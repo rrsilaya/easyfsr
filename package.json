@@ -1,0 +1,32 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "backpack",
+    "build": "backpack build",
+    "seed": "mysql -u root -p < ./src/database/schema.sql",
+    "docs": "apidoc -i ./src -o ./docs",
+    "precommit": "lint-staged"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "apidoc": "^0.17.6",
+    "backpack-core": "^0.5.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.0.0",
+    "node": "^9.5.0",
+    "prettier": "^1.10.2"
+  },
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "express-mysql-session": "^1.2.3",
+    "express-session": "^1.15.6",
+    "morgan": "^1.9.0",
+    "mysql": "^2.15.0"
+  },
+  "lint-staged": {
+    "*.{js,json,md}": ["prettier --config ./.prettierrc --write", "git add"]
+  }
+}
