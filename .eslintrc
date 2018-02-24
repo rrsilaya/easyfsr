@@ -1,0 +1,9 @@
+{
+  "extends": "react-app",
+  "rules": {
+    "default-case": "off",
+    "prefer-const": "warn",
+    "no-var": "error",
+    "href-no-hash": "off"
+  }
+}

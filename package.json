@@ -1,0 +1,47 @@
+{
+  "name": "fsrmgtsys-client",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "antd": "^3.2.1",
+    "axios": "^0.18.0",
+    "qs": "^6.5.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-helmet": "^5.2.0",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.9",
+    "react-scripts": "1.1.1",
+    "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
+    "redux-pack": "^0.1.5",
+    "redux-thunk": "^2.2.0"
+  },
+  "scripts": {
+    "serve": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
+    "stylus": "stylus -w ./src/pages/styles.styl -o ./src/app/styles.css",
+    "start":
+      "concurrently 'yarn serve' 'yarn stylus' -n 'React,Stylus' -c 'bgBlue.bold,bgRed.bold'",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,json,md}": ["prettier --config ./.prettierrc --write", "git add"]
+  },
+  "devDependencies": {
+    "babel-plugin-import": "^1.6.5",
+    "concurrently": "^3.5.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.0.0",
+    "node": "9.5.0",
+    "prettier": "^1.10.2",
+    "react-app-rewire-eslint": "^0.2.3",
+    "react-app-rewire-less": "^2.1.0",
+    "react-app-rewired": "^1.4.1",
+    "stylus": "^0.54.5"
+  },
+  "proxy": "http://localhost:3001/"
+}
