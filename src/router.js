@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import sample from './entities/sample/router';
 
 const router = Router();
 
@@ -13,11 +14,6 @@ const router = Router();
  *       .use(entity2Router);
  * ```
  */
-router.get('/', (req, res) => {
-  res.status(200).json({
-    status: 200,
-    message: 'Successfully fetched data',
-  });
-});
+router.use(sample);
 
 export default router;
