@@ -2,9 +2,9 @@ import mysql from 'mysql';
 
 const db = mysql.createConnection({
   host: 'localhost',
-  user: 'fsrmgtsys',
+  user: 'easyfsr',
   password: 'admin',
-  db: 'fsrmgtsys',
+  db: 'easyfsr',
 });
 
 db.on('ready', () => console.log('Database is connected')).on('error', err => {
@@ -21,6 +21,6 @@ db.connect(err => {
   }
 });
 
-db.query('USE fsrmgtsys');
+db.query('USE easyfsr');
 
 export default db;
