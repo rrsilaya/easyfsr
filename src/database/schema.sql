@@ -1,12 +1,12 @@
 -- User
-DROP USER IF EXISTS 'fsrmgtsys'@'localhost';
-CREATE USER 'fsrmgtsys'@'localhost' IDENTIFIED BY 'admin';
+DROP USER IF EXISTS 'easyfsr'@'localhost';
+CREATE USER 'easyfsr'@'localhost' IDENTIFIED BY 'admin';
 
 -- Database
-DROP DATABASE IF EXISTS fsrmgtsys;
-CREATE DATABASE fsrmgtsys;
+DROP DATABASE IF EXISTS easyfsr;
+CREATE DATABASE easyfsr;
 
-USE fsrmgtsys;
+USE easyfsr;
 
 CREATE TABLE user(
   employeeID VARCHAR (30) NOT NULL PRIMARY KEY,
@@ -24,5 +24,5 @@ CREATE TABLE user(
   acctType VARCHAR(10) -- ADMIN / USER
 );
 -- Privileges
-GRANT SUPER ON *.* TO 'fsrmgtsys'@'localhost';
-GRANT ALL PRIVILEGES ON fsrmgtsys.* TO 'fsrmgtsys'@'localhost';
+GRANT SUPER ON *.* TO 'easyfsr'@'localhost';
+GRANT ALL PRIVILEGES ON easyfsr.* TO 'easyfsr'@'localhost';
