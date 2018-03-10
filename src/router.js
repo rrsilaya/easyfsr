@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import sample from './entities/sample/router';
+import userRouter from './entities/user/router';
 
 const router = Router();
 
@@ -14,6 +15,6 @@ const router = Router();
  *       .use(entity2Router);
  * ```
  */
-router.use(sample);
+router.use(userRouter);
 
 export default router;
