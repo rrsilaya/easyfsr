@@ -24,5 +24,5 @@ CREATE TABLE user(
   acctType VARCHAR(10) -- ADMIN / USER
 );
 -- Privileges
-GRANT SUPER ON *.* TO 'cmsc128-a6l'@'localhost';
+GRANT SUPER ON *.* TO 'fsrmgtsys'@'localhost';
 GRANT ALL PRIVILEGES ON fsrmgtsys.* TO 'fsrmgtsys'@'localhost';
