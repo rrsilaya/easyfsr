@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Icon } from 'antd';
+import { Link } from 'react-router-dom';
 
 import links from './links';
 import styles from './styles';
@@ -14,8 +15,10 @@ class Sidebar extends Component {
         <Menu style={styles.sidebar} theme="dark">
           {links.map(link => (
             <Item key={link.label}>
-              <Icon type={link.icon} />
-              <span>{link.label}</span>
+              <Link to={link.path}>
+                <Icon type={link.icon} />
+                <span>{link.label}</span>
+              </Link>
             </Item>
           ))}
         </Menu>
