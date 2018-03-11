@@ -4,7 +4,13 @@
  */
 
 const theme = {
-  // include overridden variables here
+  'font-family-no-number': '"Circular", "Helvetica", "Arial", sans-serif',
+  'font-family': '"Circular", "Helvetica", "Arial", sans-serif',
+
+  // Color Scheme
+  'primary-color': '#634959',
+  'menu-dark-bg': '#1D161E',
+  'layout-header-background': '#1D161E',
 };
 
 module.exports = theme;

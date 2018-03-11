@@ -1,0 +1,17 @@
+.background {
+  &.primary {
+    background-color: $primary;
+  }
+  
+  &.secondary {
+    background-color: $secondary;
+  }
+}
+
+.dark-mode {
+  background-color: $primary;
+  
+  * {
+    color: lighten($primary, 90%);
+  }
+}

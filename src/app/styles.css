@@ -1,3 +1,18 @@
 /**
  * Require *.styl files here.
  */
+.fullpage {
+  height: 100vh;
+}
+.background.primary {
+  background-color: #483440;
+}
+.background.secondary {
+  background-color: #1d161e;
+}
+.dark-mode {
+  background-color: #483440;
+}
+.dark-mode * {
+  color: #efe9ec;
+}

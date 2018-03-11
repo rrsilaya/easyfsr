@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
+import './assets/fonts/lineto-font.css';
 import './index.css';
 import './app/styles.css';
 import App from './app/App';

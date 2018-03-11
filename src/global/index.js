@@ -5,3 +5,4 @@
  */
 
 export { default as HeaderConfig } from './headerconfig/HeaderConfig';
+export { default as Sidebar } from './navigation/Sidebar';
