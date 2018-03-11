@@ -34,10 +34,7 @@ export const addUser = ({
     ];
 
     db.query(query, values, (err, results) => {
-      if (err) {
-        console.log(err);
-        return reject(500);
-      }
+      if (err) return reject(500);
       return resolve(results.insertId);
     });
   });
@@ -92,10 +89,7 @@ export const updateUser = (
     ];
 
     db.query(query, values, (err, results) => {
-      if (err) {
-        console.log(err);
-        return reject(500);
-      }
+      if (err) return reject(500);
       return resolve(results.insertId);
     });
   });

@@ -15,7 +15,7 @@ CREATE TABLE user(
   middleName VARCHAR (50) ,
   lastName VARCHAR (50) NOT NULL,
   committee VARCHAR (30),
-  isHead TINYINT(1) NOT NULL,      -- TRUE / FALSE
+  isHead TINYINT(1) NOT NULL,      -- 0 / 1
   officeNumber VARCHAR (30) NOT NULL, 
   contractType VARCHAR (40) NOT NULL, -- FULL-TIME / PART-TIME
   emailAddress VARCHAR (40) NOT NULL,
