@@ -10,7 +10,7 @@ USE easyfsr;
 
 CREATE TABLE user(
   employeeID VARCHAR (30) NOT NULL PRIMARY KEY,
-  password VARCHAR (36) NOT NULL,
+  password VARCHAR (60) NOT NULL,
   firstName VARCHAR (50) NOT NULL,
   middleName VARCHAR (50) ,
   lastName VARCHAR (50) NOT NULL,

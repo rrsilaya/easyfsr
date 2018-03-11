@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
 
 const router = Router();
@@ -58,7 +59,9 @@ const router = Router();
 
 router.post('/user/', async (req, res) => {
   try {
+    req.body.password = await bcrypt.hash(req.body.password, 10);
     const id = await Ctrl.addUser(req.body);
+
     // const user = await Ctrl.getUser({ id });
     res.status(200).json({
       status: 200,
@@ -137,6 +140,9 @@ router.post('/user/', async (req, res) => {
 
 router.put('/user/:employeeID', async (req, res) => {
   try {
+    if (req.body.password) {
+      req.body.password = await bcrypt.hash(req.body.password, 10);
+    }
     await Ctrl.updateUser(req.params, req.body);
     res.status(200).json({
       status: 200,
