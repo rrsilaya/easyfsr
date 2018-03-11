@@ -4,6 +4,14 @@
 .fullpage {
   height: 100vh;
 }
+.content-body {
+  display: flex;
+  justify-content: center;
+}
+.content-body > * {
+  width: 95%;
+  margin: auto;
+}
 .background.primary {
   background-color: #483440;
 }
