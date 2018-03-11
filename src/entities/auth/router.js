@@ -20,7 +20,7 @@ router.post('/login', async (req, res) => {
         message = 'Internal server error while logging in';
         break;
       case 422:
-        message = 'Incorrect Username or Password';
+        message = 'Incorrect Email or Password';
         break;
     }
     res.status(status).json({ status, message });
