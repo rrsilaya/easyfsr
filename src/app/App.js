@@ -9,15 +9,23 @@ import routes from './routes';
 
 class App extends Component {
   render() {
+    const {
+      // State
+      isSidebarCollapsed,
+
+      // Dispatch
+      toggleSidebar,
+    } = this.props;
+
     return (
       <Fragment>
         <HeaderConfig title="easyFSR" />
         <ConnectedRouter history={history}>
           <Layout className="fullpage">
-            <Sidebar />
+            <Sidebar isSidebarCollapsed={isSidebarCollapsed} />
             <Layout.Content className="dark-mode" style={{ overflowY: 'auto' }}>
               <Layout className="background primary content-body">
-                <Topbar />
+                <Topbar toggleSidebar={toggleSidebar} />
                 <Layout.Content>
                   <Switch>
                     {routes.map(

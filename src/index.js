@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import './assets/fonts/lineto-font.css';
 import './index.css';
 import './app/styles.css';
-import App from './app/App';
+import App from './app/AppContainer';
 import store from './app/store';
 import registerServiceWorker from './registerServiceWorker';
 

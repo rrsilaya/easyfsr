@@ -24,3 +24,6 @@
 .dark-mode * {
   color: #efe9ec;
 }
+.set-cursor.pointer {
+  cursor: pointer;
+}
