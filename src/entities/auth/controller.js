@@ -1,14 +1,11 @@
-import db from './../../database/index';
 import bcrypt from 'bcrypt';
+import db from '../../database/index';
+
+import * as Query from './queries';
 
 export const login = ({ emailAddress, password }) => {
   return new Promise((resolve, reject) => {
-    const query = `
-      SELECT * FROM user
-      WHERE emailAddress = :emailAddress
-    `;
-
-    db.query(query, { emailAddress }, (err, result) => {
+    db.query(Query.getUser, { emailAddress }, (err, result) => {
       if (err) return reject(500);
       else if (!result.length) return reject(401);
 
