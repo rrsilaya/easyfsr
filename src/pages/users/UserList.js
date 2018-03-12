@@ -6,7 +6,7 @@ import User from './User';
 class UserList extends Component {
   render() {
     const { userData, expanded } = this.props;
-    const gridConfig = { xl: expanded ? 6 : 4, lg: 8, sm: 12, xs: 24 };
+    const gridConfig = { xxl: expanded ? 4 : 3, xl: 6, lg: 8, sm: 12, xs: 24 };
 
     return (
       <Row type="flex" gutter={16}>

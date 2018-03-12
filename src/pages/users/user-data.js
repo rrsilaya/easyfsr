@@ -1,78 +1,78 @@
 const users = [
   {
-    name: 'Lorenz Matthew Afable',
+    name: 'Afable, Lorenz Matthew',
     type: 'Admin',
   },
   {
-    name: 'Ralph Lawrence Silaya',
+    name: 'Silaya, Ralph Lawrence',
     type: 'Admin',
   },
   {
-    name: 'Erlen Mae Evangelista',
+    name: 'Evangelista, Erlen Mae',
     type: 'Admin',
   },
   {
-    name: 'Kia Mei Somabes',
+    name: 'Somabes, Kia Mei',
     type: 'Admin',
   },
   {
-    name: 'Trixia Belleza',
+    name: 'Belleza, Trixia',
     type: 'Admin',
   },
   {
-    name: 'Allen Ponce de Leon',
+    name: 'Ponce de Leon, Allen',
     type: 'User',
   },
   {
-    name: 'Ai Salva',
+    name: 'Salva, Ai',
     type: 'User',
   },
   {
-    name: 'Harold Roxas',
+    name: 'Roxas, Harold',
     type: 'User',
   },
   {
-    name: 'John Dewey Legaspi',
+    name: 'Legaspi, John Dewey',
     type: 'User',
   },
   {
-    name: 'Trizia Leal',
+    name: 'Leal, Trizia',
     type: 'User',
   },
   {
-    name: 'Francisco Hernandez',
+    name: 'Hernandez, Francisco',
     type: 'User',
   },
   {
-    name: 'Tisha Ordona',
+    name: 'Ordona, Tisha',
     type: 'User',
   },
   {
-    name: 'Cholo Manglicmot',
+    name: 'Manglicmot, Cholo',
     type: 'User',
   },
   {
-    name: 'Ina Lagman',
+    name: 'Lagman, Ina',
     type: 'User',
   },
   {
-    name: 'Reigner Gutierrez',
+    name: 'Gutierrez, Reigner',
     type: 'User',
   },
   {
-    name: 'Ivan Dacquel',
+    name: 'Dacquel, Ivan',
     type: 'User',
   },
   {
-    name: 'Lois Quillo',
+    name: 'Quillo, Lois',
     type: 'User',
   },
   {
-    name: 'Nico Sosmena',
+    name: 'Sosmena, Nico',
     type: 'User',
   },
   {
-    name: 'Paulo Astudillo',
+    name: 'Astudillo, Paulo',
     type: 'User',
   },
 ];
