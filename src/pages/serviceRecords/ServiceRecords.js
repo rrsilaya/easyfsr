@@ -4,7 +4,7 @@ class ServiceRecords extends Component {
   render() {
     return (
       <div>
-        <h1>ServiceRecords</h1>
+        <h1>Service Records</h1>
       </div>
     );
   }

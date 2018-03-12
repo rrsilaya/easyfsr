@@ -19,6 +19,11 @@ const links = [
     label: 'Users',
     path: '/users',
   },
+  {
+    icon: 'search',
+    label: 'Faculty Search',
+    path: '/search',
+  },
 ];
 
 export default links;

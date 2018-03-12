@@ -2,6 +2,7 @@ import Dashboard from '../pages/dashboard/Dashboard';
 import Profile from '../pages/profile/Profile';
 import ServiceRecords from '../pages/serviceRecords/ServiceRecords';
 import Users from '../pages/users/Users';
+import FacultySearch from '../pages/facultySearch/FacultySearch';
 
 const routes = [
   {
@@ -26,7 +27,12 @@ const routes = [
     component: Users,
   },
   {
-    type: 'redirect',
+    type: 'path',
+    to: '/search',
+    component: FacultySearch,
+  },
+  {
+    type: 'path',
     to: '/',
   },
 ];
