@@ -35,7 +35,7 @@ db.config.queryFormat = function(query, values) {
         if (offset > values.length) return text;
 
         if (match.length === 2) return this.escapeId(values[offset - 1]);
-        else return this.escape(values[offset]);
+        else return this.escape(values[offset - 1]);
       }.bind(this),
     );
   } else {

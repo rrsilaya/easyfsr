@@ -1,18 +1,23 @@
 export const addUser = `
-  INSERT INTO user VALUES (
+  INSERT INTO user (
+    employeeID, 
+    password, 
+    firstName, 
+    middleName, 
+    lastName, 
+    officeNumber, 
+    contractType, 
+    emailAddress
+  )
+  VALUES (
     :employeeID, 
     :password, 
     :firstName, 
     :middleName, 
     :lastName, 
-    :committee, 
-    :isHead, 
     :officeNumber, 
     :contractType, 
-    :emailAddress, 
-    :rank, 
-    :isArchived, 
-    :acctType
+    :emailAddress
   )
 `;
 
