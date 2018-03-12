@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
+import { Button } from 'antd';
+
+import UserList from './UserList';
+import styles from './styles';
+import userData from './user-data';
 
 class Users extends Component {
   render() {
     return (
       <div>
-        <h1>Users</h1>
+        <div style={styles.button}>
+          <Button size="large" icon="plus-circle-o" ghost>
+            Add User
+          </Button>
+        </div>
+        <UserList expanded userData={userData} />
       </div>
     );
   }
