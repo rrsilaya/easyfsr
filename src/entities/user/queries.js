@@ -37,3 +37,7 @@ export const updateUser = `
     acctType = :acctType 
   WHERE employeeID = :employeeID
 `;
+
+export const getAllUser = `
+  SELECT * FROM user
+`;
