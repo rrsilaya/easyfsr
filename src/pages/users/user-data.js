@@ -44,19 +44,19 @@ const users = [
     type: 'User',
   },
   {
-    name: 'Cholo Manglicmot',
-    type: 'User',
-  },
-  {
-    name: 'Nico Sosmena',
-    type: 'User',
-  },
-  {
     name: 'Tisha Ordona',
     type: 'User',
   },
   {
+    name: 'Cholo Manglicmot',
+    type: 'User',
+  },
+  {
     name: 'Ina Lagman',
+    type: 'User',
+  },
+  {
+    name: 'Reigner Gutierrez',
     type: 'User',
   },
   {
@@ -68,11 +68,11 @@ const users = [
     type: 'User',
   },
   {
-    name: 'Paulo Astudillo',
+    name: 'Nico Sosmena',
     type: 'User',
   },
   {
-    name: 'Reigner Gutierrez',
+    name: 'Paulo Astudillo',
     type: 'User',
   },
 ];
