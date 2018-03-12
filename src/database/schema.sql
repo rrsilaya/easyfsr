@@ -15,12 +15,12 @@ CREATE TABLE user(
   middleName VARCHAR (50),
   lastName VARCHAR (50) NOT NULL,
   committee VARCHAR (30),
-  isHead TINYINT(1),      -- 0 / 1
+  isHead BOOLEAN,      
   officeNumber VARCHAR (30) NOT NULL, 
   contractType VARCHAR (40) NOT NULL, -- FULL-TIME / PART-TIME
   emailAddress VARCHAR (40) NOT NULL,
   rank VARCHAR (30),
-  isArchived VARCHAR (10) DEFAULT 'NO', -- YES / NO / PENDING (?) 
+  isArchived BOOLEAN DEFAULT 0, 
   acctType VARCHAR(10) DEFAULT 'USER' -- ADMIN / USER
 );
 -- Privileges
