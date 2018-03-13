@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Row, Col, Button } from 'antd';
+import { Button } from 'antd';
 
-import User from './User';
-import UserList from './UserList';
+import UserList from './components/UserList';
 import styles from './styles';
 import userData from './user-data';
 

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Card, Icon, Avatar } from 'antd';
 
-import styles from './styles';
-import actions from './actions';
+import styles from '../styles';
+import actions from '../actions';
 
 const { Meta } = Card;
 
