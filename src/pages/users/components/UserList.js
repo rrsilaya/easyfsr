@@ -5,7 +5,7 @@ import User from './User';
 
 class UserList extends Component {
   render() {
-    const { userData, expanded } = this.props;
+    const { userData } = this.props;
     const gridConfig = { xxl: 6, xl: 8, sm: 12, xs: 24 };
     const sortedData = userData.sort((a, b) => {
       if (a.lastName > b.lastName) return 1;

@@ -14,7 +14,7 @@ class Users extends Component {
             Add User
           </Button>
         </div>
-        <UserList expanded userData={userData} />
+        <UserList userData={userData} />
       </div>
     );
   }
