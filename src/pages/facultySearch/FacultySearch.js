@@ -64,13 +64,6 @@ class FacultySearch extends Component {
   render() {
     return (
       <div>
-        <Search
-          placeholder="input faculty name"
-          onSearch={value => console.log(value)}
-          style={{ width: 300 }}
-          enterButton
-        />
-
         <Row gutter={16}>
           {person.map(faculty => (
             <Col span={16}>
