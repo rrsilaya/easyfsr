@@ -94,3 +94,12 @@ export const updateUser = (
     });
   });
 };
+
+export const deleteUser = ({ employeeID }) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.deleteUser, { employeeID }, (err, results) => {
+      if (err) return reject(500);
+      return resolve(employeeID);
+    });
+  });
+};
