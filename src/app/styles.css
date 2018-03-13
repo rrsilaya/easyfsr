@@ -12,11 +12,29 @@
   width: 95%;
   margin: auto;
 }
+.container {
+  margin: auto;
+}
+.container.medium {
+  width: 90%;
+}
 .background.primary {
   background-color: #483440;
 }
 .background.secondary {
   background-color: #1d161e;
+}
+.background.clear {
+  background-color: #fff;
+}
+.text.primary {
+  color: #483440;
+}
+.text.secondary {
+  color: #1d161e;
+}
+.text.meta {
+  color: #836488;
 }
 .dark-mode {
   background-color: #483440;
@@ -26,4 +44,13 @@
 }
 .set-cursor.pointer {
   cursor: pointer;
+}
+h1.super {
+  font-size: 56px;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+p.subtitle {
+  font-size: 20px;
+  width: 80%;
 }
