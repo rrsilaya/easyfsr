@@ -39,7 +39,8 @@ export const updateUser = `
 `;
 
 export const deleteUser = `
-UPDATE user SET
-  isArchived = true
-WHERE employeeID = :employeeID
+  UPDATE user SET
+    isArchived = true
+  WHERE employeeID = :employeeID
 `;
+
