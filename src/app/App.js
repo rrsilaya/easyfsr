@@ -35,7 +35,7 @@ class App extends Component {
               >
                 <Layout className="background primary content-body">
                   <Topbar toggleSidebar={toggleSidebar} />
-                  <Layout.Content>
+                  <Layout.Content style={{ paddingBottom: '2em' }}>
                     <Switch>
                       {routes.map(route => (
                         <Route key={route.path} {...route} />

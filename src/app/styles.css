@@ -36,6 +36,9 @@
 .text.meta {
   color: #836488;
 }
+.text.normal {
+  color: #4d4d4d;
+}
 .dark-mode {
   background-color: #483440;
 }
@@ -53,4 +56,7 @@ h1.super {
 p.subtitle {
   font-size: 20px;
   width: 85%;
+}
+.ant-card-meta-title {
+  margin-bottom: 0 !important;
 }

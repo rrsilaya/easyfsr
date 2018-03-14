@@ -15,8 +15,8 @@ class UserList extends Component {
 
     return (
       <Row type="flex" gutter={16}>
-        {sortedData.map(user => (
-          <Col {...gridConfig}>
+        {sortedData.map((user, i) => (
+          <Col key={i} {...gridConfig}>
             <User
               title={`${user.lastName}, ${user.firstName}`}
               description={user.type}

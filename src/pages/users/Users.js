@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { Button } from 'antd';
+import { Button, Row, Col } from 'antd';
 
-import UserList from './components/UserList';
+import User from './components/User';
 import styles from './styles';
 import userData from './user-data';
 
 class Users extends Component {
   render() {
+    const gridConfig = { xxl: 6, xl: 8, sm: 12, xs: 24 };
+
     return (
       <div>
         <div style={styles.button}>
@@ -14,7 +16,16 @@ class Users extends Component {
             Add User
           </Button>
         </div>
-        <UserList userData={userData} />
+        <Row type="flex" gutter={16}>
+          {userData.map((user, i) => (
+            <Col key={i} {...gridConfig}>
+              <User
+                title={`${user.lastName}, ${user.firstName}`}
+                description={user.type}
+              />
+            </Col>
+          ))}
+        </Row>
       </div>
     );
   }

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Card, Icon, Avatar } from 'antd';
 
 import styles from '../styles';
-import actions from '../actions';
 
 const { Meta } = Card;
 
@@ -12,8 +11,11 @@ class User extends Component {
       <Card
         bordered={false}
         style={styles.card}
-        hoverable
-        actions={actions.map(action => <Icon type={action} />)}
+        actions={[
+          <Icon type="edit" className="text normal" />,
+          <Icon type="delete" className="text normal" />,
+          <Icon type="profile" className="text normal" />,
+        ]}
       >
         <Meta
           avatar={<Avatar size="large" icon="user" />}
