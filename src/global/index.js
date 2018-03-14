@@ -7,3 +7,4 @@
 export { default as HeaderConfig } from './headerconfig/HeaderConfig';
 export { default as Sidebar } from './navigation/Sidebar';
 export { default as Topbar } from './navigation/Topbar';
+export { default as Loader } from './loader/Loader';
