@@ -10,14 +10,10 @@ const style = {
     alignItems: 'center',
   },
   progressBar: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    width: 600,
+    paddingLeft: '20',
+    paddingRight: '20',
   },
   facultyTable: {
-    marginTop: 20,
     size: 'large',
   },
 };
