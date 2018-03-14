@@ -169,28 +169,27 @@ router.put('/user/:employeeID', async (req, res) => {
  * @apiName getAllUser
  *
  * @apiSuccess {String} message Confirmation Message.
- * @apiSuccess {Object[]} user All users
- * @apiSuccess {String} user.employeeID ID of employee
- * @apiSuccess {String} user.password password of employee
- * @apiSuccess {String} user.firstName first name of employee
- * @apiSuccess {String} user.middleName middle name of employee
- * @apiSuccess {String} user.lastName last name of employee
- * @apiSuccess {String} user.committee committee of employee, if exists
- * @apiSuccess {Boolean} user.isHead indicates if employee is head
- * @apiSuccess {String} user.officeNumber office number of employee
- * @apiSuccess {String} user.contractType contract type of employee
- * @apiSuccess {String} user.emailAddress email address of employee
- * @apiSuccess {String} user.rank rank of employee
- * @apiSuccess {String} user.isArchived indicates if employee entry is archived
- * @apiSuccess {String} user.acctType account type of employee
+ * @apiSuccess {Object[]} users All users
+ * @apiSuccess {String} users.employeeID ID of employee
+ * @apiSuccess {String} users.password password of employee
+ * @apiSuccess {String} users.firstName first name of employee
+ * @apiSuccess {String} users.middleName middle name of employee
+ * @apiSuccess {String} users.lastName last name of employee
+ * @apiSuccess {String} users.committee committee of employee, if exists
+ * @apiSuccess {Boolean} users.isHead indicates if employee is head
+ * @apiSuccess {String} users.officeNumber office number of employee
+ * @apiSuccess {String} users.contractType contract type of employee
+ * @apiSuccess {String} users.emailAddress email address of employee
+ * @apiSuccess {String} users.rank rank of employee
+ * @apiSuccess {String} users.isArchived indicates if employee entry is archived
+ * @apiSuccess {String} users.acctType account type of employee
  * @apiSuccessExample {json} Success-Response:
  *    HTTP/1.1 200 OK
  *   {
         "message": "Successfully fetched user",
-        "user": [
+        "users": [
             {
                 "employeeID": "123abc",
-                "password": "123abc(encrypted)",
                 "firstName": "John Dewey",
                 "middleName": "Bayani",
                 "lastName": "Legaspi",
@@ -200,7 +199,6 @@ router.put('/user/:employeeID', async (req, res) => {
                 "contractType": "regular",
                 "emailAddress": "jblegaspi4@up.edu.ph",
                 "rank": "instructor 1",
-                "isArchived": "no",
                 "acctType: "admin"
 
             }
@@ -220,11 +218,13 @@ router.put('/user/:employeeID', async (req, res) => {
 
 router.get('/user', async (req, res) => {
   try {
-    const user = await Ctrl.getAllUser();
+    const users = await Ctrl.getAllUser();
+    delete users.password;
+    delete users.isArchived;
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched user',
-      data: user,
+      data: users,
     });
   } catch (status) {
     let message = '';
