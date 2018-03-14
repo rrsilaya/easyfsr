@@ -13,7 +13,7 @@ const style = {
     },
   },
   wrapper: {
-    width: '95%',
+    width: '90%',
     display: 'flex',
   },
   section: {
@@ -32,7 +32,19 @@ const style = {
     borderBottom: '1px solid #ddd',
   },
   form: {
+    width: '90%',
     display: 'flex',
+  },
+  inputgroup: {
+    display: 'flex',
+  },
+  input: {
+    width: '50%',
+    marginBottom: '5px',
+  },
+  margin: {
+    marginTop: '10px',
+    marginRight: '8px',
   },
 };
 

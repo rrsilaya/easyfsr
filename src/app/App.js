@@ -4,7 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { history } from './store';
 import { Layout } from 'antd';
 
-import { HeaderConfig, Sidebar, Topbar } from '../global';
+import { HeaderConfig, Sidebar, Topbar, Loader } from '../global';
 import routes from './routes';
 import Login from '../pages/login/Login';
 
@@ -14,6 +14,7 @@ class App extends Component {
       // State
       isSidebarCollapsed,
       user,
+      isLoading,
 
       // Dispatch
       toggleSidebar,
@@ -23,7 +24,9 @@ class App extends Component {
       <Fragment>
         <HeaderConfig title="easyFSR" />
         <ConnectedRouter history={history}>
-          {user ? (
+          {isLoading ? (
+            <Loader />
+          ) : user ? (
             <Layout className="fullpage">
               <Sidebar isSidebarCollapsed={isSidebarCollapsed} />
               <Layout.Content

@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import { Layout, Form, Input, Button } from 'antd';
 
+import { handleFormSubmit } from './actions';
 import styles from './styles';
 
 const { Header, Content } = Layout;
 const { Group: InputGroup } = Input;
 
 class Login extends Component {
+  handleFormSubmit = handleFormSubmit.bind(this);
+
   render() {
+    const { form } = this.props;
+
     return (
       <Layout className="fullpage background clear">
         <Header className="background clear" style={styles.header}>
@@ -24,19 +29,39 @@ class Login extends Component {
                 style={{ ...styles.section, ...styles.login }}
               >
                 <h1 className="super text primary">Lorem ipsum</h1>
-                <p className="subtitle text meta">
+                <p className="subtitle text meta border">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et consectetur
                   adipiscing elit.
                 </p>
-                <Form>
-                  <InputGroup compact size="large" style={styles.form}>
-                    <Input placeholder="Email" />
-                    <Input placeholder="Password" />
-                    <Button type="primary" htmlType="submit" size="large">
-                      Login
-                    </Button>
+                <Form style={styles.form} onSubmit={this.handleFormSubmit}>
+                  <InputGroup
+                    compact
+                    size="large"
+                    style={{ ...styles.inputgroup, ...styles.margin }}
+                  >
+                    {form.getFieldDecorator('email@@login', {
+                      rules: [{ required: true }],
+                    })(<Input placeholder="Email" style={styles.input} />)}
+                    {form.getFieldDecorator('password@@login', {
+                      rules: [{ required: true }],
+                    })(
+                      <Input
+                        placeholder="Password"
+                        type="password"
+                        style={styles.input}
+                      />,
+                    )}
                   </InputGroup>
+
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    size="large"
+                    style={styles.margin}
+                  >
+                    Login
+                  </Button>
                 </Form>
               </div>
             </div>
@@ -47,4 +72,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Form.create()(Login);
