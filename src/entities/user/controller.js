@@ -24,7 +24,7 @@ export const getAllUser = () => {
   return new Promise((resolve, reject) => {
     db.query(Query.getAllUser, (err, results) => {
       if (err) return reject(500);
-      return resolve(results.insertId);
+      return resolve(results);
     });
   });
 };
