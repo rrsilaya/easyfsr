@@ -218,7 +218,7 @@ router.put('/user/:employeeID', async (req, res) => {
 
 router.get('/user', async (req, res) => {
   try {
-    const users = await Ctrl.getAllUser();
+    const users = await Ctrl.getAllUsers();
     users.map(user => delete user.password);
     users.map(user => delete user.isArchived);
 
@@ -231,7 +231,75 @@ router.get('/user', async (req, res) => {
     let message = '';
     switch (status) {
       case 404:
-        message = 'Users not found';
+        message = 'User not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
+    }
+    res.status(status).json({ status, message });
+  }
+});
+/**
+* @api {delete} /user/:employeeID deleteUser
+ * @apiGroup User
+ * @apiName deleteUser
+ *
+ * @apiParam (Query Params) {String} employeeID ID of employee
+ *
+ * @apiSuccess {Object} user User updated
+ * @apiSuccess {String} user.employeeID ID of employee
+ * @apiSuccess {String} user.password password of employee
+ * @apiSuccess {String} user.firstName first name of employee
+ * @apiSuccess {String} user.middleName middle name of employee
+ * @apiSuccess {String} user.lastName last name of employee
+ * @apiSuccess {String} user.committee committee of employee, if exists
+ * @apiSuccess {Boolean} user.isHead indicates if employee is head
+ * @apiSuccess {String} user.officeNumber office number of employee
+ * @apiSuccess {String} user.contractType contract type of employee
+ * @apiSuccess {String} user.emailAddress email address of employee
+ * @apiSuccess {String} user.rank rank of employee
+ * @apiSuccess {String} user.isArchived indicates if employee entry is archived
+ * @apiSuccess {String} user.acctType account type of employee
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *   HTTP/1.1 200 OK
+ *   {
+ *     "data": {
+ *        status: 200;
+ *        message: 'Succesfully updated user'
+ *     }
+ *   }
+ *
+ * @apiError (Error 500) {String[]} errors List of errors
+ * @apiError (Error 500) {String} errors.message Error message
+ * @apiErrorExample {json} Error-Response:
+ *   HTTP/1.1 500 Internal Server Error
+ *   {
+ *     "status": 500,
+ *     "message": "Internal server error"
+ *   }
+
+   HTTP/1.1 404 User not found
+ * {
+ *   "status": 404,
+ *   "message": "User not found"
+ * }
+ */
+router.delete('/user/:employeeID', async (req, res) => {
+  try {
+    const id = await Ctrl.deleteUser(req.params);
+    // const user = await Ctrl.getUser(req.params);
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully deleted user',
+      //data: user
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'User not found';
         break;
       case 500:
         message = 'Internal server error';
