@@ -219,8 +219,8 @@ router.put('/user/:employeeID', async (req, res) => {
 router.get('/user', async (req, res) => {
   try {
     const users = await Ctrl.getAllUser();
-    users.map( user => delete user.password);
-    users.map( user => delete user.isArchived);
+    users.map(user => delete user.password);
+    users.map(user => delete user.isArchived);
 
     res.status(200).json({
       status: 200,
@@ -230,6 +230,9 @@ router.get('/user', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 404:
+        message = 'Users not found';
+        break;
       case 500:
         message = 'Internal server error';
         break;
