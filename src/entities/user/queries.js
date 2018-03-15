@@ -37,3 +37,10 @@ export const updateUser = `
     acctType = :acctType 
   WHERE employeeID = :employeeID
 `;
+
+export const deleteUser = `
+  UPDATE user SET
+    isArchived = true
+  WHERE employeeID = :employeeID
+`;
+
