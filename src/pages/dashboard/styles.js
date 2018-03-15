@@ -10,8 +10,8 @@ const style = {
     alignItems: 'center',
   },
   progressBar: {
-    paddingLeft: '20',
-    paddingRight: '20',
+    display: 'flex',
+    justifyContent: 'center',
   },
   facultyTable: {
     size: 'large',
