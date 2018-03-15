@@ -20,11 +20,29 @@ export const updateUser = ({ employeeID }, user) => {
   });
 };
 
+export const getAllUsers = () => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getAllUser, (err, results) => {
+      if (err) return reject(500);
+      else if (!results) return reject(404);
+      return resolve(results);
+    });
+  });
+};
 export const deleteUser = ({ employeeID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.deleteUser, { employeeID }, (err, results) => {
       if (err) return reject(500);
       return resolve(employeeID);
+    });
+  });
+};
+
+export const getUser = ({ employeeID }, user) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getUser, { ...user, employeeID }, (err, results) => {
+      if (err) return reject(500);
+      return resolve(results);
     });
   });
 };
