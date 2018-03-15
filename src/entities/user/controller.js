@@ -38,9 +38,9 @@ export const deleteUser = ({ employeeID }) => {
   });
 };
 
-export const getUser = ({ employeeID }, user) => {
+export const getUser = ({ employeeID }) => {
   return new Promise((resolve, reject) => {
-    db.query(Query.getUser, { ...user, employeeID }, (err, results) => {
+    db.query(Query.getUser, { employeeID }, (err, results) => {
       if (err) return reject(500);
       return resolve(results);
     });

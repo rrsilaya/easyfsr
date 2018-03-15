@@ -241,7 +241,7 @@ router.get('/user', async (req, res) => {
   }
 });
 /**
-* @api {delete} /user/:employeeID deleteUser
+ * @api {delete} /user/:employeeID deleteUser
  * @apiGroup User
  * @apiName deleteUser
  *
@@ -279,12 +279,11 @@ router.get('/user', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
-
-   HTTP/1.1 404 User not found
- * {
- *   "status": 404,
- *   "message": "User not found"
- * }
+ *   HTTP/1.1 404 User not found
+ *   {
+ *     "status": 404,
+ *     "message": "User not found"
+ *   }
  */
 router.delete('/user/:employeeID', async (req, res) => {
   try {
@@ -311,9 +310,68 @@ router.delete('/user/:employeeID', async (req, res) => {
 
 export default router;
 
+/**
+ * @api {get} /user/:employeeID getUser
+ * @apiGroup User
+ * @apiName getUser
+ *
+ * @apiParam (Query Params) {String} employeeID ID of employee
+ *
+ * @apiSuccess {Object} user User details
+ * @apiSuccess {String} user.employeeID ID of employee
+ * @apiSuccess {String} user.firstName first name of employee
+ * @apiSuccess {String} user.middleName middle name of employee
+ * @apiSuccess {String} user.lastName last name of employee
+ * @apiSuccess {String} user.committee committee of employee, if exists
+ * @apiSuccess {Boolean} user.isHead indicates if employee is head
+ * @apiSuccess {String} user.officeNumber office number of employee
+ * @apiSuccess {String} user.contractType contract type of employee
+ * @apiSuccess {String} user.emailAddress email address of employee
+ * @apiSuccess {String} user.rank rank of employee
+ * @apiSuccess {String} user.isArchived indicates if employee entry is archived
+ * @apiSuccess {String} user.acctType account type of employee
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *   HTTP/1.1 200 OK
+ *   {
+ *     "status":200,
+ *     "message":"Successfully got user details",
+ *		 "data": [
+ *        {
+ *          "employeeID":"5121328320",
+ *          "password":"$2a$10$JQL/6dENt1TQofx49huAmu1e/K/m8UPn4SGXixRU5NYDK/QzpudbW",
+ *          "firstName":"Erlen Mae",
+ *          "middleName":"S",
+ *          "lastName":"Evangelista",
+ *          "committee":null,
+ *          "isHead":null,
+ *          "officeNumber":"128",
+ *          "contractType":"full-time",
+ *          "emailAddress":"esevangelista1@up.edu.ph",
+ *          "rank":null,
+ *          "isArchived":0,
+ *          "acctType":"USER"
+ *        }
+ *     ]
+ *   }
+ *
+ * @apiError (Error 500) {String[]} errors List of errors
+ * @apiError (Error 500) {String} errors.message Error message
+ * @apiErrorExample {json} Error-Response:
+ *   HTTP/1.1 500 Internal Server Error
+ *   {
+ *     "status": 500,
+ *     "message": "Internal server error"
+ *   }
+ * HTTP/1.1 404 User not found
+ * {
+ *   "status": 404,
+ *   "message": "User not found"
+ * }
+ */
 router.get('/user/:employeeID', async (req, res) => {
   try {
-    const user = await Ctrl.getUser(req.params, req.body);
+    const user = await Ctrl.getUser(req.params);
     delete user.password;
     res.status(200).json({
       status: 200,
