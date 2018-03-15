@@ -310,3 +310,26 @@ router.delete('/user/:employeeID', async (req, res) => {
 });
 
 export default router;
+
+router.get('/user/:employeeID', async (req, res) => {
+  try {
+    const user = await Ctrl.getUser(req.params, req.body);
+    delete user.password;
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully got user details',
+      data: user,
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'User not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
+    }
+    res.status(status).json({ status, message });
+  }
+});
