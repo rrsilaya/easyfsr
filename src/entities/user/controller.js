@@ -103,3 +103,12 @@ export const deleteUser = ({ employeeID }) => {
     });
   });
 };
+
+export const getUser = ({ employeeID }, user) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getUser, { ...user, employeeID }, (err, results) => {
+      if (err) return reject(500);
+      return resolve(results);
+    });
+  });
+};

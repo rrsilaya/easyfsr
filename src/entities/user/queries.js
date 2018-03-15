@@ -43,3 +43,8 @@ UPDATE user SET
   isArchived = true
 WHERE employeeID = :employeeID
 `;
+
+export const getUser = `
+  SELECT * from user
+  WHERE employeeID = :employeeID
+`;
