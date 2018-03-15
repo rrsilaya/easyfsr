@@ -1,6 +1,20 @@
 import db from '../../database/index';
-
 import * as Query from './queries';
+import * as Utils from '../../utils';
+
+const userAttributes = [
+  'employeeID',
+  'firstName',
+  'middleName',
+  'lastName',
+  'committee',
+  'isHead',
+  'officeNumber',
+  'contractType',
+  'emailAddress',
+  'rank',
+  'acctType',
+];
 
 export const addUser = user => {
   return new Promise((resolve, reject) => {
@@ -13,10 +27,15 @@ export const addUser = user => {
 
 export const updateUser = ({ employeeID }, user) => {
   return new Promise((resolve, reject) => {
-    db.query(Query.updateUser, { ...user, employeeID }, (err, results) => {
-      if (err) return reject(500);
-      return resolve(results.insertId);
-    });
+    if (!user) return reject(500);
+    db.query(
+      Query.updateUser(Utils.filtered(user, userAttributes)),
+      { employeeID, ...user },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(results.insertId);
+      },
+    );
   });
 };
 

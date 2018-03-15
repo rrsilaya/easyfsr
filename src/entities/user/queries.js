@@ -1,3 +1,5 @@
+import * as Utils from '../../utils';
+
 export const addUser = `
   INSERT INTO user (
     employeeID, 
@@ -21,20 +23,9 @@ export const addUser = `
   )
 `;
 
-export const updateUser = `
+export const updateUser = user => `
   UPDATE user SET 
-    password = :password,
-    firstName = :firstName,
-    middleName = :middleName,
-    lastName = :lastName,
-    committee = :committee,
-    isHead = :isHead,
-    officeNumber = :officeNumber,
-    contractType = :contractType,
-    emailAddress = :emailAddress,
-    rank = :rank,
-    isArchived = :isArchived,
-    acctType = :acctType 
+  ${Utils.formatQueryParams(user)}
   WHERE employeeID = :employeeID
 `;
 
