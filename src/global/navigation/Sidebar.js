@@ -9,8 +9,15 @@ const { Item } = Menu;
 
 class Sidebar extends Component {
   render() {
+    const { isSidebarCollapsed } = this.props;
+
     return (
-      <Layout.Sider width={230} collapsible trigger={null}>
+      <Layout.Sider
+        width={230}
+        collapsible
+        collapsed={isSidebarCollapsed}
+        trigger={null}
+      >
         <div style={styles.logo}>&nbsp;</div>
         <Menu style={styles.sidebar} theme="dark">
           {links.map(link => (

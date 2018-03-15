@@ -11,6 +11,10 @@ const theme = {
   'primary-color': '#634959',
   'menu-dark-bg': '#1D161E',
   'layout-header-background': '#1D161E',
+
+  // Input
+  'input-height-lg': '48px',
+  'btn-height-lg': '48px',
 };
 
 module.exports = theme;
