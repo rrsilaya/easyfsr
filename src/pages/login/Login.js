@@ -11,7 +11,7 @@ class Login extends Component {
   handleFormSubmit = handleFormSubmit.bind(this);
 
   render() {
-    const { form } = this.props;
+    const { form, isLoggingIn } = this.props;
 
     return (
       <Layout className="fullpage background clear">
@@ -40,7 +40,7 @@ class Login extends Component {
                     size="large"
                     style={{ ...styles.inputgroup, ...styles.margin }}
                   >
-                    {form.getFieldDecorator('email@@login', {
+                    {form.getFieldDecorator('emailAddress@@login', {
                       rules: [{ required: true }],
                     })(<Input placeholder="Email" style={styles.input} />)}
                     {form.getFieldDecorator('password@@login', {
@@ -59,6 +59,7 @@ class Login extends Component {
                     htmlType="submit"
                     size="large"
                     style={styles.margin}
+                    loading={isLoggingIn}
                   >
                     Login
                   </Button>

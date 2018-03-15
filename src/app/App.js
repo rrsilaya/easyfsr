@@ -9,22 +9,28 @@ import routes from './routes';
 import Login from '../pages/login/Login';
 
 class App extends Component {
+  componentDidMount() {
+    this.props.getSession();
+  }
+
   render() {
     const {
       // State
       isSidebarCollapsed,
       user,
-      isLoading,
+      isGettingSession,
+      isLoggingIn,
 
       // Dispatch
       toggleSidebar,
+      login,
     } = this.props;
 
     return (
       <Fragment>
         <HeaderConfig title="easyFSR" />
         <ConnectedRouter history={history}>
-          {isLoading ? (
+          {isGettingSession ? (
             <Loader />
           ) : user ? (
             <Layout className="fullpage">
@@ -48,7 +54,13 @@ class App extends Component {
             </Layout>
           ) : (
             <Switch>
-              <Route exact path="/" component={Login} />
+              <Route
+                exact
+                path="/"
+                component={() => (
+                  <Login isLoggingIn={isLoggingIn} login={login} />
+                )}
+              />
               <Redirect to="/" />
             </Switch>
           )}
