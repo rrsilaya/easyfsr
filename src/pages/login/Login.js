@@ -3,6 +3,7 @@ import { Layout, Form, Input, Button } from 'antd';
 
 import { handleFormSubmit } from './actions';
 import styles from './styles';
+import logo from './easyFSR.png';
 
 const { Header, Content } = Layout;
 const { Group: InputGroup } = Input;
@@ -16,7 +17,7 @@ class Login extends Component {
     return (
       <Layout className="fullpage background clear">
         <Header className="background clear" style={styles.header}>
-          <img alt="" style={styles.logo.top} />
+          <img src={logo} alt="" style={styles.logo.top} />
         </Header>
         <Content>
           <div className="border" style={styles.pagecontainer}>
