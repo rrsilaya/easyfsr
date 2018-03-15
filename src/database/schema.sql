@@ -23,7 +23,9 @@ CREATE TABLE user(
   emailAddress VARCHAR (40) NOT NULL,
   rank VARCHAR (30),
   isArchived BOOLEAN DEFAULT 0, 
-  acctType VARCHAR(10) DEFAULT 'USER' -- ADMIN / USER
+  acctType VARCHAR(10) DEFAULT 'USER', -- ADMIN / USER
+  CONSTRAINT `user_pk`
+    PRIMARY KEY (`employeeID`)
 );
 
 CREATE TABLE IF NOT EXISTS fsr(
