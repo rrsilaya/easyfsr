@@ -164,7 +164,84 @@ router.put('/user/:employeeID', async (req, res) => {
 });
 
 /**
- * @api {delete} /user/:employeeID deleteUser
+ * @api {get} /user getAllUser
+ * @apiGroup User
+ * @apiName getAllUser
+ *
+ * @apiSuccess {String} message Confirmation Message.
+ * @apiSuccess {Object[]} users All users
+ * @apiSuccess {String} users.employeeID ID of employee
+ * @apiSuccess {String} users.password password of employee
+ * @apiSuccess {String} users.firstName first name of employee
+ * @apiSuccess {String} users.middleName middle name of employee
+ * @apiSuccess {String} users.lastName last name of employee
+ * @apiSuccess {String} users.committee committee of employee, if exists
+ * @apiSuccess {Boolean} users.isHead indicates if employee is head
+ * @apiSuccess {String} users.officeNumber office number of employee
+ * @apiSuccess {String} users.contractType contract type of employee
+ * @apiSuccess {String} users.emailAddress email address of employee
+ * @apiSuccess {String} users.rank rank of employee
+ * @apiSuccess {String} users.isArchived indicates if employee entry is archived
+ * @apiSuccess {String} users.acctType account type of employee
+ * @apiSuccessExample {json} Success-Response:
+ *    HTTP/1.1 200 OK
+ *   {
+        "message": "Successfully fetched user",
+        "users": [
+            {
+                "employeeID": "123abc",
+                "firstName": "John Dewey",
+                "middleName": "Bayani",
+                "lastName": "Legaspi",
+                "committee": "palicsihan",
+                "isHead": False,
+                "officeNumber": "123",
+                "contractType": "regular",
+                "emailAddress": "jblegaspi4@up.edu.ph",
+                "rank": "instructor 1",
+                "acctType: "admin"
+
+            }
+        ]
+    }
+ *
+ * @apiError (Error 500) {String[]} errors List of errors.
+ * @apiError (Error 500) {String} errors.message Error message.
+ * @apiErrorExample {json} Error-Response:
+ *    HTTP/1.1 500 Internal Server Error
+ *    {
+ *      "errors": [
+ *        "Internal server error."
+ *      ]
+ *    }
+ **/
+
+router.get('/user', async (req, res) => {
+  try {
+    const users = await Ctrl.getAllUsers();
+    users.map(user => delete user.password);
+    users.map(user => delete user.isArchived);
+
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully fetched user',
+      data: users,
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'User not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
+    }
+    res.status(status).json({ status, message });
+  }
+});
+/**
+* @api {delete} /user/:employeeID deleteUser
  * @apiGroup User
  * @apiName deleteUser
  *
@@ -209,7 +286,6 @@ router.put('/user/:employeeID', async (req, res) => {
  *   "message": "User not found"
  * }
  */
-
 router.delete('/user/:employeeID', async (req, res) => {
   try {
     const id = await Ctrl.deleteUser(req.params);
@@ -234,3 +310,26 @@ router.delete('/user/:employeeID', async (req, res) => {
 });
 
 export default router;
+
+router.get('/user/:employeeID', async (req, res) => {
+  try {
+    const user = await Ctrl.getUser(req.params, req.body);
+    delete user.password;
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully got user details',
+      data: user,
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'User not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
+    }
+    res.status(status).json({ status, message });
+  }
+});

@@ -253,3 +253,5 @@ CREATE TABLE rCoAuthor(
 -- Privileges
 GRANT SUPER ON *.* TO 'easyfsr'@'localhost';
 GRANT ALL PRIVILEGES ON easyfsr.* TO 'easyfsr'@'localhost';
+
+INSERT INTO `user` VALUES ('5121328320','$2a$10$JQL/6dENt1TQofx49huAmu1e/K/m8UPn4SGXixRU5NYDK/QzpudbW','Erlen Mae','S','Evangelista',NULL,NULL,'128','full-time','esevangelista1@up.edu.ph',NULL,0,'USER');
