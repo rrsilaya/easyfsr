@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS fsr(
   -- teaching_load, subject, timeslot
 
 CREATE TABLE IF NOT EXISTS `teachingLoad`(
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL,
   `teachingLoadCreds` int(2) NOT NULL,
   CONSTRAINT `teachingLoad_user_fk`
     FOREIGN KEY (`id`)
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `teachingLoad`(
 );
 
 CREATE TABLE IF NOT EXISTS `subject`(
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL,
   `subjectCode` VARCHAR (30) NOT NULL,
   `teachingLoadCreds` int(2) NOT NULL,
   `noOfStudents` int(3) NOT NULL,
