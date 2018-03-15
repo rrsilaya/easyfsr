@@ -38,10 +38,14 @@ export const updateUser = `
   WHERE employeeID = :employeeID
 `;
 
+export const getAllUser = `
+  SELECT * FROM user
+`;
+
 export const deleteUser = `
-UPDATE user SET
-  isArchived = true
-WHERE employeeID = :employeeID
+  UPDATE user SET
+    isArchived = true
+  WHERE employeeID = :employeeID
 `;
 
 export const getUser = `
