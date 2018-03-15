@@ -219,8 +219,9 @@ router.put('/user/:employeeID', async (req, res) => {
 router.get('/user', async (req, res) => {
   try {
     const users = await Ctrl.getAllUser();
-    delete users.password;
-    delete users.isArchived;
+    users.map( user => delete user.password);
+    users.map( user => delete user.isArchived);
+
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched user',
