@@ -11,7 +11,7 @@ USE easyfsr;
 -- Tables
 
 CREATE TABLE user(
-  employeeID VARCHAR (30) NOT NULL PRIMARY KEY,
+  employeeID VARCHAR (30) NOT NULL,
   password VARCHAR (60) NOT NULL,
   firstName VARCHAR (50) NOT NULL,
   middleName VARCHAR (50),
