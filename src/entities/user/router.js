@@ -313,14 +313,12 @@ export default router;
 
 router.get('/user/:employeeID', async (req, res) => {
   try {
-    if (req.body.password) {
-      req.body.password = await bcrypt.hash(req.body.password, 10);
-    }
-    await Ctrl.getUser(req.params, req.body);
+    const user = await Ctrl.getUser(req.params, req.body);
+    delete user.password;
     res.status(200).json({
       status: 200,
       message: 'Successfully got user details',
-      // data: user
+      data: user,
     });
   } catch (status) {
     let message = '';
