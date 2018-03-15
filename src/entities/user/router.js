@@ -241,7 +241,7 @@ router.get('/user', async (req, res) => {
   }
 });
 /**
-* @api {delete} /user/:employeeID deleteUser
+ * @api {delete} /user/:employeeID deleteUser
  * @apiGroup User
  * @apiName deleteUser
  *
@@ -279,12 +279,11 @@ router.get('/user', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
-
-   HTTP/1.1 404 User not found
- * {
- *   "status": 404,
- *   "message": "User not found"
- * }
+ *   HTTP/1.1 404 User not found
+ *   {
+ *     "status": 404,
+ *     "message": "User not found"
+ *   }
  */
 router.delete('/user/:employeeID', async (req, res) => {
   try {
@@ -312,7 +311,7 @@ router.delete('/user/:employeeID', async (req, res) => {
 export default router;
 
 /**
-* @api {get} /user/:employeeID getUser
+ * @api {get} /user/:employeeID getUser
  * @apiGroup User
  * @apiName getUser
  *
@@ -335,23 +334,25 @@ export default router;
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
- *     "data": 
+ *     "status":200,
+ *     "message":"Successfully got user details",
+ *		 "data": [
  *        {
- 			"status":200,"message":"Successfully got user details",
- 			"data":[{"employeeID":"5121328320",
- 					"password":"$2a$10$JQL/6dENt1TQofx49huAmu1e/K/m8UPn4SGXixRU5NYDK/QzpudbW",
- 					"firstName":"Erlen Mae",
- 					"middleName":"S",
- 					"lastName":"Evangelista",
- 					"committee":null,
- 					"isHead":null,
- 					"officeNumber":"128",
- 					"contractType":"full-time",
- 					"emailAddress":"esevangelista1@up.edu.ph",
- 					"rank":null,
- 					"isArchived":0,
- 					"acctType":"USER"}]
- 		}
+ *          "employeeID":"5121328320",
+ *          "password":"$2a$10$JQL/6dENt1TQofx49huAmu1e/K/m8UPn4SGXixRU5NYDK/QzpudbW",
+ *          "firstName":"Erlen Mae",
+ *          "middleName":"S",
+ *          "lastName":"Evangelista",
+ *          "committee":null,
+ *          "isHead":null,
+ *          "officeNumber":"128",
+ *          "contractType":"full-time",
+ *          "emailAddress":"esevangelista1@up.edu.ph",
+ *          "rank":null,
+ *          "isArchived":0,
+ *          "acctType":"USER"
+ *        }
+ *     ]
  *   }
  *
  * @apiError (Error 500) {String[]} errors List of errors
@@ -362,8 +363,7 @@ export default router;
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
-
-   HTTP/1.1 404 User not found
+ * HTTP/1.1 404 User not found
  * {
  *   "status": 404,
  *   "message": "User not found"
