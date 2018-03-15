@@ -11,7 +11,8 @@ USE easyfsr;
 -- Tables
 
 CREATE TABLE user(
-  employeeID VARCHAR (30) NOT NULL PRIMARY KEY,
+  userID INT NOT NULL AUTO_INCREMENT, 
+  employeeID VARCHAR (30) NOT NULL,
   password VARCHAR (60) NOT NULL,
   firstName VARCHAR (50) NOT NULL,
   middleName VARCHAR (50),
@@ -25,12 +26,12 @@ CREATE TABLE user(
   isArchived BOOLEAN DEFAULT 0, 
   acctType VARCHAR(10) DEFAULT 'USER', -- ADMIN / USER
   CONSTRAINT `user_pk`
-    PRIMARY KEY (`employeeID`)
+    PRIMARY KEY (`userID`)
 );
 
 CREATE TABLE IF NOT EXISTS fsr(
   `id` INT NOT NULL AUTO_INCREMENT,
-  `employeeID` VARCHAR (30) NOT NULL,
+  `userID` INT NOT NULL, 
   `acadYear` VARCHAR (20) NOT NULL,
   `semester` VARCHAR (10) NOT NULL,
   `isChecked` boolean DEFAULT 0,
@@ -38,8 +39,8 @@ CREATE TABLE IF NOT EXISTS fsr(
   CONSTRAINT `fsr_pk` 
     PRIMARY KEY (`id`),
   CONSTRAINT `user_fsr_fk`
-  FOREIGN KEY (`employeeID`)
-    REFERENCES user(`employeeID`)
+  FOREIGN KEY (`userID`)
+    REFERENCES user(`userID`)
 );
 
 -- Entities under FSR 
@@ -97,7 +98,7 @@ CREATE TABLE `course`(
   `school` VARCHAR (30) NOT NULL,
   `credit` VARCHAR (30) NOT NULL,
   `id` INT NOT NULL AUTO_INCREMENT,
-  CONSTRAINT `<entity>_fsr_fk`
+  CONSTRAINT `course_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
   CONSTRAINT `course_fk` 
@@ -204,13 +205,13 @@ CREATE TABLE `creativeWork`(
 
 CREATE TABLE `cworkCoAuthor`(
   `creativeWorkCode` VARCHAR(30) NOT NULL,
-  `employeeID` VARCHAR(30) NOT NULL,
+  `userID` INT NOT NULL,
   CONSTRAINT `cworkCoAuthor_creativeWork_fk`
     FOREIGN KEY (`creativeWorkCode`)
     REFERENCES creativeWork(`creativeWorkCode`),
   CONSTRAINT `cworkCoAuthor_user_fk`
-    FOREIGN KEY (`employeeID`)
-    REFERENCES user(`employeeID`)
+    FOREIGN KEY (`userID`)
+    REFERENCES user(`userID`)
 
 );
 
@@ -239,13 +240,13 @@ CREATE TABLE `research`(
 
 CREATE TABLE rCoAuthor(
   researchCode VARCHAR(30) NOT NULL,
-  employeeID VARCHAR (30) NOT NULL,
+  userID INT NOT NULL,
   CONSTRAINT `rCoAuthor_research_fk`
     FOREIGN KEY (`researchCode`)
     REFERENCES research(`researchCode`),
   CONSTRAINT `rCoAuthor_user_fk`
-    FOREIGN KEY (`employeeID`)
-    REFERENCES user(`employeeID`)
+    FOREIGN KEY (`userID`)
+    REFERENCES user(`userID`)
 );
 
 
