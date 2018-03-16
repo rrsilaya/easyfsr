@@ -10,13 +10,13 @@ class Faculty extends Component {
   render() {
     return (
       <Card
-        bordered={false}
+       
         style={styles.card}
         hoverable
-        actions={actions.map(action => <Icon type={action} />)}
+        
       >
         <Meta
-          avatar={<Avatar size="large" icon="user" />}
+          avatar={<Avatar size="medium" icon="user" />}
           title={this.props.title}
           description={this.props.description}
         />
@@ -26,3 +26,5 @@ class Faculty extends Component {
 }
 
 export default Faculty;
+
+
