@@ -3,7 +3,7 @@ import { Layout, Form, Input, Button } from 'antd';
 
 import { handleFormSubmit } from './actions';
 import styles from './styles';
-import logo from './easyFSR.png';
+import logo from './easyFSR.svg';
 
 const { Header, Content } = Layout;
 const { Group: InputGroup } = Input;

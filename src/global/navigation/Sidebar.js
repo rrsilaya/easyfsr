@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import { Link } from 'react-router-dom';
-import logo from './easyFSR.png';
+import logo from './easyFSR.svg';
 import links from './links';
 import styles from './styles';
 

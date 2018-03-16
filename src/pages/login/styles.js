@@ -8,7 +8,6 @@ const style = {
     top: {
       height: 50,
       width: 200,
-      backgroundColor: '#483440',
       display: 'inline-block',
     },
   },
