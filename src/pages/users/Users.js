@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Row, Col } from 'antd';
+import { Button, Row, Col, Pagination } from 'antd';
 
 import User from './components/User';
 import EditModal from './components/EditModal';
@@ -58,6 +58,9 @@ class Users extends Component {
           isDeleteModalOpen={isDeleteModalOpen}
           toggleDeleteModal={toggleDeleteModal}
         />
+        <div style={styles.pagination}>
+          <Pagination defaultCurrent={1} total={50} size="small" />
+        </div>
       </div>
     );
   }
