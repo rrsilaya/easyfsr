@@ -14,7 +14,7 @@ class UserCard extends React.Component {
               shape="square"
               icon="user"
               size="large"
-              style={{ width: '128px', height: '128px' }}
+              style={{ width: '128px', height: '128px', borderRadius: '50%' }}
             />
           </Row>
           <Row type="flex" justify="center" style={{ marginBottom: '15px' }}>
