@@ -120,7 +120,7 @@ CREATE TABLE `consultationHours`(
 );
 
 CREATE TABLE `chTimeslot`(
-  `id` INT NOT NULL
+  `id` INT NOT NULL,
   `day` varchar(10) NOT NULL,
   `time` varchar(10) NOT NULL,
   CONSTRAINT `chTimeslot_fsr_fk`
@@ -185,7 +185,7 @@ CREATE TABLE `adminWork`(
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
   CONSTRAINT `extAndCommService_pk` 
-    PRIMARY KEY (`extAndCommServiceID`) 
+    PRIMARY KEY (`adminWorkID`) 
 );
 
 -- Creative Work, Creative Work Co-Authors
@@ -209,7 +209,7 @@ CREATE TABLE `cworkCoAuthor`(
   `userID` INT NOT NULL,
   CONSTRAINT `cworkCoAuthor_creativeWork_fk`
     FOREIGN KEY (`creativeWorkCode`)
-    REFERENCES creativeWork(`creativeWorkCode`),
+    REFERENCES creativeWork(`creativeWorkID`),
   CONSTRAINT `cworkCoAuthor_user_fk`
     FOREIGN KEY (`userID`)
     REFERENCES user(`userID`)
