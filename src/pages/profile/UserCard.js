@@ -43,13 +43,13 @@ class UserCard extends React.Component {
             <Col {...gridConfig}>
               <Card
                 style={{ marginBottom: 16 }}
-                title="I. Teaching Load in The College: "
+                title="Teaching Load in The College: "
               >
                 {userData}
               </Card>
             </Col>
             <Col {...gridConfig}>
-              <Card style={{ marginBottom: 16 }} title="II. Research Proposal">
+              <Card style={{ marginBottom: 16 }} title="Research Proposal">
                 {userData}
               </Card>
             </Col>
