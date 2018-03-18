@@ -1,9 +1,47 @@
 import React, { Component } from 'react';
-import { Layout, Icon } from 'antd';
-import { Menu, Dropdown } from 'antd';
+import { Layout, Icon, Menu, Dropdown } from 'antd';
 import styles from './styles';
+import { connect } from 'react-redux';
+import App from '../../app/App';
+import { toggleSidebar, getSession, login } from '../../app/duck';
 
 class Topbar extends Component {
+  handleClick() {
+    const mapStateToProps = state => {
+      const {
+        isSidebarCollapsed = false,
+
+        isGettingSession = false,
+        isLoggingIn = false,
+
+        user = {},
+      } = state.app;
+
+      return {
+        isSidebarCollapsed,
+
+        isGettingSession,
+        isLoggingIn,
+
+        user,
+      };
+    };
+
+    const mapDispatchToProps = dispatch => {
+      return {
+        toggleSidebar: () => {
+          dispatch(toggleSidebar());
+        },
+        getSession: () => {
+          dispatch(getSession());
+        },
+        login: body => {
+          dispatch(login(body));
+        },
+      };
+    };
+    const Topbar = connect(mapStateToProps, mapDispatchToProps)(App);
+  }
   render() {
     const { toggleSidebar } = this.props;
     const menu = (
@@ -15,7 +53,7 @@ class Topbar extends Component {
           </a>
         </Menu.Item>
         <Menu.Item>
-          <a target="_blank" rel="noopener noreferrer" href="localhost:3000">
+          <a target="_blank" onclick={this.handleClick.bind(this)}>
             <Icon type="logout" /> Logout
           </a>
         </Menu.Item>
