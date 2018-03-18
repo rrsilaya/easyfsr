@@ -12,7 +12,7 @@ export const addConsultationHour = `
 export const updateConsultationHours = `
   UPDATE consultationHours SET 
     place = :place
-  WHERE employeeID = :employeeID
+  WHERE id = :id
 `;
 
 export const getAllConsultationHours = `
