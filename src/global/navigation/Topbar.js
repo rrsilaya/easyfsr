@@ -9,11 +9,15 @@ class Topbar extends Component {
     const menu = (
       <Menu>
         <Menu.Item>
-
-          <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/"> <Icon type="setting" /> Account Settings</a>
+          <a target="_blank" rel="noopener noreferrer" href="#">
+            {' '}
+            <Icon type="setting" /> Account Settings
+          </a>
         </Menu.Item>
         <Menu.Item>
-          <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/" ><Icon type="logout" /> Logout</a>
+          <a target="_blank" rel="noopener noreferrer" href="localhost:3000">
+            <Icon type="logout" /> Logout
+          </a>
         </Menu.Item>
       </Menu>
     );
@@ -27,22 +31,16 @@ class Topbar extends Component {
         />
         <div style={styles.account}>
           <img style={styles.image} alt="" />
-          <div>Sam Sepiol</div>      
-           <Dropdown overlay={menu} trigger={['click']}>
+          <div>Sam Sepiol</div>
+          <Dropdown overlay={menu} trigger={['click']}>
             <a className="ant-dropdown-link" href="#">
-             <Icon type="caret-down" style={styles.caretDown} />
+              <Icon type="caret-down" style={styles.caretDown} />
             </a>
-           </Dropdown>
+          </Dropdown>
         </div>
       </Layout.Header>
-
     );
   }
 }
-    
+
 export default Topbar;
-
-
-
-   
-
