@@ -96,6 +96,10 @@ CREATE TABLE `course`(
   `school` VARCHAR (30) NOT NULL,
   `credit` VARCHAR (30) NOT NULL,
   `courseNumber` VARCHAR (20) NOT NULL,
+  `id` INT NOT NULL,
+  CONSTRAINT `course_studyLoad_fk`
+    FOREIGN KEY (`id`)
+    REFERENCES fsr(`id`),
   CONSTRAINT `studyLoad_pk`
     PRIMARY KEY (`courseNumber`)
 );
@@ -219,7 +223,7 @@ CREATE TABLE `cworkCoAuthor`(
 -- research
 
 CREATE TABLE `research`(
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL,
   `researchCode` VARCHAR(30) NOT NULL,
   `type` VARCHAR (30) NOT NULL, -- PROPOSAL / IMPLEMENTATION
   `role` VARCHAR (30) NOT NULL,

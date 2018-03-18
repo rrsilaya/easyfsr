@@ -9,7 +9,7 @@ export const addSubject = `
 		room 
 	)
 	VALUES ( 
-		DEFAULT, 
+		:id, 
 		:subjectCode, 
 		:teachingLoadCreds, 
 		:noOfStudents, 
@@ -33,8 +33,21 @@ export const deleteSubject = `
 export const getAllSubject = `
 	SELECT *
 	FROM teachingLoad natural join subject
+	WHERE id=:id
 	ORDER BY subjectCode ASC
 	LIMIT 10
 `;
 
+export const getAllSubjectWithSched = `
+	SELECT * 
+	FROM subject natural join timeslot
+	WHERE id=:id
+	ORDER BY subjectCode ASC
+	LIMIT 10
+`;
 
+export const getSubjectWithSched = `
+	SELECT * 
+	FROM subject natural join timeslot 
+	WHERE subjectCode=:subjectCode AND id=:id 
+`;

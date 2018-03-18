@@ -10,7 +10,7 @@ export const addAward = `
     endDate 
   )
   VALUES ( 
-    DEFAULT,
+    :id,
     :grantF,
     :chairGrantTitle,
     :collegeHasNominated,

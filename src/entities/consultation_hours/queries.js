@@ -16,7 +16,11 @@ export const updateConsultationHours = `
 `;
 
 export const getAllConsultationHours = `
-  SELECT * FROM consultationHours
+  SELECT * FROM consultationHours NATURAL JOIN chTimeSlot
+`;
+
+export const getAllConsultationHoursOfFSR = `
+  SELECT * FROM consultationHours NATURAL JOIN chTimeSlot
   WHERE id = :id
 `;
 

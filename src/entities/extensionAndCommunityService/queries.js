@@ -11,7 +11,7 @@ export const addExtensionAndCommunityService = `
     endDate
   )
   VALUES ( 
-    DEFAULT,
+    :id,
     :participant,
     :role,
     :hours,
