@@ -39,13 +39,17 @@ export const updateUser = ({ userID }, user) => {
   });
 };
 
-export const getAllUsers = () => {
+export const getAllUsers = user => {
   return new Promise((resolve, reject) => {
-    db.query(Query.getAllUser, (err, results) => {
-      if (err) return reject(500);
-      else if (!results.length) return reject(404);
-      return resolve(results);
-    });
+    db.query(
+      Query.getUsers(filtered(user, userAttributes)),
+      user,
+      (err, results) => {
+        if (err) return reject(500);
+        else if (!results.length) return reject(404);
+        return resolve(results);
+      },
+    );
   });
 };
 
@@ -63,6 +67,7 @@ export const getUser = ({ userID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getUser, { userID }, (err, results) => {
       if (err) return reject(500);
+      else if (!results.length) return reject(404);
       return resolve(results);
     });
   });
