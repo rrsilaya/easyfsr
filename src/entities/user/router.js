@@ -60,13 +60,13 @@ const router = Router();
 router.post('/user/', async (req, res) => {
   try {
     req.body.password = await bcrypt.hash(req.body.password, 10);
-    const id = await Ctrl.addUser(req.body);
-
-    // const user = await Ctrl.getUser({ id });
+    const userID = await Ctrl.addUser(req.body);
+    const user = await Ctrl.getUser({ userID });
+    delete user.password;
     res.status(200).json({
       status: 200,
       message: 'Successfully created user',
-      // data: user
+      data: user,
     });
   } catch (status) {
     let message = '';
@@ -138,16 +138,19 @@ router.post('/user/', async (req, res) => {
  * }
  */
 
-router.put('/user/:employeeID', async (req, res) => {
+router.put('/user/:userID', async (req, res) => {
   try {
     if (req.body.password) {
       req.body.password = await bcrypt.hash(req.body.password, 10);
     }
     await Ctrl.updateUser(req.params, req.body);
+    const user = await Ctrl.getUser(req.params);
+    delete user.password;
+
     res.status(200).json({
       status: 200,
       message: 'Successfully updated user',
-      // data: user
+      data: user,
     });
   } catch (status) {
     let message = '';
@@ -285,14 +288,14 @@ router.get('/user', async (req, res) => {
  *     "message": "User not found"
  *   }
  */
-router.delete('/user/:employeeID', async (req, res) => {
+router.delete('/user/:userID', async (req, res) => {
   try {
-    const id = await Ctrl.deleteUser(req.params);
-    // const user = await Ctrl.getUser(req.params);
+    await Ctrl.deleteUser(req.params);
+    const user = await Ctrl.getUser(req.params);
+    delete user.password;
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted user',
-      //data: user
     });
   } catch (status) {
     let message = '';
@@ -369,7 +372,7 @@ export default router;
  *   "message": "User not found"
  * }
  */
-router.get('/user/:employeeID', async (req, res) => {
+router.get('/user/:userID', async (req, res) => {
   try {
     const user = await Ctrl.getUser(req.params);
     delete user.password;
