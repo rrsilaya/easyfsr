@@ -15,7 +15,7 @@ export const updateLimitedPracticeOfProf = `
   UPDATE limitedPracticeOfProf SET 
     askedPermission=:askedPermission,
     date=:date  
-  WHERE id=DEFAULT
+  WHERE id=:id
 `;
 
 export const getLimitedPracticeOfProf = `
@@ -27,5 +27,5 @@ export const getLimitedPracticeOfProf = `
 
 export const deleteLimitedPracticeOfProf = `
   DELETE FROM limitedPracticeOfProf
-  WHERE id = ""
+  WHERE id = :id
 `;

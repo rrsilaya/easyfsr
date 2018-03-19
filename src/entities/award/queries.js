@@ -30,7 +30,7 @@ export const updateAward = `
     professionalChair=:professionalChair,
     approvedStartDate=:approvedStartDate,
     endDate=:endDate
-  WHERE id = DEFAULT
+  WHERE id = :id
 `;
 
 export const getAward = `
