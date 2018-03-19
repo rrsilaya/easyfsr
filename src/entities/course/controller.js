@@ -7,6 +7,7 @@ const courseAttributes = ['hoursPerWeek', 'school', 'credit', 'courseNumber'];
 export const addCourse = course => {
   return new Promise((resolve, reject) => {
     db.query(Query.addCourse, { ...course }, (err, results) => {
+      console.log(results);
       if (err) return reject(500);
       return resolve(results.insertId);
     });
@@ -31,8 +32,23 @@ export const deleteCourse = ({ courseNumber }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.deleteCourse, { courseNumber }, (err, results) => {
       if (err) return reject(500);
+      else if (!results.affectedRows) return reject(404);
       return resolve(courseNumber);
     });
+  });
+};
+
+export const getCourses = course => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      Query.getCourses(Utils.filtered(course, courseAttributes)),
+      course,
+      (err, results) => {
+        if (err) return reject(500);
+        else if (!results) return reject(404);
+        return resolve(results);
+      },
+    );
   });
 };
 
