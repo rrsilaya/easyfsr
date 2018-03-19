@@ -5,6 +5,79 @@ import * as Ctrl from './controller';
 const router = Router();
 
 /**
+ * @api {get} /award/:id getAward
+ * @apiGroup Award
+ * @apiName getAward
+ *
+ * @apiParam (Query Params) {Integer} id ID of award
+ *
+ * @apiSuccess {Object} award Award deleted
+ * @apiSuccess {Integer} award.id ID of award
+ * @apiSuccess {String} award.grantF grantf of award
+ * @apiSuccess {String} award.chairGrantTitle chair grant title of award
+ * @apiSuccess {String} award.collegeHasNominated which college nominated the award
+ * @apiSuccess {String} award.recipientOrNominee recipient or nominee of award
+ * @apiSuccess {String} award.professionalChair professional chair of award
+ * @apiSuccess {String} award.approvedStartDate approved start date of award
+ * @apiSuccess {String} award.endDate end date of award
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *   HTTP/1.1 200 OK
+ *  {
+ *    "status": 200,
+ *    "message": "Successfully fetched award",
+ *    "data": [
+ *       {
+ *           "id": 1,
+ *           "grantF": "Hi",
+ *           "chairGrantTitle": "Mea",
+ *           "collegeHasNominated": "123",
+ *           "recipientOrNominee": "You",
+ *           "professionalChair": "him",
+ *           "approvedStartDate": "ystrday",
+ *           "endDate": "tomo"
+ *       }
+ *     ]
+ *   }
+ * @apiError (Error 500) {String[]} errors List of errors
+ * @apiError (Error 500) {String} errors.message Error message
+ * @apiErrorExample {json} Error-Response:
+ *   HTTP/1.1 500 Internal Server Error
+ *   {
+ *     "status": 500,
+ *     "message": "Internal server error"
+ *   }
+ *
+ * HTTP/1.1 404 Award not found
+ * {
+ *   "status": 404,
+ *   "message": "Award not found"
+ * }
+ */
+
+router.get('/award/:id', async (req, res) => {
+  try {
+    const award = await Ctrl.getAward(req.params);
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully fetched award',
+      data: award,
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'Award not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
+    }
+    res.status(status).json({ status, message });
+  }
+});
+
+/**
  * @api {post} /award addAward
  * @apiGroup Award
  * @apiName addAward
@@ -50,12 +123,12 @@ const router = Router();
 router.post('/award/', async (req, res) => {
   try {
     const id = await Ctrl.addAward(req.body);
-
-    // const user = await Ctrl.getUser({ id });
+    console.log(id);
+    const award = await Ctrl.getAward({ id });
     res.status(200).json({
       status: 200,
       message: 'Successfully added award',
-      // data: user
+      data: award,
     });
   } catch (status) {
     let message = '';
@@ -113,23 +186,24 @@ router.post('/award/', async (req, res) => {
  * HTTP/1.1 404 Award not found
  * {
  *   "status": 404,
- *   "message": "award not found"
+ *   "message": "Award not found"
  * }
  */
 
 router.put('/award/:id', async (req, res) => {
   try {
     await Ctrl.updateAward(req.params, req.body);
+    const award = await Ctrl.getAward(req.params);
     res.status(200).json({
       status: 200,
       message: 'Successfully updated award',
-      // data: user
+      data: award,
     });
   } catch (status) {
     let message = '';
     switch (status) {
       case 404:
-        message = 'award not found';
+        message = 'Award not found';
         break;
       case 500:
         message = 'Internal server error';
@@ -177,97 +251,23 @@ router.put('/award/:id', async (req, res) => {
  * HTTP/1.1 404 Award not found
  * {
  *   "status": 404,
- *   "message": "award not found"
+ *   "message": "Award not found"
  * }
  */
 
 router.delete('/award/:id', async (req, res) => {
   try {
-    const id = await Ctrl.deleteAward(req.params);
-    // const user = await Ctrl.getUser(req.params);
+    await Ctrl.deleteAward(req.params);
+
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted award',
-      //data: user
     });
   } catch (status) {
     let message = '';
     switch (status) {
       case 404:
-        message = 'award not found';
-        break;
-      case 500:
-        message = 'Internal server error';
-        break;
-    }
-    res.status(status).json({ status, message });
-  }
-});
-
-/**
- * @api {get} /award/:id getAward
- * @apiGroup Award
- * @apiName getAward
- *
- * @apiParam (Query Params) {Integer} id ID of award
- *
- * @apiSuccess {Object} award Award deleted
- * @apiSuccess {Integer} award.id ID of award
- * @apiSuccess {String} award.grantF grantf of award
- * @apiSuccess {String} award.chairGrantTitle chair grant title of award
- * @apiSuccess {String} award.collegeHasNominated which college nominated the award
- * @apiSuccess {String} award.recipientOrNominee recipient or nominee of award
- * @apiSuccess {String} award.professionalChair professional chair of award
- * @apiSuccess {String} award.approvedStartDate approved start date of award
- * @apiSuccess {String} award.endDate end date of award
- *
- * @apiSuccessExample {json} Success-Response:
- *   HTTP/1.1 200 OK
- *  {
- *    "status": 200,
- *    "message": "Successfully got award details",
- *    "data": [
- *       {
- *           "id": 1,
- *           "grantF": "Hi",
- *           "chairGrantTitle": "Mea",
- *           "collegeHasNominated": "123",
- *           "recipientOrNominee": "You",
- *           "professionalChair": "him",
- *           "approvedStartDate": "ystrday",
- *           "endDate": "tomo"
- *       }
- *     ]
- *   }
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
- * @apiErrorExample {json} Error-Response:
- *   HTTP/1.1 500 Internal Server Error
- *   {
- *     "status": 500,
- *     "message": "Internal server error"
- *   }
- *
- * HTTP/1.1 404 Award not found
- * {
- *   "status": 404,
- *   "message": "award not found"
- * }
- */
-
-router.get('/award/:id', async (req, res) => {
-  try {
-    const id = await Ctrl.getAward(req.params);
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully got award details',
-      data: id,
-    });
-  } catch (status) {
-    let message = '';
-    switch (status) {
-      case 404:
-        message = 'award not found';
+        message = 'Award not found';
         break;
       case 500:
         message = 'Internal server error';
