@@ -5,7 +5,10 @@ import {
   toggleEditModal,
   toggleAddModal,
   toggleDeleteModal,
+  getUsers,
+  getUser,
   addUser,
+  editUser,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -14,7 +17,12 @@ const mapStateToProps = state => {
     isAddModalOpen,
     isDeleteModalOpen,
 
+    isGettingUsers,
     isAddingUser,
+    isEditingUser,
+
+    users,
+    user,
   } = state.users;
 
   return {
@@ -22,7 +30,12 @@ const mapStateToProps = state => {
     isAddModalOpen,
     isDeleteModalOpen,
 
+    isGettingUsers,
     isAddingUser,
+    isEditingUser,
+
+    users,
+    user,
   };
 };
 
@@ -37,8 +50,17 @@ const mapDispatchToProps = dispatch => {
     toggleDeleteModal: () => {
       dispatch(toggleDeleteModal());
     },
+    getUsers: () => {
+      dispatch(getUsers());
+    },
+    getUser: user => {
+      dispatch(getUser(user));
+    },
     addUser: values => {
       dispatch(addUser(values));
+    },
+    editUser: (userID, body) => {
+      dispatch(editUser(userID, body));
     },
   };
 };

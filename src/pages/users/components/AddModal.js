@@ -66,6 +66,7 @@ class AddModal extends Component {
 
     return (
       <Modal
+        title="Add User"
         visible={isAddModalOpen}
         onOk={toggleAddModal}
         onCancel={toggleAddModal}
@@ -84,7 +85,6 @@ class AddModal extends Component {
           </Button>,
         ]}
       >
-        <h1>Add</h1>
         <Form onSubmit={this.handleFormSubmit}>
           <FormItem {...formItemLayout} label="E-mail">
             {form.getFieldDecorator('emailAddress', {

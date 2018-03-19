@@ -7,7 +7,12 @@ const { Meta } = Card;
 
 class User extends Component {
   render() {
-    const { toggleEditModal, toggleDeleteModal } = this.props;
+    const { getUser, toggleDeleteModal, toggleEditModal, user } = this.props;
+
+    const handleToggleEditModal = () => {
+      getUser(user);
+      toggleEditModal();
+    };
 
     return (
       <div>
@@ -18,7 +23,7 @@ class User extends Component {
             <Icon
               type="edit"
               className="text normal"
-              onClick={toggleEditModal}
+              onClick={handleToggleEditModal}
             />,
             <Icon
               type="delete"

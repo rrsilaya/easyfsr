@@ -7,11 +7,14 @@ import AddModal from './components/AddModal';
 import DeleteModal from './components/DeleteModal';
 
 import styles from './styles';
-import userData from './user-data';
 
 const { Search } = Input;
 
 class Users extends Component {
+  componentDidMount() {
+    this.props.getUsers();
+  }
+
   render() {
     const gridConfig = { xxl: 6, xl: 8, sm: 12, xs: 24 };
     const {
@@ -20,12 +23,17 @@ class Users extends Component {
       isDeleteModalOpen,
 
       isAddingUser,
+      isEditingUser,
 
       toggleEditModal,
       toggleAddModal,
       toggleDeleteModal,
 
+      getUser,
       addUser,
+      editUser,
+
+      users,
     } = this.props;
 
     return (
@@ -47,13 +55,15 @@ class Users extends Component {
           </Button>
         </div>
         <Row type="flex" gutter={16}>
-          {userData.map((user, i) => (
+          {users.map((user, i) => (
             <Col key={i} {...gridConfig}>
               <User
+                user={user}
                 title={`${user.lastName}, ${user.firstName}`}
-                description={user.type}
+                description={user.acctType}
                 toggleEditModal={toggleEditModal}
                 toggleDeleteModal={toggleDeleteModal}
+                getUser={getUser}
               />
             </Col>
           ))}
@@ -61,6 +71,7 @@ class Users extends Component {
         <EditModal
           isEditModalOpen={isEditModalOpen}
           toggleEditModal={toggleEditModal}
+          isEditingUser={isEditingUser}
         />
         <AddModal
           isAddModalOpen={isAddModalOpen}

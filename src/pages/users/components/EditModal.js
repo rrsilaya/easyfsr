@@ -7,10 +7,13 @@ class EditModal extends Component {
       isEditModalOpen,
 
       toggleEditModal,
+
+      getUser,
     } = this.props;
 
     return (
       <Modal
+        title="Edit User"
         visible={isEditModalOpen}
         onOk={toggleEditModal}
         onCancel={toggleEditModal}
@@ -22,9 +25,7 @@ class EditModal extends Component {
             Save
           </Button>,
         ]}
-      >
-        <h1>Edit User</h1>
-      </Modal>
+      />
     );
   }
 }
