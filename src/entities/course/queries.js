@@ -1,23 +1,33 @@
-export const addCourse = `INSERT INTO course ( id, courseNumber, hoursPerWeek, school, credit ) VALUES ( DEFAULT, :courseNumber, :hoursPerWeek, :school, :credit )`;
+export const addCourse = `
+	INSERT INTO course 
+	( id, courseNumber, courseID, hoursPerWeek, school, credit ) 
+	VALUES ( :id, :courseNumber, :courseID, :hoursPerWeek, :school, :credit )`;
 
-export const updateCourse = `UPDATE course SET hoursPerWeek=:hoursPerWeek, school=:school, credit=:credit WHERE courseNumber=:courseNumber AND id=:id`;
+export const updateCourse = `
+	UPDATE course 
+	SET hoursPerWeek=:hoursPerWeek, school=:school, credit=:credit 
+	WHERE courseID=:courseID AND id=:id`;
 
-export const deleteCourse = `delete from course where courseNumber = :courseNumber`;
+export const deleteCourse = `delete from course where courseID = :courseID`;
 
 export const getAllCourse = `SELECT * from course where id=:id`;
 
-export const getAllCourseWithSched = `SELECT * FROM course NATURAL JOIN courseSched WHERE id=:id ORDER BY id, courseNumber ASC LIMIT 10`;
+export const getAllCourseWithSched = `
+	SELECT * FROM course NATURAL JOIN courseSched 
+	WHERE id=:id 
+	ORDER BY courseID ASC LIMIT 10`;
 
-export const getCourseWithSched = `SELECT * FROM course NATURAL JOIN courseSched WHERE id=:id AND courseNumber=:courseNumber`;
+export const getCourseWithSched = `SELECT * FROM course NATURAL JOIN courseSched 
+	WHERE id=:id AND courseID=:courseID`;
 
 export const dropCourse = `DROP TABLE course`;
 
-export const addCourseSched = `INSERT INTO courseSched ( courseNumber, day, time ) VALUES ( :courseNumber, :day, :time );`;
+export const addCourseSched = `INSERT INTO courseSched ( courseID, day, time ) VALUES ( :courseID, :day, :time );`;
 
-export const updateCourseSched = `UPDATE courseSched SET day= :day, time=:time  WHERE courseNumber=:courseNumber AND id=:id`;
+export const updateCourseSched = `UPDATE courseSched SET day= :day, time=:time  WHERE courseID=:courseID AND id=:id`;
 
-export const deleteCourseSched = `DELETE from courseSched where courseNumber = :courseNumber AND id = :id AND day=:day AND time=:time`;
+export const deleteCourseSched = `DELETE from courseSched where courseID = :courseID AND id = :id AND day=:day AND time=:time`;
 
-export const getCourseSched = `SELECT * FROM courseSched WHERE courseNumber=:courseNumber`;
+export const getCourseSched = `SELECT * FROM courseSched WHERE courseID=:courseID`;
 
 export const dropCourseSched = `DROP TABLE courseSched`;
