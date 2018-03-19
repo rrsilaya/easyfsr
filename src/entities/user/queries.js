@@ -45,5 +45,5 @@ export const getUser = `
 `;
 
 export const getUsers = query => `
-  SELECT * FROM user ${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
+  SELECT * FROM user ${query.length ? `WHERE ${formatQueryParams(query)}` : ''} 
 `;

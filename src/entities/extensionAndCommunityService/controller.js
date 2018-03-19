@@ -1,6 +1,6 @@
 import db from '../../database/index';
 import * as Query from './queries';
-import * as Utils from '../../utils';
+import { filtered } from '../../utils';
 
 const serviceAttributes = [
   'id',
@@ -20,10 +20,7 @@ export const addExtensionAndCommunityService = service => {
       Query.addExtensionAndCommunityService,
       { ...service },
       (err, results) => {
-        if (err) {
-          console.log(err);
-          return reject(500);
-        }
+        if (err) return reject(500);
         return resolve(results.insertId);
       },
     );
@@ -35,21 +32,18 @@ export const updateExtensionAndCommunityService = ({ id }, service) => {
     if (!service) return reject(500);
     db.query(
       Query.updateExtensionAndCommunityService(
-        Utils.filtered(service, serviceAttributes),
+        filtered(service, serviceAttributes),
       ),
       { id, ...service },
       (err, results) => {
-        if (err) {
-          console.log(err);
-          return reject(500);
-        }
+        if (err) return reject(500);
         return resolve(results.insertId);
       },
     );
   });
 };
 
-export const getExtensionAndCommunityServices = () => {
+export const getExtensionAndCommunityServices = service => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getExtensionAndCommunityServices(
@@ -58,32 +52,37 @@ export const getExtensionAndCommunityServices = () => {
       service,
       (err, results) => {
         if (err) return reject(500);
-        else if (!results) return reject(404);
+        else if (!results.length) return reject(404);
         return resolve(results);
       },
     );
   });
 };
 
-export const deleteExtensionAndCommunityService = ({ id }) => {
+export const deleteExtensionAndCommunityService = ({ extAndCommServiceID }) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.deleteExtensionAndCommunityService,
-      { id },
+      { extAndCommServiceID },
       (err, results) => {
         if (err) return reject(500);
-        return resolve(id);
+        else if (!results.affectedRows) return reject(404);
+        return resolve(extAndCommServiceID);
       },
     );
   });
 };
 
-export const getExtensionAndCommunityService = ({ id }) => {
+export const getExtensionAndCommunityService = ({ extAndCommServiceID }) => {
   return new Promise((resolve, reject) => {
-    db.query(Query.getExtensionAndCommunityService, { id }, (err, results) => {
-      if (err) return reject(500);
-      else if (!results.length) return reject(404);
-      return resolve(results);
-    });
+    db.query(
+      Query.getExtensionAndCommunityService,
+      { extAndCommServiceID },
+      (err, results) => {
+        if (err) return reject(500);
+        else if (!results.length) return reject(404);
+        return resolve(results);
+      },
+    );
   });
 };

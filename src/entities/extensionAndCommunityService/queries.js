@@ -1,4 +1,4 @@
-import * as Utils from '../../utils';
+import { formatQueryParams } from '../../utils';
 
 export const addExtensionAndCommunityService = `
   INSERT INTO extensionAndCommunityService (
@@ -27,16 +27,9 @@ export const addExtensionAndCommunityService = `
 
 export const updateExtensionAndCommunityService = service => `
   UPDATE extensionAndCommunityService SET 
-  ${Utils.formatQueryParams(service)} 
-  WHERE id=id
+  ${formatQueryParams(service)} 
+  WHERE extAndCommServiceID = :extAndCommServiceID
 `;
-
-/*export const getAllExtensionAndCommunityService = `
-  SELECT * FROM extensionAndCommunityService
-  WHERE id = :id 
-  ORDER BY extAndCommServiceID ASC
-  LIMIT 10;
-`;*/
 
 export const getExtensionAndCommunityServices = query => `
   SELECT * FROM extensionAndCommunityService ${
@@ -46,12 +39,12 @@ export const getExtensionAndCommunityServices = query => `
 
 export const getExtensionAndCommunityService = `
   SELECT * FROM extensionAndCommunityService
-  WHERE id = :id AND extAndCommServiceID = :extAndCommServiceID
+  WHERE extAndCommServiceID = :extAndCommServiceID
   ORDER BY id ASC
   LIMIT 10;
 `;
 
 export const deleteExtensionAndCommunityService = `
   DELETE FROM extensionAndCommunityService
-  WHERE id = :id AND extAndCommServiceID = :extAndCommServiceID
+  WHERE extAndCommServiceID = :extAndCommServiceID
 `;

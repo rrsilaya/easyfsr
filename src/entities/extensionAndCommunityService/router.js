@@ -49,8 +49,12 @@ const router = Router();
 
 router.post('/service/', async (req, res) => {
   try {
-    const id = await Ctrl.addExtensionAndCommunityService(req.body);
-    const service = await Ctrl.getExtensionAndCommunityService({ id });
+    const extAndCommServiceID = await Ctrl.addExtensionAndCommunityService(
+      req.body,
+    );
+    const service = await Ctrl.getExtensionAndCommunityService({
+      extAndCommServiceID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully created service',
@@ -124,7 +128,7 @@ router.post('/service/', async (req, res) => {
  *   }
  */
 
-router.put('/service/:id', async (req, res) => {
+router.put('/service/:extAndCommServiceID ', async (req, res) => {
   try {
     await Ctrl.updateExtensionAndCommunityService(req.params, req.body);
     const service = await Ctrl.getExtensionAndCommunityService(req.params);
@@ -149,20 +153,18 @@ router.put('/service/:id', async (req, res) => {
 
 router.get('/service', async (req, res) => {
   try {
-    const services = await Ctrl.getExtensionAndCommunityServices();
-    services.map(service => delete service.password);
-    services.map(service => delete service.isArchived);
+    const services = await Ctrl.getExtensionAndCommunityServices(req.query);
 
     res.status(200).json({
       status: 200,
-      message: 'Successfully fetched service',
+      message: 'Successfully fetched services',
       data: services,
     });
   } catch (status) {
     let message = '';
     switch (status) {
       case 404:
-        message = 'ExtensionAndCommunityService not found';
+        message = 'Extension and community services not found';
         break;
       case 500:
         a;
@@ -216,7 +218,7 @@ router.get('/service', async (req, res) => {
  *   }
  **/
 
-router.delete('/service/:id', async (req, res) => {
+router.delete('/service/:extAndCommServiceID ', async (req, res) => {
   try {
     const id = await Ctrl.deleteExtensionAndCommunityService(req.params);
     res.status(200).json({
@@ -294,7 +296,7 @@ export default router;
  *   }
  **/
 
-router.get('/service/:id', async (req, res) => {
+router.get('/service/:extAndCommServiceID ', async (req, res) => {
   try {
     const service = await Ctrl.getExtensionAndCommunityService(req.params);
     res.status(200).json({
