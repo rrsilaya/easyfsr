@@ -378,7 +378,7 @@ router.get('/user/:userID', async (req, res) => {
     delete user.password;
     res.status(200).json({
       status: 200,
-      message: 'Successfully got user details',
+      message: 'Successfully fetched user',
       data: user,
     });
   } catch (status) {
