@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import authRouter from './entities/auth/router';
 import userRouter from './entities/user/router';
+import researchRouter from './entities/research/router';
 
 const router = Router();
 
@@ -27,6 +28,8 @@ router.use(userRouter);
 //     status:401,
 //     message: 'You must be logged in',
 //   });
-// });
+// });]
+
+router.use(researchRouter);
 
 export default router;
