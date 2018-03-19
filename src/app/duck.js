@@ -53,6 +53,10 @@ const reducer = (state = initialState, action) => {
           ...prevState,
           isLoggingIn: true,
         }),
+        success: prevState => ({
+          ...prevState,
+          user: payload.data.data,
+        }),
         finish: prevState => ({
           ...prevState,
           isLoggingIn: false,
