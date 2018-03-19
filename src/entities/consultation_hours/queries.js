@@ -1,9 +1,11 @@
 export const addConsultationHour = `
   INSERT INTO consultationHours (
+    chID,
     id, 
     place
   )
   VALUES (
+    :chID,
     :id,
     :place
   )
@@ -12,7 +14,7 @@ export const addConsultationHour = `
 export const updateConsultationHours = `
   UPDATE consultationHours SET 
     place = :place
-  WHERE id = :id
+  WHERE id = :id AND chID = :chID
 `;
 
 export const getAllConsultationHours = `
@@ -21,7 +23,7 @@ export const getAllConsultationHours = `
 
 export const getAllConsultationHoursOfFSR = `
   SELECT * FROM consultationHours NATURAL JOIN chTimeSlot
-  WHERE id = :id
+  WHERE id = :id 
 `;
 
 export const deleteConsultationHours = `
@@ -31,11 +33,13 @@ export const deleteConsultationHours = `
 
 export const addTimeslot = `
     INSERT INTO chTimeslot (
+        chID,
         id,
         day,
         time
     )
     VALUES (
+        :chID,
         :id,
         :day,
         :time
@@ -46,10 +50,10 @@ export const updateTimeslot = `
     UPDATE chTimeSlot SET 
         day = :day, 
         time = :time
-    WHERE id = :id
+    WHERE chID = :chID AND id = :id
 `;
 
 export const deleteTimeslot = `
     DELETE FROM chTimeslot
-    WHERE id = :id
+    WHERE id = :id AND chID = :chID AND day = :day AND time = :time 
 `;

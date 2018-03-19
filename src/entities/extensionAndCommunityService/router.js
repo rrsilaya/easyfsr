@@ -147,7 +147,7 @@ router.put('/service/:id', async (req, res) => {
   }
 });
 
-/*router.get('/service', async (req, res) => {
+router.get('/service', async (req, res) => {
   try {
     const services = await Ctrl.getAllExtensionAndCommunityServices();
     services.map(service => delete service.password);
@@ -170,7 +170,7 @@ router.put('/service/:id', async (req, res) => {
     }
     res.status(status).json({ status, message });
   }
-});*/
+});
 
 /**
  * @api {delete} /service deleteExtensionAndCommunityService

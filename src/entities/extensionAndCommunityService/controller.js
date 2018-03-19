@@ -46,15 +46,15 @@ export const updateExtensionAndCommunityService = ({ id }, service) => {
   });
 };
 
-/*export const getAllExtensionAndCommunityServices = () => {
+export const getAllExtensionAndCommunityServices = () => {
   return new Promise((resolve, reject) => {
-    db.query(Query.getAllExtensionAndCommunityService, (err, results) => {
+    db.query(Query.getAllExtensionAndCommunityServices, (err, results) => {
       if (err) return reject(500);
       else if (!results) return reject(404);
       return resolve(results);
     });
   });
-};*/
+};
 
 export const deleteExtensionAndCommunityService = ({ id }) => {
   return new Promise((resolve, reject) => {
