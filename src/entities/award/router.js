@@ -123,11 +123,10 @@ router.get('/award/:id', async (req, res) => {
 router.post('/award/', async (req, res) => {
   try {
     const id = await Ctrl.addAward(req.body);
-    console.log(id);
     const award = await Ctrl.getAward({ id });
     res.status(200).json({
       status: 200,
-      message: 'Successfully added award',
+      message: 'Successfully created award',
       data: award,
     });
   } catch (status) {
@@ -343,7 +342,7 @@ router.get('/award/', async (req, res) => {
     const awards = await Ctrl.getAwards(req.query);
     res.status(200).json({
       status: 200,
-      message: 'Successfully fetched award',
+      message: 'Successfully fetched awards',
       data: awards,
     });
   } catch (status) {
