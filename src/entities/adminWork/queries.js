@@ -30,16 +30,12 @@ export const deleteAdminWork = `
 
 export const getAllAdminWork = `
 	SELECT * FROM adminWork
-	WHERE
-		id = :id 
+	WHERE id = :id 
 	ORDER BY adminWorkID ASC
 	LIMIT 10
 `;
 
 export const getAdminWork = `
 	SELECT * FROM adminWork
-	WHERE
-		id = :id AND adminWorkID = :adminWorkID
-	ORDER BY adminWorkID ASC
-	LIMIT 10
+	WHERE id = :id AND adminWorkID = :adminWorkID
 `;

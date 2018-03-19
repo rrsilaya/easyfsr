@@ -4,8 +4,8 @@ export const addTeachingLoad = `
 		teachingLoadCreds 
 	)
 	VALUES ( 
-	:id, 
-	:teachingLoadCreds 
+		:id, 
+		:teachingLoadCreds 
 	)
 `;
 
@@ -22,8 +22,7 @@ export const deleteTeachingLoad = `
 `;
 
 export const getTeachingLoad = `
-	SELECT *
-	FROM teachingLoad
+	SELECT * FROM teachingLoad
 	WHERE id = :id
 	ORDER BY id ASC
 	LIMIT 10

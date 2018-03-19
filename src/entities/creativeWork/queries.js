@@ -32,11 +32,18 @@ export const deleteCreativeWork = `
 `;
 
 export const getAllCreativeWork = `
-	SELECT * FROM creativeWork
-	NATURAL JOIN cworkCoAuthor
-	ORDER BY id ASC
+	SELECT * FROM creativeWork NATURAL JOIN cworkCoAuthor
+	WHERE id = :id
+	ORDER BY creativeWorkID ASC
 	LIMIT 10
 `;
+
+//Dinagdag ko. Pasabi nalang kung tama -Ivan
+export const getCreativeWork = `
+	SELECT * FROM creativeWork NATURAL JOIN cworkCoAuthor
+	WHERE id = :id AND creativeWorkID = :creativeWorkID
+`;
+//==========================================
 
 export const addCoAuthor = `
 	INSERT INTO cworkCoAuthor ( 
@@ -45,7 +52,8 @@ export const addCoAuthor = `
 	)
 	VALUES ( 
 		:creativeWorkID, 
-		:userID )
+		:userID
+	)
 `;
 
 export const updateCoAuthor = `
