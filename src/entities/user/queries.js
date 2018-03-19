@@ -43,3 +43,7 @@ export const getUser = `
   SELECT * from user
   WHERE userID = :userID
 `;
+
+export const getUsers = query => `
+  SELECT * FROM user ${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
+`;

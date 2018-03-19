@@ -219,12 +219,11 @@ router.put('/user/:userID', async (req, res) => {
  *    }
  **/
 
-router.get('/user', async (req, res) => {
+router.get('/user/', async (req, res) => {
   try {
-    const users = await Ctrl.getAllUsers();
+    const users = await Ctrl.getAllUsers(req.query);
     users.map(user => delete user.password);
     users.map(user => delete user.isArchived);
-
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched user',
