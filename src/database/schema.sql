@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS `teachingLoad`(
 
 CREATE TABLE IF NOT EXISTS `subject`(
   `id` INT NOT NULL,
+  `subjectID` INT NOT NULL AUTO_INCREMENT,
   `subjectCode` VARCHAR (30) NOT NULL,
   `teachingLoadCreds` int(2) NOT NULL,
   `noOfStudents` int(3) NOT NULL,
@@ -64,79 +65,86 @@ CREATE TABLE IF NOT EXISTS `subject`(
   `sectionCode` varchar(10) NOT NULL,
   `room` varchar(10) NOT NULL,
   CONSTRAINT `subject_pk` 
-    PRIMARY KEY (`subjectCode`), 
+    PRIMARY KEY (`subjectID`), 
   CONSTRAINT `subject_teachingLoad_fk`
     FOREIGN KEY (`id`)
     REFERENCES teachingLoad(`id`)
 );
 
 CREATE TABLE IF NOT EXISTS `timeslot`(
-  `subjectCode` VARCHAR (30) NOT NULL,
+  `subjectID` INT NOT NULL,
   `day` varchar(10) NOT NULL,
   `time` varchar(10) NOT NULL,
   CONSTRAINT `timeslot_subject_fk`
-    FOREIGN KEY (`subjectCode`)
-    REFERENCES subject(`subjectCode`)
+    FOREIGN KEY (`subjectID`)
+    REFERENCES subject(`subjectID`)
 );
 
   -- study load, course, courseSched
 
 CREATE TABLE `studyLoad`(
   `degree` VARCHAR (50) NOT NULL,
-  `courseNumber` VARCHAR (20) NOT NULL,
   `university` VARCHAR (50) NOT NULL,
   `totalSLcredits` INT (10) NOT NULL,
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL,
   CONSTRAINT `studyLoad_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`)
 );
 
 CREATE TABLE `course`(
-  `courseID` VARCHAR (30) NOT NULL,
+  `courseID` INT NOT NULL AUTO_INCREMENT,
   `hoursPerWeek` VARCHAR (10) NOT NULL,
   `school` VARCHAR (30) NOT NULL,
   `credit` VARCHAR (30) NOT NULL,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  CONSTRAINT `course_fsr_fk`
+  `courseNumber` VARCHAR (20) NOT NULL,
+  `id` INT NOT NULL,
+  CONSTRAINT `course_studyLoad_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
-  CONSTRAINT `course_fk` 
-    PRIMARY KEY(`courseID`)
+  CONSTRAINT `studyLoad_pk`
+    PRIMARY KEY (`courseID`)
 );
 
 CREATE TABLE `courseSched`(
-  `courseID` VARCHAR (30) NOT NULL,
+  `courseID` INT NOT NULL,
   `day` VARCHAR (30) NOT NULL,
   `time` VARCHAR (30) NOT NULL,
-CONSTRAINT`courseSched_course_fk`
-  FOREIGN KEY (`courseID`)
-  REFERENCES course(`courseID`)
+  CONSTRAINT`courseSched_course_fk`
+    FOREIGN KEY (`courseID`)
+    REFERENCES course(`courseID`)
 );
 
 -- Consultation hours and CH Timeslot
 
 CREATE TABLE `consultationHours`(
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `chID` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL,
   `place` varchar (50) NOT NULL,
   CONSTRAINT `consultationHours_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`)    
+    REFERENCES fsr(`id`),
+  CONSTRAINT `consultationHours_pk`
+    PRIMARY KEY (`chID`)   
 );
 
 CREATE TABLE `chTimeslot`(
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL,
+  `chID` INT NOT NULL,
   `day` varchar(10) NOT NULL,
   `time` varchar(10) NOT NULL,
-  CONSTRAINT `chTimeslot_fsr_fk`
+  CONSTRAINT `chTimeslot_consultationHours_fk`
+    FOREIGN KEY (`chID`)
+    REFERENCES consultationHours(`chID`),
+  CONSTRAINT `chTimeslot_consultationHours_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`)
+    REFERENCES consultationHours(`id`)
 );
 
 -- Professorial Chair or Faculty Grant or Nominee (Award)
 
 CREATE TABLE IF NOT EXISTS `award`(
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL,
   grantF VARCHAR (50) NOT NULL,
   chairGrantTitle VARCHAR (50) NOT NULL,
   collegeHasNominated VARCHAR (50) NOT NULL,
@@ -152,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `award`(
 -- Limited Practice of Profession
 
 CREATE TABLE IF NOT EXISTS `limitedPracticeOfProf`(
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL,
   askedPermission VARCHAR (10) NOT NULL,  -- YES / NO
   Date VARCHAR (50),
   CONSTRAINT `limitedPracticeOfProf_fsr_fk`
@@ -161,7 +169,8 @@ CREATE TABLE IF NOT EXISTS `limitedPracticeOfProf`(
 );
 
 CREATE TABLE IF NOT EXISTS `extensionAndCommunityService`(
-  `id` INT NOT NULL AUTO_INCREMENT, 
+  `id` INT NOT NULL, 
+  extAndCommServiceID INT NOT NULL AUTO_INCREMENT,
   participant VARCHAR (50) NOT NULL,
   role VARCHAR (50) NOT NULL,
   hours INT (50) NOT NULL,
@@ -172,26 +181,31 @@ CREATE TABLE IF NOT EXISTS `extensionAndCommunityService`(
   endDate VARCHAR (50) NOT NULL,
   CONSTRAINT `extensionAndCommunityService_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`)
+    REFERENCES fsr(`id`),
+  CONSTRAINT `extAndCommService_pk` 
+    PRIMARY KEY (`extAndCommServiceID`) 
 );
 
 -- Administrative Work
 
 CREATE TABLE `adminWork`(
+  `adminWorkID` INT NOT NULL AUTO_INCREMENT, 
   `position` VARCHAR(50) NOT NULL,
   `officeUnit` VARCHAR(50) NOT NULL,
   `approvedUnits` INT(2) NOT NULL,
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL,
   CONSTRAINT `adminWork_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`)
+    REFERENCES fsr(`id`),
+  CONSTRAINT `extAndCommService_pk` 
+    PRIMARY KEY (`adminWorkID`) 
 );
 
 -- Creative Work, Creative Work Co-Authors
 
 CREATE TABLE `creativeWork`(
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `creativeWorkCode` VARCHAR(30) NOT NULL,
+  `id` INT NOT NULL,
+  `creativeWorkID` INT NOT NULL AUTO_INCREMENT,
   `date` DATE NOT NULL,
   `title` VARCHAR(50) NOT NULL,
   `type` VARCHAR(50) NOT NULL,
@@ -200,50 +214,47 @@ CREATE TABLE `creativeWork`(
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
   CONSTRAINT `creativeWork_pk`
-    PRIMARY KEY (`creativeWorkCode`)
+    PRIMARY KEY (`creativeWorkID`)
 );
 
 CREATE TABLE `cworkCoAuthor`(
-  `creativeWorkCode` VARCHAR(30) NOT NULL,
+  `creativeWorkID` INT NOT NULL,
   `userID` INT NOT NULL,
   CONSTRAINT `cworkCoAuthor_creativeWork_fk`
-    FOREIGN KEY (`creativeWorkCode`)
-    REFERENCES creativeWork(`creativeWorkCode`),
+    FOREIGN KEY (`creativeWorkID`)
+    REFERENCES creativeWork(`creativeWorkID`),
   CONSTRAINT `cworkCoAuthor_user_fk`
     FOREIGN KEY (`userID`)
     REFERENCES user(`userID`)
-
 );
 
 
 -- research
 
 CREATE TABLE `research`(
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `researchCode` VARCHAR(30) NOT NULL,
+  `id` INT NOT NULL,
+  `researchID` INT NOT NULL AUTO_INCREMENT,
   `type` VARCHAR (30) NOT NULL, -- PROPOSAL / IMPLEMENTATION
   `role` VARCHAR (30) NOT NULL,
   `title` VARCHAR (50) NOT NULL,
   `startDate` DATE NOT NULL,
-  `endDate` DATE,
+  `endDate` DATE NOT NULL,
   `funding` VARCHAR (30) NOT NULL,
   `approvedUnits` VARCHAR (30) NOT NULL,
   CONSTRAINT `research_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
   CONSTRAINT `research_pk`
-    PRIMARY KEY (`researchCode`)
+    PRIMARY KEY (`researchID`)
 );
 
 
-
-
 CREATE TABLE rCoAuthor(
-  researchCode VARCHAR(30) NOT NULL,
-  userID INT NOT NULL,
+  `researchID` INT NOT NULL,
+  `userID` INT NOT NULL,
   CONSTRAINT `rCoAuthor_research_fk`
-    FOREIGN KEY (`researchCode`)
-    REFERENCES research(`researchCode`),
+    FOREIGN KEY (`researchID`)
+    REFERENCES research(`researchID`),
   CONSTRAINT `rCoAuthor_user_fk`
     FOREIGN KEY (`userID`)
     REFERENCES user(`userID`)

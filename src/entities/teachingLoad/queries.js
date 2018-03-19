@@ -4,7 +4,7 @@ export const addTeachingLoad = `
 		teachingLoadCreds 
 	)
 	VALUES ( 
-	DEFAULT, 
+	:id, 
 	:teachingLoadCreds 
 	)
 `;
@@ -28,4 +28,3 @@ export const getTeachingLoad = `
 	ORDER BY id ASC
 	LIMIT 10
 `;
-	

@@ -10,7 +10,7 @@ export const addAward = `
     endDate 
   )
   VALUES ( 
-    DEFAULT,
+    :id,
     :grantF,
     :chairGrantTitle,
     :collegeHasNominated,
@@ -42,5 +42,5 @@ export const getAward = `
 
 export const deleteAward = `
   DELETE FROM award
-  WHERE id = ""
+  WHERE id = :id
 `;
