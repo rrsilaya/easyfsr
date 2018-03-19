@@ -27,6 +27,10 @@ CREATE TABLE user(
   acctType VARCHAR(10) DEFAULT 'USER', -- ADMIN / USER
   CONSTRAINT `user_pk`
     PRIMARY KEY (`userID`)
+  CONSTRAINT `user_empid_uk`
+    UNIQUE KEY (`employeeID`)
+  CONSTRAINT `user_email_uk`
+    UNIQUE KEY (`emailAddress`)
 );
 
 CREATE TABLE IF NOT EXISTS fsr(
@@ -49,7 +53,7 @@ CREATE TABLE IF NOT EXISTS fsr(
 
 CREATE TABLE IF NOT EXISTS `teachingLoad`(
   `id` INT NOT NULL,
-  `teachingLoadCreds` int(2) NOT NULL,
+  `teachingLoadCreds` INT(2) NOT NULL,
   CONSTRAINT `teachingLoad_user_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`)
@@ -59,11 +63,11 @@ CREATE TABLE IF NOT EXISTS `subject`(
   `id` INT NOT NULL,
   `subjectID` INT NOT NULL AUTO_INCREMENT,
   `subjectCode` VARCHAR (30) NOT NULL,
-  `teachingLoadCreds` int(2) NOT NULL,
-  `noOfStudents` int(3) NOT NULL,
-  `hoursPerWeek` int(2) NOT NULL,
-  `sectionCode` varchar(10) NOT NULL,
-  `room` varchar(10) NOT NULL,
+  `teachingLoadCreds` INT(2) NOT NULL,
+  `noOfStudents` INT(3) NOT NULL,
+  `hoursPerWeek` INT(2) NOT NULL,
+  `sectionCode` VARCHAR(10) NOT NULL,
+  `room` VARCHAR(10) NOT NULL,
   CONSTRAINT `subject_pk` 
     PRIMARY KEY (`subjectID`), 
   CONSTRAINT `subject_teachingLoad_fk`
@@ -73,8 +77,8 @@ CREATE TABLE IF NOT EXISTS `subject`(
 
 CREATE TABLE IF NOT EXISTS `timeslot`(
   `subjectID` INT NOT NULL,
-  `day` varchar(10) NOT NULL,
-  `time` varchar(10) NOT NULL,
+  `day` VARCHAR(10) NOT NULL,
+  `time` VARCHAR(10) NOT NULL,
   CONSTRAINT `timeslot_subject_fk`
     FOREIGN KEY (`subjectID`)
     REFERENCES subject(`subjectID`)
@@ -173,9 +177,9 @@ CREATE TABLE IF NOT EXISTS `extensionAndCommunityService`(
   extAndCommServiceID INT NOT NULL AUTO_INCREMENT,
   participant VARCHAR (50) NOT NULL,
   role VARCHAR (50) NOT NULL,
-  hours INT (50) NOT NULL,
+  hours INT (3) NOT NULL,
   title VARCHAR (50) NOT NULL,
-  creditUnit INT (50) NOT NULL,
+  creditUnit INT (2) NOT NULL,
   type VARCHAR (50) NOT NULL,
   startDate VARCHAR (50) NOT NULL,
   endDate VARCHAR (50) NOT NULL,
@@ -197,7 +201,7 @@ CREATE TABLE `adminWork`(
   CONSTRAINT `adminWork_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
-  CONSTRAINT `extAndCommService_pk` 
+  CONSTRAINT `adminWork_pk` 
     PRIMARY KEY (`adminWorkID`) 
 );
 
