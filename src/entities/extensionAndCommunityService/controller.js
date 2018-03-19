@@ -21,7 +21,7 @@ export const addExtensionAndCommunityService = service => {
       { ...service },
       (err, results) => {
         if (err) return reject(500);
-        return resolve(results);
+        return resolve(results.insertId);
       },
     );
   });
@@ -40,7 +40,7 @@ export const updateExtensionAndCommunityService = ({ id }, service) => {
           console.log(err);
           return reject(500);
         }
-        return resolve(results);
+        return resolve(results.insertId);
       },
     );
   });
@@ -73,6 +73,7 @@ export const getExtensionAndCommunityService = ({ id }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getExtensionAndCommunityService, { id }, (err, results) => {
       if (err) return reject(500);
+      else if (!results.length) return reject(404);
       return resolve(results);
     });
   });

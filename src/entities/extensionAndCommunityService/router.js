@@ -50,12 +50,11 @@ const router = Router();
 router.post('/service/', async (req, res) => {
   try {
     const id = await Ctrl.addExtensionAndCommunityService(req.body);
-
-    // const service = await Ctrl.getExtensionAndCommunityService({ id });
+    const service = await Ctrl.getExtensionAndCommunityService({ id });
     res.status(200).json({
       status: 200,
       message: 'Successfully created service',
-      // data: service
+      data: service,
     });
   } catch (status) {
     let message = '';
@@ -132,7 +131,6 @@ router.put('/service/:id', async (req, res) => {
     res.status(200).json({
       status: 200,
       message: 'Successfully updated service',
-
       data: service,
     });
   } catch (status) {
@@ -220,11 +218,9 @@ router.put('/service/:id', async (req, res) => {
 router.delete('/service/:id', async (req, res) => {
   try {
     const id = await Ctrl.deleteExtensionAndCommunityService(req.params);
-    // const service = await Ctrl.getExtensionAndCommunityService(req.params);
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted service',
-      //data: service
     });
   } catch (status) {
     let message = '';
@@ -272,7 +268,7 @@ export default router;
  *   HTTP/1.1 200 OK
  *  {
  *   "status": 200,
- *   "message": "Successfully got service details".
+ *   "message": "Successfully fetched service".
  *   "data": [{
  *       "id": 1,
  *       "extAndCommServiceID": 1,
@@ -302,7 +298,7 @@ router.get('/service/:id', async (req, res) => {
     const service = await Ctrl.getExtensionAndCommunityService(req.params);
     res.status(200).json({
       status: 200,
-      message: 'Successfully got service details',
+      message: 'Successfully fetched service',
       data: service,
     });
   } catch (status) {
