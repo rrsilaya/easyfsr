@@ -29,10 +29,6 @@ export const updateUser = user => `
   WHERE userID = :userID
 `;
 
-export const getAllUser = `
-  SELECT * FROM user;
-`;
-
 export const deleteUser = `
   UPDATE user SET
     isArchived = true

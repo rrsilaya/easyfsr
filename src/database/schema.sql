@@ -33,7 +33,7 @@ CREATE TABLE user(
     UNIQUE KEY (`emailAddress`)
 );
 
-CREATE TABLE IF NOT EXISTS fsr(
+CREATE TABLE fsr(
   `id` INT NOT NULL AUTO_INCREMENT,
   `userID` INT NOT NULL, 
   `acadYear` VARCHAR (20) NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS fsr(
 
   -- teaching_load, subject, timeslot
 
-CREATE TABLE IF NOT EXISTS `teachingLoad`(
+CREATE TABLE `teachingLoad`(
   `id` INT NOT NULL,
   `teachingLoadCreds` INT(2) NOT NULL,
   CONSTRAINT `teachingLoad_user_fk`
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `teachingLoad`(
     REFERENCES fsr(`id`)
 );
 
-CREATE TABLE IF NOT EXISTS `subject`(
+CREATE TABLE `subject`(
   `id` INT NOT NULL,
   `subjectID` INT NOT NULL AUTO_INCREMENT,
   `subjectCode` VARCHAR (30) NOT NULL,
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `subject`(
     REFERENCES teachingLoad(`id`)
 );
 
-CREATE TABLE IF NOT EXISTS `timeslot`(
+CREATE TABLE `timeslot`(
   `subjectID` INT NOT NULL,
   `day` VARCHAR(10) NOT NULL,
   `time` VARCHAR(10) NOT NULL,
@@ -147,7 +147,7 @@ CREATE TABLE `chTimeslot`(
 
 -- Professorial Chair or Faculty Grant or Nominee (Award)
 
-CREATE TABLE IF NOT EXISTS `award`(
+CREATE TABLE `award`(
   `id` INT NOT NULL,
   grantF VARCHAR (50) NOT NULL,
   chairGrantTitle VARCHAR (50) NOT NULL,
@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `award`(
 
 -- Limited Practice of Profession
 
-CREATE TABLE IF NOT EXISTS `limitedPracticeOfProf`(
+CREATE TABLE `limitedPracticeOfProf`(
   `id` INT NOT NULL,
   askedPermission VARCHAR (10) NOT NULL,  -- YES / NO
   Date VARCHAR (50),
@@ -172,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `limitedPracticeOfProf`(
     REFERENCES fsr(`id`)
 );
 
-CREATE TABLE IF NOT EXISTS `extensionAndCommunityService`(
+CREATE TABLE `extensionAndCommunityService`(
   `id` INT NOT NULL, 
   extAndCommServiceID INT NOT NULL AUTO_INCREMENT,
   participant VARCHAR (50) NOT NULL,

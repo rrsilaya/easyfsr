@@ -1,3 +1,5 @@
+import { formatQueryParams } from '../../utils';
+
 export const addAdminWork = `
 	INSERT INTO adminWork ( 
 		adminWorkID,
@@ -15,25 +17,20 @@ export const addAdminWork = `
 	)
 `;
 
-export const updateAdminWork = `
+export const updateAdminWork = adminWork => `
 	UPDATE adminWork SET
-		position = :position,
-		officeUnit = :officeUnit,
-		approvedUnits = :approvedUnits
+	${formatQueryParams(adminWork)}
 	WHERE id = :id AND adminWorkID = :adminWorkID
-`;
+`
 
 export const deleteAdminWork = `
 	DELETE FROM adminWork
 	WHERE id = :id AND adminWorkID = :adminWorkID
 `;
 
-export const getAllAdminWork = `
-	SELECT * FROM adminWork
-	WHERE id = :id 
-	ORDER BY adminWorkID ASC
-	LIMIT 10
-`;
+export const getAdminWorks = query => `
+	SELECT * FROM adminWork ${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
+`
 
 export const getAdminWork = `
 	SELECT * FROM adminWork

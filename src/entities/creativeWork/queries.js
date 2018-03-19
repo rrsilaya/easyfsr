@@ -1,3 +1,5 @@
+import { formatQueryParams } from '../../utils';
+
 export const addCreativeWork = `
 	INSERT INTO creativeWork ( 
 		id,
@@ -17,33 +19,25 @@ export const addCreativeWork = `
 	)
 `;
 
-export const updateCreativeWork = `
-	UPDATE creativeWork SET 
-		date = :date, 
-		type = :type, 
-		title = :title, 
-		credUnit = :credUnit  
+export const updateCreativeWork = creativeWork => `
+	UPDATE creativeWork SET
+	${formatQueryParams(creativeWork)}
 	WHERE id = :id AND creativeWorkID = :creativeWorkID;
-`;
+`
 
 export const deleteCreativeWork = `
 	DELETE FROM creativeWork
 	WHERE creativeWorkID = :creativeWorkID AND id = :id
 `;
 
-export const getAllCreativeWork = `
-	SELECT * FROM creativeWork NATURAL JOIN cworkCoAuthor
-	WHERE id = :id
-	ORDER BY creativeWorkID ASC
-	LIMIT 10
-`;
+export const getCreativeWorks = query => `
+	SELECT * FROM creativeWork ${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
+`
 
-//Dinagdag ko. Pasabi nalang kung tama -Ivan
 export const getCreativeWork = `
 	SELECT * FROM creativeWork NATURAL JOIN cworkCoAuthor
 	WHERE id = :id AND creativeWorkID = :creativeWorkID
 `;
-//==========================================
 
 export const addCoAuthor = `
 	INSERT INTO cworkCoAuthor ( 
