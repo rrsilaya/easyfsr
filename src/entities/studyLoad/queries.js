@@ -1,10 +1,41 @@
-export const addStudyLoad = 'INSERT INTO studyLoad ( id, degree, courseNumber, university, totalSLcredits )VALUES ( DEFAULT, :degree, :courseNumber, :university, :totalSLcredits )';
+import * as Utils from '../../utils';
 
-export const updateStudyLoad = 'UPDATE studyLoad SET degree= :degree, courseNumber=:courseNumber, university=:courseNumber, totalSLcredits= WHERE id=:id';
+export const addStudyLoad = `
+	INSERT INTO studyLoad ( 
+		id, 
+		degree, 
+		courseNumber, 
+		university, 
+		totalSLcredits 
+	)
 
-export const deleteStudyLoad = 'delete from studyLoad where userID = :userID';
+	VALUES ( 
+		:id, 
+		:degree, 
+		:courseNumber, 
+		:university, 
+		:totalSLcredits 
+	)
+`;
 
-export const selectStudyLoad = 'SELECT *FROM studyLoadWHERE fsrID=:fsrID, university=:university degree=:degree courseNumber=:courseNumber ORDER BY userID ASC LIMIT 10';
+export const updateStudyLoad = studyLoad => `
+	UPDATE studyLoad SET 
+		${Utils.formatQueryParams(studyLoad)}
+		WHERE id = :id
+`;
 
-export const dropStudyLoad = 'DROP TABLE studyLoad';
+export const deleteStudyLoad = `
+	DELETE FROM studyLoad 
+		where id = :id
+`;
 
+export const getStudyLoad = `
+	SELECT * FROM studyLoad
+		WHERE id = :id 
+		ORDER BY id ASC 
+		LIMIT 10
+`;
+
+export const dropStudyLoad = `
+	DROP TABLE studyLoad
+`;
