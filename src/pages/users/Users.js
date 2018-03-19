@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Row, Col, Pagination } from 'antd';
+import { Button, Row, Col, Pagination, Input } from 'antd';
 
 import User from './components/User';
 import EditModal from './components/EditModal';
@@ -8,6 +8,8 @@ import DeleteModal from './components/DeleteModal';
 
 import styles from './styles';
 import userData from './user-data';
+
+const { Search } = Input;
 
 class Users extends Component {
   render() {
@@ -24,7 +26,13 @@ class Users extends Component {
 
     return (
       <div>
-        <div style={styles.button}>
+        <div style={styles.search}>
+          <Search
+            placeholder="Search user..."
+            enterButton="Search"
+            size="large"
+            style={styles.searchBar}
+          />
           <Button
             size="large"
             icon="plus-circle-o"

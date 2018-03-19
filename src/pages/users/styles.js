@@ -5,11 +5,16 @@ const style = {
     marginLeft: 'auto',
     marginRight: 'auto',
   },
-  button: {
+  search: {
     marginTop: '10px',
     marginBottom: '10px',
+    marginLeft: 'auto',
+    marginRight: 'auto',
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+  },
+  searchBar: {
+    width: '66%',
   },
   pagination: {
     marginBottom: '10px',
