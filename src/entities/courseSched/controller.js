@@ -49,3 +49,13 @@ export const getCourseSched = ({ courseNumber }) => {
     });
   });
 };
+
+export const getCourseSchedules = ({ courseNumber }) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getCourseSchedules(courseNumber), (err, results) => {
+      if (err) return reject(500);
+      else if (!results) return reject(404);
+      return resolve(results);
+    });
+  });
+};

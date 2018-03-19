@@ -21,8 +21,13 @@ const router = Router();
  *   HTTP/1.1 200 OK
  *   {
  *     "data": {
- *        "status": 200;
- *        "message": 'Succesfully added course schedule'
+          "status": 200,
+          "message": "Successfully added course schedule",
+          "data": {
+              "courseNumber": "10",
+              "day": "mon",
+              "time": "2:00 pm"
+          }
  *     }
  *   }
  *
@@ -38,15 +43,13 @@ const router = Router();
 
 router.post('/courseSched/', async (req, res) => {
   try {
-    const courseSched = await Ctrl.addCourseSched(req.body);
-    // console.log(courseSched);
-    // const courseSched = await Ctrl.getCourseSched({ courseNumber });
-    // console.log(courseSched);
+    await Ctrl.addCourseSched(req.body);
 
+    const courseSched = await Ctrl.getCourseSched(req.body.courseNumber);
     res.status(200).json({
       status: 200,
       message: 'Successfully added course schedule',
-      // data: courseSched
+      data: courseSched,
     });
   } catch (status) {
     let message = '';
@@ -78,8 +81,13 @@ router.post('/courseSched/', async (req, res) => {
  *   HTTP/1.1 200 OK
  *   {
  *     "data": {
- *        "status": 200;
- *        "message": 'Succesfully updated course schedule'
+          "status": 200,
+          "message": "Successfully added course schedule",
+          "data": {
+              "courseNumber": "10",
+              "day": "mon",
+              "time": "2:00 pm"
+          }
  *     }
  *   }
  *
@@ -102,9 +110,11 @@ router.post('/courseSched/', async (req, res) => {
 router.put('/courseSched/:courseNumber', async (req, res) => {
   try {
     await Ctrl.updateCourseSched(req.params, req.body);
+    const courseSched = await Ctrl.getCourseSched(req.params);
     res.status(200).json({
       status: 200,
       message: 'Successfully updated course schedule',
+      data: courseSched,
     });
   } catch (status) {
     let message = '';
@@ -232,6 +242,65 @@ router.get('/courseSched/:courseNumber', async (req, res) => {
       status: 200,
       message: 'Successfully got course sched details',
       data: courseSched,
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'Course not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
+    }
+    res.status(status).json({ status, message });
+  }
+});
+
+/**
+ * @api {get} /courseSched getCourseSchedules
+ * @apiGroup CourseSched
+ * @apiName getCourseSchedules
+ *
+ * @apiSuccess {String} message Confirmation Message.
+ * @apiSuccess {Object[]} courseSchedules All course schedules
+ 
+ * @apiSuccess {String} courseSched.courseNumber number of course
+ * @apiSuccess {String} courseSched.day day course is being taught
+ * @apiSuccess {String} courseSched.time time course is being taught
+ *
+ 
+ * @apiSuccessExample {json} Success-Response:
+ *    HTTP/1.1 200 OK
+ *   {
+        "message": "Successfully fetched courses",
+        "courseSchedules": [
+ *          {
+            "courseNumber": "12345678",
+            "day": "friday",
+            "time": "4:00 pm"
+ *        }
+ *     ]
+    }
+ *
+ * @apiError (Error 500) {String[]} errors List of errors.
+ * @apiError (Error 500) {String} errors.message Error message.
+ * @apiErrorExample {json} Error-Response:
+ *    HTTP/1.1 500 Internal Server Error
+ *    {
+ *      "errors": [
+ *        "Internal server error."
+ *      ]
+ *    }
+ **/
+
+router.get('/courseSched/:courseNumber', async (req, res) => {
+  try {
+    const courseSchedules = await Ctrl.getCourseSchedules(req.params);
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully fetched all courses',
+      data: courseSchedules,
     });
   } catch (status) {
     let message = '';
