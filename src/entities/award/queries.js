@@ -1,4 +1,4 @@
-import * as Utils from '../../utils';
+import { formatQueryParams } from '../../utils';
 
 export const addAward = `
   INSERT INTO award ( 
@@ -25,7 +25,7 @@ export const addAward = `
 
 export const updateAward = award => `
   UPDATE award SET 
-   ${Utils.formatQueryParams(award)}
+   ${formatQueryParams(award)}
   WHERE id = :id
 `;
 
@@ -36,8 +36,8 @@ export const getAward = `
   LIMIT 10
 `;
 
-export const getAllAward = `
-  SELECT * FROM award
+export const getAwards = query => `
+  SELECT * FROM award ${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
 `;
 
 export const deleteAward = `
