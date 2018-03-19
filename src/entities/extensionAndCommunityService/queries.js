@@ -1,3 +1,5 @@
+import * as Utils from '../../utils';
+
 export const addExtensionAndCommunityService = `
   INSERT INTO extensionAndCommunityService (
     id,
@@ -23,17 +25,10 @@ export const addExtensionAndCommunityService = `
   )
 `;
 
-export const updateExtensionAndCommunityService = `
+export const updateExtensionAndCommunityService = service => `
   UPDATE extensionAndCommunityService SET 
-    participant=:participant, 
-    role=:role;
-    hours=:hours, 
-    title=:title, 
-    creditUnit=:creditUnit, 
-    type=:type, 
-    startDate=:startDate, 
-    endDate=:endDate     
-  WHERE id=DEFAULT
+  ${Utils.formatQueryParams(service)} 
+  WHERE id=id
 `;
 
 export const getExtensionAndCommunityService = `
