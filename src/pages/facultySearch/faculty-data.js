@@ -2,52 +2,52 @@ const faculty = [
   {
     id: 1,
     name: 'Lorenz Matthew Afable',
-    type: 'Admin',
+    type: 'Administrator',
   },
   {
     id: 2,
     name: 'Ralph Lawrence Silaya',
-    type: 'Admin',
+    type: 'Administrator',
   },
   {
     id: 3,
     name: 'Erlen Mae Evangelista',
-    type: 'Admin',
+    type: 'Committee Head',
   },
   {
     id: 4,
     name: 'Kia Mei Somabes',
-    type: 'Admin',
+    type: 'Faculty Member',
   },
   {
     id: 5,
     name: 'Trixia Belleza',
-    type: 'Admin',
+    type: 'Administrator',
   },
   {
     id: 6,
     name: 'Allen Ponce de Leon',
-    type: 'User',
+    type: 'Faculty Member',
   },
   {
     id: 7,
     name: 'Ai Salva',
-    type: 'User',
+    type: 'Committee Head',
   },
   {
     id: 8,
     name: 'Harold Roxas',
-    type: 'User',
+    type: 'Faculty Member',
   },
   {
     id: 9,
     name: 'John Dewey Legaspi',
-    type: 'User',
+    type: 'Committee Head',
   },
   {
     id: 10,
     name: 'Tricia Leal',
-    type: 'User',
+    type: 'Committee Head',
   },
 ];
 
