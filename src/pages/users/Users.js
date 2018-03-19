@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Row, Col, Pagination, Input } from 'antd';
+import { Button, Row, Col, Pagination, Input, Modal } from 'antd';
 
 import User from './components/User';
 import EditModal from './components/EditModal';
@@ -10,8 +10,20 @@ import styles from './styles';
 import userData from './user-data';
 
 const { Search } = Input;
+const { confirm } = Modal;
 
 class Users extends Component {
+  showConfirmDelete = () => {
+    confirm({
+      title: 'Are you sure you want to delete this user?',
+      content: 'You are about to archive this user.',
+      okText: 'Yes',
+      cancelText: 'No',
+      okType: 'primary',
+      onCancel() {},
+    });
+  };
+
   render() {
     const gridConfig = { xxl: 6, xl: 8, sm: 12, xs: 24 };
     const {
@@ -53,7 +65,7 @@ class Users extends Component {
                 title={`${user.lastName}, ${user.firstName}`}
                 description={user.type}
                 toggleEditModal={toggleEditModal}
-                toggleDeleteModal={toggleDeleteModal}
+                toggleDeleteModal={this.showConfirmDelete}
               />
             </Col>
           ))}

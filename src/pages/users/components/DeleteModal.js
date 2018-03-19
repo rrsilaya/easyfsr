@@ -22,9 +22,7 @@ class AddModal extends Component {
             Save
           </Button>,
         ]}
-      >
-        <h1>Delete</h1>
-      </Modal>
+      />
     );
   }
 }

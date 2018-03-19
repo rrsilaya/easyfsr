@@ -8,6 +8,7 @@ const TOGGLE_ADD_MODAL = 'USER/TOGGLE_ADD_MODAL';
 const TOGGLE_DELETE_MODAL = 'USER/TOGGLE_DELETE_MODAL';
 
 const ADD_USER = 'USER/ADD_USER';
+const DELETE_USER = 'USER/DELETE_USER';
 
 export const toggleEditModal = () => ({
   type: TOGGLE_EDIT_MODAL,
@@ -42,12 +43,34 @@ export const addUser = user => {
   };
 };
 
+export const deleteUser = ({ id }) => {
+  return dispatch => {
+    return dispatch({
+      type: DELETE_USER,
+      promise: Api.deleteUser(id),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully deleted user.',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while deleting user.',
+          });
+        },
+      },
+    });
+  };
+};
+
 const initialState = {
   isEditModalOpen: false,
   isAddModalOpen: false,
   isDeleteModalOpen: false,
 
   isAddingUser: false,
+  isDeletingUser: false,
 
   users: [],
   user: {},
@@ -89,6 +112,24 @@ const reducer = (state = initialState, action) => {
         finish: prevState => ({
           ...prevState,
           isAddingUser: false,
+        }),
+      });
+    case DELETE_USER:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isDeletingUser: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          users: state.users.filter(
+            user => user.userID !== payload.data.data.userID,
+          ),
+          isDeleteModalOpen: false,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isDeletingUser: false,
         }),
       });
 
