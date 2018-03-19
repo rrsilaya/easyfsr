@@ -1,3 +1,5 @@
+import * as Utils from '../../utils';
+
 export const addAward = `
   INSERT INTO award ( 
     id,
@@ -21,16 +23,10 @@ export const addAward = `
   )
 `;
 
-export const updateAward = `
+export const updateAward = award => `
   UPDATE award SET 
-    grant=:grantF,
-    chairGrantTitle=:chairGrantTitle,
-    collegeHasNominated=:collegeHasNominated,
-    receipient/nominee=:recipientOrNominee,
-    professionalChair=:professionalChair,
-    approvedStartDate=:approvedStartDate,
-    endDate=:endDate
-  WHERE id = DEFAULT
+   ${Utils.formatQueryParams(award)}
+  WHERE id = :id
 `;
 
 export const getAward = `
@@ -40,7 +36,11 @@ export const getAward = `
   LIMIT 10
 `;
 
+export const getAllAward = `
+  SELECT * FROM award
+`;
+
 export const deleteAward = `
   DELETE FROM award
-  WHERE id = ""
+  WHERE id =:id
 `;
