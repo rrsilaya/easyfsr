@@ -2,7 +2,6 @@ import * as Utils from '../../utils';
 
 export const addExtensionAndCommunityService = `
   INSERT INTO extensionAndCommunityService (
-    extAndCommServiceID,
     id,
     participant,
     role,
@@ -14,7 +13,6 @@ export const addExtensionAndCommunityService = `
     endDate
   )
   VALUES ( 
-    :extAndCommServiceID,
     :id,
     :participant,
     :role,
@@ -39,6 +37,12 @@ export const updateExtensionAndCommunityService = service => `
   ORDER BY extAndCommServiceID ASC
   LIMIT 10;
 `;*/
+
+export const getExtensionAndCommunityServices = query => `
+  SELECT * FROM extensionAndCommunityService ${
+    query.length ? `WHERE ${formatQueryParams(query)}` : ''
+  }
+`;
 
 export const getExtensionAndCommunityService = `
   SELECT * FROM extensionAndCommunityService

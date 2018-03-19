@@ -20,7 +20,10 @@ export const addExtensionAndCommunityService = service => {
       Query.addExtensionAndCommunityService,
       { ...service },
       (err, results) => {
-        if (err) return reject(500);
+        if (err) {
+          console.log(err);
+          return reject(500);
+        }
         return resolve(results.insertId);
       },
     );
@@ -46,13 +49,19 @@ export const updateExtensionAndCommunityService = ({ id }, service) => {
   });
 };
 
-export const getAllExtensionAndCommunityServices = () => {
+export const getExtensionAndCommunityServices = () => {
   return new Promise((resolve, reject) => {
-    db.query(Query.getAllExtensionAndCommunityServices, (err, results) => {
-      if (err) return reject(500);
-      else if (!results) return reject(404);
-      return resolve(results);
-    });
+    db.query(
+      Query.getExtensionAndCommunityServices(
+        filtered(service, serviceAttributes),
+      ),
+      service,
+      (err, results) => {
+        if (err) return reject(500);
+        else if (!results) return reject(404);
+        return resolve(results);
+      },
+    );
   });
 };
 

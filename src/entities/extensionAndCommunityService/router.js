@@ -149,7 +149,7 @@ router.put('/service/:id', async (req, res) => {
 
 router.get('/service', async (req, res) => {
   try {
-    const services = await Ctrl.getAllExtensionAndCommunityServices();
+    const services = await Ctrl.getExtensionAndCommunityServices();
     services.map(service => delete service.password);
     services.map(service => delete service.isArchived);
 
@@ -165,6 +165,7 @@ router.get('/service', async (req, res) => {
         message = 'ExtensionAndCommunityService not found';
         break;
       case 500:
+        a;
         message = 'Internal server error';
         break;
     }
