@@ -1,15 +1,28 @@
 import { connect } from 'react-redux';
 import Users from './Users';
 
-import { toggleEditModal, toggleAddModal, toggleDeleteModal } from './duck';
+import {
+  toggleEditModal,
+  toggleAddModal,
+  toggleDeleteModal,
+  addUser,
+} from './duck';
 
 const mapStateToProps = state => {
-  const { isEditModalOpen, isAddModalOpen, isDeleteModalOpen } = state.users;
+  const {
+    isEditModalOpen,
+    isAddModalOpen,
+    isDeleteModalOpen,
+
+    isAddingUser,
+  } = state.users;
 
   return {
     isEditModalOpen,
     isAddModalOpen,
     isDeleteModalOpen,
+
+    isAddingUser,
   };
 };
 
@@ -23,6 +36,9 @@ const mapDispatchToProps = dispatch => {
     },
     toggleDeleteModal: () => {
       dispatch(toggleDeleteModal());
+    },
+    addUser: values => {
+      dispatch(addUser(values));
     },
   };
 };
