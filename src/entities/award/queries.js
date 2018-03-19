@@ -25,6 +25,7 @@ export const addAward = `
 
 export const updateAward = `
   UPDATE award SET
+    awardID=:awardID,
     grant=:grantF,
     chairGrantTitle=:chairGrantTitle,
     collegeHasNominated=:collegeHasNominated,

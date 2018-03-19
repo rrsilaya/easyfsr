@@ -13,7 +13,8 @@ export const addTeachingLoad = `
 
 export const updateTeachingLoad = `
 	UPDATE teachingLoad SET
-		teachingLoadCreds = :teachingLoadCreds
+		teachingLoadCreds = :teachingLoadCreds,
+		teachingLoadID = :teachingLoadID
 	WHERE id = :id
 `;
 

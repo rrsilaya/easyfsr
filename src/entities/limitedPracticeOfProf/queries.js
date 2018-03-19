@@ -15,6 +15,7 @@ export const addLimitedPracticeOfProf = `
 
 export const updateLimitedPracticeOfProf = `
   UPDATE limitedPracticeOfProf SET
+    limitedPracticeOfProfID=:limitedPracticeOfProfID,
     askedPermission=:askedPermission,
     date=:date
   WHERE id=:id

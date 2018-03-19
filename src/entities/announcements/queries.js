@@ -1,12 +1,12 @@
 export const addAnnouncement = `
-  INSERT INTO announcement ( 
+  INSERT INTO announcement (
     announcementID,
     authorID,
     title,
     body,
     isResolved
   )
-  VALUES ( 
+  VALUES (
     DEFAULT,
     :authorID,
     :title,
@@ -16,7 +16,7 @@ export const addAnnouncement = `
 `;
 
 export const updateAnnouncement = `
-  UPDATE announcement SET 
+  UPDATE announcement SET
     announcementID=:announcementID,
     authorID=:authorID,
     title=:title,
