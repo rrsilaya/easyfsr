@@ -1,5 +1,3 @@
-import { formatQueryParams } from '../../utils';
-
 export const addAward = `
   INSERT INTO award ( 
     id,
@@ -23,10 +21,16 @@ export const addAward = `
   )
 `;
 
-export const updateAward = award => `
+export const updateAward = `
   UPDATE award SET 
-   ${formatQueryParams(award)}
-  WHERE id = :id
+    grant=:grantF,
+    chairGrantTitle=:chairGrantTitle,
+    collegeHasNominated=:collegeHasNominated,
+    receipient/nominee=:recipientOrNominee,
+    professionalChair=:professionalChair,
+    approvedStartDate=:approvedStartDate,
+    endDate=:endDate
+  WHERE id = DEFAULT
 `;
 
 export const getAward = `
@@ -36,11 +40,7 @@ export const getAward = `
   LIMIT 10
 `;
 
-export const getAwards = query => `
-  SELECT * FROM award ${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
-`;
-
 export const deleteAward = `
   DELETE FROM award
-  WHERE id =:id
+  WHERE id = :id
 `;
