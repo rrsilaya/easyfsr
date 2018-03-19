@@ -1,19 +1,19 @@
 import { formatQueryParams } from '../../utils';
 
 export const addAdminWork = `
-	INSERT INTO adminWork ( 
+	INSERT INTO adminWork (
 		adminWorkID,
-		id, 
-		position, 
-		officeUnit, 
-		approvedUnits 
+		id,
+		position,
+		officeUnit,
+		approvedUnits
 	)
-	VALUES ( 
+	VALUES (
 		:adminWorkID,
 		:id,
-		:position, 
-		:officeUnit, 
-		:approvedUnits 
+		:position,
+		:officeUnit,
+		:approvedUnits
 	)
 `;
 

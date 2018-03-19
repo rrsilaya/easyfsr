@@ -1,21 +1,21 @@
 import { formatQueryParams } from '../../utils';
 
 export const addCreativeWork = `
-	INSERT INTO creativeWork ( 
+	INSERT INTO creativeWork (
 		id,
-		creativeWorkID, 
-		date, 
-		title, 
-		type, 
-		credUnit 
+		creativeWorkID,
+		date,
+		title,
+		type,
+		credUnit
 	)
-	VALUES ( 
-		:id, 
-		:creativeWorkID, 
-		:date, 
-		:title, 
-		:type, 
-		:credUnit 
+	VALUES (
+		:id,
+		:creativeWorkID,
+		:date,
+		:title,
+		:type,
+		:credUnit
 	)
 `;
 
@@ -40,12 +40,12 @@ export const getCreativeWork = `
 `;
 
 export const addCoAuthor = `
-	INSERT INTO cworkCoAuthor ( 
-		creativeWorkID, 
-		userID 
+	INSERT INTO cworkCoAuthor (
+		creativeWorkID,
+		userID
 	)
-	VALUES ( 
-		:creativeWorkID, 
+	VALUES (
+		:creativeWorkID,
 		:userID
 	)
 `;
@@ -57,6 +57,6 @@ export const updateCoAuthor = `
 `;
 
 export const deleteCoAuthor = `
-	DELETE FROM cworkAuthors 
+	DELETE FROM cworkAuthors
 	WHERE userID = :userID
 `;

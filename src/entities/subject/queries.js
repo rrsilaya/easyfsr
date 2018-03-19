@@ -1,38 +1,38 @@
 export const addSubject = `
-	INSERT INTO subject ( 
-		id, 
+	INSERT INTO subject (
+		id,
 		subjectCode,
-		subjectID, 
-		teachingLoadCreds, 
-		noOfStudents, 
-		hoursPerWeek, 
-		sectionCode, 
-		room 
+		subjectID,
+		teachingLoadCreds,
+		noOfStudents,
+		hoursPerWeek,
+		sectionCode,
+		room
 	)
-	VALUES ( 
-		:id, 
+	VALUES (
+		:id,
 		:subjectCode,
-		:subjectID, 
-		:teachingLoadCreds, 
-		:noOfStudents, 
-		:hoursPerWeek, 
-		:sectionCode, 
+		:subjectID,
+		:teachingLoadCreds,
+		:noOfStudents,
+		:hoursPerWeek,
+		:sectionCode,
 		:room
 	)
 `;
 
 export const updateSubject = `
-	UPDATE subject SET 
-		teachingLoadCreds = :teachingLoadCreds 
+	UPDATE subject SET
+		teachingLoadCreds = :teachingLoadCreds
 	WHERE subjectCode = :subjectCode
 `;
 
 export const deleteSubject = `
-	DELETE FROM subject 
+	DELETE FROM subject
 	WHERE id = :id
 `;
 
-export const getAllSubject = `
+export const getAllSubjects = `
 	SELECT *
 	FROM teachingLoad natural join subject
 	WHERE id=:id
@@ -47,7 +47,7 @@ export const getSubject = `
 `;
 //============================
 export const getAllSubjectWithSched = `
-	SELECT * 
+	SELECT *
 	FROM subject natural join timeslot
 	WHERE id=:id
 	ORDER BY subjectCode ASC
@@ -55,9 +55,9 @@ export const getAllSubjectWithSched = `
 `;
 
 export const getSubjectWithSched = `
-	SELECT * 
-	FROM subject natural join timeslot 
-	WHERE subjectID=:subjectID AND id=:id 
+	SELECT *
+	FROM subject natural join timeslot
+	WHERE subjectID=:subjectID AND id=:id
 `;
 
 export const addTimeslot = `

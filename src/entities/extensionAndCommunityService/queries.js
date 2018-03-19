@@ -11,7 +11,7 @@ export const addExtensionAndCommunityService = `
     startDate,
     endDate
   )
-  VALUES ( 
+  VALUES (
     :extAndCommServiceID,
     :id,
     :participant,
@@ -26,21 +26,21 @@ export const addExtensionAndCommunityService = `
 `;
 
 export const updateExtensionAndCommunityService = `
-  UPDATE extensionAndCommunityService SET 
-    participant=:participant, 
+  UPDATE extensionAndCommunityService SET
+    participant=:participant,
     role=:role;
-    hours=:hours, 
-    title=:title, 
-    creditUnit=:creditUnit, 
-    type=:type, 
-    startDate=:startDate, 
-    endDate=:endDate     
+    hours=:hours,
+    title=:title,
+    creditUnit=:creditUnit,
+    type=:type,
+    startDate=:startDate,
+    endDate=:endDate
   WHERE id= :id AND extAndCommServiceID = :extAndCommServiceID
 `;
 
-export const getAllExtensionAndCommunityService = `
+export const getAllExtensionAndCommunityServices = `
   SELECT * FROM extensionAndCommunityService
-  WHERE id = :id 
+  WHERE id = :id
   ORDER BY extAndCommServiceID ASC
   LIMIT 10;
 `;
