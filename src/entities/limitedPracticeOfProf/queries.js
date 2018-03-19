@@ -21,8 +21,6 @@ export const updateLimitedPracticeOfProf = `
 export const getLimitedPracticeOfProf = `
   SELECT * FROM limitedPracticeOfProf
   WHERE id = :id
-  ORDER BY id ASC
-  LIMIT 10;
 `;
 
 export const deleteLimitedPracticeOfProf = `

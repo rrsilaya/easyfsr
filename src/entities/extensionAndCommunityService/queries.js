@@ -48,8 +48,6 @@ export const getAllExtensionAndCommunityService = `
 export const getExtensionAndCommunityService = `
   SELECT * FROM extensionAndCommunityService
   WHERE id = :id AND extAndCommServiceID = :extAndCommServiceID
-  ORDER BY id ASC
-  LIMIT 10;
 `;
 
 export const deleteExtensionAndCommunityService = `

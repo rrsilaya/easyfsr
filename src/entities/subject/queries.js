@@ -11,8 +11,8 @@ export const addSubject = `
 	)
 	VALUES ( 
 		:id, 
-		:subjectID, 
 		:subjectCode,
+		:subjectID, 
 		:teachingLoadCreds, 
 		:noOfStudents, 
 		:hoursPerWeek, 
@@ -39,7 +39,13 @@ export const getAllSubject = `
 	ORDER BY subjectCode ASC
 	LIMIT 10
 `;
-
+//dinagdagan ko ng getSpecific
+export const getSubject = `
+	SELECT *
+	FROM teachingLoad natural join subject
+	WHERE id=:id AND subjectCode =:subjectCode
+`;
+//============================
 export const getAllSubjectWithSched = `
 	SELECT * 
 	FROM subject natural join timeslot
