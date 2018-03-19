@@ -1,23 +1,25 @@
 export const addTeachingLoad = `
-	INSERT INTO teachingLoad ( 
-		id, 
-		teachingLoadCreds 
+	INSERT INTO teachingLoad (
+		id,
+		teachingLoadID,
+		teachingLoadCreds
 	)
-	VALUES ( 
-		:id, 
-		:teachingLoadCreds 
+	VALUES (
+		:id,
+		:teachingLoadID,
+		:teachingLoadCreds
 	)
 `;
 
 export const updateTeachingLoad = `
-	UPDATE teachingLoad SET 
+	UPDATE teachingLoad SET
 		teachingLoadCreds = :teachingLoadCreds
 	WHERE id = :id
 `;
 
 export const deleteTeachingLoad = `
-	 DELETE FROM 
-	 	teachingLoad 
+	 DELETE FROM
+	 	teachingLoad
 	 WHERE id = :id
 `;
 

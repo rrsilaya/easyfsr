@@ -1,28 +1,28 @@
 export const addCreativeWork = `
-	INSERT INTO creativeWork ( 
+	INSERT INTO creativeWork (
 		id,
-		creativeWorkID, 
-		date, 
-		title, 
-		type, 
-		credUnit 
+		creativeWorkID,
+		date,
+		title,
+		type,
+		credUnit
 	)
-	VALUES ( 
-		:id, 
-		:creativeWorkID, 
-		:date, 
-		:title, 
-		:type, 
-		:credUnit 
+	VALUES (
+		:id,
+		:creativeWorkID,
+		:date,
+		:title,
+		:type,
+		:credUnit
 	)
 `;
 
 export const updateCreativeWork = `
-	UPDATE creativeWork SET 
-		date = :date, 
-		type = :type, 
-		title = :title, 
-		credUnit = :credUnit  
+	UPDATE creativeWork SET
+		date = :date,
+		type = :type,
+		title = :title,
+		credUnit = :credUnit
 	WHERE id = :id AND creativeWorkID = :creativeWorkID;
 `;
 
@@ -31,7 +31,7 @@ export const deleteCreativeWork = `
 	WHERE creativeWorkID = :creativeWorkID AND id = :id
 `;
 
-export const getAllCreativeWork = `
+export const getAllCreativeWorks = `
 	SELECT * FROM creativeWork NATURAL JOIN cworkCoAuthor
 	WHERE id = :id
 	ORDER BY creativeWorkID ASC
@@ -46,12 +46,12 @@ export const getCreativeWork = `
 //==========================================
 
 export const addCoAuthor = `
-	INSERT INTO cworkCoAuthor ( 
-		creativeWorkID, 
-		userID 
+	INSERT INTO cworkCoAuthor (
+		creativeWorkID,
+		userID
 	)
-	VALUES ( 
-		:creativeWorkID, 
+	VALUES (
+		:creativeWorkID,
 		:userID
 	)
 `;
@@ -63,6 +63,6 @@ export const updateCoAuthor = `
 `;
 
 export const deleteCoAuthor = `
-	DELETE FROM cworkAuthors 
+	DELETE FROM cworkAuthors
 	WHERE userID = :userID
 `;

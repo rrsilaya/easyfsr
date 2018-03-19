@@ -1,20 +1,22 @@
 export const addLimitedPracticeOfProf = `
-  INSERT INTO limitedPracticeOfProf ( 
+  INSERT INTO limitedPracticeOfProf (
     id,
+    limitedPracticeOfProfID,
     askedPermission,
-    date 
+    date
   )
-  VALUES ( 
+  VALUES (
     :id,
+    :limitedPracticeOfProfID,
     :askedPermission,
     :date
   )
 `;
 
 export const updateLimitedPracticeOfProf = `
-  UPDATE limitedPracticeOfProf SET 
+  UPDATE limitedPracticeOfProf SET
     askedPermission=:askedPermission,
-    date=:date  
+    date=:date
   WHERE id=:id
 `;
 

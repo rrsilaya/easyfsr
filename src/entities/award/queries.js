@@ -1,16 +1,18 @@
 export const addAward = `
-  INSERT INTO award ( 
+  INSERT INTO award (
     id,
+    awardID,
     grantF,
     chairGrantTitle,
     collegeHasNominated,
     recipientOrNominee,
     professionalChair,
     approvedStartDate,
-    endDate 
+    endDate
   )
-  VALUES ( 
+  VALUES (
     :id,
+    :awardID,
     :grantF,
     :chairGrantTitle,
     :collegeHasNominated,
@@ -22,7 +24,7 @@ export const addAward = `
 `;
 
 export const updateAward = `
-  UPDATE award SET 
+  UPDATE award SET
     grant=:grantF,
     chairGrantTitle=:chairGrantTitle,
     collegeHasNominated=:collegeHasNominated,
@@ -35,7 +37,7 @@ export const updateAward = `
 
 export const getAward = `
   SELECT * FROM award
-  WHERE id = :id 
+  WHERE id = :id
   ORDER BY id ASC
   LIMIT 10
 `;
