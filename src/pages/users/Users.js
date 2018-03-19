@@ -19,9 +19,13 @@ class Users extends Component {
       isAddModalOpen,
       isDeleteModalOpen,
 
+      isAddingUser,
+
       toggleEditModal,
       toggleAddModal,
       toggleDeleteModal,
+
+      addUser,
     } = this.props;
 
     return (
@@ -61,6 +65,8 @@ class Users extends Component {
         <AddModal
           isAddModalOpen={isAddModalOpen}
           toggleAddModal={toggleAddModal}
+          addUser={addUser}
+          isAddingUser={isAddingUser}
         />
         <DeleteModal
           isDeleteModalOpen={isDeleteModalOpen}
