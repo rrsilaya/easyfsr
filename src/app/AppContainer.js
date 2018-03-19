@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import App from './App';
 
-import { toggleSidebar, getSession, login } from './duck';
+import { toggleSidebar, getSession, login, logout } from './duck';
 
 const mapStateToProps = state => {
   const {
@@ -33,6 +33,9 @@ const mapDispatchToProps = dispatch => {
     },
     login: body => {
       dispatch(login(body));
+    },
+    logout: () => {
+      dispatch(logout());
     },
   };
 };

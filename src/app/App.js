@@ -24,6 +24,7 @@ class App extends Component {
       // Dispatch
       toggleSidebar,
       login,
+      logout,
     } = this.props;
 
     return (
@@ -40,7 +41,7 @@ class App extends Component {
                 style={{ overflowY: 'auto' }}
               >
                 <Layout className="background primary content-body">
-                  <Topbar toggleSidebar={toggleSidebar} />
+                  <Topbar toggleSidebar={toggleSidebar} logout={logout} />
                   <Layout.Content style={{ paddingBottom: '2em' }}>
                     <Switch>
                       {routes.map(route => (
