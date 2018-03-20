@@ -5,7 +5,7 @@ export const addLimitedPracticeOfProf = `
     date 
   )
   VALUES ( 
-    DEFAULT,
+    :id,
     :askedPermission,
     :date
   )

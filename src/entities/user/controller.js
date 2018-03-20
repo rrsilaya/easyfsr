@@ -1,6 +1,6 @@
 import db from '../../database/index';
 import * as Query from './queries';
-import * as Utils from '../../utils';
+import { filtered, escapeSearch } from '../../utils';
 
 const userAttributes = [
   'employeeID',
@@ -16,6 +16,14 @@ const userAttributes = [
   'acctType',
 ];
 
+const searchFields = [
+  'firstName',
+  'middleName',
+  'lastName',
+  'committee',
+  'officeNumber',
+];
+
 export const addUser = user => {
   return new Promise((resolve, reject) => {
     db.query(Query.addUser, { middleName: '', ...user }, (err, results) => {
@@ -25,12 +33,12 @@ export const addUser = user => {
   });
 };
 
-export const updateUser = ({ employeeID }, user) => {
+export const updateUser = ({ userID }, user) => {
   return new Promise((resolve, reject) => {
     if (!user) return reject(500);
     db.query(
-      Query.updateUser(Utils.filtered(user, userAttributes)),
-      { employeeID, ...user },
+      Query.updateUser(filtered(user, userAttributes)),
+      { userID, ...user },
       (err, results) => {
         if (err) return reject(500);
         return resolve(results.insertId);
@@ -39,28 +47,35 @@ export const updateUser = ({ employeeID }, user) => {
   });
 };
 
-export const getAllUsers = () => {
+export const getAllUsers = user => {
   return new Promise((resolve, reject) => {
-    db.query(Query.getAllUser, (err, results) => {
-      if (err) return reject(500);
-      else if (!results) return reject(404);
-      return resolve(results);
-    });
+    db.query(
+      Query.getUsers(filtered(user, userAttributes), user.sortBy),
+      { field: 'lastName', ...escapeSearch(user, searchFields, user.limit) },
+      (err, results) => {
+        console.log(err);
+        if (err) return reject(500);
+        return resolve(results);
+      },
+    );
   });
 };
-export const deleteUser = ({ employeeID }) => {
+
+export const deleteUser = ({ userID }) => {
   return new Promise((resolve, reject) => {
-    db.query(Query.deleteUser, { employeeID }, (err, results) => {
+    db.query(Query.deleteUser, { userID }, (err, results) => {
       if (err) return reject(500);
-      return resolve(employeeID);
+      else if (!results.affectedRows) return reject(404);
+      return resolve();
     });
   });
 };
 
-export const getUser = ({ employeeID }) => {
+export const getUser = ({ userID }) => {
   return new Promise((resolve, reject) => {
-    db.query(Query.getUser, { employeeID }, (err, results) => {
+    db.query(Query.getUser, { userID }, (err, results) => {
       if (err) return reject(500);
+      else if (!results.length) return reject(404);
       return resolve(results);
     });
   });

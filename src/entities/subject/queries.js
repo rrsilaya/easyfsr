@@ -1,7 +1,8 @@
 export const addSubject = `
 	INSERT INTO subject ( 
 		id, 
-		subjectCode, 
+		subjectCode,
+		subjectID, 
 		teachingLoadCreds, 
 		noOfStudents, 
 		hoursPerWeek, 
@@ -9,8 +10,9 @@ export const addSubject = `
 		room 
 	)
 	VALUES ( 
-		DEFAULT, 
-		:subjectCode, 
+		:id, 
+		:subjectID, 
+		:subjectCode,
 		:teachingLoadCreds, 
 		:noOfStudents, 
 		:hoursPerWeek, 
@@ -33,8 +35,34 @@ export const deleteSubject = `
 export const getAllSubject = `
 	SELECT *
 	FROM teachingLoad natural join subject
+	WHERE id=:id
 	ORDER BY subjectCode ASC
 	LIMIT 10
 `;
 
+export const getAllSubjectWithSched = `
+	SELECT * 
+	FROM subject natural join timeslot
+	WHERE id=:id
+	ORDER BY subjectCode ASC
+	LIMIT 10
+`;
 
+export const getSubjectWithSched = `
+	SELECT * 
+	FROM subject natural join timeslot 
+	WHERE subjectID=:subjectID AND id=:id 
+`;
+
+export const addTimeslot = `
+	INSERT INTO timeslot (
+		subjectID,
+		day,
+		time
+	)
+	VALUES (
+		:subjectID,
+		:day,
+		:time
+	)
+`;

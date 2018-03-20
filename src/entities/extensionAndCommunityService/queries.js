@@ -1,5 +1,6 @@
 export const addExtensionAndCommunityService = `
   INSERT INTO extensionAndCommunityService (
+    extAndCommServiceID,
     id,
     participant,
     role,
@@ -11,7 +12,8 @@ export const addExtensionAndCommunityService = `
     endDate
   )
   VALUES ( 
-    DEFAULT,
+    :extAndCommServiceID,
+    :id,
     :participant,
     :role,
     :hours,
@@ -33,17 +35,24 @@ export const updateExtensionAndCommunityService = `
     type=:type, 
     startDate=:startDate, 
     endDate=:endDate     
-  WHERE id=DEFAULT
+  WHERE id= :id AND extAndCommServiceID = :extAndCommServiceID
+`;
+
+export const getAllExtensionAndCommunityService = `
+  SELECT * FROM extensionAndCommunityService
+  WHERE id = :id 
+  ORDER BY extAndCommServiceID ASC
+  LIMIT 10;
 `;
 
 export const getExtensionAndCommunityService = `
   SELECT * FROM extensionAndCommunityService
-  WHERE id = :id
+  WHERE id = :id AND extAndCommServiceID = :extAndCommServiceID
   ORDER BY id ASC
   LIMIT 10;
 `;
 
 export const deleteExtensionAndCommunityService = `
   DELETE FROM extensionAndCommunityService
-  WHERE id = ""
+  WHERE id = :id AND extAndCommServiceID = :extAndCommServiceID
 `;

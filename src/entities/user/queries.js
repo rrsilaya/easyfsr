@@ -1,4 +1,4 @@
-import * as Utils from '../../utils';
+import { formatQueryParams } from '../../utils';
 
 export const addUser = `
   INSERT INTO user (
@@ -25,21 +25,26 @@ export const addUser = `
 
 export const updateUser = user => `
   UPDATE user SET 
-  ${Utils.formatQueryParams(user)}
-  WHERE employeeID = :employeeID
+  ${formatQueryParams(user)}
+  WHERE userID = :userID
 `;
 
 export const getAllUser = `
-  SELECT * FROM user
+  SELECT * FROM user;
 `;
 
 export const deleteUser = `
   UPDATE user SET
     isArchived = true
-  WHERE employeeID = :employeeID
+  WHERE userID = :userID
 `;
 
 export const getUser = `
   SELECT * from user
-  WHERE employeeID = :employeeID
+  WHERE userID = :userID
+`;
+
+export const getUsers = (query, sortBy) => `
+  SELECT * FROM user ${query.length ? `WHERE ${formatQueryParams(query)}` : ''} 
+  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} LIMIT :limit
 `;
