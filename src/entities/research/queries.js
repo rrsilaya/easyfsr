@@ -29,7 +29,7 @@ export const selectAllResearch = `SELECT * FROM research WHERE id=:id`;
 export const selectAllResearchWithCoAuthor = `SELECT * FROM research NATURAL JOIN rCoAuthor where id = :id`;
 
 //done
-export const selectResearch = `SELECT * FROM research WHERE id=:id AND researchID = :researchID`;
+export const selectResearch = `SELECT * FROM research WHERE researchID = :researchID`;
 
 //done
 export const selectResearchWithCoAuthor = `SELECT * FROM research NATURAL JOIN rCoAuthor where id = :id AND researchID = :researchID`;
