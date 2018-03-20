@@ -1,3 +1,5 @@
+import { formatQueryParams } from '../../utils';
+
 export const addSubject = `
 	INSERT INTO subject (
 		id,
@@ -12,7 +14,7 @@ export const addSubject = `
 	VALUES (
 		:id,
 		:subjectCode,
-		:subjectID,
+		DEFAULT,
 		:teachingLoadCreds,
 		:noOfStudents,
 		:hoursPerWeek,
@@ -21,37 +23,36 @@ export const addSubject = `
 	)
 `;
 
-export const updateSubject = `
+export const updateSubject = subject => `
 	UPDATE subject SET
-		teachingLoadCreds = :teachingLoadCreds
-	WHERE subjectCode = :subjectCode
+		${formatQueryParams(subject)}
+	WHERE subjectID = :subjectID
 `;
 
 export const deleteSubject = `
 	DELETE FROM subject
-	WHERE id = :id
+	WHERE id = :id AND subjectID = :subjectID
 `;
 
-export const getAllSubjects = `
-	SELECT *
-	FROM teachingLoad natural join subject
-	WHERE id=:id
-	ORDER BY subjectCode ASC
-	LIMIT 10
+export const getSubjects = (query, sortBy) => `
+	SELECT * FROM subject 
+	${query.length ? `WHERE ${formatQueryParams(query)}` : ''} 
+  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+  LIMIT :limit
 `;
-//dinagdagan ko ng getSpecific
+
 export const getSubject = `
 	SELECT *
 	FROM teachingLoad natural join subject
-	WHERE id=:id AND subjectCode =:subjectCode
+	WHERE id=:id AND subjectID =:subjectID
 `;
-//============================
-export const getAllSubjectWithSched = `
+
+export const getSubjectsWithSched = (query, sortBy) => `
 	SELECT *
 	FROM subject natural join timeslot
-	WHERE id=:id
-	ORDER BY subjectCode ASC
-	LIMIT 10
+	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
+	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+	LIMIT :limit
 `;
 
 export const getSubjectWithSched = `
@@ -72,3 +73,25 @@ export const addTimeslot = `
 		:time
 	)
 `;
+
+export const updateTimeslot = timeslot => `
+	UPDATE timeslot SET
+		${formatQueryParams(timeslot)}
+	WHERE subjectID = :subjectID
+`;
+
+// Is this too specific?
+export const deleteTimeslot = `
+	DELETE FROM timeslot
+	WHERE subjectID = :subjectID AND day = :day AND time = :time 
+`;
+
+/*
+
+// Supports deleting single or multiple rows at the same time 
+
+export const deleteTimeslots = query =>`
+	DELETE FROM timeslot
+	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
+`
+*/
