@@ -44,6 +44,7 @@ export const getUser = `
   WHERE userID = :userID
 `;
 
-export const getUsers = query => `
-  SELECT * FROM user ${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
+export const getUsers = (query, sortBy) => `
+  SELECT * FROM user ${query.length ? `WHERE ${formatQueryParams(query)}` : ''} 
+  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} LIMIT :limit
 `;
