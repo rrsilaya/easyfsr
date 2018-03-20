@@ -1,3 +1,5 @@
+import { formatQueryParams } from '../../utils';
+
 export const addReseach = `
 	INSERT INTO research (
 		id,
@@ -11,7 +13,7 @@ export const addReseach = `
 	)
   	VALUES (
   		:id,
-  		:researchID,
+  		DEFAULT,
   		:type,
   		:role,
   		:title,
@@ -21,16 +23,22 @@ export const addReseach = `
   	)
 `;
 
-export const updateResearch = `
+export const getResearches = (query, sortBy) => `
+	SELECT * FROM research 
+	${query.length ? `WHERE ${formatQueryParams(query)}` : ''} 
+  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+  LIMIT :limit
+`;
+
+export const getResearch = `
+	SELECT * FROM research
+	WHERE id=:id AND researchID = :researchID
+`;
+
+export const updateResearch = research => `
 	UPDATE research SET
-		type=:type,
-		title=:title,
-		role=:role,
-		startDate=:startDate,
-		endDate=:endDate,
-		funding=:funding,
-		approvedUnits=:approvedUnits
-  	WHERE id=:id and researchID=:researchID
+		${formatQueryParams(research)}
+	WHERE id=:id and researchID=:researchID
 `;
 
 export const deleteResearch = `
@@ -38,33 +46,26 @@ export const deleteResearch = `
 	where id=:id AND researchID = :researchID
 `;
 
-//nilagyan ko ng orderby at limit
-export const selectAllResearches = `
-	SELECT * FROM research
-	WHERE id=:id
-	ORDER BY researchID ASC
-	LIMIT 10
-`;
+/*
 
-export const selectAllResearchesWithCoAuthor = `
+// Supports deleting single or multiple rows at the same time 
+
+export const deleteResearches = query =>`
+	DELETE FROM research
+	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
+`
+*/
+
+export const getResearchesWithCoAuthor = query => `
 	SELECT * FROM research NATURAL JOIN rCoAuthor
-	where id = :id
-	ORDER BY researchID ASC
-	LIMIT 10
-`;
-//======================================
-export const selectResearch = `
-	SELECT * FROM research
-	WHERE id=:id AND researchID = :researchID
+	${query.length ? `WHERE ${formatQueryParams(query)}` : ''} 
+  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+  LIMIT :limit
 `;
 
-export const selectResearchWithCoAuthor = `
+export const getResearchWithCoAuthor = `
 	SELECT * FROM research NATURAL JOIN rCoAuthor
 	where id = :id AND researchID = :researchID
-`;
-
-export const dropResearch = `
-	DROP TABLE research
 `;
 
 export const addrCoAuthor = `
@@ -87,8 +88,4 @@ export const updaterCoAuthor = `
 export const deleterCoAuthor = `
 	delete from rCoAuthor
 	where userID = :userID AND researchID=:researchID
-`;
-
-export const droprCoAuthor = `
-	DROP TABLE rCoAuthor
 `;
