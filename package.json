@@ -6,7 +6,8 @@
     "build": "backpack build",
     "seed": "mysql -u root -p < ./src/database/schema.sql",
     "docs": "apidoc -i ./src -o ./docs",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "prettify": "prettier ./src/**/**/*.js --write"
   },
   "license": "MIT",
   "devDependencies": {
