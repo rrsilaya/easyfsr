@@ -26,9 +26,9 @@ CREATE TABLE user(
   isArchived BOOLEAN DEFAULT 0, 
   acctType VARCHAR(10) DEFAULT 'USER', -- ADMIN / USER
   CONSTRAINT `user_pk`
-    PRIMARY KEY (`userID`)
+    PRIMARY KEY (`userID`),
   CONSTRAINT `user_empid_uk`
-    UNIQUE KEY (`employeeID`)
+    UNIQUE KEY (`employeeID`),
   CONSTRAINT `user_email_uk`
     UNIQUE KEY (`emailAddress`)
 );
@@ -56,13 +56,15 @@ CREATE TABLE `teachingLoad`(
   `teachingLoadCreds` INT(2) NOT NULL,
   CONSTRAINT `teachingLoad_user_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`)
+    REFERENCES fsr(`id`),
+  CONSTRAINT `teachingLoad_pk`
+    PRIMARY KEY(`id`)
 );
 
 CREATE TABLE `subject`(
   `id` INT NOT NULL,
-  `subjectID` INT NOT NULL AUTO_INCREMENT,
   `subjectCode` VARCHAR (30) NOT NULL,
+  `subjectID` INT NOT NULL AUTO_INCREMENT,
   `teachingLoadCreds` INT(2) NOT NULL,
   `noOfStudents` INT(3) NOT NULL,
   `hoursPerWeek` INT(2) NOT NULL,
@@ -93,7 +95,9 @@ CREATE TABLE `studyLoad`(
   `id` INT NOT NULL,
   CONSTRAINT `studyLoad_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`)
+    REFERENCES fsr(`id`),
+  CONSTRAINT `studyLoad_pk`
+    PRIMARY KEY(`id`)
 );
 
 CREATE TABLE `course`(
@@ -106,7 +110,7 @@ CREATE TABLE `course`(
   CONSTRAINT `course_studyLoad_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
-  CONSTRAINT `studyLoad_pk`
+  CONSTRAINT `course_pk`
     PRIMARY KEY (`courseID`)
 );
 
@@ -148,41 +152,47 @@ CREATE TABLE `chTimeslot`(
 -- Professorial Chair or Faculty Grant or Nominee (Award)
 
 CREATE TABLE `award`(
+  `awardID` INT NOT NULL AUTO_INCREMENT, 
   `id` INT NOT NULL,
-  grantF VARCHAR (50) NOT NULL,
-  chairGrantTitle VARCHAR (50) NOT NULL,
-  collegeHasNominated VARCHAR (50) NOT NULL,
-  recipientOrNominee VARCHAR (50) NOT NULL,
-  professionalChair VARCHAR (50) NOT NULL,
-  approvedStartDate VARCHAR (50) NOT NULL,
-  endDate VARCHAR (50) NOT NULL,
+  `grantF` VARCHAR (50) NOT NULL,
+  `chairGrantTitle` VARCHAR (50) NOT NULL,
+  `collegeHasNominated` VARCHAR (50) NOT NULL,
+  `recipientOrNominee` VARCHAR (50) NOT NULL,
+  `professionalChair` VARCHAR (50) NOT NULL,
+  `approvedStartDate` VARCHAR (50) NOT NULL,
+  `endDate` VARCHAR (50) NOT NULL,
   CONSTRAINT `award_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`)
+    REFERENCES fsr(`id`),
+  CONSTRAINT `award_pk`
+    PRIMARY KEY (`awardID`) 
 );
 
 -- Limited Practice of Profession
 
 CREATE TABLE `limitedPracticeOfProf`(
+  `limitedPracticeOfProfID` INT NOT NULL AUTO_INCREMENT, 
   `id` INT NOT NULL,
-  askedPermission VARCHAR (10) NOT NULL,  -- YES / NO
+  `askedPermission` VARCHAR (10) NOT NULL,  -- YES / NO
   Date VARCHAR (50),
   CONSTRAINT `limitedPracticeOfProf_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`)
+    REFERENCES fsr(`id`),
+  CONSTRAINT `limitedPracticeOfProf_pk`
+    PRIMARY KEY (`limitedPracticeOfProfID`) 
 );
 
 CREATE TABLE `extensionAndCommunityService`(
   `id` INT NOT NULL, 
-  extAndCommServiceID INT NOT NULL AUTO_INCREMENT,
-  participant VARCHAR (50) NOT NULL,
-  role VARCHAR (50) NOT NULL,
-  hours INT (3) NOT NULL,
-  title VARCHAR (50) NOT NULL,
-  creditUnit INT (2) NOT NULL,
-  type VARCHAR (50) NOT NULL,
-  startDate VARCHAR (50) NOT NULL,
-  endDate VARCHAR (50) NOT NULL,
+  `extAndCommServiceID` INT NOT NULL AUTO_INCREMENT,
+  `participant` VARCHAR (50) NOT NULL,
+  `role` VARCHAR (50) NOT NULL,
+  `hours` INT (3) NOT NULL,
+  `title` VARCHAR (50) NOT NULL,
+  `creditUnit` INT (2) NOT NULL,
+  `type` VARCHAR (50) NOT NULL,
+  `startDate` VARCHAR (50) NOT NULL,
+  `endDate` VARCHAR (50) NOT NULL,
   CONSTRAINT `extensionAndCommunityService_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),

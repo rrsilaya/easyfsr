@@ -1,20 +1,19 @@
+import { formatQueryParams } from '../../utils';
+
 export const addTeachingLoad = `
 	INSERT INTO teachingLoad (
 		id,
-		teachingLoadID,
 		teachingLoadCreds
 	)
 	VALUES (
 		:id,
-		:teachingLoadID,
 		:teachingLoadCreds
 	)
 `;
 
-export const updateTeachingLoad = `
+export const updateTeachingLoad = teachingLoad => `
 	UPDATE teachingLoad SET
-		teachingLoadCreds = :teachingLoadCreds,
-		teachingLoadID = :teachingLoadID
+		${formatQueryParams(teachingLoad)}
 	WHERE id = :id
 `;
 
@@ -27,6 +26,4 @@ export const deleteTeachingLoad = `
 export const getTeachingLoad = `
 	SELECT * FROM teachingLoad
 	WHERE id = :id
-	ORDER BY id ASC
-	LIMIT 10
 `;
