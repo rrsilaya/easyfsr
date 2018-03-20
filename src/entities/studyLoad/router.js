@@ -101,9 +101,11 @@ router.put('/studyLoad/:id', async (req, res) => {
     //   req.body.password = await bcrypt.hash(req.body.password, 10);
     // }
     await Ctrl.updateStudyLoad(req.params, req.body);
+    const studyLoad = await Ctrl.getStudyLoad(req.params);
     res.status(200).json({
       status: 200,
       message: 'Successfully updated studyLoad',
+      data: studyLoad,
     });
   } catch (status) {
     let message = '';
@@ -166,11 +168,33 @@ router.put('/studyLoad/:id', async (req, res) => {
 
 router.get('/studyLoad/:id', async (req, res) => {
   try {
-    const id = await Ctrl.getStudyLoad(req.params);
+    const studyLoad = await Ctrl.getStudyLoad(req.params);
     res.status(200).json({
       status: 200,
       message: 'Successfully retrieved studyLoad details',
-      data: id,
+      data: studyLoad,
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'studyLoad not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
+    }
+    res.status(status).json({ status, message });
+  }
+});
+
+router.get('/studyLoad/', async (req, res) => {
+  try {
+    const studyLoads = await Ctrl.getAllStudyLoad(req.query);
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully fetched all studyLoad details',
+      data: studyLoads,
     });
   } catch (status) {
     let message = '';

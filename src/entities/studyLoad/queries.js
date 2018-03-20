@@ -1,10 +1,9 @@
-import * as Utils from '../../utils';
+import { formatQueryParams } from '../../utils';
 
 export const addStudyLoad = `
 	INSERT INTO studyLoad ( 
 		id, 
 		degree, 
-		courseNumber, 
 		university, 
 		totalSLcredits 
 	)
@@ -12,7 +11,6 @@ export const addStudyLoad = `
 	VALUES ( 
 		:id, 
 		:degree, 
-		:courseNumber, 
 		:university, 
 		:totalSLcredits 
 	)
@@ -20,7 +18,7 @@ export const addStudyLoad = `
 
 export const updateStudyLoad = studyLoad => `
 	UPDATE studyLoad SET 
-		${Utils.formatQueryParams(studyLoad)}
+		${formatQueryParams(studyLoad)}
 		WHERE id = :id
 `;
 
@@ -34,6 +32,11 @@ export const getStudyLoad = `
 		WHERE id = :id 
 		ORDER BY id ASC 
 		LIMIT 10
+`;
+
+export const getAllStudyLoad = query => `
+	SELECT * FROM studyLoad 
+	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
 `;
 
 export const dropStudyLoad = `

@@ -1,14 +1,9 @@
 import db from '../../database/index';
 import * as Query from './queries';
 import * as Utils from '../../utils';
+import { filtered } from '../../utils';
 
-const studyLoadAttributes = [
-  'id',
-  'degree',
-  'courseNumber',
-  'university',
-  'totalSLcredits',
-];
+const studyLoadAttributes = ['id', 'degree', 'university', 'totalSLcredits'];
 
 export const addStudyLoad = studyLoad => {
   return new Promise((resolve, reject) => {
@@ -28,7 +23,7 @@ export const updateStudyLoad = ({ id }, studyLoad) => {
       { id, ...studyLoad },
       (err, results) => {
         if (err) return reject(500);
-        else if (!results.length) return reject(404);
+        // else if (!results.length) return reject(404);
         return resolve(results.insertId);
       },
     );
@@ -45,11 +40,25 @@ export const getStudyLoad = ({ id }) => {
   });
 };
 
+export const getAllStudyLoad = studyLoad => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      Query.getAllStudyLoad(filtered(studyLoad, studyLoadAttributes)),
+      studyLoad,
+      (err, results) => {
+        if (err) return reject(500);
+        else if (!results.length) return reject(404);
+        return resolve(results);
+      },
+    );
+  });
+};
+
 export const deleteStudyLoad = ({ id }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.deleteStudyLoad, { id }, (err, results) => {
       if (err) return reject(500);
-      else if (!results.length) return reject(404);
+      else if (!results.affectedRows) return reject(404);
       return resolve(id);
     });
   });
