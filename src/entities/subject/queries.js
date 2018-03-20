@@ -29,6 +29,15 @@ export const updateSubject = subject => `
 	WHERE subjectID = :subjectID
 `;
 
+/*
+
+// Supports single or multiple rows of delete
+export const deleteSubjects = query =>`
+	DELETE FROM subject
+	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
+`; 
+*/
+
 export const deleteSubject = `
 	DELETE FROM subject
 	WHERE id = :id AND subjectID = :subjectID
@@ -72,6 +81,11 @@ export const addTimeslot = `
 		:day,
 		:time
 	)
+`;
+
+export const getTimeslots = query => `
+	SELECT FROM timeslot
+	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}	
 `;
 
 export const updateTimeslot = timeslot => `

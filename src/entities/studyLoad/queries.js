@@ -1,15 +1,29 @@
-export const addStudyLoad =
-	'INSERT INTO studyLoad ( studyLoadID, degree, university, totalSLcredits, id )VALUES ( :studyLoadID, :degree, :university, :totalSLcredits, DEFAULT )';
+import { formatQueryParams } from '../../utils';
 
-export const updateStudyLoad =
-  'UPDATE studyLoad SET studyLoadID=:studyLoadID, degree= :degree, university=:university, totalSLcredits= WHERE id=:id';
+export const addStudyLoad = `
+	INSERT INTO studyLoad ( degree, university, totalSLcredits, id )
+	VALUES ( :degree, :university, :totalSLcredits, :id )`;
 
-export const deleteStudyLoad = 'delete from studyLoad where id = :id';
-//made a getAll and getSpecific
-export const selectAllStudyLoads =
-  'SELECT *FROM studyLoad WHERE id=:id ORDER BY id ASC LIMIT 10';
+export const updateStudyLoad = studyLoad => `
+	UPDATE studyLoad 
+  ${formatQueryParams(studyLoad)}
+	WHERE id=:id
+`;
 
-export const selectStudyLoad =
-  'SELECT *FROM studyLoad WHERE id=:id AND university=:university AND degree=:degree AND courseNumber=:courseNumber';
-//=============================
-export const dropStudyLoad = 'DROP TABLE studyLoad';
+// Supports single or multiple rows delete of studyLoad
+/*
+export const deleteStudyLoads = query = `
+	DELETE FROM studyLoad 
+	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
+`;
+*/
+
+export const deleteStudyLoad = `
+	DELETE FROM studyLoad 
+	where id = :id
+`;
+
+export const selectStudyLoad = `
+	SELECT * FROM studyLoad 
+  WHERE id = :id
+`;

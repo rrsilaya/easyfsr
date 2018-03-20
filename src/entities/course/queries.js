@@ -1,3 +1,5 @@
+import { formatQueryParams } from '../../utils';
+
 export const addCourse = `
 	INSERT INTO course (
 		id,
@@ -17,36 +19,42 @@ export const addCourse = `
 	)
 `;
 
-export const updateCourse = `
+export const updateCourse = course => `
 	UPDATE course SET
-		hoursPerWeek=:hoursPerWeek,
-		school=:school,
-		credit=:credit
+	${formatQueryParams(course)}
 	WHERE courseID=:courseID AND id=:id
 `;
+
+/*
+
+// Supports single or multiple rows of delete
+export const deleteCourses = query =>`
+	DELETE FROM subject
+	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
+`; 
+*/
 
 export const deleteCourse = `
 	DELETE FROM course where courseID = :courseID`;
 
-export const getAllCourses = `
-	SELECT * FROM course
-	where id=:id
+export const getCourses = (query, sortBy) => `
+	SELECT * FROM course 
+	${query.length ? `WHERE ${formatQueryParams(query)}` : ''} 
+  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+  LIMIT :limit
 `;
 
-export const getAllCoursesWithSched = `
-	SELECT * FROM course NATURAL JOIN courseSched
-	WHERE id=:id
-	ORDER BY courseID ASC
-	LIMIT 10
+export const getCoursesWithSched = (query, sortBy) => `
+	SELECT *
+	FROM course natural join courseSched
+	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
+	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+	LIMIT :limit
 `;
 
 export const getCourseWithSched = `
 	SELECT * FROM course NATURAL JOIN courseSched
 	WHERE id=:id AND courseID=:courseID
-`;
-
-export const dropCourse = `
-	DROP TABLE course
 `;
 
 export const addCourseSched = `
@@ -62,23 +70,19 @@ export const addCourseSched = `
 	);
 `;
 
-export const updateCourseSched = `
+export const getCourseScheds = query => `
+	SELECT FROM courseSched
+	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}	
+`;
+
+export const updateCourseSched = timeslot => `
 	UPDATE courseSched SET
-		day= :day,
-		time=:time
-	WHERE courseID=:courseID AND id=:id
+		${formatQueryParams(timeslot)}
+	WHERE courseID = :courseID
 `;
 
-export const deleteCourseSched = `
+// Supports single or multiple rows of delete
+export const deleteCourseSched = (query = `
 	DELETE FROM courseSched
-	WHERE courseID = :courseID AND id = :id AND day=:day AND time=:time
-`;
-
-export const getCourseSched = `
-	SELECT * FROM courseSched
-	WHERE courseID=:courseID
-`;
-
-export const dropCourseSched = `
-	DROP TABLE courseSched
-`;
+	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
+`);
