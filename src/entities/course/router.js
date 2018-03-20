@@ -47,8 +47,9 @@ const router = Router();
 
 router.post('/course/', async (req, res) => {
   try {
-    await Ctrl.addCourse(req.body);
-    const course = await Ctrl.getCourse(req.body.courseNumber);
+    const courseNumber = await Ctrl.addCourse(req.body);
+    console.log('courseNumber' + courseNumber);
+    const course = await Ctrl.getCourse({ courseNumber });
 
     res.status(200).json({
       status: 200,
@@ -247,9 +248,10 @@ router.delete('/course/:courseNumber', async (req, res) => {
 router.get('/course/:courseNumber', async (req, res) => {
   try {
     const course = await Ctrl.getCourse(req.params);
+
     res.status(200).json({
       status: 200,
-      message: 'Successfully got course details',
+      message: 'Successfully fetched course',
       data: course,
     });
   } catch (status) {
@@ -307,10 +309,9 @@ router.get('/course/:courseNumber', async (req, res) => {
 router.get('/course', async (req, res) => {
   try {
     const courses = await Ctrl.getCourses(req.query);
-
     res.status(200).json({
       status: 200,
-      message: 'Successfully fetched user',
+      message: 'Successfully fetched courses',
       data: courses,
     });
   } catch (status) {

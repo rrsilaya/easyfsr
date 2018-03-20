@@ -1,10 +1,10 @@
-import * as Utils from '../../utils';
+import { formatQueryParams } from '../../utils';
 
 export const addCourse =
   'INSERT INTO course ( hoursPerWeek, school, credit, courseNumber ) VALUES ( :hoursPerWeek, :school, :credit, :courseNumber )';
 
 export const updateCourse = course =>
-  `UPDATE course SET   ${Utils.formatQueryParams(
+  `UPDATE course SET   ${formatQueryParams(
     course,
   )} WHERE courseNumber= :courseNumber`;
 
@@ -16,13 +16,8 @@ export const getCourse = `
   WHERE courseNumber = :courseNumber
 `;
 
-export const selectCourse =
-  'SELECT *FROM course WHERE fsrID=:fsrID courseNumber=:courseNumber school=:school credit=:credit ORDER BY id ASC LIMIT 10';
-
-export const dropCourse = 'DROP TABLE course';
-
 export const getCourses = query => `
   SELECT * FROM course ${
-    query.length ? `WHERE ${Utils.formatQueryParams(query)}` : ''
+    query.length ? `WHERE ${formatQueryParams(query)}` : ''
   }
 `;
