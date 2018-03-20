@@ -1,7 +1,7 @@
 import Dashboard from '../pages/dashboard/Dashboard';
 import Profile from '../pages/profile/Profile';
 import ServiceRecords from '../pages/serviceRecords/ServiceRecords';
-import Users from '../pages/users/Users';
+import Users from '../pages/users/UsersContainer';
 
 const routes = [
   {
