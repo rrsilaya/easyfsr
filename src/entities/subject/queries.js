@@ -1,8 +1,9 @@
+import { formatQueryParams } from '../../utils';
+
 export const addSubject = `
 	INSERT INTO subject ( 
 		id, 
 		subjectCode,
-		subjectID, 
 		teachingLoadCreds, 
 		noOfStudents, 
 		hoursPerWeek, 
@@ -11,7 +12,6 @@ export const addSubject = `
 	)
 	VALUES ( 
 		:id, 
-		:subjectID, 
 		:subjectCode,
 		:teachingLoadCreds, 
 		:noOfStudents, 
@@ -21,10 +21,10 @@ export const addSubject = `
 	)
 `;
 
-export const updateSubject = `
-	UPDATE subject SET 
-		teachingLoadCreds = :teachingLoadCreds 
-	WHERE subjectCode = :subjectCode
+export const updateSubject = subject => `
+  UPDATE subject SET 
+   ${formatQueryParams(subject)}
+  WHERE id = :id
 `;
 
 export const deleteSubject = `
@@ -32,7 +32,13 @@ export const deleteSubject = `
 	WHERE id = :id
 `;
 
-export const getAllSubject = `
+export const getSubject = query => `
+  SELECT * FROM subject ${
+    query.length ? `WHERE ${formatQueryParams(query)}` : ''
+  }
+`;
+
+/*export const getAllSubject = `
 	SELECT *
 	FROM teachingLoad natural join subject
 	WHERE id=:id
@@ -66,3 +72,5 @@ export const addTimeslot = `
 		:time
 	)
 `;
+
+*/
