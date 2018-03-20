@@ -47,14 +47,14 @@ const router = Router();
 
 router.post('/course/', async (req, res) => {
   try {
-    const courseNumber = await Ctrl.addCourse(req.body);
-    console.log('courseNumber' + courseNumber);
-    const course = await Ctrl.getCourse({ courseNumber });
+    const id = await Ctrl.addCourse(req.body);
+    // console.log('id' + id);
+    // const course = await Ctrl.getCourse({id});
 
     res.status(200).json({
       status: 200,
       message: 'Successfully added course',
-      data: course,
+      // data: course,
     });
   } catch (status) {
     let message = '';
@@ -67,59 +67,60 @@ router.post('/course/', async (req, res) => {
   }
 });
 
-/**
- * @api {put} /course/:courseNumber updateCourse
- * @apiGroup Course
- * @apiName updateCourse
- *
- * @apiParam (Query Params) {String} courseNumber courseNumber of course
- * @apiParam (Body Params) {String} hoursPerWeek number of hours of course per week
- * @apiParam (Body Params) {String} school school course is being taken
- * @apiParam (Body Params) {String} credit credit of course
- *
- * @apiSuccess {Object} course Course is update
- * @apiSuccess {String} course.hoursPerWeek number of hours of course per week
- * @apiSuccess {String} course.school school course is being taken
- * @apiSuccess {String} course.credit credit of course
- * @apiSuccess {String} courseNumber courseNumber of course
- *
- * @apiSuccessExample {json} Success-Response:
- *   HTTP/1.1 200 OK
- *   {
- *     "data": {
- *       "status": 200,
- *       "message": "Successfully updated course",
- *       "data": [
- *         {
- *           "hoursPerWeek": "1",
- *           "school": "uplb",
- *           "credit": "10",
- *           "courseNumber": "10"
- *        }
- *      ]
- *   }
- *   
- *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
- * @apiErrorExample {json} Error-Response:
- *   HTTP/1.1 500 Internal Server Error
- *   {
- *     "status": 500,
- *     "message": "Internal server error"
- *   }
+// /**
+//  * @api {put} /course/:courseNumber updateCourse
+//  * @apiGroup Course
+//  * @apiName updateCourse
+//  *
+//  * @apiParam (Query Params) {String} courseNumber courseNumber of course
+//  * @apiParam (Body Params) {String} hoursPerWeek number of hours of course per week
+//  * @apiParam (Body Params) {String} school school course is being taken
+//  * @apiParam (Body Params) {String} credit credit of course
+//  *
+//  * @apiSuccess {Object} course Course is update
+//  * @apiSuccess {String} course.hoursPerWeek number of hours of course per week
+//  * @apiSuccess {String} course.school school course is being taken
+//  * @apiSuccess {String} course.credit credit of course
+//  * @apiSuccess {String} courseNumber courseNumber of course
+//  *
+//  * @apiSuccessExample {json} Success-Response:
+//  *   HTTP/1.1 200 OK
+//  *   {
+//  *     "data": {
+//  *       "status": 200,
+//  *       "message": "Successfully updated course",
+//  *       "data": [
+//  *         {
+//  *           "hoursPerWeek": "1",
+//  *           "school": "uplb",
+//  *           "credit": "10",
+//  *           "courseNumber": "10"
+//  *        }
+//  *      ]
+//  *   }
+//  *
+//  *
+//  * @apiError (Error 500) {String[]} errors List of errors
+//  * @apiError (Error 500) {String} errors.message Error message
+//  * @apiErrorExample {json} Error-Response:
+//  *   HTTP/1.1 500 Internal Server Error
+//  *   {
+//  *     "status": 500,
+//  *     "message": "Internal server error"
+//  *   }
 
-    HTTP/1.1 404 Course not found
- * {
- *   "status": 404,
- *   "message": "Course not found"
- * }
- */
+//     HTTP/1.1 404 Course not found
+//  * {
+//  *   "status": 404,
+//  *   "message": "Course not found"
+//  * }
+//  */
 
-router.put('/course/:courseNumber', async (req, res) => {
+router.put('/course/:courseID', async (req, res) => {
   try {
-    await Ctrl.updateCourse(req.params, req.body);
-    const course = await Ctrl.getCourse(req.params);
+    const courseID = await Ctrl.updateCourse(req.params, req.body);
+    // console.log("courseID: "+ courseID);
+    const course = await Ctrl.getCourse(courseID, req.params);
 
     res.status(200).json({
       status: 200,
@@ -178,7 +179,7 @@ router.put('/course/:courseNumber', async (req, res) => {
  * }
  */
 
-router.delete('/course/:courseNumber', async (req, res) => {
+router.delete('/course/:courseID', async (req, res) => {
   try {
     const id = await Ctrl.deleteCourse(req.params);
     res.status(200).json({
@@ -200,7 +201,7 @@ router.delete('/course/:courseNumber', async (req, res) => {
 });
 
 /**
- * @api {put} /course/:courseNumber addCourse
+ * @api {put} /course/:courseNumber getCourse
  * @apiGroup Course
  * @apiName updateCourse
  *
@@ -245,7 +246,7 @@ router.delete('/course/:courseNumber', async (req, res) => {
  * }
  */
 
-router.get('/course/:courseNumber', async (req, res) => {
+router.get('/course/:id/:courseID', async (req, res) => {
   try {
     const course = await Ctrl.getCourse(req.params);
 
@@ -306,9 +307,9 @@ router.get('/course/:courseNumber', async (req, res) => {
  *    }
  **/
 
-router.get('/course', async (req, res) => {
+router.get('/course/:id', async (req, res) => {
   try {
-    const courses = await Ctrl.getCourses(req.query);
+    const courses = await Ctrl.getCourses(req.params);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched courses',

@@ -4,5 +4,5 @@ export const formatQueryParams = query =>
     return field;
   }, '');
 
-export const filtered = (payload, attributes) =>
+export const filtered = (payload = {}, attributes) =>
   Object.keys(payload).filter(key => attributes.includes(key));

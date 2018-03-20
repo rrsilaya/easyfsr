@@ -2,7 +2,14 @@ import db from '../../database/index';
 import * as Query from './queries';
 import { filtered } from '../../utils';
 
-const courseAttributes = ['hoursPerWeek', 'school', 'credit', 'courseNumber'];
+const courseAttributes = [
+  'id',
+  'courseNumber',
+  'courseID',
+  'hoursPerWeek',
+  'school',
+  'credit',
+];
 
 export const addCourse = course => {
   return new Promise((resolve, reject) => {
@@ -13,52 +20,52 @@ export const addCourse = course => {
   });
 };
 
-export const updateCourse = ({ courseNumber }, course) => {
+export const deleteCourse = ({ courseID }) => {
   return new Promise((resolve, reject) => {
-    if (!course) return reject(500);
-    db.query(
-      Query.updateCourse(filtered(course, courseAttributes)),
-      { courseNumber, ...course },
-      (err, results) => {
-        if (err) return reject(500);
-        console.log(results);
-        return resolve(results.insertId);
-      },
-    );
-  });
-};
-
-export const deleteCourse = ({ courseNumber }) => {
-  return new Promise((resolve, reject) => {
-    db.query(Query.deleteCourse, { courseNumber }, (err, results) => {
+    db.query(Query.deleteCourse, { courseID }, (err, results) => {
+      console.log(err);
       if (err) return reject(500);
       else if (!results.affectedRows) return reject(404);
-      return resolve(courseNumber);
+      return resolve(courseID);
     });
   });
 };
 
-export const getCourses = course => {
+export const getCourses = ({ id }) => {
   return new Promise((resolve, reject) => {
-    db.query(
-      Query.getCourses(filtered(course, courseAttributes)),
-      course,
-      (err, results) => {
-        if (err) return reject(500);
-        else if (!results) return reject(404);
-        return resolve(results);
-      },
-    );
+    db.query(Query.getAllCourse, { id }, (err, results) => {
+      if (err) return reject(500);
+      else if (!results) return reject(404);
+      return resolve(results);
+    });
   });
 };
 
-export const getCourse = ({ courseNumber }) => {
+export const getCourse = ({ id, courseID }) => {
   return new Promise((resolve, reject) => {
-    db.query(Query.getCourse, { courseNumber }, (err, results) => {
-      console.log(courseNumber);
+    db.query(Query.getCourse, { id, courseID }, (err, results) => {
+      console.log(err);
       if (err) return reject(500);
       else if (!results.length) return reject(404);
       return resolve(results);
     });
+  });
+};
+
+export const updateCourse = ({ courseID }, course) => {
+  return new Promise((resolve, reject) => {
+    // console.log("course " + course);
+    if (!course) return reject(500);
+    db.query(
+      Query.updateCourse(filtered(course, courseAttributes)),
+      { courseID, ...course },
+      (err, results) => {
+        // console.log("err" + err);
+
+        if (err) return reject(500);
+        // console.log("results: " + results.insertId);
+        return resolve(results.insertId);
+      },
+    );
   });
 };
