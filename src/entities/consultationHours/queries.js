@@ -1,3 +1,5 @@
+import { formatQueryParams } from '../../utils';
+
 export const addConsultationHour = `
   INSERT INTO consultationHours (
     chID,
@@ -5,25 +7,23 @@ export const addConsultationHour = `
     place
   )
   VALUES (
-    :chID,
+    DEFAULT,
     :id,
     :place
   )
 `;
 
-export const updateConsultationHours = `
+export const updateConsultationHour = `
   UPDATE consultationHours SET 
     place = :place
   WHERE id = :id AND chID = :chID
 `;
 
-export const getAllConsultationHours = `
+export const getConsultationHours = (query, sortBy) => `
   SELECT * FROM consultationHours NATURAL JOIN chTimeSlot
-`;
-
-export const getAllConsultationHoursOfFSR = `
-  SELECT * FROM consultationHours NATURAL JOIN chTimeSlot
-  WHERE id = :id 
+  ${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
+  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+  LIMIT :limit
 `;
 
 export const deleteConsultationHours = `
@@ -46,10 +46,9 @@ export const addTimeslot = `
     )
 `;
 
-export const updateTimeslot = `
+export const updateTimeslot = timeslot => `
     UPDATE chTimeSlot SET 
-        day = :day, 
-        time = :time
+      ${formatQueryParams(timeslot)}
     WHERE chID = :chID AND id = :id
 `;
 
