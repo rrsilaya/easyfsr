@@ -22,6 +22,7 @@ class Users extends Component {
       isAddModalOpen,
       isDeleteModalOpen,
 
+      isGettingUsers,
       isAddingUser,
       isEditingUser,
 
@@ -34,6 +35,7 @@ class Users extends Component {
       editUser,
 
       users,
+      user,
     } = this.props;
 
     return (
@@ -69,8 +71,10 @@ class Users extends Component {
           ))}
         </Row>
         <EditModal
+          user={user}
           isEditModalOpen={isEditModalOpen}
           toggleEditModal={toggleEditModal}
+          editUser={editUser}
           isEditingUser={isEditingUser}
         />
         <AddModal

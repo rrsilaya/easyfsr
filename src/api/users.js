@@ -12,6 +12,6 @@ export const addUser = user => {
   return axios.post('/api/user', user);
 };
 
-export const editUser = (id, body) => {
-  return axios.put(`/api/user/${id}`, body);
+export const editUser = (userID, body) => {
+  return axios.put(`/api/user/${userID}`, body);
 };
