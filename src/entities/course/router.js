@@ -47,14 +47,14 @@ const router = Router();
 
 router.post('/course/', async (req, res) => {
   try {
-    const id = await Ctrl.addCourse(req.body);
+    const courseID = await Ctrl.addCourse(req.body);
     // console.log('id' + id);
-    // const course = await Ctrl.getCourse({id});
+    const course = await Ctrl.getCourse({ courseID });
 
     res.status(200).json({
       status: 200,
       message: 'Successfully added course',
-      // data: course,
+      data: course,
     });
   } catch (status) {
     let message = '';
@@ -118,9 +118,8 @@ router.post('/course/', async (req, res) => {
 
 router.put('/course/:courseID', async (req, res) => {
   try {
-    const courseID = await Ctrl.updateCourse(req.params, req.body);
-    // console.log("courseID: "+ courseID);
-    const course = await Ctrl.getCourse(courseID, req.params);
+    await Ctrl.updateCourse(req.params, req.body);
+    const course = await Ctrl.getCourse(req.params);
 
     res.status(200).json({
       status: 200,

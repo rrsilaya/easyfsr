@@ -41,9 +41,9 @@ export const getCourses = ({ id }) => {
   });
 };
 
-export const getCourse = ({ id, courseID }) => {
+export const getCourse = ({ courseID }) => {
   return new Promise((resolve, reject) => {
-    db.query(Query.getCourse, { id, courseID }, (err, results) => {
+    db.query(Query.getCourse, { courseID }, (err, results) => {
       console.log(err);
       if (err) return reject(500);
       else if (!results.length) return reject(404);

@@ -18,7 +18,7 @@ export const addCourse = `
 
 export const deleteCourse = `delete from course where courseID = :courseID`;
 export const getAllCourse = `SELECT * from course where id=:id`;
-export const getCourse = `SELECT * FROM course WHERE  id =:id && courseID=:courseID`;
+export const getCourse = `SELECT * FROM course WHERE  courseID=:courseID`;
 
 export const updateCourse = course =>
   ` UPDATE course 
