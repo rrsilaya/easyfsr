@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Row, Col, Button, Icon, Dropdown, Menu, Input, Table } from 'antd';
+import { Button, Icon, Input, Table } from 'antd';
 import data from './faculty-data';
-
-const Search = Input.Search;
 
 class FacultySearch extends Component {
   state = {

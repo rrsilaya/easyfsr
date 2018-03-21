@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Layout, Icon } from 'antd';
 
 import styles from './styles';
-import { Input } from 'antd';
-const Search = Input.Search;
 
 class Topbar extends Component {
   render() {
