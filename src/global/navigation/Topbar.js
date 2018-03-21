@@ -15,15 +15,14 @@ class Topbar extends Component {
     const menu = (
       <Menu>
         <Menu.Item>
-          <a target="_blank" rel="noopener noreferrer" href="#">
-            {' '}
-            <Icon type="setting" /> Account Settings
-          </a>
+          <Icon type="setting" style={styles.iconOffset} />
+          Account Settings
         </Menu.Item>
         <Menu.Item>
-          <div onClick={logout}>
-            <Icon type="logout" /> Logout
-          </div>
+          <span onClick={logout}>
+            <Icon type="logout" style={styles.iconOffset} />
+            Logout
+          </span>
         </Menu.Item>
       </Menu>
     );
@@ -37,11 +36,11 @@ class Topbar extends Component {
         />
         <div style={styles.account}>
           <img style={styles.image} alt="" />
-          <div>{`${user.firstName} ${user.lastName}`}</div>
           <Dropdown overlay={menu} trigger={['click']}>
-            <a className="ant-dropdown-link" href="#">
+            <div className="set-cursor pointer">
+              <span>{`${user.firstName} ${user.lastName}`}</span>
               <Icon type="caret-down" style={styles.caretDown} />
-            </a>
+            </div>
           </Dropdown>
         </div>
       </Layout.Header>

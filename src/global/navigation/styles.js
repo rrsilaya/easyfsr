@@ -33,6 +33,9 @@ const style = {
     height: 34,
     width: 34,
   },
+  iconOffset: {
+    marginRight: 10,
+  },
 };
 
 export default style;
