@@ -3,32 +3,6 @@ import { Row, Col, Button, Icon, Dropdown, Menu, Input, Table } from 'antd';
 import data from './faculty-data';
 
 const Search = Input.Search;
-const menu = (
-  <Menu>
-    <Menu.Item key="0">
-      <a href="#">Name</a>
-    </Menu.Item>
-    <Menu.Divider />
-    <Menu.Item key="1">
-      <a href="#">Date</a>
-    </Menu.Item>
-    <Menu.Divider />
-    <Menu.Item key="3">Salary Grade</Menu.Item>
-  </Menu>
-);
-const menu2 = (
-  <Menu>
-    <Menu.Item key="0">
-      <a href="#">Help</a>
-    </Menu.Item>
-    <Menu.Divider />
-    <Menu.Item key="1">
-      <a href="#">Option1</a>
-    </Menu.Item>
-    <Menu.Divider />
-    <Menu.Item key="3">Option2</Menu.Item>
-  </Menu>
-);
 
 class FacultySearch extends Component {
   state = {
