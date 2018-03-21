@@ -4,8 +4,14 @@ import styles from './styles';
 
 class Topbar extends Component {
   render() {
-    const { toggleSidebar } = this.props;
-    const { logout } = this.props;
+    const {
+      // State
+      user,
+
+      // Dispatch
+      toggleSidebar,
+      logout,
+    } = this.props;
     const menu = (
       <Menu>
         <Menu.Item>
@@ -31,7 +37,7 @@ class Topbar extends Component {
         />
         <div style={styles.account}>
           <img style={styles.image} alt="" />
-          <div>Sam Sepiol</div>
+          <div>{`${user.firstName} ${user.lastName}`}</div>
           <Dropdown overlay={menu} trigger={['click']}>
             <a className="ant-dropdown-link" href="#">
               <Icon type="caret-down" style={styles.caretDown} />

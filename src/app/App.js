@@ -41,7 +41,11 @@ class App extends Component {
                 style={{ overflowY: 'auto' }}
               >
                 <Layout className="background primary content-body">
-                  <Topbar toggleSidebar={toggleSidebar} logout={logout} />
+                  <Topbar
+                    toggleSidebar={toggleSidebar}
+                    logout={logout}
+                    user={user}
+                  />
                   <Layout.Content style={{ paddingBottom: '2em' }}>
                     <Switch>
                       {routes.map(route => (

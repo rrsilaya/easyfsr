@@ -7,7 +7,7 @@ class Loader extends Component {
   render() {
     return (
       <div className="fullpage" style={styles.wrapper}>
-        <Spin indicator={<Icon type="loading" />} spin style={styles.loader} />
+        <Spin indicator={<Icon type="loading" spin />} style={styles.loader} />
       </div>
     );
   }
