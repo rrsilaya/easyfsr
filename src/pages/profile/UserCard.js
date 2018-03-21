@@ -14,7 +14,7 @@ class UserCard extends React.Component {
               shape="square"
               icon="user"
               size="large"
-              style={{ width: '128px', height: '128px' }}
+              style={{ width: '128px', height: '128px', borderRadius: '50%' }}
             />
           </Row>
           <Row type="flex" justify="center" style={{ marginBottom: '15px' }}>
@@ -43,13 +43,13 @@ class UserCard extends React.Component {
             <Col {...gridConfig}>
               <Card
                 style={{ marginBottom: 16 }}
-                title="I. Teaching Load in The College: "
+                title="Teaching Load in The College: "
               >
                 {userData}
               </Card>
             </Col>
             <Col {...gridConfig}>
-              <Card style={{ marginBottom: 16 }} title="II. Research Proposal">
+              <Card style={{ marginBottom: 16 }} title="Research Proposal">
                 {userData}
               </Card>
             </Col>
