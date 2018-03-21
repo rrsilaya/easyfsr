@@ -274,6 +274,24 @@ CREATE TABLE rCoAuthor(
     REFERENCES user(`userID`)
 );
 
+CREATE TABLE `notification`(
+  `notificationID` INT NOT NULL AUTO_INCREMENT,
+  `senderID` INT NOT NULL,
+  `receiverID` INT NOT NULL,
+  `message` varchar(1000) NOT NULL,
+  `dateSent` date NOT NULL,
+  `timeSent` time NOT NULL,
+  `isResolved` BOOLEAN,
+  CONSTRAINT `notification_pk`
+    PRIMARY KEY(`notificationID`),
+  CONSTRAINT `notification_user_fk`
+    FOREIGN KEY (`senderID`)
+    REFERENCES user(`userID`),
+  CONSTRAINT `notificationReceived_user_fk`
+    FOREIGN KEY (`receiverID`)
+    REFERENCES user(`userID`)
+);
+
 
 -- Privileges
 GRANT SUPER ON *.* TO 'easyfsr'@'localhost';
