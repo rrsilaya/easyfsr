@@ -45,11 +45,11 @@ router.post('/courseSched/', async (req, res) => {
   try {
     await Ctrl.addCourseSched(req.body);
 
-    const courseSched = await Ctrl.getCourseSched(req.body.courseNumber);
+    // const courseSched = await Ctrl.getCourseSched(req.body.courseID);
     res.status(200).json({
       status: 200,
       message: 'Successfully added course schedule',
-      data: courseSched,
+      // data: courseSched,
     });
   } catch (status) {
     let message = '';
@@ -106,15 +106,15 @@ router.post('/courseSched/', async (req, res) => {
  *   "message": "Course schedule not found"
  * }
  */
-
+/*
 router.put('/courseSched/:courseNumber', async (req, res) => {
   try {
     await Ctrl.updateCourseSched(req.params, req.body);
-    const courseSched = await Ctrl.getCourseSched(req.params);
+    // const courseSched = await Ctrl.getCourseSched(req.params);
     res.status(200).json({
       status: 200,
       message: 'Successfully updated course schedule',
-      data: courseSched,
+      // data: courseSched,
     });
   } catch (status) {
     let message = '';
@@ -129,7 +129,7 @@ router.put('/courseSched/:courseNumber', async (req, res) => {
     res.status(status).json({ status, message });
   }
 });
-
+*/
 /**
  * @api {delete} /courseSched/:courseNumber deleteCourseSched
  * @apiGroup CourseSched
@@ -166,8 +166,8 @@ router.put('/courseSched/:courseNumber', async (req, res) => {
  *   "message": "Course schedule not found"
  * }
  */
-
-router.delete('/courseSched/:courseNumber', async (req, res) => {
+/*
+router.delete('/courseSched/:courseID', async (req, res) => {
   try {
     const id = await Ctrl.deleteCourseSched(req.params);
     res.status(200).json({
@@ -187,7 +187,7 @@ router.delete('/courseSched/:courseNumber', async (req, res) => {
     res.status(status).json({ status, message });
   }
 });
-
+*/
 /**
  * @api {put} /course/:courseNumber addCourse
  * @apiGroup Course
@@ -235,7 +235,7 @@ router.delete('/courseSched/:courseNumber', async (req, res) => {
  * }
  */
 
-router.get('/courseSched/:courseNumber', async (req, res) => {
+/*router.get('/courseSched/:courseNumber', async (req, res) => {
   try {
     const courseSched = await Ctrl.getCourseSched(req.params);
     res.status(200).json({
@@ -256,7 +256,7 @@ router.get('/courseSched/:courseNumber', async (req, res) => {
     res.status(status).json({ status, message });
   }
 });
-
+*/
 /**
  * @api {get} /courseSched getCourseSchedules
  * @apiGroup CourseSched
@@ -294,26 +294,27 @@ router.get('/courseSched/:courseNumber', async (req, res) => {
  *    }
  **/
 
-router.get('/courseSched/:courseNumber', async (req, res) => {
-  try {
-    const courseSchedules = await Ctrl.getCourseSchedules(req.params);
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully fetched all courses',
-      data: courseSchedules,
-    });
-  } catch (status) {
-    let message = '';
-    switch (status) {
-      case 404:
-        message = 'Course not found';
-        break;
-      case 500:
-        message = 'Internal server error';
-        break;
-    }
-    res.status(status).json({ status, message });
-  }
-});
+// router.get('/courseSched/:courseNumber', async (req, res) => {
+//   try {
+//     const courseSchedules = await Ctrl.getCourseSchedules(req.params);
+//     res.status(200).json({
+//       status: 200,
+//       message: 'Successfully fetched all courses',
+//       data: courseSchedules,
+//     });
+//   } catch (status) {
+//     let message = '';
+//     switch (status) {
+//       case 404:
+//         message = 'Course not found';
+//         break;
+//       case 500:
+//         message = 'Internal server error';
+//         break;
+//     }
+//     res.status(status).json({ status, message });
+//   }
+// });
 
 export default router;
+//
