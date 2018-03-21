@@ -6695,6 +6695,12 @@ react-app-rewired@^1.4.1:
     cross-spawn "^5.1.0"
     dotenv "^4.0.0"
 
+react-circular-progressbar@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/react-circular-progressbar/-/react-circular-progressbar-0.8.0.tgz#19a0103669fc1b6168dface2024de267857f868f"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-dev-utils@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-5.0.0.tgz#425ac7c9c40c2603bc4f7ab8836c1406e96bb473"

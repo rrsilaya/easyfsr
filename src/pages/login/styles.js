@@ -6,9 +6,8 @@ const style = {
   },
   logo: {
     top: {
-      height: 32,
-      width: 120,
-      backgroundColor: '#483440',
+      height: 50,
+      width: 200,
       display: 'inline-block',
     },
   },
