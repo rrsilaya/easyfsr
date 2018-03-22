@@ -102,7 +102,7 @@ router.post('/user/', async (req, res) => {
  * @apiGroup User
  * @apiName updateUser
  *
- * @apiParam (Query Params) {String} employeeID ID of employee
+ * @apiParam (Query Params) {String} userID ID of employee
  * @apiParam (Body Params) {String} password password of employee
  * @apiParam (Body Params) {String} firstName first name of employee
  * @apiParam (Body Params) {String} [middleName] middle name of employee
@@ -325,6 +325,11 @@ router.get('/user/', async (req, res) => {
  * @apiSuccess {String} user.rank rank of employee
  * @apiSuccess {String} user.isArchived indicates if employee entry is archived
  * @apiSuccess {String} user.acctType account type of employee
+ *    HTTP/1.1 200 OK
+ *   {
+ *    "status": 200,
+ *    "message": "Successfully deleted user",
+ *  }
  *
  * @apiError (Error 500) {String} status error status code
  * @apiError (Error 500) {String} message Error message
@@ -392,8 +397,8 @@ export default router;
  *   HTTP/1.1 200 OK
  *   {
  *     "status":200,
- *     "message":"Successfully got user details",
- *		 "data": [
+ *     "message":"Successfully fetched user",
+ *     "data": [
  *        {
  *          "employeeID":"5121328320",
  *          "password":"$2a$10$JQL/6dENt1TQofx49huAmu1e/K/m8UPn4SGXixRU5NYDK/QzpudbW",
