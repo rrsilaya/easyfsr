@@ -250,7 +250,7 @@ router.delete('/course/:courseID', async (req, res) => {
  * }
  */
 
-router.get('/course/:id/:courseID', async (req, res) => {
+router.get('/course/:courseID', async (req, res) => {
   try {
     const course = await Ctrl.getCourse(req.params);
 
@@ -313,13 +313,17 @@ router.get('/course/:id/:courseID', async (req, res) => {
  *    }
  **/
 
-router.get('/course/:id', async (req, res) => {
+router.get('/course/', async (req, res) => {
   try {
-    const courses = await Ctrl.getCourses(req.params);
+    const courses = await Ctrl.getCourses(req.query);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched courses',
       data: courses,
+      total: courses.length,
+      limit: req.query.limit || 10,
+      page: req.query.page || 1,
+      pages: Math.ceil(courses.length / (req.query.limit || 10)),
     });
   } catch (status) {
     let message = '';

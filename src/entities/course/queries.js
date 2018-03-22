@@ -17,9 +17,15 @@ export const addCourse = `
     :credit )`;
 
 export const deleteCourse = `delete from course where courseID = :courseID`;
-export const getAllCourse = `SELECT * from course where id=:id`;
-export const getCourse = `SELECT * FROM course WHERE  courseID=:courseID`;
+
+export const getCourses = (query, sortBy) => `
+  SELECT * FROM course ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
+  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} LIMIT :limit
+`;
+export const getCourse = `SELECT * FROM course WHERE courseID=:courseID`;
 
 export const updateCourse = course =>
   ` UPDATE course 
-  SET  ${formatQueryParams(course)} WHERE courseID=:courseID`;
+  SET  ${formatQueryParams(course, 'update')} WHERE courseID=:courseID`;

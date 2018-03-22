@@ -1,6 +1,6 @@
 import db from '../../database/index';
 import * as Query from './queries';
-import { filtered } from '../../utils';
+import { filtered, escapeSearch } from '../../utils';
 
 const courseAttributes = [
   'id',
@@ -10,6 +10,8 @@ const courseAttributes = [
   'school',
   'credit',
 ];
+
+const searchFields = ['courseNumber', 'courseID', 'school', 'credit'];
 
 export const addCourse = course => {
   return new Promise((resolve, reject) => {
@@ -31,13 +33,19 @@ export const deleteCourse = ({ courseID }) => {
   });
 };
 
-export const getCourses = ({ id }) => {
+export const getCourses = course => {
   return new Promise((resolve, reject) => {
-    db.query(Query.getAllCourse, { id }, (err, results) => {
-      if (err) return reject(500);
-      else if (!results) return reject(404);
-      return resolve(results);
-    });
+    db.query(
+      Query.getCourses(filtered(course, courseAttributes), course.sortBy),
+      {
+        field: 'courseNumber',
+        ...escapeSearch(course, searchFields, course.limit),
+      },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(results);
+      },
+    );
   });
 };
 
