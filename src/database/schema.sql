@@ -292,6 +292,19 @@ CREATE TABLE `notification`(
     REFERENCES user(`userID`)
 );
 
+CREATE TABLE announcement(
+   `announcementID` INT NOT NULL AUTO_INCREMENT,
+   `userID` INT NOT NULL, -- userID of who sent the announcement 
+   `title` VARCHAR (512) NOT NULL,
+   `body` TEXT(10000) NOT NULL,
+   `isResolved` BOOLEAN DEFAULT 0,
+   CONSTRAINT `announcement_pk`
+     PRIMARY KEY(`announcementID`),
+   CONSTRAINT `announcement_user_fk`
+    FOREIGN KEY (`userID`)
+    REFERENCES user(`userID`)
+);
+
 
 -- Privileges
 GRANT SUPER ON *.* TO 'easyfsr'@'localhost';
