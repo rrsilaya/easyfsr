@@ -179,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `limitedPracticeOfProf`(
 CREATE TABLE IF NOT EXISTS `extensionAndCommunityService`(
   `id` INT NOT NULL, 
   extAndCommServiceID INT NOT NULL AUTO_INCREMENT,
-  participant VARCHAR (50) NOT NULL,
+  participant INT(2) NOT NULL,
   role VARCHAR (50) NOT NULL,
   hours INT (50) NOT NULL,
   title VARCHAR (50) NOT NULL,
