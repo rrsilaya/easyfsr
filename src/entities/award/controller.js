@@ -1,10 +1,19 @@
 import db from '../../database/index';
 import * as Query from './queries';
-import { filtered } from '../../utils';
+import { filtered, escapeSearch } from '../../utils';
 
 const awardAttributes = [
   'id',
   'grantF',
+  'chairGrantTitle',
+  'collegeHasNominated',
+  'recipientOrNominee',
+  'professionalChair',
+  'approvedStartDate',
+  'endDate',
+];
+
+const searchFields = [
   'chairGrantTitle',
   'collegeHasNominated',
   'recipientOrNominee',
@@ -22,12 +31,12 @@ export const addAward = award => {
   });
 };
 
-export const updateAward = ({ id }, award) => {
+export const updateAward = ({ awardID }, award) => {
   return new Promise((resolve, reject) => {
     if (!award) return reject(500);
     db.query(
       Query.updateAward(filtered(award, awardAttributes)),
-      { id, ...award },
+      { awardID, ...award },
       (err, results) => {
         if (err) return reject(500);
         return resolve(results.insertId);
@@ -36,19 +45,19 @@ export const updateAward = ({ id }, award) => {
   });
 };
 
-export const deleteAward = ({ id }) => {
+export const deleteAward = ({ awardID }) => {
   return new Promise((resolve, reject) => {
-    db.query(Query.deleteAward, { id }, (err, results) => {
+    db.query(Query.deleteAward, { awardID }, (err, results) => {
       if (err) return reject(500);
       else if (!results.affectedRows) return reject(404);
-      return resolve(id);
+      return resolve();
     });
   });
 };
 
-export const getAward = ({ id }) => {
+export const getAward = ({ awardID }) => {
   return new Promise((resolve, reject) => {
-    db.query(Query.getAward, { id }, (err, results) => {
+    db.query(Query.getAward, { awardID }, (err, results) => {
       if (err) return reject(500);
       else if (!results.length) return reject(404);
       return resolve(results);
@@ -59,11 +68,13 @@ export const getAward = ({ id }) => {
 export const getAwards = award => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getAwards(filtered(award, awardAttributes)),
-      award,
+      Query.getAwards(filtered(award, awardAttributes), award.sortBy),
+      {
+        field: 'chairGrantTitle',
+        ...escapeSearch(award, searchFields, award.limit),
+      },
       (err, results) => {
         if (err) return reject(500);
-        else if (!results.length) return reject(404);
         return resolve(results);
       },
     );

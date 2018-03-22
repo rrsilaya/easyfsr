@@ -1,9 +1,10 @@
 import { Router } from 'express';
 
 import authRouter from './entities/auth/router';
-import userRouter from './entities/user/router';
 import courseRouter from './entities/course/router';
 import awardRouter from './entities/award/router';
+import serviceRouter from './entities/extensionAndCommunityService/router';
+import userRouter from './entities/user/router';
 
 const router = Router();
 
@@ -19,10 +20,9 @@ router.use(authRouter);
 //   });
 // });
 
-router.use(userRouter);
-
 router.use(courseRouter);
 router.use(awardRouter);
+router.use(serviceRouter);
 
 // router.use( (req,res,next) => {
 //   if(req.session.user){
@@ -33,5 +33,6 @@ router.use(awardRouter);
 //     message: 'You must be logged in',
 //   });
 // });
+router.use(userRouter);
 
 export default router;
