@@ -54,16 +54,12 @@ export const getCourse = ({ courseID }) => {
 
 export const updateCourse = ({ courseID }, course) => {
   return new Promise((resolve, reject) => {
-    // console.log("course " + course);
     if (!course) return reject(500);
     db.query(
       Query.updateCourse(filtered(course, courseAttributes)),
       { courseID, ...course },
       (err, results) => {
-        // console.log("err" + err);
-
         if (err) return reject(500);
-        // console.log("results: " + results.insertId);
         return resolve(results.insertId);
       },
     );
