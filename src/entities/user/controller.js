@@ -7,6 +7,7 @@ const userAttributes = [
   'firstName',
   'middleName',
   'lastName',
+  'password',
   'committee',
   'isHead',
   'officeNumber',

@@ -291,9 +291,9 @@ router.get('/user/', async (req, res) => {
       message: 'Successfully fetched users',
       data: users,
       total: users.length,
-      limit: req.query.limit || 10,
+      limit: req.query.limit || 12,
       page: req.query.page || 1,
-      pages: Math.ceil(users.length / (req.query.limit || 10)),
+      pages: Math.ceil(users.length / (req.query.limit || 12)),
     });
   } catch (status) {
     let message = '';
