@@ -47,23 +47,9 @@ export const updateUser = ({ userID }, user) => {
   });
 };
 
-export const getUsers = user => {
-  return new Promise((resolve, reject) => {
-    db.query(
-      Query.getUsers(filtered(user, userAttributes), user.sortBy),
-      { field: 'lastName', ...escapeSearch(user, searchFields, user.limit) },
-      (err, results) => {
-        if (err) return reject(500);
-        return resolve(results);
-      },
-    );
-  });
-};
-
 export const deleteUser = ({ userID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.deleteUser, { userID }, (err, results) => {
-      console.log(results);
       if (err) return reject(500);
       else if (!results.changedRows) return reject(404);
       return resolve();
@@ -78,5 +64,18 @@ export const getUser = ({ userID }) => {
       else if (!results.length) return reject(404);
       return resolve(results);
     });
+  });
+};
+
+export const getUsers = user => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      Query.getUsers(filtered(user, userAttributes), user.sortBy),
+      { field: 'lastName', ...escapeSearch(user, searchFields, user.limit) },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(results);
+      },
+    );
   });
 };
