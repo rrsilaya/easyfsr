@@ -16,6 +16,11 @@ class EditModal extends Component {
     });
   };
 
+  handleCancel = () => {
+    this.props.toggleEditModal();
+    this.handleAfterClose();
+  };
+
   validateNextPassword = (rule, value, callback) => {
     const { form } = this.props;
     if (value && this.state.isMatch) {
@@ -72,9 +77,9 @@ class EditModal extends Component {
         title="Edit User"
         visible={isEditModalOpen}
         onOk={toggleEditModal}
-        onCancel={toggleEditModal}
+        onCancel={this.handleCancel}
         footer={[
-          <Button key="back" onClick={toggleEditModal}>
+          <Button key="back" onClick={this.handleCancel}>
             Cancel
           </Button>,
           <Button

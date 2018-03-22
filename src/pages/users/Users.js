@@ -76,12 +76,14 @@ class Users extends Component {
           toggleEditModal={toggleEditModal}
           editUser={editUser}
           isEditingUser={isEditingUser}
+          handleAfterClose={this.handleAfterClose}
         />
         <AddModal
           isAddModalOpen={isAddModalOpen}
           toggleAddModal={toggleAddModal}
           addUser={addUser}
           isAddingUser={isAddingUser}
+          handleAfterClose={this.handleAfterClose}
         />
         <DeleteModal
           isDeleteModalOpen={isDeleteModalOpen}
