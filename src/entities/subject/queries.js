@@ -32,35 +32,36 @@ export const deleteSubject = `
 	WHERE id = :id
 `;
 
-export const getSubject = query => `
+/*GETS SPECIFIC SUBJECT*/
+export const getSubjects = query => ` 
   SELECT * FROM subject ${
     query.length ? `WHERE ${formatQueryParams(query)}` : ''
   }
 `;
-
-export const getSubjects = query => `
+/*GETS ALL SUBJECTS*/
+export const getSubject = query => `
 	SELECT *
 	FROM subject natural join teachingLoad
 	WHERE id=id
 	ORDER BY subjectCode ASC
 	LIMIT 10
 `;
-/*
-export const getAllSubjectWithSched = `
+/*GETS ALL SUBJECTS WITH SPECIFIC SCHED*/
+export const getAllSubjectsWithSched = query => `
 	SELECT * 
 	FROM subject natural join timeslot
-	WHERE id=:id
+	WHERE id=id
 	ORDER BY subjectCode ASC
 	LIMIT 10
 `;
 
-export const getSubjectWithSched = `
+export const getSubjectWithSched = query => `
 	SELECT * 
 	FROM subject natural join timeslot 
-	WHERE subjectID=:subjectID AND id=:id 
+	WHERE subjectID=subjectID AND id=id 
 `;
 
-export const addTimeslot = `
+export const addTimeSlot = `
 	INSERT INTO timeslot (
 		subjectID,
 		day,
@@ -72,5 +73,3 @@ export const addTimeslot = `
 		:time
 	)
 `;
-
-*/
