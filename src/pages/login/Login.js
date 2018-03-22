@@ -19,18 +19,18 @@ class Login extends Component {
         <Header className="background clear" style={styles.header}>
           <img src={logo} alt="" style={styles.logo.top} />
         </Header>
-        <Content>
-          <div className="border" style={styles.pagecontainer}>
+        <Content style={styles.contentWrapper}>
+          <div style={styles.pagecontainer}>
             <div style={styles.wrapper}>
-              <div className="container border" style={styles.section}>
+              <div className="container" style={styles.section}>
                 Image
               </div>
               <div
-                className="container border"
+                className="container"
                 style={{ ...styles.section, ...styles.login }}
               >
                 <h1 className="super text primary">Lorem ipsum</h1>
-                <p className="subtitle text meta border">
+                <p className="subtitle text meta">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et consectetur
                   adipiscing elit.

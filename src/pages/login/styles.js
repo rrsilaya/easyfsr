@@ -1,8 +1,15 @@
 const style = {
+  contentWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
   pagecontainer: {
     display: 'flex',
     justifyContent: 'center',
     height: '100%',
+    flex: 1,
+    width: '100%',
   },
   logo: {
     top: {
