@@ -146,7 +146,9 @@ CREATE TABLE `chTimeslot`(
     REFERENCES consultationHours(`chID`),
   CONSTRAINT `chTimeslot_consultationHours_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES consultationHours(`id`)
+    REFERENCES consultationHours(`id`),
+  CONSTRAINT `chTimeslot_pk` 
+    PRIMARY KEY (chID, id, day, time)
 );
 
 -- Professorial Chair or Faculty Grant or Nominee (Award)
@@ -239,7 +241,8 @@ CREATE TABLE `cworkCoAuthor`(
     REFERENCES creativeWork(`creativeWorkID`),
   CONSTRAINT `cworkCoAuthor_user_fk`
     FOREIGN KEY (`userID`)
-    REFERENCES user(`userID`)
+    REFERENCES user(`userID`),
+  PRIMARY KEY (userID, researchID)
 );
 
 
@@ -271,7 +274,8 @@ CREATE TABLE rCoAuthor(
     REFERENCES research(`researchID`),
   CONSTRAINT `rCoAuthor_user_fk`
     FOREIGN KEY (`userID`)
-    REFERENCES user(`userID`)
+    REFERENCES user(`userID`),
+  PRIMARY KEY (userID, researchID)
 );
 
 CREATE TABLE `notification`(
