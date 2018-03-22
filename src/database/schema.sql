@@ -89,7 +89,9 @@ CREATE TABLE `studyLoad`(
   `id` INT NOT NULL,
   CONSTRAINT `studyLoad_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`)
+    REFERENCES fsr(`id`),
+  CONSTRAINT `studyLoad_pk`
+    PRIMARY KEY(`id`)
 );
 
 CREATE TABLE `course`(

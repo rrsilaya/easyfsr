@@ -22,7 +22,10 @@ export const updateStudyLoad = ({ id }, studyLoad) => {
       Query.updateStudyLoad(Utils.filtered(studyLoad, studyLoadAttributes)),
       { id, ...studyLoad },
       (err, results) => {
-        if (err) return reject(500);
+        if (err) {
+          console.log(err);
+          return reject(500);
+        }
         // else if (!results.length) return reject(404);
         return resolve(results.insertId);
       },
