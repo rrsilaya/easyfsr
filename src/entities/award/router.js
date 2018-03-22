@@ -343,6 +343,10 @@ router.get('/award/', async (req, res) => {
       status: 200,
       message: 'Successfully fetched awards',
       data: awards,
+      total: awards.length,
+      limit: req.query.limit || 10,
+      page: req.query.page || 1,
+      pages: Math.ceil(awards.length / (req.query.limit || 10)),
     });
   } catch (status) {
     let message = '';
