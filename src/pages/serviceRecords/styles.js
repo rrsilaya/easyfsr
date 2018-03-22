@@ -1,7 +1,7 @@
 const styles = {
   formFSR: {
     marginBottom: '10px',
-    marginLeft: 'auto',
+    marginLeft: 10,
     marginRight: 'auto',
   },
   button: {
@@ -13,6 +13,11 @@ const styles = {
     marginTop: 10,
     marginBottom: 'auto',
     size: 'large',
+  },
+  regFSR: {
+    marginBottom: 'auto',
+    marginLeft: 10,
+    marginRight: 'auto',
   },
 };
 
