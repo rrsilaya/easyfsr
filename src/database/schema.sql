@@ -120,7 +120,9 @@ CREATE TABLE `courseSched`(
   `time` VARCHAR (30) NOT NULL,
   CONSTRAINT`courseSched_course_fk`
     FOREIGN KEY (`courseID`)
-    REFERENCES course(`courseID`)
+    REFERENCES course(`courseID`),
+  CONSTRAINT `courseSched_pk`
+    PRIMARY KEY(courseID, day, time)
 );
 
 -- Consultation hours and CH Timeslot
@@ -241,7 +243,7 @@ CREATE TABLE `cworkCoAuthor`(
   CONSTRAINT `cworkCoAuthor_user_fk`
     FOREIGN KEY (`userID`)
     REFERENCES user(`userID`),
-  PRIMARY KEY (userID, researchID)
+  PRIMARY KEY (userID, creativeWorkID)
 );
 
 
