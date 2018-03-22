@@ -43,6 +43,6 @@ export const addNotification = `
 
 export const deleteNotification = `
 	UPDATE notification SET
-		isResolved = 1
+		isResolved = true
 	WHERE notificationID = :notificationID
 `;

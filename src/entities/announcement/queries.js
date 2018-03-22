@@ -12,13 +12,13 @@ export const getAllAnnouncements = (query, sortBy) => `
   LIMIT :limit
 `;
 
-export const updateAnnouncement = announcement =>`
+export const updateAnnouncement = announcement => `
   UPDATE announcement SET 
     ${formatQueryParams(announcement)}
   WHERE announcementID = :announcementID
 `;
 
-export const addAnnouncement =  `
+export const addAnnouncement = `
   INSERT INTO announcement ( 
     announcementID,
     userID,
@@ -36,6 +36,7 @@ export const addAnnouncement =  `
 `;
 
 export const deleteAnnouncement = `
-  DELETE FROM announcement
+  UPDATE announcement SET
+    isResolved = true
   WHERE announcementID = :announcementID
 `;
