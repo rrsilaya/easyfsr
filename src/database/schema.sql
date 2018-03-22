@@ -26,7 +26,11 @@ CREATE TABLE user(
   isArchived BOOLEAN DEFAULT 0, 
   acctType VARCHAR(10) DEFAULT 'USER', -- ADMIN / USER
   CONSTRAINT `user_pk`
-    PRIMARY KEY (`userID`)
+    PRIMARY KEY (`userID`),
+  CONSTRAINT `user_empid_uk`
+    UNIQUE KEY (`employeeID`),
+  CONSTRAINT `user_email_uk`
+    UNIQUE KEY (`emailAddress`)
 );
 
 CREATE TABLE IF NOT EXISTS fsr(
@@ -266,5 +270,3 @@ CREATE TABLE rCoAuthor(
 -- Privileges
 GRANT SUPER ON *.* TO 'easyfsr'@'localhost';
 GRANT ALL PRIVILEGES ON easyfsr.* TO 'easyfsr'@'localhost';
-
-INSERT INTO `user` VALUES (1, '5121328320','$2a$10$JQL/6dENt1TQofx49huAmu1e/K/m8UPn4SGXixRU5NYDK/QzpudbW','Erlen Mae','S','Evangelista',NULL,NULL,'128','full-time','esevangelista1@up.edu.ph',NULL,0,'USER');
