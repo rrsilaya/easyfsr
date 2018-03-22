@@ -11,7 +11,6 @@ const router = Router();
  *
  * @apiParam (Body Params) {String} id ID of Study Load
  * @apiParam (Body Params) {String} degree degree of study load
- * @apiParam (Body Params) {String} courseNumber course number of study load
  * @apiParam (Body Params) {String} university university of study load
  * @apiParam (Body Params) {String} totalSLcredits total credits of study load
 
@@ -19,7 +18,6 @@ const router = Router();
  * @apiSuccess {Object} studyLoad new Study Load created
  * @apiSuccess {String} studyLoad.id ID of Study Load
  * @apiSuccess {String} studyLoad.degree degree of study load
- * @apiSuccess {String} studyLoad.courseNumber course number of study load
  * @apiSuccess {String} studyLoad.university university of study load
  * @apiSuccess {String} studyLoad.totalSLcredits total credits of study load
  *
@@ -66,7 +64,6 @@ router.post('/studyLoad/', async (req, res) => {
  *
  * @apiParam (Body Params) {String} id ID of Study Load
  * @apiParam (Body Params) {String} degree degree of study load
- * @apiParam (Body Params) {String} courseNumber course number of study load
  * @apiParam (Body Params) {String} university university of study load
  * @apiParam (Body Params) {String} totalSLcredits total credits of study load
 
@@ -74,7 +71,6 @@ router.post('/studyLoad/', async (req, res) => {
  * @apiSuccess {Object} studyLoad study load updated
  * @apiSuccess {String} studyLoad.id ID of Study Load
  * @apiSuccess {String} studyLoad.degree degree of study load
- * @apiSuccess {String} studyLoad.courseNumber course number of study load
  * @apiSuccess {String} studyLoad.university university of study load
  * @apiSuccess {String} studyLoad.totalSLcredits total credits of study load
  *
@@ -133,7 +129,6 @@ router.put('/studyLoad/:id', async (req, res) => {
  *
  * @apiParam (Body Params) {String} id ID of Study Load
  * @apiParam (Body Params) {String} degree degree of study load
- * @apiParam (Body Params) {String} courseNumber course number of study load
  * @apiParam (Body Params) {String} university university of study load
  * @apiParam (Body Params) {String} totalSLcredits total credits of study load
 
@@ -141,7 +136,6 @@ router.put('/studyLoad/:id', async (req, res) => {
  * @apiSuccess {Object} studyLoad study load retrieved
  * @apiSuccess {String} studyLoad.id ID of Study Load
  * @apiSuccess {String} studyLoad.degree degree of study load
- * @apiSuccess {String} studyLoad.courseNumber course number of study load
  * @apiSuccess {String} studyLoad.university university of study load
  * @apiSuccess {String} studyLoad.totalSLcredits total credits of study load
  *
@@ -205,7 +199,6 @@ router.get('/studyLoad/:id', async (req, res) => {
  *
  * @apiParam (Body Params) {String} id ID of Study Load
  * @apiParam (Body Params) {String} degree degree of study load
- * @apiParam (Body Params) {String} courseNumber course number of study load
  * @apiParam (Body Params) {String} university university of study load
  * @apiParam (Body Params) {String} totalSLcredits total credits of study load
 
@@ -213,7 +206,6 @@ router.get('/studyLoad/:id', async (req, res) => {
  * @apiSuccess {Object} studyLoad study load retrieved
  * @apiSuccess {String} studyLoad.id ID of Study Load
  * @apiSuccess {String} studyLoad.degree degree of study load
- * @apiSuccess {String} studyLoad.courseNumber course number of study load
  * @apiSuccess {String} studyLoad.university university of study load
  * @apiSuccess {String} studyLoad.totalSLcredits total credits of study load
  *
@@ -277,7 +269,6 @@ router.get('/studyLoad/', async (req, res) => {
  *
  * @apiParam (Body Params) {String} id ID of Study Load
  * @apiParam (Body Params) {String} degree degree of study load
- * @apiParam (Body Params) {String} courseNumber course number of study load
  * @apiParam (Body Params) {String} university university of study load
  * @apiParam (Body Params) {String} totalSLcredits total credits of study load
 
@@ -285,7 +276,6 @@ router.get('/studyLoad/', async (req, res) => {
  * @apiSuccess {Object} studyLoad study load deleted
  * @apiSuccess {String} studyLoad.id ID of Study Load
  * @apiSuccess {String} studyLoad.degree degree of study load
- * @apiSuccess {String} studyLoad.courseNumber course number of study load
  * @apiSuccess {String} studyLoad.university university of study load
  * @apiSuccess {String} studyLoad.totalSLcredits total credits of study load
  *
