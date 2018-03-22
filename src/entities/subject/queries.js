@@ -38,14 +38,14 @@ export const getSubject = query => `
   }
 `;
 
-/*export const getAllSubject = `
+export const getSubjects = query => `
 	SELECT *
-	FROM teachingLoad natural join subject
-	WHERE id=:id
+	FROM subject natural join teachingLoad
+	WHERE id=id
 	ORDER BY subjectCode ASC
 	LIMIT 10
 `;
-
+/*
 export const getAllSubjectWithSched = `
 	SELECT * 
 	FROM subject natural join timeslot

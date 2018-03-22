@@ -339,7 +339,7 @@ router.delete('/award/:id', async (req, res) => {
 
 router.get('/award/', async (req, res) => {
   try {
-    const awards = await Ctrl.getAwards(req.query);
+    const awards = await Ctrl.getAwards();
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched awards',

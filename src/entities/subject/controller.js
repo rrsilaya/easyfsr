@@ -59,6 +59,21 @@ export const getSubject = subject => {
   });
 };
 
+export const getSubjects = subject => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      Query.getSubjects(filtered(subject, subjectAttributes)),
+      subject,
+      (err, results) => {
+        console.log(err);
+        if (err) return reject(500);
+        else if (!results.length) return reject(404);
+        return resolve(results);
+      },
+    );
+  });
+};
+
 export const deleteSubject = ({ id }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.deleteSubject, { id }, (err, results) => {
