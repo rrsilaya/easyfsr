@@ -27,24 +27,24 @@ export const addExtensionAndCommunityService = `
 
 export const updateExtensionAndCommunityService = service => `
   UPDATE extensionAndCommunityService SET 
-  ${formatQueryParams(service)} 
+  ${formatQueryParams(service, 'update')} 
   WHERE extAndCommServiceID = :extAndCommServiceID
-`;
-
-export const getExtensionAndCommunityServices = query => `
-  SELECT * FROM extensionAndCommunityService ${
-    query.length ? `WHERE ${formatQueryParams(query)}` : ''
-  }
-`;
-
-export const getExtensionAndCommunityService = `
-  SELECT * FROM extensionAndCommunityService
-  WHERE extAndCommServiceID = :extAndCommServiceID
-  ORDER BY id ASC
-  LIMIT 10;
 `;
 
 export const deleteExtensionAndCommunityService = `
   DELETE FROM extensionAndCommunityService
   WHERE extAndCommServiceID = :extAndCommServiceID
+`;
+
+export const getExtensionAndCommunityService = `
+  SELECT * FROM extensionAndCommunityService
+  WHERE extAndCommServiceID = :extAndCommServiceID
+`;
+
+export const getExtensionAndCommunityServices = (query, sortBy) => `
+  SELECT * FROM extensionAndCommunityService ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
+  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} LIMIT :limit
+
 `;

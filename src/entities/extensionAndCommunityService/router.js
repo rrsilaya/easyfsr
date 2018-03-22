@@ -33,9 +33,23 @@ const router = Router();
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *  {
- *    "status": 200,
- *    "message": "Successfully created service"
- *  }
+ *   "status": 200,
+ *   "message": "Successfully created service",
+ *   "data": [
+ *       {
+ *           "id": 1,
+ *           "extAndCommServiceID": 3,
+ *           "participant": "12",
+ *           "role": "registration",
+ *           "hours": 5,
+ *           "title": "Fair",
+ *           "creditUnit": 3,
+ *           "type": "fair",
+ *           "startDate": "2018-09-09",
+ *           "endDate": "2018-09-11"
+ *       }
+ *   ]
+ * }
  *
  * @apiError (Error 500) {String[]} errors List of errors
  * @apiError (Error 500) {String} errors.message Error message
@@ -128,7 +142,7 @@ router.post('/service/', async (req, res) => {
  *   }
  */
 
-router.put('/service/:extAndCommServiceID ', async (req, res) => {
+router.put('/service/:extAndCommServiceID/', async (req, res) => {
   try {
     await Ctrl.updateExtensionAndCommunityService(req.params, req.body);
     const service = await Ctrl.getExtensionAndCommunityService(req.params);
@@ -154,7 +168,6 @@ router.put('/service/:extAndCommServiceID ', async (req, res) => {
 router.get('/service', async (req, res) => {
   try {
     const services = await Ctrl.getExtensionAndCommunityServices(req.query);
-
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched services',
@@ -218,9 +231,9 @@ router.get('/service', async (req, res) => {
  *   }
  **/
 
-router.delete('/service/:extAndCommServiceID ', async (req, res) => {
+router.delete('/service/:extAndCommServiceID/', async (req, res) => {
   try {
-    const id = await Ctrl.deleteExtensionAndCommunityService(req.params);
+    await Ctrl.deleteExtensionAndCommunityService(req.params);
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted service',
@@ -238,8 +251,6 @@ router.delete('/service/:extAndCommServiceID ', async (req, res) => {
     res.status(status).json({ status, message });
   }
 });
-
-export default router;
 
 /**
  * @api {get} /service getExtensionAndCommunityService
@@ -296,7 +307,7 @@ export default router;
  *   }
  **/
 
-router.get('/service/:extAndCommServiceID ', async (req, res) => {
+router.get('/service/:extAndCommServiceID/', async (req, res) => {
   try {
     const service = await Ctrl.getExtensionAndCommunityService(req.params);
     res.status(200).json({
@@ -317,3 +328,5 @@ router.get('/service/:extAndCommServiceID ', async (req, res) => {
     res.status(status).json({ status, message });
   }
 });
+
+export default router;

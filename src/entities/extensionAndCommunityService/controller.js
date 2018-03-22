@@ -1,6 +1,6 @@
 import db from '../../database/index';
 import * as Query from './queries';
-import { filtered } from '../../utils';
+import { filtered, escapeSearch } from '../../utils';
 
 const serviceAttributes = [
   'id',
@@ -9,6 +9,15 @@ const serviceAttributes = [
   'hours',
   'title',
   'creditUnit',
+  'type',
+  'startDate',
+  'endDate',
+];
+
+const searchFields = [
+  'participant',
+  'role',
+  'title',
   'type',
   'startDate',
   'endDate',
@@ -27,33 +36,20 @@ export const addExtensionAndCommunityService = service => {
   });
 };
 
-export const updateExtensionAndCommunityService = ({ id }, service) => {
+export const updateExtensionAndCommunityService = (
+  { extAndCommServiceID },
+  service,
+) => {
   return new Promise((resolve, reject) => {
     if (!service) return reject(500);
     db.query(
       Query.updateExtensionAndCommunityService(
         filtered(service, serviceAttributes),
       ),
-      { id, ...service },
+      { extAndCommServiceID, ...service },
       (err, results) => {
         if (err) return reject(500);
         return resolve(results.insertId);
-      },
-    );
-  });
-};
-
-export const getExtensionAndCommunityServices = service => {
-  return new Promise((resolve, reject) => {
-    db.query(
-      Query.getExtensionAndCommunityServices(
-        filtered(service, serviceAttributes),
-      ),
-      service,
-      (err, results) => {
-        if (err) return reject(500);
-        else if (!results.length) return reject(404);
-        return resolve(results);
       },
     );
   });
@@ -81,6 +77,22 @@ export const getExtensionAndCommunityService = ({ extAndCommServiceID }) => {
       (err, results) => {
         if (err) return reject(500);
         else if (!results.length) return reject(404);
+        return resolve(results);
+      },
+    );
+  });
+};
+
+export const getExtensionAndCommunityServices = service => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      Query.getExtensionAndCommunityServices(
+        filtered(service, serviceAttributes),
+        service.sortBy,
+      ),
+      { field: 'title', ...escapeSearch(service, searchFields, service.limit) },
+      (err, results) => {
+        if (err) return reject(500);
         return resolve(results);
       },
     );
