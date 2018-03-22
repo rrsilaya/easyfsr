@@ -60,7 +60,7 @@ router.post('/studyLoad/', async (req, res) => {
 });
 
 /**
- * @api {post} /studyLoad updateStudyLoad
+ * @api {put} /studyLoad/:id updateStudyLoad
  * @apiGroup Study Load
  * @apiName updateStudyLoad 
  *
@@ -93,6 +93,11 @@ router.post('/studyLoad/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
+ *   HTTP/1.1 404 studyLoad not found
+ *   {
+ *     "status": 404,
+ *     "message": "studyLoad not found"
+ *   }
  */
 
 router.put('/studyLoad/:id', async (req, res) => {
@@ -122,7 +127,7 @@ router.put('/studyLoad/:id', async (req, res) => {
 });
 
 /**
- * @api {post} /studyLoad getStudyLoad
+ * @api {get} /studyLoad/:id getStudyLoad
  * @apiGroup Study Load
  * @apiName getStudyLoad 
  *
@@ -164,6 +169,11 @@ router.put('/studyLoad/:id', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
+ *   HTTP/1.1 404 studyLoad not found
+ *   {
+ *     "status": 404,
+ *     "message": "studyLoad not found"
+ *   }
  */
 
 router.get('/studyLoad/:id', async (req, res) => {
@@ -188,6 +198,56 @@ router.get('/studyLoad/:id', async (req, res) => {
   }
 });
 
+/**
+ * @api {get} /studyLoad getAllStudyLoad
+ * @apiGroup Study Load
+ * @apiName getAllStudyLoad 
+ *
+ * @apiParam (Body Params) {String} id ID of Study Load
+ * @apiParam (Body Params) {String} degree degree of study load
+ * @apiParam (Body Params) {String} courseNumber course number of study load
+ * @apiParam (Body Params) {String} university university of study load
+ * @apiParam (Body Params) {String} totalSLcredits total credits of study load
+
+ *
+ * @apiSuccess {Object} studyLoad study load retrieved
+ * @apiSuccess {String} studyLoad.id ID of Study Load
+ * @apiSuccess {String} studyLoad.degree degree of study load
+ * @apiSuccess {String} studyLoad.courseNumber course number of study load
+ * @apiSuccess {String} studyLoad.university university of study load
+ * @apiSuccess {String} studyLoad.totalSLcredits total credits of study load
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *   HTTP/1.1 200 OK
+ *   {
+ *     "status": 200,
+ *     "message": "Successfully fetched all studyLoad details",
+ *     "data": [
+ *       {
+ *           "degree": "BSCS",
+ *           "courseNumber": "128",
+ *           "university": "UPLB",
+ *           "totalSLcredits": 3,
+ *           "id": 1
+ *       }
+ *     ]
+ *   }
+ *
+ * @apiError (Error 500) {String[]} errors List of errors
+ * @apiError (Error 500) {String} errors.message Error message
+ * @apiErrorExample {json} Error-Response:
+ *   HTTP/1.1 500 Internal Server Error
+ *   {
+ *     "status": 500,
+ *     "message": "Internal server error"
+ *   }
+ *   HTTP/1.1 404 studyLoad not found
+ *   {
+ *     "status": 404,
+ *     "message": "studyLoad not found"
+ *   }
+ */
+
 router.get('/studyLoad/', async (req, res) => {
   try {
     const studyLoads = await Ctrl.getAllStudyLoad(req.query);
@@ -211,7 +271,7 @@ router.get('/studyLoad/', async (req, res) => {
 });
 
 /**
- * @api {post} /studyLoad deleteStudyLoad
+ * @api {delete} /studyLoad/:id deleteStudyLoad
  * @apiGroup Study Load
  * @apiName deleteStudyLoad 
  *
@@ -243,6 +303,11 @@ router.get('/studyLoad/', async (req, res) => {
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
+ *   }
+ *   HTTP/1.1 404 studyLoad not found
+ *   {
+ *     "status": 404,
+ *     "message": "studyLoad not found"
  *   }
  */
 
