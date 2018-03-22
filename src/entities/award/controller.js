@@ -25,6 +25,7 @@ const searchFields = [
 export const addAward = award => {
   return new Promise((resolve, reject) => {
     db.query(Query.addAward, { ...award }, (err, results) => {
+      console.log(err);
       if (err) return reject(500);
       return resolve(results.insertId);
     });
