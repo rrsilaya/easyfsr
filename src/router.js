@@ -5,7 +5,6 @@ import userRouter from './entities/user/router';
 import studyLoadRouter from './entities/studyLoad/router';
 import awardRouter from './entities/award/router';
 import serviceRouter from './entities/extensionAndCommunityService/router';
-import userRouter from './entities/user/router';
 
 const router = Router();
 
