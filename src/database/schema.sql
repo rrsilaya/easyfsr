@@ -26,7 +26,11 @@ CREATE TABLE user(
   isArchived BOOLEAN DEFAULT 0, 
   acctType VARCHAR(10) DEFAULT 'USER', -- ADMIN / USER
   CONSTRAINT `user_pk`
-    PRIMARY KEY (`userID`)
+    PRIMARY KEY (`userID`),
+  CONSTRAINT `user_empid_uk`
+    UNIQUE KEY (`employeeID`),
+  CONSTRAINT `user_email_uk`
+    UNIQUE KEY (`emailAddress`)
 );
 
 CREATE TABLE IF NOT EXISTS fsr(
