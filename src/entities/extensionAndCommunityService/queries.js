@@ -2,7 +2,6 @@ import { formatQueryParams } from '../../utils';
 
 export const addExtensionAndCommunityService = `
   INSERT INTO extensionAndCommunityService (
-    extAndCommServiceID,
     id,
     participant,
     role,
@@ -13,8 +12,7 @@ export const addExtensionAndCommunityService = `
     startDate,
     endDate
   )
-  VALUES (
-    DEFAULT,
+  VALUES ( 
     :id,
     :participant,
     :role,
@@ -27,27 +25,28 @@ export const addExtensionAndCommunityService = `
   )
 `;
 
-export const getExtensionAndCommunityServices = (query, sortBy) => `
-  SELECT * FROM extensionAndCommunityService 
-  ${query.length ? `WHERE ${formatQueryParams(query)}` : ''} 
-  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
-  LIMIT :limit
-`;
-
-export const getExtensionAndCommunityService = `
-  SELECT * FROM extensionAndCommunityService
-  WHERE id = :id AND extAndCommServiceID = :extAndCommServiceID
-`;
-
-export const updateExtensionAndCommunityService = extAndCommService => `
-  UPDATE extensionAndCommunityService SET
-    ${formatQueryParams(extAndCommService)}
-  WHERE id= :id AND extAndCommServiceID = :extAndCommServiceID
+export const updateExtensionAndCommunityService = service => `
+  UPDATE extensionAndCommunityService SET 
+  ${formatQueryParams(service, 'update')} 
+  WHERE extAndCommServiceID = :extAndCommServiceID
 `;
 
 export const deleteExtensionAndCommunityService = `
   DELETE FROM extensionAndCommunityService
-  WHERE id = :id AND extAndCommServiceID = :extAndCommServiceID
+  WHERE extAndCommServiceID = :extAndCommServiceID
+`;
+
+export const getExtensionAndCommunityService = `
+  SELECT * FROM extensionAndCommunityService
+  WHERE extAndCommServiceID = :extAndCommServiceID
+`;
+
+export const getExtensionAndCommunityServices = (query, sortBy) => `
+  SELECT * FROM extensionAndCommunityService ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
+  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} LIMIT :limit
+
 `;
 
 /*
