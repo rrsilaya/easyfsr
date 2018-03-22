@@ -59,8 +59,8 @@ const mapDispatchToProps = dispatch => {
     addUser: values => {
       dispatch(addUser(values));
     },
-    editUser: (user, body) => {
-      dispatch(editUser(user, body));
+    editUser: (user, values) => {
+      dispatch(editUser(user, values));
     },
   };
 };
