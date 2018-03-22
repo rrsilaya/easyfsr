@@ -45,10 +45,10 @@ export const updateSubject = ({ id }, subject) => {
   });
 };*/
 
-export const getSubject = subject => {
+export const getSubjects = subject => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getSubject(filtered(subject, subjectAttributes)),
+      Query.getSubjects(filtered(subject, subjectAttributes)),
       subject,
       (err, results) => {
         if (err) return reject(500);
@@ -59,10 +59,10 @@ export const getSubject = subject => {
   });
 };
 
-export const getSubjects = subject => {
+export const getSubject = subject => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getSubjects(filtered(subject, subjectAttributes)),
+      Query.getSubject(filtered(subject, subjectAttributes)),
       subject,
       (err, results) => {
         console.log(err);

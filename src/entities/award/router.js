@@ -55,7 +55,7 @@ const router = Router();
  * }
  */
 
-router.get('/award/:id', async (req, res) => {
+router.get('/award/:awardID', async (req, res) => {
   try {
     const award = await Ctrl.getAward(req.params);
     res.status(200).json({
@@ -122,8 +122,8 @@ router.get('/award/:id', async (req, res) => {
 
 router.post('/award/', async (req, res) => {
   try {
-    const id = await Ctrl.addAward(req.body);
-    const award = await Ctrl.getAward({ id });
+    const awardID = await Ctrl.addAward(req.body);
+    const award = await Ctrl.getAward({ awardID });
     res.status(200).json({
       status: 200,
       message: 'Successfully created award',
@@ -189,7 +189,7 @@ router.post('/award/', async (req, res) => {
  * }
  */
 
-router.put('/award/:id', async (req, res) => {
+router.put('/award/:awardID', async (req, res) => {
   try {
     await Ctrl.updateAward(req.params, req.body);
     const award = await Ctrl.getAward(req.params);
@@ -254,10 +254,9 @@ router.put('/award/:id', async (req, res) => {
  * }
  */
 
-router.delete('/award/:id', async (req, res) => {
+router.delete('/award/:awardID', async (req, res) => {
   try {
     await Ctrl.deleteAward(req.params);
-
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted award',
@@ -344,6 +343,10 @@ router.get('/award/', async (req, res) => {
       status: 200,
       message: 'Successfully fetched awards',
       data: awards,
+      total: awards.length,
+      limit: req.query.limit || 10,
+      page: req.query.page || 1,
+      pages: Math.ceil(awards.length / (req.query.limit || 10)),
     });
   } catch (status) {
     let message = '';
