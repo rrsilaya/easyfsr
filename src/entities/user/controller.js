@@ -51,7 +51,7 @@ export const deleteUser = ({ userID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.deleteUser, { userID }, (err, results) => {
       if (err) return reject(500);
-      else if (!results.changedRows) return reject(404);
+      else if (!results.affectedRows) return reject(404);
       return resolve();
     });
   });
