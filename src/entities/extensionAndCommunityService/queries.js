@@ -1,3 +1,5 @@
+import { formatQueryParams } from '../../utils';
+
 export const addExtensionAndCommunityService = `
   INSERT INTO extensionAndCommunityService (
     id,
@@ -11,7 +13,7 @@ export const addExtensionAndCommunityService = `
     endDate
   )
   VALUES ( 
-    DEFAULT,
+    :id,
     :participant,
     :role,
     :hours,
@@ -23,27 +25,26 @@ export const addExtensionAndCommunityService = `
   )
 `;
 
-export const updateExtensionAndCommunityService = `
+export const updateExtensionAndCommunityService = service => `
   UPDATE extensionAndCommunityService SET 
-    participant=:participant, 
-    role=:role;
-    hours=:hours, 
-    title=:title, 
-    creditUnit=:creditUnit, 
-    type=:type, 
-    startDate=:startDate, 
-    endDate=:endDate     
-  WHERE id=DEFAULT
-`;
-
-export const getExtensionAndCommunityService = `
-  SELECT * FROM extensionAndCommunityService
-  WHERE id = :id
-  ORDER BY id ASC
-  LIMIT 10;
+  ${formatQueryParams(service, 'update')} 
+  WHERE extAndCommServiceID = :extAndCommServiceID
 `;
 
 export const deleteExtensionAndCommunityService = `
   DELETE FROM extensionAndCommunityService
-  WHERE id = ""
+  WHERE extAndCommServiceID = :extAndCommServiceID
+`;
+
+export const getExtensionAndCommunityService = `
+  SELECT * FROM extensionAndCommunityService
+  WHERE extAndCommServiceID = :extAndCommServiceID
+`;
+
+export const getExtensionAndCommunityServices = (query, sortBy) => `
+  SELECT * FROM extensionAndCommunityService ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
+  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} LIMIT :limit
+
 `;

@@ -1,12 +1,14 @@
 export const addAdminWork = `
 	INSERT INTO adminWork ( 
+		adminWorkID,
 		id, 
 		position, 
 		officeUnit, 
 		approvedUnits 
 	)
 	VALUES ( 
-		DEFAULT, 
+		:adminWorkID,
+		:id,
 		:position, 
 		:officeUnit, 
 		:approvedUnits 
@@ -18,21 +20,26 @@ export const updateAdminWork = `
 		position = :position,
 		officeUnit = :officeUnit,
 		approvedUnits = :approvedUnits
-	WHERE id = :id
+	WHERE id = :id AND adminWorkID = :adminWorkID
 `;
 
 export const deleteAdminWork = `
 	DELETE FROM adminWork
-	WHERE adminWorkID = :adminWorkID
+	WHERE id = :id AND adminWorkID = :adminWorkID
 `;
 
-export const viewAdminWork = `
+export const getAllAdminWork = `
 	SELECT * FROM adminWork
 	WHERE
-		id = :id
-		position = :position
-		officeUnit = :officeUnit
-		approvedUnits = :approvedUnits
-	ORDER BY id ASC
+		id = :id 
+	ORDER BY adminWorkID ASC
+	LIMIT 10
+`;
+
+export const getAdminWork = `
+	SELECT * FROM adminWork
+	WHERE
+		id = :id AND adminWorkID = :adminWorkID
+	ORDER BY adminWorkID ASC
 	LIMIT 10
 `;

@@ -1,15 +1,15 @@
 export const addCreativeWork = `
 	INSERT INTO creativeWork ( 
 		id,
-		creativeWorkCode, 
+		creativeWorkID, 
 		date, 
 		title, 
 		type, 
 		credUnit 
 	)
 	VALUES ( 
-		DEFAULT, 
-		:creativeWorkCode, 
+		:id, 
+		:creativeWorkID, 
 		:date, 
 		:title, 
 		:type, 
@@ -23,12 +23,12 @@ export const updateCreativeWork = `
 		type = :type, 
 		title = :title, 
 		credUnit = :credUnit  
-	WHERE id = :id AND creativeWorkCode = :creativeWorkCode;
+	WHERE id = :id AND creativeWorkID = :creativeWorkID;
 `;
 
 export const deleteCreativeWork = `
 	DELETE FROM creativeWork
-	WHERE creativeWorkCode = :creativeWorkCode
+	WHERE creativeWorkID = :creativeWorkID AND id = :id
 `;
 
 export const getAllCreativeWork = `
@@ -40,18 +40,18 @@ export const getAllCreativeWork = `
 
 export const addCoAuthor = `
 	INSERT INTO cworkCoAuthor ( 
-		creativeWorkCode, 
+		creativeWorkID, 
 		userID 
 	)
 	VALUES ( 
-		:creativeWorkCode, 
+		:creativeWorkID, 
 		:userID )
 `;
 
 export const updateCoAuthor = `
 	UPDATE cworkCoAuthor SET
 		userID = :userID
-	WHERE creativeWorkCode = :creativeWorkCode
+	WHERE creativeWorkID = :creativeWorkID
 `;
 
 export const deleteCoAuthor = `
