@@ -147,20 +147,22 @@ CREATE TABLE `chTimeslot`(
 
 -- Professorial Chair or Faculty Grant or Nominee (Award)
 
-CREATE TABLE IF NOT EXISTS `award`(
+CREATE TABLE `award`(
+  `awardID` INT NOT NULL AUTO_INCREMENT, 
   `id` INT NOT NULL,
-  grantF VARCHAR (50) NOT NULL,
-  chairGrantTitle VARCHAR (50) NOT NULL,
-  collegeHasNominated VARCHAR (50) NOT NULL,
-  recipientOrNominee VARCHAR (50) NOT NULL,
-  professionalChair VARCHAR (50) NOT NULL,
-  approvedStartDate VARCHAR (50) NOT NULL,
-  endDate VARCHAR (50) NOT NULL,
+  `grantF` VARCHAR (50) NOT NULL,
+  `chairGrantTitle` VARCHAR (50) NOT NULL,
+  `collegeHasNominated` VARCHAR (50) NOT NULL,
+  `recipientOrNominee` VARCHAR (50) NOT NULL,
+  `professionalChair` VARCHAR (50) NOT NULL,
+  `approvedStartDate` VARCHAR (50) NOT NULL,
+  `endDate` VARCHAR (50) NOT NULL,
   CONSTRAINT `award_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`)
+    REFERENCES fsr(`id`),
+  CONSTRAINT `award_pk`
+    PRIMARY KEY (`awardID`) 
 );
-
 -- Limited Practice of Profession
 
 CREATE TABLE IF NOT EXISTS `limitedPracticeOfProf`(
