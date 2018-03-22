@@ -6,7 +6,7 @@ import * as Api from '../api';
 const TOGGLE_SIDEBAR = 'APP/TOGGLE_SIDEBAR';
 const LOGIN = 'APP/LOGIN';
 const GET_SESSION = 'APP/GET_SESSION';
-
+const LOGOUT = 'APP/LOGOUT';
 // Action Creators
 export const toggleSidebar = () => ({
   type: TOGGLE_SIDEBAR,
@@ -27,6 +27,16 @@ export const getSession = () => ({
   promise: Api.getSession(),
 });
 
+export const logout = () => ({
+  type: LOGOUT,
+  promise: Api.logout(),
+  meta: {
+    onFailure: () => {
+      notification.error({ message: 'Invalid credentials' });
+    },
+  },
+});
+
 // Initial State
 const initialState = {
   isSidebarCollapsed: false,
@@ -34,7 +44,7 @@ const initialState = {
   isGettingSession: true,
   isLoggingIn: false,
 
-  user: {},
+  user: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -73,6 +83,22 @@ const reducer = (state = initialState, action) => {
           ...prevState,
           isGettingSession: false,
           user: payload.data.data,
+        }),
+      });
+
+    case LOGOUT:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingSession: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          user: null,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingSession: false,
         }),
       });
 
