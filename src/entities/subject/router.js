@@ -415,9 +415,9 @@ router.post('/timeslot/', async (req, res) => {
 });
 
 /**
- * @api {get} /subject/ getSubjects
+ * @api {get} /subject/ getAllSubjectsWithSched
  * @apiGroup Subject
- * @apiName getSubjects
+ * @apiName getAllSubjectsWithSched
  * 
  * @apiSuccess {Object} subject Subjects fetched
  * @apiSuccess {Integer} subject.id ID of subject
@@ -504,9 +504,9 @@ router.get('/timeslot/', async (req, res) => {
 });
 
 /**
- * @api {get} /subject/:id getSubject
+ * @api {get} /subject/:id getSubjectWithSched
  * @apiGroup Subject
- * @apiName getSubject
+ * @apiName getSubjectWithSched
  *
  * @apiParam (Query Params) {Integer} id ID of subject
  *
