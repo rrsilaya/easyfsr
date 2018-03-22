@@ -3,11 +3,9 @@ import { formatQueryParams } from '../../utils';
 export const getNotification = `
 	SELECT * FROM notification
 	WHERE notificationID = :notificationID
-	ORDER BY notificationID ASC
-	LIMIT 10;
 `;
 
-export const getAllNotification = (query, sortBy) => `
+export const getAllNotifications = (query, sortBy) => `
 	SELECT * FROM notification ${
     query.length ? `WHERE ${formatQueryParams(query)}` : ''
   } 
@@ -43,6 +41,6 @@ export const addNotification = `
 
 export const deleteNotification = `
 	UPDATE notification SET
-		isResolved = 1
+		isResolved = true
 	WHERE notificationID = :notificationID
 `;

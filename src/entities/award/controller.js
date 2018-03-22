@@ -2,44 +2,41 @@ import db from '../../database/index';
 import * as Query from './queries';
 import { filtered, escapeSearch } from '../../utils';
 
-const userAttributes = [
-  'employeeID',
-  'firstName',
-  'middleName',
-  'lastName',
-  'password',
-  'committee',
-  'isHead',
-  'officeNumber',
-  'contractType',
-  'emailAddress',
-  'rank',
-  'acctType',
+const awardAttributes = [
+  'id',
+  'grantF',
+  'chairGrantTitle',
+  'collegeHasNominated',
+  'recipientOrNominee',
+  'professionalChair',
+  'approvedStartDate',
+  'endDate',
 ];
 
 const searchFields = [
-  'firstName',
-  'middleName',
-  'lastName',
-  'committee',
-  'officeNumber',
+  'chairGrantTitle',
+  'collegeHasNominated',
+  'recipientOrNominee',
+  'professionalChair',
+  'approvedStartDate',
+  'endDate',
 ];
 
-export const addUser = user => {
+export const addAward = award => {
   return new Promise((resolve, reject) => {
-    db.query(Query.addUser, { middleName: '', ...user }, (err, results) => {
+    db.query(Query.addAward, { ...award }, (err, results) => {
       if (err) return reject(500);
       return resolve(results.insertId);
     });
   });
 };
 
-export const updateUser = ({ userID }, user) => {
+export const updateAward = ({ awardID }, award) => {
   return new Promise((resolve, reject) => {
-    if (!user) return reject(500);
+    if (!award) return reject(500);
     db.query(
-      Query.updateUser(filtered(user, userAttributes)),
-      { userID, ...user },
+      Query.updateAward(filtered(award, awardAttributes)),
+      { awardID, ...award },
       (err, results) => {
         if (err) return reject(500);
         return resolve(results.insertId);
@@ -48,9 +45,9 @@ export const updateUser = ({ userID }, user) => {
   });
 };
 
-export const deleteUser = ({ userID }) => {
+export const deleteAward = ({ awardID }) => {
   return new Promise((resolve, reject) => {
-    db.query(Query.deleteUser, { userID }, (err, results) => {
+    db.query(Query.deleteAward, { awardID }, (err, results) => {
       if (err) return reject(500);
       else if (!results.affectedRows) return reject(404);
       return resolve();
@@ -58,9 +55,9 @@ export const deleteUser = ({ userID }) => {
   });
 };
 
-export const getUser = ({ userID }) => {
+export const getAward = ({ awardID }) => {
   return new Promise((resolve, reject) => {
-    db.query(Query.getUser, { userID }, (err, results) => {
+    db.query(Query.getAward, { awardID }, (err, results) => {
       if (err) return reject(500);
       else if (!results.length) return reject(404);
       return resolve(results);
@@ -68,11 +65,14 @@ export const getUser = ({ userID }) => {
   });
 };
 
-export const getUsers = user => {
+export const getAwards = award => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getUsers(filtered(user, userAttributes), user.sortBy),
-      { field: 'lastName', ...escapeSearch(user, searchFields, user.limit) },
+      Query.getAwards(filtered(award, awardAttributes), award.sortBy),
+      {
+        field: 'chairGrantTitle',
+        ...escapeSearch(award, searchFields, award.limit),
+      },
       (err, results) => {
         if (err) return reject(500);
         return resolve(results);

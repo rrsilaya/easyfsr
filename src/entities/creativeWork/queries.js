@@ -11,7 +11,7 @@ export const addCreativeWork = `
 	)
 	VALUES (
 		:id,
-		:creativeWorkID,
+		DEFAULT,
 		:date,
 		:title,
 		:type,
@@ -23,16 +23,20 @@ export const updateCreativeWork = creativeWork => `
 	UPDATE creativeWork SET
 	${formatQueryParams(creativeWork)}
 	WHERE id = :id AND creativeWorkID = :creativeWorkID;
-`
+`;
 
 export const deleteCreativeWork = `
 	DELETE FROM creativeWork
 	WHERE creativeWorkID = :creativeWorkID AND id = :id
 `;
 
-export const getCreativeWorks = query => `
-	SELECT * FROM creativeWork ${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
-`
+export const getCreativeWorks = (query, sortBy) => `
+	SELECT * FROM creativeWork ${
+    query.length ? `WHERE ${formatQueryParams(query)}` : ''
+  }
+	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+	LIMIT :limit
+`;
 
 export const getCreativeWork = `
 	SELECT * FROM creativeWork NATURAL JOIN cworkCoAuthor

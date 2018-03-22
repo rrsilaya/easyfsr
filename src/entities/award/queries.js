@@ -26,22 +26,26 @@ export const addAward = `
 `;
 
 export const updateAward = award => `
-  UPDATE award SET
-  ${formatQueryParams(award)}
-  WHERE id = :id
-`;
-
-export const getAwards = (query, sortBy) => `
-  SELECT *
-  FROM award
-  ${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
-  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
-  LIMIT :limit
+  UPDATE award SET 
+   ${formatQueryParams(award, 'update')}
+  WHERE awardID = :awardID
 `;
 
 export const deleteAward = `
   DELETE FROM award
-  WHERE id = :id
+  WHERE awardID = :awardID
+`;
+
+export const getAward = `
+  SELECT * FROM award
+  WHERE awardID = :awardID
+`;
+
+export const getAwards = (query, sortBy) => `
+ SELECT * FROM award ${
+   query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+ }
+  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} LIMIT :limit
 `;
 
 /*
