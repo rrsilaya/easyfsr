@@ -2,6 +2,7 @@ import Dashboard from '../pages/dashboard/Dashboard';
 import Profile from '../pages/profile/Profile';
 import ServiceRecords from '../pages/serviceRecords/ServiceRecords';
 import Users from '../pages/users/Users';
+import FormSample from '../pages/serviceRecords/FormSample';
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     type: 'path',
     path: '/users',
     component: Users,
+  },
+  {
+    type: 'path',
+    path: '/formSample',
+    component: FormSample,
   },
   {
     type: 'redirect',

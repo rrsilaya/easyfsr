@@ -119,7 +119,7 @@ class RegForm extends Component {
             rules: [
               {
                 required: true,
-                message: 'Please input your nickname!',
+                message: 'Please input your name!',
                 whitespace: true,
               },
             ],
@@ -143,7 +143,7 @@ class RegForm extends Component {
         </FormItem>
 
         <FormItem {...formItemLayout} label="Home Department">
-          {getFieldDecorator('rank', {
+          {getFieldDecorator('department', {
             rules: [
               {
                 required: true,
@@ -165,8 +165,6 @@ class RegForm extends Component {
             ],
           })(<Cascader options={colleges} />)}
         </FormItem>
-
-        
 
         <FormItem {...tailFormItemLayout}>
           {getFieldDecorator('agreement', {

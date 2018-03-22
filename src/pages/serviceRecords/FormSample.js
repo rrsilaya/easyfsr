@@ -25,7 +25,7 @@ class FormSample extends Component {
       <div>
         <h1>FSR Form</h1>
         <Row>
-          <Col span={6}>
+          <Col span={8}>
             <Card title="Tasks" style={styles.formFSR}>
               <Steps direction="vertical" size="small" current={1}>
                 <Step

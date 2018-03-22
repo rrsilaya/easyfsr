@@ -1,12 +1,24 @@
 import React, { Component } from 'react';
-import { Icon, Button, Card, Progress, Table, Row, Column, Menu } from 'antd';
+import {
+  Icon,
+  Button,
+  Card,
+  Progress,
+  Table,
+  Row,
+  Col,
+  Menu,
+  List,
+} from 'antd';
 import styles from './styles';
 import actions from './actions';
 import dataSource from './datasource';
 import columns from './columns';
+import { Link } from 'react-router-dom';
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
+const { Item } = List;
 
 class FSRForm extends Component {
   state = {
@@ -22,29 +34,31 @@ class FSRForm extends Component {
   render() {
     return (
       <div>
-        <Row>
-          <Card title="Faculty Service Record Form" style={styles.formFSR}>
-            <Menu
-              onClick={this.handleClick}
-              selectedKeys={[this.state.current]}
-              mode="horizontal"
-            >
-              <Menu.Item key="alipay">
-                <a href="/FormSample" target="_blank" rel="noopener noreferrer">
-                  FSR Form - Link
-                </a>
-              </Menu.Item>
-            </Menu>
-          </Card>
-        </Row>
+        <h1>Faculty Service Record</h1>
         <div>
-          <Row>
-            <Table
-              columns={columns}
-              dataSource={dataSource}
-              style={styles.formFSR}
-            />
-          </Row>
+          <List
+            bordered
+            columns={columns}
+            dataSource={dataSource}
+            style={styles.tableFSR}
+            renderItem={item => (
+              <Item>
+                <Col span={8}>
+                  <div>{item.year}</div>
+                </Col>
+                <Col span={8}>
+                  <div>{item.term}</div>
+                </Col>
+                <Col span={8}>
+                  <div>
+                    <Link to={`/FormSample/${item.link}`}>
+                      Faculty Service Record
+                    </Link>
+                  </div>
+                </Col>
+              </Item>
+            )}
+          />
         </div>
       </div>
     );
