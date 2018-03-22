@@ -17,6 +17,9 @@ const style = {
       width: 200,
       display: 'inline-block',
     },
+    splash: {
+      width: '80%',
+    },
   },
   wrapper: {
     width: '90%',

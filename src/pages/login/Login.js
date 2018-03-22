@@ -4,6 +4,7 @@ import { Layout, Form, Input, Button } from 'antd';
 import { handleFormSubmit } from './actions';
 import styles from './styles';
 import logo from './easyFSR.svg';
+import splash from './splash.png';
 
 const { Header, Content } = Layout;
 const { Group: InputGroup } = Input;
@@ -23,7 +24,7 @@ class Login extends Component {
           <div style={styles.pagecontainer}>
             <div style={styles.wrapper}>
               <div className="container" style={styles.section}>
-                Image
+                <img src={splash} alt="" style={styles.logo.splash} />
               </div>
               <div
                 className="container"
