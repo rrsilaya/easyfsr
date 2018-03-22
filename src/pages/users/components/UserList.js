@@ -29,5 +29,3 @@ class UserList extends Component {
 }
 
 export default UserList;
-
-//nasa loob ng folder na components
