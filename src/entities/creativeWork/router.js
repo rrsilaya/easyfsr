@@ -62,9 +62,9 @@ router.post('/creativeWork/', async (req, res) => {
   }
 });
 /**
- * @api {get} /creativeWork/ getAllCreativeWork
+ * @api {get} /creativeWork/ getCreativeWorks
  * @apiGroup Creative Work
- * @apiName getAllCreativeWork
+ * @apiName getCreativeWorks
  * 
  * @apiSuccess {Object} creativeWork createWorks fetched
  * @apiSuccess {Integer} creativeWork.creativeWorkID ID of creative work
@@ -120,7 +120,7 @@ router.post('/creativeWork/', async (req, res) => {
  */
 router.get('/creativeWork/', async (req, res) => {
   try {
-    const creativeWork = await Ctrl.getAllCreativeWork();
+    const creativeWork = await Ctrl.getCreativeWorks();
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched creative works',

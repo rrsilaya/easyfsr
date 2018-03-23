@@ -14,10 +14,10 @@ export const addCreativeWork = creativeWork => {
   });
 };
 
-export const getAllCreativeWork = creativeWork => {
+export const getCreativeWorks = creativeWork => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getAllCreativeWork(filtered(creativeWork, creativeWorkAttributes)),
+      Query.getCreativeWorks(filtered(creativeWork, creativeWorkAttributes)),
       creativeWork,
       (err, results) => {
         if (err) return reject(500);

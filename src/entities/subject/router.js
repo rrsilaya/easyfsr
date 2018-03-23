@@ -413,9 +413,9 @@ router.post('/timeslot/', async (req, res) => {
 });
 
 /**
- * @api {get} /subject/ getAllSubjectsWithSched
+ * @api {get} /subject/ getSubjectsWithSched
  * @apiGroup Subject
- * @apiName getAllSubjectsWithSched
+ * @apiName getSubjectsWithSched
  * 
  * @apiSuccess {Object} subject Subjects fetched
  * @apiSuccess {Integer} subject.id ID of subject
@@ -481,7 +481,7 @@ router.post('/timeslot/', async (req, res) => {
 
 router.get('/timeslot/', async (req, res) => {
   try {
-    const subject = await Ctrl.getAllSubjectsWithSched();
+    const subject = await Ctrl.getSubjectsWithSched();
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched subjects',

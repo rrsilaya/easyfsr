@@ -72,10 +72,10 @@ export const getSubject = ({ id }) => {
   });
 };
 
-export const getAllSubjectsWithSched = subject => {
+export const getSubjectsWithSched = subject => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getAllSubjectsWithSched(filtered(subject, subjectAttributes)),
+      Query.getSubjectsWithSched(filtered(subject, subjectAttributes)),
       subject,
       (err, results) => {
         console.log(err);

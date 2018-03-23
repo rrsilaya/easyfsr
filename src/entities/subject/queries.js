@@ -45,7 +45,7 @@ export const getSubject = `
 	WHERE id= :id
 `;
 /*GETS ALL SUBJECTS WITH SPECIFIC SCHED*/
-export const getAllSubjectsWithSched = query => `
+export const getSubjectsWithSched = query => `
 	SELECT * 
 	FROM subject natural join timeslot
 	WHERE id=id

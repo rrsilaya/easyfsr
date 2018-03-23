@@ -31,7 +31,7 @@ export const deleteCreativeWork = `
 	WHERE creativeWorkID = :creativeWorkID AND id = :id
 `;
 
-export const getAllCreativeWork = query => `
+export const getCreativeWorks = query => `
 	SELECT * FROM creativeWork
 	NATURAL JOIN cworkCoAuthor
 	ORDER BY id ASC
