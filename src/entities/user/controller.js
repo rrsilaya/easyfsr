@@ -80,3 +80,12 @@ export const getUsers = user => {
     );
   });
 };
+
+export const getTotalUsers = () => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getTotalUsers, (err, results) => {
+      if (err) return reject(500);
+      return resolve(results);
+    });
+  });
+};
