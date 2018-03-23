@@ -41,28 +41,24 @@ const router = Router();
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
- *     "data": {
- *        "status": 200;
- *		    "message": 'Succesfully created user'
- *        "data": [
- *          {
- *               "userID": 3,
- *               "employeeID": "51111231223",
- *               "password": "$2a$10$/dzZc88gN1RdA2UMiJIXau65QQ5dGZeBlDD0PNBQVAYYFDXMDVrb2",
- *               "firstName": "Marie",
- *               "middleName": "S",
- *               "lastName": "Smith",
- *               "committee": null,
- *               "isHead": null,
- *               "officeNumber": "118",
- *               "contractType": "part-time",
- *               "emailAddress": "marieSmith@up.edu.ph",
- *               "rank": null,
- *               "isArchived": 0,
- *               "acctType": "USER"
- *           }
- *         ]
- *     }
+ *     "status": 200;
+ *		 "message": 'Succesfully created user'
+ *     "data":
+ *        {
+ *          "userID": 3,
+ *          "employeeID": "51111231223",
+ *          "firstName": "Marie",
+ *          "middleName": "S",
+ *          "lastName": "Smith",
+ *          "committee": null,
+ *          "isHead": null,
+ *          "officeNumber": "118",
+ *          "contractType": "part-time",
+ *          "emailAddress": "marieSmith@up.edu.ph",
+ *          "rank": null,
+ *          "isArchived": 0,
+ *          "acctType": "USER"
+ *         }
  *   }
  *
  * @apiError (Error 500) {String} status List of errors
@@ -227,6 +223,22 @@ router.get('/user/', async (req, res) => {
  *   {
  *    "status": 200,
  *    "message": "Successfully deleted user",
+ *    "data":
+ *        {
+ *          "userID": 3,
+ *          "employeeID": "51111231223",
+ *          "firstName": "Marie",
+ *          "middleName": "S",
+ *          "lastName": "Smith",
+ *          "committee": null,
+ *          "isHead": null,
+ *          "officeNumber": "118",
+ *          "contractType": "part-time",
+ *          "emailAddress": "marieSmith@up.edu.ph",
+ *          "rank": null,
+ *          "isArchived": 0,
+ *          "acctType": "USER"
+ *         }
  *  }
  *
  * @apiError (Error 500) {String} status error status code
@@ -297,10 +309,9 @@ router.delete('/user/:userID', async (req, res) => {
  *   {
  *     "status":200,
  *     "message":"Successfully fetched user",
- *     "data": [
+ *     "data":
  *        {
  *          "employeeID":"5121328320",
- *          "password":"$2a$10$JQL/6dENt1TQofx49huAmu1e/K/m8UPn4SGXixRU5NYDK/QzpudbW",
  *          "firstName":"Erlen Mae",
  *          "middleName":"S",
  *          "lastName":"Evangelista",
@@ -313,7 +324,6 @@ router.delete('/user/:userID', async (req, res) => {
  *          "isArchived":0,
  *          "acctType":"USER"
  *        }
- *     ]
  *   }
  *
  * @apiError (Error 500) {String} status error status code
@@ -394,14 +404,12 @@ router.get('/user/:userID', async (req, res) => {
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
- *     "data": {
  *        status: 200;
  *        message: 'Succesfully updated user'
- *        "data": [
+ *        "data":
  *          {
  *               "userID": 3,
  *               "employeeID": "51111231223",
- *               "password": "$2a$10$/dzZc88gN1RdA2UMiJIXau65QQ5dGZeBlDD0PNBQVAYYFDXMDVrb2",
  *               "firstName": "Marie",
  *               "middleName": "S",
  *               "lastName": "Smith",
@@ -414,8 +422,6 @@ router.get('/user/:userID', async (req, res) => {
  *               "isArchived": 0,
  *               "acctType": "USER"
  *           }
- *         ]
- *     }
  *   }
  *
  * @apiError (Error 500) {String} status error status code
