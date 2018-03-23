@@ -32,19 +32,17 @@ export const deleteSubject = `
 	WHERE id = :id
 `;
 
-/*GETS SPECIFIC SUBJECT*/
+/*GETS ALL SUBJECTS*/
 export const getSubjects = query => ` 
-  SELECT * FROM subject ${
+  SELECT * FROM subject  ${
     query.length ? `WHERE ${formatQueryParams(query)}` : ''
   }
 `;
-/*GETS ALL SUBJECTS*/
-export const getSubject = query => `
+/*GETS SPECIFIC SUBJECT*/
+export const getSubject = `
 	SELECT *
-	FROM subject natural join teachingLoad
-	WHERE id=id
-	ORDER BY subjectCode ASC
-	LIMIT 10
+	FROM subject 
+	WHERE id= :id
 `;
 /*GETS ALL SUBJECTS WITH SPECIFIC SCHED*/
 export const getAllSubjectsWithSched = query => `
@@ -58,7 +56,7 @@ export const getAllSubjectsWithSched = query => `
 export const getSubjectWithSched = query => `
 	SELECT * 
 	FROM subject natural join timeslot 
-	WHERE subjectID=subjectID AND id=id 
+	WHERE subjectID=:subjectID AND id=:id 
 `;
 
 export const addTimeSlot = `
