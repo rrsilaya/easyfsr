@@ -363,7 +363,7 @@ router.delete('/subject/:id', async (req, res) => {
 });
 
 /**
- * @api {post} /subject addTimeSlot
+ * @api {post} /timeslot addTimeSlot
  * @apiGroup Subject
  * @apiName addTimeSlot
 
