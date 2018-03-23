@@ -193,9 +193,9 @@ router.get('/studyLoad/:id', async (req, res) => {
 });
 
 /**
- * @api {get} /studyLoad getAllStudyLoad
+ * @api {get} /studyLoad getStudyLoads
  * @apiGroup Study Load
- * @apiName getAllStudyLoad 
+ * @apiName getStudyLoads 
  *
  * @apiParam (Body Params) {String} id ID of Study Load
  * @apiParam (Body Params) {String} degree degree of study load
@@ -242,7 +242,7 @@ router.get('/studyLoad/:id', async (req, res) => {
 
 router.get('/studyLoad/', async (req, res) => {
   try {
-    const studyLoads = await Ctrl.getAllStudyLoad(req.query);
+    const studyLoads = await Ctrl.getStudyLoads(req.query);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched all studyLoad details',

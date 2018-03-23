@@ -34,7 +34,7 @@ export const getStudyLoad = `
 		LIMIT 10
 `;
 
-export const getAllStudyLoad = query => `
+export const getStudyLoads = query => `
 	SELECT * FROM studyLoad 
 	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
 `;

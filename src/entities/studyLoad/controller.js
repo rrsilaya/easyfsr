@@ -43,10 +43,10 @@ export const getStudyLoad = ({ id }) => {
   });
 };
 
-export const getAllStudyLoad = studyLoad => {
+export const getStudyLoads = studyLoad => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getAllStudyLoad(filtered(studyLoad, studyLoadAttributes)),
+      Query.getStudyLoads(filtered(studyLoad, studyLoadAttributes)),
       studyLoad,
       (err, results) => {
         if (err) return reject(500);
