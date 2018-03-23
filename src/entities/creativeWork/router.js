@@ -67,7 +67,8 @@ router.post('/creativeWork/', async (req, res) => {
  * @apiName getAllCreativeWork
  * 
  * @apiSuccess {Object} creativeWork createWorks fetched
- * @apiSuccess {Integer} creativeWork.id ID of creative work
+ * @apiSuccess {Integer} creativeWork.creativeWorkID ID of creative work
+ * @apiSuccess {Integer} creativeWork.id ID of fsr connected to creative work
  * @apiSuccess {Date} creativeWork.date date of creative work
  * @apiSuccess {String} creativeWork.title title of creative work
  * @apiSuccess {String} creativeWork.type type of creative work
