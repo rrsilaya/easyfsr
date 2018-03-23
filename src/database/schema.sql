@@ -163,8 +163,8 @@ CREATE TABLE `award`(
   `collegeHasNominated` VARCHAR (50) NOT NULL,
   `recipientOrNominee` VARCHAR (50) NOT NULL,
   `professionalChair` VARCHAR (50) NOT NULL,
-  `approvedStartDate` VARCHAR (50) NOT NULL,
-  `endDate` VARCHAR (50) NOT NULL,
+  `approvedStartDate` DATE NOT NULL,
+  `endDate` DATE NOT NULL,
   CONSTRAINT `award_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
@@ -194,8 +194,8 @@ CREATE TABLE `extensionAndCommunityService`(
   `title` VARCHAR (50) NOT NULL,
   `creditUnit` INT (2) NOT NULL,
   `type` VARCHAR (50) NOT NULL,
-  `startDate` VARCHAR (50) NOT NULL,
-  `endDate` VARCHAR (50) NOT NULL,
+  `startDate` DATE NOT NULL,
+  `endDate` DATE NOT NULL,
   CONSTRAINT `extensionAndCommunityService_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
@@ -284,8 +284,8 @@ CREATE TABLE `notification`(
   `senderID` INT NOT NULL,
   `receiverID` INT NOT NULL,
   `message` varchar(1000) NOT NULL,
-  `dateSent` date NOT NULL,
-  `timeSent` time NOT NULL,
+  `dateSent` DATE NOT NULL,
+  `timeSent` TIME NOT NULL,
   `isResolved` BOOLEAN,
   CONSTRAINT `notification_pk`
     PRIMARY KEY(`notificationID`),
