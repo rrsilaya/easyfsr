@@ -163,8 +163,8 @@ CREATE TABLE `award`(
   `collegeHasNominated` VARCHAR (50) NOT NULL,
   `recipientOrNominee` VARCHAR (50) NOT NULL,
   `professionalChair` VARCHAR (50) NOT NULL,
-  `approvedStartDate` DATE NOT NULL,
-  `endDate` DATE NOT NULL,
+  `approvedStartDate` DATE NOT NULL, --                   DATE format: YYYY-MM-DD
+  `endDate` DATE NOT NULL, --                             DATE format: YYYY-MM-DD
   CONSTRAINT `award_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
@@ -177,7 +177,7 @@ CREATE TABLE `limitedPracticeOfProf`(
   `limitedPracticeOfProfID` INT NOT NULL AUTO_INCREMENT, 
   `id` INT NOT NULL,
   `askedPermission` VARCHAR (10) NOT NULL,  -- YES / NO
-  Date VARCHAR (50),
+  Date VARCHAR (50),  --                   DATE format: YYYY-MM-DD
   CONSTRAINT `limitedPracticeOfProf_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
@@ -194,8 +194,8 @@ CREATE TABLE `extensionAndCommunityService`(
   `title` VARCHAR (50) NOT NULL,
   `creditUnit` INT (2) NOT NULL,
   `type` VARCHAR (50) NOT NULL,
-  `startDate` DATE NOT NULL,
-  `endDate` DATE NOT NULL,
+  `startDate` DATE NOT NULL, --                   DATE format: YYYY-MM-DD
+  `endDate` DATE NOT NULL, --                     DATE format: YYYY-MM-DD
   CONSTRAINT `extensionAndCommunityService_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
@@ -255,8 +255,8 @@ CREATE TABLE `research`(
   `type` VARCHAR (30) NOT NULL, -- PROPOSAL / IMPLEMENTATION
   `role` VARCHAR (30) NOT NULL,
   `title` VARCHAR (50) NOT NULL,
-  `startDate` DATE NOT NULL,
-  `endDate` DATE NOT NULL,
+  `startDate` DATE NOT NULL, --                   DATE format: YYYY-MM-DD
+  `endDate` DATE NOT NULL, --                     DATE format: YYYY-MM-DD
   `funding` VARCHAR (30) NOT NULL,
   `approvedUnits` VARCHAR (30) NOT NULL,
   CONSTRAINT `research_fsr_fk`
@@ -284,7 +284,7 @@ CREATE TABLE `notification`(
   `senderID` INT NOT NULL,
   `receiverID` INT NOT NULL,
   `message` varchar(1000) NOT NULL,
-  `dateSent` DATE NOT NULL,
+  `dateSent` DATE NOT NULL, --                   DATE format: YYYY-MM-DD
   `timeSent` TIME NOT NULL,
   `isResolved` BOOLEAN,
   CONSTRAINT `notification_pk`
