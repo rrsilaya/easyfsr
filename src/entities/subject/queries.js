@@ -33,10 +33,11 @@ export const deleteSubject = `
 `;
 
 /*GETS ALL SUBJECTS*/
-export const getSubjects = query => ` 
-  SELECT * FROM subject  ${
-    query.length ? `WHERE ${formatQueryParams(query)}` : ''
-  }
+export const getSubjects = (query, sortBy) => `
+ SELECT * FROM subject ${
+   query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+ }
+  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} LIMIT :limit
 `;
 /*GETS SPECIFIC SUBJECT*/
 export const getSubject = `

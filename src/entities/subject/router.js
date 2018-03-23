@@ -137,20 +137,23 @@ router.get('/subject/:id', async (req, res) => {
  *   "message": "Subjects not found"
  * }
  */
-
 router.get('/subject/', async (req, res) => {
   try {
-    const subject = await Ctrl.getSubjects();
+    const subjects = await Ctrl.getSubjects(req.query);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched subjects',
-      data: subject,
+      data: subjects,
+      total: subjects.length,
+      limit: req.query.limit || 12,
+      page: req.query.page || 1,
+      pages: Math.ceil(subjects.length / (req.query.limit || 12)),
     });
   } catch (status) {
     let message = '';
     switch (status) {
       case 404:
-        message = 'Subjects not found';
+        message = 'User not found';
         break;
       case 500:
         message = 'Internal server error';

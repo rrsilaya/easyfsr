@@ -1,9 +1,18 @@
 import db from '../../database/index';
 import * as Query from './queries';
-import { filtered } from '../../utils';
+import { filtered, escapeSearch } from '../../utils';
 
 const subjectAttributes = [
   'id',
+  'subjectCode',
+  'teachingLoadCreds',
+  'noOfStudents',
+  'hoursPerWeek',
+  'sectionCode',
+  'room',
+];
+
+const searchFields = [
   'subjectCode',
   'teachingLoadCreds',
   'noOfStudents',
@@ -50,11 +59,13 @@ export const addTimeSlot = timeslot => {
 export const getSubjects = subject => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getSubjects(filtered(subject, subjectAttributes)),
-      subject,
+      Query.getSubjects(filtered(subject, subjectAttributes), subject.sortBy),
+      {
+        field: 'subjectCode',
+        ...escapeSearch(subject, searchFields, subject.limit),
+      },
       (err, results) => {
         if (err) return reject(500);
-        else if (!results.length) return reject(404);
         return resolve(results);
       },
     );
