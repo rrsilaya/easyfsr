@@ -65,8 +65,8 @@ const router = Router();
  *     }
  *   }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {String} status List of errors
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
@@ -163,7 +163,7 @@ router.post('/user/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} error status code
+ * @apiError (Error 404) {String} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 User not found
@@ -186,7 +186,7 @@ router.get('/user/', async (req, res) => {
       limit: req.query.limit || 12,
       page: req.query.page || 1,
       pages: Math.ceil(
-        (await Ctrl.getTotalUsers())[0].total / (req.query.limit || 12),
+        (await Ctrl.getTotalUsers()).total / (req.query.limit || 12),
       ),
     });
   } catch (status) {
@@ -237,7 +237,7 @@ router.get('/user/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} error status code
+ * @apiError (Error 404) {String} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 User not found
@@ -248,10 +248,13 @@ router.get('/user/', async (req, res) => {
  */
 router.delete('/user/:userID', async (req, res) => {
   try {
+    const user = await Ctrl.getUser(req.params);
+    delete user.password;
     await Ctrl.deleteUser(req.params);
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted user',
+      data: user,
     });
   } catch (status) {
     let message = '';
@@ -321,7 +324,7 @@ router.delete('/user/:userID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} error status code
+ * @apiError (Error 404) {String} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 User not found
@@ -423,7 +426,7 @@ router.get('/user/:userID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} error status code
+ * @apiError (Error 404) {String} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 User not found
