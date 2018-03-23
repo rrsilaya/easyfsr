@@ -7,6 +7,7 @@ const userAttributes = [
   'firstName',
   'middleName',
   'lastName',
+  'password',
   'committee',
   'isHead',
   'officeNumber',
@@ -77,5 +78,14 @@ export const getUsers = user => {
         return resolve(results);
       },
     );
+  });
+};
+
+export const getTotalUsers = () => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getTotalUsers, (err, results) => {
+      if (err) return reject(500);
+      return resolve(results);
+    });
   });
 };

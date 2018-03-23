@@ -98,114 +98,6 @@ router.post('/user/', async (req, res) => {
 });
 
 /**
- * @api {put} /user/:userID updateUser
- * @apiGroup User
- * @apiName updateUser
- *
- * @apiParam (Query Params) {String} userID ID of employee
- * @apiParam (Body Params) {String} password password of employee
- * @apiParam (Body Params) {String} firstName first name of employee
- * @apiParam (Body Params) {String} [middleName] middle name of employee
- * @apiParam (Body Params) {String} lastName last name of employee
- * @apiParam (Body Params) {String} [committee] committee of employee, if exists
- * @apiParam (Body Params) {Boolean} [isHead] indicates if employee is head
- * @apiParam (Body Params) {String} officeNumber office number of employee
- * @apiParam (Body Params) {String} contractType contract type of employee
- * @apiParam (Body Params) {String} emailAddress email address of employee
- * @apiParam (Body Params) {String} [rank] rank of employee
- * @apiParam (Body Params) {String} [isArchived] indicates if employee entry is archived
- * @apiParam (Body Params) {String} [acctType] account type of employee
- *
- * @apiSuccess {Object} user User updated
- * @apiSuccess {String} user.userID ID of employee
- * @apiSuccess {String} user.employeeID employee ID
- * @apiSuccess {String} user.password password of employee
- * @apiSuccess {String} user.firstName first name of employee
- * @apiSuccess {String} user.middleName middle name of employee
- * @apiSuccess {String} user.lastName last name of employee
- * @apiSuccess {String} user.committee committee of employee, if exists
- * @apiSuccess {Boolean} user.isHead indicates if employee is head
- * @apiSuccess {String} user.officeNumber office number of employee
- * @apiSuccess {String} user.contractType contract type of employee
- * @apiSuccess {String} user.emailAddress email address of employee
- * @apiSuccess {String} user.rank rank of employee
- * @apiSuccess {String} user.isArchived indicates if employee entry is archived
- * @apiSuccess {String} user.acctType account type of employee
- *
- * @apiSuccessExample {json} Success-Response:
- *   HTTP/1.1 200 OK
- *   {
- *     "data": {
- *        status: 200;
- *        message: 'Succesfully updated user'
- *        "data": [
- *          {
- *               "userID": 3,
- *               "employeeID": "51111231223",
- *               "password": "$2a$10$/dzZc88gN1RdA2UMiJIXau65QQ5dGZeBlDD0PNBQVAYYFDXMDVrb2",
- *               "firstName": "Marie",
- *               "middleName": "S",
- *               "lastName": "Smith",
- *               "committee": Registration,
- *               "isHead": 1,
- *               "officeNumber": "118",
- *               "contractType": "part-time",
- *               "emailAddress": "marieSmith@up.edu.ph",
- *               "rank": 121,
- *               "isArchived": 0,
- *               "acctType": "USER"
- *           }
- *         ]
- *     }
- *   }
- *
- * @apiError (Error 500) {String} status error status code
- * @apiError (Error 500) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- *   HTTP/1.1 500 Internal Server Error
- *   {
- *     "status": 500,
- *     "message": "Internal server error"
- *   }
- * @apiError (Error 404) {String} error status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 User not found
- * {
- *   "status": 404,
- *   "message": "User not found"
- * }
- */
-
-router.put('/user/:userID', async (req, res) => {
-  try {
-    if (req.body.password) {
-      req.body.password = await bcrypt.hash(req.body.password, 10);
-    }
-    await Ctrl.updateUser(req.params, req.body);
-    const user = await Ctrl.getUser(req.params);
-    delete user.password;
-
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully updated user',
-      data: user,
-    });
-  } catch (status) {
-    let message = '';
-    switch (status) {
-      case 404:
-        message = 'User not found';
-        break;
-      case 500:
-        message = 'Internal server error';
-        break;
-    }
-    res.status(status).json({ status, message });
-  }
-});
-
-/**
  * @api {get} /user getUsers
  * @apiGroup User
  * @apiName getUsers
@@ -291,9 +183,11 @@ router.get('/user/', async (req, res) => {
       message: 'Successfully fetched users',
       data: users,
       total: users.length,
-      limit: req.query.limit || 10,
+      limit: req.query.limit || 12,
       page: req.query.page || 1,
-      pages: Math.ceil(users.length / (req.query.limit || 10)),
+      pages: Math.ceil(
+        (await Ctrl.getTotalUsers())[0].total / (req.query.limit || 12),
+      ),
     });
   } catch (status) {
     let message = '';
@@ -372,8 +266,6 @@ router.delete('/user/:userID', async (req, res) => {
     res.status(status).json({ status, message });
   }
 });
-
-export default router;
 
 /**
  * @api {get} /user/:userID getUser
@@ -460,3 +352,122 @@ router.get('/user/:userID', async (req, res) => {
     res.status(status).json({ status, message });
   }
 });
+
+/**
+ * @api {put} /user/:userID updateUser
+ * @apiGroup User
+ * @apiName updateUser
+ *
+ * @apiParam (Query Params) {String} userID ID of employee
+ * @apiParam (Body Params) {String} password password of employee
+ * @apiParam (Body Params) {String} firstName first name of employee
+ * @apiParam (Body Params) {String} [middleName] middle name of employee
+ * @apiParam (Body Params) {String} lastName last name of employee
+ * @apiParam (Body Params) {String} [committee] committee of employee, if exists
+ * @apiParam (Body Params) {Boolean} [isHead] indicates if employee is head
+ * @apiParam (Body Params) {String} officeNumber office number of employee
+ * @apiParam (Body Params) {String} contractType contract type of employee
+ * @apiParam (Body Params) {String} emailAddress email address of employee
+ * @apiParam (Body Params) {String} [rank] rank of employee
+ * @apiParam (Body Params) {String} [isArchived] indicates if employee entry is archived
+ * @apiParam (Body Params) {String} [acctType] account type of employee
+ *
+ * @apiSuccess {Object} user User updated
+ * @apiSuccess {String} user.userID ID of employee
+ * @apiSuccess {String} user.employeeID employee ID
+ * @apiSuccess {String} user.password password of employee
+ * @apiSuccess {String} user.firstName first name of employee
+ * @apiSuccess {String} user.middleName middle name of employee
+ * @apiSuccess {String} user.lastName last name of employee
+ * @apiSuccess {String} user.committee committee of employee, if exists
+ * @apiSuccess {Boolean} user.isHead indicates if employee is head
+ * @apiSuccess {String} user.officeNumber office number of employee
+ * @apiSuccess {String} user.contractType contract type of employee
+ * @apiSuccess {String} user.emailAddress email address of employee
+ * @apiSuccess {String} user.rank rank of employee
+ * @apiSuccess {String} user.isArchived indicates if employee entry is archived
+ * @apiSuccess {String} user.acctType account type of employee
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *   HTTP/1.1 200 OK
+ *   {
+ *     "data": {
+ *        status: 200;
+ *        message: 'Succesfully updated user'
+ *        "data": [
+ *          {
+ *               "userID": 3,
+ *               "employeeID": "51111231223",
+ *               "password": "$2a$10$/dzZc88gN1RdA2UMiJIXau65QQ5dGZeBlDD0PNBQVAYYFDXMDVrb2",
+ *               "firstName": "Marie",
+ *               "middleName": "S",
+ *               "lastName": "Smith",
+ *               "committee": Registration,
+ *               "isHead": 1,
+ *               "officeNumber": "118",
+ *               "contractType": "part-time",
+ *               "emailAddress": "marieSmith@up.edu.ph",
+ *               "rank": 121,
+ *               "isArchived": 0,
+ *               "acctType": "USER"
+ *           }
+ *         ]
+ *     }
+ *   }
+ *
+ * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ *   HTTP/1.1 500 Internal Server Error
+ *   {
+ *     "status": 500,
+ *     "message": "Internal server error"
+ *   }
+ * @apiError (Error 404) {String} error status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 User not found
+ * {
+ *   "status": 404,
+ *   "message": "User not found"
+ * }
+ */
+router.use('/user/:userID', (req, res, next) => {
+  const { user } = req.session;
+  if (user.acctType === 'ADMIN' || user.userID == req.params.userID) {
+    return next();
+  }
+  res.status(403).json({
+    status: 403,
+    message: 'Unauthorized access',
+  });
+});
+router.put('/user/:userID', async (req, res) => {
+  try {
+    if (req.body.password) {
+      req.body.password = await bcrypt.hash(req.body.password, 10);
+    }
+    await Ctrl.updateUser(req.params, req.body);
+    const user = await Ctrl.getUser(req.params);
+    delete user.password;
+
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully updated user',
+      data: user,
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'User not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
+    }
+    res.status(status).json({ status, message });
+  }
+});
+
+export default router;
