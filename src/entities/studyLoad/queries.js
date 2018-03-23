@@ -29,12 +29,10 @@ export const deleteStudyLoad = `
 
 export const getStudyLoad = `
 	SELECT * FROM studyLoad
-		WHERE id = :id 
-		ORDER BY id ASC 
-		LIMIT 10
+		WHERE id = :id
 `;
 
-export const getStudyLoads = query => `
+export const getStudyLoads = (query, sortBy) => `
 	SELECT * FROM studyLoad 
 	${query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''}
  	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} LIMIT :limit
