@@ -167,7 +167,6 @@ router.get('/subject/', async (req, res) => {
 
  * @apiParam (Body Params) {Integer} subject.id ID of subject
  * @apiParam (Body Params) {String} subject.subjectCode subject code of subject
- * @apiParam (Body Params) {Integer} subject.subjectID subject ID of subject
  * @apiParam (Body Params) {Integer} subject.teachingLoadCreds teaching load credits of subject
  * @apiParam (Body Params) {Integer} subject.noOfStudents number of students enrolled in the subject
  * @apiParam (Body Params) {Integer} subject.hoursPerWeek number of hours per week subject takes up
@@ -230,7 +229,6 @@ router.post('/subject/', async (req, res) => {
  * @apiParam (Query Params) {Integer} id ID of subject
 
  * @apiParam (Body Params) {String} subject.subjectCode subject code of subject
- * @apiParam (Body Params) {Integer} subject.subjectID subject ID of subject
  * @apiParam (Body Params) {Integer} subject.teachingLoadCreds teaching load credits of subject
  * @apiParam (Body Params) {Integer} subject.noOfStudents number of students enrolled in the subject
  * @apiParam (Body Params) {Integer} subject.hoursPerWeek number of hours per week subject takes up

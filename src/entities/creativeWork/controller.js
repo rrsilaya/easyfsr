@@ -14,12 +14,16 @@ export const addCreativeWork = creativeWork => {
   });
 };
 
-export const deleteCreativeWork = ({ id }) => {
+export const getAllCreativeWork = creativeWork => {
   return new Promise((resolve, reject) => {
-    db.query(Query.deleteCreativeWork, { id }, (err, results) => {
-      if (err) return reject(500);
-      else if (!results.affectedRows) return reject(404);
-      return resolve(id);
-    });
+    db.query(
+      Query.getAllCreativeWork(filtered(creativeWork, creativeWorkAttributes)),
+      creativeWork,
+      (err, results) => {
+        if (err) return reject(500);
+        else if (!results.length) return reject(404);
+        return resolve(results);
+      },
+    );
   });
 };
