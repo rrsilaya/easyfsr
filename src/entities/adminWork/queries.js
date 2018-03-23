@@ -1,13 +1,13 @@
+import { formatQueryParams } from '../../utils';
+
 export const addAdminWork = `
 	INSERT INTO adminWork ( 
-		adminWorkID,
 		id, 
 		position, 
 		officeUnit, 
 		approvedUnits 
 	)
 	VALUES ( 
-		:adminWorkID,
 		:id,
 		:position, 
 		:officeUnit, 
@@ -15,31 +15,25 @@ export const addAdminWork = `
 	)
 `;
 
-export const updateAdminWork = `
-	UPDATE adminWork SET
-		position = :position,
-		officeUnit = :officeUnit,
-		approvedUnits = :approvedUnits
-	WHERE id = :id AND adminWorkID = :adminWorkID
+export const updateAdminWork = adminWork => `
+  UPDATE adminWork SET 
+   ${formatQueryParams(adminWork, 'update')}
+  WHERE adminWorkID = :adminWorkID
 `;
 
 export const deleteAdminWork = `
 	DELETE FROM adminWork
-	WHERE id = :id AND adminWorkID = :adminWorkID
+	WHERE adminWorkID = :adminWorkID
 `;
 
-export const getAllAdminWork = `
-	SELECT * FROM adminWork
-	WHERE
-		id = :id 
-	ORDER BY adminWorkID ASC
-	LIMIT 10
+export const getAdminWorks = (query, sortBy) => `
+ SELECT * FROM adminWork ${
+   query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+ }
+  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} LIMIT :limit
 `;
 
 export const getAdminWork = `
 	SELECT * FROM adminWork
-	WHERE
-		id = :id AND adminWorkID = :adminWorkID
-	ORDER BY adminWorkID ASC
-	LIMIT 10
+	WHERE adminWorkID = :adminWorkID
 `;
