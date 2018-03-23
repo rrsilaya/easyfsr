@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import { Link } from 'react-router-dom';
-
+import logo from './easyFSR.svg';
 import links from './links';
 import styles from './styles';
 
@@ -18,7 +18,9 @@ class Sidebar extends Component {
         collapsed={isSidebarCollapsed}
         trigger={null}
       >
-        <div style={styles.logo}>&nbsp;</div>
+        <div style={styles.logo}>
+          <img src={logo} />
+        </div>
         <Menu style={styles.sidebar} theme="dark">
           {links.map(link => (
             <Item key={link.label}>

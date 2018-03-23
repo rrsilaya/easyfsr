@@ -1,39 +1,35 @@
 import Dashboard from '../pages/dashboard/Dashboard';
 import Profile from '../pages/profile/Profile';
 import ServiceRecords from '../pages/serviceRecords/ServiceRecords';
-import Users from '../pages/users/Users';
 import FormSample from '../pages/serviceRecords/FormSample';
+import Users from '../pages/users/UsersContainer';
+import FacultySearch from '../pages/facultySearch/FacultySearch';
 
 const routes = [
   {
-    type: 'path',
     path: '/',
     exact: true,
     component: Dashboard,
   },
   {
-    type: 'path',
     path: '/profile',
     component: Profile,
   },
   {
-    type: 'path',
     path: '/records',
     component: ServiceRecords,
   },
   {
-    type: 'path',
     path: '/users',
     component: Users,
   },
   {
-    type: 'path',
     path: '/formSample',
     component: FormSample,
   },
   {
-    type: 'redirect',
-    to: '/',
+    to: '/search',
+    component: FacultySearch,
   },
 ];
 
