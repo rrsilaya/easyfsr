@@ -36,7 +36,8 @@ export const getStudyLoad = `
 
 export const getStudyLoads = query => `
 	SELECT * FROM studyLoad 
-	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
+	${query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''}
+ 	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} LIMIT :limit
 `;
 
 export const dropStudyLoad = `
