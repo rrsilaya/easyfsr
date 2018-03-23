@@ -50,7 +50,7 @@ const router = Router();
 router.post('/studyLoad/', async (req, res) => {
   try {
     const id = await Ctrl.addStudyLoad(req.body);
-    const studyLoad = await Ctrl.getStudyLoad(req.params);
+    const studyLoad = await Ctrl.getStudyLoad({ id });
     res.status(200).json({
       status: 200,
       message: 'Successfully created studyLoad',
