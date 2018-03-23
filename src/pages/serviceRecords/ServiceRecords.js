@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import FSRForm from './FSRForm';
 
-class ServiceRecords extends Component {
+class ServiceRecords extends React.Component {
   render() {
     return (
       <div>
-        <h1>Service Records</h1>
+        <FSRForm />
       </div>
     );
   }
