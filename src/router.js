@@ -4,6 +4,7 @@ import authRouter from './entities/auth/router';
 import awardRouter from './entities/award/router';
 import serviceRouter from './entities/extensionAndCommunityService/router';
 import userRouter from './entities/user/router';
+import adminWorkRouter from './entities/adminWork/router';
 
 const router = Router();
 
@@ -32,5 +33,6 @@ router.use(serviceRouter);
 //   });
 // });
 router.use(userRouter);
+router.use(adminWorkRouter);
 
 export default router;
