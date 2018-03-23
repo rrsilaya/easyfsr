@@ -26,6 +26,15 @@ const router = Router();
  *   {
  *     "status": 200,
  *     "message": "Successfully created studyLoad"
+ *     "data": [
+ *       {
+ *           "degree": "BSCS",
+ *           "courseNumber": "128",
+ *           "university": "UPLB",
+ *           "totalSLcredits": 3,
+ *           "id": 1
+ *       }
+ *     ]
  *   }
  *
  * @apiError (Error 500) {String[]} errors List of errors
@@ -40,11 +49,12 @@ const router = Router();
 
 router.post('/studyLoad/', async (req, res) => {
   try {
-    // req.body.password = await bcrypt.hash(req.body.password, 10);
     const id = await Ctrl.addStudyLoad(req.body);
+    const studyLoad = await Ctrl.getStudyLoad(req.params);
     res.status(200).json({
       status: 200,
       message: 'Successfully created studyLoad',
+      data: studyLoad,
     });
   } catch (status) {
     let message = '';
@@ -79,6 +89,15 @@ router.post('/studyLoad/', async (req, res) => {
  *   {
  *     "status": 200,
  *     "message": "Successfully updated studyLoad"
+ *     "data": [
+ *       {
+ *           "degree": "BSCS",
+ *           "courseNumber": "128",
+ *           "university": "UPLB",
+ *           "totalSLcredits": 3,
+ *           "id": 1
+ *       }
+ *     ]
  *   }
  *
  * @apiError (Error 500) {String[]} errors List of errors
@@ -247,6 +266,10 @@ router.get('/studyLoad/', async (req, res) => {
       status: 200,
       message: 'Successfully fetched all studyLoad details',
       data: studyLoads,
+      total: studyLoads.length,
+      limit: req.query.limit || 12,
+      page: req.query.page || 1,
+      pages: Math.ceil(studyLoads.length / (req.query.limit || 12)),
     });
   } catch (status) {
     let message = '';

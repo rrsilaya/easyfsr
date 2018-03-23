@@ -1,9 +1,10 @@
 import db from '../../database/index';
 import * as Query from './queries';
 import * as Utils from '../../utils';
-import { filtered } from '../../utils';
+import { filtered, escapeSearch } from '../../utils';
 
 const studyLoadAttributes = ['id', 'degree', 'university', 'totalSLcredits'];
+const searchFields = ['degree', 'university', 'totalSLcredits'];
 
 export const addStudyLoad = studyLoad => {
   return new Promise((resolve, reject) => {
@@ -46,11 +47,16 @@ export const getStudyLoad = ({ id }) => {
 export const getStudyLoads = studyLoad => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getStudyLoads(filtered(studyLoad, studyLoadAttributes)),
-      studyLoad,
+      Query.getStudyLoads(
+        filtered(studyLoad, studyLoadAttributes),
+        studyLoad.sortBy,
+      ),
+      {
+        field: 'degree',
+        ...escapeSearch(studyLoad, searchFields, studyLoad.limit),
+      },
       (err, results) => {
         if (err) return reject(500);
-        else if (!results.length) return reject(404);
         return resolve(results);
       },
     );
