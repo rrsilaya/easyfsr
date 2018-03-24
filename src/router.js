@@ -7,10 +7,12 @@ import courseRouter from './entities/course/router';
 import courseSchedRouter from './entities/courseSched/router';
 
 import awardRouter from './entities/award/router';
+import serviceRouter from './entities/extensionAndCommunityService/router';
 
 const router = Router();
 
 router.use(authRouter);
+router.use(userRouter);
 
 // router.use( (req,res,next) => {
 //   if(req.session.user.acctType == 'ADMIN'){
@@ -22,12 +24,11 @@ router.use(authRouter);
 //   });
 // });
 
-router.use(userRouter);
-
 router.use(courseRouter);
 router.use(courseSchedRouter);
 
 router.use(awardRouter);
+router.use(serviceRouter);
 
 // router.use( (req,res,next) => {
 //   if(req.session.user){
