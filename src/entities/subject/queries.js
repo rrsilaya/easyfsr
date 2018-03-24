@@ -51,8 +51,12 @@ export const getSubjects = (query, sortBy) => `
   	LIMIT :limit
 `;
 
+export const getTotalSubjects = `
+	SELECT COUNT(*) as total FROM subject
+`;
+
 export const getTotalSubjectsByFSR = `
-	SELECT COUNT(*) FROM subject
+	SELECT COUNT(*) as total FROM subject
 	WHERE id = :id
 `;
 

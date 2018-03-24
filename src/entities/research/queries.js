@@ -48,11 +48,11 @@ export const deleteResearch = `
 `;
 
 export const getTotalResearches = `
-	SELECT count(*) FROM research
+	SELECT count(*) as total FROM research
 `;
 
 export const getTotalResearchesByFSR = `
-	SELECT count(*) FROM research WHERE id = :id 
+	SELECT count(*) as total FROM research WHERE id = :id 
 `;
 
 /*

@@ -43,11 +43,11 @@ export const deleteAdminWork = `
 `;
 
 export const getTotalAdminWorks = `
-	SELECT count(*) FROM adminWork
+	SELECT count(*) as total FROM adminWork
 `;
 
 export const getTotalAdminWorksByFSR = `
-	SELECT count(*) FROM adminWork WHERE id = :id 
+	SELECT count(*) as total FROM adminWork WHERE id = :id 
 `;
 
 /*

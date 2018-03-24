@@ -40,11 +40,11 @@ export const deleteLimitedPracticeOfProf = `
 `;
 
 export const getTotalLimitedPracticeOfProfs = `
-  SELECT count(*) FROM limitedPracticeOfProf
+  SELECT count(*) as total FROM limitedPracticeOfProf
 `;
 
 export const getTotalLimitedPracticeOfProfsByFSR = `
-  SELECT count(*) FROM limitedPracticeOfProf WHERE id = :id 
+  SELECT count(*) as total FROM limitedPracticeOfProf WHERE id = :id 
 `;
 
 /*

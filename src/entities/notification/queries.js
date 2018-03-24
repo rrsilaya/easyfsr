@@ -46,13 +46,13 @@ export const deleteNotification = `
 `;
 
 export const getTotalNotifications = `
-  SELECT count(*) FROM notification
+  SELECT count(*) as total FROM notification
 `;
 
 export const getTotalNotificationsBySender = `
-  SELECT count(*) FROM limitedPracticeOfProf WHERE senderID = :senderID 
+  SELECT count(*) as total FROM limitedPracticeOfProf WHERE senderID = :senderID 
 `;
 
 export const getTotalNotificationsByReceiver = `
-  SELECT count(*) FROM limitedPracticeOfProf WHERE receiverID = :receiverID 
+  SELECT count(*) as total FROM limitedPracticeOfProf WHERE receiverID = :receiverID 
 `;

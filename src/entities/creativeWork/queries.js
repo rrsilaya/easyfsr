@@ -45,11 +45,11 @@ export const getCreativeWork = `
 `;
 
 export const getTotalCreativeWorks = `
-	SELECT count(*) FROM creativeWork
+	SELECT count(*) as total FROM creativeWork
 `;
 
 export const getTotalCreativeWorksByFSR = `
-	SELECT count(*) FROM creativeWork WHERE id = :id 
+	SELECT count(*) as total FROM creativeWork WHERE id = :id 
 `;
 
 // CREATIVE WORK CO AUTHOR

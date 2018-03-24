@@ -49,11 +49,11 @@ export const getExtensionAndCommunityServices = (query, sortBy) => `
 `;
 
 export const getTotalExtensionAndCommunityServices = `
-  SELECT count(*) FROM extensionAndCommunityService
+  SELECT count(*) as total FROM extensionAndCommunityService
 `;
 
 export const getTotalExtensionAndCommunityServicesByFSR = `
-  SELECT count(*) FROM extensionAndCommunityService WHERE id = :id 
+  SELECT count(*) as total FROM extensionAndCommunityService WHERE id = :id 
 `;
 
 /*

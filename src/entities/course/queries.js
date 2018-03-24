@@ -45,8 +45,12 @@ export const getCourses = (query, sortBy) => `
   	LIMIT :limit
 `;
 
+export const getTotalCourses = `
+	SELECT count(*) as total FROM course
+`;
+
 export const getTotalCoursesByFSR = `
-	SELECT COUNT(*) FROM course
+	SELECT COUNT(*) as total FROM course
 	WHERE id = :id
 `;
 

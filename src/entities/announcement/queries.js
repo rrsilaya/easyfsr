@@ -41,3 +41,7 @@ export const deleteAnnouncement = `
     isResolved = true
   WHERE announcementID = :announcementID
 `;
+
+export const getTotalAnnouncements = `
+  SELECT count(*) as total FROM announcement
+`;
