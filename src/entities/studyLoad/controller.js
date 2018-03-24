@@ -11,7 +11,7 @@ export const addStudyLoad = studyLoad => {
     db.query(Query.addStudyLoad, { ...studyLoad }, (err, results) => {
       console.log(err);
       if (err) return reject(500);
-      return resolve(results.insertId);
+      return resolve(studyLoad.id);
     });
   });
 };
