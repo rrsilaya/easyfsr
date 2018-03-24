@@ -167,7 +167,7 @@ router.put('/course/:courseID', async (req, res) => {
  *   {
  *     "data": {
  *        "status": 200;
- *        "message": 'Succesfully deleted course';
+ *        "message": 'Succesfully deleted course;
  *        "data": 
  *         {
             "courseID": 1,
