@@ -5,10 +5,8 @@ const style = {
     minHeight: '55px',
   },
   overlay: {
-    display: 'block',
     height: '100%',
     width: '100%',
-    content: '',
     zIndex: 2,
     position: 'absolute',
     top: 0,
