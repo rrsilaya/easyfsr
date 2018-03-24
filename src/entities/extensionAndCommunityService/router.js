@@ -280,10 +280,24 @@ router.get('/service', async (req, res) => {
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
- *  {
- *   "status": 200,
- *   "message": "Successfully deleted service"
- *  }
+ * {
+ *    "status": 200,
+ *    "message": "Successfully deleted service",
+ *    "data": [
+ *        {
+ *            "id": 1,
+ *            "extAndCommServiceID": 1,
+ *            "participant": "ren",
+ *            "role": "wala",
+ *            "hours": 3,
+ *            "title": "tulog",
+ *           "creditUnit": 1,
+ *           "type": "rest",
+ *           "startDate": "010118",
+ *           "endDate": "123118"
+ *       }
+ *   ]
+ * }
  *
  * @apiError (Error 500) {String[]} errors List of errors
  * @apiError (Error 500) {String} errors.message Error message
@@ -297,10 +311,12 @@ router.get('/service', async (req, res) => {
 
 router.delete('/service/:extAndCommServiceID/', async (req, res) => {
   try {
+    const service = await Ctrl.getExtensionAndCommunityService(req.params);
     await Ctrl.deleteExtensionAndCommunityService(req.params);
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted service',
+      data: service,
     });
   } catch (status) {
     let message = '';
