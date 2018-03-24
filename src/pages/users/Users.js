@@ -16,6 +16,10 @@ class Users extends Component {
     this.props.getUsers();
   }
 
+  componentWillUnmount() {
+    this.props.resetPage();
+  }
+
   render() {
     const gridConfig = { xxl: 6, xl: 8, sm: 12, xs: 24 };
     const {

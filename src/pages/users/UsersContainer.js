@@ -9,6 +9,7 @@ import {
   getUser,
   addUser,
   editUser,
+  resetPage,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -61,6 +62,9 @@ const mapDispatchToProps = dispatch => {
     },
     editUser: (user, values) => {
       dispatch(editUser(user, values));
+    },
+    resetPage: () => {
+      dispatch(resetPage);
     },
   };
 };

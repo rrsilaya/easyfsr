@@ -12,6 +12,8 @@ const GET_USER = 'USER/GET_USER';
 const ADD_USER = 'USER/ADD_USER';
 const EDIT_USER = 'USER/EDIT_USER';
 
+const RESET_PAGE = 'USER/RESET_PAGE';
+
 export const toggleEditModal = () => ({
   type: TOGGLE_EDIT_MODAL,
 });
@@ -99,6 +101,10 @@ export const editUser = (user, body) => {
     });
   };
 };
+
+export const resetPage = () => ({
+  type: RESET_PAGE,
+});
 
 const initialState = {
   isEditModalOpen: false,
@@ -206,6 +212,9 @@ const reducer = (state = initialState, action) => {
           isEditingUser: false,
         }),
       });
+
+    case RESET_PAGE:
+      return initialState;
 
     default:
       return state;
