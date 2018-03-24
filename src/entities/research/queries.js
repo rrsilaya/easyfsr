@@ -24,10 +24,11 @@ export const addReseach = `
 `;
 
 export const getResearches = (query, sortBy) => `
-	SELECT * FROM research 
-	${query.length ? `WHERE ${formatQueryParams(query)}` : ''} 
-  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
-  LIMIT :limit
+	SELECT * FROM research ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  } 
+  	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+  	LIMIT :limit
 `;
 
 export const getResearch = `
@@ -37,7 +38,7 @@ export const getResearch = `
 
 export const updateResearch = research => `
 	UPDATE research SET
-		${formatQueryParams(research)}
+		${formatQueryParams(research, 'update')}
 	WHERE id=:id and researchID=:researchID
 `;
 
@@ -57,10 +58,11 @@ export const deleteResearches = query =>`
 */
 
 export const getResearchesWithCoAuthor = query => `
-	SELECT * FROM research NATURAL JOIN rCoAuthor
-	${query.length ? `WHERE ${formatQueryParams(query)}` : ''} 
-  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
-  LIMIT :limit
+	SELECT * FROM research NATURAL JOIN rCoAuthor ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  } 
+  	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+  	LIMIT :limit
 `;
 
 export const getResearchWithCoAuthor = `

@@ -25,7 +25,7 @@ export const addSubject = `
 
 export const updateSubject = subject => `
 	UPDATE subject SET
-		${formatQueryParams(subject)}
+	${formatQueryParams(subject, 'update')}
 	WHERE subjectID = :subjectID
 `;
 
@@ -44,10 +44,11 @@ export const deleteSubject = `
 `;
 
 export const getSubjects = (query, sortBy) => `
-	SELECT * FROM subject 
-	${query.length ? `WHERE ${formatQueryParams(query)}` : ''} 
-  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
-  LIMIT :limit
+	SELECT * FROM subject ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  } 
+  	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+  	LIMIT :limit
 `;
 
 export const getSubject = `
@@ -58,8 +59,9 @@ export const getSubject = `
 
 export const getSubjectsWithSched = (query, sortBy) => `
 	SELECT *
-	FROM subject natural join timeslot
-	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
+	FROM subject natural join timeslot ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
 	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
 	LIMIT :limit
 `;
@@ -84,13 +86,13 @@ export const addTimeslot = `
 `;
 
 export const getTimeslots = query => `
-	SELECT FROM timeslot
-	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}	
+	SELECT * FROM timeslot
+	${query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''}	
 `;
 
 export const updateTimeslot = timeslot => `
 	UPDATE timeslot SET
-		${formatQueryParams(timeslot)}
+	${formatQueryParams(timeslot, 'update')}
 	WHERE subjectID = :subjectID
 `;
 
