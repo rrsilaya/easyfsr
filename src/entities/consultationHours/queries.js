@@ -41,7 +41,7 @@ export const addTimeslot = `
         time
     )
     VALUES (
-		:chTimeslotID,
+		DEFAULT,
         :chID,
         :id,
         :day,
