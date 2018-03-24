@@ -51,6 +51,11 @@ export const getSubjects = (query, sortBy) => `
   	LIMIT :limit
 `;
 
+export const getTotalSubjectsByFSR = `
+	SELECT COUNT(*) FROM subject
+	WHERE id = :id
+`;
+
 export const getSubject = `
 	SELECT *
 	FROM teachingLoad natural join subject
@@ -74,11 +79,13 @@ export const getSubjectWithSched = `
 
 export const addTimeslot = `
 	INSERT INTO timeslot (
+		timeslotID,
 		subjectID,
 		day,
 		time
 	)
 	VALUES (
+		DEFAULT,
 		:subjectID,
 		:day,
 		:time

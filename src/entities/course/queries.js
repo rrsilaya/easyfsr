@@ -45,6 +45,11 @@ export const getCourses = (query, sortBy) => `
   	LIMIT :limit
 `;
 
+export const getTotalCoursesByFSR = `
+	SELECT COUNT(*) FROM course
+	WHERE id = :id
+`;
+
 export const getCoursesWithSched = (query, sortBy) => `
 	SELECT *
 	FROM course natural join courseSched ${
@@ -67,7 +72,7 @@ export const addCourseSched = `
 		time
 	)
 	VALUES (
-		:courseSchedID,
+		DEFAULT,
 		:courseID,
 		:day,
 		:time
