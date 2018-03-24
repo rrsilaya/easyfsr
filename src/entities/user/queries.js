@@ -46,3 +46,7 @@ export const getUsers = (query, sortBy) => `
   } 
   ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} LIMIT :limit
 `;
+
+export const getTotalUsers = `
+  SELECT count(*) as total FROM user
+`;

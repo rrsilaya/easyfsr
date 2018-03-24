@@ -63,7 +63,7 @@ export const getUser = ({ userID }) => {
     db.query(Query.getUser, { userID }, (err, results) => {
       if (err) return reject(500);
       else if (!results.length) return reject(404);
-      return resolve(results);
+      return resolve(results[0]);
     });
   });
 };
@@ -78,5 +78,14 @@ export const getUsers = user => {
         return resolve(results);
       },
     );
+  });
+};
+
+export const getTotalUsers = () => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getTotalUsers, (err, results) => {
+      if (err) return reject(500);
+      return resolve(results[0]);
+    });
   });
 };
