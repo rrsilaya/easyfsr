@@ -27,7 +27,7 @@ export const deleteCourse = ({ courseID }) => {
     db.query(Query.deleteCourse, { courseID }, (err, results) => {
       if (err) return reject(500);
       else if (!results.affectedRows) return reject(404);
-      return resolve(courseID);
+      return resolve();
     });
   });
 };

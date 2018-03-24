@@ -167,7 +167,16 @@ router.put('/course/:courseID', async (req, res) => {
  *   {
  *     "data": {
  *        "status": 200;
- *        "message": 'Succesfully deleted course'
+ *        "message": 'Succesfully deleted course';
+ *        "data": 
+ *         {
+            "courseID": 1,
+            "hoursPerWeek": "5",
+            "school": "la salle",
+            "credit": "5",
+            "courseNumber": "999",
+            "id": 1
+ *        }
  *     }
  *   }
  *
@@ -189,10 +198,14 @@ router.put('/course/:courseID', async (req, res) => {
 
 router.delete('/course/:courseID', async (req, res) => {
   try {
-    const id = await Ctrl.deleteCourse(req.params);
+    const course = await Ctrl.getCourse(req.params);
+
+    await Ctrl.deleteCourse(req.params);
+
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted course',
+      data: course,
     });
   } catch (status) {
     let message = '';
