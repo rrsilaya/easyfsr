@@ -12,8 +12,7 @@ const router = Router();
  * @apiParam (Body Params) {Number} userID ID of user
  * @apiParam (Body Params) {String} acadYear academic year the fsr is filed
  * @apiParam (Body Params) {String} semester semester the fsr is filed
- * @apiParam (Body Params) {Number} [teachingLoadCreds]  teaching load credits
-
+ *
  * @apiSuccess {Object} fsr new FSR created
  * @apiSuccess {Number} fsr.id ID of FSR
  * @apiSuccess {Number} fsr.userID ID of user
@@ -21,7 +20,7 @@ const router = Router();
  * @apiSuccess {String} fsr.semester semester the fsr is filed
  * @apiSucess {Number} fsr.teachingLoadCreds  teaching load credits
  * @apiSuccess {Boolean} fsr.isChecked indicates if fsr is approved or not
-
+ *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
@@ -81,12 +80,12 @@ router.post('/fsr/', async (req, res) => {
  * @apiSuccess {String} fsr.semester semester the fsr is filed
  * @apiSucess {Number} fsr.teachingLoadCreds  teaching load credits
  * @apiSuccess {Boolean} fsr.isChecked indicates if fsr is approved or not
-
+ *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *     "status": 200;
- *     "message": 'Succesfully created fsr'
+ *     "message": 'Succesfully deleted fsr'
  *     "data": {
  *         "id": 92,
  *         "userID": 1,
@@ -151,12 +150,12 @@ router.delete('/fsr/:id', async (req, res) => {
  * @apiSuccess {String} fsr.semester semester the fsr is filed
  * @apiSucess {Number} fsr.teachingLoadCreds  teaching load credits
  * @apiSuccess {Boolean} fsr.isChecked indicates if fsr is approved or not
-
+ *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *     "status": 200;
- *     "message": 'Succesfully created fsr'
+ *     "message": 'Succesfully fetched fsr'
  *     "data": {
  *         "id": 92,
  *         "userID": 1,
@@ -319,11 +318,12 @@ router.use('/fsr/:userID', (req, res, next) => {
  * @apiSucess {Number} fsr.teachingLoadCreds  teaching load credits
  * @apiSuccess {Boolean} fsr.isChecked indicates if fsr is approved or not
  *
+ *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *     "status": 200;
- *     "message": 'Succesfully created fsr'
+ *     "message": 'Succesfully updated fsr'
  *     "data": {
  *         "id": 92,
  *         "userID": 1,

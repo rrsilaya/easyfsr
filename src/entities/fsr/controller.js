@@ -18,6 +18,7 @@ const searchFields = [
   'teachingLoadCreds',
 ];
 
+
 export const addFSR = fsr => {
   return new Promise((resolve, reject) => {
     db.query(Query.addFSR, { ...fsr }, (err, results) => {

@@ -24,6 +24,7 @@ const router = Router();
  * @apiParam (Body Params) {String} [acctType] account type of employee. Can be "USER" or "ADMIN"
  *
  * @apiSuccess {Object} user new User created
+ * @apiSuccess {Number} user.userID ID of user
  * @apiSuccess {String} user.employeeID ID of employee
  * @apiSuccess {String} user.password password of employee
  * @apiSuccess {String} user.firstName first name of employee
@@ -75,7 +76,7 @@ router.post('/user/', async (req, res) => {
   try {
     req.body.password = await bcrypt.hash(req.body.password, 10);
     const userID = await Ctrl.addUser(req.body);
-    const user = await Ctrl.getUser({ userID });
+    const user = await Ctrl.getUserByUserID({ userID });
     delete user.password;
     res.status(200).json({
       status: 200,
@@ -100,7 +101,7 @@ router.post('/user/', async (req, res) => {
  *
  * @apiSuccess {String} message Confirmation Message.
  * @apiSuccess {Object[]} users All users
- * @apiSuccess {String} users.userID ID of employee
+ * @apiSuccess {Number} users.userID ID of employee
  * @apiSuccess {String} users.employeeID employee ID
  * @apiSuccess {String} users.password password of employee
  * @apiSuccess {String} users.firstName first name of employee
@@ -206,6 +207,7 @@ router.get('/user/', async (req, res) => {
  * @apiParam (Query Params) {String} userID ID of employee
  *
  * @apiSuccess {Object} user User user deleted
+ * @apiSuccess {Number} user.userID ID of user
  * @apiSuccess {String} user.employeeID ID of employee
  * @apiSuccess {String} user.password password of employee
  * @apiSuccess {String} user.firstName first name of employee
@@ -260,7 +262,7 @@ router.get('/user/', async (req, res) => {
  */
 router.delete('/user/:userID', async (req, res) => {
   try {
-    const user = await Ctrl.getUser(req.params);
+    const user = await Ctrl.getUserByUserID(req.params);
     delete user.password;
     await Ctrl.deleteUser(req.params);
     res.status(200).json({
@@ -283,14 +285,14 @@ router.delete('/user/:userID', async (req, res) => {
 });
 
 /**
- * @api {get} /user/:userID getUser
+ * @api {get} /user/:employeeId getUser
  * @apiGroup User
  * @apiName getUser
  *
- * @apiParam (Query Params) {String} userID ID of employee
+ * @apiParam (Query Params) {String} employeeID ID of employee
  *
  * @apiSuccess {Object} user User details
- * @apiSuccess {String} user.userID ID of employee
+ * @apiSuccess {Number} user.userID ID of employee
  * @apiSuccess {String} user.employeeID ID of employee
  * @apiSuccess {String} user.firstName first name of employee
  * @apiSuccess {String} user.middleName middle name of employee
@@ -343,9 +345,9 @@ router.delete('/user/:userID', async (req, res) => {
  *   "message": "User not found"
  * }
  */
-router.get('/user/:userID', async (req, res) => {
+router.get('/user/:employeeID', async (req, res) => {
   try {
-    const user = await Ctrl.getUser(req.params);
+    const user = await Ctrl.getUserByEmpID(req.params);
     delete user.password;
     res.status(200).json({
       status: 200,
@@ -371,7 +373,8 @@ router.get('/user/:userID', async (req, res) => {
  * @apiGroup User
  * @apiName updateUser
  *
- * @apiParam (Query Params) {String} userID ID of employee
+ * @apiParam (Query Params) {Number} userID ID of employee
+ * @apiParam (Body Params) {String} user.employeeID employee ID
  * @apiParam (Body Params) {String} password password of employee
  * @apiParam (Body Params) {String} firstName first name of employee
  * @apiParam (Body Params) {String} [middleName] middle name of employee
@@ -457,7 +460,7 @@ router.put('/user/:userID', async (req, res) => {
       req.body.password = await bcrypt.hash(req.body.password, 10);
     }
     await Ctrl.updateUser(req.params, req.body);
-    const user = await Ctrl.getUser(req.params);
+    const user = await Ctrl.getUserByUserID(req.params);
     delete user.password;
 
     res.status(200).json({
