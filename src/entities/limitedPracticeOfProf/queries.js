@@ -17,13 +17,14 @@ export const addLimitedPracticeOfProf = `
 
 export const updateLimitedPracticeOfProf = limitedPracticeOfProf => `
   UPDATE limitedPracticeOfProf SET
-    ${formatQueryParams(limitedPracticeOfProf)}
+  ${formatQueryParams(limitedPracticeOfProf, 'update')}
   WHERE id=:id
 `;
 
 export const getLimitedPracticeOfProfs = (query, sortBy) => `
-  SELECT * FROM limitedPracticeOfProf 
-  ${query.length ? `WHERE ${formatQueryParams(query)}` : ''} 
+  SELECT * FROM limitedPracticeOfProf ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  } 
   ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
   LIMIT :limit
 `;

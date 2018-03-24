@@ -18,8 +18,9 @@ export const addAdminWork = `
 `;
 
 export const getAdminWorks = (query, sortBy) => `
-	SELECT * FROM adminWork 
-	${query.length ? `WHERE ${formatQueryParams(query)}` : ''} 
+	SELECT * FROM adminWork ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  } 
   ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
   LIMIT :limit
 `;
@@ -31,7 +32,7 @@ export const getAdminWork = `
 
 export const updateAdminWork = adminWork => `
 	UPDATE adminWork SET
-	${formatQueryParams(adminWork)}
+	${formatQueryParams(adminWork, 'update')}
 	WHERE id = :id AND adminWorkID = :adminWorkID
 `;
 

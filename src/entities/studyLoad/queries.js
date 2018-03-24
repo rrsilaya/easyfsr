@@ -6,7 +6,7 @@ export const addStudyLoad = `
 
 export const updateStudyLoad = studyLoad => `
 	UPDATE studyLoad 
-  ${formatQueryParams(studyLoad)}
+  ${formatQueryParams(studyLoad, 'update')}
 	WHERE id=:id
 `;
 
@@ -23,7 +23,7 @@ export const deleteStudyLoad = `
 	where id = :id
 `;
 
-export const selectStudyLoad = `
+export const getStudyLoad = `
 	SELECT * FROM studyLoad 
   WHERE id = :id
 `;

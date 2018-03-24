@@ -20,8 +20,9 @@ export const updateConsultationHour = `
 `;
 
 export const getConsultationHours = (query, sortBy) => `
-  SELECT * FROM consultationHours NATURAL JOIN chTimeSlot
-  ${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
+  SELECT * FROM consultationHours NATURAL JOIN chTimeSlot ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
   ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
   LIMIT :limit
 `;
@@ -48,7 +49,7 @@ export const addTimeslot = `
 
 export const updateTimeslot = timeslot => `
     UPDATE chTimeSlot SET 
-      ${formatQueryParams(timeslot)}
+      ${formatQueryParams(timeslot, 'update')}
     WHERE chID = :chID AND id = :id
 `;
 

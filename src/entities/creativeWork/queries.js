@@ -21,7 +21,7 @@ export const addCreativeWork = `
 
 export const updateCreativeWork = creativeWork => `
 	UPDATE creativeWork SET
-	${formatQueryParams(creativeWork)}
+	${formatQueryParams(creativeWork, 'update')}
 	WHERE id = :id AND creativeWorkID = :creativeWorkID;
 `;
 
@@ -32,7 +32,7 @@ export const deleteCreativeWork = `
 
 export const getCreativeWorks = (query, sortBy) => `
 	SELECT * FROM creativeWork ${
-    query.length ? `WHERE ${formatQueryParams(query)}` : ''
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }
 	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
 	LIMIT :limit

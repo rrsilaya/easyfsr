@@ -5,16 +5,17 @@ export const getAnnouncement = `
   WHERE announcementID = :announcementID
 `;
 
-export const getAllAnnouncements = (query, sortBy) => `
-  SELECT * FROM announcement
-  ${query.length ? `WHERE ${formatQueryParams(query)}` : ''} 
+export const getAnnouncements = (query, sortBy) => `
+  SELECT * FROM announcement ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  } 
   ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
   LIMIT :limit
 `;
 
 export const updateAnnouncement = announcement => `
   UPDATE announcement SET 
-    ${formatQueryParams(announcement)}
+    ${formatQueryParams(announcement, 'update')}
   WHERE announcementID = :announcementID
 `;
 

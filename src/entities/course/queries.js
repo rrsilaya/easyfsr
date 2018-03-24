@@ -21,7 +21,7 @@ export const addCourse = `
 
 export const updateCourse = course => `
 	UPDATE course SET
-	${formatQueryParams(course)}
+	${formatQueryParams(course, 'update')}
 	WHERE courseID=:courseID AND id=:id
 `;
 
@@ -38,16 +38,18 @@ export const deleteCourse = `
 	DELETE FROM course where courseID = :courseID`;
 
 export const getCourses = (query, sortBy) => `
-	SELECT * FROM course 
-	${query.length ? `WHERE ${formatQueryParams(query)}` : ''} 
-  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
-  LIMIT :limit
+	SELECT * FROM course ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  } 
+  	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+  	LIMIT :limit
 `;
 
 export const getCoursesWithSched = (query, sortBy) => `
 	SELECT *
-	FROM course natural join courseSched
-	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
+	FROM course natural join courseSched ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
 	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
 	LIMIT :limit
 `;
@@ -71,13 +73,14 @@ export const addCourseSched = `
 `;
 
 export const getCourseScheds = query => `
-	SELECT FROM courseSched
-	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}	
+	SELECT * FROM courseSched ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }	
 `;
 
 export const updateCourseSched = timeslot => `
 	UPDATE courseSched SET
-		${formatQueryParams(timeslot)}
+	${formatQueryParams(timeslot, 'update')}
 	WHERE courseID = :courseID
 `;
 

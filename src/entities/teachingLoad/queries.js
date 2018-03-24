@@ -13,7 +13,7 @@ export const addTeachingLoad = `
 
 export const updateTeachingLoad = teachingLoad => `
 	UPDATE teachingLoad SET
-		${formatQueryParams(teachingLoad)}
+	${formatQueryParams(teachingLoad, 'update')}
 	WHERE id = :id
 `;
 
