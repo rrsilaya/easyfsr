@@ -21,6 +21,9 @@
 .background.primary {
   background-color: #483440;
 }
+.background.primary.overlay {
+  background-color: rgba(72,52,64,0.8);
+}
 .background.secondary {
   background-color: #1d161e;
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Row, Col, Pagination, Input } from 'antd';
+import { DataLoader } from '../../global';
 
 import User from './components/User';
 import EditModal from './components/EditModal';
@@ -22,7 +23,7 @@ class Users extends Component {
       isAddModalOpen,
       isDeleteModalOpen,
 
-      // isGettingUsers,
+      isGettingUsers,
       isAddingUser,
       isEditingUser,
 
@@ -56,20 +57,25 @@ class Users extends Component {
             Add User
           </Button>
         </div>
-        <Row type="flex" gutter={16}>
-          {users.map((user, i) => (
-            <Col key={i} {...gridConfig}>
-              <User
-                user={user}
-                title={`${user.lastName}, ${user.firstName}`}
-                description={user.acctType}
-                toggleEditModal={toggleEditModal}
-                toggleDeleteModal={toggleDeleteModal}
-                getUser={getUser}
-              />
-            </Col>
-          ))}
-        </Row>
+        <DataLoader
+          isLoading={isGettingUsers}
+          content={
+            <Row type="flex" gutter={16}>
+              {users.map((user, i) => (
+                <Col key={i} {...gridConfig}>
+                  <User
+                    user={user}
+                    title={`${user.lastName}, ${user.firstName}`}
+                    description={user.acctType}
+                    toggleEditModal={toggleEditModal}
+                    toggleDeleteModal={toggleDeleteModal}
+                    getUser={getUser}
+                  />
+                </Col>
+              ))}
+            </Row>
+          }
+        />
         <EditModal
           user={user}
           isEditModalOpen={isEditModalOpen}
