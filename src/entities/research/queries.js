@@ -47,6 +47,14 @@ export const deleteResearch = `
 	where id=:id AND researchID = :researchID
 `;
 
+export const getTotalResearches = `
+	SELECT count(*) FROM research
+`;
+
+export const getTotalResearchesByFSR = `
+	SELECT count(*) FROM research WHERE id = :id 
+`;
+
 /*
 
 // Supports deleting single or multiple rows at the same time 
@@ -73,11 +81,13 @@ export const getResearchWithCoAuthor = `
 export const addrCoAuthor = `
 	INSERT INTO rCoAuthor (
 		researchID,
-		userID
+		userID,
+		rCoAuthorID
 	)
 	VALUES (
 		:researchID,
-		:userID
+		:userID,
+		DEFAULT
 	)
 `;
 

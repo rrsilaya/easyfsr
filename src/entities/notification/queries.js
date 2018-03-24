@@ -44,3 +44,15 @@ export const deleteNotification = `
 		isResolved = true
 	WHERE notificationID = :notificationID
 `;
+
+export const getTotalNotifications = `
+  SELECT count(*) FROM notification
+`;
+
+export const getTotalNotificationsBySender = `
+  SELECT count(*) FROM limitedPracticeOfProf WHERE senderID = :senderID 
+`;
+
+export const getTotalNotificationsByReceiver = `
+  SELECT count(*) FROM limitedPracticeOfProf WHERE receiverID = :receiverID 
+`;

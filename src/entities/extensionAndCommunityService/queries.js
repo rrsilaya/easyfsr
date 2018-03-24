@@ -46,7 +46,14 @@ export const getExtensionAndCommunityServices = (query, sortBy) => `
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }
   ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} LIMIT :limit
+`;
 
+export const getTotalExtensionAndCommunityServices = `
+  SELECT count(*) FROM extensionAndCommunityService
+`;
+
+export const getTotalExtensionAndCommunityServicesByFSR = `
+  SELECT count(*) FROM extensionAndCommunityService WHERE id = :id 
 `;
 
 /*

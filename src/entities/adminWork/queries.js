@@ -1,5 +1,6 @@
 import { formatQueryParams } from '../../utils';
 
+// Admin Work
 export const addAdminWork = `
 	INSERT INTO adminWork (
 		adminWorkID,
@@ -39,6 +40,14 @@ export const updateAdminWork = adminWork => `
 export const deleteAdminWork = `
 	DELETE FROM adminWork
 	WHERE id = :id AND adminWorkID = :adminWorkID
+`;
+
+export const getTotalAdminWorks = `
+	SELECT count(*) FROM adminWork
+`;
+
+export const getTotalAdminWorksByFSR = `
+	SELECT count(*) FROM adminWork WHERE id = :id 
 `;
 
 /*

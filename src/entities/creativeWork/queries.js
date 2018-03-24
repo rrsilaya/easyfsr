@@ -1,5 +1,6 @@
 import { formatQueryParams } from '../../utils';
 
+// CREATIVE WORK
 export const addCreativeWork = `
 	INSERT INTO creativeWork (
 		id,
@@ -43,14 +44,25 @@ export const getCreativeWork = `
 	WHERE id = :id AND creativeWorkID = :creativeWorkID
 `;
 
+export const getTotalCreativeWorks = `
+	SELECT count(*) FROM creativeWork
+`;
+
+export const getTotalCreativeWorksByFSR = `
+	SELECT count(*) FROM creativeWork WHERE id = :id 
+`;
+
+// CREATIVE WORK CO AUTHOR
 export const addCoAuthor = `
 	INSERT INTO cworkCoAuthor (
 		creativeWorkID,
-		userID
+		userID,
+		cworkCoAuthorID
 	)
 	VALUES (
 		:creativeWorkID,
-		:userID
+		:userID,
+		DEFAULT
 	)
 `;
 

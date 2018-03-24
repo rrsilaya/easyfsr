@@ -39,6 +39,14 @@ export const deleteLimitedPracticeOfProf = `
   WHERE id = :id
 `;
 
+export const getTotalLimitedPracticeOfProfs = `
+  SELECT count(*) FROM limitedPracticeOfProf
+`;
+
+export const getTotalLimitedPracticeOfProfsByFSR = `
+  SELECT count(*) FROM limitedPracticeOfProf WHERE id = :id 
+`;
+
 /*
 
 // Supports single or multiple rows delete
