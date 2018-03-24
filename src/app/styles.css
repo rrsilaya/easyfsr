@@ -18,6 +18,9 @@
 .container.medium {
   width: 90%;
 }
+.center {
+  text-align: center;
+}
 .background.primary {
   background-color: #483440;
 }
@@ -42,6 +45,9 @@
 .text.normal {
   color: #4d4d4d;
 }
+.text.white {
+  color: #fff;
+}
 .dark-mode {
   background-color: #483440;
 }
@@ -59,6 +65,9 @@ h1.super {
 p.subtitle {
   font-size: 20px;
   width: 85%;
+}
+img.crop {
+  object-fit: cover;
 }
 .ant-card-meta-title {
   margin-bottom: 0 !important;
