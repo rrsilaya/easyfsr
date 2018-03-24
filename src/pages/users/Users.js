@@ -22,7 +22,7 @@ class Users extends Component {
       isAddModalOpen,
       isDeleteModalOpen,
 
-      isGettingUsers,
+      // isGettingUsers,
       isAddingUser,
       isEditingUser,
 

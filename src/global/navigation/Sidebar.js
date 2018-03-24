@@ -19,7 +19,7 @@ class Sidebar extends Component {
         trigger={null}
       >
         <div style={styles.logo}>
-          <img src={logo} />
+          <img src={logo} alt="" />
         </div>
         <Menu style={styles.sidebar} theme="dark">
           {links.map(link => (
