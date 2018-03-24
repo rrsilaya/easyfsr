@@ -9,6 +9,7 @@ export const addAdminWork = `
 		approvedUnits
 	)
 	VALUES (
+		DEFAULT,
 		:id,
 		:position,
 		:officeUnit,
@@ -19,7 +20,7 @@ export const addAdminWork = `
 export const updateAdminWork = adminWork => `
 	UPDATE adminWork SET
 	${formatQueryParams(adminWork, 'update')}
-	WHERE id = :id AND adminWorkID = :adminWorkID
+	WHERE adminWorkID = :adminWorkID
 `;
 
 export const deleteAdminWork = `
