@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Input, Select } from 'antd';
 
+import { getFieldValues } from '../../../utils';
+
 const FormItem = Form.Item;
 const { Option } = Select;
 
 class AddModal extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
+
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        this.props.addUser(values);
+        this.props.addUser(getFieldValues(values));
         this.handleAfterClose();
       }
     });
@@ -17,15 +20,17 @@ class AddModal extends Component {
 
   validateNextPassword = (rule, value, callback) => {
     const { form } = this.props;
+
     if (value && this.state.isMatch) {
-      form.validateFields(['confirm'], { force: true });
+      form.validateFields(['confirm@@addUser'], { force: true });
     }
     callback();
   };
 
   compareToFirstPassword = (rule, value, callback) => {
     const { form } = this.props;
-    if (value && value !== form.getFieldValue('password')) {
+
+    if (value && value !== form.getFieldValue('password@@addUser')) {
       callback('Passwords do not match.');
     } else callback();
   };
@@ -91,8 +96,43 @@ class AddModal extends Component {
         ]}
       >
         <Form onSubmit={this.handleFormSubmit}>
+          <FormItem {...formItemLayout} label="Employee ID">
+            {form.getFieldDecorator('employeeID@@addUser', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input employee ID',
+                },
+              ],
+            })(<Input />)}
+          </FormItem>
+          <FormItem {...formItemLayout} label="First Name">
+            {form.getFieldDecorator('firstName@@addUser', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input first name',
+                  whitespace: true,
+                },
+              ],
+            })(<Input />)}
+          </FormItem>
+          <FormItem {...formItemLayout} label="Middle Name">
+            {form.getFieldDecorator('middleName@@addUser')(<Input />)}
+          </FormItem>
+          <FormItem {...formItemLayout} label="Last Name">
+            {form.getFieldDecorator('lastName@@addUser', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input last name',
+                  whitespace: true,
+                },
+              ],
+            })(<Input />)}
+          </FormItem>
           <FormItem {...formItemLayout} label="E-mail">
-            {form.getFieldDecorator('emailAddress', {
+            {form.getFieldDecorator('emailAddress@@addUser', {
               rules: [
                 {
                   type: 'email',
@@ -103,10 +143,10 @@ class AddModal extends Component {
                   message: 'Please input e-mail address',
                 },
               ],
-            })(<Input />)}
+            })(<Input addonAfter="@up.edu.ph" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Password">
-            {form.getFieldDecorator('password', {
+            {form.getFieldDecorator('password@@addUser', {
               rules: [
                 {
                   required: true,
@@ -119,7 +159,7 @@ class AddModal extends Component {
             })(<Input type="password" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Confirm Password">
-            {form.getFieldDecorator('confirm', {
+            {form.getFieldDecorator('confirm@@addUser', {
               rules: [
                 {
                   required: true,
@@ -131,65 +171,23 @@ class AddModal extends Component {
               ],
             })(<Input type="password" onBlur={this.handleConfirmBlur} />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="Employee ID">
-            {form.getFieldDecorator('employeeID', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please input Employee ID',
-                },
-              ],
-            })(<Input />)}
-          </FormItem>
-          <FormItem {...formItemLayout} label="First Name">
-            {form.getFieldDecorator('firstName', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please input First Name',
-                  whitespace: true,
-                },
-              ],
-            })(<Input />)}
-          </FormItem>
-          <FormItem {...formItemLayout} label="Middle Name">
-            {form.getFieldDecorator('middleName', {
-              rules: [{ whitespace: true }],
-            })(<Input />)}
-          </FormItem>
-          <FormItem {...formItemLayout} label="Last Name">
-            {form.getFieldDecorator('lastName', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please input Last Name',
-                  whitespace: true,
-                },
-              ],
-            })(<Input />)}
-          </FormItem>
-          <FormItem {...formItemLayout} label="Office Number">
-            {form.getFieldDecorator('officeNumber', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please input Office Number',
-                },
-              ],
-            })(<Input />)}
+          <FormItem {...formItemLayout} label="Room Number">
+            {form.getFieldDecorator('officeNumber')(
+              <Input placeholder="C-112" />,
+            )}
           </FormItem>
           <FormItem {...formItemLayout} label="Contract Type">
-            {form.getFieldDecorator('contractType', {
+            {form.getFieldDecorator('contractType@@addUser', {
               rules: [
                 {
                   required: true,
-                  message: 'Please select Contract Type',
+                  message: 'Please select contract type',
                 },
               ],
             })(
-              <Select placeholder="Select contract type">
-                <Option value="full-time">Full-time Employment</Option>
-                <Option value="part-time">Part-time Employment</Option>
+              <Select placeholder="Select Contract Type">
+                <Option value="FULL-TIME">Full-time Employment</Option>
+                <Option value="PART-TIME">Part-time Employment</Option>
               </Select>,
             )}
           </FormItem>
