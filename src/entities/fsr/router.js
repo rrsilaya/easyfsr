@@ -9,17 +9,19 @@ const router = Router();
  * @apiGroup FSR
  * @apiName addFSR
  *
- * @apiParam (Body Params) {String} userID ID of user
+ * @apiParam (Body Params) {Number} userID ID of user
  * @apiParam (Body Params) {String} acadYear academic year the fsr is filed
  * @apiParam (Body Params) {String} semester semester the fsr is filed
- *
+ * @apiParam (Body Params) {Number} [teachingLoadCreds]  teaching load credits
+
  * @apiSuccess {Object} fsr new FSR created
- * @apiSuccess {String} fsr.id ID of FSR
- * @apiSuccess {String} fsr.userID ID of user
+ * @apiSuccess {Number} fsr.id ID of FSR
+ * @apiSuccess {Number} fsr.userID ID of user
  * @apiSuccess {String} fsr.acadYear academic year the fsr is filed
  * @apiSuccess {String} fsr.semester semester the fsr is filed
- * @apiSuccess {String} fsr.isChecked indicates if fsr is approved or not
- *
+ * @apiSucess {Number} fsr.teachingLoadCreds  teaching load credits
+ * @apiSuccess {Boolean} fsr.isChecked indicates if fsr is approved or not
+
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
@@ -30,6 +32,7 @@ const router = Router();
  *         "userID": 1,
  *         "acadYear": "2018",
  *         "semester": "2",
+ *         "teachingLoadCreds": 5
  *         "isChecked": 0
  *      }
  *   }
@@ -69,25 +72,27 @@ router.post('/fsr/', async (req, res) => {
  * @apiGroup FSR
  * @apiName deleteFSR
  *
- * @apiParam (Query Params) {String} id ID of FSR
+ * @apiParam (Query Params) {Number} id ID of FSR
  *
- * @apiSuccess {Object} fsr new FSR deleted
- * @apiSuccess {String} fsr.id ID of FSR
- * @apiSuccess {String} fsr.userID ID of user
+ * @apiSuccess {Object} fsr new FSR created
+ * @apiSuccess {Number} fsr.id ID of FSR
+ * @apiSuccess {Number} fsr.userID ID of user
  * @apiSuccess {String} fsr.acadYear academic year the fsr is filed
  * @apiSuccess {String} fsr.semester semester the fsr is filed
- * @apiSuccess {String} fsr.isChecked indicates if fsr is approved or not
- *
+ * @apiSucess {Number} fsr.teachingLoadCreds  teaching load credits
+ * @apiSuccess {Boolean} fsr.isChecked indicates if fsr is approved or not
+
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *     "status": 200;
- *     "message": 'Succesfully deleted fsr'
+ *     "message": 'Succesfully created fsr'
  *     "data": {
  *         "id": 92,
  *         "userID": 1,
  *         "acadYear": "2018",
  *         "semester": "2",
+ *         "teachingLoadCreds": 5
  *         "isChecked": 0
  *      }
  *   }
@@ -137,25 +142,27 @@ router.delete('/fsr/:id', async (req, res) => {
  * @apiGroup FSR
  * @apiName getFSR
  *
- * @apiParam (Query Params) {String} id ID of FSR
+ * @apiParam (Query Params) {Number} id ID of FSR
  *
  * @apiSuccess {Object} fsr new FSR created
- * @apiSuccess {String} fsr.id ID of FSR
- * @apiSuccess {String} fsr.userID ID of user
+ * @apiSuccess {Number} fsr.id ID of FSR
+ * @apiSuccess {Number} fsr.userID ID of user
  * @apiSuccess {String} fsr.acadYear academic year the fsr is filed
  * @apiSuccess {String} fsr.semester semester the fsr is filed
- * @apiSuccess {String} fsr.isChecked indicates if fsr is approved or not
- *
+ * @apiSucess {Number} fsr.teachingLoadCreds  teaching load credits
+ * @apiSuccess {Boolean} fsr.isChecked indicates if fsr is approved or not
+
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *     "status": 200;
- *     "message": 'Succesfully fetched fsr'
+ *     "message": 'Succesfully created fsr'
  *     "data": {
  *         "id": 92,
  *         "userID": 1,
  *         "acadYear": "2018",
  *         "semester": "2",
+ *         "teachingLoadCreds": 5
  *         "isChecked": 0
  *      }
  *   }
@@ -205,11 +212,12 @@ router.get('/fsr/:id', async (req, res) => {
  * @apiName getFSRs
  *
  * @apiSuccess {Object[]} fsrs new FSR created
- * @apiSuccess {String} fsrs.id ID of FSR
- * @apiSuccess {String} fsrs.userID ID of user
+ * @apiSuccess {Number} fsrs.id ID of FSR
+ * @apiSuccess {Number} fsrs.userID ID of user
  * @apiSuccess {String} fsrs.acadYear academic year the fsr is filed
  * @apiSuccess {String} fsrs.semester semester the fsr is filed
- * @apiSuccess {String} fsrs.isChecked indicates if fsr is approved or not
+ * @apiSuccess {Number} fsrs.teachingLoadCreds teaching load credits
+ * @apiSuccess {Boolean} fsrs.isChecked indicates if fsr is approved or not
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -295,31 +303,34 @@ router.use('/fsr/:userID', (req, res, next) => {
  * @apiGroup FSR
  * @apiName updateFSR
  *
- * @apiParam (Query Params) {String} id ID of FSR
- * 
- * @apiParam (Body Params) {String} userID ID of user
+ * @apiParam (Query Params) {Number} id ID of FSR
+ *
+ * @apiParam (Body Params) {Number} userID ID of user
  * @apiParam (Body Params) {String} acadYear academic year the fsr is filed
  * @apiParam (Body Params) {String} semester semester the fsr is filed
-  * @apiParam (Body Params) {String} isChecked indicates if fsr is approved or not
-
- * @apiSuccess {Object} fsr  FSR updated
- * @apiSuccess {String} fsr.id ID of FSR
- * @apiSuccess {String} fsr.userID ID of user
+ * @apiParam (Body Params) {Number} teachingLoadCreds teaching load credit
+ * @apiParam (Body Params) {Boolean} isChecked indicates if fsr is approved or not
+ *
+ * @apiSuccess {Object} fsr new FSR created
+ * @apiSuccess {Number} fsr.id ID of FSR
+ * @apiSuccess {Number} fsr.userID ID of user
  * @apiSuccess {String} fsr.acadYear academic year the fsr is filed
  * @apiSuccess {String} fsr.semester semester the fsr is filed
- * @apiSuccess {String} fsr.isChecked indicates if fsr is approved or not
+ * @apiSucess {Number} fsr.teachingLoadCreds  teaching load credits
+ * @apiSuccess {Boolean} fsr.isChecked indicates if fsr is approved or not
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *     "status": 200;
- *     "message": 'Succesfully updated fsr'
+ *     "message": 'Succesfully created fsr'
  *     "data": {
  *         "id": 92,
  *         "userID": 1,
  *         "acadYear": "2018",
  *         "semester": "2",
- *         "isChecked": 1
+ *         "teachingLoadCreds": 5
+ *         "isChecked": 0
  *      }
  *   }
  *
