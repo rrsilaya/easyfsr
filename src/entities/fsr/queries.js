@@ -39,3 +39,7 @@ export const getFSRs = (query, sortBy) => `
 export const getTotalFSRs = `
   SELECT count(*) as total FROM fsr
 `;
+
+export const getTotalFSRsByUser = `
+  SELECT count(*) as total FROM fsr WHERE userID = :userID
+`;
