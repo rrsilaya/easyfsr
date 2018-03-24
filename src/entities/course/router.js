@@ -14,10 +14,12 @@ const router = Router();
  * @apiParam (Body Params) {String} courseNumber courseNumber of course
  *
  * @apiSuccess {Object} course new Course is added
+ * @apiSuccess {String} course.courseID course ID
  * @apiSuccess {String} course.hoursPerWeek number of hours of course per week
  * @apiSuccess {String} course.school school course is being taken
  * @apiSuccess {String} course.credit credit of course
- * @apiSuccess {String} courseNumber courseNumber of course
+ * @apiSuccess {String} course.courseNumber courseNumber of course
+ * @apiSuccess {String} course.id fsr id
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -27,8 +29,8 @@ const router = Router();
  *       "message": "Successfully updated course",
  *       "data": [
             {
-                "courseID": 4,
-                "hoursPerWeek": "9",
+                "courseID": 1,
+                "hoursPerWeek": "3",
                 "school": "uplb",
                 "credit": "3",
                 "courseNumber": "999",
@@ -78,11 +80,13 @@ router.post('/course/', async (req, res) => {
  * @apiParam (Body Params) {String} school school course is being taken
  * @apiParam (Body Params) {String} credit credit of course
  *
- * @apiSuccess {Object} course Course is update
+ * @apiSuccess {Object} course Course updated
+ * @apiSuccess {String} course.courseID course ID
  * @apiSuccess {String} course.hoursPerWeek number of hours of course per week
  * @apiSuccess {String} course.school school course is being taken
  * @apiSuccess {String} course.credit credit of course
- * @apiSuccess {String} courseNumber courseNumber of course
+ * @apiSuccess {String} course.courseNumber courseNumber of course
+ * @apiSuccess {String} course.id fsr id
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -92,11 +96,11 @@ router.post('/course/', async (req, res) => {
  *       "message": "Successfully updated course",
  *       "data": [
  *         {
-            "courseID": 2,
-            "hoursPerWeek": "21",
-            "school": "uplb",
-            "credit": "3",
-            "courseNumber": "128",
+            "courseID": 1,
+            "hoursPerWeek": "5",
+            "school": "la salle",
+            "credit": "5",
+            "courseNumber": "999",
             "id": 1
  *        }
  *      ]
@@ -150,11 +154,13 @@ router.put('/course/:courseID', async (req, res) => {
  *
  * @apiParam (Query Params) {String} courseNumber courseNumber of course
  *
- * @apiSuccess {Object} course Course is update
+ * @apiSuccess {Object} course Course course deleted
+ * @apiSuccess {String} course.courseID course ID
  * @apiSuccess {String} course.hoursPerWeek number of hours of course per week
  * @apiSuccess {String} course.school school course is being taken
  * @apiSuccess {String} course.credit credit of course
- * @apiSuccess {String} courseNumber courseNumber of course
+ * @apiSuccess {String} course.courseNumber courseNumber of course
+ * @apiSuccess {String} course.id fsr id
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -207,13 +213,15 @@ router.delete('/course/:courseID', async (req, res) => {
  * @apiGroup Course
  * @apiName updateCourse
  *
- * @apiParam (Query Params) {String} courseNumber courseNumber of course
+ * @apiParam (Query Params) {String} courseID courseID of course
  * 
- * @apiSuccess {Object} course Course is update
+ * @apiSuccess {Object} course Course details
+ * @apiSuccess {String} course.courseID course ID
  * @apiSuccess {String} course.hoursPerWeek number of hours of course per week
  * @apiSuccess {String} course.school school course is being taken
  * @apiSuccess {String} course.credit credit of course
- * @apiSuccess {String} courseNumber courseNumber of course
+ * @apiSuccess {String} course.courseNumber courseNumber of course
+ * @apiSuccess {String} course.id fsr
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -280,12 +288,13 @@ router.get('/course/:courseID', async (req, res) => {
  *
  * @apiSuccess {String} message Confirmation Message.
  * @apiSuccess {Object[]} courses All courses
+ * @apiSuccess {String} course.courseID course ID
  * @apiSuccess {String} course.hoursPerWeek number of hours of course per week
  * @apiSuccess {String} course.school school course is being taken
  * @apiSuccess {String} course.credit credit of course
- * @apiSuccess {String} courseNumber courseNumber of course
+ * @apiSuccess {String} course.courseNumber courseNumber of course
+ * @apiSuccess {String} course.id fsr id
  *
- 
  * @apiSuccessExample {json} Success-Response:
  *    HTTP/1.1 200 OK
  *   {

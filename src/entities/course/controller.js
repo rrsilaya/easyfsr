@@ -25,7 +25,6 @@ export const addCourse = course => {
 export const deleteCourse = ({ courseID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.deleteCourse, { courseID }, (err, results) => {
-      console.log(err);
       if (err) return reject(500);
       else if (!results.affectedRows) return reject(404);
       return resolve(courseID);
@@ -52,7 +51,6 @@ export const getCourses = course => {
 export const getCourse = ({ courseID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getCourse, { courseID }, (err, results) => {
-      console.log(err);
       if (err) return reject(500);
       else if (!results.length) return reject(404);
       return resolve(results);
