@@ -61,6 +61,6 @@ export const updateCoAuthor = `
 `;
 
 export const deleteCoAuthor = `
-	DELETE FROM cworkAuthors
+	DELETE FROM cworkCoAuthor
 	WHERE userID = :userID
 `;

@@ -34,12 +34,14 @@ export const deleteConsultationHours = `
 
 export const addTimeslot = `
     INSERT INTO chTimeslot (
-        chID,
+        chTimeslotID,
+		chID,
         id,
         day,
         time
     )
     VALUES (
+		:chTimeslotID,
         :chID,
         :id,
         :day,

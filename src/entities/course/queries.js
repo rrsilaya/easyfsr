@@ -61,11 +61,13 @@ export const getCourseWithSched = `
 
 export const addCourseSched = `
 	INSERT INTO courseSched (
+		courseSchedID
 		courseID,
 		day,
 		time
 	)
 	VALUES (
+		:courseSchedID,
 		:courseID,
 		:day,
 		:time
