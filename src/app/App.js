@@ -51,6 +51,10 @@ class App extends Component {
                       {routes.map(route => (
                         <Route key={route.path} {...route} />
                       ))}
+                      <Redirect
+                        from="/profile"
+                        to={`/profile/${user.employeeID}`}
+                      />
                       <Redirect to="/" />
                     </Switch>
                   </Layout.Content>

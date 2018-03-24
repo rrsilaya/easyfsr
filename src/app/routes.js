@@ -11,7 +11,8 @@ const routes = [
     component: Dashboard,
   },
   {
-    path: '/profile',
+    path: '/profile/:userID',
+    exact: true,
     component: Profile,
   },
   {
@@ -23,13 +24,8 @@ const routes = [
     component: Users,
   },
   {
-    type: 'path',
-    to: '/search',
+    path: '/search',
     component: FacultySearch,
-  },
-  {
-    type: 'path',
-    to: '/',
   },
 ];
 
