@@ -34,8 +34,8 @@ class Users extends Component {
       toggleEditModal,
       toggleAddModal,
       toggleDeleteModal,
+      changeSelectedUser,
 
-      getUser,
       addUser,
       editUser,
 
@@ -73,7 +73,7 @@ class Users extends Component {
                     description={user.acctType}
                     toggleEditModal={toggleEditModal}
                     toggleDeleteModal={toggleDeleteModal}
-                    getUser={getUser}
+                    changeSelectedUser={changeSelectedUser}
                   />
                 </Col>
               ))}
@@ -86,18 +86,18 @@ class Users extends Component {
           toggleEditModal={toggleEditModal}
           editUser={editUser}
           isEditingUser={isEditingUser}
-          handleAfterClose={this.handleAfterClose}
+          changeSelectedUser={changeSelectedUser}
         />
         <AddModal
           isAddModalOpen={isAddModalOpen}
           toggleAddModal={toggleAddModal}
           addUser={addUser}
           isAddingUser={isAddingUser}
-          handleAfterClose={this.handleAfterClose}
         />
         <DeleteModal
           isDeleteModalOpen={isDeleteModalOpen}
           toggleDeleteModal={toggleDeleteModal}
+          changeSelectedUser={changeSelectedUser}
         />
         <div style={styles.pagination}>
           <Pagination defaultCurrent={1} total={50} size="small" />

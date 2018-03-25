@@ -7,10 +7,15 @@ const { Meta } = Card;
 
 class User extends Component {
   render() {
-    const { getUser, toggleDeleteModal, toggleEditModal, user } = this.props;
+    const {
+      changeSelectedUser,
+      toggleDeleteModal,
+      toggleEditModal,
+      user,
+    } = this.props;
 
     const handleToggleEditModal = () => {
-      getUser(user);
+      changeSelectedUser(user);
       toggleEditModal();
     };
 
