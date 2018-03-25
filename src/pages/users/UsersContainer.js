@@ -64,7 +64,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(editUser(user, values));
     },
     resetPage: () => {
-      dispatch(resetPage);
+      dispatch(resetPage());
     },
   };
 };
