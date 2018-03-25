@@ -109,7 +109,7 @@ CREATE TABLE `course`(
   `courseID` INT NOT NULL AUTO_INCREMENT,
   `hoursPerWeek` VARCHAR (10) NOT NULL,
   `school` VARCHAR (30) NOT NULL,
-  `credit` VARCHAR (30) NOT NULL,
+  `credit` INT (2) NOT NULL,
   `courseNumber` VARCHAR (20) NOT NULL,
   `id` INT NOT NULL,
   CONSTRAINT `course_studyLoad_fk`
