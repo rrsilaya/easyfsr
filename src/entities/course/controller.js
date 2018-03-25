@@ -71,3 +71,12 @@ export const updateCourse = ({ courseID }, course) => {
     );
   });
 };
+
+export const getTotalCourses = () => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getTotalCourses, (err, results) => {
+      if (err) return reject(500);
+      return resolve(results[0]);
+    });
+  });
+};
