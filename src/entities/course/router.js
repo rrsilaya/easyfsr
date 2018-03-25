@@ -8,10 +8,12 @@ const router = Router();
  * @apiGroup Course
  * @apiName addCourse
  *
+ * @apiParam (Body Params) {String} courseID course ID
  * @apiParam (Body Params) {String} hoursPerWeek number of hours of course per week
  * @apiParam (Body Params) {String} school school course is being taken
  * @apiParam (Body Params) {String} credit credit of course
  * @apiParam (Body Params) {String} courseNumber courseNumber of course
+ * @apiParam (Body Params) {String} id fsr id
  *
  * @apiSuccess {Object} course new Course is added
  * @apiSuccess {String} course.courseID course ID
@@ -39,8 +41,8 @@ const router = Router();
         ]
  *   }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
@@ -71,7 +73,7 @@ router.post('/course/', async (req, res) => {
 });
 
 /**
- * @api {put} /course/:courseNumber updateCourse
+ * @api {put} /course/:courseID updateCourse
  * @apiGroup Course
  * @apiName updateCourse
  *
@@ -79,6 +81,7 @@ router.post('/course/', async (req, res) => {
  * @apiParam (Body Params) {String} hoursPerWeek number of hours of course per week
  * @apiParam (Body Params) {String} school school course is being taken
  * @apiParam (Body Params) {String} credit credit of course
+ * @apiParam (Body Params) {String} id fsr id
  *
  * @apiSuccess {Object} course Course updated
  * @apiSuccess {String} course.courseID course ID
@@ -107,8 +110,8 @@ router.post('/course/', async (req, res) => {
  *   }
  *
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
@@ -222,9 +225,9 @@ router.delete('/course/:courseID', async (req, res) => {
 });
 
 /**
- * @api {put} /course/:courseNumber getCourse
+ * @api {get} /course/:courseID getCourse
  * @apiGroup Course
- * @apiName updateCourse
+ * @apiName getCourse
  *
  * @apiParam (Query Params) {String} courseID courseID of course
  * 
@@ -345,7 +348,9 @@ router.get('/course/', async (req, res) => {
       total: courses.length,
       limit: req.query.limit || 10,
       page: req.query.page || 1,
-      pages: Math.ceil(courses.length / (req.query.limit || 10)),
+      pages: Math.ceil(
+        (await Ctrl.getTotalCourses()).total / (req.query.limit || 10),
+      ),
     });
   } catch (status) {
     let message = '';
