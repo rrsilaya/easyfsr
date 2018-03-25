@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Modal, Button, Form, Input, Select } from 'antd';
 
 import { getFieldValues } from '../../../utils';
+import { getUsers } from '../../../api';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -47,6 +48,33 @@ class AddModal extends Component {
   handleCancel = () => {
     this.props.toggleAddModal();
     this.handleAfterClose();
+  };
+
+  validateEmployeeID = async (rule, value, callback) => {
+    if (!value) return callback('Please input employee ID');
+
+    const { data } = await getUsers({
+      employeeID: value,
+      page: 1,
+      limit: 1,
+    });
+
+    if (data.total) return callback('Employee ID must be unique.');
+    callback();
+  };
+
+  validateEmail = async (rule, value, callback) => {
+    if (!value) return callback('Please input email address.');
+    if (!value.match(/^[\w\d]+$/))
+      return callback('Please enter a valid email address.');
+
+    const { data } = await getUsers({
+      emailAddress: value + '@up.edu.ph',
+      page: 1,
+      limit: 1,
+    });
+
+    if (data.total) return callback('Email address must be unique.');
   };
 
   state = {
@@ -96,14 +124,14 @@ class AddModal extends Component {
         ]}
       >
         <Form onSubmit={this.handleFormSubmit}>
-          <FormItem {...formItemLayout} label="Employee ID">
+          <FormItem
+            {...formItemLayout}
+            label="Employee ID"
+            required
+            hasFeedback
+          >
             {form.getFieldDecorator('employeeID@@addUser', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please input employee ID',
-                },
-              ],
+              rules: [{ validator: this.validateEmployeeID }],
             })(<Input />)}
           </FormItem>
           <FormItem {...formItemLayout} label="First Name">
@@ -131,18 +159,9 @@ class AddModal extends Component {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="E-mail">
+          <FormItem {...formItemLayout} label="E-mail" hasFeedback required>
             {form.getFieldDecorator('emailAddress@@addUser', {
-              rules: [
-                {
-                  type: 'email',
-                  message: 'The input is not a valid e-mail',
-                },
-                {
-                  required: true,
-                  message: 'Please input e-mail address',
-                },
-              ],
+              rules: [{ validator: this.validateEmail }],
             })(<Input addonAfter="@up.edu.ph" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Password">
