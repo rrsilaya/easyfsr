@@ -23,3 +23,34 @@
 .center {
   text-align: center;
 }
+
+.pagination {
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  color: $white;
+}
+
+.ant-pagination-prev { margin-right: 28px !important; }
+.ant-pagination-next { margin-left: 20px !important; }
+
+.ant-pagination-prev,
+.ant-pagination-next {
+  & > * {
+    background-color: $primary !important;
+    color: $white !important;
+  }
+}
+
+.ant-pagination-item {
+  background-color: $primary !important;
+  border: none !important;
+  
+  & > a {
+    color: $white !important;
+  }
+  
+  &.ant-pagination-item-active {
+    background-color: lighten($primary, 30%) !important;
+  }
+}

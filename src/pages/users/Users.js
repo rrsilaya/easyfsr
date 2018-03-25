@@ -99,8 +99,8 @@ class Users extends Component {
           toggleDeleteModal={toggleDeleteModal}
           changeSelectedUser={changeSelectedUser}
         />
-        <div style={styles.pagination}>
-          <Pagination defaultCurrent={1} total={50} size="small" />
+        <div className="pagination">
+          <Pagination defaultCurrent={1} total={50} />
         </div>
       </div>
     );

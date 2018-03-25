@@ -21,6 +21,33 @@
 .center {
   text-align: center;
 }
+.pagination {
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  color: #fff;
+}
+.ant-pagination-prev {
+  margin-right: 28px !important;
+}
+.ant-pagination-next {
+  margin-left: 20px !important;
+}
+.ant-pagination-prev > *,
+.ant-pagination-next > * {
+  background-color: #483440 !important;
+  color: #fff !important;
+}
+.ant-pagination-item {
+  background-color: #483440 !important;
+  border: none !important;
+}
+.ant-pagination-item > a {
+  color: #fff !important;
+}
+.ant-pagination-item.ant-pagination-item-active {
+  background-color: #8b657c !important;
+}
 .background.primary {
   background-color: #483440;
 }
