@@ -15,6 +15,11 @@ const links = [
     path: '/profile',
   },
   {
+    icon: 'search',
+    label: 'Search',
+    path: '/search',
+  },
+  {
     icon: 'team',
     label: 'Users',
     path: '/users',

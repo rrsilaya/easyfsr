@@ -6,12 +6,14 @@ import * as Api from '../../api';
 const TOGGLE_EDIT_MODAL = 'USER/TOGGLE_EDIT_MODAL';
 const TOGGLE_ADD_MODAL = 'USER/TOGGLE_ADD_MODAL';
 const TOGGLE_DELETE_MODAL = 'USER/TOGGLE_DELETE_MODAL';
+const CHANGE_SELECTED_USER = 'USER/CHANGE_SELECTED_USER';
 
 const GET_USERS = 'USER/GET_USERS';
-const GET_USER = 'USER/GET_USER';
 const ADD_USER = 'USER/ADD_USER';
 const DELETE_USER = 'USER/DELETE_USER';
 const EDIT_USER = 'USER/EDIT_USER';
+
+const RESET_PAGE = 'USER/RESET_PAGE';
 
 export const toggleEditModal = () => ({
   type: TOGGLE_EDIT_MODAL,
@@ -41,22 +43,10 @@ export const getUsers = () => {
   };
 };
 
-export const getUser = user => {
-  const { userID } = user;
-  return dispatch => {
-    return dispatch({
-      type: GET_USER,
-      promise: Api.getUser(userID),
-      meta: {
-        onFailure: () => {
-          notification.error({
-            message: 'Error fetching user information.',
-          });
-        },
-      },
-    });
-  };
-};
+export const changeSelectedUser = user => ({
+  type: CHANGE_SELECTED_USER,
+  payload: user,
+});
 
 export const addUser = user => {
   return dispatch => {
@@ -79,7 +69,26 @@ export const addUser = user => {
   };
 };
 
-export const deleteUser = ({ id }) => {};
+export const deleteUser = id => {
+  return dispatch => {
+    return dispatch({
+      type: DELETE_USER,
+      promise: Api.deleteUser(id),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully deleted user.',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while deleting user.',
+          });
+        },
+      },
+    });
+  };
+};
 
 export const editUser = (user, body) => {
   const { userID } = user;
@@ -103,13 +112,16 @@ export const editUser = (user, body) => {
   };
 };
 
+export const resetPage = () => ({
+  type: RESET_PAGE,
+});
+
 const initialState = {
   isEditModalOpen: false,
   isAddModalOpen: false,
   isDeleteModalOpen: false,
 
   isGettingUsers: false,
-  isGettingUser: false,
   isAddingUser: false,
   isDeletingUser: false,
   isEditingUser: false,
@@ -156,21 +168,11 @@ const reducer = (state = initialState, action) => {
         }),
       });
 
-    case GET_USER:
-      return handle(state, action, {
-        start: prevState => ({
-          ...prevState,
-          isGettingUser: true,
-        }),
-        success: prevState => ({
-          ...prevState,
-          user: payload.data.data[0],
-        }),
-        finish: prevState => ({
-          ...prevState,
-          isGettingUser: true,
-        }),
-      });
+    case CHANGE_SELECTED_USER:
+      return {
+        ...state,
+        user: payload,
+      };
 
     case ADD_USER:
       return handle(state, action, {
@@ -218,8 +220,8 @@ const reducer = (state = initialState, action) => {
           ...prevState,
           users: prevState.users.map(
             user =>
-              user.userID === payload.data.data.userID
-                ? { ...payload.data.data }
+              user.userID === payload.data.data[0].userID
+                ? { ...payload.data.data[0] }
                 : user,
           ),
           isEditModalOpen: false,
@@ -229,6 +231,9 @@ const reducer = (state = initialState, action) => {
           isEditingUser: false,
         }),
       });
+
+    case RESET_PAGE:
+      return initialState;
 
     default:
       return state;

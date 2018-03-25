@@ -5,11 +5,12 @@ import {
   toggleEditModal,
   toggleAddModal,
   toggleDeleteModal,
+  changeSelectedUser,
   getUsers,
-  getUser,
   addUser,
   deleteUser,
   editUser,
+  resetPage,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -52,11 +53,11 @@ const mapDispatchToProps = dispatch => {
     toggleDeleteModal: () => {
       dispatch(toggleDeleteModal());
     },
+    changeSelectedUser: user => {
+      dispatch(changeSelectedUser(user));
+    },
     getUsers: () => {
       dispatch(getUsers());
-    },
-    getUser: user => {
-      dispatch(getUser(user));
     },
     addUser: values => {
       dispatch(addUser(values));
@@ -64,8 +65,11 @@ const mapDispatchToProps = dispatch => {
     deleteUser: id => {
       dispatch(deleteUser(id));
     },
-    editUser: (userID, body) => {
-      dispatch(editUser(userID, body));
+    editUser: (user, values) => {
+      dispatch(editUser(user, values));
+    },
+    resetPage: () => {
+      dispatch(resetPage());
     },
   };
 };

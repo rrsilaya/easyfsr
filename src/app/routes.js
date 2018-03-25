@@ -1,7 +1,8 @@
 import Dashboard from '../pages/dashboard/Dashboard';
-import Profile from '../pages/profile/Profile';
+import Profile from '../pages/profile/ProfileContainer';
 import ServiceRecords from '../pages/serviceRecords/ServiceRecords';
 import Users from '../pages/users/UsersContainer';
+import FacultySearch from '../pages/facultySearch/FacultySearch';
 
 const routes = [
   {
@@ -10,7 +11,8 @@ const routes = [
     component: Dashboard,
   },
   {
-    path: '/profile',
+    path: '/profile/:userID',
+    exact: true,
     component: Profile,
   },
   {
@@ -20,6 +22,10 @@ const routes = [
   {
     path: '/users',
     component: Users,
+  },
+  {
+    path: '/search',
+    component: FacultySearch,
   },
 ];
 

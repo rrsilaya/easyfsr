@@ -34,6 +34,7 @@ class Topbar extends Component {
           onClick={toggleSidebar}
           className="set-cursor pointer"
         />
+
         <div style={styles.account}>
           <img style={styles.image} alt="" />
           <Dropdown overlay={menu} trigger={['click']}>
