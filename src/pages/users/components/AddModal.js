@@ -159,7 +159,7 @@ class AddModal extends Component {
               ],
             })(<Input />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="E-mail" hasFeedback required>
+          <FormItem {...formItemLayout} label="E-mail" required>
             {form.getFieldDecorator('emailAddress@@addUser', {
               rules: [{ validator: this.validateEmail }],
             })(<Input addonAfter="@up.edu.ph" />)}
