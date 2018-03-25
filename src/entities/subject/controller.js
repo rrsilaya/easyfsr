@@ -21,35 +21,10 @@ const searchFields = [
   'room',
 ];
 
-const timeslotAttributes = ['subjectID', 'day', 'time'];
-
 export const addSubject = subject => {
   return new Promise((resolve, reject) => {
     db.query(Query.addSubject, { ...subject }, (err, results) => {
       console.log(err);
-      if (err) return reject(500);
-      return resolve(results.insertId);
-    });
-  });
-};
-
-export const updateSubject = ({ id }, subject) => {
-  return new Promise((resolve, reject) => {
-    if (!subject) return reject(500);
-    db.query(
-      Query.updateSubject(filtered(subject, subjectAttributes)),
-      { id, ...subject },
-      (err, results) => {
-        if (err) return reject(500);
-        return resolve(results.insertId);
-      },
-    );
-  });
-};
-
-export const addTimeSlot = timeslot => {
-  return new Promise((resolve, reject) => {
-    db.query(Query.addTimeSlot, { ...timeslot }, (err, results) => {
       if (err) return reject(500);
       return resolve(results.insertId);
     });
@@ -72,9 +47,9 @@ export const getSubjects = subject => {
   });
 };
 
-export const getSubject = ({ id }) => {
+export const getSubject = ({ subjectID }) => {
   return new Promise((resolve, reject) => {
-    db.query(Query.getSubject, { id }, (err, results) => {
+    db.query(Query.getSubject, { subjectID }, (err, results) => {
       console.log(err);
       if (err) return reject(500);
       else if (!results.length) return reject(404);
@@ -83,42 +58,60 @@ export const getSubject = ({ id }) => {
   });
 };
 
-export const getAllSubjectsWithSched = subject => {
+export const updateSubject = ({ subjectID }, subject) => {
   return new Promise((resolve, reject) => {
+    if (!subject) return reject(500);
     db.query(
-      Query.getAllSubjectsWithSched(filtered(subject, subjectAttributes)),
-      subject,
+      Query.updateSubject(filtered(subject, subjectAttributes)),
+      { subjectID, ...subject },
       (err, results) => {
-        console.log(err);
         if (err) return reject(500);
-        else if (!results.length) return reject(404);
-        return resolve(results);
+        return resolve(results.subjectID);
       },
     );
   });
 };
 
-export const getSubjectWithSched = subject => {
+export const deleteSubject = ({ subjectID }) => {
   return new Promise((resolve, reject) => {
-    db.query(
-      Query.getSubjectWithSched(filtered(subject, subjectAttributes)),
-      subject,
-      (err, results) => {
-        console.log(err);
-        if (err) return reject(500);
-        else if (!results.length) return reject(404);
-        return resolve(results);
-      },
-    );
-  });
-};
-
-export const deleteSubject = ({ id }) => {
-  return new Promise((resolve, reject) => {
-    db.query(Query.deleteSubject, { id }, (err, results) => {
+    db.query(Query.deleteSubject, { subjectID }, (err, results) => {
       if (err) return reject(500);
       else if (!results.affectedRows) return reject(404);
-      return resolve(id);
+      return resolve(results.insertId);
+    });
+  });
+};
+
+//ADDITIONAL GET FOR SUBJECTS
+
+export const getSubjectsWithSched = subject => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      Query.getSubjectsWithSched(
+        filtered(subject, subjectAttributes),
+        subject.sortBy,
+      ),
+      {
+        field: 'subjectCode',
+        ...escapeSearch(subject, searchFields, subject.limit),
+      },
+      (err, results) => {
+        console.log(err);
+        if (err) return reject(500);
+        else if (!results.length) return reject(404);
+        return resolve(results);
+      },
+    );
+  });
+};
+
+export const getSubjectWithSched = ({ subjectID }) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getSubjectWithSched, { subjectID }, (err, results) => {
+      console.log(err);
+      if (err) return reject(500);
+      else if (!results.length) return reject(404);
+      return resolve(results);
     });
   });
 };
