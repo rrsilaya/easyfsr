@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Icon, Avatar } from 'antd';
+import { Link } from 'react-router-dom';
 
 import styles from '../styles';
 
@@ -35,7 +36,9 @@ class User extends Component {
               className="text normal"
               onClick={toggleDeleteModal}
             />,
-            <Icon type="profile" className="text normal" />,
+            <Link to={`/profile/${user.employeeID}`}>
+              <Icon type="profile" className="text normal" />
+            </Link>,
           ]}
         >
           <Meta
