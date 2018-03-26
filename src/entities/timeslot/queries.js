@@ -36,3 +36,8 @@ export const deleteTimeslot = `
 	DELETE FROM timeslot
 	WHERE timeslotID = :timeslotID
 `;
+
+export const deleteTimeslots = query => `
+	DELETE FROM timeslot
+	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
+`;

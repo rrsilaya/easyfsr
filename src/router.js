@@ -3,6 +3,7 @@ import { Router } from 'express';
 import authRouter from './entities/auth/router';
 import awardRouter from './entities/award/router';
 import subjectRouter from './entities/subject/router';
+import timeslotRouter from './entities/timeslot/router';
 import creativeWorkRouter from './entities/creativeWork/router';
 import fsrRouter from './entities/fsr/router';
 import serviceRouter from './entities/extensionAndCommunityService/router';
@@ -27,6 +28,7 @@ router.use(subjectRouter);
 router.use(creativeWorkRouter);
 router.use(fsrRouter);
 router.use(serviceRouter);
+router.use(timeslotRouter);
 
 // router.use( (req,res,next) => {
 //   if(req.session.user){
