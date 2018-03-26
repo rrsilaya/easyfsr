@@ -7,6 +7,7 @@ import courseRouter from './entities/course/router';
 import courseSchedRouter from './entities/courseSched/router';
 
 import awardRouter from './entities/award/router';
+import fsrRouter from './entities/fsr/router';
 import serviceRouter from './entities/extensionAndCommunityService/router';
 
 const router = Router();
@@ -28,6 +29,7 @@ router.use(courseRouter);
 router.use(courseSchedRouter);
 
 router.use(awardRouter);
+router.use(fsrRouter);
 router.use(serviceRouter);
 
 // router.use( (req,res,next) => {

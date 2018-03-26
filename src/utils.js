@@ -9,8 +9,9 @@ export const formatQueryParams = (query, method) =>
 export const filtered = (payload = {}, attributes) =>
   Object.keys(payload).filter(key => attributes.includes(key));
 
-export const escapeSearch = (query, appendList, limit = 10) => {
+export const escapeSearch = (query, appendList, limit = 12) => {
   query.limit = parseInt(limit);
+  query.offset = (parseInt(query.page) - 1) * limit || 0;
 
   appendList.forEach(key => {
     if (query.hasOwnProperty(key)) {
