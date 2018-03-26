@@ -12,13 +12,12 @@ export const addCourse = `
 	VALUES (
 		:id,
 		:courseNumber,
-		:courseID,
+		DEFAULT,
 		:hoursPerWeek,
 		:school,
 		:credit
 	)
 `;
-
 
 export const deleteCourse = `
 	DELETE FROM course 
@@ -35,7 +34,7 @@ export const getCourse = `
   WHERE courseID=:courseID
 `;
 
-export const updateCourse = course =>  ` 
+export const updateCourse = course => ` 
   UPDATE course SET  
     ${formatQueryParams(course, 'update')} 
   WHERE courseID=:courseID
