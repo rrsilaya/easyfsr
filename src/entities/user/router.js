@@ -99,6 +99,12 @@ router.post('/user/', async (req, res) => {
  * @apiGroup User
  * @apiName getUsers
  *
+ * @apiParam (Query Params) {String} [firstName] first name of employee
+ * @apiParam (Query Params) {String} [lastName] last name of employee
+ * @apiParam (Query Params) {String} [middleName] middle name of employee
+ * @apiParam (Query Params) {String} [committee]  committee of employee
+ * @apiParam (Query Params) {Number} [officeNumber] room number of employee
+ *
  * @apiSuccess {String} message Confirmation Message.
  * @apiSuccess {Object[]} users All users
  * @apiSuccess {Number} users.userID ID of employee
