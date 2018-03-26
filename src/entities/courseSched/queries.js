@@ -3,14 +3,16 @@ import { formatQueryParams } from '../../utils';
 export const addCourseSched = `INSERT INTO courseSched 
   	(
   		courseID,
- 	 	day,
-  		time
+   	 	day,
+		  timeStart,
+      timeEnd
   	) 
   	VALUES 
   	(
   		:courseID,
-  		:day,
-  		:time 
+      :day,
+  		:timeStart,
+      :timeEnd
   	)`;
 
 // export const updateCourseSched = courseSched =>
