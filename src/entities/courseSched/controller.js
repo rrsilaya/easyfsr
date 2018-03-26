@@ -58,22 +58,22 @@ export const getCourseSched = ({ courseSchedID }) => {
   });
 };
 
-export const getCourseScheds = courseSched => {
-  return new Promise((resolve, reject) => {
-    db.query(
-      Query.getCourseSched(
-        filtered(courseSched, courseSchedAttributes),
-        courseSched.sortBy,
-      ),
-      {
-        field: 'courseSchedID',
-        ...escapeSearch(courseSched, searchFields, courseSched.limit),
-      },
-      (err, results) => {
-        if (err) return reject(500);
-        else if (!results) return reject(404);
-        return resolve(results);
-      },
-    );
-  });
-};
+// export const getCourseScheds = courseSched => {
+//   return new Promise((resolve, reject) => {
+//     db.query(
+//       Query.getCourseSched(
+//         filtered(courseSched, courseSchedAttributes),
+//         courseSched.sortBy,
+//       ),
+//       {
+//         field: 'courseSchedID',
+//         ...escapeSearch(courseSched, searchFields, courseSched.limit),
+//       },
+//       (err, results) => {
+//         if (err) return reject(500);
+//         else if (!results) return reject(404);
+//         return resolve(results);
+//       },
+//     );
+//   });
+// };
