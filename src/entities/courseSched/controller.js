@@ -2,8 +2,15 @@ import db from '../../database/index';
 import * as Query from './queries';
 import { filtered } from '../../utils';
 
-const courseSchedAttributes = ['courseSchedID', 'courseID', 'day', 'time'];
-const searchFields = ['courseSchedID', 'day', 'time'];
+const courseSchedAttributes = [
+  'courseSchedID',
+  'courseID',
+  'day',
+  'timeStart',
+  'timeEnd',
+];
+
+const searchFields = ['courseID', 'day', 'timeStart', 'timeEnd'];
 
 export const addCourseSched = courseSched => {
   return new Promise((resolve, reject) => {
@@ -15,31 +22,31 @@ export const addCourseSched = courseSched => {
   });
 };
 
-// export const updateCourseSched = ({ courseID }, courseSched) => {
-//   return new Promise((resolve, reject) => {
-//     if (!courseSched) return reject(500);
-//     db.query(
-//       Query.updateCourseSched(
-//         Utils.filtered(courseSched, courseSchedAttributes),
-//       ),
-//       { courseNumber, ...courseSched },
-//       (err, results) => {
-//         // console.log(err);
-//         if (err) return reject(500);
-//         return resolve(results.insertId);
-//       },
-//     );
-//   });
-// };
+export const updateCourseSched = ({ courseSchedID }, courseSched) => {
+  return new Promise((resolve, reject) => {
+    // console.log(courseSched);
 
-// export const deleteCourseSched = ({ courseID }) => {
-//   return new Promise((resolve, reject) => {
-//     db.query(Query.deleteCourseSched, { courseID }, (err, results) => {
-//       if (err) return reject(500);
-//       return resolve(courseID);
-//     });
-//   });
-// };
+    if (!courseSched) return reject(500);
+    db.query(
+      Query.updateCourseSched(filtered(courseSched, courseSchedAttributes)),
+      { courseSchedID, ...courseSched },
+      (err, results) => {
+        console.log(err);
+        if (err) return reject(500);
+        return resolve(results.insertId);
+      },
+    );
+  });
+};
+
+export const deleteCourseSched = ({ courseSchedID }) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.deleteCourseSched, { courseSchedID }, (err, results) => {
+      if (err) return reject(500);
+      return resolve(courseSchedID);
+    });
+  });
+};
 
 export const getCourseSched = ({ courseSchedID }) => {
   return new Promise((resolve, reject) => {
@@ -55,8 +62,8 @@ export const getCourseScheds = courseSched => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getCourseSched(
-        filtered(courseNumber, courseSchedAttributes),
-        award.sortBy,
+        filtered(courseSched, courseSchedAttributes),
+        courseSched.sortBy,
       ),
       {
         field: 'courseSchedID',

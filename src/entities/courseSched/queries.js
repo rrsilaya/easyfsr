@@ -1,12 +1,24 @@
 import { formatQueryParams } from '../../utils';
 
-export const addCourseSched = `INSERT INTO courseSched ( courseSchedID, courseID, day, time)
-    VALUES (DEFAULT, :courseID, :day, :time)`;
+export const addCourseSched = `INSERT INTO courseSched 
+  	(
+  		courseID,
+   	 	day,
+		  timeStart,
+      timeEnd
+  	) 
+  	VALUES 
+  	(
+  		:courseID,
+      :day,
+  		:timeStart,
+      :timeEnd
+  	)`;
 
-// export const updateCourseSched = courseSched =>
-//   `UPDATE courseSched SET ${Utils.formatQueryParams(
-//     courseSched,
-//   )} WHERE courseNumber=:courseNumber`;
+export const updateCourseSched = courseSched =>
+  `UPDATE courseSched SET ${formatQueryParams(
+    courseSched,
+  )} WHERE courseSchedID=:courseSchedID`;
 
 // export const deleteCourseSched =
 //   'delete from courseSched where courseNumber = :courseNumber';
@@ -23,11 +35,9 @@ export const addCourseSched = `INSERT INTO courseSched ( courseSchedID, courseID
 
 // // export const getCourseSchedules = ` SELECT * FROM courseSched WHERE courseNumber=:courseNumber`;
 
-// // export const deleteCourseSched = `DELETE from courseSched where courseID = :courseID`;
+export const deleteCourseSched = `DELETE from courseSched where courseSchedID = :courseSchedID`;
 
 // // export const getCourseSched = `SELECT * FROM courseSched WHERE courseID=:courseID`;
-
-// export const deleteCourseSched = `DELETE from courseSched where courseID = :courseID AND id = :id AND day=:day AND time=:time`;
 
 export const getCourseSched = `SELECT * FROM courseSched WHERE courseSchedID=:courseSchedID`;
 
@@ -35,4 +45,8 @@ export const getCourseScheds = query => `
   SELECT * FROM courseSched ${
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   } 
+  ORDER BY [field] ${
+    sortBy === 'DESC' ? 'DESC' : 'ASC'
+  } LIMIT :limit OFFSET :offset
+
 `;

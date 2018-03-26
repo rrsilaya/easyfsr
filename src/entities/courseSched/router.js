@@ -106,8 +106,8 @@ router.post('/courseSched/', async (req, res) => {
  *   "message": "Course schedule not found"
  * }
  */
-/*
-router.put('/courseSched/:courseNumber', async (req, res) => {
+
+router.put('/courseSched/:courseSchedID', async (req, res) => {
   try {
     await Ctrl.updateCourseSched(req.params, req.body);
     // const courseSched = await Ctrl.getCourseSched(req.params);
@@ -129,7 +129,7 @@ router.put('/courseSched/:courseNumber', async (req, res) => {
     res.status(status).json({ status, message });
   }
 });
-*/
+
 /**
  * @api {delete} /courseSched/:courseNumber deleteCourseSched
  * @apiGroup CourseSched
@@ -166,8 +166,8 @@ router.put('/courseSched/:courseNumber', async (req, res) => {
  *   "message": "Course schedule not found"
  * }
  */
-/*
-router.delete('/courseSched/:courseID', async (req, res) => {
+
+router.delete('/courseSched/:courseSchedID', async (req, res) => {
   try {
     const id = await Ctrl.deleteCourseSched(req.params);
     res.status(200).json({
@@ -187,7 +187,7 @@ router.delete('/courseSched/:courseID', async (req, res) => {
     res.status(status).json({ status, message });
   }
 });
-*/
+
 /**
  * @api {put} /course/:courseNumber addCourse
  * @apiGroup Course
@@ -294,27 +294,31 @@ router.get('/courseSched/:courseSchedID', async (req, res) => {
  *    }
  **/
 
-// router.get('/courseSched/:courseNumber', async (req, res) => {
-//   try {
-//     const courseSchedules = await Ctrl.getCourseSchedules(req.params);
-//     res.status(200).json({
-//       status: 200,
-//       message: 'Successfully fetched all courses',
-//       data: courseSchedules,
-//     });
-//   } catch (status) {
-//     let message = '';
-//     switch (status) {
-//       case 404:
-//         message = 'Course not found';
-//         break;
-//       case 500:
-//         message = 'Internal server error';
-//         break;
-//     }
-//     res.status(status).json({ status, message });
-//   }
-// });
+router.get('/courseSched/', async (req, res) => {
+  try {
+    const courseSchedules = await Ctrl.getCourseScheds(req.params);
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully fetched all courses',
+      data: courseSchedules,
+      total: courseScheds.length,
+      limit: req.query.limit || 12,
+      page: req.query.page || 1,
+      pages: Math.ceil(courseScheds.length / (req.query.limit || 12)),
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'Course not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
+    }
+    res.status(status).json({ status, message });
+  }
+});
 
 export default router;
 //
