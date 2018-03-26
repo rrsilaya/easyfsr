@@ -82,7 +82,7 @@ CREATE TABLE `timeslot`(
   `timeslotID` INT NOT NULL AUTO_INCREMENT,
   `subjectID` INT NOT NULL,
   `day` VARCHAR(10) NOT NULL,
-  `time` VARCHAR(10) NOT NULL,
+  `time` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
   CONSTRAINT `timeslot_subject_fk`
     FOREIGN KEY (`subjectID`)
     REFERENCES subject(`subjectID`)
@@ -109,7 +109,7 @@ CREATE TABLE `course`(
   `courseID` INT NOT NULL AUTO_INCREMENT,
   `hoursPerWeek` VARCHAR (10) NOT NULL,
   `school` VARCHAR (30) NOT NULL,
-  `credit` VARCHAR (30) NOT NULL,
+  `credit` INT (2) NOT NULL,
   `courseNumber` VARCHAR (20) NOT NULL,
   `id` INT NOT NULL,
   CONSTRAINT `course_studyLoad_fk`
@@ -123,7 +123,7 @@ CREATE TABLE `courseSched`(
   `courseSchedID` INT NOT NULL AUTO_INCREMENT,
   `courseID` INT NOT NULL,
   `day` VARCHAR (30) NOT NULL,
-  `time` VARCHAR (30) NOT NULL,
+  `time` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
   CONSTRAINT `courseSched_course_fk`
     FOREIGN KEY (`courseID`)
     REFERENCES course(`courseID`)
@@ -150,7 +150,7 @@ CREATE TABLE `chTimeslot`(
   `id` INT NOT NULL,
   `chID` INT NOT NULL,
   `day` varchar(10) NOT NULL,
-  `time` varchar(10) NOT NULL,
+  `time` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
   CONSTRAINT `chTimeslot_consultationHours_fk`
     FOREIGN KEY (`chID`)
     REFERENCES consultationHours(`chID`),
@@ -186,7 +186,7 @@ CREATE TABLE `limitedPracticeOfProf`(
   `limitedPracticeOfProfID` INT NOT NULL AUTO_INCREMENT, 
   `id` INT NOT NULL,
   `askedPermission` VARCHAR (10) NOT NULL,  -- YES / NO
-  Date VARCHAR (50),  --                   DATE format: YYYY-MM-DD
+  `date` DATE,  --                   DATE format: YYYY-MM-DD
   CONSTRAINT `limitedPracticeOfProf_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
