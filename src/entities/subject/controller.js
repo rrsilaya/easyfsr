@@ -24,7 +24,6 @@ const searchFields = [
 export const addSubject = subject => {
   return new Promise((resolve, reject) => {
     db.query(Query.addSubject, { ...subject }, (err, results) => {
-      console.log(err);
       if (err) return reject(500);
       return resolve(results.insertId);
     });
@@ -50,7 +49,6 @@ export const getSubjects = subject => {
 export const getSubject = ({ subjectID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getSubject, { subjectID }, (err, results) => {
-      console.log(err);
       if (err) return reject(500);
       else if (!results.length) return reject(404);
       return resolve(results);
@@ -96,7 +94,6 @@ export const getSubjectsWithSched = subject => {
         ...escapeSearch(subject, searchFields, subject.limit),
       },
       (err, results) => {
-        console.log(err);
         if (err) return reject(500);
         else if (!results.length) return reject(404);
         return resolve(results);
@@ -108,7 +105,6 @@ export const getSubjectsWithSched = subject => {
 export const getSubjectWithSched = ({ subjectID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getSubjectWithSched, { subjectID }, (err, results) => {
-      console.log(err);
       if (err) return reject(500);
       else if (!results.length) return reject(404);
       return resolve(results);
@@ -119,7 +115,6 @@ export const getSubjectWithSched = ({ subjectID }) => {
 export const getTotalSubjects = subject => {
   return new Promise((resolve, reject) => {
     db.query(Query.getTotalSubjects, { ...subject }, (err, results) => {
-      console.log(err);
       if (err) return reject(500);
       return resolve(results);
     });
@@ -129,7 +124,6 @@ export const getTotalSubjects = subject => {
 export const getTotalSubjectsByFSR = ({ id }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getTotalSubjectsByFSR, { id }, (err, results) => {
-      console.log(err);
       if (err) return reject(500);
       return resolve(results);
     });
