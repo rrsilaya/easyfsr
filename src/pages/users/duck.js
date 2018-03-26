@@ -70,15 +70,18 @@ export const addUser = user => {
 };
 
 export const deleteUser = id => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const { user } = getState().users;
+
     return dispatch({
       type: DELETE_USER,
-      promise: Api.deleteUser(id),
+      promise: Api.deleteUser(user.userID),
       meta: {
         onSuccess: () => {
           notification.success({
             message: 'Successfully deleted user.',
           });
+          dispatch(getUsers());
         },
         onFailure: () => {
           notification.error({

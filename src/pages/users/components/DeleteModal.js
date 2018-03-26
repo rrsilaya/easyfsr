@@ -6,10 +6,11 @@ const FormItem = Form.Item;
 class DeleteModal extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
+    console.log(this.props.user);
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log(values);
-        this.props.deleteUser(this.props.user, values);
+        this.props.deleteUser(this.props.user);
         this.handleAfterClose();
       }
     });
@@ -52,7 +53,7 @@ class DeleteModal extends Component {
         onOk={toggleDeleteModal}
         onCancel={this.handleCancel}
         footer={[
-          <Button key="back" onClick={toggleDeleteModal}>
+          <Button key="back" onClick={this.handleCancel}>
             Cancel
           </Button>,
           <Button

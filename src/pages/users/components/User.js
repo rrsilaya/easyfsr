@@ -7,6 +7,14 @@ import styles from '../styles';
 const { Meta } = Card;
 
 class User extends Component {
+  handleToggleEditModal = () => {
+    this.props.changeSelectedUser(this.props.user);
+    this.props.toggleEditModal();
+  };
+  handleToggleDeleteModal = () => {
+    this.props.changeSelectedUser(this.props.user);
+    this.props.toggleDeleteModal();
+  };
   render() {
     const {
       changeSelectedUser,
@@ -14,11 +22,6 @@ class User extends Component {
       toggleEditModal,
       user,
     } = this.props;
-
-    const handleToggleEditModal = () => {
-      changeSelectedUser(user);
-      toggleEditModal();
-    };
 
     return (
       <div>
@@ -29,12 +32,12 @@ class User extends Component {
             <Icon
               type="edit"
               className="text normal"
-              onClick={handleToggleEditModal}
+              onClick={this.handleToggleEditModal}
             />,
             <Icon
               type="delete"
               className="text normal"
-              onClick={toggleDeleteModal}
+              onClick={this.handleToggleDeleteModal}
             />,
             <Link to={`/profile/${user.employeeID}`}>
               <Icon type="profile" className="text normal" />
