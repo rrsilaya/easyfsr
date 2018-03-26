@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import authRouter from './entities/auth/router';
+import courseRouter from './entities/course/router';
 import awardRouter from './entities/award/router';
 import subjectRouter from './entities/subject/router';
 import timeslotRouter from './entities/timeslot/router';
@@ -23,6 +24,7 @@ router.use(authRouter);
 //   });
 // });
 
+router.use(courseRouter);
 router.use(awardRouter);
 router.use(subjectRouter);
 router.use(creativeWorkRouter);
