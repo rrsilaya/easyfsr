@@ -1,20 +1,35 @@
 import React, { Component } from 'react';
-import { Card, Icon, Avatar } from 'antd';
+import { Card, Icon, Avatar, Modal } from 'antd';
 import { Link } from 'react-router-dom';
 
 import styles from '../styles';
 
 const { Meta } = Card;
+const { confirm } = Modal;
 
 class User extends Component {
-  handleToggleEditModal = () => {
-    this.props.changeSelectedUser(this.props.user);
-    this.props.toggleEditModal();
-  };
   handleToggleDeleteModal = () => {
     this.props.changeSelectedUser(this.props.user);
     this.props.toggleDeleteModal();
   };
+  showDeleteConfirm = () => {
+    confirm({
+      title: 'Are you sure you want to delete this user?',
+      content: 'You are about to archive this user.',
+      okText: 'Yes',
+      cancelText: 'No',
+      okType: 'primary',
+      onOk: () => {
+        this.handleToggleDeleteModal();
+      },
+      onCancel: () => {},
+    });
+  };
+  handleToggleEditModal = () => {
+    this.props.changeSelectedUser(this.props.user);
+    this.props.toggleEditModal();
+  };
+
   render() {
     const {
       changeSelectedUser,
@@ -37,7 +52,7 @@ class User extends Component {
             <Icon
               type="delete"
               className="text normal"
-              onClick={this.handleToggleDeleteModal}
+              onClick={this.showDeleteConfirm}
             />,
             <Link to={`/profile/${user.employeeID}`}>
               <Icon type="profile" className="text normal" />

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Row, Col, Pagination, Input } from 'antd';
+import { Button, Row, Col, Pagination, Input, Modal } from 'antd';
 import { DataLoader } from '../../global';
 
 import User from './components/User';
@@ -10,8 +10,19 @@ import DeleteModal from './components/DeleteModal';
 import styles from './styles';
 
 const { Search } = Input;
+const { confirm } = Modal;
 
 class Users extends Component {
+  showConfirmDelete = () => {
+    confirm({
+      title: 'Are you sure you want to delete this user?',
+      content: 'You are about to archive this user.',
+      okText: 'Yes',
+      cancelText: 'No',
+      okType: 'primary',
+      onCancel() {},
+    });
+  };
   componentDidMount() {
     this.props.getUsers();
   }
