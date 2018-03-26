@@ -2,7 +2,8 @@ import db from '../../database/index';
 import * as Query from './queries';
 import { filtered } from '../../utils';
 
-const courseSchedAttributes = ['courseID', 'day', 'time'];
+const courseSchedAttributes = ['courseSchedID', 'courseID', 'day', 'time'];
+const searchFields = ['courseSchedID', 'day', 'time'];
 
 export const addCourseSched = courseSched => {
   return new Promise((resolve, reject) => {
@@ -40,22 +41,32 @@ export const addCourseSched = courseSched => {
 //   });
 // };
 
-// export const getCourseSched = ({ courseNumber }) => {
-//   return new Promise((resolve, reject) => {
-//     db.query(Query.getCourseSched, { courseNumber }, (err, results) => {
-//       if (err) return reject(500);
-//       else if (results.length == 0) return reject(404);
-//       return resolve(results);
-//     });
-//   });
-// };
+export const getCourseSched = ({ courseSchedID }) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getCourseSched, { courseSchedID }, (err, results) => {
+      if (err) return reject(500);
+      else if (results.length == 0) return reject(404);
+      return resolve(results);
+    });
+  });
+};
 
-// export const getCourseSchedules = ({ courseNumber }) => {
-//   return new Promise((resolve, reject) => {
-//     db.query(Query.getCourseSchedules(courseNumber), (err, results) => {
-//       if (err) return reject(500);
-//       else if (!results) return reject(404);
-//       return resolve(results);
-//     });
-//   });
-// };
+export const getCourseScheds = courseSched => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      Query.getCourseSched(
+        filtered(courseNumber, courseSchedAttributes),
+        award.sortBy,
+      ),
+      {
+        field: 'courseSchedID',
+        ...escapeSearch(courseSched, searchFields, courseSched.limit),
+      },
+      (err, results) => {
+        if (err) return reject(500);
+        else if (!results) return reject(404);
+        return resolve(results);
+      },
+    );
+  });
+};

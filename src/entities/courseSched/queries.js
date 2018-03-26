@@ -1,17 +1,7 @@
 import { formatQueryParams } from '../../utils';
 
-export const addCourseSched = `INSERT INTO courseSched 
-  	(
-  		courseID,
- 	 	day,
-  		time
-  	) 
-  	VALUES 
-  	(
-  		:courseID,
-  		:day,
-  		:time 
-  	)`;
+export const addCourseSched = `INSERT INTO courseSched ( courseSchedID, courseID, day, time)
+    VALUES (DEFAULT, :courseID, :day, :time)`;
 
 // export const updateCourseSched = courseSched =>
 //   `UPDATE courseSched SET ${Utils.formatQueryParams(
@@ -38,4 +28,11 @@ export const addCourseSched = `INSERT INTO courseSched
 // // export const getCourseSched = `SELECT * FROM courseSched WHERE courseID=:courseID`;
 
 // export const deleteCourseSched = `DELETE from courseSched where courseID = :courseID AND id = :id AND day=:day AND time=:time`;
-// export const getCourseSched = `SELECT * FROM courseSched WHERE courseID=:courseID`;
+
+export const getCourseSched = `SELECT * FROM courseSched WHERE courseSchedID=:courseSchedID`;
+
+export const getCourseScheds = query => `
+  SELECT * FROM courseSched ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  } 
+`;

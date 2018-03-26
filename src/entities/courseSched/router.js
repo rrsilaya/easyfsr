@@ -235,12 +235,12 @@ router.delete('/courseSched/:courseID', async (req, res) => {
  * }
  */
 
-/*router.get('/courseSched/:courseNumber', async (req, res) => {
+router.get('/courseSched/:courseSchedID', async (req, res) => {
   try {
     const courseSched = await Ctrl.getCourseSched(req.params);
     res.status(200).json({
       status: 200,
-      message: 'Successfully got course sched details',
+      message: 'Successfully got course schedule details',
       data: courseSched,
     });
   } catch (status) {
@@ -256,7 +256,7 @@ router.delete('/courseSched/:courseID', async (req, res) => {
     res.status(status).json({ status, message });
   }
 });
-*/
+
 /**
  * @api {get} /courseSched getCourseSchedules
  * @apiGroup CourseSched
