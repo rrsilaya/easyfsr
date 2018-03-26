@@ -10,6 +10,7 @@ import {
   addUser,
   editUser,
   resetPage,
+  changeQuery,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -22,6 +23,7 @@ const mapStateToProps = state => {
     isAddingUser,
     isEditingUser,
 
+    pagination,
     users,
     user,
   } = state.users;
@@ -35,6 +37,7 @@ const mapStateToProps = state => {
     isAddingUser,
     isEditingUser,
 
+    pagination,
     users,
     user,
   };
@@ -54,8 +57,8 @@ const mapDispatchToProps = dispatch => {
     changeSelectedUser: user => {
       dispatch(changeSelectedUser(user));
     },
-    getUsers: () => {
-      dispatch(getUsers());
+    getUsers: query => {
+      dispatch(getUsers(query));
     },
     addUser: values => {
       dispatch(addUser(values));
@@ -65,6 +68,9 @@ const mapDispatchToProps = dispatch => {
     },
     resetPage: () => {
       dispatch(resetPage());
+    },
+    changeQuery: query => {
+      dispatch(changeQuery(query));
     },
   };
 };
