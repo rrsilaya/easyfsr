@@ -1,9 +1,12 @@
 import { Router } from 'express';
 
 import authRouter from './entities/auth/router';
+import courseRouter from './entities/course/router';
 import awardRouter from './entities/award/router';
+import fsrRouter from './entities/fsr/router';
 import serviceRouter from './entities/extensionAndCommunityService/router';
 import userRouter from './entities/user/router';
+import limitedPracticeOfProfRouter from './entities/limitedPracticeOfProf/router';
 
 const router = Router();
 
@@ -19,9 +22,11 @@ router.use(authRouter);
 //   });
 // });
 
+router.use(courseRouter);
 router.use(awardRouter);
+router.use(fsrRouter);
 router.use(serviceRouter);
-
+router.use(limitedPracticeOfProfRouter);
 // router.use( (req,res,next) => {
 //   if(req.session.user){
 //     return next;

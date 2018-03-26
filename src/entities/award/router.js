@@ -10,6 +10,7 @@ const router = Router();
  * @apiName addAward
  *
  * @apiParam (Body Params) {Integer} id ID of award
+ * @apiParam (Body Params) {Integer} awardID awardID of award
  * @apiParam (Body Params) {String} grantF grantF of award
  * @apiParam (Body Params) {String} chairGrantTitle chair grant title of award
  * @apiParam (Body Params) {String} collegeHasNominated which college has nominated the award
@@ -30,15 +31,25 @@ const router = Router();
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
- *   {
- *     "data": {
- *        "status": 200;
- *		    "message": 'Succesfully added award'
- *     }
+ *  {
+ *     "status": 200,
+ *     "message": "Successfully added award",
+ *     "data": [
+ *        {
+ *           "awardID": 4,
+ *           "id": 3,
+ *           "grantF": "Hi",
+ *           "chairGrantTitle": "Meaee",
+ *           "collegeHasNominated": "156",
+ *           "recipientOrNominee": "Youuuu",
+ *           "professionalChair": "her",
+ *           "approvedStartDate": "2day",
+ *           "endDate": "tomor"
+ *         }
  *   }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {String[]} status status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
@@ -112,8 +123,8 @@ router.post('/award/', async (req, res) => {
  *     ]
  *   }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {String[]} status status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
@@ -178,8 +189,8 @@ router.put('/award/:awardID', async (req, res) => {
  *     }
  *   }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {String[]} status status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
@@ -252,8 +263,8 @@ router.delete('/award/:awardID', async (req, res) => {
  *           }
  *       ]
  *   }
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {String[]} status status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
@@ -342,8 +353,8 @@ router.get('/award/:awardID', async (req, res) => {
  *    "page": 1,
  *    "pages": 1
  *   }
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {String[]} status status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
@@ -374,7 +385,7 @@ router.get('/award/', async (req, res) => {
     let message = '';
     switch (status) {
       case 404:
-        message = 'User not found';
+        message = 'Award not found';
         break;
       case 500:
         message = 'Internal server error';
