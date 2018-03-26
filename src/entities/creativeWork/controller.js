@@ -1,6 +1,6 @@
 import db from '../../database/index';
 import * as Query from './queries';
-import { filtered } from '../../utils';
+import { filtered, escapeSearch } from '../../utils';
 
 const creativeWorkAttributes = ['id', 'date', 'title', 'type', 'credUnit'];
 
@@ -19,8 +19,14 @@ export const addCreativeWork = creativeWork => {
 export const getCreativeWorks = creativeWork => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getCreativeWorks(filtered(creativeWork, creativeWorkAttributes)),
-      creativeWork,
+      Query.getCreativeWorks(
+        filtered(creativeWork, creativeWorkAttributes),
+        creativeWork.sortBy,
+      ),
+      {
+        field: 'date',
+        ...escapeSearch(creativeWork, searchFields, creativeWork.limit),
+      },
       (err, results) => {
         if (err) return reject(500);
         else if (!results.length) return reject(404);
@@ -30,15 +36,18 @@ export const getCreativeWorks = creativeWork => {
   });
 };
 
-export const updateCreativeWork = creativeWork => {
+export const updateCreativeWork = ({ creativeWorkID }, creativeWork) => {
   return new Promise((resolve, reject) => {
-    if (!coAuthor) return reject(500);
+    if (!creativeWork) return reject(500);
     db.query(
       Query.updateCreativeWork(filtered(creativeWork, creativeWorkAttributes)),
       { creativeWorkID, ...creativeWork },
       (err, results) => {
-        if (err) return reject(500);
-        return resolve(results.insertId);
+        if (err) {
+          console.log(err);
+          return reject(500);
+        }
+        return resolve(results.creativeWorkID);
       },
     );
   });
@@ -47,8 +56,10 @@ export const updateCreativeWork = creativeWork => {
 export const deleteCreativeWork = ({ creativeWorkID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.deleteCreativeWork, { creativeWorkID }, (err, results) => {
-      if (err) return reject(500);
-      else if (!results.affectedRows) return reject(404);
+      if (err) {
+        console.log(err);
+        return reject(500);
+      } else if (!results.affectedRows) return reject(404);
       return resolve();
     });
   });
@@ -57,8 +68,34 @@ export const deleteCreativeWork = ({ creativeWorkID }) => {
 export const getCreativeWork = ({ creativeWorkID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getCreativeWork, { creativeWorkID }, (err, results) => {
-      if (err) return reject(500);
-      else if (!results.length) return reject(404);
+      if (err) {
+        console.log(err);
+        return reject(500);
+      } else if (!results.length) return reject(404);
+      return resolve(results);
+    });
+  });
+};
+
+export const getTotalCreativeWorks = totalCreativeWorks => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getTotalCreativeWorks, (err, results) => {
+      if (err) {
+        console.log(err);
+        return reject(500);
+      } else if (!results.length) return reject(404);
+      return resolve(results);
+    });
+  });
+};
+
+export const getTotalCreativeWorksByFSR = ({ id }) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getTotalCreativeWorksByFSR, { id }, (err, results) => {
+      if (err) {
+        console.log(err);
+        return reject(500);
+      } else if (!results.length) return reject(404);
       return resolve(results);
     });
   });

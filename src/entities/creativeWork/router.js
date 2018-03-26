@@ -45,10 +45,12 @@ const router = Router();
 
 router.post('/creativeWork/', async (req, res) => {
   try {
-    const id = await Ctrl.addCreativeWork(req.body);
+    const creativeWorkID = await Ctrl.addCreativeWork(req.body);
+    const creativeWork = await Ctrl.getCreativeWork({ creativeWorkID });
     res.status(200).json({
       status: 200,
       message: 'Successfully created creative work',
+      data: creativeWork,
     });
   } catch (status) {
     let message = '';
@@ -124,6 +126,10 @@ router.get('/creativeWork/', async (req, res) => {
       status: 200,
       message: 'Successfully fetched creative works',
       data: creativeWork,
+      limit: req.query.limit || 12,
+      offset: offset,
+      page: req.query.page || 1,
+      pages: Math.ceil(creativeWork.length / (req.query.limit || 12)),
     });
   } catch (status) {
     let message = '';
@@ -242,7 +248,7 @@ router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
  *   }
  */
 
-router.get('/creativeWork/creativeWorkID', async (req, res) => {
+router.get('/creativeWork/:creativeWorkID', async (req, res) => {
   try {
     const creativeWork = await Ctrl.getCreativeWork(req.params);
     res.status(200).json({
@@ -318,6 +324,50 @@ router.put('/creativeWork/:creativeWorkID', async (req, res) => {
     switch (status) {
       case 404:
         message = 'Creative work not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
+    }
+    res.status(status).json({ status, message });
+  }
+});
+
+router.get('/totalCreativeWorks/', async (req, res) => {
+  try {
+    const totalCreativeWorks = await Ctrl.getTotalCreativeWorks();
+    res.status(200).json({
+      status: 200,
+      data: totalCreativeWorks,
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'Creative works not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
+    }
+    res.status(status).json({ status, message });
+  }
+});
+
+router.get('/totalCreativeWorksByFSR/', async (req, res) => {
+  try {
+    const totalCreativeWorksByFSR = await Ctrl.getTotalCreativeWorksByFSR(
+      req.params,
+    );
+    res.status(200).json({
+      status: 200,
+      data: totalCreativeWorksByFSR,
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'Creative works not found';
         break;
       case 500:
         message = 'Internal server error';
