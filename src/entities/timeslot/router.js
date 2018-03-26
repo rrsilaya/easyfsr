@@ -213,12 +213,11 @@ router.get('/timeslot/:timeslotID/', async (req, res) => {
  * @apiName updateTimeslot
  *
  * @apiParam (Query Params) {Integer} timeslotID ID of timeslot
-
-* @apiParam (Body Params) {Integer} timeslot.subjectID subject ID of subject
+ * @apiParam (Body Params) {Integer} timeslot.subjectID ID of subject
  * @apiParam (Body Params) {String} timeslot.day day assigned to timeslot
  * @apiParam (Body Params) {String} timeslot.time time assigned to timeslot
  *
-   *@apiSuccess {Object} timeslot timeslot updated
+ * @apiSuccess {Object} timeslot timeslot updated
  * @apiSuccess {Integer} timeslot.timeslotID ID of timeslot
  * @apiSuccess {Integer} timeslot.subjectID ID of subject 
  * @apiSuccess {String} timeslot.day day assigned to timeslot
@@ -287,10 +286,9 @@ router.put('/timeslot/:timeslotID/', async (req, res) => {
  *
  * @apiParam (Query Params) {Integer} timeslot.timeslotID ID of timeslot
  *
- *@apiSuccess {Object} timeslot subject deleted
- 
+ *@apiSuccess {Object} timeslot timeslots deleted
  * @apiSuccess {Integer} timeslot.timeslotID ID of timeslot
- * @apiSuccess {Integer} timeslot.subjectID ID of subject 
+ * @apiSuccess {Integer} timeslot.subjectID ID of subject
  * @apiSuccess {String} timeslot.day day assigned to timeslot
  * @apiSuccess {String} timeslot.time time assigned to timeslot
  *
@@ -344,7 +342,7 @@ router.delete('/timeslot/:timeslotID/', async (req, res) => {
 });
 
 /**
- * @api {delete} /timeslot/ deleteSubjects
+ * @api {delete} /timeslot/ deleteTimeslots
  * @apiGroup Timeslot
  * @apiName deleteTimeslots
  * 
