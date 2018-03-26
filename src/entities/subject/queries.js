@@ -86,13 +86,15 @@ export const addTimeslot = `
 		timeslotID,
 		subjectID,
 		day,
-		time
+		timeStart,
+		timeEnd
 	)
 	VALUES (
 		DEFAULT,
 		:subjectID,
 		:day,
-		:time
+		:timeStart,
+		:timeEnd
 	)
 `;
 
