@@ -35,6 +35,7 @@ export const getCourse = `
 `;
 
 export const updateCourse = course => ` 
+
   UPDATE course SET  
     ${formatQueryParams(course, 'update')} 
   WHERE courseID=:courseID
