@@ -7,7 +7,7 @@ export const addConsultationHours = `
     place
   )
   VALUES (
-    :chID,
+    DEFAULT,
     :id,
     :place
   )
@@ -16,8 +16,50 @@ export const addConsultationHours = `
 export const updateConsultationHours = consultationHours => `
   UPDATE consultationHours SET 
     ${formatQueryParams(consultationHours)}
-  WHERE id = :id AND chID = :chID
+  WHERE chID = :chID
 `;
+
+export const deleteConsultationHours = `
+  DELETE FROM consultationHours
+  WHERE chID = :chID
+`;
+
+export const addTimeslot = `
+    INSERT INTO chTimeslot (
+        chID,
+        id,
+        day,
+        timeStart,
+        timeEnd
+    )
+    VALUES (
+        DEFAULT,
+        :id,
+        :day,
+        :timeStart,
+        :timeEnd
+    )
+`;
+
+// get All time slots
+
+export const getTimeslot = `
+    SELECT * FROM chTimeslot
+    WHERE chTimeSlotID = :chTimeSlotID
+`;
+
+export const updateTimeslot = `
+    UPDATE chTimeSlot SET 
+      ${formatQueryParams(consultationHours, 'update')}
+    WHERE chTimeslotID = :chTimeslotID
+`;
+
+export const deleteTimeslot = `
+    DELETE FROM chTimeslot
+    WHERE chTimeslotID=:chTimeslotID
+`;
+
+// Natural join for consultationHours and chTimeslot
 
 export const getAllConsultationHours = `
   SELECT * FROM consultationHours NATURAL JOIN chTimeSlot
@@ -26,36 +68,4 @@ export const getAllConsultationHours = `
 export const getAllConsultationHoursOfFSR = `
   SELECT * FROM consultationHours NATURAL JOIN chTimeSlot
   WHERE id = :id 
-`;
-
-export const deleteConsultationHours = `
-  DELETE FROM consultationHours
-  WHERE id = :id
-`;
-
-export const addTimeslot = `
-    INSERT INTO chTimeslot (
-        chID,
-        id,
-        day,
-        time
-    )
-    VALUES (
-        :chID,
-        :id,
-        :day,
-        :time
-    )
-`;
-
-export const updateTimeslot = `
-    UPDATE chTimeSlot SET 
-        day = :day, 
-        time = :time
-    WHERE id = :id and chID = :chID
-`;
-
-export const deleteTimeslot = `
-    DELETE FROM chTimeslot
-    WHERE id = :id AND chID = :chID AND day = :day AND time = :time 
 `;
