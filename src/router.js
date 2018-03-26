@@ -6,6 +6,7 @@ import subjectRouter from './entities/subject/router';
 import creativeWorkRouter from './entities/creativeWork/router';
 import serviceRouter from './entities/extensionAndCommunityService/router';
 import userRouter from './entities/user/router';
+import coAuthorRouter from './entities/coAuthor/router';
 
 const router = Router();
 
@@ -35,6 +36,8 @@ router.use(serviceRouter);
 //     message: 'You must be logged in',
 //   });
 // });
+
 router.use(userRouter);
+router.use(coAuthorRouter);
 
 export default router;

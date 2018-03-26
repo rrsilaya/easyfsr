@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
 
 const router = Router();
@@ -131,6 +130,194 @@ router.get('/creativeWork/', async (req, res) => {
     switch (status) {
       case 404:
         message = 'Creative works not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
+    }
+    res.status(status).json({ status, message });
+  }
+});
+
+/**
+ * @api {delete} /creativeWork deleteCreativeWork
+ * @apiGroup Creative Work
+ * @apiName deleteCreativeWork
+
+ * @apiParam (Body Params) {Integer} creativeWork.id ID of creative work
+ * @apiParam (Body Params) {Date} creativeWork.date date of creative work
+ * @apiParam (Body Params) {String} creativeWork.title title of creative work
+ * @apiParam (Body Params) {String} creativeWork.type type of creative work
+ * @apiParam (Body Params) {Integer} creativeWork.credUnit credit units of creative work
+ * @apiParam (Body Params) {Integer} creativeWork.userID user ID of creative work
+ *
+ * @apiSuccess {Object} creativeWork createWork added
+ * @apiSuccess {Integer} creativeWork.id ID of creative work
+ * @apiSuccess {Date} creativeWork.date date of creative work
+ * @apiSuccess {String} creativeWork.title title of creative work
+ * @apiSuccess {String} creativeWork.type type of creative work
+ * @apiSuccess {Integer} creativeWork.credUnit credit units of creative work
+ * @apiSuccess {Integer} creativeWork.userID user ID of creative work
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *   HTTP/1.1 200 OK
+ *   {
+ *     "data": {
+ *        "status": 200;
+ *        "message": 'Succesfully deleted creative work'
+ *     }
+ *   }
+ *
+ * @apiError (Error 500) {String[]} errors List of errors
+ * @apiError (Error 500) {String} errors.message Error message
+
+ * @apiErrorExample {json} Error-Response:
+ *   HTTP/1.1 500 Internal Server Error
+ *   {
+ *     "status": 500,
+ *     "message": "Internal server error"
+ *   }
+ */
+
+router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
+  try {
+    const creativeWork = await Ctrl.getCreativeWork(req.params);
+    await Ctrl.deleteCreativeWork(req.params);
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully deleted creative work',
+      data: creativeWork,
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'Creative work not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
+    }
+    res.status(status).json({ status, message });
+  }
+});
+
+/**
+ * @api {get} /creativeWork getCreativeWork
+ * @apiGroup Creative Work
+ * @apiName getCreativeWork
+
+ * @apiParam (Body Params) {Integer} creativeWork.id ID of creative work
+ * @apiParam (Body Params) {Date} creativeWork.date date of creative work
+ * @apiParam (Body Params) {String} creativeWork.title title of creative work
+ * @apiParam (Body Params) {String} creativeWork.type type of creative work
+ * @apiParam (Body Params) {Integer} creativeWork.credUnit credit units of creative work
+ * @apiParam (Body Params) {Integer} creativeWork.userID user ID of creative work
+ *
+ * @apiSuccess {Object} creativeWork createWork added
+ * @apiSuccess {Integer} creativeWork.id ID of creative work
+ * @apiSuccess {Date} creativeWork.date date of creative work
+ * @apiSuccess {String} creativeWork.title title of creative work
+ * @apiSuccess {String} creativeWork.type type of creative work
+ * @apiSuccess {Integer} creativeWork.credUnit credit units of creative work
+ * @apiSuccess {Integer} creativeWork.userID user ID of creative work
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *   HTTP/1.1 200 OK
+ *   {
+ *     "data": {
+ *        "status": 200;
+ *        "message": 'Succesfully fetched creative work'
+ *     }
+ *   }
+ *
+ * @apiError (Error 500) {String[]} errors List of errors
+ * @apiError (Error 500) {String} errors.message Error message
+
+ * @apiErrorExample {json} Error-Response:
+ *   HTTP/1.1 500 Internal Server Error
+ *   {
+ *     "status": 500,
+ *     "message": "Internal server error"
+ *   }
+ */
+
+router.get('/creativeWork/creativeWorkID', async (req, res) => {
+  try {
+    const creativeWork = await Ctrl.getCreativeWork(req.params);
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully fetched creative work',
+      data: creativeWork,
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'Creative work not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
+    }
+    res.status(status).json({ status, message });
+  }
+});
+
+/**
+ * @api {put} /creativeWork updateCreativeWork
+ * @apiGroup Creative Work
+ * @apiName updateCreativeWork
+
+ * @apiParam (Body Params) {Integer} creativeWork.id ID of creative work
+ * @apiParam (Body Params) {Date} creativeWork.date date of creative work
+ * @apiParam (Body Params) {String} creativeWork.title title of creative work
+ * @apiParam (Body Params) {String} creativeWork.type type of creative work
+ * @apiParam (Body Params) {Integer} creativeWork.credUnit credit units of creative work
+ * @apiParam (Body Params) {Integer} creativeWork.userID user ID of creative work
+ *
+ * @apiSuccess {Object} creativeWork createWork added
+ * @apiSuccess {Integer} creativeWork.id ID of creative work
+ * @apiSuccess {Date} creativeWork.date date of creative work
+ * @apiSuccess {String} creativeWork.title title of creative work
+ * @apiSuccess {String} creativeWork.type type of creative work
+ * @apiSuccess {Integer} creativeWork.credUnit credit units of creative work
+ * @apiSuccess {Integer} creativeWork.userID user ID of creative work
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *   HTTP/1.1 200 OK
+ *   {
+ *     "data": {
+ *        "status": 200;
+ *        "message": 'Succesfully updated creative work'
+ *     }
+ *   }
+ *
+ * @apiError (Error 500) {String[]} errors List of errors
+ * @apiError (Error 500) {String} errors.message Error message
+
+ * @apiErrorExample {json} Error-Response:
+ *   HTTP/1.1 500 Internal Server Error
+ *   {
+ *     "status": 500,
+ *     "message": "Internal server error"
+ *   }
+ */
+
+router.put('/creativeWork/:creativeWorkID', async (req, res) => {
+  try {
+    await Ctrl.updateCreativeWork(req.params, req.body);
+    const creativeWork = await Ctrl.getCreativeWork(req.params);
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully updated creative work',
+      data: creativeWork,
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'Creative work not found';
         break;
       case 500:
         message = 'Internal server error';

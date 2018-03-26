@@ -38,23 +38,7 @@ export const getCreativeWorks = query => `
 	LIMIT 10
 `;
 
-export const addCoAuthor = `
-	INSERT INTO cworkCoAuthor ( 
-		creativeWorkID, 
-		userID 
-	)
-	VALUES ( 
-		:creativeWorkID, 
-		:userID )
-`;
-
-export const updateCoAuthor = `
-	UPDATE cworkCoAuthor SET
-		userID = :userID
-	WHERE creativeWorkID = :creativeWorkID
-`;
-
-export const deleteCoAuthor = `
-	DELETE FROM cworkAuthors 
-	WHERE userID = :userID
+export const getCreativeWork = query => `
+	SELECT * FROM creativeWork
+	WHERE creativeWorkID = :creativeWorkID AND id = :id
 `;

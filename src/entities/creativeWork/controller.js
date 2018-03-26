@@ -4,6 +4,8 @@ import { filtered } from '../../utils';
 
 const creativeWorkAttributes = ['id', 'date', 'title', 'type', 'credUnit'];
 
+const searchFields = ['date', 'title', 'type', 'credUnit'];
+
 export const addCreativeWork = creativeWork => {
   return new Promise((resolve, reject) => {
     db.query(Query.addCreativeWork, { ...creativeWork }, (err, results) => {
@@ -25,5 +27,39 @@ export const getCreativeWorks = creativeWork => {
         return resolve(results);
       },
     );
+  });
+};
+
+export const updateCreativeWork = creativeWork => {
+  return new Promise((resolve, reject) => {
+    if (!coAuthor) return reject(500);
+    db.query(
+      Query.updateCreativeWork(filtered(creativeWork, creativeWorkAttributes)),
+      { creativeWorkID, ...creativeWork },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(results.insertId);
+      },
+    );
+  });
+};
+
+export const deleteCreativeWork = ({ creativeWorkID }) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.deleteCreativeWork, { creativeWorkID }, (err, results) => {
+      if (err) return reject(500);
+      else if (!results.affectedRows) return reject(404);
+      return resolve();
+    });
+  });
+};
+
+export const getCreativeWork = ({ creativeWorkID }) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getCreativeWork, { creativeWorkID }, (err, results) => {
+      if (err) return reject(500);
+      else if (!results.length) return reject(404);
+      return resolve(results);
+    });
   });
 };
