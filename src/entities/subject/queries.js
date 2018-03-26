@@ -37,7 +37,6 @@ export const getSubject = `
 	WHERE subjectID =:subjectID
 `;
 
-//FIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 export const updateSubject = subject => `  			
 	UPDATE subject SET
 	${formatQueryParams(subject, 'update')}
@@ -64,4 +63,18 @@ export const getSubjectWithSched = `
 	SELECT *
 	FROM subject natural join timeslot
 	WHERE subjectID=:subjectID
+`;
+
+export const getTotalSubjects = `
+	SELECT COUNT(*) as total FROM subject
+`;
+
+export const getTotalSubjectsByFSR = `
+	SELECT COUNT(*) as total FROM subject
+	WHERE id = :id
+`;
+
+export const deleteSubjects = query => `
+	DELETE FROM subject
+	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
 `;

@@ -115,3 +115,42 @@ export const getSubjectWithSched = ({ subjectID }) => {
     });
   });
 };
+
+export const getTotalSubjects = subject => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getTotalSubjects, { ...subject }, (err, results) => {
+      console.log(err);
+      if (err) return reject(500);
+      return resolve(results);
+    });
+  });
+};
+
+export const getTotalSubjectsByFSR = ({ id }) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getTotalSubjectsByFSR, { id }, (err, results) => {
+      console.log(err);
+      if (err) return reject(500);
+      return resolve(results);
+    });
+  });
+};
+
+export const deleteSubjects = subject => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      Query.deleteSubjects(
+        filtered(subject, subjectAttributes),
+        subject.sortBy,
+      ),
+      {
+        field: 'subjectCode',
+        ...escapeSearch(subject, searchFields, subject.limit),
+      },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(results);
+      },
+    );
+  });
+};
