@@ -63,6 +63,24 @@ export const getSubjectWithSched = `
 	SELECT *
 	FROM subject natural join timeslot
 	WHERE subjectID=:subjectID
+	WHERE subjectID=:subjectID AND id=:id
+`;
+
+export const addTimeslot = `
+	INSERT INTO timeslot (
+		timeslotID,
+		subjectID,
+		day,
+		timeStart,
+		timeEnd
+	)
+	VALUES (
+		DEFAULT,
+		:subjectID,
+		:day,
+		:timeStart,
+		:timeEnd
+	)
 `;
 
 export const getTotalSubjects = `
