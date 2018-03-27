@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Button, Card, Progress, Table, Row, Col } from 'antd';
+import { Icon, Button, Card, Progress, Table, Row, Col, Radio } from 'antd';
 import styles from './styles';
 import actions from './actions';
 import dataSource from './datasource';
@@ -9,40 +9,30 @@ class Dashboard extends Component {
   render() {
     return (
       <div style={{ padding: '30px' }}>
-        <h1>Dashboard</h1>
-        <Row>
-          <Col span={32}>
-            <Card
-              title="Announcements"
-              style={styles.announcement}
-              actions={actions.map(action => <Icon type={action} />)}
-            >
-              No announcements available
-            </Card>
-          </Col>
-        </Row>
+        <h1>hello</h1>
         <div>
-          <Row gutter={12}>
-            <Col span={8}>
-              <Card title="Faculty Progress">
-                <Progress
-                  type="dashboard"
-                  percent={30}
-                  width={200}
-                  style={styles.progressBar}
-                />
-              </Card>
-            </Col>
-            <Col span={16}>
-              <Card title="Latest Submissions">
-                <Table
-                  columns={columns}
-                  dataSource={dataSource}
-                  style={styles.facultyTable}
-                />
-              </Card>
-            </Col>
-          </Row>
+          <Button.Group>
+            <Button type="primary">
+              <Icon type="notification" style={styles.icons} />
+              <p>Send Notification</p>
+            </Button>
+            <Button type="primary">
+              <Icon type="file-add" style={styles.icons} />
+              <p>Create FSR</p>
+            </Button>
+            <Button type="primary">
+              <Icon type="edit" style={styles.icons} />
+              <p>Edit FSR</p>
+            </Button>
+            <Button type="primary">
+              <Icon type="eye-o" style={styles.icons} />
+              <p>View FSR</p>
+            </Button>
+            <Button type="primary">
+              <Icon type="download" style={styles.icons} />
+              <p>Download FSR</p>
+            </Button>
+          </Button.Group>
         </div>
       </div>
     );

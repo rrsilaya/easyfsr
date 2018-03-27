@@ -16,6 +16,10 @@ const style = {
   facultyTable: {
     size: 'large',
   },
+  icons: {
+    paddingTop: 20,
+    fontSize: 75,
+  },
 };
 
 export default style;
