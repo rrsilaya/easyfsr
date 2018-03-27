@@ -25,6 +25,11 @@ class Users extends Component {
     this.props.changeQuery({ page });
   };
 
+  handlePageSizeChange = (page, limit) => {
+    this.props.getUsers({ ...this.props.query, page, limit });
+    this.props.changeQuery({ page, limit });
+  };
+
   render() {
     const gridConfig = { xxl: 6, xl: 8, sm: 12, xs: 24 };
     const {
@@ -107,11 +112,12 @@ class Users extends Component {
         />
         <div className="pagination">
           <Pagination
-            current={parseInt(pagination.page)}
+            current={pagination.page}
             total={pagination.total}
             showSizeChanger
-            pageSizeOptions={[12, 24, 36, 48]}
+            pageSizeOptions={['12', '24', '36', '48']}
             onChange={this.handlePageChange}
+            onShowSizeChange={this.handlePageSizeChange}
           />
         </div>
       </div>
