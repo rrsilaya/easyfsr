@@ -14,7 +14,7 @@ const searchFields = ['courseID', 'day', 'timeStart', 'timeEnd'];
 
 export const addCourseSched = courseSched => {
   return new Promise((resolve, reject) => {
-    db.query(Query.addCourseSched, { ...courseSched }, (err, results) => {
+    db.query(Query.addCourseSched, { courseSched }, (err, results) => {
       if (err) return reject(500);
       return resolve(results.insertId);
     });

@@ -39,7 +39,7 @@ const router = Router();
  *     }
  *   }
  *
- * @apiError (Error 500) {String[]} status error status code
+ * @apiError (Error 500) {String} status error status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -107,7 +107,7 @@ router.post('/courseSched/', async (req, res) => {
  *     }
  *   }
  *
- * @apiError (Error 500) {String[]} status error status code
+ * @apiError (Error 500) {String} status error status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -179,7 +179,7 @@ router.put('/courseSched/:courseSchedID', async (req, res) => {
  *     }
  *   }
  *
- * @apiError (Error 500) {String[]} errors List of errors
+ * @apiError (Error 500) {String} errors List of errors
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -251,7 +251,7 @@ router.delete('/courseSched/:courseSchedID', async (req, res) => {
  *     }
  *   }
  *
- * @apiError (Error 500) {String[]} errors List of errors
+ * @apiError (Error 500) {String} errors List of errors
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -320,7 +320,7 @@ router.get('/courseSched/:courseSchedID', async (req, res) => {
           ]
     }
  *
- * @apiError (Error 500) {String[]} errors List of errors.
+ * @apiError (Error 500) {String} errors List of errors.
  * @apiError (Error 500) {String} message Error message.
  * @apiErrorExample {json} Error-Response:
  *    HTTP/1.1 500 Internal Server Error
