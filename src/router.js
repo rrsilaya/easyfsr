@@ -8,6 +8,7 @@ import subjectRouter from './entities/subject/router';
 import fsrRouter from './entities/fsr/router';
 import serviceRouter from './entities/extensionAndCommunityService/router';
 import userRouter from './entities/user/router';
+import notificationRouter from './entities/notification/router';
 
 const router = Router();
 
@@ -40,5 +41,6 @@ router.use(serviceRouter);
 //   });
 // });
 router.use(userRouter);
+router.use(notificationRouter);
 
 export default router;
