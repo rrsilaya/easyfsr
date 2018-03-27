@@ -39,3 +39,46 @@ export const deleteNotification = ({ notificationID }) => {
     });
   });
 };
+
+export const getNotification = ({ notificationID }) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getNotification, { notificationID }, (err, results) => {
+      if (err) return reject(500);
+      else if (!results.length) return reject(404);
+      return resolve(results);
+    });
+  });
+};
+
+export const getNotifications = notification => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      Query.getNotifications(
+        filtered(notification, notificationAttributes),
+        notification.sortBy,
+      ),
+      {
+        field: 'notificationID',
+        ...escapeSearch(notification, searchFields, notification.limit),
+      },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(results);
+      },
+    );
+  });
+};
+
+export const updateNotification = ({ notificationID }, notification) => {
+  return new Promise((resolve, reject) => {
+    if (!notification) return reject(500);
+    db.query(
+      Query.updateNotification(filtered(notification, notificationAttributes)),
+      { notificationID, ...notification },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(results.insertId);
+      },
+    );
+  });
+};
