@@ -5,8 +5,9 @@ import userRouter from './entities/user/router';
 
 import courseRouter from './entities/course/router';
 import courseSchedRouter from './entities/courseSched/router';
-
-import awardRouter from './entities/award/router';
+// import awardRouter from './entities/award/router';
+import subjectRouter from './entities/subject/router';
+// import creativeWorkRouter from './entities/creativeWork/router';
 import fsrRouter from './entities/fsr/router';
 import serviceRouter from './entities/extensionAndCommunityService/router';
 
@@ -27,8 +28,7 @@ router.use(userRouter);
 
 router.use(courseRouter);
 router.use(courseSchedRouter);
-
-router.use(awardRouter);
+router.use(subjectRouter);
 router.use(fsrRouter);
 router.use(serviceRouter);
 
