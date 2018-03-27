@@ -1,68 +1,80 @@
+import { formatQueryParams } from '../../utils';
+
 export const addSubject = `
-	INSERT INTO subject ( 
-		id, 
+	INSERT INTO subject (
+		id,
 		subjectCode,
-		subjectID, 
-		teachingLoadCreds, 
-		noOfStudents, 
-		hoursPerWeek, 
-		sectionCode, 
-		room 
+		subjectID,
+		teachingLoadCreds,
+		noOfStudents,
+		hoursPerWeek,
+		sectionCode,
+		room
 	)
-	VALUES ( 
-		:id, 
-		:subjectID, 
+	VALUES (
+		:id,
 		:subjectCode,
-		:teachingLoadCreds, 
-		:noOfStudents, 
-		:hoursPerWeek, 
-		:sectionCode, 
+		DEFAULT,
+		:teachingLoadCreds,
+		:noOfStudents,
+		:hoursPerWeek,
+		:sectionCode,
 		:room
 	)
 `;
 
-export const updateSubject = `
-	UPDATE subject SET 
-		teachingLoadCreds = :teachingLoadCreds 
-	WHERE subjectCode = :subjectCode
+export const getSubjects = (query, sortBy) => `
+	SELECT * FROM subject ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  } 
+  	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+  	LIMIT :limit
+`;
+
+export const getSubject = `
+	SELECT *
+	FROM subject
+	WHERE subjectID =:subjectID
+`;
+
+export const updateSubject = subject => `  			
+	UPDATE subject SET
+	${formatQueryParams(subject, 'update')}
+	WHERE subjectID = :subjectID
 `;
 
 export const deleteSubject = `
-	DELETE FROM subject 
-	WHERE id = :id
+	DELETE FROM subject
+	WHERE subjectID = :subjectID
 `;
 
-export const getAllSubject = `
+//ADDITIONAL GET FOR SUBJECTS
+
+export const getSubjectsWithSched = (query, sortBy) => `
 	SELECT *
-	FROM teachingLoad natural join subject
-	WHERE id=:id
-	ORDER BY subjectCode ASC
-	LIMIT 10
-`;
-
-export const getAllSubjectWithSched = `
-	SELECT * 
-	FROM subject natural join timeslot
-	WHERE id=:id
-	ORDER BY subjectCode ASC
-	LIMIT 10
+	FROM subject natural join timeslot ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
+	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+	LIMIT :limit
 `;
 
 export const getSubjectWithSched = `
-	SELECT * 
-	FROM subject natural join timeslot 
-	WHERE subjectID=:subjectID AND id=:id 
+	SELECT *
+	FROM subject natural join timeslot
+	WHERE subjectID=:subjectID
 `;
 
-export const addTimeslot = `
-	INSERT INTO timeslot (
-		subjectID,
-		day,
-		time
-	)
-	VALUES (
-		:subjectID,
-		:day,
-		:time
-	)
+export const getTotalSubjects = `
+	SELECT COUNT(*) as total FROM subject
+`;
+
+export const getTotalSubjectsByFSR = `
+	SELECT COUNT(*) as total FROM subject
+	WHERE id = :id
+`;
+
+export const deleteSubjects = query => `
+	DELETE FROM subject
+	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
 `;

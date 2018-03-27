@@ -1,13 +1,20 @@
 import { Router } from 'express';
 
 import authRouter from './entities/auth/router';
-import awardRouter from './entities/award/router';
-import serviceRouter from './entities/extensionAndCommunityService/router';
 import userRouter from './entities/user/router';
+
+import courseRouter from './entities/course/router';
+import courseSchedRouter from './entities/courseSched/router';
+// import awardRouter from './entities/award/router';
+import subjectRouter from './entities/subject/router';
+// import creativeWorkRouter from './entities/creativeWork/router';
+import fsrRouter from './entities/fsr/router';
+import serviceRouter from './entities/extensionAndCommunityService/router';
 
 const router = Router();
 
 router.use(authRouter);
+router.use(userRouter);
 
 // router.use( (req,res,next) => {
 //   if(req.session.user.acctType == 'ADMIN'){
@@ -19,7 +26,10 @@ router.use(authRouter);
 //   });
 // });
 
-router.use(awardRouter);
+router.use(courseRouter);
+router.use(courseSchedRouter);
+router.use(subjectRouter);
+router.use(fsrRouter);
 router.use(serviceRouter);
 
 // router.use( (req,res,next) => {
@@ -31,6 +41,5 @@ router.use(serviceRouter);
 //     message: 'You must be logged in',
 //   });
 // });
-router.use(userRouter);
 
 export default router;
