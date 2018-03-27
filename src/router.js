@@ -2,9 +2,9 @@ import { Router } from 'express';
 
 import authRouter from './entities/auth/router';
 import courseRouter from './entities/course/router';
-import awardRouter from './entities/award/router';
+// import awardRouter from './entities/award/router';
 import subjectRouter from './entities/subject/router';
-import creativeWorkRouter from './entities/creativeWork/router';
+// import creativeWorkRouter from './entities/creativeWork/router';
 import fsrRouter from './entities/fsr/router';
 import serviceRouter from './entities/extensionAndCommunityService/router';
 import userRouter from './entities/user/router';
@@ -24,9 +24,9 @@ router.use(authRouter);
 // });
 
 router.use(courseRouter);
-router.use(awardRouter);
+// router.use(awardRouter);
 router.use(subjectRouter);
-router.use(creativeWorkRouter);
+// router.use(creativeWorkRouter);
 router.use(fsrRouter);
 router.use(serviceRouter);
 

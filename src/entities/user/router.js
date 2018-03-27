@@ -188,7 +188,7 @@ router.get('/user/', async (req, res) => {
       total: users.length,
       limit: parseInt(req.query.limit) || 12,
       page: parseInt(req.query.page) || 1,
-      pages: Math.ceil(users.length / (req.query.limit || 12)),
+      pages: Math.ceil(users.length / (parseInt(req.query.limit) || 12)),
     });
   } catch (status) {
     let message = '';
