@@ -10,14 +10,14 @@ class FacultySearch extends Component {
       <div>
         <Search
           placeholder="input search text"
-          onSearch={value => console.log(value)}
-          enterButton
-          style={{ width: 300, top: 20 }}
+          enterButton="Search"
+          size="large"
+          style={{ width: 700 }}
         />
 
         <List
           size="large"
-          style={{ top: 50 }}
+          style={{ top: 25 }}
           header={
             <Item>
               <Col span={8}>
@@ -25,7 +25,7 @@ class FacultySearch extends Component {
               </Col>
 
               <Col span={8}>
-                <div>Employee ID</div>
+                <div>ID</div>
               </Col>
 
               <Col span={8}>
