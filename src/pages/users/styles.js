@@ -6,15 +6,18 @@ const style = {
     marginRight: 'auto',
   },
   search: {
-    marginTop: '10px',
-    marginBottom: '10px',
+    marginTop: '20px',
+    marginBottom: '20px',
     marginLeft: 'auto',
     marginRight: 'auto',
     display: 'flex',
     justifyContent: 'space-between',
   },
   searchBar: {
-    width: '66%',
+    marginRight: '10px',
+  },
+  addButton: {
+    marginLeft: '10px',
   },
 };
 

@@ -50,7 +50,9 @@ export const changeSelectedUser = user => ({
 });
 
 export const addUser = user => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const { query } = getState().users;
+
     return dispatch({
       type: ADD_USER,
       promise: Api.addUser(user),
@@ -59,6 +61,7 @@ export const addUser = user => {
           notification.success({
             message: 'Successfully created user.',
           });
+          dispatch(getUsers(query));
         },
         onFailure: () => {
           notification.error({
@@ -180,7 +183,6 @@ const reducer = (state = initialState, action) => {
         }),
         success: prevState => ({
           ...prevState,
-          users: [...state.users, payload.data.data[0]],
           isAddModalOpen: false,
         }),
         finish: prevState => ({

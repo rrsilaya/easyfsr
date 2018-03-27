@@ -6,6 +6,7 @@ import User from './components/User';
 import EditModal from './components/EditModal';
 import AddModal from './components/AddModal';
 import DeleteModal from './components/DeleteModal';
+import SearchUser from './components/Search';
 
 import styles from './styles';
 
@@ -23,6 +24,11 @@ class Users extends Component {
   handlePageChange = page => {
     this.props.getUsers({ ...this.props.query, page });
     this.props.changeQuery({ page });
+  };
+
+  handlePageSizeChange = (page, limit) => {
+    this.props.getUsers({ ...this.props.query, page, limit });
+    this.props.changeQuery({ page, limit });
   };
 
   render() {
@@ -51,22 +57,7 @@ class Users extends Component {
 
     return (
       <div>
-        <div style={styles.search}>
-          <Search
-            placeholder="Search user..."
-            enterButton="Search"
-            size="large"
-            style={styles.searchBar}
-          />
-          <Button
-            size="large"
-            icon="plus-circle-o"
-            ghost
-            onClick={toggleAddModal}
-          >
-            Add User
-          </Button>
-        </div>
+        <SearchUser toggleAddModal={toggleAddModal} />
         <DataLoader
           isLoading={isGettingUsers}
           content={
@@ -110,8 +101,9 @@ class Users extends Component {
             current={parseInt(pagination.page)}
             total={pagination.total}
             showSizeChanger
-            pageSizeOptions={[12, 24, 36, 48]}
+            pageSizeOptions={['12', '24', '36', '48']}
             onChange={this.handlePageChange}
+            onShowSizeChange={this.handlePageSizeChange}
           />
         </div>
       </div>
