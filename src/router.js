@@ -8,7 +8,6 @@ import creativeWorkRouter from './entities/creativeWork/router';
 import fsrRouter from './entities/fsr/router';
 import serviceRouter from './entities/extensionAndCommunityService/router';
 import userRouter from './entities/user/router';
-import coAuthorRouter from './entities/coAuthor/router';
 
 const router = Router();
 
@@ -42,6 +41,5 @@ router.use(serviceRouter);
 // });
 
 router.use(userRouter);
-router.use(coAuthorRouter);
 
 export default router;

@@ -333,6 +333,48 @@ router.put('/creativeWork/:creativeWorkID', async (req, res) => {
   }
 });
 
+/**
+ * @api {get} /totalCreativeWorks/ getTotalCreativeWorks
+ * @apiGroup Creative Work
+ * @apiName getTotalCreativeWorks
+ * 
+ * @apiSuccess {Object} creativeWork createWorks fetched
+ * @apiSuccess {Integer} creativeWork.creativeWorkID ID of creative work
+ * @apiSuccess {Integer} creativeWork.id ID of fsr connected to creative work
+ * @apiSuccess {Date} creativeWork.date date of creative work
+ * @apiSuccess {String} creativeWork.title title of creative work
+ * @apiSuccess {String} creativeWork.type type of creative work
+ * @apiSuccess {Integer} creativeWork.credUnit credit units of creative work
+ * @apiSuccess {Integer} creativeWork.userID user ID of creative work
+ *
+ @apiSuccessExample {json} Success-Response:
+ *   HTTP/1.1 200 OK
+ * {
+ *    "status": 200,
+ *    "data": [
+ *        {
+ *            "total": 26
+ *        }
+ *    ]
+ * }
+ * @apiError (Error 500) {String[]} errors List of errors
+ * @apiError (Error 500) {String} errors.message Error message
+  * @apiError (Error 404) {String[]} errors List of errors
+ * @apiError (Error 404) {String} errors.message Error message
+ * @apiErrorExample {json} Error-Response:
+ *   HTTP/1.1 500 Internal Server Error
+ *   {
+ *     "status": 500,
+ *     "message": "Internal server error"
+ *   }
+ *
+ * HTTP/1.1 404 Creative works not found
+ * {
+ *   "status": 404,
+ *   "message": "Creative works not found"
+ * }
+ */
+
 router.get('/totalCreativeWorks/', async (req, res) => {
   try {
     const totalCreativeWorks = await Ctrl.getTotalCreativeWorks();
@@ -353,6 +395,48 @@ router.get('/totalCreativeWorks/', async (req, res) => {
     res.status(status).json({ status, message });
   }
 });
+
+/**
+ * @api {get} /totalCreativeWorksByFSR/ getTotalCreativeWorksByFSR
+ * @apiGroup Creative Work
+ * @apiName getTotalCreativeWorksByFSR
+ * 
+ * @apiSuccess {Object} creativeWork createWorks fetched
+ * @apiSuccess {Integer} creativeWork.creativeWorkID ID of creative work
+ * @apiSuccess {Integer} creativeWork.id ID of fsr connected to creative work
+ * @apiSuccess {Date} creativeWork.date date of creative work
+ * @apiSuccess {String} creativeWork.title title of creative work
+ * @apiSuccess {String} creativeWork.type type of creative work
+ * @apiSuccess {Integer} creativeWork.credUnit credit units of creative work
+ * @apiSuccess {Integer} creativeWork.userID user ID of creative work
+ *
+ @apiSuccessExample {json} Success-Response:
+ *   HTTP/1.1 200 OK
+ * {
+ *    "status": 200,
+ *    "data": [
+ *        {
+ *            "total": 26
+ *        }
+ *    ]
+ * }
+ * @apiError (Error 500) {String[]} errors List of errors
+ * @apiError (Error 500) {String} errors.message Error message
+  * @apiError (Error 404) {String[]} errors List of errors
+ * @apiError (Error 404) {String} errors.message Error message
+ * @apiErrorExample {json} Error-Response:
+ *   HTTP/1.1 500 Internal Server Error
+ *   {
+ *     "status": 500,
+ *     "message": "Internal server error"
+ *   }
+ *
+ * HTTP/1.1 404 Creative works not found
+ * {
+ *   "status": 404,
+ *   "message": "Creative works not found"
+ * }
+ */
 
 router.get('/totalCreativeWorksByFSR/', async (req, res) => {
   try {
