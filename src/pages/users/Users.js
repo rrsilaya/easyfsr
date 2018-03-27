@@ -13,12 +13,22 @@ const { Search } = Input;
 
 class Users extends Component {
   componentDidMount() {
-    this.props.getUsers();
+    this.props.getUsers({ limit: 12 });
   }
 
   componentWillUnmount() {
     this.props.resetPage();
   }
+
+  handlePageChange = page => {
+    this.props.getUsers({ ...this.props.query, page });
+    this.props.changeQuery({ page });
+  };
+
+  handlePageSizeChange = (page, limit) => {
+    this.props.getUsers({ ...this.props.query, page, limit });
+    this.props.changeQuery({ page, limit });
+  };
 
   render() {
     const gridConfig = { xxl: 6, xl: 8, sm: 12, xs: 24 };
@@ -39,6 +49,7 @@ class Users extends Component {
       addUser,
       editUser,
 
+      pagination,
       users,
       user,
     } = this.props;
@@ -100,7 +111,14 @@ class Users extends Component {
           changeSelectedUser={changeSelectedUser}
         />
         <div className="pagination">
-          <Pagination defaultCurrent={1} total={50} />
+          <Pagination
+            current={pagination.page}
+            total={pagination.total}
+            showSizeChanger
+            pageSizeOptions={['12', '24', '36', '48']}
+            onChange={this.handlePageChange}
+            onShowSizeChange={this.handlePageSizeChange}
+          />
         </div>
       </div>
     );
