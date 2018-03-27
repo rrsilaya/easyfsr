@@ -1,6 +1,6 @@
 import React from 'react';
-import { Tag, Icon, Card, Row, Col, Button, Avatar } from 'antd';
-const { Meta } = Card;
+import { Tag, Card, Row, Col, Avatar } from 'antd';
+
 const userData = 'Insert Table Here';
 
 class UserCard extends React.Component {

@@ -1,3 +1,4 @@
+import { notification } from 'antd';
 import { getFieldValues } from '../../utils';
 
 export function handleFormSubmit(e) {
@@ -7,6 +8,8 @@ export function handleFormSubmit(e) {
     if (!err) {
       console.log(getFieldValues(values));
       this.props.login(getFieldValues(values));
+    } else {
+      notification.error({ message: 'Email and username are required.' });
     }
   });
 }

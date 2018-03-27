@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Button, Avatar } from 'antd';
+
 import userData from './UserContent';
 import UserCard from './UserCard';
 

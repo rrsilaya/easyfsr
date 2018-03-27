@@ -26,7 +26,7 @@ class AddModal extends Component {
   compareToFirstPassword = (rule, value, callback) => {
     const { form } = this.props;
     if (value && value !== form.getFieldValue('password')) {
-      callback('Passwords do not match');
+      callback('Passwords do not match.');
     } else callback();
   };
 
@@ -37,6 +37,11 @@ class AddModal extends Component {
 
   handleAfterClose = () => {
     this.props.form.resetFields();
+  };
+
+  handleCancel = () => {
+    this.props.toggleAddModal();
+    this.handleAfterClose();
   };
 
   state = {
@@ -69,9 +74,9 @@ class AddModal extends Component {
         title="Add User"
         visible={isAddModalOpen}
         onOk={toggleAddModal}
-        onCancel={toggleAddModal}
+        onCancel={this.handleCancel}
         footer={[
-          <Button key="back" onClick={toggleAddModal}>
+          <Button key="back" onClick={this.handleCancel}>
             Cancel
           </Button>,
           <Button
@@ -91,11 +96,11 @@ class AddModal extends Component {
               rules: [
                 {
                   type: 'email',
-                  message: 'The input is not a valid E-mail',
+                  message: 'The input is not a valid e-mail',
                 },
                 {
                   required: true,
-                  message: 'Please input E-mail address',
+                  message: 'Please input e-mail address',
                 },
               ],
             })(<Input />)}
