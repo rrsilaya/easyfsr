@@ -41,12 +41,14 @@ export const deleteCourseSched = `DELETE from courseSched where courseSchedID = 
 
 export const getCourseSched = `SELECT * FROM courseSched WHERE courseSchedID=:courseSchedID`;
 
-// export const getCourseScheds = query => `
-//   SELECT * FROM courseSched ${
-//     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
-//   }
-//   ORDER BY [field] ${
-//     sortBy === 'DESC' ? 'DESC' : 'ASC'
-//   } LIMIT :limit OFFSET :offset
+export const getCourseScheds = (query, sortBy) => `
+  SELECT * FROM courseSched ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
+  ORDER BY [field] ${
+    sortBy === 'DESC' ? 'DESC' : 'ASC'
+  } LIMIT :limit OFFSET :offset
 
-// `;
+`;
+
+export const getTotalCourseScheds = () => `SELECT count(*) FROM courseSched`;

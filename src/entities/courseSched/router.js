@@ -180,7 +180,7 @@ router.put('/courseSched/:courseSchedID', async (req, res) => {
  *   }
  *
  * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
@@ -252,7 +252,7 @@ router.delete('/courseSched/:courseSchedID', async (req, res) => {
  *   }
  *
  * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
@@ -297,26 +297,31 @@ router.get('/courseSched/:courseSchedID', async (req, res) => {
  * @apiSuccess {String} message Confirmation Message.
  * @apiSuccess {Object[]} courseSchedules All course schedules
  
- * @apiSuccess {String} courseSched.courseNumber number of course
+ * @apiSuccess {String} courseSched.courseSchedID course schedule id
+ * @apiSuccess {String} courseSched.courseID course id
  * @apiSuccess {String} courseSched.day day course is being taught
- * @apiSuccess {String} courseSched.time time course is being taught
- *
+ * @apiSuccess {String} courseSched.timeStart time course start
+ * @apiSuccess {String} courseSched.timeEnd time course end
+ 
  
  * @apiSuccessExample {json} Success-Response:
  *    HTTP/1.1 200 OK
  *   {
+        "status:" 200;
         "message": "Successfully fetched courses",
-        "courseSchedules": [
- *          {
-            "courseNumber": "12345678",
-            "day": "friday",
-            "time": "4:00 pm"
- *        }
- *     ]
+        "courseSches": [
+          {
+            "courseSchedID": 2,
+            "courseID": 1,
+            "day": "monday",
+            "timeStart": "09:00:00",
+            "timeEnd": "010:00:00"
+          }
+          ]
     }
  *
  * @apiError (Error 500) {String[]} errors List of errors.
- * @apiError (Error 500) {String} errors.message Error message.
+ * @apiError (Error 500) {String} message Error message.
  * @apiErrorExample {json} Error-Response:
  *    HTTP/1.1 500 Internal Server Error
  *    {
@@ -326,31 +331,31 @@ router.get('/courseSched/:courseSchedID', async (req, res) => {
  *    }
  **/
 
-// router.get('/courseSched/', async (req, res) => {
-//   try {
-//     const courseSchedules = await Ctrl.getCourseScheds(req.params);
-//     res.status(200).json({
-//       status: 200,
-//       message: 'Successfully fetched all courses',
-//       data: courseSchedules,
-//       total: courseScheds.length,
-//       limit: req.query.limit || 12,
-//       page: req.query.page || 1,
-//       pages: Math.ceil(courseScheds.length / (req.query.limit || 12)),
-//     });
-//   } catch (status) {
-//     let message = '';
-//     switch (status) {
-//       case 404:
-//         message = 'Course not found';
-//         break;
-//       case 500:
-//         message = 'Internal server error';
-//         break;
-//     }
-//     res.status(status).json({ status, message });
-//   }
-// });
+router.get('/courseSched/', async (req, res) => {
+  try {
+    const courseScheds = await Ctrl.getCourseScheds(req.query);
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully fetched course schedules',
+      data: courseScheds,
+      total: courseScheds.length,
+      limit: req.query.limit || 12,
+      page: req.query.page || 1,
+      // pages: Math.ceil((await Ctrl.getTotalCourseScheds()).total/ (req.query.limit || 12)),
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'Course not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
+    }
+    res.status(status).json({ status, message });
+  }
+});
 
 export default router;
 //
