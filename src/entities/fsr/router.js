@@ -12,13 +12,14 @@ const router = Router();
  * @apiParam (Body Params) {Number} userID ID of user
  * @apiParam (Body Params) {String} acadYear academic year the fsr is filed
  * @apiParam (Body Params) {String} semester semester the fsr is filed
+ * @apiParam (Body Params) {Number} teachingLoadCreds teaching load credits
  *
  * @apiSuccess {Object} fsr new FSR created
  * @apiSuccess {Number} fsr.id ID of FSR
  * @apiSuccess {Number} fsr.userID ID of user
  * @apiSuccess {String} fsr.acadYear academic year the fsr is filed
  * @apiSuccess {String} fsr.semester semester the fsr is filed
- * @apiSucess {Number} fsr.teachingLoadCreds  teaching load credits
+ * @apiSucess {Number} fsr.teachingLoadCreds teaching load credits
  * @apiSuccess {Boolean} fsr.isChecked indicates if fsr is approved or not
  *
  * @apiSuccessExample {json} Success-Response:
@@ -140,6 +141,16 @@ router.get('/fsr/:id', async (req, res) => {
  * @apiGroup FSR
  * @apiName getFSRs
  *
+ * @apiParam (Query Params) ({Number} [userID] ID of user
+ * @apiParam (Query Params) {String} [acadYear] academic year the fsr is filed
+ * @apiParam (Query Params) {String} [semester] semester the fsr is filed
+ * @apiParam (Query Params) {Number} [teachingLoadCreds] teaching load credits
+ * @apiParam (Query Params) {Boolean} [isChecked] indicates if fsr is approved or no
+ * @apiParam (Query Params) {Number} [page] page number
+ * @apiParam (Query Params) {Number} [limit] count limit of users to fetch
+ * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
+ * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'isChecked'
+ *
  * @apiSuccess {Object[]} fsrs new FSR created
  * @apiSuccess {Number} fsrs.id ID of FSR
  * @apiSuccess {Number} fsrs.userID ID of user
@@ -168,7 +179,11 @@ router.get('/fsr/:id', async (req, res) => {
  *            "semester": "First",
  *            "isChecked": 0
  *        },
- *      ]
+ *      ],
+ *     "total": 2,
+ *     "limit": 2,
+ *     "page": 8,
+ *     "pages": 8
  *   }
  *
  * @apiError (Error 500) {String} status error status code
@@ -197,10 +212,11 @@ router.get('/fsr', async (req, res) => {
       message: 'Successfully fetched FSRs',
       data: FSRs,
       total: FSRs.length,
-      limit: req.query.limit || 12,
-      page: req.query.page || 1,
+      limit: parseInt(req.query.limit) || 12,
+      page: parseInt(req.query.page) || 1,
       pages: Math.ceil(
-        (await Ctrl.getTotalFSRs()).total / (req.query.limit || 12),
+        (await Ctrl.getTotalFSRs(req.query)).total /
+          (parseInt(req.query.limit) || 12),
       ),
     });
   } catch (status) {
@@ -227,6 +243,7 @@ router.use('/fsr/:userID', (req, res, next) => {
     message: 'Unauthorized access',
   });
 });
+
 /**
  * @api {put} /fsr/:id updateFSR
  * @apiGroup FSR

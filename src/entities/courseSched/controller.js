@@ -73,11 +73,21 @@ export const getCourseScheds = courseSched => {
   });
 };
 
-export const getTotalCourseScheds = () => {
+export const getTotalCourseScheds = courseSched => {
   return new Promise((resolve, reject) => {
-    db.query(Query.getTotalCourseScheds, (err, results) => {
-      if (err) return reject(500);
-      return resolve(results[0]);
-    });
+    db.query(
+      Query.getTotalCourseScheds(
+        filtered(courseSched, courseSchedAttributes),
+        courseSched.sortBy,
+      ),
+      {
+        field: 'courseSchedID',
+        ...escapeSearch(courseSched, searchFields, courseSched.limit),
+      },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(results[0]);
+      },
+    );
   });
 };

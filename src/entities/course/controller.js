@@ -22,12 +22,36 @@ export const addCourse = course => {
   });
 };
 
+export const updateCourse = ({ courseID }, course) => {
+  return new Promise((resolve, reject) => {
+    if (!course) return reject(500);
+    db.query(
+      Query.updateCourse(filtered(course, courseAttributes)),
+      { courseID, ...course },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(results.insertId);
+      },
+    );
+  });
+};
+
 export const deleteCourse = ({ courseID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.deleteCourse, { courseID }, (err, results) => {
       if (err) return reject(500);
       else if (!results.affectedRows) return reject(404);
       return resolve();
+    });
+  });
+};
+
+export const getCourse = ({ courseID }) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getCourse, { courseID }, (err, results) => {
+      if (err) return reject(500);
+      else if (!results.length) return reject(404);
+      return resolve(results[0]);
     });
   });
 };
@@ -48,35 +72,18 @@ export const getCourses = course => {
   });
 };
 
-export const getCourse = ({ courseID }) => {
+export const getTotalCourses = course => {
   return new Promise((resolve, reject) => {
-    db.query(Query.getCourse, { courseID }, (err, results) => {
-      if (err) return reject(500);
-      else if (!results.length) return reject(404);
-      return resolve(results[0]);
-    });
-  });
-};
-
-export const updateCourse = ({ courseID }, course) => {
-  return new Promise((resolve, reject) => {
-    if (!course) return reject(500);
     db.query(
-      Query.updateCourse(filtered(course, courseAttributes)),
-      { courseID, ...course },
+      Query.getTotalCourses(filtered(course, courseAttributes)),
+      {
+        field: 'courseNumber',
+        ...escapeSearch(course, searchFields, course.limit),
+      },
       (err, results) => {
         if (err) return reject(500);
-        return resolve(results.insertId);
+        return resolve(results[0]);
       },
     );
-  });
-};
-
-export const getTotalCourses = () => {
-  return new Promise((resolve, reject) => {
-    db.query(Query.getTotalCourses, (err, results) => {
-      if (err) return reject(500);
-      return resolve(results[0]);
-    });
   });
 };

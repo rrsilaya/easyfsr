@@ -33,10 +33,8 @@ export const getFSRs = (query, sortBy) => `
   } LIMIT :limit OFFSET :offset
 `;
 
-export const getTotalFSRs = `
-  SELECT count(*) as total FROM fsr
-`;
-
-export const getTotalFSRsByUser = `
-  SELECT count(*) as total FROM fsr WHERE userID = :userID
+export const getTotalFSRs = query => `
+  SELECT count(*) as total FROM fsr ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
 `;
