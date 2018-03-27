@@ -28,7 +28,7 @@ const router = Router();
  *   {
  *     "data": {
  *       "status": 200,
- *       "message": "Successfully updated course",
+ *       "message": "Successfully added course",
  *       "data": [
             {
                 "courseID": 1,

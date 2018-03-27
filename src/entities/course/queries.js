@@ -12,7 +12,7 @@ export const addCourse = `
 	VALUES (
 		:id,
 		:courseNumber,
-		:courseID,
+		DEFAULT,
 		:hoursPerWeek,
 		:school,
 		:credit
