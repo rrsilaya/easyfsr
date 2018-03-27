@@ -4,7 +4,6 @@ export const addSubject = `
 	INSERT INTO subject (
 		id,
 		subjectCode,
-		subjectID,
 		teachingLoadCreds,
 		noOfStudents,
 		hoursPerWeek,
@@ -14,7 +13,6 @@ export const addSubject = `
 	VALUES (
 		:id,
 		:subjectCode,
-		DEFAULT,
 		:teachingLoadCreds,
 		:noOfStudents,
 		:hoursPerWeek,

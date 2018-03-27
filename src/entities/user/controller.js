@@ -90,7 +90,7 @@ export const getUsers = user => {
   });
 };
 
-export const getTotalUsers = () => {
+export const getTotalUsers = query => {
   return new Promise((resolve, reject) => {
     db.query(Query.getTotalUsers, (err, results) => {
       if (err) return reject(500);

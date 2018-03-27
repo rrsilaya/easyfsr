@@ -8,18 +8,17 @@ const router = Router();
  * @apiGroup Course
  * @apiName addCourse
  *
- * @apiParam (Body Params) {String} courseID course ID
- * @apiParam (Body Params) {String} hoursPerWeek number of hours of course per week
+ * @apiParam (Body Params) {Number} hoursPerWeek number of hours of course per week
  * @apiParam (Body Params) {String} school school course is being taken
- * @apiParam (Body Params) {String} credit credit of course
+ * @apiParam (Body Params) {Number} credit credit of course
  * @apiParam (Body Params) {String} courseNumber courseNumber of course
  * @apiParam (Body Params) {String} id fsr id
  *
  * @apiSuccess {Object} course new Course is added
- * @apiSuccess {String} course.courseID course ID
- * @apiSuccess {String} course.hoursPerWeek number of hours of course per week
+ * @apiSuccess {Number} course.courseID course ID
+ * @apiSuccess {Number} course.hoursPerWeek number of hours of course per week
  * @apiSuccess {String} course.school school course is being taken
- * @apiSuccess {String} course.credit credit of course
+ * @apiSuccess {Number} course.credit credit of course
  * @apiSuccess {String} course.courseNumber courseNumber of course
  * @apiSuccess {String} course.id fsr id
  *
@@ -78,16 +77,16 @@ router.post('/course/', async (req, res) => {
  * @apiName updateCourse
  *
  * @apiParam (Query Params) {String} courseNumber courseNumber of course
- * @apiParam (Body Params) {String} hoursPerWeek number of hours of course per week
+ * @apiParam (Body Params) {Number} hoursPerWeek number of hours of course per week
  * @apiParam (Body Params) {String} school school course is being taken
- * @apiParam (Body Params) {String} credit credit of course
+ * @apiParam (Body Params) {Number} credit credit of course
  * @apiParam (Body Params) {String} id fsr id
  *
  * @apiSuccess {Object} course Course updated
- * @apiSuccess {String} course.courseID course ID
- * @apiSuccess {String} course.hoursPerWeek number of hours of course per week
+ * @apiSuccess {Number} course.courseID course ID
+ * @apiSuccess {Number} course.hoursPerWeek number of hours of course per week
  * @apiSuccess {String} course.school school course is being taken
- * @apiSuccess {String} course.credit credit of course
+ * @apiSuccess {Number} course.credit credit of course
  * @apiSuccess {String} course.courseNumber courseNumber of course
  * @apiSuccess {String} course.id fsr id
  *
@@ -158,10 +157,10 @@ router.put('/course/:courseID', async (req, res) => {
  * @apiParam (Query Params) {String} courseNumber courseNumber of course
  *
  * @apiSuccess {Object} course Course course deleted
- * @apiSuccess {String} course.courseID course ID
- * @apiSuccess {String} course.hoursPerWeek number of hours of course per week
+ * @apiSuccess {Number} course.courseID course ID
+ * @apiSuccess {Number} course.hoursPerWeek number of hours of course per week
  * @apiSuccess {String} course.school school course is being taken
- * @apiSuccess {String} course.credit credit of course
+ * @apiSuccess {Number} course.credit credit of course
  * @apiSuccess {String} course.courseNumber courseNumber of course
  * @apiSuccess {String} course.id fsr id
  *
@@ -169,8 +168,8 @@ router.put('/course/:courseID', async (req, res) => {
  *   HTTP/1.1 200 OK
  *   {
  *     "data": {
- *        "status": 200;
- *        "message": 'Succesfully deleted course;
+ *        "status": 200,
+ *        "message": 'Succesfully deleted course,
  *        "data": 
  *         {
             "courseID": 1,
@@ -202,7 +201,6 @@ router.put('/course/:courseID', async (req, res) => {
 router.delete('/course/:courseID', async (req, res) => {
   try {
     const course = await Ctrl.getCourse(req.params);
-
     await Ctrl.deleteCourse(req.params);
 
     res.status(200).json({
@@ -245,7 +243,7 @@ router.delete('/course/:courseID', async (req, res) => {
  *     "data": {
  *        "status": 200;
  *        "message": 'Succesfully got course details'
- *        "data": [
+ *        "data": 
  *          {
             "courseID": 2,
             "hoursPerWeek": "21",
@@ -254,7 +252,7 @@ router.delete('/course/:courseID', async (req, res) => {
             "courseNumber": "128",
             "id": 1
  *        }
- *     ]
+ *     
  *     }
  *   }
  *

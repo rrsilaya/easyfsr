@@ -4,7 +4,6 @@ export const addCourse = `
 	INSERT INTO course (
 		id,
 		courseNumber,
-		courseID,
 		hoursPerWeek,
 		school,
 		credit
@@ -12,7 +11,6 @@ export const addCourse = `
 	VALUES (
 		:id,
 		:courseNumber,
-		DEFAULT,
 		:hoursPerWeek,
 		:school,
 		:credit
@@ -31,13 +29,13 @@ export const getCourses = (query, sortBy) => `
 `;
 export const getCourse = `
   SELECT * FROM course 
-  WHERE courseID=:courseID
+  WHERE courseID = :courseID
 `;
 
 export const updateCourse = course => ` 
   UPDATE course SET  
     ${formatQueryParams(course, 'update')} 
-  WHERE courseID=:courseID
+  WHERE courseID =: courseID
 `;
 
 export const getTotalCourses = `

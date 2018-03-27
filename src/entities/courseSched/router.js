@@ -52,7 +52,6 @@ const router = Router();
 router.post('/courseSched/', async (req, res) => {
   try {
     const courseSchedID = await Ctrl.addCourseSched(req.body);
-
     const courseSched = await Ctrl.getCourseSched({ courseSchedID });
     res.status(200).json({
       status: 200,
@@ -198,7 +197,6 @@ router.put('/courseSched/:courseSchedID', async (req, res) => {
 router.delete('/courseSched/:courseSchedID', async (req, res) => {
   try {
     const courseSched = await Ctrl.getCourseSched(req.params);
-
     await Ctrl.deleteCourseSched(req.params);
     res.status(200).json({
       status: 200,
@@ -272,7 +270,7 @@ router.get('/courseSched/:courseSchedID', async (req, res) => {
     const courseSched = await Ctrl.getCourseSched(req.params);
     res.status(200).json({
       status: 200,
-      message: 'Successfully got course schedule details',
+      message: 'Successfully fetched course schedule',
       data: courseSched,
     });
   } catch (status) {
@@ -358,4 +356,3 @@ router.get('/courseSched/', async (req, res) => {
 });
 
 export default router;
-//

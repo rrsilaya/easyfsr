@@ -14,7 +14,7 @@ const searchFields = ['courseID', 'day', 'timeStart', 'timeEnd'];
 
 export const addCourseSched = courseSched => {
   return new Promise((resolve, reject) => {
-    db.query(Query.addCourseSched, { courseSched }, (err, results) => {
+    db.query(Query.addCourseSched, courseSched, (err, results) => {
       if (err) return reject(500);
       return resolve(results.insertId);
     });
@@ -28,7 +28,6 @@ export const updateCourseSched = ({ courseSchedID }, courseSched) => {
       Query.updateCourseSched(filtered(courseSched, courseSchedAttributes)),
       { courseSchedID, ...courseSched },
       (err, results) => {
-        console.log(err);
         if (err) return reject(500);
         return resolve(results.insertId);
       },
@@ -40,7 +39,7 @@ export const deleteCourseSched = ({ courseSchedID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.deleteCourseSched, { courseSchedID }, (err, results) => {
       if (err) return reject(500);
-      return resolve(courseSchedID);
+      return resolve();
     });
   });
 };
@@ -49,8 +48,8 @@ export const getCourseSched = ({ courseSchedID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getCourseSched, { courseSchedID }, (err, results) => {
       if (err) return reject(500);
-      else if (results.length == 0) return reject(404);
-      return resolve(results);
+      else if (!results.length) return reject(404);
+      return resolve(results[0]);
     });
   });
 };
@@ -67,9 +66,7 @@ export const getCourseScheds = courseSched => {
         ...escapeSearch(courseSched, searchFields, courseSched.limit),
       },
       (err, results) => {
-        console.log(err);
         if (err) return reject(500);
-        else if (!results) return reject(404);
         return resolve(results);
       },
     );

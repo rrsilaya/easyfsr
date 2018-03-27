@@ -15,7 +15,7 @@ const searchFields = ['courseNumber', 'courseID', 'school', 'credit'];
 
 export const addCourse = course => {
   return new Promise((resolve, reject) => {
-    db.query(Query.addCourse, { ...course }, (err, results) => {
+    db.query(Query.addCourse, course, (err, results) => {
       if (err) return reject(500);
       return resolve(results.insertId);
     });
@@ -53,7 +53,7 @@ export const getCourse = ({ courseID }) => {
     db.query(Query.getCourse, { courseID }, (err, results) => {
       if (err) return reject(500);
       else if (!results.length) return reject(404);
-      return resolve(results);
+      return resolve(results[0]);
     });
   });
 };

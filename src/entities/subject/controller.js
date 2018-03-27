@@ -23,7 +23,7 @@ const searchFields = [
 
 export const addSubject = subject => {
   return new Promise((resolve, reject) => {
-    db.query(Query.addSubject, { ...subject }, (err, results) => {
+    db.query(Query.addSubject, subject, (err, results) => {
       if (err) return reject(500);
       return resolve(results.insertId);
     });

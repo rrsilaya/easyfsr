@@ -16,7 +16,7 @@ const router = Router();
  * @apiParam (Body Params) {String} lastName last name of employee
  * @apiParam (Body Params) {String} [committee] committee of employee, if exists
  * @apiParam (Body Params) {Boolean} [isHead] indicates if employee is head
- * @apiParam (Body Params) {String} officeNumber office number of employee
+ * @apiParam (Body Params) {String} [officeNumber] office number of employee
  * @apiParam (Body Params) {String} [contractType] contract type of employee. Can be "FULL-TIME" or "PART-TIME"
  * @apiParam (Body Params) {String} emailAddress email address of employee
  * @apiParam (Body Params) {String} [rank] rank of employee
@@ -450,7 +450,7 @@ router.get('/user/:employeeID', async (req, res) => {
  */
 router.use('/user/:userID', (req, res, next) => {
   const { user } = req.session;
-  if (user.acctType === 'ADMIN' || user.userID == req.params.userID) {
+  if (user && (user.acctType === 'ADMIN' || user.userID == req.params.userID)) {
     return next();
   }
   res.status(403).json({
