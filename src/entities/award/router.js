@@ -16,25 +16,26 @@ const router = Router();
  * @apiParam (Body Params) {String} collegeHasNominated which college has nominated the award
  * @apiParam (Body Params) {String} recipientOrNominee recipient or nominee of award
  * @apiParam (Body Params) {String} proffesionalChair professional chai of award
- * @apiParam (Body Params) {String} approvedStartDate approved start date of award
- * @apiParam (Body Params) {String} endDate end date of award
+ * @apiParam (Body Params) {Date} approvedStartDate approved start date of award
+ * @apiParam (Body Params) {Date} endDate end date of award
  *
  * @apiSuccess {Object} award new Award
  * @apiSuccess {Number} award.id ID of award
+ * @apiSuccess {Number} award.awardID awardID of award
  * @apiSuccess {String} award.grantF grantf of award
  * @apiSuccess {String} award.chairGrantTitle chair grant title of award
  * @apiSuccess {String} award.collegeHasNominated which college has nominated the award
  * @apiSuccess {String} award.recipientOrNominee recipient or nominee of award
  * @apiSuccess {String} award.professionalChair professional chair of award
- * @apiSuccess {String} award.approvedStartDate approved start date of award
- * @apiSuccess {String} award.endDate end date of award
+ * @apiSuccess {Date} award.approvedStartDate approved start date of award
+ * @apiSuccess {Date} award.endDate end date of award
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *  {
  *     "status": 200,
  *     "message": "Successfully added award",
- *     "data": [
+ *     "data":
  *        {
  *           "awardID": 4,
  *           "id": 3,
@@ -48,7 +49,7 @@ const router = Router();
  *         }
  *   }
  *
- * @apiError (Error 500) {String[]} status status code
+ * @apiError (Error 500) {String} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -90,8 +91,8 @@ router.post('/award/', async (req, res) => {
  * @apiParam (Body Params) {String} collegeHasNominated which college nominated the award
  * @apiParam (Body Params) {String} recipientOrNominee recipient or nominee of award
  * @apiParam (Body Params) {String} proffesionalChair professional chair of award
- * @apiParam (Body Params) {String} approvedStartDate approved start date of award
- * @apiParam (Body Params) {String} endDate end date of award
+ * @apiParam (Body Params) {Date} approvedStartDate approved start date of award
+ * @apiParam (Body Params) {Date} endDate end date of award
  *
  * @apiSuccess {Object} award Award updated
  * @apiSuccess {Number} award.id ID of award
@@ -100,15 +101,15 @@ router.post('/award/', async (req, res) => {
  * @apiSuccess {String} award.collegeHasNominated which college nominated the award
  * @apiSuccess {String} award.recipientOrNominee recipient or nominee of award
  * @apiSuccess {String} award.professionalChair professional chair of award
- * @apiSuccess {String} award.approvedStartDate approved start date of award
- * @apiSuccess {String} award.endDate end date of award
+ * @apiSuccess {Date} award.approvedStartDate approved start date of award
+ * @apiSuccess {Date} award.endDate end date of award
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *    "status": 200,
  *    "message": "Successfully updated award",
- *    "data": [
+ *    "data":
  *        {
  *            "awardID": 4,
  *            "id": 3,
@@ -120,10 +121,9 @@ router.post('/award/', async (req, res) => {
  *            "approvedStartDate": "1999-12-31T16:00:00.000Z",
  *            "endDate": "2000-12-31T16:00:00.000Z"
  *        }
- *     ]
  *   }
  *
- * @apiError (Error 500) {String[]} status status code
+ * @apiError (Error 500) {String} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -131,7 +131,8 @@ router.post('/award/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- *
+ * @apiError (Error 500) {String[]} status status code
+ * @apiError (Error 500) {String} message Error message
  * HTTP/1.1 404 Award not found
  * {
  *   "status": 404,
@@ -177,8 +178,8 @@ router.put('/award/:awardID', async (req, res) => {
  * @apiSuccess {String} award.collegeHasNominated which college has nominated theaward
  * @apiSuccess {String} award.recipientOrNominee recipient or nominee of award
  * @apiSuccess {String} award.professionalChair professional chair of award
- * @apiSuccess {String} award.approvedStartDate approved start date of award
- * @apiSuccess {String} award.endDate end date of award
+ * @apiSuccess {Date} award.approvedStartDate approved start date of award
+ * @apiSuccess {Date} award.endDate end date of award
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -201,7 +202,7 @@ router.put('/award/:awardID', async (req, res) => {
  *   }
  *
  *
- * @apiError (Error 500) {String[]} status status code
+ * @apiError (Error 500) {String} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -209,7 +210,8 @@ router.put('/award/:awardID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- *
+ * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {String} message Error message
  * HTTP/1.1 404 Award not found
  * {
  *   "status": 404,
@@ -255,8 +257,8 @@ router.delete('/award/:awardID', async (req, res) => {
  * @apiSuccess {String} award.collegeHasNominated which college nominated the award
  * @apiSuccess {String} award.recipientOrNominee recipient or nominee of award
  * @apiSuccess {String} award.professionalChair professional chair of award
- * @apiSuccess {String} award.approvedStartDate approved start date of award
- * @apiSuccess {String} award.endDate end date of award
+ * @apiSuccess {Date} award.approvedStartDate approved start date of award
+ * @apiSuccess {Date} award.endDate end date of award
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -277,7 +279,7 @@ router.delete('/award/:awardID', async (req, res) => {
  *           }
  *       ]
  *   }
- * @apiError (Error 500) {String[]} status status code
+ * @apiError (Error 500) {String} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -285,7 +287,8 @@ router.delete('/award/:awardID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- *
+ * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {String} message Error message
  * HTTP/1.1 404 Award not found
  * {
  *   "status": 404,
@@ -320,7 +323,7 @@ router.get('/award/:awardID', async (req, res) => {
  * @apiGroup Award
  * @apiName getAwards
  *
-
+ * @apiParam (Query Params) {Number} awardID awardID of award
  *
  * @apiSuccess {Object} award Awards fetched
  * @apiSuccess {Number} award.awardID ID of award
@@ -330,8 +333,8 @@ router.get('/award/:awardID', async (req, res) => {
  * @apiSuccess {String} award.collegeHasNominated which college nominated the award
  * @apiSuccess {String} award.recipientOrNominee recipient or nominee of award
  * @apiSuccess {String} award.professionalChair professional chair of award
- * @apiSuccess {String} award.approvedStartDate approved start date of award
- * @apiSuccess {String} award.endDate end date of award
+ * @apiSuccess {Date} award.approvedStartDate approved start date of award
+ * @apiSuccess {Date} award.endDate end date of award
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -367,7 +370,7 @@ router.get('/award/:awardID', async (req, res) => {
  *    "page": 1,
  *    "pages": 1
  *   }
- * @apiError (Error 500) {String[]} status status code
+ * @apiError (Error 500) {String} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExampsle {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -375,7 +378,8 @@ router.get('/award/:awardID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- *
+ * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {String} message Error message
  * HTTP/1.1 404 Award not found
  * {
  *   "status": 404,
