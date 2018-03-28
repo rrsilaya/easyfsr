@@ -81,3 +81,19 @@ export const getAwards = award => {
     );
   });
 };
+
+export const getTotalAwards = award => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      Query.getTotalAwards(filtered(award, awardAttributes)),
+      {
+        field: 'chairGrantTitle',
+        ...escapeSearch(award, searchFields, award.limit),
+      },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(results[0]);
+      },
+    );
+  });
+};

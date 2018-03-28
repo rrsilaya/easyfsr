@@ -9,8 +9,8 @@ const router = Router();
  * @apiGroup Award
  * @apiName addAward
  *
- * @apiParam (Body Params) {Integer} id ID of award
- * @apiParam (Body Params) {Integer} awardID awardID of award
+ * @apiParam (Body Params) {Number} id ID of award
+ * @apiParam (Body Params) {Number} awardID awardID of award
  * @apiParam (Body Params) {String} grantF grantF of award
  * @apiParam (Body Params) {String} chairGrantTitle chair grant title of award
  * @apiParam (Body Params) {String} collegeHasNominated which college has nominated the award
@@ -20,7 +20,7 @@ const router = Router();
  * @apiParam (Body Params) {String} endDate end date of award
  *
  * @apiSuccess {Object} award new Award
- * @apiSuccess {Integer} award.id ID of award
+ * @apiSuccess {Number} award.id ID of award
  * @apiSuccess {String} award.grantF grantf of award
  * @apiSuccess {String} award.chairGrantTitle chair grant title of award
  * @apiSuccess {String} award.collegeHasNominated which college has nominated the award
@@ -43,8 +43,8 @@ const router = Router();
  *           "collegeHasNominated": "156",
  *           "recipientOrNominee": "Youuuu",
  *           "professionalChair": "her",
- *           "approvedStartDate": "2day",
- *           "endDate": "tomor"
+ *           "approvedStartDate": "1999-12-31T16:00:00.000Z",
+ *           "endDate": "2000-12-31T16:00:00.000Z"
  *         }
  *   }
  *
@@ -83,8 +83,8 @@ router.post('/award/', async (req, res) => {
  * @apiGroup Award
  * @apiName updateAward
  *
- * @apiParam (Query Params) {Integer} awardID awardID of award
- * @apiParam (Body Params) {Integer} id ID of award
+ * @apiParam (Query Params) {Number} awardID awardID of award
+ * @apiParam (Body Params) {Number} id ID of award
  * @apiParam (Body Params) {String} grantF grantF of award
  * @apiParam (Body Params) {String} chairGrantTitle chair grant title of award
  * @apiParam (Body Params) {String} collegeHasNominated which college nominated the award
@@ -94,7 +94,7 @@ router.post('/award/', async (req, res) => {
  * @apiParam (Body Params) {String} endDate end date of award
  *
  * @apiSuccess {Object} award Award updated
- * @apiSuccess {Integer} award.id ID of award
+ * @apiSuccess {Number} award.id ID of award
  * @apiSuccess {String} award.grantF grantf of award
  * @apiSuccess {String} award.chairGrantTitle chair grant title of award
  * @apiSuccess {String} award.collegeHasNominated which college nominated the award
@@ -117,8 +117,8 @@ router.post('/award/', async (req, res) => {
  *            "collegeHasNominated": "hl1445",
  *            "recipientOrNominee": "You456",
  *            "professionalChair": "him334",
- *            "approvedStartDate": "ystrdayaasdasd",
- *            "endDate": "to"
+ *            "approvedStartDate": "1999-12-31T16:00:00.000Z",
+ *            "endDate": "2000-12-31T16:00:00.000Z"
  *        }
  *     ]
  *   }
@@ -167,11 +167,11 @@ router.put('/award/:awardID', async (req, res) => {
  * @apiGroup Award
  * @apiName deleteAward
  *
- * @apiParam (Query Params) {Integer} awardID ID of award
+ * @apiParam (Query Params) {Number} awardID ID of award
  *
  * @apiSuccess {Object} award Award deleted
- * @apiSuccess {Integer} award.awardID awardID of award
- * @apiSuccess {Integer} award.id ID of award
+ * @apiSuccess {Number} award.awardID awardID of award
+ * @apiSuccess {Number} award.id ID of award
  * @apiSuccess {String} award.grantF grantf of award
  * @apiSuccess {String} award.chairGrantTitle chair grant title of award
  * @apiSuccess {String} award.collegeHasNominated which college has nominated theaward
@@ -183,11 +183,23 @@ router.put('/award/:awardID', async (req, res) => {
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
- *     "data": {
- *        "status": 200;
- *        "message": 'Succesfully deleted award'
- *     }
+ *    "status": 200,
+ *    "message": "Successfully deleted award",
+ *    "data": [
+ *        {
+ *            "awardID": 4,
+ *            "id": 3,
+ *            "grantF": "Hlloasdsad",
+ *            "chairGrantTitle": "Mea123123",
+ *            "collegeHasNominated": "hl1445",
+ *            "recipientOrNominee": "You456",
+ *            "professionalChair": "him334",
+ *            "approvedStartDate": "1999-12-31T16:00:00.000Z",
+ *            "endDate": "2000-12-31T16:00:00.000Z"
+ *        }
+ *     ]
  *   }
+ *
  *
  * @apiError (Error 500) {String[]} status status code
  * @apiError (Error 500) {String} message Error message
@@ -207,10 +219,12 @@ router.put('/award/:awardID', async (req, res) => {
 
 router.delete('/award/:awardID', async (req, res) => {
   try {
+    const award = await Ctrl.getAward(req.params);
     await Ctrl.deleteAward(req.params);
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted award',
+      data: award,
     });
   } catch (status) {
     let message = '';
@@ -231,11 +245,11 @@ router.delete('/award/:awardID', async (req, res) => {
  * @apiGroup Award
  * @apiName getAward
  *
- * @apiParam (Query Params) {Integer} awardID ID of award
+ * @apiParam (Query Params) {Number} awardID ID of award
  *
  * @apiSuccess {Object} award Award fetched
- * @apiSuccess {Integer} award.awardID awardID of award
- * @apiSuccess {Integer} award.id ID of award
+ * @apiSuccess {Number} award.awardID awardID of award
+ * @apiSuccess {Number} award.id ID of award
  * @apiSuccess {String} award.grantF grantf of award
  * @apiSuccess {String} award.chairGrantTitle chair grant title of award
  * @apiSuccess {String} award.collegeHasNominated which college nominated the award
@@ -258,8 +272,8 @@ router.delete('/award/:awardID', async (req, res) => {
  *               "collegeHasNominated": "hl1445",
  *               "recipientOrNominee": "You456",
  *               "professionalChair": "him334",
- *               "approvedStartDate": "ystrdayaasdasd",
- *               "endDate": "to"
+ *               "approvedStartDate": "1999-12-31T16:00:00.000Z",
+ *               "endDate": "2001-12-31T16:00:00.000Z"
  *           }
  *       ]
  *   }
@@ -309,8 +323,8 @@ router.get('/award/:awardID', async (req, res) => {
 
  *
  * @apiSuccess {Object} award Awards fetched
- * @apiSuccess {Integer} award.awardID ID of award
- * @apiSuccess {Integer} award.id ID of award
+ * @apiSuccess {Number} award.awardID ID of award
+ * @apiSuccess {Number} award.id ID of award
  * @apiSuccess {String} award.grantF grantf of award
  * @apiSuccess {String} award.chairGrantTitle chair grant title of award
  * @apiSuccess {String} award.collegeHasNominated which college nominated the award
@@ -333,8 +347,8 @@ router.get('/award/:awardID', async (req, res) => {
  *           "collegeHasNominated": "156",
  *           "recipientOrNominee": "Youuuu",
  *           "professionalChair": "her",
- *           "approvedStartDate": "2day",
- *           "endDate": "tomor"
+ *           "approvedStartDate": "2000-12-31T16:00:00.000Z",
+ *           "endDate": "2009-12-31T16:00:00.000Z"
  *         },
  *        {
  *           "awardID": 5,
@@ -344,18 +358,18 @@ router.get('/award/:awardID', async (req, res) => {
  *           "collegeHasNominated": "156",
  *           "recipientOrNominee": "me",
  *           "professionalChair": "him",
- *           "approvedStartDate": "2day",
- *           "endDate": "tomoro"
+ *           "approvedStartDate": "1999-12-31T16:00:00.000Z",
+ *           "endDate": "2003-12-31T16:00:00.000Z"
  *         }
  *       ],
  *    "total": 2,
- *    "limit": 10,
+ *    "limit": 12,
  *    "page": 1,
  *    "pages": 1
  *   }
  * @apiError (Error 500) {String[]} status status code
  * @apiError (Error 500) {String} message Error message
- * @apiErrorExample {json} Error-Response:
+ * @apiErrorExampsle {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
@@ -371,21 +385,24 @@ router.get('/award/:awardID', async (req, res) => {
 
 router.get('/award/', async (req, res) => {
   try {
-    const awards = await Ctrl.getAwards(req.query);
+    const award = await Ctrl.getAwards(req.query);
     res.status(200).json({
       status: 200,
-      message: 'Successfully fetched awards',
-      data: awards,
-      total: awards.length,
-      limit: req.query.limit || 12,
-      page: req.query.page || 1,
-      pages: Math.ceil(awards.length / (req.query.limit || 12)),
+      message: 'Successfully fetched Awards',
+      data: award,
+      total: award.length,
+      limit: parseInt(req.query.limit) || 12,
+      page: parseInt(req.query.page) || 1,
+      pages: Math.ceil(
+        (await Ctrl.getTotalAwards(req.query)).total /
+          (parseInt(req.query.limit) || 12),
+      ),
     });
   } catch (status) {
     let message = '';
     switch (status) {
       case 404:
-        message = 'Award not found';
+        message = 'Award/s not found';
         break;
       case 500:
         message = 'Internal server error';

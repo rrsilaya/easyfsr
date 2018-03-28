@@ -48,12 +48,8 @@ export const getAwards = (query, sortBy) => `
   ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} LIMIT :limit
 `;
 
-/*
-// Supports single or multiple rows of delete 
-
-export const deleteAward = `
-  DELETE FROM award
-  ${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
+export const getTotalAwards = query => `
+  SELECT count(*) as total FROM award ${
+    query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
+  }
 `;
-
-*/
