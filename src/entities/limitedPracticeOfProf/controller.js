@@ -2,7 +2,7 @@ import db from '../../database/index';
 import * as Query from './queries';
 import { filtered, escapeSearch } from '../../utils';
 
-const LimitedPracticeAttributes = [
+const LtdPractAttributes = [
   'id',
   'limitedPracticeOfProfID',
   'askedPermission',
@@ -16,29 +16,24 @@ const searchFields = [
   'date',
 ];
 
-export const addLimitedPracticeOfProf = limitedPracticeOfProf => {
+export const addLtdPractOfProf = limitedPracticeOfProf => {
   return new Promise((resolve, reject) => {
-    db.query(
-      Query.addLimitedPracticeOfProf,
-      limitedPracticeOfProf,
-      (err, results) => {
-        console.log(err);
-        if (err) return reject(500);
-        return resolve(results.insertId);
-      },
-    );
+    db.query(Query.addLtdPractOfProf, limitedPracticeOfProf, (err, results) => {
+      if (err) return reject(500);
+      return resolve(results.insertId);
+    });
   });
 };
 
-export const updateLimitedPracticeOfProf = (
+export const updateLtdPractOfProf = (
   { limitedPracticeOfProfID },
   limitedPracticeOfProf,
 ) => {
   return new Promise((resolve, reject) => {
     if (!limitedPracticeOfProf) return reject(500);
     db.query(
-      Query.updateLimitedPracticeOfProf(
-        filtered(limitedPracticeOfProf, LimitedPracticeAttributes),
+      Query.updateLtdPractOfProf(
+        filtered(limitedPracticeOfProf, LtdPractAttributes),
       ),
       { limitedPracticeOfProfID, ...limitedPracticeOfProf },
       (err, results) => {
@@ -49,10 +44,10 @@ export const updateLimitedPracticeOfProf = (
   });
 };
 
-export const getLimitedPracticeOfProf = ({ limitedPracticeOfProfID }) => {
+export const getLtdPractOfProf = ({ limitedPracticeOfProfID }) => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getLimitedPracticeOfProf,
+      Query.getLtdPractOfProf,
       { limitedPracticeOfProfID },
       (err, results) => {
         if (err) return reject(500);
@@ -63,10 +58,10 @@ export const getLimitedPracticeOfProf = ({ limitedPracticeOfProfID }) => {
   });
 };
 
-export const deleteLimitedPracticeOfProf = ({ limitedPracticeOfProfID }) => {
+export const deleteLtdPractOfProf = ({ limitedPracticeOfProfID }) => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.deleteLimitedPracticeOfProf,
+      Query.deleteLtdPractOfProf,
       { limitedPracticeOfProfID },
       (err, results) => {
         console.log(err);
@@ -78,11 +73,11 @@ export const deleteLimitedPracticeOfProf = ({ limitedPracticeOfProfID }) => {
   });
 };
 
-export const getLimitedPracticeOfProfs = limitedPracticeOfProf => {
+export const getLtdPractOfProfs = limitedPracticeOfProf => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getLimitedPracticeOfProfs(
-        filtered(limitedPracticeOfProf, LimitedPracticeAttributes),
+      Query.getLtdPractOfProfs(
+        filtered(limitedPracticeOfProf, LtdPractAttributes),
         limitedPracticeOfProf.sortBy,
       ),
       {
@@ -100,11 +95,11 @@ export const getLimitedPracticeOfProfs = limitedPracticeOfProf => {
     );
   });
 };
-export const getTotalLimitedPracticeOfProfs = limitedPracticeOfProf => {
+export const getTotalLtdPractOfProfs = limitedPracticeOfProf => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getTotalLimitedPracticeOfProfs(
-        filtered(limitedPracticeOfProf, LimitedPracticeAttributes),
+      Query.getTotalLtdPractOfProfs(
+        filtered(limitedPracticeOfProf, LtdPractAttributes),
       ),
       {
         field: 'askedPermission',

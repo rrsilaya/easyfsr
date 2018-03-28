@@ -1,6 +1,6 @@
 import { formatQueryParams } from '../../utils';
 
-export const addLimitedPracticeOfProf = `
+export const addLtdPractOfProf = `
   INSERT INTO limitedPracticeOfProf (
     id,
     limitedPracticeOfProfID,
@@ -15,13 +15,13 @@ export const addLimitedPracticeOfProf = `
   )
 `;
 
-export const updateLimitedPracticeOfProf = limitedPracticeOfProf => `
+export const updateLtdPractOfProf = limitedPracticeOfProf => `
   UPDATE limitedPracticeOfProf SET
   ${formatQueryParams(limitedPracticeOfProf, 'update')}
   WHERE limitedPracticeOfProfID=:limitedPracticeOfProfID
 `;
 
-export const getLimitedPracticeOfProfs = (query, sortBy) => `
+export const getLtdPractOfProfs = (query, sortBy) => `
   SELECT * FROM limitedPracticeOfProf ${
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   } 
@@ -29,17 +29,17 @@ export const getLimitedPracticeOfProfs = (query, sortBy) => `
   LIMIT :limit
 `;
 
-export const getLimitedPracticeOfProf = `
+export const getLtdPractOfProf = `
   SELECT * FROM limitedPracticeOfProf
 
   WHERE limitedPracticeOfProfID = :limitedPracticeOfProfID
 `;
 
-export const deleteLimitedPracticeOfProf = `
+export const deleteLtdPractOfProf = `
   DELETE FROM limitedPracticeOfProf WHERE limitedPracticeOfProfID = :limitedPracticeOfProfID
 `;
 
-export const getTotalLimitedPracticeOfProfs = query => `
+export const getTotalLtdPractOfProfs = query => `
   SELECT count(*) as total FROM limitedPracticeOfProf ${
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }

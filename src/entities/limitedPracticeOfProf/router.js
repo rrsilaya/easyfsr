@@ -5,37 +5,36 @@ import * as Ctrl from './controller';
 const router = Router();
 
 /**
- * @api {post} /limitPracticeOfProf addLimitedPracticeOfProf
- * @apiGroup limitPracticeOfProf
- * @apiName addLimitedPracticeOfProf
+ * @api {post} /ltdPractOfProf addLtdPractOfProf
+ * @apiGroup LtdPractOfProf
+ * @apiName addLtdPractOfProf
  *
- * @apiParam (Body Params) {Number} id ID of limitPracticeOfProf
- * @apiParam (Body Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
- * @apiParam (Body Params) {String} askedPermssion Asked permission of limitPracticeOfProf
- * @apiParam (Body Params) {Date} date Date of limitPracticeOfProf
+ * @apiParam (Body Params) {Number} id ID of fsr
+ * @apiParam (Body Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
+ * @apiParam (Body Params) {String} askedPermssion Asked permission of limitedPracticeOfProf
+ * @apiParam (Body Params) {Date} date Date of limitedPracticeOfProf
  *
- * @apiSuccess {Object} limitPracticeOfProf new LimitPracticeOfProf
- * @apiSuccess {Number} limitPracticeOfProf.id ID of limitPracticeOfProf
- * @apiSuccess {Number} limitPracticeOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
- * @apiSuccess {String} limitPracticeOfProf.askedPermssion Asked permission of limitPracticeOfProf
- * @apiSuccess {Date} limitPracticeOfProf.date Date of limitPracticeOfProf
+ * @apiSuccess {Object} ltdPractOfProf new LtdPractOfProf
+ * @apiSuccess {Number} ltdPractOfProf.id ID of fsr
+ * @apiSuccess {Number} ltdPractOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
+ * @apiSuccess {String} ltdPractOfProf.askedPermssion Asked permission of limitedPracticeOfProf
+ * @apiSuccess {Date} ltdPractOfProf.date Date of limitedPracticeOfProf
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *	{
  *	    "status": 200,
- *	    "message": "Successfully created limitedPracticeOfProf",
- *	    "data": [
+ *	    "message": "Successfully created ltdPractOfProf",
+ *	    "data":
  *	        {
  *	            "limitedPracticeOfProfID": 97,
  *	            "id": 5,
  *	            "askedPermission": "no",
  *	            "date": "2000-12-31T16:00:00.000Z"
  *	        }
- *	    ]
  *	}
  *
- * @apiError (Error 500) {String[]} status status code
+ * @apiError (Error 500) {String} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -45,18 +44,16 @@ const router = Router();
  *   }
  */
 
-router.post('/limitedPracticeOfProf/', async (req, res) => {
+router.post('/ltdPractOfProf/', async (req, res) => {
   try {
-    const limitedPracticeOfProfID = await Ctrl.addLimitedPracticeOfProf(
-      req.body,
-    );
-    const limitedPracticeOfProf = await Ctrl.getLimitedPracticeOfProf({
+    const limitedPracticeOfProfID = await Ctrl.addLtdPractOfProf(req.body);
+    const ltdPractOfProf = await Ctrl.getLtdPractOfProf({
       limitedPracticeOfProfID,
     });
     res.status(200).json({
       status: 200,
-      message: 'Successfully created limitedPracticeOfProf',
-      data: limitedPracticeOfProf,
+      message: 'Successfully created LtdPractOfProf',
+      data: ltdPractOfProf,
     });
   } catch (status) {
     let message = '';
@@ -70,28 +67,28 @@ router.post('/limitedPracticeOfProf/', async (req, res) => {
 });
 
 /**
- * @api {put} /limitPracticeOfProf/:limitedPracticeOfProfID updateLimitedPracticeOfProf
- * @apiGroup limitPracticeOfProf
- * @apiName updateLimitedPracticeOfProf
+ * @api {put} /ltdPractOfProf/:limitedPracticeOfProfID updateLtdPractOfProf
+ * @apiGroup LtdPractOfProf
+ * @apiName updateLtdPractOfProf
 
- * @apiParam (Query Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
+ * @apiParam (Query Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
  *
- * @apiParam (Body Params) {Number} id ID of limitPracticeOfProf
- * @apiParam (Body Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
- * @apiParam (Body Params) {String} askedPermssion Asked permission of limitPracticeOfProf
- * @apiParam (Body Params) {Date} date Date of limitPracticeOfProf
+ * @apiParam (Body Params) {Number} id ID of fsr
+ * @apiParam (Body Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
+ * @apiParam (Body Params) {String} askedPermssion Asked permission of limitedPracticeOfProf
+ * @apiParam (Body Params) {Date} date Date of limitedPracticeOfProf
  *
- * @apiSuccess {Object} limitPracticeOfProf new LimitPracticeOfProf
- * @apiSuccess {Number} limitPracticeOfProf.id ID of limitPracticeOfProf
- * @apiSuccess {Number} limitPracticeOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
- * @apiSuccess {String} limitPracticeOfProf.askedPermssion Asked permission of limitPracticeOfProf
- * @apiSuccess {Date} limitPracticeOfProf.date Date of limitPracticeOfProf
+ * @apiSuccess {Object} ltdPractOfProf LtdPractOfProf updated
+ * @apiSuccess {Number} ltdPractOfProf.id ID of fsr
+ * @apiSuccess {Number} ltdPractOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
+ * @apiSuccess {String} ltdPractOfProf.askedPermssion Asked permission of limitedPracticeOfProf
+ * @apiSuccess {Date} ltdPractOfProf.date Date of limitedPracticeOfProf
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *	{
  *	    "status": 200,
- *	    "message": "Successfully updated limitedPracticeOfProf",
+ *	    "message": "Successfully updated LtdPractOfProf",
  *	    "data": [
  *	        {
  *	            "limitedPracticeOfProfID": 97,
@@ -102,7 +99,7 @@ router.post('/limitedPracticeOfProf/', async (req, res) => {
  *	    ]
  *	}
  *
- * @apiError (Error 500) {String[]} status status code
+ * @apiError (Error 500) {String} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -110,60 +107,55 @@ router.post('/limitedPracticeOfProf/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * 	HTTP/1.1 404 limitPracticeOfProf not found
+ * 	HTTP/1.1 404 LtdPractOfProf not found
  *	 {
  * 	  "status": 404,
- * 	  "message": "limitPracticeOfProf not found"
+ * 	  "message": "LtdPractOfProf not found"
  * 	 }
  */
 
-router.put(
-  '/limitedPracticeOfProf/:limitedPracticeOfProfID',
-  async (req, res) => {
-    try {
-      await Ctrl.updateLimitedPracticeOfProf(req.params, req.body);
-      const limitedPracticeOfProf = await Ctrl.getLimitedPracticeOfProf(
-        req.params,
-      );
-      res.status(200).json({
-        status: 200,
-        message: 'Successfully updated limitedPracticeOfProf',
-        data: limitedPracticeOfProf,
-      });
-    } catch (status) {
-      let message = '';
-      switch (status) {
-        case 404:
-          message = 'limitedPracticeOfProf not found';
-          break;
-        case 500:
-          message = 'Internal server error';
-          break;
-      }
-      res.status(status).json({ status, message });
+router.put('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
+  try {
+    await Ctrl.updateLtdPractOfProf(req.params, req.body);
+    const ltdPractOfProf = await Ctrl.getLtdPractOfProf(req.params);
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully updated LtdPractOfProf',
+      data: ltdPractOfProf,
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'LtdPractOfProf not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
     }
-  },
-);
+    res.status(status).json({ status, message });
+  }
+});
 
 /**
- * @api {put} /limitPracticeOfProf/:limitedPracticeOfProfID deleteLimitedPracticeOfProf
- * @apiGroup limitPracticeOfProf
- * @apiName deleteLimitedPracticeOfProf
+ * @api {delete} /ltdPractOfProf/:limitedPracticeOfProfID deleteLtdPractOfProf
+ * @apiGroup LtdPractOfProf
+ * @apiName deleteLtdPractOfProf
  *
  *
- * @apiParam (Query Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
+ * @apiParam (Query Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
  *
- * @apiSuccess {Object} limitPracticeOfProf new LimitPracticeOfProf
- * @apiSuccess {Number} limitPracticeOfProf.id ID of limitPracticeOfProf
- * @apiSuccess {Number} limitPracticeOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
- * @apiSuccess {String} limitPracticeOfProf.askedPermssion Asked permission of limitPracticeOfProf
- * @apiSuccess {Date} limitPracticeOfProf.date Date of limitPracticeOfProf
+ * @apiSuccess {Object} ltdPractOfProf LtdPractOfProf deleted
+ * @apiSuccess {Number} ltdPractOfProf.id ID of fsr
+ * @apiSuccess {Number} ltdPractOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
+ * @apiSuccess {String} ltdPractOfProf.askedPermssion Asked permission of limitedPracticeOfProf
+ * @apiSuccess {Date} ltdPractOfProf.date Date of limitedPracticeOfProf
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *	{
  *	    "status": 200,
- *	    "message": "Successfully deleted limitedPracticeOfProf",
+ *	    "message": "Successfully deleted LtdPractOfProf",
  *	    "data": [
  *	        {
  *	            "limitedPracticeOfProfID": 97,
@@ -174,7 +166,7 @@ router.put(
  *	    ]
  *	}
  *
- * @apiError (Error 500) {String[]} status status code
+ * @apiError (Error 500) {String} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -182,60 +174,55 @@ router.put(
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * 	HTTP/1.1 404 limitPracticeOfProf not found
+ * 	HTTP/1.1 404 LtdPractOfProf not found
  *	 {
  * 	  "status": 404,
- * 	  "message": "limitPracticeOfProf not found"
+ * 	  "message": "LtdPractOfProf not found"
  * 	 }
  */
 
-router.delete(
-  '/limitedPracticeOfProf/:limitedPracticeOfProfID',
-  async (req, res) => {
-    try {
-      const limitedPracticeOfProf = await Ctrl.getLimitedPracticeOfProf(
-        req.params,
-      );
-      await Ctrl.deleteLimitedPracticeOfProf(req.params);
-      res.status(200).json({
-        status: 200,
-        message: 'Successfully deleted limitedPracticeOfProf',
-        data: limitedPracticeOfProf,
-      });
-    } catch (status) {
-      let message = '';
-      switch (status) {
-        case 404:
-          message = 'LimitedPracticeOfProf not found';
-          break;
-        case 500:
-          message = 'Internal server error';
-          break;
-      }
-      res.status(status).json({ status, message });
+router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
+  try {
+    const ltdPractOfProf = await Ctrl.getLtdPractOfProf(req.params);
+    await Ctrl.deleteLtdPractOfProf(req.params);
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully deleted LtdPractOfProf',
+      data: ltdPractOfProf,
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'LtdPractOfProf not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
     }
-  },
-);
+    res.status(status).json({ status, message });
+  }
+});
 
 /**
- * @api {get} /limitPracticeOfProf/:limitedPracticeOfProfID getLimitedPracticeOfProf
- * @apiGroup limitPracticeOfProf
- * @apiName getLimitedPracticeOfProf
+ * @api {get} /ltdPractOfProf/:limitedPracticeOfProfID getLtdPractOfProf
+ * @apiGroup LtdPractOfProf
+ * @apiName getLtdPractOfProf
  *
  *
- * @apiParam (Query Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
+ * @apiParam (Query Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
  *
- * @apiSuccess {Object} limitPracticeOfProf new LimitPracticeOfProf
- * @apiSuccess {Number} limitPracticeOfProf.id ID of limitPracticeOfProf
- * @apiSuccess {Number} limitPracticeOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
- * @apiSuccess {String} limitPracticeOfProf.askedPermssion Asked permission of limitPracticeOfProf
- * @apiSuccess {Date} limitPracticeOfProf.date Date of limitPracticeOfProf
+ * @apiSuccess {Object} ltdPractOfProf LtdPractOfProf details
+ * @apiSuccess {Number} ltdPractOfProf.id ID of fsr
+ * @apiSuccess {Number} ltdPractOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
+ * @apiSuccess {String} ltdPractOfProf.askedPermssion Asked permission of limitedPracticeOfProf
+ * @apiSuccess {Date} ltdPractOfProf.date Date of limitedPracticeOfProf
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *	{
  *	    "status": 200,
- *	    "message": "Successfully fetched limitedPracticeOfProf",
+ *	    "message": "Successfully fetched LtdPractOfProf",
  *	    "data": [
  *	        {
  *	            "limitedPracticeOfProfID": 97,
@@ -246,7 +233,7 @@ router.delete(
  *	    ]
  *	}
  *
- * @apiError (Error 500) {String[]} status status code
+ * @apiError (Error 500) {String} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -254,58 +241,53 @@ router.delete(
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * 	HTTP/1.1 404 limitPracticeOfProf not found
+ * 	HTTP/1.1 404 LtdPractOfProf not found
  *	 {
  * 	  "status": 404,
- * 	  "message": "limitPracticeOfProf not found"
+ * 	  "message": "LtdPractOfProf not found"
  * 	 }
  */
 
-router.get(
-  '/limitedPracticeOfProf/:limitedPracticeOfProfID',
-  async (req, res) => {
-    try {
-      const limitedPracticeOfProf = await Ctrl.getLimitedPracticeOfProf(
-        req.params,
-      );
-      res.status(200).json({
-        status: 200,
-        message: 'Successfully fetched limitedPracticeOfProf',
-        data: limitedPracticeOfProf,
-      });
-    } catch (status) {
-      let message = '';
-      switch (status) {
-        case 404:
-          message = 'limitedPracticeOfProf not found';
-          break;
-        case 500:
-          message = 'Internal server error';
-          break;
-      }
-      res.status(status).json({ status, message });
+router.get('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
+  try {
+    const ltdPractOfProf = await Ctrl.getLtdPractOfProf(req.params);
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully fetched LtdPractOfProf',
+      data: ltdPractOfProf,
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'LtdPractOfProf not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
     }
-  },
-);
+    res.status(status).json({ status, message });
+  }
+});
 
 /**
- * @api {get} /limitPracticeOfProf/ getLimitedPracticeOfProfs
- * @apiGroup limitPracticeOfProf
- * @apiName getLimitedPracticeOfProfs
+ * @api {get} /ltdPractOfProf/ getLtdPractOfProfs
+ * @apiGroup LtdPractOfProf
+ * @apiName getLtdPractOfProfs
  *
  *
  *
- * @apiSuccess {Object} limitPracticeOfProf new LimitPracticeOfProf
- * @apiSuccess {Number} limitPracticeOfProf.id ID of limitPracticeOfProf
- * @apiSuccess {Number} limitPracticeOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
- * @apiSuccess {String} limitPracticeOfProf.askedPermssion Asked permission of limitPracticeOfProf
- * @apiSuccess {Date} limitPracticeOfProf.date Date of limitPracticeOfProf
+ * @apiSuccess {Object} ltdPractOfProf All LtdPractOfProf
+ * @apiSuccess {Number} ltdPractOfProf.id ID of fsr
+ * @apiSuccess {Number} ltdPractOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
+ * @apiSuccess {String} ltdPractOfProf.askedPermssion Asked permission of limitedPracticeOfProf
+ * @apiSuccess {Date} ltdPractOfProf.date Date of limitedPracticeOfProf
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *	{
  *	    "status": 200,
- *	    "message": "Successfully fetched limitedPracticeOfProf",
+ *	    "message": "Successfully fetched ltdPractOfProf",
  *	    "data": [
  *	        {
  *	            "limitedPracticeOfProfID": 97,
@@ -326,7 +308,7 @@ router.get(
  *      "pages": 8
  *	}
  *
- * @apiError (Error 500) {String[]} status status code
+ * @apiError (Error 500) {String} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -334,27 +316,25 @@ router.get(
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * 	HTTP/1.1 404 limitPracticeOfProf not found
+ * 	HTTP/1.1 404 LtdPractOfProf not found
  *	 {
  * 	  "status": 404,
- * 	  "message": "limitPracticeOfProf not found"
+ * 	  "message": "LtdPractOfProf not found"
  * 	 }
  */
 
-router.get('/limitedPracticeOfProf/', async (req, res) => {
+router.get('/ltdPractOfProf/', async (req, res) => {
   try {
-    const limitedPracticeOfProf = await Ctrl.getLimitedPracticeOfProfs(
-      req.query,
-    );
+    const ltdPractOfProf = await Ctrl.getLtdPractOfProfs(req.query);
     res.status(200).json({
       status: 200,
-      message: 'Successfully fetched limitedPracticeOfProf',
-      data: limitedPracticeOfProf,
-      total: limitedPracticeOfProf.length,
+      message: 'Successfully fetched LtdPractOfProf',
+      data: ltdPractOfProf,
+      total: ltdPractOfProf.length,
       limit: parseInt(req.query.limit) || 12,
       page: parseInt(req.query.page) || 1,
       pages: Math.ceil(
-        (await Ctrl.getTotalLimitedPracticeOfProfs(req.query)).total /
+        (await Ctrl.getTotalLtdPractOfProfs(req.query)).total /
           (parseInt(req.query.limit) || 12),
       ),
     });
@@ -362,7 +342,7 @@ router.get('/limitedPracticeOfProf/', async (req, res) => {
     let message = '';
     switch (status) {
       case 404:
-        message = 'limitedPracticeOfProf/s not found';
+        message = 'LtdPractOfProf/s not found';
         break;
       case 500:
         message = 'Internal server error';
