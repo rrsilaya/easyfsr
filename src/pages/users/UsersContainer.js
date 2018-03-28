@@ -21,7 +21,6 @@ const mapStateToProps = state => {
 
     isGettingUsers,
     isAddingUser,
-    isDeletingUser,
     isEditingUser,
 
     users,

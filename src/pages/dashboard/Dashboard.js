@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Button, Card, Progress, Table, Row, Col } from 'antd';
+import { Icon, Card, Progress, Table, Row, Col } from 'antd';
 import styles from './styles';
 import actions from './actions';
 import dataSource from './datasource';

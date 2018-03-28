@@ -31,12 +31,7 @@ class User extends Component {
   };
 
   render() {
-    const {
-      changeSelectedUser,
-      toggleDeleteModal,
-      toggleEditModal,
-      user,
-    } = this.props;
+    const { user } = this.props;
 
     return (
       <div>
