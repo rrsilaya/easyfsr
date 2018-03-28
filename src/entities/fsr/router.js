@@ -19,7 +19,7 @@ const router = Router();
  * @apiSuccess {Number} fsr.userID ID of user
  * @apiSuccess {String} fsr.acadYear academic year the fsr is filed
  * @apiSuccess {String} fsr.semester semester the fsr is filed
- * @apiSucess {Number} fsr.teachingLoadCreds teaching load credits
+ * @apiSuccess {Number} fsr.teachingLoadCreds teaching load credits
  * @apiSuccess {Boolean} fsr.isChecked indicates if fsr is approved or not
  *
  * @apiSuccessExample {json} Success-Response:
@@ -79,7 +79,7 @@ router.post('/fsr/', async (req, res) => {
  * @apiSuccess {Number} fsr.userID ID of user
  * @apiSuccess {String} fsr.acadYear academic year the fsr is filed
  * @apiSuccess {String} fsr.semester semester the fsr is filed
- * @apiSucess {Number} fsr.teachingLoadCreds  teaching load credits
+ * @apiSuccess {Number} fsr.teachingLoadCreds  teaching load credits
  * @apiSuccess {Boolean} fsr.isChecked indicates if fsr is approved or not
  *
  * @apiSuccessExample {json} Success-Response:
@@ -141,7 +141,7 @@ router.get('/fsr/:id', async (req, res) => {
  * @apiGroup FSR
  * @apiName getFSRs
  *
- * @apiParam (Query Params) ({Number} [userID] ID of user
+ * @apiParam (Query Params) {Number} [userID] ID of user
  * @apiParam (Query Params) {String} [acadYear] academic year the fsr is filed
  * @apiParam (Query Params) {String} [semester] semester the fsr is filed
  * @apiParam (Query Params) {Number} [teachingLoadCreds] teaching load credits
@@ -262,7 +262,7 @@ router.use('/fsr/:userID', (req, res, next) => {
  * @apiSuccess {Number} fsr.userID ID of user
  * @apiSuccess {String} fsr.acadYear academic year the fsr is filed
  * @apiSuccess {String} fsr.semester semester the fsr is filed
- * @apiSucess {Number} fsr.teachingLoadCreds  teaching load credits
+ * @apiSuccess {Number} fsr.teachingLoadCreds  teaching load credits
  * @apiSuccess {Boolean} fsr.isChecked indicates if fsr is approved or not
  *
  *
