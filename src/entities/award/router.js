@@ -131,8 +131,8 @@ router.post('/award/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 500) {String[]} status status code
- * @apiError (Error 500) {String} message Error message
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} message Error message
  * HTTP/1.1 404 Award not found
  * {
  *   "status": 404,
@@ -210,8 +210,8 @@ router.put('/award/:awardID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 500) {String} status status code
- * @apiError (Error 500) {String} message Error message
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} message Error message
  * HTTP/1.1 404 Award not found
  * {
  *   "status": 404,
@@ -287,8 +287,8 @@ router.delete('/award/:awardID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 500) {String} status status code
- * @apiError (Error 500) {String} message Error message
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} message Error message
  * HTTP/1.1 404 Award not found
  * {
  *   "status": 404,
@@ -378,8 +378,8 @@ router.get('/award/:awardID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 500) {String} status status code
- * @apiError (Error 500) {String} message Error message
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} message Error message
  * HTTP/1.1 404 Award not found
  * {
  *   "status": 404,
