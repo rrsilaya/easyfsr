@@ -107,6 +107,8 @@ router.post('/ltdPractOfProf/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} message Error message
  * 	HTTP/1.1 404 LtdPractOfProf not found
  *	 {
  * 	  "status": 404,
@@ -174,6 +176,8 @@ router.put('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} message Error message
  * 	HTTP/1.1 404 LtdPractOfProf not found
  *	 {
  * 	  "status": 404,
@@ -241,6 +245,8 @@ router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} message Error message
  * 	HTTP/1.1 404 LtdPractOfProf not found
  *	 {
  * 	  "status": 404,
@@ -316,6 +322,8 @@ router.get('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} message Error message
  * 	HTTP/1.1 404 LtdPractOfProf not found
  *	 {
  * 	  "status": 404,
