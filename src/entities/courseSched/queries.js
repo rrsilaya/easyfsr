@@ -1,6 +1,6 @@
 import { formatQueryParams } from '../../utils';
 
-export const addCourseSched = `INSERT INTO courseSched 
+export const addCourseSched = ` INSERT INTO courseSched 
 	(
     courseID,
  	 	day,
@@ -18,11 +18,17 @@ export const addCourseSched = `INSERT INTO courseSched
 export const updateCourseSched = courseSched =>
   `UPDATE courseSched SET ${formatQueryParams(
     courseSched,
-  )} WHERE courseSchedID=:courseSchedID`;
+  )} WHERE courseSchedID = :courseSchedID`;
 
-export const deleteCourseSched = `DELETE from courseSched where courseSchedID = :courseSchedID`;
+export const deleteCourseSched = `
+  DELETE from courseSched 
+  WHERE courseSchedID = :courseSchedID
+`;
 
-export const getCourseSched = `SELECT * FROM courseSched WHERE courseSchedID=:courseSchedID`;
+export const getCourseSched = `
+  SELECT * FROM courseSched 
+  WHERE courseSchedID = :courseSchedID
+`;
 
 export const getCourseScheds = (query, sortBy) => `
   SELECT * FROM courseSched ${
@@ -34,6 +40,8 @@ export const getCourseScheds = (query, sortBy) => `
 
 `;
 
-export const getTotalCourseScheds = () => `SELECT count(*) FROM courseSched`;
-
-// export const dropCourseSched = 'DROP TABLE courseSched';
+export const getTotalCourseScheds = query => `
+  SELECT count(*) as total FROM courseSched ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
+`;
