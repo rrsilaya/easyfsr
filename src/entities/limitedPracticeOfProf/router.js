@@ -9,14 +9,14 @@ const router = Router();
  * @apiGroup limitPracticeOfProf
  * @apiName addLimitedPracticeOfProf
  *
- * @apiParam (Body Params) {Integer} id ID of limitPracticeOfProf
- * @apiParam (Body Params) {Integer} limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
+ * @apiParam (Body Params) {Number} id ID of limitPracticeOfProf
+ * @apiParam (Body Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
  * @apiParam (Body Params) {String} askedPermssion Asked permission of limitPracticeOfProf
  * @apiParam (Body Params) {Date} date Date of limitPracticeOfProf
  *
  * @apiSuccess {Object} limitPracticeOfProf new LimitPracticeOfProf
- * @apiSuccess {Integer} limitPracticeOfProf.id ID of limitPracticeOfProf
- * @apiSuccess {Integer} limitPracticeOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
+ * @apiSuccess {Number} limitPracticeOfProf.id ID of limitPracticeOfProf
+ * @apiSuccess {Number} limitPracticeOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
  * @apiSuccess {String} limitPracticeOfProf.askedPermssion Asked permission of limitPracticeOfProf
  * @apiSuccess {Date} limitPracticeOfProf.date Date of limitPracticeOfProf
  *
@@ -74,16 +74,16 @@ router.post('/limitedPracticeOfProf/', async (req, res) => {
  * @apiGroup limitPracticeOfProf
  * @apiName updateLimitedPracticeOfProf
 
- * @apiParam (Query Params) {Integer} limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
+ * @apiParam (Query Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
  *
- * @apiParam (Body Params) {Integer} id ID of limitPracticeOfProf
- * @apiParam (Body Params) {Integer} limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
+ * @apiParam (Body Params) {Number} id ID of limitPracticeOfProf
+ * @apiParam (Body Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
  * @apiParam (Body Params) {String} askedPermssion Asked permission of limitPracticeOfProf
  * @apiParam (Body Params) {Date} date Date of limitPracticeOfProf
  *
  * @apiSuccess {Object} limitPracticeOfProf new LimitPracticeOfProf
- * @apiSuccess {Integer} limitPracticeOfProf.id ID of limitPracticeOfProf
- * @apiSuccess {Integer} limitPracticeOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
+ * @apiSuccess {Number} limitPracticeOfProf.id ID of limitPracticeOfProf
+ * @apiSuccess {Number} limitPracticeOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
  * @apiSuccess {String} limitPracticeOfProf.askedPermssion Asked permission of limitPracticeOfProf
  * @apiSuccess {Date} limitPracticeOfProf.date Date of limitPracticeOfProf
  *
@@ -151,11 +151,11 @@ router.put(
  * @apiName deleteLimitedPracticeOfProf
  *
  *
- * @apiParam (Query Params) {Integer} limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
+ * @apiParam (Query Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
  *
  * @apiSuccess {Object} limitPracticeOfProf new LimitPracticeOfProf
- * @apiSuccess {Integer} limitPracticeOfProf.id ID of limitPracticeOfProf
- * @apiSuccess {Integer} limitPracticeOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
+ * @apiSuccess {Number} limitPracticeOfProf.id ID of limitPracticeOfProf
+ * @apiSuccess {Number} limitPracticeOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
  * @apiSuccess {String} limitPracticeOfProf.askedPermssion Asked permission of limitPracticeOfProf
  * @apiSuccess {Date} limitPracticeOfProf.date Date of limitPracticeOfProf
  *
@@ -223,11 +223,11 @@ router.delete(
  * @apiName getLimitedPracticeOfProf
  *
  *
- * @apiParam (Query Params) {Integer} limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
+ * @apiParam (Query Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
  *
  * @apiSuccess {Object} limitPracticeOfProf new LimitPracticeOfProf
- * @apiSuccess {Integer} limitPracticeOfProf.id ID of limitPracticeOfProf
- * @apiSuccess {Integer} limitPracticeOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
+ * @apiSuccess {Number} limitPracticeOfProf.id ID of limitPracticeOfProf
+ * @apiSuccess {Number} limitPracticeOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
  * @apiSuccess {String} limitPracticeOfProf.askedPermssion Asked permission of limitPracticeOfProf
  * @apiSuccess {Date} limitPracticeOfProf.date Date of limitPracticeOfProf
  *
@@ -296,8 +296,8 @@ router.get(
  *
  *
  * @apiSuccess {Object} limitPracticeOfProf new LimitPracticeOfProf
- * @apiSuccess {Integer} limitPracticeOfProf.id ID of limitPracticeOfProf
- * @apiSuccess {Integer} limitPracticeOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
+ * @apiSuccess {Number} limitPracticeOfProf.id ID of limitPracticeOfProf
+ * @apiSuccess {Number} limitPracticeOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitPracticeOfProf
  * @apiSuccess {String} limitPracticeOfProf.askedPermssion Asked permission of limitPracticeOfProf
  * @apiSuccess {Date} limitPracticeOfProf.date Date of limitPracticeOfProf
  *
@@ -319,7 +319,11 @@ router.get(
  *	            "askedPermission": "NO",
  *	            "date": "2000-12-31T16:00:00.000Z"
  *	        }
- *	    ]
+ *	    ],
+ *      "total": 2,
+ *      "limit": 12,
+ *      "page": 8,
+ *      "pages": 8
  *	}
  *
  * @apiError (Error 500) {String[]} status status code
@@ -346,134 +350,19 @@ router.get('/limitedPracticeOfProf/', async (req, res) => {
       status: 200,
       message: 'Successfully fetched limitedPracticeOfProf',
       data: limitedPracticeOfProf,
-      // total: limitedPracticeOfProf.length,
-      // limit: req.query.limit || 12,
-      // page: req.query.page || 1,
-      // pages: Math.ceil(limitedPracticeOfProf.length / (req.query.limit || 12)),
+      total: limitedPracticeOfProf.length,
+      limit: parseInt(req.query.limit) || 12,
+      page: parseInt(req.query.page) || 1,
+      pages: Math.ceil(
+        (await Ctrl.getTotalLimitedPracticeOfProfs(req.query)).total /
+          (parseInt(req.query.limit) || 12),
+      ),
     });
   } catch (status) {
     let message = '';
     switch (status) {
       case 404:
-        message = 'limitPracticeOfProf not found';
-        break;
-      case 500:
-        message = 'Internal server error';
-        break;
-    }
-    res.status(status).json({ status, message });
-  }
-});
-
-/**
- * @api {get} /countlimitPracticeOfProf/:id getTotalLimitedPracticeOfProfsByFSR
- * @apiGroup limitPracticeOfProf
- * @apiName getTotalLimitedPracticeOfProfsByFSR
- *
- *
- *
- * @apiSuccess {Integer} total total countof limitPracticeOfProf
- *
- * @apiSuccessExample {json} Success-Response:
- *   HTTP/1.1 200 OK
- *	{
- *	    "status": 200,
- *	    "message": "Successfully fetched limitedPracticeOfProf",
- *	    "data": [
- *	        {
- *	            "total": 1,
- *	        }
- *	    ]
- *	}
- *
- * @apiError (Error 500) {String[]} status status code
- * @apiError (Error 500) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- *   HTTP/1.1 500 Internal Server Error
- *   {
- *     "status": 500,
- *     "message": "Internal server error"
- *   }
- * 	HTTP/1.1 404 limitPracticeOfProf not found
- *	 {
- * 	  "status": 404,
- * 	  "message": "limitPracticeOfProf not found"
- * 	 }
- */
-
-router.get('/countlimitedPracticeOfProf/:id', async (req, res) => {
-  try {
-    const limitedPracticeOfProf = await Ctrl.getTotalLimitedPracticeOfProfsByFSR(
-      req.params,
-    );
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully counted limitedPracticeOfProf by FSR',
-      data: limitedPracticeOfProf,
-    });
-  } catch (status) {
-    let message = '';
-    switch (status) {
-      case 404:
-        message = 'limitedPracticeOfProf not found';
-        break;
-      case 500:
-        message = 'Internal server error';
-        break;
-    }
-    res.status(status).json({ status, message });
-  }
-});
-
-/**
- * @api {get} /countlimitPracticeOfProf/ getTotalLimitedPracticeOfProfs
- * @apiGroup limitPracticeOfProf
- * @apiName getTotalLimitedPracticeOfProfs
- *
- *
- *
- * @apiSuccess {Integer} total total countof limitPracticeOfProf
- *
- * @apiSuccessExample {json} Success-Response:
- *   HTTP/1.1 200 OK
- *	{
- *	    "status": 200,
- *	    "message": "Successfully fetched limitedPracticeOfProf",
- *	    "data": [
- *	        {
- *	            "total": 94,
- *	        }
- *	    ]
- *	}
- *
- * @apiError (Error 500) {String[]} status status code
- * @apiError (Error 500) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- *   HTTP/1.1 500 Internal Server Error
- *   {
- *     "status": 500,
- *     "message": "Internal server error"
- *   }
- * 	HTTP/1.1 404 limitPracticeOfProf not found
- *	 {
- * 	  "status": 404,
- * 	  "message": "limitPracticeOfProf not found"
- * 	 }
- */
-
-router.get('/countlimitedPracticeOfProf/', async (req, res) => {
-  try {
-    const total = await Ctrl.getTotalLimitedPracticeOfProfs(req.query);
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully counted limitedPracticeOfProf',
-      data: total,
-    });
-  } catch (status) {
-    let message = '';
-    switch (status) {
-      case 404:
-        message = 'limitedPracticeOfProf not found';
+        message = 'limitedPracticeOfProf/s not found';
         break;
       case 500:
         message = 'Internal server error';

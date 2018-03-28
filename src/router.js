@@ -1,23 +1,34 @@
 import { Router } from 'express';
 
 import authRouter from './entities/auth/router';
-import userRouter from './entities/user/router';
-
 import courseRouter from './entities/course/router';
 import courseSchedRouter from './entities/courseSched/router';
-// import awardRouter from './entities/award/router';
-import subjectRouter from './entities/subject/router';
-// import creativeWorkRouter from './entities/creativeWork/router';
 import fsrRouter from './entities/fsr/router';
 import serviceRouter from './entities/extensionAndCommunityService/router';
-
+import subjectRouter from './entities/subject/router';
 import userRouter from './entities/user/router';
+
 import limitedPracticeOfProfRouter from './entities/limitedPracticeOfProf/router';
 
 const router = Router();
 
 router.use(authRouter);
-router.use(userRouter);
+
+// router.use( (req,res,next) => {
+//   if(req.session.user){
+//     return next;
+//   }
+//   res.status(401).json({
+//     status:401,
+//     message: 'You must be logged in',
+//   });
+// });
+router.use(courseRouter);
+router.use(courseSchedRouter);
+router.use(fsrRouter);
+router.use(serviceRouter);
+
+router.use(limitedPracticeOfProfRouter);
 
 // router.use( (req,res,next) => {
 //   if(req.session.user.acctType == 'ADMIN'){
@@ -29,20 +40,6 @@ router.use(userRouter);
 //   });
 // });
 
-router.use(courseRouter);
-router.use(courseSchedRouter);
-router.use(subjectRouter);
-router.use(fsrRouter);
-router.use(serviceRouter);
-router.use(limitedPracticeOfProfRouter);
-// router.use( (req,res,next) => {
-//   if(req.session.user){
-//     return next;
-//   }
-//   res.status(401).json({
-//     status:401,
-//     message: 'You must be logged in',
-//   });
-// });
+router.use(userRouter);
 
 export default router;

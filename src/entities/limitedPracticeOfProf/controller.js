@@ -20,7 +20,7 @@ export const addLimitedPracticeOfProf = limitedPracticeOfProf => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.addLimitedPracticeOfProf,
-      { ...limitedPracticeOfProf },
+      limitedPracticeOfProf,
       (err, results) => {
         console.log(err);
         if (err) return reject(500);
@@ -57,7 +57,7 @@ export const getLimitedPracticeOfProf = ({ limitedPracticeOfProfID }) => {
       (err, results) => {
         if (err) return reject(500);
         else if (!results.length) return reject(404);
-        return resolve(results);
+        return resolve(results[0]);
       },
     );
   });
@@ -69,6 +69,7 @@ export const deleteLimitedPracticeOfProf = ({ limitedPracticeOfProfID }) => {
       Query.deleteLimitedPracticeOfProf,
       { limitedPracticeOfProfID },
       (err, results) => {
+        console.log(err);
         if (err) return reject(500);
         else if (!results.affectedRows) return reject(404);
         return resolve();
@@ -102,26 +103,20 @@ export const getLimitedPracticeOfProfs = limitedPracticeOfProf => {
 export const getTotalLimitedPracticeOfProfs = limitedPracticeOfProf => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getTotalLimitedPracticeOfProfs,
-      { ...limitedPracticeOfProf },
-      (err, results) => {
-        if (err) return reject(500);
-        else if (!results.length) return reject(404);
-        return resolve(results);
+      Query.getTotalLimitedPracticeOfProfs(
+        filtered(limitedPracticeOfProf, LimitedPracticeAttributes),
+      ),
+      {
+        field: 'askedPermission',
+        ...escapeSearch(
+          limitedPracticeOfProf,
+          searchFields,
+          limitedPracticeOfProf.limit,
+        ),
       },
-    );
-  });
-};
-
-export const getTotalLimitedPracticeOfProfsByFSR = ({ id }) => {
-  return new Promise((resolve, reject) => {
-    db.query(
-      Query.getTotalLimitedPracticeOfProfsByFSR,
-      { id },
       (err, results) => {
         if (err) return reject(500);
-        else if (!results.length) return reject(404);
-        return resolve(results);
+        return resolve(results[0]);
       },
     );
   });
