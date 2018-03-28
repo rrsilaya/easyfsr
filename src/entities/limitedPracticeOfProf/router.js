@@ -333,12 +333,12 @@ router.get('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
 
 router.get('/ltdPractOfProf/', async (req, res) => {
   try {
-    const ltdPractOfProf = await Ctrl.getLtdPractOfProfs(req.query);
+    const ltdPractOfProfs = await Ctrl.getLtdPractOfProfs(req.query);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched LtdPractOfProf',
-      data: ltdPractOfProf,
-      total: ltdPractOfProf.length,
+      data: ltdPractOfProfs,
+      total: ltdPractOfProfs.length,
       limit: parseInt(req.query.limit) || 12,
       page: parseInt(req.query.page) || 1,
       pages: Math.ceil(

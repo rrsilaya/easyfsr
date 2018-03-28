@@ -389,12 +389,12 @@ router.get('/award/:awardID', async (req, res) => {
 
 router.get('/award/', async (req, res) => {
   try {
-    const award = await Ctrl.getAwards(req.query);
+    const awards = await Ctrl.getAwards(req.query);
     res.status(200).json({
       status: 200,
-      message: 'Successfully fetched Awards',
-      data: award,
-      total: award.length,
+      message: 'Successfully fetched awards',
+      data: awards,
+      total: awards.length,
       limit: parseInt(req.query.limit) || 12,
       page: parseInt(req.query.page) || 1,
       pages: Math.ceil(

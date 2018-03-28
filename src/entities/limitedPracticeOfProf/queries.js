@@ -26,7 +26,7 @@ export const getLtdPractOfProfs = (query, sortBy) => `
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   } 
   ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
-  LIMIT :limit
+  LIMIT :limit OFFSET :offset
 `;
 
 export const getLtdPractOfProf = `
