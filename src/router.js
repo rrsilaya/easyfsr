@@ -7,6 +7,7 @@ import fsrRouter from './entities/fsr/router';
 import serviceRouter from './entities/extensionAndCommunityService/router';
 import subjectRouter from './entities/subject/router';
 import userRouter from './entities/user/router';
+import awardRouter from './entities/award/router';
 
 const router = Router();
 
@@ -26,6 +27,7 @@ router.use(courseSchedRouter);
 router.use(fsrRouter);
 router.use(serviceRouter);
 router.use(subjectRouter);
+router.use(awardRouter);
 
 // router.use( (req,res,next) => {
 //   if(req.session.user.acctType == 'ADMIN'){
