@@ -381,7 +381,7 @@ router.get('/award/:awardID', async (req, res) => {
  *   }
  * @apiError (Error 500) {String} status status code
  * @apiError (Error 500) {String} message Error message
- * @apiErrorExampsle {json} Error-Response:
+ * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
@@ -389,6 +389,7 @@ router.get('/award/:awardID', async (req, res) => {
  *   }
  * @apiError (Error 404) {String} status status code
  * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Award not found
  * {
  *   "status": 404,
