@@ -145,9 +145,9 @@ router.get('/fsr/:id', async (req, res) => {
  * @apiParam (Query Params) {String} [acadYear] academic year the fsr is filed
  * @apiParam (Query Params) {String} [semester] semester the fsr is filed
  * @apiParam (Query Params) {Number} [teachingLoadCreds] teaching load credits
- * @apiParam (Query Params) {Boolean} [isChecked] indicates if fsr is approved or no
+ * @apiParam (Query Params) {Boolean} [isChecked] indicates if fsr is approved or not
  * @apiParam (Query Params) {Number} [page] page number
- * @apiParam (Query Params) {Number} [limit] count limit of users to fetch
+ * @apiParam (Query Params) {Number} [limit] count limit of fsrs to fetch
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'isChecked'
  *

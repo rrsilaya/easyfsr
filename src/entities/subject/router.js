@@ -322,7 +322,7 @@ router.get('/subject/:subjectID', async (req, res) => {
  * @apiParam (Query Params) {String} [sectionCode] section code of subject
  * @apiParam (Query Params) {String} [room] room where subject is being taught
  * @apiParam (Query Params) {Number} [page] page number
- * @apiParam (Query Params) {Number} [limit] count limit of users to fetch
+ * @apiParam (Query Params) {Number} [limit] count limit of subjects to fetch
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'subjectCode'
  * 

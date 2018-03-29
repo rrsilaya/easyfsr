@@ -11,13 +11,13 @@ const router = Router();
  *
  * @apiParam (Body Params) {Number} id ID of fsr
  * @apiParam (Body Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
- * @apiParam (Body Params) {String} askedPermssion Asked permission of limitedPracticeOfProf
- * @apiParam (Body Params) {Date} date Date of limitedPracticeOfProf
+ * @apiParam (Body Params) {String} askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
+ * @apiParam (Body Params) {Date} [date] Date of limitedPracticeOfProf
  *
  * @apiSuccess {Object} ltdPractOfProf new LtdPractOfProf
  * @apiSuccess {Number} ltdPractOfProf.id ID of fsr
  * @apiSuccess {Number} ltdPractOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
- * @apiSuccess {String} ltdPractOfProf.askedPermssion Asked permission of limitedPracticeOfProf
+ * @apiSuccess {String} ltdPractOfProf.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
  * @apiSuccess {Date} ltdPractOfProf.date Date of limitedPracticeOfProf
  *
  * @apiSuccessExample {json} Success-Response:
@@ -73,15 +73,14 @@ router.post('/ltdPractOfProf/', async (req, res) => {
 
  * @apiParam (Query Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
  *
- * @apiParam (Body Params) {Number} id ID of fsr
- * @apiParam (Body Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
- * @apiParam (Body Params) {String} askedPermssion Asked permission of limitedPracticeOfProf
- * @apiParam (Body Params) {Date} date Date of limitedPracticeOfProf
+ * @apiParam (Body Params) {Number} [id] ID of fsr
+ * @apiParam (Body Params) {String} [askedPermssion] Asked permission of limitedPracticeOfProf.Can be 'YES' OR 'NO'
+ * @apiParam (Body Params) {Date} [date] Date of limitedPracticeOfProf
  *
  * @apiSuccess {Object} ltdPractOfProf LtdPractOfProf updated
  * @apiSuccess {Number} ltdPractOfProf.id ID of fsr
  * @apiSuccess {Number} ltdPractOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
- * @apiSuccess {String} ltdPractOfProf.askedPermssion Asked permission of limitedPracticeOfProf
+ * @apiSuccess {String} ltdPractOfProf.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
  * @apiSuccess {Date} ltdPractOfProf.date Date of limitedPracticeOfProf
  *
  * @apiSuccessExample {json} Success-Response:
@@ -89,14 +88,13 @@ router.post('/ltdPractOfProf/', async (req, res) => {
  *	{
  *	    "status": 200,
  *	    "message": "Successfully updated LtdPractOfProf",
- *	    "data": [
+ *	    "data": 
  *	        {
  *	            "limitedPracticeOfProfID": 97,
  *	            "id": 5,
  *	            "askedPermission": "YES",
  *	            "date": "2002-12-31T16:00:00.000Z"
  *	        }
- *	    ]
  *	}
  *
  * @apiError (Error 500) {String} status status code
@@ -150,7 +148,7 @@ router.put('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  * @apiSuccess {Object} ltdPractOfProf LtdPractOfProf deleted
  * @apiSuccess {Number} ltdPractOfProf.id ID of fsr
  * @apiSuccess {Number} ltdPractOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
- * @apiSuccess {String} ltdPractOfProf.askedPermssion Asked permission of limitedPracticeOfProf
+ * @apiSuccess {String} ltdPractOfProf.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
  * @apiSuccess {Date} ltdPractOfProf.date Date of limitedPracticeOfProf
  *
  * @apiSuccessExample {json} Success-Response:
@@ -219,7 +217,7 @@ router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  * @apiSuccess {Object} ltdPractOfProf LtdPractOfProf details
  * @apiSuccess {Number} ltdPractOfProf.id ID of fsr
  * @apiSuccess {Number} ltdPractOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
- * @apiSuccess {String} ltdPractOfProf.askedPermssion Asked permission of limitedPracticeOfProf
+ * @apiSuccess {String} ltdPractOfProf.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
  * @apiSuccess {Date} ltdPractOfProf.date Date of limitedPracticeOfProf
  *
  * @apiSuccessExample {json} Success-Response:
@@ -281,12 +279,19 @@ router.get('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  * @apiGroup LtdPractOfProf
  * @apiName getLtdPractOfProfs
  *
- *
+ * @apiParam (Query Params) {Number} [id] ID of fsr
+ * @apiParam (Query Params) {Number} [limitedPracticeOfProfID] limitedPracticeOfProfID of limitedPracticeOfProf
+ * @apiParam (Query Params) {String} [askedPermssion] Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
+ * @apiParam (Query Params) {Date} [date] Date of limitedPracticeOfProf
+ * @apiParam (Query Params) {Number} [page] page number
+ * @apiParam (Query Params) {Number} [limit] count limit to fetch
+ * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
+ * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'id'
  *
  * @apiSuccess {Object} ltdPractOfProf All LtdPractOfProf
  * @apiSuccess {Number} ltdPractOfProf.id ID of fsr
  * @apiSuccess {Number} ltdPractOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
- * @apiSuccess {String} ltdPractOfProf.askedPermssion Asked permission of limitedPracticeOfProf
+ * @apiSuccess {String} ltdPractOfProf.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
  * @apiSuccess {Date} ltdPractOfProf.date Date of limitedPracticeOfProf
  *
  * @apiSuccessExample {json} Success-Response:

@@ -102,7 +102,7 @@ export const getTotalLtdPractOfProfs = limitedPracticeOfProf => {
         filtered(limitedPracticeOfProf, LtdPractAttributes),
       ),
       {
-        field: 'askedPermission',
+        field: 'id',
         ...escapeSearch(
           limitedPracticeOfProf,
           searchFields,
