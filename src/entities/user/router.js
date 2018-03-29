@@ -236,6 +236,7 @@ router.get('/user/', async (req, res) => {
  * @apiSuccess {String} user.rank rank of employee
  * @apiSuccess {Boolean} user.isArchived indicates if employee entry is archived
  * @apiSuccess {String} user.acctType account type of employee
+ * @apiSuccessExample {json} Success-Response:
  *    HTTP/1.1 200 OK
  *   {
  *    "status": 200,
