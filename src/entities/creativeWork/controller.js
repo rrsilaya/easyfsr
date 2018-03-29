@@ -77,15 +77,24 @@ export const getCreativeWork = ({ creativeWorkID }) => {
   });
 };
 
-export const getTotalCreativeWorks = totalCreativeWorks => {
+export const getTotalCreativeWorks = creativeWork => {
   return new Promise((resolve, reject) => {
-    db.query(Query.getTotalCreativeWorks, (err, results) => {
-      if (err) {
-        console.log(err);
-        return reject(500);
-      } else if (!results.length) return reject(404);
-      return resolve(results);
-    });
+    db.query(
+      Query.getTotalCreativeWorks(
+        filtered(creativeWork, creativeWorkAttributes),
+      ),
+      {
+        field: 'date',
+        ...escapeSearch(creativeWork, searchFields, creativeWork.limit),
+      },
+      (err, results) => {
+        if (err) {
+          console.log(err);
+          return reject(500);
+        } else if (!results.length) return reject(404);
+        return resolve(results[0]);
+      },
+    );
   });
 };
 

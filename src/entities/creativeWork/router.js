@@ -78,30 +78,32 @@ router.post('/creativeWork/', async (req, res) => {
  *
  @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
- *  {
- *    "status": 200,
- *    "message": "Successfully fetched creative works",
- *    "data": [
- *       {
- *          "creativeWorkID": 1,
-            "id": 1,
-            "date": "2015-05-03T16:00:00.000Z",
-            "title": "hello",
-            "type": "a",
-            "credUnit": 2,
-            "userID": 1
- *       },
- *       {
- *          "creativeWorkID": 2,
-            "id": 2,
-            "date": "2015-05-03T16:00:00.000Z",
-            "title": "hello",
-            "type": "a",
-            "credUnit": 2,
-            "userID": 1
- *       }
- *    ]
- *  }
+ * {
+ *     "status": 200,
+ *     "message": "Successfully fetched creative works",
+ *     "data": [
+ *         {
+ *             "id": 1,
+ *             "creativeWorkID": 1,
+ *             "date": "0000-00-00",
+ *             "title": "1",
+ *             "type": "1",
+ *             "credUnit": 1
+ *         },
+ *         {
+ *             "id": 1,
+ *             "creativeWorkID": 2,
+ *             "date": "0000-00-00",
+ *             "title": "1",
+ *             "type": "1",
+ *             "credUnit": 1
+ *         }
+ *     ],
+ *     "total": 2,
+ *     "limit": 12,
+ *     "page": 1,
+ *     "pages": 1
+ * }
  * @apiError (Error 500) {String[]} errors List of errors
  * @apiError (Error 500) {String} errors.message Error message
   * @apiError (Error 404) {String[]} errors List of errors
@@ -121,13 +123,13 @@ router.post('/creativeWork/', async (req, res) => {
  */
 router.get('/creativeWork/', async (req, res) => {
   try {
-    const creativeWork = await Ctrl.getCreativeWorks();
+    const creativeWork = await Ctrl.getCreativeWorks(req.query);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched creative works',
       data: creativeWork,
+      total: (await Ctrl.getTotalCreativeWorks(req.query)).total,
       limit: req.query.limit || 12,
-      offset: offset,
       page: req.query.page || 1,
       pages: Math.ceil(creativeWork.length / (req.query.limit || 12)),
     });
@@ -324,134 +326,6 @@ router.put('/creativeWork/:creativeWorkID', async (req, res) => {
     switch (status) {
       case 404:
         message = 'Creative work not found';
-        break;
-      case 500:
-        message = 'Internal server error';
-        break;
-    }
-    res.status(status).json({ status, message });
-  }
-});
-
-/**
- * @api {get} /totalCreativeWorks/ getTotalCreativeWorks
- * @apiGroup Creative Work
- * @apiName getTotalCreativeWorks
- * 
- * @apiSuccess {Object} creativeWork createWorks fetched
- * @apiSuccess {Integer} creativeWork.creativeWorkID ID of creative work
- * @apiSuccess {Integer} creativeWork.id ID of fsr connected to creative work
- * @apiSuccess {Date} creativeWork.date date of creative work
- * @apiSuccess {String} creativeWork.title title of creative work
- * @apiSuccess {String} creativeWork.type type of creative work
- * @apiSuccess {Integer} creativeWork.credUnit credit units of creative work
- * @apiSuccess {Integer} creativeWork.userID user ID of creative work
- *
- @apiSuccessExample {json} Success-Response:
- *   HTTP/1.1 200 OK
- * {
- *    "status": 200,
- *    "data": [
- *        {
- *            "total": 26
- *        }
- *    ]
- * }
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
-  * @apiError (Error 404) {String[]} errors List of errors
- * @apiError (Error 404) {String} errors.message Error message
- * @apiErrorExample {json} Error-Response:
- *   HTTP/1.1 500 Internal Server Error
- *   {
- *     "status": 500,
- *     "message": "Internal server error"
- *   }
- *
- * HTTP/1.1 404 Creative works not found
- * {
- *   "status": 404,
- *   "message": "Creative works not found"
- * }
- */
-
-router.get('/totalCreativeWorks/', async (req, res) => {
-  try {
-    const totalCreativeWorks = await Ctrl.getTotalCreativeWorks();
-    res.status(200).json({
-      status: 200,
-      data: totalCreativeWorks,
-    });
-  } catch (status) {
-    let message = '';
-    switch (status) {
-      case 404:
-        message = 'Creative works not found';
-        break;
-      case 500:
-        message = 'Internal server error';
-        break;
-    }
-    res.status(status).json({ status, message });
-  }
-});
-
-/**
- * @api {get} /totalCreativeWorksByFSR/ getTotalCreativeWorksByFSR
- * @apiGroup Creative Work
- * @apiName getTotalCreativeWorksByFSR
- * 
- * @apiSuccess {Object} creativeWork createWorks fetched
- * @apiSuccess {Integer} creativeWork.creativeWorkID ID of creative work
- * @apiSuccess {Integer} creativeWork.id ID of fsr connected to creative work
- * @apiSuccess {Date} creativeWork.date date of creative work
- * @apiSuccess {String} creativeWork.title title of creative work
- * @apiSuccess {String} creativeWork.type type of creative work
- * @apiSuccess {Integer} creativeWork.credUnit credit units of creative work
- * @apiSuccess {Integer} creativeWork.userID user ID of creative work
- *
- @apiSuccessExample {json} Success-Response:
- *   HTTP/1.1 200 OK
- * {
- *    "status": 200,
- *    "data": [
- *        {
- *            "total": 26
- *        }
- *    ]
- * }
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
-  * @apiError (Error 404) {String[]} errors List of errors
- * @apiError (Error 404) {String} errors.message Error message
- * @apiErrorExample {json} Error-Response:
- *   HTTP/1.1 500 Internal Server Error
- *   {
- *     "status": 500,
- *     "message": "Internal server error"
- *   }
- *
- * HTTP/1.1 404 Creative works not found
- * {
- *   "status": 404,
- *   "message": "Creative works not found"
- * }
- */
-
-router.get('/totalCreativeWorksByFSR/', async (req, res) => {
-  try {
-    const totalCreativeWorksByFSR = await Ctrl.getTotalCreativeWorksByFSR(
-      req.params,
-    );
-    res.status(200).json({
-      status: 200,
-      data: totalCreativeWorksByFSR,
-    });
-  } catch (status) {
-    let message = '';
-    switch (status) {
-      case 404:
-        message = 'Creative works not found';
         break;
       case 500:
         message = 'Internal server error';

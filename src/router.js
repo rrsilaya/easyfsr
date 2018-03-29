@@ -9,6 +9,7 @@ import limitedPracticeOfProfRouter from './entities/limitedPracticeOfProf/router
 import serviceRouter from './entities/extensionAndCommunityService/router';
 import subjectRouter from './entities/subject/router';
 import userRouter from './entities/user/router';
+import creativeWorkRouter from './entities/creativeWork/router';
 
 const router = Router();
 
@@ -30,6 +31,7 @@ router.use(fsrRouter);
 router.use(limitedPracticeOfProfRouter);
 router.use(serviceRouter);
 router.use(subjectRouter);
+router.use(creativeWorkRouter);
 // router.use( (req,res,next) => {
 //   if(req.session.user.acctType == 'ADMIN'){
 //     return next;

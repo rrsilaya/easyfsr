@@ -50,8 +50,10 @@ export const getCreativeWork = `
 	WHERE creativeWorkID = :creativeWorkID
 `;
 
-export const getTotalCreativeWorks = `
-	SELECT count(*) as total FROM creativeWork
+export const getTotalCreativeWorks = query => `
+	SELECT count(*) as total FROM creativeWork ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
 `;
 
 export const getTotalCreativeWorksByFSR = `
