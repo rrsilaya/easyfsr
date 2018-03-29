@@ -42,7 +42,9 @@ export const getCreativeWorks = (query, sortBy) => `
 	SELECT * FROM creativeWork ${
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }
-	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} LIMIT :limit
+	ORDER BY [field] ${
+    sortBy === 'DESC' ? 'DESC' : 'ASC'
+  } LIMIT :limit OFFSET :offset
 `;
 
 export const getCreativeWork = `
