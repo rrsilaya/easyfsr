@@ -6,7 +6,12 @@ class ProfileInfo extends Component {
     const gridConfig = { xxl: 6, xl: 8, sm: 12, xs: 24 };
 
     return (
-      <Row type="flex" gutter={16} className="gridTiles">
+      <Row type="flex" justify="center" gutter={16} className="gridTiles">
+        <Col {...gridConfig}>
+          <Card title="Service Records" loading>
+            Content
+          </Card>
+        </Col>
         <Col {...gridConfig}>
           <Card title="Awards" loading>
             Content
@@ -14,6 +19,11 @@ class ProfileInfo extends Component {
         </Col>
         <Col {...gridConfig}>
           <Card title="Research" loading>
+            Content
+          </Card>
+        </Col>
+        <Col {...gridConfig}>
+          <Card title="Administrative Works" loading>
             Content
           </Card>
         </Col>
