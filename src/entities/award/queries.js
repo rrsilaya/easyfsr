@@ -52,6 +52,6 @@ export const getAwards = (query, sortBy) => `
 
 export const getTotalAwards = query => `
   SELECT count(*) as total FROM award ${
-    query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }
 `;
