@@ -3,20 +3,253 @@ import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
 
 const router = Router();
+
 /**
- * @api {get} /subject/:id getSubject
+ * @api {post} /subject addSubject
+ * @apiGroup Subject
+ * @apiName addSubject
+
+ * @apiParam (Body Params) {Number} subject.id ID of subject
+ * @apiParam (Body Params) {String} subject.subjectCode subject code of subject
+ * @apiParam (Body Params) {Number} subject.teachingLoadCreds teaching load credits of subject
+ * @apiParam (Body Params) {Number} subject.noOfStudents number of students enrolled in the subject
+ * @apiParam (Body Params) {Number} subject.hoursPerWeek number of hours per week subject takes up
+ * @apiParam (Body Params) {String} subject.sectionCode section code of subject
+ * @apiParam (Body Params) {String} subject.room room where subject is being taught
+ *
+ * @apiSuccess {Object}  subject subject added
+ * @apiSuccess {Number} subject.id ID of FSR
+ * @apiSuccess {String} subject.subjectCode subject code of subject
+ * @apiSuccess {Number} subject.subjectID ID of subject
+ * @apiSuccess {Number} subject.teachingLoadCreds teaching load credits of subject
+ * @apiSuccess {Number} subject.noOfStudents number of students enrolled in the subject
+ * @apiSuccess {Number} subject.hoursPerWeek number of hours per week subject takes up
+ * @apiSuccess {String} subject.sectionCode section code of subject
+ * @apiSuccess {String} subject.room room where subject is being taught
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *   HTTP/1.1 200 OK
+ *   {
+ *      "status": 200,
+ *       "message": "Successfully created subject",
+ *       "data": 
+ *           {
+ *               "id": 5,
+ *               "subjectCode": "NEW",
+ *               "subjectID": 20,
+ *               "teachingLoadCreds": 1,
+ *               "noOfStudents": 1,
+ *               "hoursPerWeek": 1,
+ *               "sectionCode": "a",
+ *               "room": "A"
+ *           }
+ *       
+ *   }
+ *
+ * @apiError (Error 500) {Number} status status code
+ * @apiError (Error 500) {String} message error message
+
+ * @apiErrorExample {json} Error-Response:
+ *   HTTP/1.1 500 Internal Server Error
+ *   {
+ *     "status": 500,
+ *     "message": "Internal server error"
+ *   }
+ */
+
+router.post('/subject/', async (req, res) => {
+  try {
+    const subjectID = await Ctrl.addSubject(req.body);
+    const subject = await Ctrl.getSubject({ subjectID });
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully added subject',
+      data: subject,
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 500:
+        message = 'Internal server error';
+        break;
+    }
+    res.status(status).json({ status, message });
+  }
+});
+
+/**
+ * @api {put} /subject/:subjectID updateSubject
+ * @apiGroup Subject
+ * @apiName updateSubject
+ *
+ * @apiParam (Query Params) {Number} subjectID ID of subject
+
+ * @apiParam (Body Params) {String} subject.subjectCode subject code of subject
+ * @apiParam (Body Params) {Number} subject.teachingLoadCreds teaching load credits of subject
+ * @apiParam (Body Params) {Number} subject.noOfStudents number of students enrolled in the subject
+ * @apiParam (Body Params) {Number} subject.hoursPerWeek number of hours per week subject takes up
+ * @apiParam (Body Params) {String} subject.sectionCode section code of subject
+ * @apiParam (Body Params) {Number} subject.room room where subject is being taught
+ *
+ * @apiSuccess {Object} subject Subject updated
+ * @apiSuccess {Number} subject.id ID of subject
+ * @apiSuccess {String} subject.subjectCode subject code of subject
+ * @apiSuccess {Number} subject.subjectID subject ID of subject
+ * @apiSuccess {Number} subject.teachingLoadCreds teaching load credits of subject
+ * @apiSuccess {Number} subject.noOfStudents number of students enrolled in the subject
+ * @apiSuccess {Number} subject.hoursPerWeek number of hours per week subject takes up
+ * @apiSuccess {String} subject.sectionCode section code of subject
+ * @apiSuccess {String} subject.room room where subject is being taught
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *   HTTP/1.1 200 OK
+ *  {
+      "status": 200,
+      "message": "Successfully updated subject",
+      "data": [
+          {
+              "id": 1,
+              "subjectCode": "NEW CODE",
+              "subjectID": 1,
+              "teachingLoadCreds": 2,
+              "noOfStudents": 2,
+              "hoursPerWeek": 2,
+              "sectionCode": "sd",
+              "room": "12"
+          }
+      ]
+    }
+ *   
+ *
+ * @apiError (Error 500) {Number} status status code
+ * @apiError (Error 500) {String} message error message
+ * @apiErrorExample {json} Error-Response:
+ *   HTTP/1.1 500 Internal Server Error
+ *   {
+ *     "status": 500,
+ *     "message": "Internal server error"
+ *   }
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message error message
+ * HTTP/1.1 404 Subject not found
+ * {
+ *   "status": 404,
+ *   "message": "Subject not found"
+ * }
+ */
+router.put('/subject/:subjectID', async (req, res) => {
+  try {
+    await Ctrl.updateSubject(req.params, req.body);
+    const subject = await Ctrl.getSubject(req.params);
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully updated subject',
+      data: subject,
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'Subject not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
+    }
+    res.status(status).json({ status, message });
+  }
+});
+
+/**
+ * @api {delete} /subject/:subjectID deleteSubject
+ * @apiGroup Subject
+ * @apiName deleteSubject
+ *
+ * @apiParam (Query Params) {Number} subjectID ID of subject
+ *
+ * @apiSuccess {Object} subject Subject deleted
+ * @apiSuccess {Number} subject.id ID of FSR
+ * @apiSuccess {String} subject.subjectCode subject code of subject
+ * @apiSuccess {Number} subject.subjectID ID of subject
+ * @apiSuccess {Number} subject.teachingLoadCreds teaching load credits of subject
+ * @apiSuccess {Number} subject.noOfStudents number of students enrolled in the subject
+ * @apiSuccess {Number} subject.hoursPerWeek number of hours per week subject takes up
+ * @apiSuccess {String} subject.sectionCode section code of subject
+ * @apiSuccess {String} subject.room room where subject is being taught
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *   HTTP/1.1 200 OK
+ *   {
+ *        "status": 200;
+ *        "message": 'Succesfully deleted subject'
+ *         "data": [
+ *         {
+ *           "id": 1,
+ *           "subjectCode": "NEW CODE",
+ *           "subjectID": 1,
+ *           "teachingLoadCreds": 2,
+ *           "noOfStudents": 2,
+ *           "hoursPerWeek": 2,
+ *           "sectionCode": "sd",
+ *           "room": "12"
+ *         }
+ *     ]
+ *   }
+ *
+ * @apiError (Error 500) {Number} status status code
+ * @apiError (Error 500) {String} message error message
+ * @apiErrorExample {json} Error-Response:
+ *   HTTP/1.1 500 Internal Server Error
+ *   {
+ *     "status": 500,
+ *     "message": "Internal server error"
+ *   }
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message error message
+ * HTTP/1.1 404 Subject not found
+ * {
+ *   "status": 404,
+ *   "message": "Subject not found"
+ * }
+ */
+
+router.delete('/subject/:subjectID', async (req, res) => {
+  try {
+    const subject = await Ctrl.getSubject(req.params);
+    await Ctrl.deleteSubject(req.params);
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully deleted subject',
+      data: subject,
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'Subject not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
+    }
+    res.status(status).json({ status, message });
+  }
+});
+
+/**
+ * @api {get} /subject/:subjectID getSubject
  * @apiGroup Subject
  * @apiName getSubject
  *
- * @apiParam (Query Params) {Integer} id ID of subject
+ * @apiParam (Query Params) {Number} subjectID ID of subject
  *
  * @apiSuccess {Object} subject Subject fetched
- * @apiSuccess {Integer} subject.id ID of subject
- * @apiSuccess {Integer} subject.subjectCode subject code of subject
- * @apiSuccess {String} subject.subjectID subject ID of subject
- * @apiSuccess {Integer} subject.teachingLoadCreds teaching load credits of subject
- * @apiSuccess {Integer} subject.noOfStudents number of students enrolled in the subject
- * @apiSuccess {Integer} subject.hoursPerWeek number of hours per week subject takes up
+ * @apiSuccess {Number} subject.id ID of FSR
+ * @apiSuccess {Number} subject.subjectCode subject code of subject
+ * @apiSuccess {String} subject.subjectID ID of subject
+ * @apiSuccess {Number} subject.teachingLoadCreds teaching load credits of subject
+ * @apiSuccess {Number} subject.noOfStudents number of students enrolled in the subject
+ * @apiSuccess {Number} subject.hoursPerWeek number of hours per week subject takes up
  * @apiSuccess {String} subject.sectionCode section code of subject
  * @apiSuccess {String} subject.room room where subject is being taught
  *
@@ -25,7 +258,7 @@ const router = Router();
  *  {
  *    "status": 200,
  *    "message": "Successfully fetched subject",
- *    "data": [
+ *    "data":
  *       {
  *           "id": 1,
  *           "subjectCode": "Hi",
@@ -36,19 +269,18 @@ const router = Router();
  *           "sectionCode": "Hello",
  *           "room": 1
  *       }
- *    ]
+ *
  *  }
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
- * @apiError (Error 404) {String[]} errors List of errors
- * @apiError (Error 404) {String} errors.message Error message
+ * @apiError (Error 500) {Number} status status code
+ * @apiError (Error 500) {String} message error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- *
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message error message
  * HTTP/1.1 404 Subject not found
  * {
  *   "status": 404,
@@ -56,7 +288,7 @@ const router = Router();
  * }
  */
 
-router.get('/subject/:id', async (req, res) => {
+router.get('/subject/:subjectID', async (req, res) => {
   try {
     const subject = await Ctrl.getSubject(req.params);
     res.status(200).json({
@@ -81,14 +313,26 @@ router.get('/subject/:id', async (req, res) => {
  * @api {get} /subject/ getSubjects
  * @apiGroup Subject
  * @apiName getSubjects
+ *
+ *
+ * @apiParam (Query Params) {Number} [subjectCode] subject code of subject
+ * @apiParam (Query Params) {Number} [teachingLoadCreds] teaching load credits of subject
+ * @apiParam (Query Params) {Number} [noOfStudents] number of students enrolled in the subject
+ * @apiParam (Query Params) {Number} [hoursPerWeek] number of hours per week subject takes up
+ * @apiParam (Query Params) {String} [sectionCode] section code of subject
+ * @apiParam (Query Params) {String} [room] room where subject is being taught
+ * @apiParam (Query Params) {Number} [page] page number
+ * @apiParam (Query Params) {Number} [limit] count limit of subjects to fetch
+ * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
+ * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'subjectCode'
  * 
  * @apiSuccess {Object} subject Subjects fetched
- * @apiSuccess {Integer} subject.id ID of subject
- * @apiSuccess {Integer} subject.subjectCode subject code of subject
- * @apiSuccess {String} subject.subjectID subject ID of subject
- * @apiSuccess {Integer} subject.teachingLoadCreds teaching load credits of subject
- * @apiSuccess {Integer} subject.noOfStudents number of students enrolled in the subject
- * @apiSuccess {Integer} subject.hoursPerWeek number of hours per week subject takes up
+ * @apiSuccess {Number} subject.id ID of FSR
+ * @apiSuccess {Number} subject.subjectCode subject code of subject
+ * @apiSuccess {String} subject.subjectID ID of subject
+ * @apiSuccess {Number} subject.teachingLoadCreds teaching load credits of subject
+ * @apiSuccess {Number} subject.noOfStudents number of students enrolled in the subject
+ * @apiSuccess {Number} subject.hoursPerWeek number of hours per week subject takes up
  * @apiSuccess {String} subject.sectionCode section code of subject
  * @apiSuccess {String} subject.room room where subject is being taught
  *
@@ -118,39 +362,49 @@ router.get('/subject/:id', async (req, res) => {
  *           "sectionCode": "Hello",
  *           "room": 2
  *       }
- *    ]
+ *    ],
+ *     "total": 2,
+ *     "limit": 2,
+ *     "page": 8,
+ *     "pages": 8
  *  }
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
-  * @apiError (Error 404) {String[]} errors List of errors
- * @apiError (Error 404) {String} errors.message Error message
+ * @apiError (Error 500) {Number} status status code
+ * @apiError (Error 500) {String} message error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- *
- * HTTP/1.1 404 Subjects not found
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message error message
+ * HTTP/1.1 404 Subject not found
  * {
  *   "status": 404,
- *   "message": "Subjects not found"
+ *   "message": "Subject not found"
  * }
  */
-
 router.get('/subject/', async (req, res) => {
   try {
-    const subject = await Ctrl.getSubjects();
+    const subjects = await Ctrl.getSubjects(req.query);
+
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched subjects',
-      data: subject,
+      data: subjects,
+      total: (await Ctrl.getTotalSubjects(req.query)).total,
+      limit: req.query.limit || 12,
+      page: req.query.page || 1,
+      pages: Math.ceil(
+        (await Ctrl.getTotalSubjects(req.query)).total /
+          (req.query.limit || 12),
+      ),
     });
   } catch (status) {
     let message = '';
     switch (status) {
       case 404:
-        message = 'Subjects not found';
+        message = 'Subject/s not found';
         break;
       case 500:
         message = 'Internal server error';
@@ -159,425 +413,4 @@ router.get('/subject/', async (req, res) => {
     res.status(status).json({ status, message });
   }
 });
-
-/**
- * @api {post} /subject addSubject
- * @apiGroup Subject
- * @apiName addSubject
-
- * @apiParam (Body Params) {Integer} subject.id ID of subject
- * @apiParam (Body Params) {String} subject.subjectCode subject code of subject
- * @apiParam (Body Params) {Integer} subject.teachingLoadCreds teaching load credits of subject
- * @apiParam (Body Params) {Integer} subject.noOfStudents number of students enrolled in the subject
- * @apiParam (Body Params) {Integer} subject.hoursPerWeek number of hours per week subject takes up
- * @apiParam (Body Params) {String} subject.sectionCode section code of subject
- * @apiParam (Body Params) {Integer} subject.room room where subject is being taught
- *
- * @apiSuccess {Object}  subject subject added
- * @apiSuccess {Integer} subject.id ID of subject
- * @apiSuccess {String} subject.subjectCode subject code of subject
- * @apiSuccess {Integer} subject.subjectID subject ID of subject
- * @apiSuccess {Integer} subject.teachingLoadCreds teaching load credits of subject
- * @apiSuccess {Integer} subject.noOfStudents number of students enrolled in the subject
- * @apiSuccess {Integer} subject.hoursPerWeek number of hours per week subject takes up
- * @apiSuccess {String} subject.sectionCode section code of subject
- * @apiSuccess {String} subject.room room where subject is being taught
- *
- * @apiSuccessExample {json} Success-Response:
- *   HTTP/1.1 200 OK
- *   {
- *     "data": {
- *        "status": 200;
- *        "message": 'Succesfully added subject'
- *     }
- *   }
- *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
-
- * @apiErrorExample {json} Error-Response:
- *   HTTP/1.1 500 Internal Server Error
- *   {
- *     "status": 500,
- *     "message": "Internal server error"
- *   }
- */
-
-router.post('/subject/', async (req, res) => {
-  try {
-    const id = await Ctrl.addSubject(req.body);
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully created subject',
-    });
-  } catch (status) {
-    let message = '';
-    switch (status) {
-      case 500:
-        message = 'Internal server error';
-        break;
-    }
-    res.status(status).json({ status, message });
-  }
-});
-
-/**
- * @api {put} /subject/:id updateSubject
- * @apiGroup Subject
- * @apiName updateSubject
- *
- * @apiParam (Query Params) {Integer} id ID of subject
-
- * @apiParam (Body Params) {String} subject.subjectCode subject code of subject
- * @apiParam (Body Params) {Integer} subject.teachingLoadCreds teaching load credits of subject
- * @apiParam (Body Params) {Integer} subject.noOfStudents number of students enrolled in the subject
- * @apiParam (Body Params) {Integer} subject.hoursPerWeek number of hours per week subject takes up
- * @apiParam (Body Params) {String} subject.sectionCode section code of subject
- * @apiParam (Body Params) {Integer} subject.room room where subject is being taught
- *
- *
- * @apiSuccess {Object} subject Subject updated
- * @apiSuccess {Integer} subject.id ID of subject
- * @apiSuccess {String} subject.subjectCode subject code of subject
- * @apiSuccess {Integer} subject.subjectID subject ID of subject
- * @apiSuccess {Integer} subject.teachingLoadCreds teaching load credits of subject
- * @apiSuccess {Integer} subject.noOfStudents number of students enrolled in the subject
- * @apiSuccess {Integer} subject.hoursPerWeek number of hours per week subject takes up
- * @apiSuccess {String} subject.sectionCode section code of subject
- * @apiSuccess {String} subject.room room where subject is being taught
- *
- * @apiSuccessExample {json} Success-Response:
- *   HTTP/1.1 200 OK
- *   {
- *     "data": {
- *        "status": 200;
- *        "message": 'Succesfully updated subject'
- *     }
- *   }
- *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
-  * @apiError (Error 404) {String[]} errors List of errors
- * @apiError (Error 404) {String} errors.message Error message
- * @apiErrorExample {json} Error-Response:
- *   HTTP/1.1 500 Internal Server Error
- *   {
- *     "status": 500,
- *     "message": "Internal server error"
- *   }
-    HTTP/1.1 404 Subject not found
- * {
- *   "status": 404,
- *   "message": "Subject not found"
- * }
- */
-
-router.put('/subject/:id', async (req, res) => {
-  try {
-    await Ctrl.updateSubject(req.params, req.body);
-    const subject = await Ctrl.getSubject(req.params);
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully updated subject',
-      data: subject,
-    });
-  } catch (status) {
-    let message = '';
-    switch (status) {
-      case 404:
-        message = 'Subject not found';
-        break;
-      case 500:
-        message = 'Internal server error';
-        break;
-    }
-    res.status(status).json({ status, message });
-  }
-});
-
-/**
- * @api {delete} /subject/:id deleteSubject
- * @apiGroup Subject
- * @apiName deleteSubject
- *
- * @apiParam (Query Params) {Integer} id ID of subject
- *
- * @apiSuccess {Object} subject Subject deleted
- * @apiSuccess {Integer} subject.id ID of subject
- * @apiSuccess {String} subject.subjectCode subject code of subject
- * @apiSuccess {Integer} subject.subjectID subject ID of subject
- * @apiSuccess {Integer} subject.teachingLoadCreds teaching load credits of subject
- * @apiSuccess {Integer} subject.noOfStudents number of students enrolled in the subject
- * @apiSuccess {Integer} subject.hoursPerWeek number of hours per week subject takes up
- * @apiSuccess {String} subject.sectionCode section code of subject
- * @apiSuccess {String} subject.room room where subject is being taught
- *
- * @apiSuccessExample {json} Success-Response:
- *   HTTP/1.1 200 OK
- *   {
- *     "data": {
- *        "status": 200;
- *        "message": 'Succesfully deleted subject'
- *     }
- *   }
- *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
- * @apiError (Error 404) {String[]} errors List of errors
- * @apiError (Error 404) {String} errors.message Error message
- * @apiErrorExample {json} Error-Response:
- *   HTTP/1.1 500 Internal Server Error
- *   {
- *     "status": 500,
- *     "message": "Internal server error"
- *   }
- *
- * HTTP/1.1 404 Subject not found
- * {
- *   "status": 404,
- *   "message": "Subject not found"
- * }
- */
-
-router.delete('/subject/:id', async (req, res) => {
-  try {
-    await Ctrl.deleteSubject(req.params);
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully deleted subject',
-    });
-  } catch (status) {
-    let message = '';
-    switch (status) {
-      case 404:
-        message = 'Subject not found';
-        break;
-      case 500:
-        message = 'Internal server error';
-        break;
-    }
-    res.status(status).json({ status, message });
-  }
-});
-
-/**
- * @api {post} /timeslot addTimeSlot
- * @apiGroup Subject
- * @apiName addTimeSlot
-
- * @apiParam (Body Params) {Integer} timeslot.subjectID subject ID of subject
- * @apiParam (Body Params) {String} timeslot.day day assigned to timeslot
- * @apiParam (Body Params) {String} timeslot.time time assigned to timeslot
- *
- * @apiSuccess {Object}  timeslot timeslot added
- * @apiSuccess {Integer} timeslot.subjectID subject ID of timeslot
- * @apiSuccess {String} timeslot.day day assigned to timeslot
- * @apiSuccess {String} timeslot.time time assigned to timeslot
- *
- * @apiSuccessExample {json} Success-Response:
- *   HTTP/1.1 200 OK
- *   {
- *     "data": {
- *        "status": 200;
- *        "message": 'Succesfully added timeslot'
- *     }
- *   }
- *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
-
- * @apiErrorExample {json} Error-Response:
- *   HTTP/1.1 500 Internal Server Error
- *   {
- *     "status": 500,
- *     "message": "Internal server error"
- *   }
- */
-
-router.post('/timeslot/', async (req, res) => {
-  try {
-    const id = await Ctrl.addTimeSlot(req.body);
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully created timeslot',
-    });
-  } catch (status) {
-    let message = '';
-    switch (status) {
-      case 500:
-        message = 'Internal server error';
-        break;
-    }
-    res.status(status).json({ status, message });
-  }
-});
-
-/**
- * @api {get} /subject/ getSubjectsWithSched
- * @apiGroup Subject
- * @apiName getSubjectsWithSched
- * 
- * @apiSuccess {Object} subject Subjects fetched
- * @apiSuccess {Integer} subject.id ID of subject
- * @apiSuccess {Integer} subject.subjectCode subject code of subject
- * @apiSuccess {String} subject.subjectID subject ID of subject
- * @apiSuccess {Integer} subject.teachingLoadCreds teaching load credits of subject
- * @apiSuccess {Integer} subject.noOfStudents number of students enrolled in the subject
- * @apiSuccess {Integer} subject.hoursPerWeek number of hours per week subject takes up
- * @apiSuccess {String} subject.sectionCode section code of subject
- * @apiSuccess {String} subject.room room where subject is being taught
- * @apiSuccess {String} timeslot.day day assigned to timeslot
- * @apiSuccess {String} timeslot.time time assigned to timeslot
- *
- @apiSuccessExample {json} Success-Response:
- *   HTTP/1.1 200 OK
- *  {
- *    "status": 200,
- *    "message": "Successfully fetched subjects",
- *     "data": [
-        {
-            "subjectID": 3,
-            "id": 2,
-            "subjectCode": "YOOOO",
-            "teachingLoadCreds": 1,
-            "noOfStudents": 1,
-            "hoursPerWeek": 1,
-            "sectionCode": "b",
-            "room": "c",
-            "day": "12",
-            "time": "12"
-        },
-        {
-            "subjectID": 4,
-            "id": 1,
-            "subjectCode": "YOOOONEW",
-            "teachingLoadCreds": 1,
-            "noOfStudents": 1,
-            "hoursPerWeek": 1,
-            "sectionCode": "b",
-            "room": "c",
-            "day": "1-1",
-            "time": "1-1"
-        }
-    ]
- *  }
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
-  * @apiError (Error 404) {String[]} errors List of errors
- * @apiError (Error 404) {String} errors.message Error message
- * @apiErrorExample {json} Error-Response:
- *   HTTP/1.1 500 Internal Server Error
- *   {
- *     "status": 500,
- *     "message": "Internal server error"
- *   }
- *
- * HTTP/1.1 404 Subjects not found
- * {
- *   "status": 404,
- *   "message": "Subjects not found"
- * }
- */
-
-router.get('/timeslot/', async (req, res) => {
-  try {
-    const subject = await Ctrl.getSubjectsWithSched();
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully fetched subjects',
-      data: subject,
-    });
-  } catch (status) {
-    let message = '';
-    switch (status) {
-      case 404:
-        message = 'Subjects not found';
-        break;
-      case 500:
-        message = 'Internal server error';
-        break;
-    }
-    res.status(status).json({ status, message });
-  }
-});
-
-/**
- * @api {get} /subject/:id getSubjectWithSched
- * @apiGroup Subject
- * @apiName getSubjectWithSched
- *
- * @apiParam (Query Params) {Integer} id ID of subject
- *
- * @apiSuccess {Object} subject Subject fetched
- * @apiSuccess {Integer} subject.id ID of subject
- * @apiSuccess {Integer} subject.subjectCode subject code of subject
- * @apiSuccess {String} subject.subjectID subject ID of subject
- * @apiSuccess {Integer} subject.teachingLoadCreds teaching load credits of subject
- * @apiSuccess {Integer} subject.noOfStudents number of students enrolled in the subject
- * @apiSuccess {Integer} subject.hoursPerWeek number of hours per week subject takes up
- * @apiSuccess {String} subject.sectionCode section code of subject
- * @apiSuccess {String} subject.room room where subject is being taught
- * @apiSuccess {String} timeslot.day day assigned to timeslot
- * @apiSuccess {String} timeslot.time time assigned to timeslot
- *
- * @apiSuccessExample {json} Success-Response:
- *   HTTP/1.1 200 OK
- *  {
- *    "status": 200,
- *    "message": "Successfully fetched subject",
- *    "data": [
-        {
-            "subjectID": 3,
-            "id": 2,
-            "subjectCode": "YOOOO",
-            "teachingLoadCreds": 1,
-            "noOfStudents": 1,
-            "hoursPerWeek": 1,
-            "sectionCode": "b",
-            "room": "c",
-            "day": "12",
-            "time": "12"
-        }
-      ]
- *  }
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
- * @apiError (Error 404) {String[]} errors List of errors
- * @apiError (Error 404) {String} errors.message Error message
- * @apiErrorExample {json} Error-Response:
- *   HTTP/1.1 500 Internal Server Error
- *   {
- *     "status": 500,
- *     "message": "Internal server error"
- *   }
- *
- * HTTP/1.1 404 Subject not found
- * {
- *   "status": 404,
- *   "message": "Subject not found"
- * }
- */
-
-router.get('/timeslot/:id', async (req, res) => {
-  try {
-    const subject = await Ctrl.getSubjectWithSched(req.params);
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully fetched subject',
-      data: subject,
-    });
-  } catch (status) {
-    let message = '';
-    switch (status) {
-      case 404:
-        message = 'Subject not found';
-        break;
-      case 500:
-        message = 'Internal server error';
-        break;
-    }
-    res.status(status).json({ status, message });
-  }
-});
-
 export default router;
