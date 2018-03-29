@@ -10,8 +10,10 @@ const style = {
     alignItems: 'center',
   },
   progressBar: {
-    paddingLeft: '20',
-    paddingRight: '20',
+    width: '20%',
+    paddingLeft: 50,
+    // paddingRight: 'auto',
+    // width: 200,
   },
   facultyTable: {
     size: 'large',
@@ -19,6 +21,26 @@ const style = {
   icons: {
     paddingTop: 20,
     fontSize: 75,
+    color: '#000000a6',
+  },
+  menuItems: {
+    width: 218,
+    height: '20%',
+    color: '#FFF',
+    marginBottom: 30,
+    overflow: 'hidden',
+  },
+  menu: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  description: {
+    paddingTop: 10,
+    color: '#000000a6',
+  },
+  stats: {
+    display: 'flex',
+    flexWrap: 'wrap',
   },
 };
 
