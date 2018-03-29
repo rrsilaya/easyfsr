@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Icon } from 'antd';
 
+import ProfileIcon from './components/ProfileIcon';
 import styles from './styles';
 
 class Profile extends Component {
@@ -10,7 +11,7 @@ class Profile extends Component {
     return (
       <div>
         <div className="center">
-          <img className="crop" src="#" alt={user.email} style={styles.photo} />
+          <ProfileIcon />
           <h1 className="center text white" style={styles.profileName}>
             {user.firstName} {user.middleName} {user.lastName}
           </h1>
