@@ -4,7 +4,7 @@ import { filtered, escapeSearch } from '../../utils';
 
 const announcementAttributes = ['userID', 'title', 'body', 'isResolved'];
 
-const searchFields = ['title', 'body', 'isResolved'];
+const searchFields = ['userID', 'title', 'body', 'isResolved'];
 
 export const addAnnouncement = announcement => {
   return new Promise((resolve, reject) => {
