@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Modal, Button, Form, Input } from 'antd';
 
 const FormItem = Form.Item;
-const { confirm } = Modal;
 
 class DeleteModal extends Component {
   handleFormSubmit = e => {
