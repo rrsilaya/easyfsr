@@ -377,7 +377,7 @@ router.get('/course', async (req, res) => {
       status: 200,
       message: 'Successfully fetched courses',
       data: courses,
-      total: courses.length,
+      total: (await Ctrl.getTotalCourses(req.query)).total,
       limit: parseInt(req.query.limit) || 12,
       page: parseInt(req.query.page) || 1,
       pages: Math.ceil(

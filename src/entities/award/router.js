@@ -404,7 +404,7 @@ router.get('/award/', async (req, res) => {
       status: 200,
       message: 'Successfully fetched awards',
       data: awards,
-      total: awards.length,
+      total: (await Ctrl.getTotalAwards(req.query)).total,
       limit: parseInt(req.query.limit) || 12,
       page: parseInt(req.query.page) || 1,
       pages: Math.ceil(

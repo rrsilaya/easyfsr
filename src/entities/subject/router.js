@@ -392,7 +392,7 @@ router.get('/subject/', async (req, res) => {
       status: 200,
       message: 'Successfully fetched subjects',
       data: subjects,
-      total: subjects.length,
+      total: (await Ctrl.getTotalSubjects(req.query)).total,
       limit: req.query.limit || 12,
       page: req.query.page || 1,
       pages: Math.ceil(

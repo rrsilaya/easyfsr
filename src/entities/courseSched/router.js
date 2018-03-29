@@ -360,7 +360,7 @@ router.get('/courseSched/', async (req, res) => {
       status: 200,
       message: 'Successfully fetched course schedules',
       data: courseScheds,
-      total: courseScheds.length,
+      total: (await Ctrl.getTotalCourseScheds(req.query)).total,
       limit: parseInt(req.query.limit) || 12,
       page: parseInt(req.query.page) || 1,
       pages: Math.ceil(
