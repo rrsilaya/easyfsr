@@ -9,39 +9,37 @@ const router = Router();
  * @apiName addNotification
  *
  * @apiParam (Body Params) {String} notificationID notification ID
- * @apiParam (Body Params) {String} senderID sender ID
- * @apiParam (Body Params) {String} receiverID receiver ID
+ * @apiParam (Body Params) {Number} senderID sender ID
+ * @apiParam (Body Params) {Number} receiverID receiver ID
  * @apiParam (Body Params) {String} message the message of sender to receiver
- * @apiParam (Body Params) {String} dateSent date when message is sent
- * @apiParam (Body Params) {String} timeSent time when message is sent
- * @apiParam (Body Params) {String} isResolved verification is message is resolved
+ * @apiParam (Body Params) {Date} dateSent date when message is sent
+ * @apiParam (Body Params) {Time} timeSent time when message is sent
+ * @apiParam (Body Params) {Boolean} isResolved verification is message is resolved
  *
  * @apiSuccess {Object} notification new Notification is added
  * @apiSuccess {String} notification.notificationID notification ID
- * @apiSuccess {String} notification.senderID sender ID
- * @apiSuccess {String} notification.receiverID receiver ID
+ * @apiSuccess {Number} notification.senderID sender ID
+ * @apiSuccess {Number} notification.receiverID receiver ID
  * @apiSuccess {String} notification.message the message of sender to receiver
- * @apiSuccess {String} notification.dateSent date when message is sent
- * @apiSuccess {String} notification.timeSent time when message is sent
- * @apiSuccess {String} notification.isResolved verification is message is resolved
+ * @apiSuccess {Date} notification.dateSent date when message is sent
+ * @apiSuccess {Time} notification.timeSent time when message is sent
+ * @apiSuccess {Boolean} notification.isResolved verification is message is resolved
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *     "data": {
  *       "status": 200,
- *       "message": "Successfully updated notification",
- *       "data": [
-            {
-                "notificationID": 1,
-                "senderID": "3",
-                "receiverID": "5",
-                "message": "HIIIIIIIIIIIIIIIIIIIIII",
-                "dateSent": "2018-01-01",
-                "timeSent": "01:01:01",
-                "isResolved": 1
-            } 
-        ]
+ *       "message": "Successfully created notification",
+ *       "data": {
+			"notificationID": 1,
+			"senderID": "3",
+			"receiverID": "5",
+			"message": "HIIIIIIIIIIIIIIIIIIIIII",
+			"dateSent": "2018-01-01",
+			"timeSent": "01:01:01",
+			"isResolved": 1
+		} 
  *   }
  *
  * @apiError (Error 500) {String} status error status code
@@ -57,12 +55,12 @@ const router = Router();
 router.post('/notification/', async (req, res) => {
   try {
     const notificationID = await Ctrl.addNotification(req.body);
-    //const notification = await Ctrl.getCourse({ notificationID });
+    const notification = await Ctrl.getNotification({ notificationID });
 
     res.status(200).json({
       status: 200,
-      message: 'Successfully added notification',
-      //  data: notification,
+      message: 'Successfully created notification',
+      data: notification,
     });
   } catch (status) {
     let message = '';
@@ -84,12 +82,12 @@ router.post('/notification/', async (req, res) => {
  *
  * @apiSuccess {Object} notification Notification notification deleted
  * @apiSuccess {String} notification.notificationID notification ID
- * @apiSuccess {String} notification.senderID sender ID
- * @apiSuccess {String} notification.receiverID receiver ID
+ * @apiSuccess {Number} notification.senderID sender ID
+ * @apiSuccess {Number} notification.receiverID receiver ID
  * @apiSuccess {String} notification.message the message of sender to receiver
- * @apiSuccess {String} notification.dateSent date when message is sent
- * @apiSuccess {String} notification.timeSent time when message is sent
- * @apiSuccess {String} notification.isResolved verification is message is resolved
+ * @apiSuccess {Date} notification.dateSent date when message is sent
+ * @apiSuccess {Time} notification.timeSent time when message is sent
+ * @apiSuccess {Boolean} notification.isResolved verification is message is resolved
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -128,14 +126,14 @@ router.post('/notification/', async (req, res) => {
 
 router.delete('/notification/:notificationID', async (req, res) => {
   try {
-    //const notification = await Ctrl.getCourse(req.params);
+    const notification = await Ctrl.getNotification(req.params);
 
     await Ctrl.deleteNotification(req.params);
 
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted notification',
-      //data: notification,
+      data: notification,
     });
   } catch (status) {
     let message = '';
@@ -160,19 +158,19 @@ router.delete('/notification/:notificationID', async (req, res) => {
  * 
  * @apiSuccess {Object} notification Notification updated
  * @apiSuccess {String} notification.notificationID notification ID
- * @apiSuccess {String} notification.senderID id of user who sent the notification
- * @apiSuccess {String} notification.receiverID id of user who received the notification
+ * @apiSuccess {Number} notification.senderID id of user who sent the notification
+ * @apiSuccess {Number} notification.receiverID id of user who received the notification
  * @apiSuccess {String} notification.message content of the notification
- * @apiSuccess {String} notification.dateSent date notification is sent
- * @apiSuccess {String} notification.timeSent time notification is sent
- * @apiSuccess {String} notification.isResolved notification state
+ * @apiSuccess {Date} notification.dateSent date notification is sent
+ * @apiSuccess {Time} notification.timeSent time notification is sent
+ * @apiSuccess {Boolean} notification.isResolved notification state
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *     "data": {
  *        "status": 200;
- *        "message": 'Succesfully got course details'
+ *        "message": 'Succesfully got notification details'
  *        "data": [
  *          {
             "notificationID": 1,
@@ -209,7 +207,7 @@ router.get('/notification/:notificationID', async (req, res) => {
 
     res.status(200).json({
       status: 200,
-      message: 'Successfully fetched course',
+      message: 'Successfully fetched notification',
       data: notification,
     });
   } catch (status) {
