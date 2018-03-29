@@ -277,9 +277,9 @@ router.get('/notification/', async (req, res) => {
       total: notifications.length,
       limit: req.query.limit || 10,
       page: req.query.page || 1,
-      //pages: Math.ceil(
-      //(await Ctrl.getTotalNotifications()).total / (req.query.limit || 10),
-      //),
+      pages: Math.ceil(
+		(await Ctrl.getTotalNotifications(req.query)).total / (req.query.limit || 10),
+      ),
     });
   } catch (status) {
     let message = '';

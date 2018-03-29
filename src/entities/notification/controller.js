@@ -68,12 +68,19 @@ export const getNotifications = notification => {
   });
 };
 
-export const getTotalNotifs = () => {
+export const getTotalNotifs = notification => {
   return new Promise((resolve, reject) => {
-    db.query(Query.getTotalNotifications, (err, results) => {
-      if (err) return reject(500);
-      return resolve(results);
-    });
+    db.query(
+		Query.getTotalNotifications(filtered(notification, notificationAttributes)),
+		{
+			field: 'notificationID',
+			...escapeSearch(notification, searchFields, notification.limit),
+		},
+		(err, results) => {
+			if (err) return reject(500);
+			return resolve(results[0]);
+		},
+	);
   });
 };
 
