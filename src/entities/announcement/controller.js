@@ -8,14 +8,10 @@ const searchFields = ['userID', 'title', 'body', 'isResolved'];
 
 export const addAnnouncement = announcement => {
   return new Promise((resolve, reject) => {
-    db.query(
-      Query.addAnnouncement,
-      { isResolved: '0', ...announcement },
-      (err, results) => {
-        if (err) return reject(500);
-        return resolve(results.insertId);
-      },
-    );
+    db.query(Query.addAnnouncement, { ...announcement }, (err, results) => {
+      if (err) return reject(500);
+      return resolve(results.insertId);
+    });
   });
 };
 
@@ -55,6 +51,9 @@ export const getAnnouncements = announcement => {
         ...escapeSearch(announcement, searchFields, announcement.limit),
       },
       (err, results) => {
+        console.log('get announcements');
+        console.log(err);
+        console.log(results);
         if (err) return reject(500);
         return resolve(results);
       },
@@ -62,12 +61,24 @@ export const getAnnouncements = announcement => {
   });
 };
 
-export const getTotalAnnouncements = () => {
+export const getTotalAnnouncements = announcement => {
   return new Promise((resolve, reject) => {
-    db.query(Query.getTotalAnnouncements, (err, results) => {
-      if (err) return reject(500);
-      return resolve(results[0]);
-    });
+    db.query(
+      Query.getTotalAnnouncements(
+        filtered(announcement, announcementAttributes),
+      ),
+      {
+        field: 'title',
+        ...escapeSearch(announcement, searchFields, announcement.limit),
+      },
+      (err, results) => {
+        console.log('get total');
+        console.log(err);
+        console.log(results);
+        if (err) return reject(500);
+        return resolve(results[0]);
+      },
+    );
   });
 };
 

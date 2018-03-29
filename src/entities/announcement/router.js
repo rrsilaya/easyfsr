@@ -10,17 +10,17 @@ const router = Router();
  * @apiName addAnnouncement
  *
  *
- * @apiParam (Body Params) {String} userID ID of user who posted announcement
+ * @apiParam (Body Params) {Number} userID ID of user who posted announcement
  * @apiParam (Body Params) {String} title title of the announcement
  * @apiParam (Body Params) {String} body body of the announcement
- * @apiParam (Body Params) {String} isResolved indicates if announcement entry is resolved
+ * @apiParam (Body Params) {String} [isResolved] indicates if announcement entry is resolved
  *
  * @apiSuccess {Object} announcement new Announcement created
  * @apiSuccess {Number} announcement.announcementID ID of announcement
- * @apiSuccess {String} announcement.userID ID of user who posted announcement
+ * @apiSuccess {Number} announcement.userID ID of user who posted announcement
  * @apiSuccess {String} announcement.title title of announcement
  * @apiSuccess {String} announcement.body body of announcement
- * @apiSuccess {Boolean} announcement.isResolved indicates if announcement is resolved
+ * @apiSuccess {Boolean} announcement.isResolved isResolved indicates if announcement is resolved
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -49,7 +49,6 @@ router.post('/announcement', async (req, res) => {
   try {
     const announcementID = await Ctrl.addAnnouncement(req.body);
     const announcement = await Ctrl.getAnnouncement({ announcementID });
-    console.log('here');
     res.status(200).json({
       status: 200,
       message: 'Successfully created announcement',
@@ -70,14 +69,14 @@ router.post('/announcement', async (req, res) => {
  * @apiGroup Announcement
  * @apiName deleteAnnouncement
  *
- * @apiParam (Query Params) {String} announcementID ID of announcement
+ * @apiParam (Query Params) {Number} announcementID ID of announcement
  *
  * @apiSuccess {Object} announcement Announcement announcement deleted
  * @apiSuccess {Number} announcement.announcementID ID of announcement
- * @apiSuccess {String} announcement.userID ID of user who posted announcement
+ * @apiSuccess {Number} announcement.userID ID of user who posted announcement
  * @apiSuccess {String} announcement.title title of announcement
  * @apiSuccess {String} announcement.body body of announcement
- * @apiSuccess {Boolean} announcement.isResolved indicates if announcement is resolved
+ * @apiSuccess {Boolean} announcement.isResolved isResolved indicates if announcement is resolved
  *
  *   HTTP/1.1 200 OK
  *   {
@@ -137,21 +136,21 @@ router.delete('/announcement/:announcementID', async (req, res) => {
  * @apiName getAnnouncements
  *
  *
- * @apiParam (Query Params) {String} userID ID of user who posted announcement
- * @apiParam (Query Params) {String} title title of the announcement
- * @apiParam (Query Params) {String} body body of the announcement
- * @apiParam (Query Params) {String} isResolved indicates if announcement entry is resolved
- *
- * @apiSuccess {Object} announcement Announcement details
- * @apiSuccess {Number} announcement.announcementID ID of announcement
- * @apiSuccess {String} announcement.userID ID of user who posted announcement
- * @apiSuccess {String} announcement.title title of announcement
- * @apiSuccess {String} announcement.body body of announcement
- * @apiSuccess {Boolean} announcement.isResolved indicates if announcement is resolved
+ * @apiParam (Query Params) {Number} [userID] ID of user who posted announcement
+ * @apiParam (Query Params) {String} [title] title of the announcement
+ * @apiParam (Query Params) {String} [body] body of the announcement
+ * @apiParam (Query Params) {Boolean} [isResolved] isResolved indicates if announcement entry is resolved
  * @apiParam (Query Params) {Number} [page] page number
  * @apiParam (Query Params) {Number} [limit] count limit of users to fetch
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'title'
+ *
+ * @apiSuccess {Object} announcement Announcement details
+ * @apiSuccess {Number} announcement.announcementID ID of announcement
+ * @apiSuccess {Number} announcement.userID ID of user who posted announcement
+ * @apiSuccess {String} announcement.title title of announcement
+ * @apiSuccess {String} announcement.body body of announcement
+ * @apiSuccess {Boolean} announcement.isResolved isResolved indicates if announcement is resolved
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -204,10 +203,11 @@ router.get('/announcement', async (req, res) => {
       message: 'Successfully fetched announcements',
       data: announcements,
       total: announcements.length,
-      limit: req.query.limit || 12,
-      page: req.query.page || 1,
+      limit: parseInt(req.query.limit) || 12,
+      page: parseInt(req.query.page) || 1,
       pages: Math.ceil(
-        (await Ctrl.getTotalAnnouncements()).total / (req.query.limit || 12),
+        (await Ctrl.getTotalAnnouncements(req.query)).total /
+          parseInt(req.query.limit) || 12,
       ),
     });
   } catch (status) {
@@ -228,14 +228,14 @@ router.get('/announcement', async (req, res) => {
  * @apiGroup Announcement
  * @apiName getAnnouncement
  *
- * @apiParam (Query Params) {String} announcementID ID of announcement
+ * @apiParam (Query Params) {Number} announcementID ID of announcement
  *
  * @apiSuccess {Object} announcement Announcement details
  * @apiSuccess {Number} announcement.announcementID ID of announcement
- * @apiSuccess {String} announcement.userID ID of user who posted announcement
+ * @apiSuccess {Number} announcement.userID ID of user who posted announcement
  * @apiSuccess {String} announcement.title title of announcement
  * @apiSuccess {String} announcement.body body of announcement
- * @apiSuccess {Boolean} announcement.isResolved indicates if announcement is resolved
+ * @apiSuccess {Boolean} announcement.isResolved isResolved indicates if announcement is resolved
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -296,14 +296,14 @@ router.get('/announcement/:announcementID', async (req, res) => {
  * @apiGroup Announcement
  * @apiName updateAnnouncement
  *
- * @apiParam (Query Params) {String} announcementID ID of announcement
+ * @apiParam (Query Params) {Number} announcementID ID of announcement
  *
  * @apiSuccess {Object} announcement Announcement announcement updated
  * @apiSuccess {Number} announcement.announcementID ID of announcement
- * @apiSuccess {String} announcement.userID ID of user who posted announcement
+ * @apiSuccess {Number} announcement.userID ID of user who posted announcement
  * @apiSuccess {String} announcement.title title of announcement
  * @apiSuccess {String} announcement.body body of announcement
- * @apiSuccess {Boolean} announcement.isResolved indicates if announcement is resolved
+ * @apiSuccess {Boolean} announcement.isResolved isResolved indicates if announcement is resolved
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -338,12 +338,8 @@ router.get('/announcement/:announcementID', async (req, res) => {
  */
 router.put('/announcement/:announcementID', async (req, res) => {
   try {
-    if (req.body.password) {
-      req.body.password = await bcrypt.hash(req.body.password, 10);
-    }
     await Ctrl.updateAnnouncement(req.params, req.body);
     const announcement = await Ctrl.getAnnouncement(req.params);
-    delete announcement.password;
 
     res.status(200).json({
       status: 200,
