@@ -15,14 +15,16 @@ class Topbar extends Component {
     const menu = (
       <Menu>
         <Menu.Item>
-          <Icon type="setting" style={styles.iconOffset} />
-          Account Settings
+          <div>
+            <Icon type="setting" style={styles.iconOffset} />
+            Account Settings
+          </div>
         </Menu.Item>
         <Menu.Item>
-          <span onClick={logout}>
+          <div onClick={logout}>
             <Icon type="logout" style={styles.iconOffset} />
             Logout
-          </span>
+          </div>
         </Menu.Item>
       </Menu>
     );
