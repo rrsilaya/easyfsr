@@ -30,6 +30,13 @@ export const deleteCreativeWork = `
 	WHERE creativeWorkID = :creativeWorkID
 `;
 
+export const getAllCreativeWork = query => `
+	SELECT * FROM creativeWork
+	NATURAL JOIN cworkCoAuthor
+	ORDER BY id ASC
+	LIMIT 10
+`;
+
 export const getCreativeWorks = (query, sortBy) => `
 	SELECT * FROM creativeWork ${
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
@@ -48,4 +55,30 @@ export const getTotalCreativeWorks = `
 
 export const getTotalCreativeWorksByFSR = `
 	SELECT count(*) as total FROM creativeWork WHERE id = :id 
+
+`;
+
+// CREATIVE WORK CO AUTHOR
+export const addCoAuthor = `
+	INSERT INTO cworkCoAuthor (
+		creativeWorkID,
+		userID,
+		cworkCoAuthorID
+	)
+	VALUES (
+		:creativeWorkID,
+		:userID,
+		DEFAULT
+	)
+`;
+
+export const updateCoAuthor = `
+	UPDATE cworkCoAuthor SET
+		userID = :userID
+	WHERE creativeWorkID = :creativeWorkID
+`;
+
+export const deleteCoAuthor = `
+	DELETE FROM cworkCoAuthor
+	WHERE userID = :userID
 `;

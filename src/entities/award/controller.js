@@ -24,7 +24,7 @@ const searchFields = [
 
 export const addAward = award => {
   return new Promise((resolve, reject) => {
-    db.query(Query.addAward, { ...award }, (err, results) => {
+    db.query(Query.addAward, award, (err, results) => {
       if (err) return reject(500);
       return resolve(results.insertId);
     });
@@ -60,7 +60,7 @@ export const getAward = ({ awardID }) => {
     db.query(Query.getAward, { awardID }, (err, results) => {
       if (err) return reject(500);
       else if (!results.length) return reject(404);
-      return resolve(results);
+      return resolve(results[0]);
     });
   });
 };
@@ -76,6 +76,22 @@ export const getAwards = award => {
       (err, results) => {
         if (err) return reject(500);
         return resolve(results);
+      },
+    );
+  });
+};
+
+export const getTotalAwards = award => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      Query.getTotalAwards(filtered(award, awardAttributes)),
+      {
+        field: 'chairGrantTitle',
+        ...escapeSearch(award, searchFields, award.limit),
+      },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(results[0]);
       },
     );
   });
