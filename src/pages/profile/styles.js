@@ -9,6 +9,7 @@ const style = {
     margin: 'auto',
     flexWrap: 'wrap',
     lineHeight: '1.5em',
+    marginBottom: '3em',
   },
   iconPad: {
     marginRight: '1em',

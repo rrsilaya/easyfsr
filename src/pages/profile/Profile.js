@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Icon } from 'antd';
 
 import ProfileIcon from './components/ProfileIcon';
+import ProfileInfo from './components/ProfileInfo';
 import styles from './styles';
 
 class Profile extends Component {
@@ -34,6 +35,7 @@ class Profile extends Component {
             </div>
           </div>
         </div>
+        <ProfileInfo />
       </div>
     );
   }
