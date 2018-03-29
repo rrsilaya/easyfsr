@@ -25,6 +25,7 @@ CREATE TABLE user(
   rank VARCHAR (30),
   isArchived BOOLEAN DEFAULT 0, 
   acctType VARCHAR(10) DEFAULT 'USER', -- ADMIN / USER
+  profileIcon TEXT,
   CONSTRAINT `user_pk`
     PRIMARY KEY (`userID`),
   CONSTRAINT `user_empid_uk`

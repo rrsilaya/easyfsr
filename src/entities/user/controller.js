@@ -15,6 +15,7 @@ const userAttributes = [
   'emailAddress',
   'rank',
   'acctType',
+  'profileIcon',
 ];
 
 const searchFields = [
