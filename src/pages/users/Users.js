@@ -21,11 +21,6 @@ class Users extends Component {
     this.props.resetPage();
   }
 
-  handlePageChange = page => {
-    this.props.getUsers({ ...this.props.query, page });
-    this.props.changeQuery({ page });
-  };
-
   handlePageSizeChange = (page, limit) => {
     this.props.getUsers({ ...this.props.query, page, limit });
     this.props.changeQuery({ page, limit });
@@ -98,11 +93,12 @@ class Users extends Component {
         />
         <div className="pagination">
           <Pagination
-            current={parseInt(pagination.page)}
+            current={pagination.page}
+            pageSize={pagination.limit}
             total={pagination.total}
             showSizeChanger
             pageSizeOptions={['12', '24', '36', '48']}
-            onChange={this.handlePageChange}
+            onChange={this.handlePageSizeChange}
             onShowSizeChange={this.handlePageSizeChange}
           />
         </div>
