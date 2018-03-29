@@ -5,22 +5,10 @@ const FormItem = Form.Item;
 const { confirm } = Modal;
 
 class DeleteModal extends Component {
-  showConfirmDelete = () => {
-    confirm({
-      title: 'Are you sure you want to delete this user?',
-      content: 'You are about to archive this user.',
-      okText: 'Yes',
-      cancelText: 'No',
-      okType: 'primary',
-      onOk() {},
-      onCancel() {},
-    });
-  };
   handleFormSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log(values);
         this.props.deleteUser(this.props.user);
         this.handleAfterClose();
       }
