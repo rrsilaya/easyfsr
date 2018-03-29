@@ -323,7 +323,16 @@ router.get('/award/:awardID', async (req, res) => {
  * @apiGroup Award
  * @apiName getAwards
  *
- * @apiParam (Query Params) {Number} awardID awardID of award
+ * @apiParam (Query Params) {String} [chairGrantTitle] chair grant title of award
+ * @apiParam (Query Params) {String} [collegeHasNominated] which college nominated the award
+ * @apiParam (Query Params) {String} [recipientOrNominee] recipient or nominee of award
+ * @apiParam (Query Params) {String} [professionalChair] professional chair of award
+ * @apiParam (Query Params) {Date} [approvedStartDate] approved start date of award
+ * @apiParam (Query Params) {Date} [endDate] end date of award
+ * @apiParam (Query Params) {Number} [page] page number
+ * @apiParam (Query Params) {Number} [limit] count limit of users to fetch
+ * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
+ * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'chairGrantTitle'
  *
  * @apiSuccess {Object} award Awards fetched
  * @apiSuccess {Number} award.awardID ID of award
