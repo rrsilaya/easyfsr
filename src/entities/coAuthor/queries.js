@@ -37,3 +37,9 @@ export const getCworkCoAuthors = (query, sortBy) => `
     sortBy === 'DESC' ? 'DESC' : 'ASC'
   } LIMIT :limit OFFSET :offset
 `;
+
+export const getTotalCworkCoAuthors = query => `
+  SELECT count(*) as total FROM cworkCoAuthor ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
+`;

@@ -80,3 +80,21 @@ export const getCworkCoAuthors = cworkCoAuthor => {
     );
   });
 };
+
+export const getTotalCworkCoAuthors = cworkCoAuthor => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      Query.getTotalCworkCoAuthors(
+        filtered(cworkCoAuthor, cworkCoAuthorAttributes),
+      ),
+      {
+        field: 'userID',
+        ...escapeSearch(cworkCoAuthor, searchFields, cworkCoAuthor.limit),
+      },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(results[0]);
+      },
+    );
+  });
+};
