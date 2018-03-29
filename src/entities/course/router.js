@@ -311,7 +311,7 @@ router.get('/course/:courseID', async (req, res) => {
  * @apiParam (Query Params) {Numner} [credit] credit of course
  * @apiParam (Query Params) {Number} [courseNumber] courseNumber of course
  * @apiParam (Query Params) {Number} [page] page number
- * @apiParam (Query Params) {Number} [limit] count limit of users to fetch
+ * @apiParam (Query Params) {Number} [limit] count limit of courses to fetch
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'courseNumber'
  *

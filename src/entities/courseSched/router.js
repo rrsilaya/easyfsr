@@ -292,8 +292,9 @@ router.get('/courseSched/:courseSchedID', async (req, res) => {
  *
  * @apiParam (Query Params) {String} [day] day course is being taught
  * @apiParam (Query Params) {Time} [timeStart] time course start
- * @apiParam (Query Params) {Time} [timeEnd] time course end * @apiParam (Query Params) {Number} [page] page number
- * @apiParam (Query Params) {Number} [limit] count limit of users to fetch
+ * @apiParam (Query Params) {Time} [timeEnd] time course end *
+ * @apiParam (Query Params) {Number} [page] page number
+ * @apiParam (Query Params) {Number} [limit] count limit of course scheds to fetch
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'lastName'
 
