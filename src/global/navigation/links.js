@@ -23,6 +23,7 @@ const links = [
     icon: 'team',
     label: 'Users',
     path: '/users',
+    restricted: true,
   },
 ];
 

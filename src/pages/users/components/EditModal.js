@@ -42,6 +42,7 @@ class EditModal extends Component {
   };
 
   handleAfterClose = () => {
+    this.props.changeSelectedUser({});
     this.props.form.resetFields();
   };
 

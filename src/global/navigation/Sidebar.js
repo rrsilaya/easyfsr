@@ -8,8 +8,25 @@ import styles from './styles';
 const { Item } = Menu;
 
 class Sidebar extends Component {
+  getActiveTab = () => {
+    const [, route] = window.location.pathname.split('/');
+
+    switch (route) {
+      case 'records':
+        return 'Service Records';
+      case 'profile':
+        return 'Profile';
+      case 'search':
+        return 'Search';
+      case 'users':
+        return 'Users';
+      case '':
+        return 'Dashboard';
+    }
+  };
+
   render() {
-    const { isSidebarCollapsed } = this.props;
+    const { isSidebarCollapsed, user } = this.props;
 
     return (
       <Layout.Sider
@@ -19,17 +36,33 @@ class Sidebar extends Component {
         trigger={null}
       >
         <div style={styles.logo}>
-          <img src={logo} />
+          <img src={logo} alt="" />
         </div>
-        <Menu style={styles.sidebar} theme="dark">
-          {links.map(link => (
-            <Item key={link.label}>
-              <Link to={link.path}>
-                <Icon type={link.icon} />
-                <span>{link.label}</span>
-              </Link>
-            </Item>
-          ))}
+        <Menu
+          style={styles.sidebar}
+          theme="dark"
+          defaultSelectedKeys={[this.getActiveTab()]}
+        >
+          {links.map(
+            link =>
+              !link.restricted ? (
+                <Item key={link.label}>
+                  <Link to={link.path}>
+                    <Icon type={link.icon} />
+                    <span>{link.label}</span>
+                  </Link>
+                </Item>
+              ) : user.acctType === 'ADMIN' ? (
+                <Item key={link.label}>
+                  <Link to={link.path}>
+                    <Icon type={link.icon} />
+                    <span>{link.label}</span>
+                  </Link>
+                </Item>
+              ) : (
+                ''
+              ),
+          )}
         </Menu>
       </Layout.Sider>
     );

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Row, Col, Pagination, Input } from 'antd';
+import { DataLoader } from '../../global';
 
 import User from './components/User';
 import EditModal from './components/EditModal';
@@ -13,6 +14,10 @@ const { Search } = Input;
 class Users extends Component {
   componentDidMount() {
     this.props.getUsers();
+  }
+
+  componentWillUnmount() {
+    this.props.resetPage();
   }
 
   render() {
@@ -29,8 +34,8 @@ class Users extends Component {
       toggleEditModal,
       toggleAddModal,
       toggleDeleteModal,
+      changeSelectedUser,
 
-      getUser,
       addUser,
       editUser,
 
@@ -56,41 +61,46 @@ class Users extends Component {
             Add User
           </Button>
         </div>
-        <Row type="flex" gutter={16}>
-          {users.map((user, i) => (
-            <Col key={i} {...gridConfig}>
-              <User
-                user={user}
-                title={`${user.lastName}, ${user.firstName}`}
-                description={user.acctType}
-                toggleEditModal={toggleEditModal}
-                toggleDeleteModal={toggleDeleteModal}
-                getUser={getUser}
-              />
-            </Col>
-          ))}
-        </Row>
+        <DataLoader
+          isLoading={isGettingUsers}
+          content={
+            <Row type="flex" gutter={16}>
+              {users.map((user, i) => (
+                <Col key={i} {...gridConfig}>
+                  <User
+                    user={user}
+                    title={`${user.lastName}, ${user.firstName}`}
+                    description={user.acctType}
+                    toggleEditModal={toggleEditModal}
+                    toggleDeleteModal={toggleDeleteModal}
+                    changeSelectedUser={changeSelectedUser}
+                  />
+                </Col>
+              ))}
+            </Row>
+          }
+        />
         <EditModal
           user={user}
           isEditModalOpen={isEditModalOpen}
           toggleEditModal={toggleEditModal}
           editUser={editUser}
           isEditingUser={isEditingUser}
-          handleAfterClose={this.handleAfterClose}
+          changeSelectedUser={changeSelectedUser}
         />
         <AddModal
           isAddModalOpen={isAddModalOpen}
           toggleAddModal={toggleAddModal}
           addUser={addUser}
           isAddingUser={isAddingUser}
-          handleAfterClose={this.handleAfterClose}
         />
         <DeleteModal
           isDeleteModalOpen={isDeleteModalOpen}
           toggleDeleteModal={toggleDeleteModal}
+          changeSelectedUser={changeSelectedUser}
         />
-        <div style={styles.pagination}>
-          <Pagination defaultCurrent={1} total={50} size="small" />
+        <div className="pagination">
+          <Pagination defaultCurrent={1} total={50} />
         </div>
       </div>
     );

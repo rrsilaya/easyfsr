@@ -43,10 +43,20 @@ class Login extends Component {
                     style={{ ...styles.inputgroup, ...styles.margin }}
                   >
                     {form.getFieldDecorator('emailAddress@@login', {
-                      rules: [{ required: true }],
+                      rules: [
+                        {
+                          required: true,
+                          message: 'Email and password are required.',
+                        },
+                      ],
                     })(<Input placeholder="Email" style={styles.input} />)}
                     {form.getFieldDecorator('password@@login', {
-                      rules: [{ required: true }],
+                      rules: [
+                        {
+                          required: true,
+                          message: 'Email and password are required.',
+                        },
+                      ],
                     })(
                       <Input
                         placeholder="Password"

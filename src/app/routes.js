@@ -1,5 +1,5 @@
 import Dashboard from '../pages/dashboard/Dashboard';
-import Profile from '../pages/profile/Profile';
+import Profile from '../pages/profile/ProfileContainer';
 import ServiceRecords from '../pages/serviceRecords/ServiceRecords';
 import FSRForm from '../pages/fsr/FSRFormContainer';
 import Users from '../pages/users/UsersContainer';
@@ -12,7 +12,8 @@ const routes = [
     component: Dashboard,
   },
   {
-    path: '/profile',
+    path: '/profile/:userID',
+    exact: true,
     component: Profile,
   },
   {
@@ -22,13 +23,14 @@ const routes = [
   {
     path: '/users',
     component: Users,
+    restricted: true,
   },
   {
     path: '/fsrForm',
     component: FSRForm,
   },
   {
-    to: '/search',
+    path: '/search',
     component: FacultySearch,
   },
 ];

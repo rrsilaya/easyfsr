@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Icon, Avatar } from 'antd';
+import { Link } from 'react-router-dom';
 
 import styles from '../styles';
 
@@ -7,10 +8,15 @@ const { Meta } = Card;
 
 class User extends Component {
   render() {
-    const { getUser, toggleDeleteModal, toggleEditModal, user } = this.props;
+    const {
+      changeSelectedUser,
+      toggleDeleteModal,
+      toggleEditModal,
+      user,
+    } = this.props;
 
     const handleToggleEditModal = () => {
-      getUser(user);
+      changeSelectedUser(user);
       toggleEditModal();
     };
 
@@ -30,7 +36,9 @@ class User extends Component {
               className="text normal"
               onClick={toggleDeleteModal}
             />,
-            <Icon type="profile" className="text normal" />,
+            <Link to={`/profile/${user.employeeID}`}>
+              <Icon type="profile" className="text normal" />
+            </Link>,
           ]}
         >
           <Meta

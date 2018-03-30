@@ -16,12 +16,6 @@ const style = {
   searchBar: {
     width: '66%',
   },
-  pagination: {
-    marginBottom: '10px',
-    marginTop: '10px',
-    display: 'flex',
-    justifyContent: 'center',
-  },
 };
 
 export default style;

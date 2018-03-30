@@ -1,6 +1,10 @@
 .background {
   &.primary {
     background-color: $primary;
+    
+    &.overlay {
+      background-color: rgba($primary, 0.8);
+    }
   }
   
   &.secondary {
@@ -27,6 +31,10 @@
   
   &.normal {
     color: lighten(#000, 30%);
+  }
+  
+  &.white {
+    color: #fff;
   }
 }
 

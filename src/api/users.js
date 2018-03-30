@@ -1,7 +1,8 @@
 import axios from 'axios';
+import qs from 'qs';
 
-export const getUsers = () => {
-  return axios.get('/api/user');
+export const getUsers = query => {
+  return axios.get(`/api/user?${qs.stringify(query)}`);
 };
 
 export const getUser = id => {
