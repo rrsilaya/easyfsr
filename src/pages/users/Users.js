@@ -41,10 +41,13 @@ class Users extends Component {
       toggleAddModal,
       toggleDeleteModal,
       changeSelectedUser,
+      changeQuery,
 
+      getUsers,
       addUser,
       editUser,
 
+      query,
       pagination,
       users,
       user,
@@ -52,7 +55,12 @@ class Users extends Component {
 
     return (
       <div>
-        <SearchUser toggleAddModal={toggleAddModal} />
+        <SearchUser
+          toggleAddModal={toggleAddModal}
+          changeQuery={changeQuery}
+          query={query}
+          getUsers={getUsers}
+        />
         <DataLoader
           isLoading={isGettingUsers}
           content={
