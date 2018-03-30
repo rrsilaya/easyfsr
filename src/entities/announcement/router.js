@@ -297,7 +297,10 @@ router.get('/announcement/:announcementID', async (req, res) => {
  * @apiName updateAnnouncement
  *
  * @apiParam (Query Params) {Number} announcementID ID of announcement
- *
+ * @apiParam (Query Params) {Number} [userID] ID of user who posted announcement
+ * @apiParam (Query Params) {String} [title] title of the announcement
+ * @apiParam (Query Params) {String} [body] body of the announcement
+ * @apiParam (Query Params) {Boolean} [isResolved] isResolved indicates if announcement entry is resolved
  * @apiSuccess {Object} announcement Announcement announcement updated
  * @apiSuccess {Number} announcement.announcementID ID of announcement
  * @apiSuccess {Number} announcement.userID ID of user who posted announcement
