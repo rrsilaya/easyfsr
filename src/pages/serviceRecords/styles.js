@@ -1,9 +1,4 @@
 const styles = {
-  formFSR: {
-    marginBottom: '10px',
-    marginLeft: 10,
-    marginRight: 'auto',
-  },
   button: {
     justifyContent: 'center',
     display: 'flex',

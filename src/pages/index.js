@@ -6,11 +6,13 @@ import { routerReducer as router } from 'react-router-redux';
  */
 import app from '../app/duck';
 import users from '../pages/users/duck';
+import fsr from '../pages/fsr/duck';
 
 const reducers = combineReducers({
   router,
   app,
   users,
+  fsr,
 });
 
 export default reducers;

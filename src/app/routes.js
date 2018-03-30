@@ -1,7 +1,7 @@
 import Dashboard from '../pages/dashboard/Dashboard';
 import Profile from '../pages/profile/Profile';
 import ServiceRecords from '../pages/serviceRecords/ServiceRecords';
-import FormSample from '../pages/serviceRecords/FormSample';
+import FSRForm from '../pages/fsr/FSRFormContainer';
 import Users from '../pages/users/UsersContainer';
 import FacultySearch from '../pages/facultySearch/FacultySearch';
 
@@ -24,8 +24,8 @@ const routes = [
     component: Users,
   },
   {
-    path: '/formSample',
-    component: FormSample,
+    path: '/fsrForm',
+    component: FSRForm,
   },
   {
     to: '/search',
