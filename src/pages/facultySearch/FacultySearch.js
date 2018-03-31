@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { List, Icon, Row, Col } from 'antd';
+import { Link } from 'react-router-dom';
 import { DataLoader } from '../../global';
 
 import Search from './components/Search';
@@ -8,6 +9,10 @@ import styles from './styles';
 const { Item: ListItem } = List;
 
 class FacultySearch extends Component {
+  componentWillUnmount() {
+    this.props.resetPage();
+  }
+
   render() {
     const gridConfig = { xl: 8, sm: 12, xs: 24 };
     const {
@@ -31,17 +36,19 @@ class FacultySearch extends Component {
               locale={{ emptyText: 'No users found' }}
               className="text white"
               dataSource={users}
-              renderItem={item => (
+              renderItem={user => (
                 <ListItem className="faculty-item" style={styles.listItem}>
                   <Row type="flex" justify="space-around" style={styles.info}>
                     <Col {...gridConfig} className="text normal">
-                      {item.name}
+                      {`${user.firstName} ${user.middleName && ' '}${
+                        user.lastName
+                      }`}
                     </Col>
-                    <Col {...gridConfig} className="text meta-2">
-                      {item.name}
+                    <Col {...gridConfig} className="text meta-2 center">
+                      {user.employeeID}
                     </Col>
-                    <Col {...gridConfig} className="text meta-2">
-                      {item.name}
+                    <Col {...gridConfig} className="text meta-2 center">
+                      {user.emailAddress}
                     </Col>
                   </Row>
                   <div style={styles.icons}>
@@ -51,7 +58,9 @@ class FacultySearch extends Component {
                       type="message"
                       style={styles.message}
                     />
-                    <Icon className="text secondary" type="profile" />
+                    <Link to={`/profile/${user.employeeID}`}>
+                      <Icon className="text secondary" type="profile" />
+                    </Link>
                   </div>
                 </ListItem>
               )}
