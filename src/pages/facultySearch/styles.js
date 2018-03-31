@@ -13,6 +13,21 @@ const styles = {
   info: {
     width: '100%',
   },
+  list: {
+    border: 'none',
+  },
+  searchForm: {
+    marginBottom: '0.5em',
+  },
+  searchGrid: {
+    display: 'flex',
+  },
+  inputSearch: {
+    width: '50%',
+  },
+  sort: {
+    width: 175,
+  },
 };
 
 export default styles;

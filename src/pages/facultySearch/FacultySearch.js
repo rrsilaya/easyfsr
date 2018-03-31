@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { List, Icon, Row, Col } from 'antd';
 
-import data from './faculty-data';
+import Search from './components/Search';
 import styles from './styles';
 
 const { Item: ListItem } = List;
@@ -12,10 +12,14 @@ class FacultySearch extends Component {
 
     return (
       <div>
+        <Search />
         <List
           bordered
           size="large"
-          dataSource={data}
+          style={styles.list}
+          locale={{ emptyText: 'No users found' }}
+          className="text white"
+          dataSource={[]}
           renderItem={item => (
             <ListItem className="faculty-item" style={styles.listItem}>
               <Row type="flex" justify="space-around" style={styles.info}>

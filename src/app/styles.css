@@ -96,6 +96,9 @@
 .dark-mode * {
   color: #efe9ec;
 }
+.text.white .ant-list-empty-text {
+  color: #c2b0c5;
+}
 .set-cursor.pointer {
   cursor: pointer;
 }
