@@ -5,6 +5,10 @@ import {
   toggleAddSubjectModal,
   toggleAddCWorkModal,
   toggleAddResearchModal,
+  toggleAddAdminWorkModal,
+  toggleAddExtAndCommServiceModal,
+  toggleAddCourseModal,
+  toggleAddConsultationHourModal,
   nextStep,
   prevStep,
 } from './duck';
@@ -14,6 +18,10 @@ const mapStateToProps = state => {
     isAddSubjectModalOpen,
     isAddCWorkModalOpen,
     isAddResearchModalOpen,
+    isAddAdminWorkModalOpen,
+    isAddExtAndCommServiceModalOpen,
+    isAddCourseModalOpen,
+    isAddConsultationHourModalOpen,
     currentStep,
   } = state.fsr;
 
@@ -21,6 +29,10 @@ const mapStateToProps = state => {
     isAddSubjectModalOpen,
     isAddCWorkModalOpen,
     isAddResearchModalOpen,
+    isAddAdminWorkModalOpen,
+    isAddExtAndCommServiceModalOpen,
+    isAddCourseModalOpen,
+    isAddConsultationHourModalOpen,
     currentStep,
   };
 };
@@ -35,6 +47,18 @@ const mapDispatchToProps = dispatch => {
     },
     toggleAddResearchModal: () => {
       dispatch(toggleAddResearchModal());
+    },
+    toggleAddAdminWorkModal: () => {
+      dispatch(toggleAddAdminWorkModal());
+    },
+    toggleAddExtAndCommServiceModal: () => {
+      dispatch(toggleAddExtAndCommServiceModal());
+    },
+    toggleAddCourseModal: () => {
+      dispatch(toggleAddCourseModal());
+    },
+    toggleAddConsultationHourModal: () => {
+      dispatch(toggleAddConsultationHourModal());
     },
     nextStep: () => {
       dispatch(nextStep());

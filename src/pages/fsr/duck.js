@@ -5,6 +5,12 @@ import * as Api from '../../api';
 const TOGGLE_ADD_SUBJECT_MODAL = 'FSR/TOGGLE_ADD_SUBJECT_MODAL';
 const TOGGLE_ADD_CWORK_MODAL = 'FSR/TOGGLE_ADD_CWORK_MODAL';
 const TOGGLE_ADD_RESEARCH_MODAL = 'FSR/TOGGLE_ADD_RESEARCH_MODAL';
+const TOGGLE_ADD_ADMINWORK_MODAL = 'FSR/TOGGLE_ADD_ADMINWORK_MODAL';
+const TOGGLE_ADD_EXTANDCOMMSERVICE_MODAL =
+  'FSR/TOGGLE_ADD_EXTANDCOMMSERVICE_MODAL';
+const TOGGLE_ADD_COURSE_MODAL = 'FSR/TOGGLE_ADD_COURSE_MODAL';
+const TOGGLE_ADD_CONSULTATIONHOUR_MODAL =
+  'FSR/TOGGLE_ADD_CONSULTATIONHOUR_MODAL';
 const NEXT_STEP = 'FSR/NEXT_STEP';
 const PREVIOUS_STEP = 'FSR/PREVIOUS_STEP';
 
@@ -18,6 +24,22 @@ export const toggleAddCWorkModal = () => ({
 
 export const toggleAddResearchModal = () => ({
   type: TOGGLE_ADD_RESEARCH_MODAL,
+});
+
+export const toggleAddAdminWorkModal = () => ({
+  type: TOGGLE_ADD_ADMINWORK_MODAL,
+});
+
+export const toggleAddExtAndCommServiceModal = () => ({
+  type: TOGGLE_ADD_EXTANDCOMMSERVICE_MODAL,
+});
+
+export const toggleAddCourseModal = () => ({
+  type: TOGGLE_ADD_COURSE_MODAL,
+});
+
+export const toggleAddConsultationHourModal = () => ({
+  type: TOGGLE_ADD_CONSULTATIONHOUR_MODAL,
 });
 
 export const nextStep = () => ({
@@ -34,6 +56,10 @@ const initialState = {
   isAddSubjectModalOpen: false,
   isAddCWorkModalOpen: false,
   isAddResearchModalOpen: false,
+  isAddAdminWorkModalOpen: false,
+  isAddExtAndCommServiceModalOpen: false,
+  isAddCourseModalOpen: false,
+  isAddConsultationHourModalOpen: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -56,6 +82,30 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isAddResearchModalOpen: !state.isAddResearchModalOpen,
+      };
+
+    case TOGGLE_ADD_ADMINWORK_MODAL:
+      return {
+        ...state,
+        isAddAdminWorkModalOpen: !state.isAddAdminWorkModalOpen,
+      };
+
+    case TOGGLE_ADD_EXTANDCOMMSERVICE_MODAL:
+      return {
+        ...state,
+        isAddExtAndCommServiceModalOpen: !state.isAddExtAndCommServiceModalOpen,
+      };
+
+    case TOGGLE_ADD_COURSE_MODAL:
+      return {
+        ...state,
+        isAddCourseModalOpen: !state.isAddCourseModalOpen,
+      };
+
+    case TOGGLE_ADD_CONSULTATIONHOUR_MODAL:
+      return {
+        ...state,
+        isAddConsultationHourModalOpen: !state.isAddConsultationHourModalOpen,
       };
 
     case NEXT_STEP:
