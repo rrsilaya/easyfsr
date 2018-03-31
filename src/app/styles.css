@@ -51,6 +51,12 @@
 .ant-pagination-item.ant-pagination-item-active {
   background-color: #8b657c !important;
 }
+.ant-list-item.faculty-item {
+  background-color: #fff !important;
+}
+.ant-list-item.faculty-item > * {
+  justify-content: space-between;
+}
 .background.primary {
   background-color: #483440;
 }
@@ -63,6 +69,9 @@
 .background.clear {
   background-color: #fff;
 }
+.background.clear * {
+  color: #262626;
+}
 .text.primary {
   color: #483440;
 }
@@ -71,6 +80,9 @@
 }
 .text.meta {
   color: #836488;
+}
+.text.meta-2 {
+  color: #b3b3b3;
 }
 .text.normal {
   color: #4d4d4d;

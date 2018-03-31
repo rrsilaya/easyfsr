@@ -13,6 +13,10 @@
   
   &.clear {
     background-color: #fff;
+    
+    & * {
+      color: lighten(#000, 15%);
+    }
   }
 }
 
@@ -27,6 +31,10 @@
   
   &.meta {
     color: lighten($secondary, 40%);
+  }
+  
+  &.meta-2 {
+    color: lighten(#000, 70%);
   }
   
   &.normal {
