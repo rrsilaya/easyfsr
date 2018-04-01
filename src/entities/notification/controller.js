@@ -22,8 +22,7 @@ const searchFields = [
 
 export const addNotification = notification => {
   return new Promise((resolve, reject) => {
-    db.query(Query.addNotification, { ...notification }, (err, results) => {
-      console.log(err);
+    db.query(Query.addNotification, notification, (err, results) => {
       if (err) return reject(500);
       return resolve(results.insertId);
     });
@@ -63,9 +62,18 @@ export const getNotifications = notification => {
       },
       (err, results) => {
         if (err) return reject(500);
-        return resolve(results);
+        return resolve(results[0]);
       },
     );
+  });
+};
+
+export const getTotalNotifs = () => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getTotalNotifs, (err, results) => {
+      if (err) return reject(500);
+      return resolve(results[0]);
+    });
   });
 };
 
