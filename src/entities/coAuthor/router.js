@@ -4,30 +4,29 @@ import * as Ctrl from './controller';
 const router = Router();
 
 /**
- * @api {post} /cworkCoAuthor/ postCworkCoAuthor
+ * @api {post} /cworkCoAuthor/ addCworkCoAuthor
  * @apiGroup CworkCoAuthor
- * @apiName postCworkCoAuthor
+ * @apiName addCworkCoAuthor
  *
- * @apiParam (Query Params) {Number} [creativeWorkID] ID of creative work
- * @apiParam (Query Params) {Number} [userID] ID of co-author as user
- * @apiParam (Query Params) {Number} [cworkCoAuthorID] ID of co-author
+ * @apiParam (Body Params) {Number} creativeWorkID ID of creative work
+ * @apiParam (Body Params) {Number} userID] ID of co-author as user
+ * @apiParam (Body Params) {Number} cworkCoAuthorID ID of co-author
  *
  * @apiSuccess {Object} cworkCoAuthor CworkCoAuthor fetched
  * @apiSuccess {Number} cworkCoAuthor.creativeWorkID ID of creative work
  * @apiSuccess {Number} cworkCoAuthor.userID ID of co-author as user
  * @apiSuccess {Number} cworkCoAuthor.cworkCoAuthorID ID of cworkCoAuthor
+ *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  * {
- *    "status": 200,
- *    "message": "Successfully created co-author",
- *    "data": [
- *        {
- *            "cworkCoAuthorID": 11,
- *           "creativeWorkID": 1,
- *            "userID": 1
- *        }
- *    ]
+ *     "status": 200,
+ *     "message": "Successfully created co-author",
+ *     "data": {
+ *         "cworkCoAuthorID": 16,
+ *         "creativeWorkID": 3,
+ *         "userID": 1
+ *     }
  * }
  * @apiError (Error 500) {String} status status code
  * @apiError (Error 500) {String} message Error message
@@ -64,9 +63,12 @@ router.post('/cworkCoAuthor/', async (req, res) => {
  * @apiGroup CworkCoAuthor
  * @apiName getCworkCoAuthors
  *
- * @apiParam (Query Params) {Number} [creativeWorkID] ID of creative work
- * @apiParam (Query Params) {Number} [userID] ID of co-author as user
- * @apiParam (Query Params) {Number} [cworkCoAuthorID] ID of co-author
+ * @apiParam (Query Params) {Number} creativeWorkID ID of creative work
+ * @apiParam (Query Params) {Number} userID ID of co-author as user
+ * @apiParam (Query Params) {Number} [page] page number
+ * @apiParam (Query Params) {Number} [limit] count limit of awards to fetch
+ * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
+ * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'chairGrantTitle'
  *
  * @apiSuccess {Object} cworkCoAuthor CworkCoAuthor fetched
  * @apiSuccess {Number} cworkCoAuthor.creativeWorkID ID of creative work
@@ -87,34 +89,9 @@ router.post('/cworkCoAuthor/', async (req, res) => {
  *             "cworkCoAuthorID": 5,
  *             "creativeWorkID": 1,
  *             "userID": 1
- *         },
- *         {
- *             "cworkCoAuthorID": 6,
- *             "creativeWorkID": 1,
- *             "userID": 1
- *         },
- *         {
- *             "cworkCoAuthorID": 8,
- *             "creativeWorkID": 1,
- *             "userID": 1
- *         },
- *         {
- *             "cworkCoAuthorID": 9,
- *             "creativeWorkID": 1,
- *             "userID": 1
- *         },
- *         {
- *             "cworkCoAuthorID": 10,
- *             "creativeWorkID": 1,
- *             "userID": 1
- *         },
- *         {
- *             "cworkCoAuthorID": 11,
- *             "creativeWorkID": 1,
- *             "userID": 1
  *         }
  *     ],
- *     "total": 7,
+ *     "total": 2,
  *     "limit": 12,
  *     "page": 1,
  *     "pages": 1
@@ -130,7 +107,7 @@ router.post('/cworkCoAuthor/', async (req, res) => {
  * @apiError (Error 404) {String} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 Award not found
+ * HTTP/1.1 404 Co-author not found
  * {
  *   "status": 404,
  *   "message": "Co-authors not found"
@@ -147,7 +124,10 @@ router.get('/cworkCoAuthor/', async (req, res) => {
       total: (await Ctrl.getTotalCworkCoAuthors(req.query)).total,
       limit: req.query.limit || 12,
       page: req.query.page || 1,
-      pages: Math.ceil(cworkCoAuthor.length / (req.query.limit || 12)),
+      pages: Math.ceil(
+        (await Ctrl.getTotalCworkCoAuthors(req.query)).total /
+          (req.query.limit || 12),
+      ),
     });
   } catch (status) {
     let message = '';
@@ -168,26 +148,23 @@ router.get('/cworkCoAuthor/', async (req, res) => {
  * @apiGroup CworkCoAuthor
  * @apiName deleteCworkCoAuthor
  *
- * @apiParam (Query Params) {Number} [creativeWorkID] ID of creative work
- * @apiParam (Query Params) {Number} [userID] ID of co-author as user
- * @apiParam (Query Params) {Number} [cworkCoAuthorID] ID of co-author
+ * @apiParam (Query Params) {Number} cworkCoAuthorID ID of co-author
  *
  * @apiSuccess {Object} cworkCoAuthor CworkCoAuthor fetched
  * @apiSuccess {Number} cworkCoAuthor.creativeWorkID ID of creative work
  * @apiSuccess {Number} cworkCoAuthor.userID ID of co-author as user
  * @apiSuccess {Number} cworkCoAuthor.cworkCoAuthorID ID of cworkCoAuthor
+ *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  * {
  *     "status": 200,
  *     "message": "Successfully deleted co-author",
- *     "data": [
- *         {
- *             "cworkCoAuthorID": 8,
- *             "creativeWorkID": 1,
- *             "userID": 1
- *         }
- *     ]
+ *     "data": {
+ *         "cworkCoAuthorID": 10,
+ *         "creativeWorkID": 1,
+ *         "userID": 1
+ *     }
  * }
  * @apiError (Error 500) {String} status status code
  * @apiError (Error 500) {String} message Error message
@@ -200,7 +177,7 @@ router.get('/cworkCoAuthor/', async (req, res) => {
  * @apiError (Error 404) {String} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 Award not found
+ * HTTP/1.1 404 Co-author not found
  * {
  *   "status": 404,
  *   "message": "Co-author not found"
@@ -235,9 +212,7 @@ router.delete('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
  * @apiGroup CworkCoAuthor
  * @apiName getCworkCoAuthor
  *
- * @apiParam (Query Params) {Number} [creativeWorkID] ID of creative work
- * @apiParam (Query Params) {Number} [userID] ID of co-author as user
- * @apiParam (Query Params) {Number} [cworkCoAuthorID] ID of co-author
+ * @apiParam (Query Params) {Number} cworkCoAuthorID ID of co-author
  *
  * @apiSuccess {Object} cworkCoAuthor CworkCoAuthor fetched
  * @apiSuccess {Number} cworkCoAuthor.creativeWorkID ID of creative work
@@ -248,13 +223,11 @@ router.delete('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
  * {
  *     "status": 200,
  *     "message": "Successfully fetched co-author",
- *     "data": [
- *         {
- *             "cworkCoAuthorID": 8,
- *             "creativeWorkID": 1,
- *             "userID": 1
- *         }
- *     ]
+ *     "data": {
+ *         "cworkCoAuthorID": 4,
+ *         "creativeWorkID": 1,
+ *         "userID": 1
+ *     }
  * }
  * @apiError (Error 500) {String} status status code
  * @apiError (Error 500) {String} message Error message
@@ -267,7 +240,7 @@ router.delete('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
  * @apiError (Error 404) {String} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 Award not found
+ * HTTP/1.1 404 Co-author not found
  * {
  *   "status": 404,
  *   "message": "Co-author not found"
@@ -301,9 +274,9 @@ router.get('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
  * @apiGroup CworkCoAuthor
  * @apiName updateCworkCoAuthor
  *
- * @apiParam (Query Params) {Number} [creativeWorkID] ID of creative work
- * @apiParam (Query Params) {Number} [userID] ID of co-author as user
- * @apiParam (Query Params) {Number} [cworkCoAuthorID] ID of co-author
+ * @apiParam (Query Params) {Number} cworkCoAuthorID ID of co-author
+ * @apiParam (Body Params) {Number} creativeWorkID ID of creative work
+ * @apiParam (Body Params) {Number} userID ID of co-author as user
  *
  * @apiSuccess {Object} cworkCoAuthor CworkCoAuthor fetched
  * @apiSuccess {Number} cworkCoAuthor.creativeWorkID ID of creative work
@@ -314,13 +287,11 @@ router.get('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
  * {
  *     "status": 200,
  *     "message": "Successfully updated co-author",
- *     "data": [
- *         {
- *             "cworkCoAuthorID": 8,
- *             "creativeWorkID": 1,
- *             "userID": 1
- *         }
- *     ]
+ *     "data": {
+ *         "cworkCoAuthorID": 4,
+ *         "creativeWorkID": 1,
+ *         "userID": 1
+ *     }
  * }
  * @apiError (Error 500) {String} status status code
  * @apiError (Error 500) {String} message Error message
@@ -333,7 +304,7 @@ router.get('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
  * @apiError (Error 404) {String} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 Award not found
+ * HTTP/1.1 404 Co-author not found
  * {
  *   "status": 404,
  *   "message": "Co-author not found"

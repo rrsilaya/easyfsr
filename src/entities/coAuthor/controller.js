@@ -8,11 +8,8 @@ const searchFields = ['creativeWorkID', 'userID'];
 
 export const addCworkCoAuthor = cworkCoAuthor => {
   return new Promise((resolve, reject) => {
-    db.query(Query.addCworkCoAuthor, { ...cworkCoAuthor }, (err, results) => {
-      if (err) {
-        console.log(err);
-        return reject(500);
-      }
+    db.query(Query.addCworkCoAuthor, cworkCoAuthor, (err, results) => {
+      if (err) return reject(500);
       return resolve(results.insertId);
     });
   });
@@ -27,10 +24,7 @@ export const updateCworkCoAuthor = ({ cworkCoAuthorID }, cworkCoAuthor) => {
       ),
       { cworkCoAuthorID, ...cworkCoAuthor },
       (err, results) => {
-        if (err) {
-          console.log(err);
-          return reject(500);
-        }
+        if (err) return reject(500);
         return resolve(results.cworkCoAuthorID);
       },
     );
@@ -40,10 +34,8 @@ export const updateCworkCoAuthor = ({ cworkCoAuthorID }, cworkCoAuthor) => {
 export const deleteCworkCoAuthor = ({ cworkCoAuthorID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.deleteCworkCoAuthor, { cworkCoAuthorID }, (err, results) => {
-      if (err) {
-        console.log(err);
-        return reject(500);
-      } else if (!results.affectedRows) return reject(404);
+      if (err) return reject(500);
+      else if (!results.affectedRows) return reject(404);
       return resolve();
     });
   });
@@ -52,11 +44,9 @@ export const deleteCworkCoAuthor = ({ cworkCoAuthorID }) => {
 export const getCworkCoAuthor = ({ cworkCoAuthorID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getCworkCoAuthor, { cworkCoAuthorID }, (err, results) => {
-      if (err) {
-        console.log(err);
-        return reject(500);
-      } else if (!results.length) return reject(404);
-      return resolve(results);
+      if (err) return reject(500);
+      else if (!results.length) return reject(404);
+      return resolve(results[0]);
     });
   });
 };
@@ -74,7 +64,6 @@ export const getCworkCoAuthors = cworkCoAuthor => {
       },
       (err, results) => {
         if (err) return reject(500);
-        else if (!results.length) return reject(404);
         return resolve(results);
       },
     );
