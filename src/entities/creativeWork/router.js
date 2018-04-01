@@ -78,9 +78,9 @@ router.post('/creativeWork/', async (req, res) => {
  * @apiParam (Query Params) {String} [type] type of creative work
  * @apiParam (Query Params) {Number} [credUnit] credit units of creative work
  * @apiParam (Query Params) {Number} [page] page number
- * @apiParam (Query Params) {Number} [limit] count limit of awards to fetch
+ * @apiParam (Query Params) {Number} [limit] count limit of creative works to fetch
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
- * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'chairGrantTitle'
+ * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'date'
  *
  * @apiSuccess {Object} creativeWork createWorks fetched
  * @apiSuccess {Integer} creativeWork.creativeWorkID ID of creative work
@@ -146,7 +146,10 @@ router.get('/creativeWork/', async (req, res) => {
       total: (await Ctrl.getTotalCreativeWorks(req.query)).total,
       limit: req.query.limit || 12,
       page: req.query.page || 1,
-      pages: Math.ceil(creativeWork.length / (req.query.limit || 12)),
+      pages: Math.ceil(
+        (await Ctrl.getTotalCreativeWorks(req.query)).total /
+          (req.query.limit || 12),
+      ),
     });
   } catch (status) {
     let message = '';
@@ -163,7 +166,7 @@ router.get('/creativeWork/', async (req, res) => {
 });
 
 /**
- * @api {delete} /creativeWork deleteCreativeWork
+ * @api {delete} /creativeWork/:creativeWorkID deleteCreativeWork
  * @apiGroup Creative Work
  * @apiName deleteCreativeWork
  *
@@ -234,7 +237,7 @@ router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
 });
 
 /**
- * @api {get} /creativeWork getCreativeWork
+ * @api {get} /creativeWork/:creativeWorkID getCreativeWork
  * @apiGroup Creative Work
  * @apiName getCreativeWork
  *
@@ -311,18 +314,18 @@ router.get('/creativeWork/:creativeWorkID', async (req, res) => {
 });
 
 /**
- * @api {put} /creativeWork updateCreativeWork
+ * @api {put} /creativeWork/creativeWorkID updateCreativeWork
  * @apiGroup Creative Work
  * @apiName updateCreativeWork
  *
  * @apiParam (Query Params) {Number} creativeWorkID ID of creativeWork
  *
  * @apiParam (Body Params) {Integer} id ID of related FSR
- * @apiParam (Body Params) {Date} creativeWork.date date of creative work
- * @apiParam (Body Params) {String} creativeWork.title title of creative work
- * @apiParam (Body Params) {String} creativeWork.type type of creative work
- * @apiParam (Body Params) {Integer} creativeWork.credUnit credit units of creative work
- * @apiParam (Body Params) {Integer} creativeWork.userID user ID of creative work
+ * @apiParam (Body Params) {Date} date date of creative work
+ * @apiParam (Body Params) {String} title title of creative work
+ * @apiParam (Body Params) {String} type type of creative work
+ * @apiParam (Body Params) {Integer} credUnit credit units of creative work
+ * @apiParam (Body Params) {Integer} userID user ID of creative work
  *
  * @apiSuccess {Object} creativeWork createWork added
  * @apiSuccess {Integer} id ID of related FSR
