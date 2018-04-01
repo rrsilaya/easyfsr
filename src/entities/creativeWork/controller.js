@@ -8,8 +8,7 @@ const searchFields = ['date', 'title', 'type', 'credUnit'];
 
 export const addCreativeWork = creativeWork => {
   return new Promise((resolve, reject) => {
-    db.query(Query.addCreativeWork, { ...creativeWork }, (err, results) => {
-      console.log(err);
+    db.query(Query.addCreativeWork, creativeWork, (err, results) => {
       if (err) return reject(500);
       return resolve(results.insertId);
     });
@@ -29,7 +28,6 @@ export const getCreativeWorks = creativeWork => {
       },
       (err, results) => {
         if (err) return reject(500);
-        else if (!results.length) return reject(404);
         return resolve(results);
       },
     );
@@ -44,7 +42,6 @@ export const updateCreativeWork = ({ creativeWorkID }, creativeWork) => {
       { creativeWorkID, ...creativeWork },
       (err, results) => {
         if (err) {
-          console.log(err);
           return reject(500);
         }
         return resolve(results.creativeWorkID);
@@ -57,7 +54,6 @@ export const deleteCreativeWork = ({ creativeWorkID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.deleteCreativeWork, { creativeWorkID }, (err, results) => {
       if (err) {
-        console.log(err);
         return reject(500);
       } else if (!results.affectedRows) return reject(404);
       return resolve();
@@ -69,10 +65,9 @@ export const getCreativeWork = ({ creativeWorkID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getCreativeWork, { creativeWorkID }, (err, results) => {
       if (err) {
-        console.log(err);
         return reject(500);
       } else if (!results.length) return reject(404);
-      return resolve(results);
+      return resolve(results[0]);
     });
   });
 };
@@ -89,7 +84,6 @@ export const getTotalCreativeWorks = creativeWork => {
       },
       (err, results) => {
         if (err) {
-          console.log(err);
           return reject(500);
         } else if (!results.length) return reject(404);
         return resolve(results[0]);
@@ -101,10 +95,7 @@ export const getTotalCreativeWorks = creativeWork => {
 export const getTotalCreativeWorksByFSR = ({ id }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getTotalCreativeWorksByFSR, { id }, (err, results) => {
-      if (err) {
-        console.log(err);
-        return reject(500);
-      } else if (!results.length) return reject(404);
+      if (err) return reject(500);
       return resolve(results);
     });
   });

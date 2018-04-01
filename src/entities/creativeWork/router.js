@@ -8,7 +8,7 @@ const router = Router();
  * @apiGroup Creative Work
  * @apiName addCreativeWork
 
- * @apiParam (Body Params) {Integer} creativeWork.id ID of creative work
+ * @apiParam (Body Params) {Integer} id ID of related FSR
  * @apiParam (Body Params) {Date} creativeWork.date date of creative work
  * @apiParam (Body Params) {String} creativeWork.title title of creative work
  * @apiParam (Body Params) {String} creativeWork.type type of creative work
@@ -16,7 +16,7 @@ const router = Router();
  * @apiParam (Body Params) {Integer} creativeWork.userID user ID of creative work
  *
  * @apiSuccess {Object} creativeWork createWork added
- * @apiSuccess {Integer} creativeWork.id ID of creative work
+ * @apiSuccess {Integer} id ID of related FSR
  * @apiSuccess {Date} creativeWork.date date of creative work
  * @apiSuccess {String} creativeWork.title title of creative work
  * @apiSuccess {String} creativeWork.type type of creative work
@@ -25,14 +25,20 @@ const router = Router();
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
- *   {
+ * {
+ *     "status": 200,
+ *     "message": "Successfully created creative work",
  *     "data": {
- *        "status": 200;
- *        "message": 'Succesfully added creative work'
+ *         "id": 1,
+ *         "creativeWorkID": 3,
+ *         "date": "0000-00-00",
+ *         "title": "test",
+ *         "type": "writer",
+ *         "credUnit": 1
  *     }
- *   }
+ * }
  *
- * @apiError (Error 500) {String[]} errors List of errors
+ * @apiError (Error 500) {String} status status code
  * @apiError (Error 500) {String} errors.message Error message
 
  * @apiErrorExample {json} Error-Response:
@@ -66,7 +72,16 @@ router.post('/creativeWork/', async (req, res) => {
  * @api {get} /creativeWork/ getCreativeWorks
  * @apiGroup Creative Work
  * @apiName getCreativeWorks
- * 
+ *
+ * @apiParam (Query Params) {Date} [date] date of creative work
+ * @apiParam (Query Params) {String} [title] title of creative work
+ * @apiParam (Query Params) {String} [type] type of creative work
+ * @apiParam (Query Params) {Number} [credUnit] credit units of creative work
+ * @apiParam (Query Params) {Number} [page] page number
+ * @apiParam (Query Params) {Number} [limit] count limit of awards to fetch
+ * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
+ * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'chairGrantTitle'
+ *
  * @apiSuccess {Object} creativeWork createWorks fetched
  * @apiSuccess {Integer} creativeWork.creativeWorkID ID of creative work
  * @apiSuccess {Integer} creativeWork.id ID of fsr connected to creative work
@@ -76,7 +91,7 @@ router.post('/creativeWork/', async (req, res) => {
  * @apiSuccess {Integer} creativeWork.credUnit credit units of creative work
  * @apiSuccess {Integer} creativeWork.userID user ID of creative work
  *
- @apiSuccessExample {json} Success-Response:
+ * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  * {
  *     "status": 200,
@@ -104,9 +119,9 @@ router.post('/creativeWork/', async (req, res) => {
  *     "page": 1,
  *     "pages": 1
  * }
- * @apiError (Error 500) {String[]} errors List of errors
+ * @apiError (Error 500) {String} status status code
  * @apiError (Error 500) {String} errors.message Error message
-  * @apiError (Error 404) {String[]} errors List of errors
+ * @apiError (Error 404) {String} status status code
  * @apiError (Error 404) {String} errors.message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -151,16 +166,11 @@ router.get('/creativeWork/', async (req, res) => {
  * @api {delete} /creativeWork deleteCreativeWork
  * @apiGroup Creative Work
  * @apiName deleteCreativeWork
-
- * @apiParam (Body Params) {Integer} creativeWork.id ID of creative work
- * @apiParam (Body Params) {Date} creativeWork.date date of creative work
- * @apiParam (Body Params) {String} creativeWork.title title of creative work
- * @apiParam (Body Params) {String} creativeWork.type type of creative work
- * @apiParam (Body Params) {Integer} creativeWork.credUnit credit units of creative work
- * @apiParam (Body Params) {Integer} creativeWork.userID user ID of creative work
  *
- * @apiSuccess {Object} creativeWork createWork added
- * @apiSuccess {Integer} creativeWork.id ID of creative work
+ * @apiParam (Query Params) {Number} creativeWorkID ID of creativeWork
+ *
+ * @apiSuccess {Object} creativeWork createWork deleted
+ * @apiSuccess {Integer} id ID of related FSR
  * @apiSuccess {Date} creativeWork.date date of creative work
  * @apiSuccess {String} creativeWork.title title of creative work
  * @apiSuccess {String} creativeWork.type type of creative work
@@ -169,22 +179,35 @@ router.get('/creativeWork/', async (req, res) => {
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
- *   {
+ * {
+ *     "status": 200,
+ *     "message": "Successfully deleted creative work",
  *     "data": {
- *        "status": 200;
- *        "message": 'Succesfully deleted creative work'
+ *         "id": 1,
+ *         "creativeWorkID": 2,
+ *         "date": "0000-00-00",
+ *         "title": "1",
+ *         "type": "1",
+ *         "credUnit": 1
  *     }
- *   }
+ * }
  *
- * @apiError (Error 500) {String[]} errors List of errors
+ * @apiError (Error 500) {String} status status code
  * @apiError (Error 500) {String} errors.message Error message
-
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} errors.message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
+ *
+ * HTTP/1.1 404 Creative works not found
+ * {
+ *   "status": 404,
+ *   "message": "Creative works not found"
+ * }
  */
 
 router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
@@ -214,8 +237,10 @@ router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
  * @api {get} /creativeWork getCreativeWork
  * @apiGroup Creative Work
  * @apiName getCreativeWork
-
- * @apiParam (Body Params) {Integer} creativeWork.id ID of creative work
+ *
+ * @apiParam (Query Params) {Number} creativeWorkID ID of creativeWork
+ *
+ * @apiParam (Body Params) {Integer} id ID of related FSR
  * @apiParam (Body Params) {Date} creativeWork.date date of creative work
  * @apiParam (Body Params) {String} creativeWork.title title of creative work
  * @apiParam (Body Params) {String} creativeWork.type type of creative work
@@ -223,7 +248,7 @@ router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
  * @apiParam (Body Params) {Integer} creativeWork.userID user ID of creative work
  *
  * @apiSuccess {Object} creativeWork createWork added
- * @apiSuccess {Integer} creativeWork.id ID of creative work
+ * @apiSuccess {Integer} id ID of related FSR
  * @apiSuccess {Date} creativeWork.date date of creative work
  * @apiSuccess {String} creativeWork.title title of creative work
  * @apiSuccess {String} creativeWork.type type of creative work
@@ -232,21 +257,34 @@ router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
- *   {
+ * {
+ *     "status": 200,
+ *     "message": "Successfully fetched creative work",
  *     "data": {
- *        "status": 200;
- *        "message": 'Succesfully fetched creative work'
+ *         "id": 1,
+ *         "creativeWorkID": 3,
+ *         "date": "0000-00-00",
+ *         "title": "test",
+ *         "type": "writer",
+ *         "credUnit": 1
  *     }
- *   }
+ * }
  *
- * @apiError (Error 500) {String[]} errors List of errors
+ * @apiError (Error 500) {String} status status code
  * @apiError (Error 500) {String} errors.message Error message
-
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} errors.message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
+ *   }
+ *
+ * HTTP/1.1 404 Creative works not found
+ * {
+ *   "status": 404,
+ *   "message": "Creative works not found"
  *   }
  */
 
@@ -276,8 +314,10 @@ router.get('/creativeWork/:creativeWorkID', async (req, res) => {
  * @api {put} /creativeWork updateCreativeWork
  * @apiGroup Creative Work
  * @apiName updateCreativeWork
-
- * @apiParam (Body Params) {Integer} creativeWork.id ID of creative work
+ *
+ * @apiParam (Query Params) {Number} creativeWorkID ID of creativeWork
+ *
+ * @apiParam (Body Params) {Integer} id ID of related FSR
  * @apiParam (Body Params) {Date} creativeWork.date date of creative work
  * @apiParam (Body Params) {String} creativeWork.title title of creative work
  * @apiParam (Body Params) {String} creativeWork.type type of creative work
@@ -285,7 +325,7 @@ router.get('/creativeWork/:creativeWorkID', async (req, res) => {
  * @apiParam (Body Params) {Integer} creativeWork.userID user ID of creative work
  *
  * @apiSuccess {Object} creativeWork createWork added
- * @apiSuccess {Integer} creativeWork.id ID of creative work
+ * @apiSuccess {Integer} id ID of related FSR
  * @apiSuccess {Date} creativeWork.date date of creative work
  * @apiSuccess {String} creativeWork.title title of creative work
  * @apiSuccess {String} creativeWork.type type of creative work
@@ -294,22 +334,34 @@ router.get('/creativeWork/:creativeWorkID', async (req, res) => {
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
- *   {
+ * {
+ *     "status": 200,
+ *     "message": "Successfully updated creative work",
  *     "data": {
- *        "status": 200;
- *        "message": 'Succesfully updated creative work'
+ *         "id": 1,
+ *         "creativeWorkID": 3,
+ *         "date": "0000-00-00",
+ *         "title": "test",
+ *         "type": "writer",
+ *         "credUnit": 1
  *     }
- *   }
+ * }
  *
- * @apiError (Error 500) {String[]} errors List of errors
+ * @apiError (Error 500) {String} status status code
  * @apiError (Error 500) {String} errors.message Error message
-
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} errors.message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
+ *
+ * HTTP/1.1 404 Creative works not found
+ * {
+ *   "status": 404,
+ *   "message": "Creative works not found"
  */
 
 router.put('/creativeWork/:creativeWorkID', async (req, res) => {
