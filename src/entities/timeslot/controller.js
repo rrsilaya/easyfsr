@@ -2,9 +2,9 @@ import db from '../../database/index';
 import * as Query from './queries';
 import { filtered, escapeSearch } from '../../utils';
 
-const timeslotAttributes = ['subjectID', 'day', 'time'];
+const timeslotAttributes = ['subjectID', 'day', 'timeStart', 'timeEnd'];
 
-const searchFields = ['day', 'time'];
+const searchFields = ['day', 'timeStart', 'timeEnd'];
 
 export const addTimeslot = timeslot => {
   return new Promise((resolve, reject) => {
@@ -65,5 +65,21 @@ export const deleteTimeslot = ({ timeslotID }) => {
       else if (!results.affectedRows) return reject(404);
       return resolve(results.insertId);
     });
+  });
+};
+
+export const getTotalTimeslots = timeslot => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      Query.getTotalTimeslots(filtered(timeslot, timeslotAttributes)),
+      {
+        field: 'day',
+        ...escapeSearch(timeslot, searchFields, timeslot.limit),
+      },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(results[0]);
+      },
+    );
   });
 };

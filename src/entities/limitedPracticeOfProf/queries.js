@@ -1,6 +1,6 @@
 import { formatQueryParams } from '../../utils';
 
-export const addLimitedPracticeOfProf = `
+export const addLtdPractOfProf = `
   INSERT INTO limitedPracticeOfProf (
     id,
     limitedPracticeOfProfID,
@@ -15,45 +15,32 @@ export const addLimitedPracticeOfProf = `
   )
 `;
 
-export const updateLimitedPracticeOfProf = limitedPracticeOfProf => `
+export const updateLtdPractOfProf = limitedPracticeOfProf => `
   UPDATE limitedPracticeOfProf SET
   ${formatQueryParams(limitedPracticeOfProf, 'update')}
-  WHERE id=:id
+  WHERE limitedPracticeOfProfID=:limitedPracticeOfProfID
 `;
 
-export const getLimitedPracticeOfProfs = (query, sortBy) => `
+export const getLtdPractOfProfs = (query, sortBy) => `
   SELECT * FROM limitedPracticeOfProf ${
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   } 
   ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
-  LIMIT :limit
+  LIMIT :limit OFFSET :offset
 `;
 
-export const getLimitedPracticeOfProf = `
+export const getLtdPractOfProf = `
   SELECT * FROM limitedPracticeOfProf
-  WHERE id = :id
+
+  WHERE limitedPracticeOfProfID = :limitedPracticeOfProfID
 `;
 
-export const deleteLimitedPracticeOfProf = `
-  DELETE FROM limitedPracticeOfProf
-  WHERE id = :id
+export const deleteLtdPractOfProf = `
+  DELETE FROM limitedPracticeOfProf WHERE limitedPracticeOfProfID = :limitedPracticeOfProfID
 `;
 
-export const getTotalLimitedPracticeOfProfs = `
-  SELECT count(*) as total FROM limitedPracticeOfProf
+export const getTotalLtdPractOfProfs = query => `
+  SELECT count(*) as total FROM limitedPracticeOfProf ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
 `;
-
-export const getTotalLimitedPracticeOfProfsByFSR = `
-  SELECT count(*) as total FROM limitedPracticeOfProf WHERE id = :id 
-`;
-
-/*
-
-// Supports single or multiple rows delete
-
-export const deleteLimitedPracticeOfProfs = query => `
-  DELETE FROM limitedPracticeOfProfs
-  ${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
-`;
-
-*/

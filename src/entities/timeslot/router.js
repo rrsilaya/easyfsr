@@ -10,13 +10,15 @@ const router = Router();
 
  * @apiParam (Body Params) {Integer} timeslot.subjectID subject ID of subject
  * @apiParam (Body Params) {String} timeslot.day day assigned to timeslot
- * @apiParam (Body Params) {String} timeslot.time time assigned to timeslot
+ * @apiParam (Body Params) {Time} timeslot.timeStart starting time of timeslot
+ * @apiParam (Body Params) {Time} timeslot.timeEnd dismissal time of timeslot
  *
  * @apiSuccess {Object}  timeslot timeslot added
  * @apiSuccess {Integer} timeslot.timeslotID ID of timeslot
  * @apiSuccess {Integer} timeslot.subjectID subject ID of timeslot
  * @apiSuccess {String} timeslot.day day assigned to timeslot
- * @apiSuccess {String} timeslot.time time assigned to timeslot
+ * @apiSuccess {Time} timeslot.timeStart starting time of timeslot
+ * @apiSuccess {Time} timeslot.timeEnd dismissal time of timeslot
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -29,15 +31,15 @@ const router = Router();
                 "timeslotID": 19,
                 "subjectID": 12,
                 "day": "12",
-                "time": "23"
+                "timeStart": "23:00:00",
+                "timeEnd": "24:00:00"
             }
         ]
 }
  *   }
  *
- * @apiError (Error 500) {Integer} errors.status 500
- * @apiError (Error 500) {String} errors.message Internal server error
-
+ * @apiError (Error 500) {Number} status status code
+ * @apiError (Error 500) {String} message error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
@@ -74,39 +76,46 @@ router.post('/timeslot/', async (req, res) => {
  * @apiSuccess {Integer} timeslot.timeslotID ID of timeslot
  * @apiSuccess {Integer} timeslot.subjectID ID of subject 
  * @apiSuccess {String} timeslot.day day assigned to timeslot
- * @apiSuccess {String} timeslot.time time assigned to timeslot
+ * @apiSuccess {Time} timeslot.timeStart starting time of timeslot
+ * @apiSuccess {Time} timeslot.timeEnd dismissal time of timeslot
  *
  @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *  {
- *    "status": 200,
- *    "message": "Successfully fetched timeslots",
- *     "data": [
+    "status": 200,
+    "message": "Successfully fetched timeslots",
+    "data": [
         {
-            "timeslotID": 3,
-            "subjectID": 2,
-            "day": "Monday",
-            "time": '1:00PM'
+            "timeslotID": 15,
+            "subjectID": 15,
+            "day": "Friday",
+            "timeStart": "13:00:00",
+            "timeEnd": "16:00:00"
         },
         {
-            "timeslotID": 4,
-            "subjectID": 3,
-            "day": "Monday",
-            "time": '1:00PM'
+            "timeslotID": 41,
+            "subjectID": 41,
+            "day": "Friday",
+            "timeStart": "07:00:00",
+            "timeEnd": "08:00:00"
         }
-    ]
+    ],
+    "total": 2,
+    "limit": 12,
+    "page": 1,
+    "pages": 1
  *  }
- * @apiError (Error 500) {Integer} errors.status 500
- * @apiError (Error 500) {String} errors.message Internal server error
-  * @apiError (Error 404) {Integer} errors.status 400
- * @apiError (Error 404) {String} errors.message Timeslots not found
+ * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- *
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Timeslots not found
  * {
  *   "status": 404,
@@ -121,10 +130,13 @@ router.get('/timeslot/', async (req, res) => {
       status: 200,
       message: 'Successfully fetched timeslots',
       data: timeslots,
-      total: timeslots.length,
+      total: (await Ctrl.getTotalTimeslots(req.query)).total,
       limit: req.query.limit || 12,
       page: req.query.page || 1,
-      pages: Math.ceil(timeslots.length / (req.query.limit || 12)),
+      pages: Math.ceil(
+        (await Ctrl.getTotalTimeslots(req.query)).total /
+          (req.query.limit || 12),
+      ),
     });
   } catch (status) {
     let message = '';
@@ -151,33 +163,35 @@ router.get('/timeslot/', async (req, res) => {
  * @apiSuccess {Integer} timeslot.timeslotID ID of timeslot
  * @apiSuccess {Integer} timeslot.subjectID ID of subject 
  * @apiSuccess {String} timeslot.day day assigned to timeslot
- * @apiSuccess {String} timeslot.time time assigned to timeslot
+ * @apiSuccess {Time} timeslot.timeStart starting time of timeslot
+ * @apiSuccess {Time} timeslot.timeEnd dismissal time of timeslot
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *  {
- *    "status": 200,
- *    "message": "Successfully fetched timeslot",
- *    "data": [
- *       {
- *          "timeslotID": 3,
+    "status": 200,
+    "message": "Successfully fetched timeslot",
+    "data": [
+        {
+            "timeslotID": 2,
             "subjectID": 2,
-            "day": "Monday",
-            "time": '1:00PM'
- *       }
- *    ]
- *  }
- * @apiError (Error 500) {Integer} errors.status 500
- * @apiError (Error 500) {String} errors.message Internal server error
- * @apiError (Error 404) {Integer} errors.status 400
- * @apiError (Error 404) {String} errors.message Timeslot not found
+            "day": "Wednesday",
+            "timeStart": "08:00:00",
+            "timeEnd": "09:00:00"
+        }
+    ]
+   }
+ * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- *
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Timeslot not found
  * {
  *   "status": 404,
@@ -213,44 +227,45 @@ router.get('/timeslot/:timeslotID/', async (req, res) => {
  * @apiName updateTimeslot
  *
  * @apiParam (Query Params) {Integer} timeslotID ID of timeslot
-
-* @apiParam (Body Params) {Integer} timeslot.subjectID subject ID of subject
+ * @apiParam (Body Params) {Integer} timeslot.subjectID subject ID of subject
  * @apiParam (Body Params) {String} timeslot.day day assigned to timeslot
- * @apiParam (Body Params) {String} timeslot.time time assigned to timeslot
+ * @apiParam (Body Params) {Time} timeslot.timeStart starting time of timeslot
+ * @apiParam (Body Params) {Time} timeslot.timeEnd dismissal time of timeslot
  *
-   *@apiSuccess {Object} timeslot timeslot updated
+ * @apiSuccess {Object} timeslot timeslot updated
  * @apiSuccess {Integer} timeslot.timeslotID ID of timeslot
  * @apiSuccess {Integer} timeslot.subjectID ID of subject 
  * @apiSuccess {String} timeslot.day day assigned to timeslot
- * @apiSuccess {String} timeslot.time time assigned to timeslot
+ * @apiSuccess {Time} timeslot.timeStart starting time of timeslot
+ * @apiSuccess {Time} timeslot.timeEnd dismissal time of timeslot
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *  {
-      "status": 200,
-      "message": "Successfully updated timeslot",
-      "data": [
-          {
-            "timeslotID": 4,
-            "subjectID": 3,
-            "day": "Monday",
-            "time": '1:00PM'
-          }
-      ]
+    "status": 200,
+    "message": "Successfully updated timeslot",
+    "data": [
+        {
+            "timeslotID": 2,
+            "subjectID": 1,
+            "day": "YO",
+            "timeStart": "10:00:00",
+            "timeEnd": "11:00:00"
+        }
+    ]
     }
- *   
- *
- * @apiError (Error 500) {Integer} errors.status 500
- * @apiError (Error 500) {String} errors.message Internal server error
-  * @apiError (Error 404) {Integer} errors.status 400
- * @apiError (Error 404) {String} errors.message Timeslot not found
+ * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
-    HTTP/1.1 404 Timeslot not found
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 Timeslot not found
  * {
  *   "status": 404,
  *   "message": "Timeslot not found"
@@ -287,48 +302,44 @@ router.put('/timeslot/:timeslotID/', async (req, res) => {
  *
  * @apiParam (Query Params) {Integer} timeslot.timeslotID ID of timeslot
  *
- *@apiSuccess {Object} timeslot subject deleted
- 
+ * @apiSuccess {Object} timeslot subject deleted
  * @apiSuccess {Integer} timeslot.timeslotID ID of timeslot
  * @apiSuccess {Integer} timeslot.subjectID ID of subject 
  * @apiSuccess {String} timeslot.day day assigned to timeslot
- * @apiSuccess {String} timeslot.time time assigned to timeslot
- *
+ * @apiSuccess {Time} timeslot.timeStart starting time of timeslot
+ * @apiSuccess {Time} timeslot.timeEnd dismissal time of timeslot 
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
- *     "data": {
- *        "status": 200;
- *        "message": 'Succesfully deleted timeslot'
- *     }
- *   }
- *
- * @apiError (Error 500) {Integer} errors.status 500
- * @apiError (Error 500) {String} errors.message Internal server error
- * @apiError (Error 404) {Integer} errors.status 400
- * @apiError (Error 404) {String} errors.message Timeslot not found
+    "status": 200,
+    "message": "Successfully deleted timeslot",
+    "data": [
+        {
+            "timeslotID": 2,
+            "subjectID": 1,
+            "day": "YO",
+            "timeStart": "10:00:00",
+            "timeEnd": "11:00:00"
+        }
+    ]
+    }
+ * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
-        "status": 200,
-        "message": "Successfully deleted timeslot",
-        "data": [
-            {
-                "timeslotID": 19,
-                "subjectID": 12,
-                "day": "12",
-                "time": "23"
-            }
-        ]
-    }
- *
+ *     "status": 500,
+ *     "message": "Internal server error"
+ *   }
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Timeslot not found
  * {
  *   "status": 404,
  *   "message": "Timeslot not found"
  * }
  */
-
 router.delete('/timeslot/:timeslotID/', async (req, res) => {
   try {
     const timeslot = await Ctrl.getTimeslot(req.params);

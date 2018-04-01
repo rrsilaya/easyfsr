@@ -4,7 +4,6 @@ export const addSubject = `
 	INSERT INTO subject (
 		id,
 		subjectCode,
-		subjectID,
 		teachingLoadCreds,
 		noOfStudents,
 		hoursPerWeek,
@@ -14,27 +13,12 @@ export const addSubject = `
 	VALUES (
 		:id,
 		:subjectCode,
-		DEFAULT,
 		:teachingLoadCreds,
 		:noOfStudents,
 		:hoursPerWeek,
 		:sectionCode,
 		:room
 	)
-`;
-
-export const getSubjects = (query, sortBy) => `
-	SELECT * FROM subject ${
-    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
-  } 
-  	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
-  	LIMIT :limit
-`;
-
-export const getSubject = `
-	SELECT *
-	FROM subject
-	WHERE subjectID =:subjectID
 `;
 
 export const updateSubject = subject => `  			
@@ -46,6 +30,26 @@ export const updateSubject = subject => `
 export const deleteSubject = `
 	DELETE FROM subject
 	WHERE subjectID = :subjectID
+`;
+
+export const getSubject = `
+	SELECT *
+	FROM subject
+	WHERE subjectID =:subjectID
+`;
+
+export const getSubjects = (query, sortBy) => `
+	SELECT * FROM subject ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  } 
+  	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+  	LIMIT :limit
+`;
+
+export const getTotalSubjects = query => `
+	SELECT COUNT(*) as total FROM subject ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  } 
 `;
 
 //ADDITIONAL GET FOR SUBJECTS
@@ -81,10 +85,6 @@ export const addTimeslot = `
 		:timeStart,
 		:timeEnd
 	)
-`;
-
-export const getTotalSubjects = `
-	SELECT COUNT(*) as total FROM subject
 `;
 
 export const getTotalSubjectsByFSR = `

@@ -5,19 +5,24 @@ export const addTimeslot = `
 		timeslotID,
 		subjectID,
 		day,
-		time
+		timeStart,
+		timeEnd
 	)
 	VALUES (
 		DEFAULT,
 		:subjectID,
 		:day,
-		:time
+		:timeStart,
+		:timeEnd
 	)
 `;
 
-export const getTimeslots = query => `
-	SELECT * FROM timeslot
-	${query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''}	
+export const getTimeslots = (query, sortBy) => `
+	SELECT * FROM timeslot ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  } 
+  	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+  	LIMIT :limit
 `;
 
 export const getTimeslot = `
@@ -40,4 +45,10 @@ export const deleteTimeslot = `
 export const deleteTimeslots = query => `
 	DELETE FROM timeslot
 	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
+`;
+
+export const getTotalTimeslots = query => `
+	SELECT COUNT(*) as total FROM timeslot ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  } 
 `;
