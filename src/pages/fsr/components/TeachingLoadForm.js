@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Button } from 'antd';
+import { Table, Button, Card } from 'antd';
+import { ADD_SUBJECT } from '../duck';
 
 import styles from '../styles';
 
@@ -50,24 +51,20 @@ const columns = [
 
 class TeachingLoadForm extends Component {
   render() {
-    const {
-      isAddSubjectModalOpen,
-      toggleAddSubjectModal,
-      nextStep,
-    } = this.props;
+    const { isAddSubjectModalOpen, toggleModal, nextStep } = this.props;
 
     return (
-      <div>
+      <Card title="Teaching Load in the College" style={styles.formFSR}>
         <AddSubjectModal
           isAddSubjectModalOpen={isAddSubjectModalOpen}
-          toggleAddSubjectModal={toggleAddSubjectModal}
+          toggleModal={toggleModal}
           handleAfterClose={this.handleAfterClose}
         />
         <div style={styles.button}>
           <Button
             icon="plus-circle-o"
             type="primary"
-            onClick={toggleAddSubjectModal}
+            onClick={() => toggleModal(ADD_SUBJECT)}
           >
             Add Subject
           </Button>
@@ -78,7 +75,7 @@ class TeachingLoadForm extends Component {
             Next
           </Button>
         </div>
-      </div>
+      </Card>
     );
   }
 }

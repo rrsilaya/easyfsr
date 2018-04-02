@@ -1,17 +1,7 @@
 import { connect } from 'react-redux';
 import FSRForm from './FSRForm';
 
-import {
-  toggleAddSubjectModal,
-  toggleAddCWorkModal,
-  toggleAddResearchModal,
-  toggleAddAdminWorkModal,
-  toggleAddExtAndCommServiceModal,
-  toggleAddCourseModal,
-  toggleAddConsultationHourModal,
-  nextStep,
-  prevStep,
-} from './duck';
+import { toggleModal, nextStep, prevStep } from './duck';
 
 const mapStateToProps = state => {
   const {
@@ -39,26 +29,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    toggleAddSubjectModal: () => {
-      dispatch(toggleAddSubjectModal());
-    },
-    toggleAddCWorkModal: () => {
-      dispatch(toggleAddCWorkModal());
-    },
-    toggleAddResearchModal: () => {
-      dispatch(toggleAddResearchModal());
-    },
-    toggleAddAdminWorkModal: () => {
-      dispatch(toggleAddAdminWorkModal());
-    },
-    toggleAddExtAndCommServiceModal: () => {
-      dispatch(toggleAddExtAndCommServiceModal());
-    },
-    toggleAddCourseModal: () => {
-      dispatch(toggleAddCourseModal());
-    },
-    toggleAddConsultationHourModal: () => {
-      dispatch(toggleAddConsultationHourModal());
+    toggleModal: modal => {
+      dispatch(toggleModal(modal));
     },
     nextStep: () => {
       dispatch(nextStep());

@@ -15,7 +15,7 @@ import CertificationForm from './components/CertificationForm';
 
 import steps from './steps';
 
-const Step = Steps.Step;
+const { Step } = Steps;
 
 class FSRForm extends Component {
   render() {
@@ -28,14 +28,7 @@ class FSRForm extends Component {
       isAddCourseModalOpen,
       isAddConsultationHourModalOpen,
 
-      toggleAddSubjectModal,
-      toggleAddCWorkModal,
-      toggleAddResearchModal,
-      toggleAddAdminWorkModal,
-      toggleAddExtAndCommServiceModal,
-      toggleAddCourseModal,
-      toggleAddConsultationHourModal,
-
+      toggleModal,
       nextStep,
       prevStep,
 
@@ -61,69 +54,59 @@ class FSRForm extends Component {
           </Col>
           <div>
             <Col span={17}>
-              <Card title="Faculty Service Record" style={styles.formFSR}>
-                {currentStep === 0 ? (
-                  <TeachingLoadForm
-                    isAddSubjectModalOpen={isAddSubjectModalOpen}
-                    toggleAddSubjectModal={toggleAddSubjectModal}
-                    nextStep={nextStep}
-                  />
-                ) : currentStep === 1 ? (
-                  <ResearchAndCreativeWorkForm
-                    isAddCWorkModalOpen={isAddCWorkModalOpen}
-                    isAddResearchModalOpen={isAddResearchModalOpen}
-                    toggleAddCWorkModal={toggleAddCWorkModal}
-                    toggleAddResearchModal={toggleAddResearchModal}
-                    prevStep={prevStep}
-                    nextStep={nextStep}
-                  />
-                ) : currentStep === 2 ? (
-                  <AdminWorkForm
-                    isAddAdminWorkModalOpen={isAddAdminWorkModalOpen}
-                    toggleAddAdminWorkModal={toggleAddAdminWorkModal}
-                    prevStep={prevStep}
-                    nextStep={nextStep}
-                  />
-                ) : currentStep === 3 ? (
-                  <ExtAndCommServiceForm
-                    isAddExtAndCommServiceModalOpen={
-                      isAddExtAndCommServiceModalOpen
-                    }
-                    toggleAddExtAndCommServiceModal={
-                      toggleAddExtAndCommServiceModal
-                    }
-                    prevStep={prevStep}
-                    nextStep={nextStep}
-                  />
-                ) : currentStep === 4 ? (
-                  <StudyLoadForm
-                    isAddCourseModalOpen={isAddCourseModalOpen}
-                    toggleAddCourseModal={toggleAddCourseModal}
-                    prevStep={prevStep}
-                    nextStep={nextStep}
-                  />
-                ) : currentStep === 5 ? (
-                  <LimitedPracticeForm
-                    prevStep={prevStep}
-                    nextStep={nextStep}
-                  />
-                ) : currentStep === 6 ? (
-                  <AwardForm prevStep={prevStep} nextStep={nextStep} />
-                ) : currentStep === 7 ? (
-                  <ConsultationHoursForm
-                    isAddConsultationHourModalOpen={
-                      isAddConsultationHourModalOpen
-                    }
-                    toggleAddConsultationHourModal={
-                      toggleAddConsultationHourModal
-                    }
-                    prevStep={prevStep}
-                    nextStep={nextStep}
-                  />
-                ) : (
-                  <CertificationForm prevStep={prevStep} nextStep={nextStep} />
-                )}
-              </Card>
+              {currentStep === 0 ? (
+                <TeachingLoadForm
+                  isAddSubjectModalOpen={isAddSubjectModalOpen}
+                  toggleModal={toggleModal}
+                  nextStep={nextStep}
+                />
+              ) : currentStep === 1 ? (
+                <ResearchAndCreativeWorkForm
+                  isAddCWorkModalOpen={isAddCWorkModalOpen}
+                  isAddResearchModalOpen={isAddResearchModalOpen}
+                  toggleModal={toggleModal}
+                  prevStep={prevStep}
+                  nextStep={nextStep}
+                />
+              ) : currentStep === 2 ? (
+                <AdminWorkForm
+                  isAddAdminWorkModalOpen={isAddAdminWorkModalOpen}
+                  toggleModal={toggleModal}
+                  prevStep={prevStep}
+                  nextStep={nextStep}
+                />
+              ) : currentStep === 3 ? (
+                <ExtAndCommServiceForm
+                  isAddExtAndCommServiceModalOpen={
+                    isAddExtAndCommServiceModalOpen
+                  }
+                  toggleModal={toggleModal}
+                  prevStep={prevStep}
+                  nextStep={nextStep}
+                />
+              ) : currentStep === 4 ? (
+                <StudyLoadForm
+                  isAddCourseModalOpen={isAddCourseModalOpen}
+                  toggleModal={toggleModal}
+                  prevStep={prevStep}
+                  nextStep={nextStep}
+                />
+              ) : currentStep === 5 ? (
+                <LimitedPracticeForm prevStep={prevStep} nextStep={nextStep} />
+              ) : currentStep === 6 ? (
+                <AwardForm prevStep={prevStep} nextStep={nextStep} />
+              ) : currentStep === 7 ? (
+                <ConsultationHoursForm
+                  isAddConsultationHourModalOpen={
+                    isAddConsultationHourModalOpen
+                  }
+                  toggleModal={toggleModal}
+                  prevStep={prevStep}
+                  nextStep={nextStep}
+                />
+              ) : (
+                <CertificationForm prevStep={prevStep} nextStep={nextStep} />
+              )}
             </Col>
           </div>
         </Row>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Checkbox, Button } from 'antd';
+import { Form, Checkbox, Button, Card } from 'antd';
 
 import styles from '../styles';
 
@@ -25,7 +25,7 @@ class CertificationForm extends Component {
     };
 
     return (
-      <div>
+      <Card title="Certification" style={styles.formFSR}>
         <Form>
           <FormItem {...tailFormItemLayout}>
             {getFieldDecorator('certification', {
@@ -50,7 +50,7 @@ class CertificationForm extends Component {
             </Button>
           </div>
         </Form>
-      </div>
+      </Card>
     );
   }
 }

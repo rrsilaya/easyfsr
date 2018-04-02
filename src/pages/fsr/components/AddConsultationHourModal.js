@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Select, Input, TimePicker } from 'antd';
+import { ADD_CONSULTATIONHOUR } from '../duck';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -10,7 +11,7 @@ class AddConsultationHourModal extends Component {
   };
 
   handleCancel = () => {
-    this.props.toggleAddConsultationHourModal();
+    this.props.toggleModal(ADD_CONSULTATIONHOUR);
     this.handleAfterClose();
   };
 
@@ -18,7 +19,7 @@ class AddConsultationHourModal extends Component {
     const {
       isAddConsultationHourModalOpen,
 
-      toggleAddConsultationHourModal,
+      toggleModal,
     } = this.props;
 
     const { getFieldDecorator } = this.props.form;
@@ -38,7 +39,7 @@ class AddConsultationHourModal extends Component {
       <Modal
         title="Add Consultation Hour"
         visible={isAddConsultationHourModalOpen}
-        onOk={toggleAddConsultationHourModal}
+        onOk={() => toggleModal(ADD_CONSULTATIONHOUR)}
         onCancel={this.handleCancel}
         footer={[
           <Button key="back" onClick={this.handleCancel}>
@@ -94,9 +95,10 @@ class AddConsultationHourModal extends Component {
                 {
                   required: true,
                   message: 'Please input place',
+                  whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter place for consultation hour" />)}
           </FormItem>
         </Form>
       </Modal>

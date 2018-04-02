@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Input, TimePicker } from 'antd';
+import { ADD_SUBJECT } from '../duck';
 
 const FormItem = Form.Item;
 
@@ -9,7 +10,7 @@ class AddSubjectModal extends Component {
   };
 
   handleCancel = () => {
-    this.props.toggleAddSubjectModal();
+    this.props.toggleModal(ADD_SUBJECT);
     this.handleAfterClose();
   };
 
@@ -17,7 +18,7 @@ class AddSubjectModal extends Component {
     const {
       isAddSubjectModalOpen,
 
-      toggleAddSubjectModal,
+      toggleModal,
     } = this.props;
 
     const { getFieldDecorator } = this.props.form;
@@ -37,7 +38,7 @@ class AddSubjectModal extends Component {
       <Modal
         title="Add Subject"
         visible={isAddSubjectModalOpen}
-        onOk={toggleAddSubjectModal}
+        onOk={() => toggleModal(ADD_SUBJECT)}
         onCancel={this.handleCancel}
         footer={[
           <Button key="back" onClick={this.handleCancel}>
@@ -55,9 +56,10 @@ class AddSubjectModal extends Component {
                 {
                   required: true,
                   message: 'Please input Subject Code',
+                  whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter subject code" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Section Code">
             {getFieldDecorator('sectionCode', {
@@ -65,9 +67,10 @@ class AddSubjectModal extends Component {
                 {
                   required: true,
                   message: 'Please input Section Code',
+                  whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter section code" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Room">
             {getFieldDecorator('room', {
@@ -78,18 +81,18 @@ class AddSubjectModal extends Component {
                   whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter name of room" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Days">
             {getFieldDecorator('day', {
               rules: [
                 {
                   required: true,
-                  message: 'Please input days',
+                  message: 'Please input the days',
                   whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter days of classes" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Time Start">
             {getFieldDecorator('timeStart', {
@@ -117,9 +120,10 @@ class AddSubjectModal extends Component {
                 {
                   required: true,
                   message: 'Please input hours per week',
+                  whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter number of hours per week" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="No of Students">
             {getFieldDecorator('noOfStudents', {
@@ -127,9 +131,10 @@ class AddSubjectModal extends Component {
                 {
                   required: true,
                   message: 'Please input number of students',
+                  whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter total number of students" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Course Credits">
             {getFieldDecorator('teachingLoadCreds', {
@@ -137,9 +142,10 @@ class AddSubjectModal extends Component {
                 {
                   required: true,
                   message: 'Please input course credits',
+                  whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter course credits" />)}
           </FormItem>
         </Form>
       </Modal>

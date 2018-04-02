@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Button } from 'antd';
+import { Table, Button, Card } from 'antd';
+import { ADD_CONSULTATIONHOUR } from '../duck';
 
 import AddConsultationHourModal from './AddConsultationHourModal';
 
@@ -27,23 +28,23 @@ class ConsultationHoursForm extends Component {
   render() {
     const {
       isAddConsultationHourModalOpen,
-      toggleAddConsultationHourModal,
+      toggleModal,
       nextStep,
       prevStep,
     } = this.props;
 
     return (
-      <div>
+      <Card title="Consultation Hours" style={styles.formFSR}>
         <AddConsultationHourModal
           isAddConsultationHourModalOpen={isAddConsultationHourModalOpen}
-          toggleAddConsultationHourModal={toggleAddConsultationHourModal}
+          toggleModal={toggleModal}
           handleAfterClose={this.handleAfterClose}
         />
         <div style={styles.button}>
           <Button
             icon="plus-circle-o"
             type="primary"
-            onClick={toggleAddConsultationHourModal}
+            onClick={() => toggleModal(ADD_CONSULTATIONHOUR)}
           >
             Add Consultation Hour
           </Button>
@@ -57,7 +58,7 @@ class ConsultationHoursForm extends Component {
             Next
           </Button>
         </div>
-      </div>
+      </Card>
     );
   }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Select, Input, DatePicker, Button } from 'antd';
+import { Form, Select, Input, DatePicker, Button, Card } from 'antd';
 
 import styles from '../styles';
 
@@ -24,7 +24,10 @@ class AwardForm extends Component {
     };
 
     return (
-      <div>
+      <Card
+        title="Professional Chair or Faculty Grant Recipient or Nominee"
+        style={styles.formFSR}
+      >
         <Form>
           <FormItem {...formItemLayout} label="Status">
             {getFieldDecorator('recipientOrNominee', {
@@ -66,7 +69,7 @@ class AwardForm extends Component {
                   whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter professional chair" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Grant">
             {getFieldDecorator('grantF', {
@@ -77,7 +80,7 @@ class AwardForm extends Component {
                   whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter name of grant" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Chair/Grant Title">
             {getFieldDecorator('chairGrantTitle', {
@@ -88,7 +91,7 @@ class AwardForm extends Component {
                   whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter title of chair or grant" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Approved Start Date">
             {getFieldDecorator('approvedStartDate')(<DatePicker />)}
@@ -109,7 +112,7 @@ class AwardForm extends Component {
             </Button>
           </div>
         </Form>
-      </div>
+      </Card>
     );
   }
 }

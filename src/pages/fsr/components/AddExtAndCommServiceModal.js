@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Input, Select, DatePicker } from 'antd';
+import { ADD_EXTANDCOMMSERVICE } from '../duck';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -10,7 +11,7 @@ class AddExtAndCommServiceModal extends Component {
   };
 
   handleCancel = () => {
-    this.props.toggleAddExtAndCommServiceModal();
+    this.props.toggleModal(ADD_EXTANDCOMMSERVICE);
     this.handleAfterClose();
   };
 
@@ -18,7 +19,7 @@ class AddExtAndCommServiceModal extends Component {
     const {
       isAddExtAndCommServiceModalOpen,
 
-      toggleAddExtAndCommServiceModal,
+      toggleModal,
     } = this.props;
 
     const { getFieldDecorator } = this.props.form;
@@ -38,7 +39,7 @@ class AddExtAndCommServiceModal extends Component {
       <Modal
         title="Add Extension and Community Service"
         visible={isAddExtAndCommServiceModalOpen}
-        onOk={toggleAddExtAndCommServiceModal}
+        onOk={() => toggleModal(ADD_EXTANDCOMMSERVICE)}
         onCancel={this.handleCancel}
         footer={[
           <Button key="back" onClick={this.handleCancel}>
@@ -59,7 +60,7 @@ class AddExtAndCommServiceModal extends Component {
                   whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter title of activity or program" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Type">
             {getFieldDecorator('type', {
@@ -90,7 +91,7 @@ class AddExtAndCommServiceModal extends Component {
                   whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter number of hours including" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="No. of Participants">
             {getFieldDecorator('participant', {
@@ -101,7 +102,7 @@ class AddExtAndCommServiceModal extends Component {
                   whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter total number of participants" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Start Date">
             {getFieldDecorator('startDate', {
@@ -132,7 +133,9 @@ class AddExtAndCommServiceModal extends Component {
                   whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(
+              <Input placeholder="Enter your role in the activity or program" />,
+            )}
           </FormItem>
           <FormItem {...formItemLayout} label="Approved Credit Units">
             {getFieldDecorator('creditUnit', {
@@ -140,9 +143,10 @@ class AddExtAndCommServiceModal extends Component {
                 {
                   required: true,
                   message: 'Please input approved credit units',
+                  whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter approved credit units" />)}
           </FormItem>
         </Form>
       </Modal>

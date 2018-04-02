@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Button } from 'antd';
+import { Table, Button, Card } from 'antd';
+import { ADD_ADMINWORK } from '../duck';
 
 import AddAdminWorkModal from './AddAdminWorkModal';
 
@@ -27,23 +28,23 @@ class AdminWorkForm extends Component {
   render() {
     const {
       isAddAdminWorkModalOpen,
-      toggleAddAdminWorkModal,
+      toggleModal,
       nextStep,
       prevStep,
     } = this.props;
 
     return (
-      <div>
+      <Card title="Administrative Work" style={styles.formFSR}>
         <AddAdminWorkModal
           isAddAdminWorkModalOpen={isAddAdminWorkModalOpen}
-          toggleAddAdminWorkModal={toggleAddAdminWorkModal}
+          toggleModal={toggleModal}
           handleAfterClose={this.handleAfterClose}
         />
         <div style={styles.button}>
           <Button
             icon="plus-circle-o"
             type="primary"
-            onClick={toggleAddAdminWorkModal}
+            onClick={() => toggleModal(ADD_ADMINWORK)}
           >
             Add Administrative Work
           </Button>
@@ -57,7 +58,7 @@ class AdminWorkForm extends Component {
             Next
           </Button>
         </div>
-      </div>
+      </Card>
     );
   }
 }

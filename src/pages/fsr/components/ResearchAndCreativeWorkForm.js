@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Button } from 'antd';
+import { Table, Button, Card } from 'antd';
+import { ADD_CWORK, ADD_RESEARCH } from '../duck';
 
 import AddCWorkModal from './AddCWorkModal';
 import AddResearchModal from './AddResearchModal';
@@ -82,24 +83,26 @@ class ResearchAndCreativeWorkForm extends Component {
     const {
       isAddCWorkModalOpen,
       isAddResearchModalOpen,
-      toggleAddCWorkModal,
-      toggleAddResearchModal,
+      toggleModal,
       nextStep,
       prevStep,
     } = this.props;
 
     return (
-      <div>
+      <Card
+        title="Research / Textbook Writing / Creative Work"
+        style={styles.formFSR}
+      >
         <AddResearchModal
           isAddResearchModalOpen={isAddResearchModalOpen}
-          toggleAddResearchModal={toggleAddResearchModal}
+          toggleModal={toggleModal}
           handleAfterClose={this.handleAfterClose}
         />
         <div style={styles.button}>
           <Button
             icon="plus-circle-o"
             type="primary"
-            onClick={toggleAddResearchModal}
+            onClick={() => toggleModal(ADD_RESEARCH)}
           >
             Add Research
           </Button>
@@ -107,14 +110,14 @@ class ResearchAndCreativeWorkForm extends Component {
         <Table columns={columns1} />
         <AddCWorkModal
           isAddCWorkModalOpen={isAddCWorkModalOpen}
-          toggleAddCWorkModal={toggleAddCWorkModal}
+          toggleModal={toggleModal}
           handleAfterClose={this.handleAfterClose}
         />
         <div style={styles.button}>
           <Button
             icon="plus-circle-o"
             type="primary"
-            onClick={toggleAddCWorkModal}
+            onClick={() => toggleModal(ADD_CWORK)}
           >
             Add Creative Work
           </Button>
@@ -128,7 +131,7 @@ class ResearchAndCreativeWorkForm extends Component {
             Next
           </Button>
         </div>
-      </div>
+      </Card>
     );
   }
 }

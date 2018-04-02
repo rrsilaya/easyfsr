@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Input, Select, DatePicker } from 'antd';
+import { ADD_RESEARCH } from '../duck';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -10,7 +11,7 @@ class AddResearchModal extends Component {
   };
 
   handleCancel = () => {
-    this.props.toggleAddResearchModal();
+    this.props.toggleModal(ADD_RESEARCH);
     this.handleAfterClose();
   };
 
@@ -18,7 +19,7 @@ class AddResearchModal extends Component {
     const {
       isAddResearchModalOpen,
 
-      toggleAddResearchModal,
+      toggleModal,
     } = this.props;
 
     const { getFieldDecorator } = this.props.form;
@@ -38,7 +39,7 @@ class AddResearchModal extends Component {
       <Modal
         title="Add Research"
         visible={isAddResearchModalOpen}
-        onOk={toggleAddResearchModal}
+        onOk={() => toggleModal(ADD_RESEARCH)}
         onCancel={this.handleCancel}
         footer={[
           <Button key="back" onClick={this.handleCancel}>
@@ -59,7 +60,7 @@ class AddResearchModal extends Component {
                   whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter complete title of research" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Type">
             {getFieldDecorator('type', {
@@ -83,7 +84,7 @@ class AddResearchModal extends Component {
                   whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter name of co-workers" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Start Date">
             {getFieldDecorator('startDate', {
@@ -99,7 +100,9 @@ class AddResearchModal extends Component {
             {getFieldDecorator('endDate')(<DatePicker />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Funding">
-            {getFieldDecorator('funding')(<Input />)}
+            {getFieldDecorator('funding')(
+              <Input placeholder="Enter funding" />,
+            )}
           </FormItem>
           <FormItem {...formItemLayout} label="Approved Credit Units">
             {getFieldDecorator('creditUnit', {
@@ -107,9 +110,10 @@ class AddResearchModal extends Component {
                 {
                   required: true,
                   message: 'Please input approved credit units',
+                  whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter approved credit units" />)}
           </FormItem>
         </Form>
       </Modal>

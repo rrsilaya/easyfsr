@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Input } from 'antd';
+import { ADD_ADMINWORK } from '../duck';
 
 const FormItem = Form.Item;
 
@@ -9,7 +10,7 @@ class AddAdminWorkModal extends Component {
   };
 
   handleCancel = () => {
-    this.props.toggleAddAdminWorkModal();
+    this.props.toggleModal(ADD_ADMINWORK);
     this.handleAfterClose();
   };
 
@@ -17,7 +18,7 @@ class AddAdminWorkModal extends Component {
     const {
       isAddAdminWorkModalOpen,
 
-      toggleAddAdminWorkModal,
+      toggleModal,
     } = this.props;
 
     const { getFieldDecorator } = this.props.form;
@@ -37,7 +38,7 @@ class AddAdminWorkModal extends Component {
       <Modal
         title="Add Administrative Work"
         visible={isAddAdminWorkModalOpen}
-        onOk={toggleAddAdminWorkModal}
+        onOk={() => toggleModal(ADD_ADMINWORK)}
         onCancel={this.handleCancel}
         footer={[
           <Button key="back" onClick={this.handleCancel}>
@@ -58,7 +59,9 @@ class AddAdminWorkModal extends Component {
                   whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(
+              <Input placeholder="Enter position or nature of administrative work" />,
+            )}
           </FormItem>
           <FormItem {...formItemLayout} label="Office/Unit">
             {getFieldDecorator('officeUnit', {
@@ -66,9 +69,10 @@ class AddAdminWorkModal extends Component {
                 {
                   required: true,
                   message: 'Please input office or unit',
+                  whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter office or unit" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Approved Credit Units">
             {getFieldDecorator('approvedUnits', {
@@ -76,9 +80,10 @@ class AddAdminWorkModal extends Component {
                 {
                   required: true,
                   message: 'Please input approved credit units',
+                  whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter approved credit units" />)}
           </FormItem>
         </Form>
       </Modal>

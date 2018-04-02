@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Select, DatePicker, Button } from 'antd';
+import { Form, Select, DatePicker, Button, Card } from 'antd';
 
 import styles from '../styles';
 
@@ -24,7 +24,7 @@ class LimitedPracticeForm extends Component {
     };
 
     return (
-      <div>
+      <Card title="Limited Practice of Profession" style={styles.formFSR}>
         <Form onSubmit={this.handleSubmit}>
           <FormItem {...formItemLayout} label="Applied for official permission">
             {getFieldDecorator('askedPermission', {
@@ -58,7 +58,7 @@ class LimitedPracticeForm extends Component {
             </Button>
           </div>
         </Form>
-      </div>
+      </Card>
     );
   }
 }

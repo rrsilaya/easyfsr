@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Form, Input, Select, Table, Button } from 'antd';
+import { Form, Input, Select, Table, Button, Card } from 'antd';
+import { ADD_COURSE } from '../duck';
 
 import AddCourseModal from './AddCourseModal';
 
@@ -40,7 +41,7 @@ class StudyLoadForm extends Component {
   render() {
     const {
       isAddCourseModalOpen,
-      toggleAddCourseModal,
+      toggleModal,
       nextStep,
       prevStep,
     } = this.props;
@@ -59,7 +60,7 @@ class StudyLoadForm extends Component {
     };
 
     return (
-      <div>
+      <Card title="Study Load" style={styles.formFSR}>
         <Form>
           <FormItem {...formItemLayout} label="Degree">
             {getFieldDecorator('degree', {
@@ -70,7 +71,7 @@ class StudyLoadForm extends Component {
                   whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter degree program" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="University">
             {getFieldDecorator('university', {
@@ -81,7 +82,7 @@ class StudyLoadForm extends Component {
                   whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter name of university" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="On full study leave with pay">
             {getFieldDecorator('studyLeave', {
@@ -115,14 +116,14 @@ class StudyLoadForm extends Component {
           </FormItem>
           <AddCourseModal
             isAddCourseModalOpen={isAddCourseModalOpen}
-            toggleAddCourseModal={toggleAddCourseModal}
+            toggleModal={toggleModal}
             handleAfterClose={this.handleAfterClose}
           />
           <div style={styles.button}>
             <Button
               icon="plus-circle-o"
               type="primary"
-              onClick={toggleAddCourseModal}
+              onClick={() => toggleModal(ADD_COURSE)}
             >
               Add Course
             </Button>
@@ -141,7 +142,7 @@ class StudyLoadForm extends Component {
             </Button>
           </div>
         </Form>
-      </div>
+      </Card>
     );
   }
 }

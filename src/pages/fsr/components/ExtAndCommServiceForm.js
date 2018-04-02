@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Button } from 'antd';
+import { Table, Button, Card } from 'antd';
+import { ADD_EXTANDCOMMSERVICE } from '../duck';
 
 import AddExtAndCommServiceModal from './AddExtAndCommServiceModal';
 
@@ -47,23 +48,23 @@ class ExtAndCommServiceForm extends Component {
   render() {
     const {
       isAddExtAndCommServiceModalOpen,
-      toggleAddExtAndCommServiceModal,
+      toggleModal,
       nextStep,
       prevStep,
     } = this.props;
 
     return (
-      <div>
+      <Card title="Extension and Community Service" style={styles.formFSR}>
         <AddExtAndCommServiceModal
           isAddExtAndCommServiceModalOpen={isAddExtAndCommServiceModalOpen}
-          toggleAddExtAndCommServiceModal={toggleAddExtAndCommServiceModal}
+          toggleModal={toggleModal}
           handleAfterClose={this.handleAfterClose}
         />
         <div style={styles.button}>
           <Button
             icon="plus-circle-o"
             type="primary"
-            onClick={toggleAddExtAndCommServiceModal}
+            onClick={() => toggleModal(ADD_EXTANDCOMMSERVICE)}
           >
             Add Extension and Community Service
           </Button>
@@ -77,7 +78,7 @@ class ExtAndCommServiceForm extends Component {
             Next
           </Button>
         </div>
-      </div>
+      </Card>
     );
   }
 }

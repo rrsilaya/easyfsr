@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Input, TimePicker } from 'antd';
+import { ADD_COURSE } from '../duck';
 
 const FormItem = Form.Item;
 
@@ -9,7 +10,7 @@ class AddCourseModal extends Component {
   };
 
   handleCancel = () => {
-    this.props.toggleAddCourseModal();
+    this.props.toggleModal(ADD_COURSE);
     this.handleAfterClose();
   };
 
@@ -17,7 +18,7 @@ class AddCourseModal extends Component {
     const {
       isAddCourseModalOpen,
 
-      toggleAddCourseModal,
+      toggleModal,
     } = this.props;
 
     const { getFieldDecorator } = this.props.form;
@@ -37,7 +38,7 @@ class AddCourseModal extends Component {
       <Modal
         title="Add Course"
         visible={isAddCourseModalOpen}
-        onOk={toggleAddCourseModal}
+        onOk={() => toggleModal(ADD_COURSE)}
         onCancel={this.handleCancel}
         footer={[
           <Button key="back" onClick={this.handleCancel}>
@@ -55,20 +56,21 @@ class AddCourseModal extends Component {
                 {
                   required: true,
                   message: 'Please input Course Number',
+                  whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter course number" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Days">
             {getFieldDecorator('day', {
               rules: [
                 {
                   required: true,
-                  message: 'Please input days',
+                  message: 'Please input the days',
                   whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter days of classes" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Time Start">
             {getFieldDecorator('timeStart', {
@@ -96,9 +98,10 @@ class AddCourseModal extends Component {
                 {
                   required: true,
                   message: 'Please input hours per week',
+                  whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter number of hours per week" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="School">
             {getFieldDecorator('school', {
@@ -106,9 +109,10 @@ class AddCourseModal extends Component {
                 {
                   required: true,
                   message: 'Please input school',
+                  whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter name of school" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Course Credits">
             {getFieldDecorator('credit', {
@@ -116,9 +120,10 @@ class AddCourseModal extends Component {
                 {
                   required: true,
                   message: 'Please input course credits',
+                  whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter course credits" />)}
           </FormItem>
         </Form>
       </Modal>

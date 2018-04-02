@@ -1,45 +1,23 @@
 import { handle } from 'redux-pack';
 import * as Api from '../../api';
 
+// Constants
+export const ADD_SUBJECT = 'ADD_SUBJECT';
+export const ADD_CWORK = 'ADD_CWORK';
+export const ADD_RESEARCH = 'ADD_RESEARCH';
+export const ADD_ADMINWORK = 'ADD_ADMINWORK';
+export const ADD_EXTANDCOMMSERVICE = 'ADD_EXTANDCOMMSERVICE';
+export const ADD_COURSE = 'ADD_COURSE';
+export const ADD_CONSULTATIONHOUR = 'ADD_CONSULTATIONHOUR';
+
 // Action Types
-const TOGGLE_ADD_SUBJECT_MODAL = 'FSR/TOGGLE_ADD_SUBJECT_MODAL';
-const TOGGLE_ADD_CWORK_MODAL = 'FSR/TOGGLE_ADD_CWORK_MODAL';
-const TOGGLE_ADD_RESEARCH_MODAL = 'FSR/TOGGLE_ADD_RESEARCH_MODAL';
-const TOGGLE_ADD_ADMINWORK_MODAL = 'FSR/TOGGLE_ADD_ADMINWORK_MODAL';
-const TOGGLE_ADD_EXTANDCOMMSERVICE_MODAL =
-  'FSR/TOGGLE_ADD_EXTANDCOMMSERVICE_MODAL';
-const TOGGLE_ADD_COURSE_MODAL = 'FSR/TOGGLE_ADD_COURSE_MODAL';
-const TOGGLE_ADD_CONSULTATIONHOUR_MODAL =
-  'FSR/TOGGLE_ADD_CONSULTATIONHOUR_MODAL';
+const TOGGLE_MODAL = 'FSR/TOGGLE_MODAL';
 const NEXT_STEP = 'FSR/NEXT_STEP';
 const PREVIOUS_STEP = 'FSR/PREVIOUS_STEP';
 
-export const toggleAddSubjectModal = () => ({
-  type: TOGGLE_ADD_SUBJECT_MODAL,
-});
-
-export const toggleAddCWorkModal = () => ({
-  type: TOGGLE_ADD_CWORK_MODAL,
-});
-
-export const toggleAddResearchModal = () => ({
-  type: TOGGLE_ADD_RESEARCH_MODAL,
-});
-
-export const toggleAddAdminWorkModal = () => ({
-  type: TOGGLE_ADD_ADMINWORK_MODAL,
-});
-
-export const toggleAddExtAndCommServiceModal = () => ({
-  type: TOGGLE_ADD_EXTANDCOMMSERVICE_MODAL,
-});
-
-export const toggleAddCourseModal = () => ({
-  type: TOGGLE_ADD_COURSE_MODAL,
-});
-
-export const toggleAddConsultationHourModal = () => ({
-  type: TOGGLE_ADD_CONSULTATIONHOUR_MODAL,
+export const toggleModal = modal => ({
+  type: TOGGLE_MODAL,
+  payload: modal,
 });
 
 export const nextStep = () => ({
@@ -66,47 +44,43 @@ const reducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case TOGGLE_ADD_SUBJECT_MODAL:
-      return {
-        ...state,
-        isAddSubjectModalOpen: !state.isAddSubjectModalOpen,
-      };
-
-    case TOGGLE_ADD_CWORK_MODAL:
-      return {
-        ...state,
-        isAddCWorkModalOpen: !state.isAddCWorkModalOpen,
-      };
-
-    case TOGGLE_ADD_RESEARCH_MODAL:
-      return {
-        ...state,
-        isAddResearchModalOpen: !state.isAddResearchModalOpen,
-      };
-
-    case TOGGLE_ADD_ADMINWORK_MODAL:
-      return {
-        ...state,
-        isAddAdminWorkModalOpen: !state.isAddAdminWorkModalOpen,
-      };
-
-    case TOGGLE_ADD_EXTANDCOMMSERVICE_MODAL:
-      return {
-        ...state,
-        isAddExtAndCommServiceModalOpen: !state.isAddExtAndCommServiceModalOpen,
-      };
-
-    case TOGGLE_ADD_COURSE_MODAL:
-      return {
-        ...state,
-        isAddCourseModalOpen: !state.isAddCourseModalOpen,
-      };
-
-    case TOGGLE_ADD_CONSULTATIONHOUR_MODAL:
-      return {
-        ...state,
-        isAddConsultationHourModalOpen: !state.isAddConsultationHourModalOpen,
-      };
+    case TOGGLE_MODAL:
+      switch (payload) {
+        case ADD_SUBJECT:
+          return {
+            ...state,
+            isAddSubjectModalOpen: !state.isAddSubjectModalOpen,
+          };
+        case ADD_CWORK:
+          return { ...state, isAddCWorkModalOpen: !state.isAddCWorkModalOpen };
+        case ADD_RESEARCH:
+          return {
+            ...state,
+            isAddResearchModalOpen: !state.isAddResearchModalOpen,
+          };
+        case ADD_ADMINWORK:
+          return {
+            ...state,
+            isAddAdminWorkModalOpen: !state.isAddAdminWorkModalOpen,
+          };
+        case ADD_EXTANDCOMMSERVICE:
+          return {
+            ...state,
+            isAddExtAndCommServiceModalOpen: !state.isAddExtAndCommServiceModalOpen,
+          };
+        case ADD_COURSE:
+          return {
+            ...state,
+            isAddCourseModalOpen: !state.isAddCourseModalOpen,
+          };
+        case ADD_CONSULTATIONHOUR:
+          return {
+            ...state,
+            isAddConsultationHourModalOpen: !state.isAddConsultationHourModalOpen,
+          };
+        default:
+          return state;
+      }
 
     case NEXT_STEP:
       return {

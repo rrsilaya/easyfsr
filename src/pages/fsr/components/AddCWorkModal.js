@@ -9,6 +9,7 @@ import {
   Upload,
   Icon,
 } from 'antd';
+import { ADD_CWORK } from '../duck';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -19,7 +20,7 @@ class AddCWorkModal extends Component {
   };
 
   handleCancel = () => {
-    this.props.toggleAddCWorkModal();
+    this.props.toggleModal(ADD_CWORK);
     this.handleAfterClose();
   };
 
@@ -27,7 +28,7 @@ class AddCWorkModal extends Component {
     const {
       isAddCWorkModalOpen,
 
-      toggleAddCWorkModal,
+      toggleModal,
     } = this.props;
 
     const { getFieldDecorator } = this.props.form;
@@ -47,7 +48,7 @@ class AddCWorkModal extends Component {
       <Modal
         title="Add Creative Work"
         visible={isAddCWorkModalOpen}
-        onOk={toggleAddCWorkModal}
+        onOk={() => toggleModal(ADD_CWORK)}
         onCancel={this.handleCancel}
         footer={[
           <Button key="back" onClick={this.handleCancel}>
@@ -68,7 +69,9 @@ class AddCWorkModal extends Component {
                   whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(
+              <Input placeholder="Enter complete title, place and publication" />,
+            )}
           </FormItem>
           <FormItem {...formItemLayout} label="Type">
             {getFieldDecorator('type', {
@@ -101,7 +104,7 @@ class AddCWorkModal extends Component {
                   whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter name of co-authors" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Date of Publication">
             {getFieldDecorator('date', {
@@ -135,9 +138,10 @@ class AddCWorkModal extends Component {
                 {
                   required: true,
                   message: 'Please input approved credit units',
+                  whitespace: true,
                 },
               ],
-            })(<Input />)}
+            })(<Input placeholder="Enter approved credit units" />)}
           </FormItem>
         </Form>
       </Modal>
