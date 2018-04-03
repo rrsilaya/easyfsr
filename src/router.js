@@ -9,6 +9,7 @@ import limitedPracticeOfProfRouter from './entities/limitedPracticeOfProf/router
 import serviceRouter from './entities/extensionAndCommunityService/router';
 import subjectRouter from './entities/subject/router';
 import userRouter from './entities/user/router';
+import userViewRouter from './entities/user/views/router';
 import announcementRouter from './entities/announcement/router';
 
 const router = Router();
@@ -24,6 +25,7 @@ router.use(authRouter);
 //     message: 'You must be logged in',
 //   });
 // });
+router.use(userViewRouter);
 router.use(awardRouter);
 router.use(courseRouter);
 router.use(courseSchedRouter);
