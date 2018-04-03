@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import bcrypt from 'bcrypt';
+
+import * as Middleware from '../../middlewares';
 import * as Ctrl from './controller';
 
 const router = Router();
@@ -46,8 +47,7 @@ const router = Router();
  *     "message": "Internal server error"
  *   }
  */
-
-router.post('/fsr/', async (req, res) => {
+router.post('/fsr', Middleware.isAdmin, async (req, res) => {
   try {
     const id = await Ctrl.addFSR(req.body);
     const fsr = await Ctrl.getFSR({ id });
@@ -114,7 +114,7 @@ router.post('/fsr/', async (req, res) => {
  *   "message": "FSR not found"
  * }
  */
-router.get('/fsr/:id', async (req, res) => {
+router.get('/fsr/:id', Middleware.isHead, async (req, res) => {
   try {
     const fsr = await Ctrl.getFSR(req.params);
     res.status(200).json({
@@ -124,6 +124,7 @@ router.get('/fsr/:id', async (req, res) => {
     });
   } catch (status) {
     let message = '';
+
     switch (status) {
       case 404:
         message = 'FSR not found';
@@ -132,6 +133,7 @@ router.get('/fsr/:id', async (req, res) => {
         message = 'Internal server error';
         break;
     }
+
     res.status(status).json({ status, message });
   }
 });
@@ -203,8 +205,7 @@ router.get('/fsr/:id', async (req, res) => {
  *   "message": "FSR not found"
  * }
  */
-
-router.get('/fsr', async (req, res) => {
+router.get('/fsr', Middleware.isHead, async (req, res) => {
   try {
     const FSRs = await Ctrl.getFSRs(req.query);
     res.status(200).json({
@@ -231,17 +232,6 @@ router.get('/fsr', async (req, res) => {
     }
     res.status(status).json({ status, message });
   }
-});
-
-router.use('/fsr/:userID', (req, res, next) => {
-  const { user } = req.session;
-  if (user && (user.acctType === 'ADMIN' || user.userID == req.params.userID)) {
-    return next();
-  }
-  res.status(403).json({
-    status: 403,
-    message: 'Unauthorized access',
-  });
 });
 
 /**

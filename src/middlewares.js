@@ -24,7 +24,9 @@ export const isAdmin = (req, res, next) => {
 };
 
 export const isHead = (req, res, next) => {
-  if (req.session.user.isHead || req.session.user.acctType === ADMIN) {
+  const { user } = req.session;
+
+  if (user.isHead || user.acctType === ADMIN) {
     return next();
   }
 
