@@ -6,15 +6,6 @@ const FormItem = Form.Item;
 const { Option } = Select;
 
 class AddResearchModal extends Component {
-  handleAfterClose = () => {
-    this.props.form.resetFields();
-  };
-
-  handleCancel = () => {
-    this.props.toggleModal(ADD_RESEARCH);
-    this.handleAfterClose();
-  };
-
   render() {
     const {
       isAddResearchModalOpen,
@@ -40,9 +31,10 @@ class AddResearchModal extends Component {
         title="Add Research"
         visible={isAddResearchModalOpen}
         onOk={() => toggleModal(ADD_RESEARCH)}
-        onCancel={this.handleCancel}
+        onCancel={() => toggleModal(ADD_RESEARCH)}
+        destroyOnClose
         footer={[
-          <Button key="back" onClick={this.handleCancel}>
+          <Button key="back" onClick={() => toggleModal(ADD_RESEARCH)}>
             Cancel
           </Button>,
           <Button key="submit" type="primary" htmlType="submit">

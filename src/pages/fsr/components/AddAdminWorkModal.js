@@ -5,15 +5,6 @@ import { ADD_ADMINWORK } from '../duck';
 const FormItem = Form.Item;
 
 class AddAdminWorkModal extends Component {
-  handleAfterClose = () => {
-    this.props.form.resetFields();
-  };
-
-  handleCancel = () => {
-    this.props.toggleModal(ADD_ADMINWORK);
-    this.handleAfterClose();
-  };
-
   render() {
     const {
       isAddAdminWorkModalOpen,
@@ -39,9 +30,10 @@ class AddAdminWorkModal extends Component {
         title="Add Administrative Work"
         visible={isAddAdminWorkModalOpen}
         onOk={() => toggleModal(ADD_ADMINWORK)}
-        onCancel={this.handleCancel}
+        onCancel={() => toggleModal(ADD_ADMINWORK)}
+        destroyOnClose
         footer={[
-          <Button key="back" onClick={this.handleCancel}>
+          <Button key="back" onClick={() => toggleModal(ADD_ADMINWORK)}>
             Cancel
           </Button>,
           <Button key="submit" type="primary" htmlType="submit">

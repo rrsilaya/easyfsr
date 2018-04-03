@@ -5,15 +5,6 @@ import { ADD_SUBJECT } from '../duck';
 const FormItem = Form.Item;
 
 class AddSubjectModal extends Component {
-  handleAfterClose = () => {
-    this.props.form.resetFields();
-  };
-
-  handleCancel = () => {
-    this.props.toggleModal(ADD_SUBJECT);
-    this.handleAfterClose();
-  };
-
   render() {
     const {
       isAddSubjectModalOpen,
@@ -39,9 +30,10 @@ class AddSubjectModal extends Component {
         title="Add Subject"
         visible={isAddSubjectModalOpen}
         onOk={() => toggleModal(ADD_SUBJECT)}
-        onCancel={this.handleCancel}
+        onCancel={() => toggleModal(ADD_SUBJECT)}
+        destroyOnClose
         footer={[
-          <Button key="back" onClick={this.handleCancel}>
+          <Button key="back" onClick={() => toggleModal(ADD_SUBJECT)}>
             Cancel
           </Button>,
           <Button key="submit" type="primary" htmlType="submit">

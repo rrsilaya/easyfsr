@@ -49,9 +49,10 @@ class AddCWorkModal extends Component {
         title="Add Creative Work"
         visible={isAddCWorkModalOpen}
         onOk={() => toggleModal(ADD_CWORK)}
-        onCancel={this.handleCancel}
+        onCancel={() => toggleModal(ADD_CWORK)}
+        destroyOnClose
         footer={[
-          <Button key="back" onClick={this.handleCancel}>
+          <Button key="back" onClick={() => toggleModal(ADD_CWORK)}>
             Cancel
           </Button>,
           <Button key="submit" type="primary" htmlType="submit">

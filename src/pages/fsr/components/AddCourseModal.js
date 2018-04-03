@@ -5,15 +5,6 @@ import { ADD_COURSE } from '../duck';
 const FormItem = Form.Item;
 
 class AddCourseModal extends Component {
-  handleAfterClose = () => {
-    this.props.form.resetFields();
-  };
-
-  handleCancel = () => {
-    this.props.toggleModal(ADD_COURSE);
-    this.handleAfterClose();
-  };
-
   render() {
     const {
       isAddCourseModalOpen,
@@ -39,9 +30,10 @@ class AddCourseModal extends Component {
         title="Add Course"
         visible={isAddCourseModalOpen}
         onOk={() => toggleModal(ADD_COURSE)}
-        onCancel={this.handleCancel}
+        onCancel={() => toggleModal(ADD_COURSE)}
+        destroyOnClose
         footer={[
-          <Button key="back" onClick={this.handleCancel}>
+          <Button key="back" onClick={() => toggleModal(ADD_COURSE)}>
             Cancel
           </Button>,
           <Button key="submit" type="primary" htmlType="submit">

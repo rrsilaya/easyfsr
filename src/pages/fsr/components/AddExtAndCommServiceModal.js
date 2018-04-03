@@ -6,15 +6,6 @@ const FormItem = Form.Item;
 const { Option } = Select;
 
 class AddExtAndCommServiceModal extends Component {
-  handleAfterClose = () => {
-    this.props.form.resetFields();
-  };
-
-  handleCancel = () => {
-    this.props.toggleModal(ADD_EXTANDCOMMSERVICE);
-    this.handleAfterClose();
-  };
-
   render() {
     const {
       isAddExtAndCommServiceModalOpen,
@@ -40,9 +31,10 @@ class AddExtAndCommServiceModal extends Component {
         title="Add Extension and Community Service"
         visible={isAddExtAndCommServiceModalOpen}
         onOk={() => toggleModal(ADD_EXTANDCOMMSERVICE)}
-        onCancel={this.handleCancel}
+        onCancel={() => toggleModal(ADD_EXTANDCOMMSERVICE)}
+        destroyOnClose
         footer={[
-          <Button key="back" onClick={this.handleCancel}>
+          <Button key="back" onClick={() => toggleModal(ADD_EXTANDCOMMSERVICE)}>
             Cancel
           </Button>,
           <Button key="submit" type="primary" htmlType="submit">

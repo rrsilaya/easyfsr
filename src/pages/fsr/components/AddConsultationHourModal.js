@@ -6,15 +6,6 @@ const FormItem = Form.Item;
 const { Option } = Select;
 
 class AddConsultationHourModal extends Component {
-  handleAfterClose = () => {
-    this.props.form.resetFields();
-  };
-
-  handleCancel = () => {
-    this.props.toggleModal(ADD_CONSULTATIONHOUR);
-    this.handleAfterClose();
-  };
-
   render() {
     const {
       isAddConsultationHourModalOpen,
@@ -40,9 +31,10 @@ class AddConsultationHourModal extends Component {
         title="Add Consultation Hour"
         visible={isAddConsultationHourModalOpen}
         onOk={() => toggleModal(ADD_CONSULTATIONHOUR)}
-        onCancel={this.handleCancel}
+        onCancel={() => toggleModal(ADD_CONSULTATIONHOUR)}
+        destroyOnClose
         footer={[
-          <Button key="back" onClick={this.handleCancel}>
+          <Button key="back" onClick={() => toggleModal(ADD_CONSULTATIONHOUR)}>
             Cancel
           </Button>,
           <Button key="submit" type="primary" htmlType="submit">
