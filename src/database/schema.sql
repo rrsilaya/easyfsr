@@ -40,6 +40,7 @@ CREATE TABLE fsr(
   `semester` VARCHAR (10) NOT NULL,
   `isChecked` boolean DEFAULT 0,
   `teachingLoadCreds` INT(2) DEFAULT 0,
+  `filepath` TEXT (50),
   -- place all entitiesID here
   CONSTRAINT `fsr_pk` 
     PRIMARY KEY (`id`),
@@ -177,6 +178,7 @@ CREATE TABLE `award`(
   `professionalChair` VARCHAR (50) NOT NULL,
   `approvedStartDate` DATE NOT NULL, --                   DATE format: YYYY-MM-DD
   `endDate` DATE NOT NULL, --                             DATE format: YYYY-MM-DD
+  `filepath` TEXT (50),
   CONSTRAINT `award_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
@@ -239,6 +241,7 @@ CREATE TABLE `creativeWork`(
   `title` VARCHAR(50) NOT NULL,
   `type` VARCHAR(50) NOT NULL,
   `credUnit` INT (10) NOT NULL,
+  `filepath` TEXT (50),
   CONSTRAINT `creativeWork_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
@@ -274,6 +277,7 @@ CREATE TABLE `research`(
   `endDate` DATE DEFAULT NULL, --                 DATE format: YYYY-MM-DD
   `funding` VARCHAR (30) NOT NULL,
   `approvedUnits` VARCHAR (30) NOT NULL,
+  `filepath` TEXT (50),
   CONSTRAINT `research_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
