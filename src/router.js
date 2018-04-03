@@ -16,7 +16,6 @@ import announcementRouter from './entities/announcement/router';
 const router = Router();
 
 router.use(authRouter);
-
 router.use(Middleware.isLoggedIn);
 
 router.use(awardRouter);
@@ -26,9 +25,6 @@ router.use(fsrRouter);
 router.use(limitedPracticeOfProfRouter);
 router.use(serviceRouter);
 router.use(subjectRouter);
-
-router.use(Middleware.isAdmin);
-
 router.use(announcementRouter);
 router.use(userRouter);
 

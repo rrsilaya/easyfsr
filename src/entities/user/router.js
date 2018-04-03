@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
+
+import * as Middleware from '../../middlewares';
 import * as Ctrl from './controller';
 
 const router = Router();
@@ -43,7 +45,7 @@ const router = Router();
  *   HTTP/1.1 200 OK
  *   {
  *     "status": 200;
- *		 "message": 'Succesfully created user'
+ *     "message": 'Succesfully created user'
  *     "data":
  *        {
  *          "userID": 3,
@@ -72,12 +74,14 @@ const router = Router();
  *   }
  */
 
-router.post('/user/', async (req, res) => {
+router.post('/user', Middleware.isAdmin, async (req, res) => {
   try {
     req.body.password = await bcrypt.hash(req.body.password, 10);
     const userID = await Ctrl.addUser(req.body);
     const user = await Ctrl.getUserByUserID({ userID });
+
     delete user.password;
+
     res.status(200).json({
       status: 200,
       message: 'Successfully created user',
@@ -85,11 +89,13 @@ router.post('/user/', async (req, res) => {
     });
   } catch (status) {
     let message = '';
+
     switch (status) {
       case 500:
         message = 'Internal server error';
         break;
     }
+
     res.status(status).json({ status, message });
   }
 });
@@ -184,11 +190,13 @@ router.post('/user/', async (req, res) => {
  * }
  */
 
-router.get('/user/', async (req, res) => {
+router.get('/user', async (req, res) => {
   try {
     const users = await Ctrl.getUsers(req.query);
+
     users.map(user => delete user.password);
     users.map(user => delete user.isArchived);
+
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched users',
@@ -203,6 +211,7 @@ router.get('/user/', async (req, res) => {
     });
   } catch (status) {
     let message = '';
+
     switch (status) {
       case 404:
         message = 'User/s not found';
@@ -211,9 +220,11 @@ router.get('/user/', async (req, res) => {
         message = 'Internal server error';
         break;
     }
+
     res.status(status).json({ status, message });
   }
 });
+
 /**
  * @api {delete} /user/:userID deleteUser
  * @apiGroup User
@@ -276,29 +287,39 @@ router.get('/user/', async (req, res) => {
  *   "message": "User not found"
  * }
  */
-router.delete('/user/:userID', async (req, res) => {
-  try {
-    const user = await Ctrl.getUserByUserID(req.params);
-    delete user.password;
-    await Ctrl.deleteUser(req.params);
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully deleted user',
-      data: user,
-    });
-  } catch (status) {
-    let message = '';
-    switch (status) {
-      case 404:
-        message = 'User not found';
-        break;
-      case 500:
-        message = 'Internal server error';
-        break;
+
+router.delete(
+  '/user/:userID',
+  Middleware.isEmployeeAuthorized('userID'),
+  Middleware.isNotSameUser('userID'),
+  async (req, res) => {
+    try {
+      const user = await Ctrl.getUserByUserID(req.params);
+
+      delete user.password;
+      await Ctrl.deleteUser(req.params);
+
+      res.status(200).json({
+        status: 200,
+        message: 'Successfully deleted user',
+        data: user,
+      });
+    } catch (status) {
+      let message = '';
+
+      switch (status) {
+        case 404:
+          message = 'User not found';
+          break;
+        case 500:
+          message = 'Internal server error';
+          break;
+      }
+
+      res.status(status).json({ status, message });
     }
-    res.status(status).json({ status, message });
-  }
-});
+  },
+);
 
 /**
  * @api {get} /user/:employeeId getUser
@@ -364,7 +385,9 @@ router.delete('/user/:userID', async (req, res) => {
 router.get('/user/:employeeID', async (req, res) => {
   try {
     const user = await Ctrl.getUserByEmpID(req.params);
+
     delete user.password;
+
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched user',
@@ -372,6 +395,7 @@ router.get('/user/:employeeID', async (req, res) => {
     });
   } catch (status) {
     let message = '';
+
     switch (status) {
       case 404:
         message = 'User not found';
@@ -380,20 +404,11 @@ router.get('/user/:employeeID', async (req, res) => {
         message = 'Internal server error';
         break;
     }
+
     res.status(status).json({ status, message });
   }
 });
 
-router.use('/user/:userID', (req, res, next) => {
-  const { user } = req.session;
-  if (user && (user.acctType === 'ADMIN' || user.userID == req.params.userID)) {
-    return next();
-  }
-  res.status(403).json({
-    status: 403,
-    message: 'Unauthorized access',
-  });
-});
 /**
  * @api {put} /user/:userID updateUser
  * @apiGroup User
@@ -471,33 +486,36 @@ router.use('/user/:userID', (req, res, next) => {
  *   "message": "User not found"
  * }
  */
+router.put(
+  '/user/:userID',
+  Middleware.isEmployeeAuthorized('userID'),
+  async (req, res) => {
+    try {
+      if (req.body.password) {
+        req.body.password = await bcrypt.hash(req.body.password, 10);
+      }
+      await Ctrl.updateUser(req.params, req.body);
+      const user = await Ctrl.getUserByUserID(req.params);
+      delete user.password;
 
-router.put('/user/:userID', async (req, res) => {
-  try {
-    if (req.body.password) {
-      req.body.password = await bcrypt.hash(req.body.password, 10);
+      res.status(200).json({
+        status: 200,
+        message: 'Successfully updated user',
+        data: user,
+      });
+    } catch (status) {
+      let message = '';
+      switch (status) {
+        case 404:
+          message = 'User not found';
+          break;
+        case 500:
+          message = 'Internal server error';
+          break;
+      }
+      res.status(status).json({ status, message });
     }
-    await Ctrl.updateUser(req.params, req.body);
-    const user = await Ctrl.getUserByUserID(req.params);
-    delete user.password;
-
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully updated user',
-      data: user,
-    });
-  } catch (status) {
-    let message = '';
-    switch (status) {
-      case 404:
-        message = 'User not found';
-        break;
-      case 500:
-        message = 'Internal server error';
-        break;
-    }
-    res.status(status).json({ status, message });
-  }
-});
+  },
+);
 
 export default router;
