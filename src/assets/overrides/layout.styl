@@ -31,6 +31,13 @@
   color: $white;
 }
 
+.gridTiles {
+  & > * {
+    margin-bottom: 16px;
+  }
+}
+
+// ANT OVERRIDES
 .ant-pagination-prev { margin-right: 28px !important; }
 .ant-pagination-next { margin-left: 20px !important; }
 
@@ -52,5 +59,15 @@
   
   &.ant-pagination-item-active {
     background-color: lighten($primary, 30%) !important;
+  }
+}
+
+.ant-list-item {
+  &.faculty-item {
+    background-color: $white !important;
+    
+    & > * {
+      justify-content: space-between;
+    }
   }
 }

@@ -22,6 +22,7 @@ const routes = [
   {
     path: '/users',
     component: Users,
+    restricted: true,
   },
   {
     path: '/search',

@@ -35,7 +35,7 @@ class App extends Component {
             <Loader />
           ) : user ? (
             <Layout className="fullpage">
-              <Sidebar isSidebarCollapsed={isSidebarCollapsed} />
+              <Sidebar isSidebarCollapsed={isSidebarCollapsed} user={user} />
               <Layout.Content
                 className="dark-mode"
                 style={{ overflowY: 'auto' }}
@@ -48,9 +48,16 @@ class App extends Component {
                   />
                   <Layout.Content style={{ paddingBottom: '2em' }}>
                     <Switch>
-                      {routes.map(route => (
-                        <Route key={route.path} {...route} />
-                      ))}
+                      {routes.map(
+                        route =>
+                          !route.restricted ? (
+                            <Route key={route.path} {...route} />
+                          ) : user.acctType === 'ADMIN' ? (
+                            <Route key={route.path} {...route} />
+                          ) : (
+                            ''
+                          ),
+                      )}
                       <Redirect
                         from="/profile"
                         to={`/profile/${user.employeeID}`}
