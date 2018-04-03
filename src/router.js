@@ -1,5 +1,7 @@
 import { Router } from 'express';
 
+import * as Middleware from './middlewares';
+
 import authRouter from './entities/auth/router';
 import awardRouter from './entities/award/router';
 import courseRouter from './entities/course/router';
@@ -15,15 +17,8 @@ const router = Router();
 
 router.use(authRouter);
 
-// router.use( (req,res,next) => {
-//   if(req.session.user){
-//     return next;
-//   }
-//   res.status(401).json({
-//     status:401,
-//     message: 'You must be logged in',
-//   });
-// });
+router.use(Middleware.isLoggedIn);
+
 router.use(awardRouter);
 router.use(courseRouter);
 router.use(courseSchedRouter);
@@ -31,15 +26,8 @@ router.use(fsrRouter);
 router.use(limitedPracticeOfProfRouter);
 router.use(serviceRouter);
 router.use(subjectRouter);
-// router.use( (req,res,next) => {
-//   if(req.session.user.acctType == 'ADMIN'){
-//     return next;
-//   }
-//   res.status(403).json({
-//     status:403,
-//     message: 'Forbidden access',
-//   });
-// });
+
+router.use(Middleware.isAdmin);
 
 router.use(announcementRouter);
 router.use(userRouter);
