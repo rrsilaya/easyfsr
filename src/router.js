@@ -9,6 +9,7 @@ import limitedPracticeOfProfRouter from './entities/limitedPracticeOfProf/router
 import serviceRouter from './entities/extensionAndCommunityService/router';
 import subjectRouter from './entities/subject/router';
 import userRouter from './entities/user/router';
+import announcementRouter from './entities/announcement/router';
 
 const router = Router();
 
@@ -40,6 +41,7 @@ router.use(subjectRouter);
 //   });
 // });
 
+router.use(announcementRouter);
 router.use(userRouter);
 
 export default router;
