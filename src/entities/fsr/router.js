@@ -211,7 +211,7 @@ router.get('/fsr', async (req, res) => {
       status: 200,
       message: 'Successfully fetched FSRs',
       data: FSRs,
-      total: FSRs.length,
+      total: (await Ctrl.getTotalFSRs(req.query)).total,
       limit: parseInt(req.query.limit) || 12,
       page: parseInt(req.query.page) || 1,
       pages: Math.ceil(
