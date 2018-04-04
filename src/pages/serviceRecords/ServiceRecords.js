@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Col, List } from 'antd';
 import styles from './styles';
-import actions from './actions';
 import dataSource from './datasource';
 import columns from './columns';
 import { Link } from 'react-router-dom';

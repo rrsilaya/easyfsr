@@ -1,8 +1,6 @@
-import { Steps, Card, Row, Col } from 'antd';
+import { Steps, Row, Col } from 'antd';
 import React, { Component } from 'react';
-import styles from './styles';
 
-import RegForm from './components/RegForm';
 import TeachingLoadForm from './components/TeachingLoadForm';
 import ResearchAndCreativeWorkForm from './components/ResearchAndCreativeWorkForm';
 import AdminWorkForm from './components/AdminWorkForm';
@@ -37,23 +35,21 @@ class FSRForm extends Component {
 
     return (
       <div>
-        <h1>FSR Form</h1>
+        <h1>Academic Year 2017-2018 Second Semester</h1>
         <Row>
-          <Col span={7}>
-            <Card title="Tasks" style={styles.formFSR}>
-              <Steps direction="vertical" size="small" current={currentStep}>
-                {steps.map((item, index) => (
-                  <Step
-                    key={index}
-                    title={item.title}
-                    description={item.description}
-                  />
-                ))}
-              </Steps>
-            </Card>
+          <Col span={5}>
+            <Steps direction="vertical" size="small" current={currentStep}>
+              {steps.map((item, index) => (
+                <Step
+                  key={index}
+                  title={item.title}
+                  description={item.description}
+                />
+              ))}
+            </Steps>
           </Col>
           <div>
-            <Col span={17}>
+            <Col span={19}>
               {currentStep === 0 ? (
                 <TeachingLoadForm
                   isAddSubjectModalOpen={isAddSubjectModalOpen}

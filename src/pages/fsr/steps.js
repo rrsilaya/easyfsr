@@ -1,39 +1,30 @@
 const steps = [
   {
-    title: 'Waiting',
-    description: 'Teaching Load in the College',
+    title: 'Teaching Load in the College',
   },
   {
-    title: 'Waiting',
-    description: 'Research/Textbook Writing/Creative Work',
+    title: 'Research/Textbook Writing/Creative Work',
   },
   {
-    title: 'Waiting',
-    description: 'Administrative Work',
+    title: 'Administrative Work',
   },
   {
-    title: 'Waiting',
-    description: 'Extension and Community Service',
+    title: 'Extension and Community Service',
   },
   {
-    title: 'Waiting',
-    description: 'Study Load',
+    title: 'Study Load',
   },
   {
-    title: 'Waiting',
-    description: 'Limited Practice of Profession',
+    title: 'Limited Practice of Profession',
   },
   {
-    title: 'Waiting',
-    description: 'Professional Chair or Faculty Grant Recipient or Nominee',
+    title: 'Professional Chair or Faculty Grant Recipient or Nominee',
   },
   {
-    title: 'Waiting',
-    description: 'Consultation Hours',
+    title: 'Consultation Hours',
   },
   {
-    title: 'Waiting',
-    description: 'Certification',
+    title: 'Certification',
   },
 ];
 
