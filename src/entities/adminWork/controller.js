@@ -21,7 +21,7 @@ const searchFields = [
 
 export const addAdminWork = adminWork => {
   return new Promise((resolve, reject) => {
-    db.query(Query.addAdminWork, { ...adminWork }, (err, results) => {
+    db.query(Query.addAdminWork, adminWork, (err, results) => {
       if (err) return reject(500);
       return resolve(results.insertId);
     });

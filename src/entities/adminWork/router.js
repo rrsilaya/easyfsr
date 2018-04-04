@@ -9,13 +9,15 @@ const router = Router();
  * @apiGroup AdminWork
  * @apiName addAdminWork
  *
- * @apiParam (Body Params) {Integer} id ID of admin work
+ * @apiParam (Body Params) {Number} adminWorkID ID of admin work
+ * @apiParam (Body Params) {Number} id ID of fsr
  * @apiParam (Body Params) {String} position position of admin work
  * @apiParam (Body Params) {String} officeUnit office unit of admin work
  * @apiParam (Body Params) {String} approvedUnits approved units of admin work
  *
- * @apiSuccess {Object} adminWork new adminWork
- * @apiSuccess {Integer} adminWork.id ID of admin work
+ * @apiSuccess {Object} adminWork new AdminWork is added
+ * @apiSuccess {Number} adminWork.adminWorkID ID of admin work
+ * @apiSuccess {Number} adminWork.id ID of FSR
  * @apiSuccess {String} adminWork.position position of admin work
  * @apiSuccess {String} adminWork.officeUnit office unit of admin work
  * @apiSuccess {String} adminWork.approvedUnits approved units of admin work
@@ -26,20 +28,20 @@ const router = Router();
  *   	"data": {
  *			"status": 200;
  *			"message": 'Succesfully created adminWork'
- *			"data": [
- *      		{
- *      			"adminWorkID": 6,
- *      			"position": "Position5",
- *       			"officeUnit": "office",
- *          		"approvedUnits": 14,
- *          		"id": 4
- *      		}
- * 	 		]
+        "data": [
+          {
+              "adminWorkID": 93,
+              "position": "admin",
+              "officeUnit": "ics",
+              "approvedUnits": 6,
+              "id": 1
+          }
+        ]
  *		}
  *   }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
@@ -73,13 +75,17 @@ router.post('/adminWork/', async (req, res) => {
  * @apiGroup AdminWork
  * @apiName updateAdminWork
  *
- * @apiParam (Body Params) {Integer} id ID of admin work
- * @apiParam (Body Params) {String} position position of admin work
- * @apiParam (Body Params) {String} officeUnit office unit of admin work
- * @apiParam (Body Params) {String} approvedUnits approved units of admin work
+ * @apiParam (Query Params) {Number} adminWordkID ID of admin work
+ * 
+ * @apiParam (Body Params) {Number} [adminWorkID] ID of admin work
+ * @apiParam (Body Params) {Number} [id] ID of FSR
+ * @apiParam (Body Params) {String} [position] position of admin work
+ * @apiParam (Body Params) {String} [officeUnit] office unit of admin work
+ * @apiParam (Body Params) {String} [approvedUnits] approved units of admin work
  *
- * @apiSuccess {Object} adminWork new adminWork
- * @apiSuccess {Integer} adminWork.id ID of admin work
+ * @apiSuccess {Object} adminWork adminWork updated
+ * @apiSuccess {Number} adminWork.adminWorkID ID of admin work
+ * @apiSuccess {Number} adminWork.id ID of FSR
  * @apiSuccess {String} adminWork.position position of admin work
  * @apiSuccess {String} adminWork.officeUnit office unit of admin work
  * @apiSuccess {String} adminWork.approvedUnits approved units of admin work
@@ -91,19 +97,19 @@ router.post('/adminWork/', async (req, res) => {
  *   		"status": 200,
  *   		"message": "Successfully updated adminWork",
  *   		"data": [
- *       		{
- *           	"adminWorkID": 6,
- *           	"position": "Position5",
- *           	"officeUnit": "office",
- *           	"approvedUnits": 12,
- *           	"id": 4
- *       		}
+            {
+              "adminWorkID": 93,
+              "position": "admin aide",
+              "officeUnit": "ics",
+              "approvedUnits": 3,
+              "id": 1
+            }
  *   		]
  *	 	}
  *	 }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
@@ -123,7 +129,7 @@ router.put('/adminWork/:adminWorkID', async (req, res) => {
     const adminWork = await Ctrl.getAdminWork(req.params);
     res.status(200).json({
       status: 200,
-      message: 'Successfully updated adminWork',
+      message: 'Successfully updated admin work',
       data: adminWork,
     });
   } catch (status) {
@@ -145,13 +151,11 @@ router.put('/adminWork/:adminWorkID', async (req, res) => {
  * @apiGroup AdminWork
  * @apiName deleteAdminWork
  *
- * @apiParam (Body Params) {Integer} id ID of admin work
- * @apiParam (Body Params) {String} position position of admin work
- * @apiParam (Body Params) {String} officeUnit office unit of admin work
- * @apiParam (Body Params) {String} approvedUnits approved units of admin work
+ * @apiParam (Query Params) {Number} adminWordkID ID of admin work
  *
- * @apiSuccess {Object} adminWork new adminWork
- * @apiSuccess {Integer} adminWork.id ID of admin work
+ * @apiSuccess {Object} adminWork new AdminWork deleted
+ * @apiSuccess {Number} adminWork.adminWorkID ID of admin work
+ * @apiSuccess {Number} adminWork.id ID of FSR
  * @apiSuccess {String} adminWork.position position of admin work
  * @apiSuccess {String} adminWork.officeUnit office unit of admin work
  * @apiSuccess {String} adminWork.approvedUnits approved units of admin work
@@ -162,11 +166,20 @@ router.put('/adminWork/:adminWorkID', async (req, res) => {
  *     "data": {
  *        "status": 200;
  *        "message": 'Succesfully deleted adminWork'
+  *       "data": [
+            {
+              "adminWorkID": 93,
+              "position": "admin aide",
+              "officeUnit": "ics",
+              "approvedUnits": 3,
+              "id": 1
+            }
+ *      ]
  *     }
  *   }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
@@ -182,10 +195,12 @@ router.put('/adminWork/:adminWorkID', async (req, res) => {
 
 router.delete('/adminWork/:adminWorkID', async (req, res) => {
   try {
+    const adminWork = await Ctrl.getAdminWork(req.params);
     await Ctrl.deleteAdminWork(req.params);
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted adminWork',
+      data: adminWork,
     });
   } catch (status) {
     let message = '';
