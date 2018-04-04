@@ -406,6 +406,34 @@ CREATE OR REPLACE VIEW viewResearch AS SELECT u.userID, u.employeeID, f.id as fs
 r.researchID, r.type, r.role, r.title, r.startDate, r.endDate, r.funding, r.approvedUnits 
 FROM research r JOIN fsr f ON r.id = f.id JOIN user u on f.userID = u.userID;
 
+ -- viewConsultationHours
+-- userID, employeeID, fsrID, consultationHours fields, chTimeslot fields
+CREATE OR REPLACE VIEW viewConsultationHours AS SELECT u.userID, u.employeeID, f.id as fsrID, 
+c.chID, c.place, t.day, t.timeStart, t.timeEnd FROM user u JOIN fsr f ON u.userID = f.userID 
+JOIN consultationHours c ON f.id = c.id JOIN chTimeslot t ON c.chID = t.chID;
+
+-- viewSubjectTimeslot
+-- userID, employeeID, fsrID, subject fields, timeslot fields
+CREATE OR REPLACE VIEW viewSubjectTimeslot AS SELECT u.userID, u.employeeID, f.id as fsrID, 
+s.subjectID, s.subjectCode, s.teachingLoadCreds, s.noOfStudents, s.hoursPerWeek, s.room, 
+t.day, t.timeStart, t.timeEnd FROM user u JOIN fsr f ON u.userID = f.userID 
+JOIN subject s ON f.id = s.id JOIN timeslot t ON s.subjectID = t.subjectID;
+
+
+-- viewStudyLoad
+-- shows userID, employeeID, fsrID, studyLoad fields
+CREATE OR REPLACE VIEW viewStudyLoad AS SELECT u.userID, u.employeeID, f.id as fsrID, 
+s.degree, s.university, s.fullLeaveWithPay, s.fellowshipRecipient, s.totalSLcredits 
+FROM user u JOIN fsr f ON u.userID = f.userID JOIN studyLoad s ON f.id = s.id;
+
+-- view entities tied with studyLoad
+-- viewSLCourse
+CREATE OR REPLACE VIEW viewSLCourses AS SELECT u.userID, u.employeeID, f.id as fsrID, 
+s.university, s.degree, c.courseID, c.courseNumber, c.school, c.credit, c.hoursPerWeek, 
+cs.day, cs.timeStart, cs.timeEnd FROM user u JOIN fsr f ON u.userID = f.userID JOIN 
+studyLoad s ON f.id = s.id JOIN course c ON f.id = c.id JOIN courseSched cs ON c.courseID = cs.courseID;
+
+
 -- Privileges
 GRANT SUPER ON *.* TO 'easyfsr'@'localhost';
 GRANT ALL PRIVILEGES ON easyfsr.* TO 'easyfsr'@'localhost';
