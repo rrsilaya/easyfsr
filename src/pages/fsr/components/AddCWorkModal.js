@@ -122,7 +122,7 @@ class AddCWorkModal extends Component {
               rules: [
                 {
                   required: true,
-                  message: 'Please input creative work file',
+                  message: 'Please attach creative work file',
                 },
               ],
             })(

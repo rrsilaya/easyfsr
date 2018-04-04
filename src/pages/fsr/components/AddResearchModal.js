@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form, Input, Select, DatePicker } from 'antd';
+import {
+  Modal,
+  Button,
+  Form,
+  Input,
+  Select,
+  DatePicker,
+  Upload,
+  Icon,
+} from 'antd';
 import { ADD_RESEARCH } from '../duck';
 
 const FormItem = Form.Item;
@@ -94,6 +103,22 @@ class AddResearchModal extends Component {
           <FormItem {...formItemLayout} label="Funding">
             {getFieldDecorator('funding')(
               <Input placeholder="Enter funding" />,
+            )}
+          </FormItem>
+          <FormItem {...formItemLayout} label="File">
+            {getFieldDecorator('researchFile', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please attach research file',
+                },
+              ],
+            })(
+              <Upload>
+                <Button>
+                  <Icon type="upload" /> Upload File
+                </Button>
+              </Upload>,
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="Approved Credit Units">

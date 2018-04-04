@@ -39,6 +39,11 @@ const columns1 = [
     key: 'funding',
   },
   {
+    title: 'File',
+    dataIndex: 'file',
+    key: 'file',
+  },
+  {
     title: 'Approved Credit Units',
     dataIndex: 'credUnit',
     key: 'credUnit',
