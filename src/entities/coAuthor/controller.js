@@ -25,7 +25,7 @@ export const updateCworkCoAuthor = ({ cworkCoAuthorID }, cworkCoAuthor) => {
       { cworkCoAuthorID, ...cworkCoAuthor },
       (err, results) => {
         if (err) return reject(500);
-        return resolve(results.cworkCoAuthorID);
+        return resolve(results.insertId);
       },
     );
   });
