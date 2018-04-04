@@ -7,6 +7,7 @@ const TOGGLE_SIDEBAR = 'APP/TOGGLE_SIDEBAR';
 const LOGIN = 'APP/LOGIN';
 const GET_SESSION = 'APP/GET_SESSION';
 const LOGOUT = 'APP/LOGOUT';
+
 // Action Creators
 export const toggleSidebar = () => ({
   type: TOGGLE_SIDEBAR,
@@ -25,6 +26,11 @@ export const login = body => ({
 export const getSession = () => ({
   type: GET_SESSION,
   promise: Api.getSession(),
+  meta: {
+    onFailure: () => {
+      notification.error({ message: 'Cannot connect to server' });
+    },
+  },
 });
 
 export const logout = () => ({
@@ -32,7 +38,7 @@ export const logout = () => ({
   promise: Api.logout(),
   meta: {
     onFailure: () => {
-      notification.error({ message: 'Invalid credentials' });
+      notification.error({ message: 'Cannot connect to server' });
     },
   },
 });
