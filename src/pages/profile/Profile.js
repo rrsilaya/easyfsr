@@ -7,15 +7,23 @@ import ProfileInfo from './components/ProfileInfo';
 import styles from './styles';
 
 class Profile extends Component {
+  componentDidMount() {
+    this.props.getUserProfile(this.props.match.params.userID);
+  }
+
   render() {
-    const { user } = this.props;
+    const {
+      user,
+
+      isGettingUser,
+    } = this.props;
 
     return (
-      <Fragment>
-        {true ? (
+      <div>
+        {isGettingUser ? (
           <PageLoader />
         ) : (
-          <div>
+          <Fragment>
             <div className="center">
               <ProfileIcon />
               <h1 className="center text white" style={styles.profileName}>
@@ -41,9 +49,9 @@ class Profile extends Component {
               </div>
             </div>
             <ProfileInfo />
-          </div>
+          </Fragment>
         )}
-      </Fragment>
+      </div>
     );
   }
 }

@@ -1,16 +1,23 @@
 import { connect } from 'react-redux';
 import Profile from './Profile';
 
+import { getUserProfile } from './duck';
+
 const mapStateToProps = state => {
-  const { user } = state.app;
+  const { user, isGettingUser } = state.profile;
 
   return {
     user,
+    isGettingUser,
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    getUserProfile: id => {
+      dispatch(getUserProfile(id));
+    },
+  };
 };
 
 const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(Profile);
