@@ -42,6 +42,7 @@ CREATE TABLE fsr(
   `isChecked` boolean DEFAULT 0,
   `isTurnedIn` boolean DEFAULT 0,
   `teachingLoadCreds` INT(2) DEFAULT 0,
+  `totalCHours` INT(2) DEFAULT 0, 
   `filepath` TEXT (50),
   -- place all entitiesID here
   CONSTRAINT `fsr_pk` 
@@ -137,10 +138,13 @@ CREATE TABLE `courseSched`(
     PRIMARY KEY (courseSchedID)
 );
 
--- Consultation hours and CH Timeslot
+-- Consultation hours 
 
 CREATE TABLE `consultationHours`(
   `chID` INT NOT NULL AUTO_INCREMENT,
+  `day` varchar(10) NOT NULL,
+  `timeStart` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
+  `timeEnd` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
   `id` INT NOT NULL,
   `place` varchar (50) NOT NULL,
   CONSTRAINT `consultationHours_fsr_fk`
@@ -150,23 +154,6 @@ CREATE TABLE `consultationHours`(
     PRIMARY KEY (`chID`)   
 );
 
-CREATE TABLE `chTimeslot`(
-  `chTimeslotID`INT NOT NULL AUTO_INCREMENT,
-  `id` INT NOT NULL,
-  `chID` INT NOT NULL,
-  `day` varchar(10) NOT NULL,
-  `timeStart` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
-  `timeEnd` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
-  CONSTRAINT `chTimeslot_consultationHours_fk`
-    FOREIGN KEY (`chID`)
-    REFERENCES consultationHours(`chID`),
-  CONSTRAINT `chTimeslot_consultationHours_fsr_fk`
-    FOREIGN KEY (`id`)
-    REFERENCES consultationHours(`id`)
-    ON DELETE CASCADE,
-  CONSTRAINT `chTimeslot_pk`
-    PRIMARY KEY(chTimeslotID)
-);
 
 -- Professorial Chair or Faculty Grant or Nominee (Award)
 
@@ -364,6 +351,14 @@ BEFORE DELETE ON course
 FOR EACH ROW 
 UPDATE studyLoad 
   SET totalSLcredits = totalSLcredits - OLD.credit;
+
+CREATE TRIGGER insert_totalCHours 
+AFTER INSERT ON consultationHours
+FOR EACH ROW
+  UPDATE fsr
+    SET totalCHours = totalCHours + (SELECT TIMESTAMPDIFF(HOUR, new.timeStart, new.timeEnd))
+      WHERE id = NEW.id;
+
 
 -- VIEWS
 
