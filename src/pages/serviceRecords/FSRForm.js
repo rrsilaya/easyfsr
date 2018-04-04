@@ -16,9 +16,7 @@ import dataSource from './datasource';
 import columns from './columns';
 import { Link } from 'react-router-dom';
 
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
-const { Item } = List;
+const { Item: ListItem } = List;
 
 class FSRForm extends Component {
   state = {
@@ -32,31 +30,43 @@ class FSRForm extends Component {
   };
 
   render() {
+    const gridConfig = { xl: 8, sm: 12, xs: 24 };
+
     return (
       <div>
         <h1>Faculty Service Record</h1>
         <div>
           <List
             bordered
+            size="large"
+            style={styles.list}
+            className="text white"
             columns={columns}
             dataSource={dataSource}
-            style={styles.tableFSR}
             renderItem={item => (
-              <Item>
-                <Col span={8}>
-                  <div>{item.year}</div>
-                </Col>
-                <Col span={8}>
-                  <div>{item.term}</div>
-                </Col>
-                <Col span={8}>
-                  <div>
-                    <Link to={`/FormSample/${item.link}`}>
-                      Faculty Service Record
-                    </Link>
-                  </div>
-                </Col>
-              </Item>
+              <ListItem className="faculty-item" style={styles.listItem}>
+                <Row type="flex" justify="space-around" style={styles.info}>
+                  <Col {...gridConfig} className="text meta-2 center">
+                    {item.year}
+                  </Col>
+                  <Col {...gridConfig} className="text meta-2 center">
+                    {item.term}
+                  </Col>
+                  <Col {...gridConfig} className="text meta-2 center">
+                    {item.form}
+                  </Col>
+                </Row>
+                <div style={styles.icons}>
+                  <Link to={`/FormSample/${item.link}`}>
+                    <Icon className="text meta-2" type="edit" />
+                  </Link>
+                  <Icon
+                    className="text meta-2"
+                    type="download"
+                    style={styles.message}
+                  />
+                </div>
+              </ListItem>
             )}
           />
         </div>
