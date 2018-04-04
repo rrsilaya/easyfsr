@@ -16,6 +16,10 @@ const style = {
   searchBar: {
     width: '66%',
   },
+  confirmation: {
+    fontWeight: 'bold',
+    color: 'red',
+  },
 };
 
 export default style;

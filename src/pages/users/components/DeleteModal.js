@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Input } from 'antd';
+import styles from '../styles';
 
 const FormItem = Form.Item;
 
@@ -22,6 +23,11 @@ class DeleteModal extends Component {
   handleAfterClose = () => {
     this.props.changeSelectedUser({});
     this.props.form.resetFields();
+  };
+
+  validateMessage = async (rule, value, callback) => {
+    if (!value.match(/^I am sure to archive this user.$/))
+      return callback('Please enter the correct message');
   };
 
   render() {
@@ -60,21 +66,22 @@ class DeleteModal extends Component {
             onClick={this.handleFormSubmit}
             loading={isDeletingUser}
           >
-            Save
+            Delete
           </Button>,
         ]}
       >
-        <p> You are about to archive this user. </p>
+        <p> Once archived, you can unarchive this user anytime. </p>
+        <p> Please type in the message below confirm. </p>
+        <p style={styles.confirmation}> I am sure to archive this user. </p>
         <Form onSubmit={this.handleFormSubmit}>
-          <FormItem {...formItemLayout} label="Password">
-            {form.getFieldDecorator('password@@addUser', {
+          <FormItem {...formItemLayout} required hasFeedback>
+            {form.getFieldDecorator('confirmation@@deleteUser', {
               rules: [
                 {
-                  required: true,
-                  message: 'Please input password',
+                  validator: this.validateMessage,
                 },
               ],
-            })(<Input type="password" />)}
+            })(<Input type="text" />)}
           </FormItem>
         </Form>
       </Modal>
