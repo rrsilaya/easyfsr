@@ -14,7 +14,7 @@ import serviceRouter from './entities/extensionAndCommunityService/router';
 import creativeWorkRouter from './entities/creativeWork/router';
 import userViewRouter from './entities/user/views/router';
 import announcementRouter from './entities/announcement/router';
-
+import subjectRouter from './entities/subject/router';
 const router = Router();
 
 router.use(authRouter);
@@ -29,7 +29,6 @@ router.use(authRouter);
 //   });
 // });
 
-router.use(userRouter);
 router.use(studyLoadRouter);
 router.use(userViewRouter);
 router.use(awardRouter);

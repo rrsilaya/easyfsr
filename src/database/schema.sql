@@ -97,6 +97,8 @@ CREATE TABLE `timeslot`(
   -- study load, course, courseSched
 
 CREATE TABLE `studyLoad`(
+  `fullLeaveWithPay` VARCHAR (10) DEFAULT 'NO', -- YES / NO
+  `fellowshipRecipient`  VARCHAR (10) DEFAULT 'NO', -- YES / NO
   `degree` VARCHAR (50) NOT NULL,
   `university` VARCHAR (50) NOT NULL,
   `totalSLcredits` INT (10) DEFAULT 0,
