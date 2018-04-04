@@ -8,6 +8,7 @@ import app from '../app/duck';
 import users from './users/duck';
 import fsr from './fsr/duck';
 import search from './facultySearch/duck';
+import profile from './profile/duck';
 
 const reducers = combineReducers({
   router,
@@ -15,6 +16,7 @@ const reducers = combineReducers({
   users,
   fsr,
   search,
+  profile,
 });
 
 export default reducers;

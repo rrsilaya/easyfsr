@@ -4,6 +4,7 @@ import { notification } from 'antd';
 
 // Action Types
 const SEARCH_USER = 'FACULTY/SEARCH_USER';
+const RESET_PAGE = 'FACULTY/RESET_PAGE';
 
 // Action Creators
 export const searchUser = query => ({
@@ -14,6 +15,10 @@ export const searchUser = query => ({
       notification.error({ message: 'Error searching faculty staff' });
     },
   },
+});
+
+export const resetPage = () => ({
+  type: RESET_PAGE,
 });
 
 // Initial State
@@ -41,6 +46,9 @@ const reducer = (state = initialState, action) => {
           isSearching: false,
         }),
       });
+
+    case RESET_PAGE:
+      return initialState;
 
     default:
       return state;

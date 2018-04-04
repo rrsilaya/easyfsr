@@ -3,7 +3,7 @@ import Profile from '../pages/profile/ProfileContainer';
 import ServiceRecords from '../pages/serviceRecords/ServiceRecords';
 import FSRForm from '../pages/fsr/FSRFormContainer';
 import Users from '../pages/users/UsersContainer';
-import FacultySearch from '../pages/facultySearch/FacultySearch';
+import FacultySearch from '../pages/facultySearch/FacultySearchContainer';
 
 const routes = [
   {
