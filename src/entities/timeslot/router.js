@@ -88,7 +88,7 @@ router.post('/timeslot/', async (req, res) => {
  *  {
     "status": 200,
     "message": "Successfully fetched timeslots",
-    "data": 
+    "data": [
         {
             "timeslotID": 15,
             "subjectID": 15,
@@ -103,7 +103,7 @@ router.post('/timeslot/', async (req, res) => {
             "timeStart": "07:00:00",
             "timeEnd": "08:00:00"
         }
-    ,
+    ],
     "total": 2,
     "limit": 12,
     "page": 1,
@@ -135,11 +135,11 @@ router.get('/timeslot/', async (req, res) => {
       message: 'Successfully fetched timeslots',
       data: timeslots,
       total: (await Ctrl.getTotalTimeslots(req.query)).total,
-      limit: req.query.limit || 12,
-      page: req.query.page || 1,
+      limit: parseInt(req.query.limit) || 12,
+      page: parseInt(req.query.page) || 1,
       pages: Math.ceil(
         (await Ctrl.getTotalTimeslots(req.query)).total /
-          (req.query.limit || 12),
+          (parseInt(req.query.limit) || 12),
       ),
     });
   } catch (status) {
