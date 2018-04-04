@@ -27,6 +27,8 @@ const router = Router();
  *     "message": "Successfully created studyLoad"
  *     "data":
  *       {
+ *           "fullLeaveWithPay: "NO",
+ *           "fellowshipRecipient: "NO",
  *           "degree": "BSCS",
  *           "courseNumber": "128",
  *           "university": "UPLB",
@@ -90,6 +92,8 @@ router.post('/studyLoad/', async (req, res) => {
  *     "message": "Successfully updated studyLoad"
  *     "data":
  *       {
+ *           "fullLeaveWithPay: "NO",
+ *           "fellowshipRecipient: "NO",
  *           "degree": "BSCS",
  *           "courseNumber": "128",
  *           "university": "UPLB",
@@ -162,6 +166,8 @@ router.put('/studyLoad/:id', async (req, res) => {
  *     "message": "Successfully retrieved studyLoad details",
  *     "data": [
  *       {
+ *           "fullLeaveWithPay: "NO",
+ *           "fellowshipRecipient: "NO",
  *           "degree": "BSCS",
  *           "courseNumber": "128",
  *           "university": "UPLB",
@@ -237,6 +243,8 @@ router.get('/studyLoad/:id', async (req, res) => {
  *     "message": "Successfully fetched all studyLoad details",
  *     "data": [
  *       {
+ *           "fullLeaveWithPay: "NO",
+ *           "fellowshipRecipient: "NO",
  *           "degree": "BSCS",
  *           "courseNumber": "128",
  *           "university": "UPLB",
@@ -244,6 +252,8 @@ router.get('/studyLoad/:id', async (req, res) => {
  *           "id": 1
  *       },
  *       {
+ *           "fullLeaveWithPay: "NO",
+ *           "fellowshipRecipient: "NO",
  *           "degree": "BSCS",
  *           "courseNumber": "128",
  *           "university": "UPLB",
@@ -324,6 +334,8 @@ router.get('/studyLoad/', async (req, res) => {
  *     "message": "Successfully deleted studyLoad"
  *     "data": [
  *       {
+ *           "fullLeaveWithPay: "NO",
+ *           "fellowshipRecipient: "NO",
  *           "degree": "BSCS",
  *           "courseNumber": "128",
  *           "university": "UPLB",

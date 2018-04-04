@@ -2,14 +2,18 @@ import { formatQueryParams } from '../../utils';
 
 export const addStudyLoad = `
 	INSERT INTO studyLoad ( 
-		id, 
+		id,
+		fullLeaveWithPay,
+		fellowshipRecipient, 
 		degree, 
 		university, 
 		totalSLcredits 
 	)
 
 	VALUES ( 
-		:id, 
+		:id,
+		:fullLeaveWithPay,
+		:fellowshipRecipient, 
 		:degree, 
 		:university, 
 		:totalSLcredits 
