@@ -206,13 +206,11 @@ router.delete('/adminWork/:adminWorkID', async (req, res) => {
  * @apiGroup AdminWork
  * @apiName getAdminWork
  *
- * @apiParam (Body Params) {Integer} id ID of admin work
- * @apiParam (Body Params) {String} position position of admin work
- * @apiParam (Body Params) {String} officeUnit office unit of admin work
- * @apiParam (Body Params) {String} approvedUnits approved units of admin work
+ * @apiParam (Query Params) {Number} [adminWorkID] ID of admin work
  *
- * @apiSuccess {Object} adminWork new adminWork
- * @apiSuccess {Integer} adminWork.id ID of admin work
+ * @apiSuccess {Object} adminWork adminWork fetched
+ * @apiSuccess {Number} adminWork.id ID of admin work
+ * @apiSuccess {Number} adminWork.id ID of FSR
  * @apiSuccess {String} adminWork.position position of admin work
  * @apiSuccess {String} adminWork.officeUnit office unit of admin work
  * @apiSuccess {String} adminWork.approvedUnits approved units of admin work
@@ -220,34 +218,33 @@ router.delete('/adminWork/:adminWorkID', async (req, res) => {
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
- *     "data": {
- *     		"status": 200,
- *   		"message": "Successfully fetched adminWork",
- *  		"data": [
- *      		{
- *          	"adminWorkID": 4,
- *          	"position": "Position4",
- *          	"officeUnit": "office",
- *          	"approvedUnits": 12,
- *          	"id": 5
- *      		}
- *  		]
- *		}
- *   }
+    "status": 200,
+    "message": "Successfully fetched admin work",
+    "data": {
+        "adminWorkID": 2,
+        "position": "Administrative Aide",
+        "officeUnit": "Institute of Computer Science",
+        "approvedUnits": 5,
+        "id": 2
+    }
+    }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- *   HTTP/1.1 404 adminWork not found
- * 	 {
- *   	"status": 404,
- *   	"message": "adminWork not found"
- *   }
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 Admin Work not found
+ * {
+ *   "status": 404,
+ *   "message": "Admin Work not found"
+ * }
  */
 
 router.get('/adminWork/:adminWorkID', async (req, res) => {
@@ -277,13 +274,14 @@ router.get('/adminWork/:adminWorkID', async (req, res) => {
  * @apiGroup AdminWork
  * @apiName getAdminWorks
  *
- * @apiParam (Body Params) {Integer} id ID of admin work
- * @apiParam (Body Params) {String} position position of admin work
- * @apiParam (Body Params) {String} officeUnit office unit of admin work
- * @apiParam (Body Params) {String} approvedUnits approved units of admin work
+ * @apiParam (Query Params) {Number} [id] ID of FSR
+ * @apiParam (Query Params) {String} [position] position of admin work
+ * @apiParam (Query Params) {String} [officeUnit] office unit of admin work
+ * @apiParam (Query Params) {String} [approvedUnits] approved units of admin work
  *
- * @apiSuccess {Object} adminWork new adminWork
- * @apiSuccess {Integer} adminWork.id ID of admin work
+ * @apiSuccess {Object} adminWork admin works fetched
+ * @apiSuccess {Number} adminWork.adminWorkID ID of admin work
+ * @apiSuccess {Number} adminWork.id ID of FSR
  * @apiSuccess {String} adminWork.position position of admin work
  * @apiSuccess {String} adminWork.officeUnit office unit of admin work
  * @apiSuccess {String} adminWork.approvedUnits approved units of admin work
@@ -291,10 +289,9 @@ router.get('/adminWork/:adminWorkID', async (req, res) => {
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
- *     "data": {
- *     		"status": 200,
- *   		"message": "Successfully fetched adminWorks",
- *  		"data": [
+      "status": 200,
+      "message": "Successfully fetched admin works",
+      "data": [
  *				{
  *          	"adminWorkID": 1,
  *          	"position": "Position1",
@@ -309,23 +306,29 @@ router.get('/adminWork/:adminWorkID', async (req, res) => {
  *          	"approvedUnits": 12,
  *          	"id": 5
  *      		}
- *  		]
- *		}
+ *  		],
+        "total": 90,
+        "limit": 12,
+        "page": 1,
+        "pages": 8
  *   }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- *   HTTP/1.1 404 adminWork not found
- * 	 {
- *   	"status": 404,
- *   	"message": "adminWork not found"
- *   }
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 Admin Works not found
+ * {
+ *   "status": 404,
+ *   "message": "Admin Works not found"
+ * }
  */
 
 router.get('/adminWork/', async (req, res) => {
@@ -333,18 +336,21 @@ router.get('/adminWork/', async (req, res) => {
     const adminWorks = await Ctrl.getAdminWorks(req.query);
     res.status(200).json({
       status: 200,
-      message: 'Successfully fetched adminWorks',
+      message: 'Successfully fetched admin works',
       data: adminWorks,
-      total: adminWorks.length,
-      limit: req.query.limit || 12,
-      page: req.query.page || 1,
-      pages: Math.ceil(adminWorks.length / (req.query.limit || 12)),
+      total: (await Ctrl.getTotalAdminWorks(req.query)).total,
+      limit: parseInt(req.query.limit) || 12,
+      page: parseInt(req.query.page) || 1,
+      pages: Math.ceil(
+        (await Ctrl.getTotalAdminWorks(req.query)).total /
+          (parseInt(req.query.limit) || 12),
+      ),
     });
   } catch (status) {
     let message = '';
     switch (status) {
       case 404:
-        message = 'adminWork not found';
+        message = 'Admin works not found';
         break;
       case 500:
         message = 'Internal server error';

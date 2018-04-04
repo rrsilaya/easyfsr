@@ -19,12 +19,13 @@ CREATE TABLE user(
   lastName VARCHAR (50) NOT NULL,
   committee VARCHAR (30),
   isHead BOOLEAN,      
-  officeNumber VARCHAR (30) NOT NULL, 
+  officeNumber VARCHAR (30), 
   contractType VARCHAR (40) NOT NULL, -- FULL-TIME / PART-TIME
   emailAddress VARCHAR (40) NOT NULL,
   rank VARCHAR (30),
   isArchived BOOLEAN DEFAULT 0, 
   acctType VARCHAR(10) DEFAULT 'USER', -- ADMIN / USER
+  `profileIcon` TEXT (50),
   CONSTRAINT `user_pk`
     PRIMARY KEY (`userID`),
   CONSTRAINT `user_empid_uk`
@@ -40,6 +41,7 @@ CREATE TABLE fsr(
   `semester` VARCHAR (10) NOT NULL,
   `isChecked` boolean DEFAULT 0,
   `teachingLoadCreds` INT(2) DEFAULT 0,
+  `filepath` TEXT (50),
   -- place all entitiesID here
   CONSTRAINT `fsr_pk` 
     PRIMARY KEY (`id`),
@@ -82,7 +84,8 @@ CREATE TABLE `timeslot`(
   `timeslotID` INT NOT NULL AUTO_INCREMENT,
   `subjectID` INT NOT NULL,
   `day` VARCHAR(10) NOT NULL,
-  `time` VARCHAR(10) NOT NULL,
+  `timeStart` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
+  `timeEnd` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
   CONSTRAINT `timeslot_subject_fk`
     FOREIGN KEY (`subjectID`)
     REFERENCES subject(`subjectID`)
@@ -109,7 +112,7 @@ CREATE TABLE `course`(
   `courseID` INT NOT NULL AUTO_INCREMENT,
   `hoursPerWeek` VARCHAR (10) NOT NULL,
   `school` VARCHAR (30) NOT NULL,
-  `credit` VARCHAR (30) NOT NULL,
+  `credit` INT (2) NOT NULL,
   `courseNumber` VARCHAR (20) NOT NULL,
   `id` INT NOT NULL,
   CONSTRAINT `course_studyLoad_fk`
@@ -123,7 +126,8 @@ CREATE TABLE `courseSched`(
   `courseSchedID` INT NOT NULL AUTO_INCREMENT,
   `courseID` INT NOT NULL,
   `day` VARCHAR (30) NOT NULL,
-  `time` VARCHAR (30) NOT NULL,
+  `timeStart` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
+  `timeEnd` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
   CONSTRAINT `courseSched_course_fk`
     FOREIGN KEY (`courseID`)
     REFERENCES course(`courseID`)
@@ -150,7 +154,8 @@ CREATE TABLE `chTimeslot`(
   `id` INT NOT NULL,
   `chID` INT NOT NULL,
   `day` varchar(10) NOT NULL,
-  `time` varchar(10) NOT NULL,
+  `timeStart` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
+  `timeEnd` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
   CONSTRAINT `chTimeslot_consultationHours_fk`
     FOREIGN KEY (`chID`)
     REFERENCES consultationHours(`chID`),
@@ -174,6 +179,7 @@ CREATE TABLE `award`(
   `professionalChair` VARCHAR (50) NOT NULL,
   `approvedStartDate` DATE NOT NULL, --                   DATE format: YYYY-MM-DD
   `endDate` DATE NOT NULL, --                             DATE format: YYYY-MM-DD
+  `filepath` TEXT (50),
   CONSTRAINT `award_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
@@ -186,7 +192,7 @@ CREATE TABLE `limitedPracticeOfProf`(
   `limitedPracticeOfProfID` INT NOT NULL AUTO_INCREMENT, 
   `id` INT NOT NULL,
   `askedPermission` VARCHAR (10) NOT NULL,  -- YES / NO
-  Date VARCHAR (50),  --                   DATE format: YYYY-MM-DD
+  `date` DATE,  --                   DATE format: YYYY-MM-DD
   CONSTRAINT `limitedPracticeOfProf_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
@@ -236,6 +242,7 @@ CREATE TABLE `creativeWork`(
   `title` VARCHAR(50) NOT NULL,
   `type` VARCHAR(50) NOT NULL,
   `credUnit` INT (10) NOT NULL,
+  `filepath` TEXT (50),
   CONSTRAINT `creativeWork_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
@@ -268,9 +275,10 @@ CREATE TABLE `research`(
   `role` VARCHAR (30) NOT NULL,
   `title` VARCHAR (50) NOT NULL,
   `startDate` DATE NOT NULL, --                   DATE format: YYYY-MM-DD
-  `endDate` DATE NOT NULL, --                     DATE format: YYYY-MM-DD
+  `endDate` DATE DEFAULT NULL, --                 DATE format: YYYY-MM-DD
   `funding` VARCHAR (30) NOT NULL,
   `approvedUnits` VARCHAR (30) NOT NULL,
+  `filepath` TEXT (50),
   CONSTRAINT `research_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
@@ -356,6 +364,47 @@ FOR EACH ROW
 UPDATE studyLoad 
   SET totalSLcredits = totalSLcredits - OLD.credit;
 
+-- VIEWS
+
+-- show profile of user 
+----- used with `WHERE userID = :userID` can also add fsr's isApproved, acadYear and semester
+CREATE OR REPLACE VIEW viewProfile AS SELECT u.userID, u.employeeID, u.password, u.firstName, u.middleName, u.lastName, 
+u.committee, u.isHead, u.officeNumber, u.contractType, u.emailAddress, u.rank, u.acctType, f.id, f.isChecked, f.acadYear, 
+f.semester FROM user u, fsr f WHERE u.userID = f.userID;
+
+-- viewAdminWork
+-- shows userID, employeeID, fsrID, adminWork fields
+CREATE OR REPLACE VIEW viewAdminWork AS SELECT u.userID, u.employeeID, f.id as fsrID, a.adminWorkID, a.position, 
+a.officeUnit, a.approvedUnits FROM adminWork a JOIN fsr f ON a.id = f.id JOIN user u on f.userID = u.userID;
+
+-- viewAward
+-- shows userID, employeeID, fsrID, award fields
+CREATE OR REPLACE VIEW viewAward AS SELECT u.userID, u.employeeID, f.id as fsrID, a.awardID, a.grantF, 
+a.chairGrantTitle, a.collegeHasNominated, a.recipientOrNominee, a.professionalChair, a.approvedStartDate, 
+a.endDate FROM award a JOIN fsr f ON a.id = f.id JOIN user u on f.userID = u.userID;
+
+-- viewExtensionAndCommunityService
+-- shows userID, employeeID, fsrID, limitedPracticeOfProf fields
+CREATE OR REPLACE VIEW viewExtensionAndCommunityService AS SELECT u.userID, u.employeeID, f.id as fsrID, 
+e.extAndCommServiceID, e.participant, e.role, e.hours, e.title, e.creditUnit, e.type, e.startDate, e.endDate 
+FROM extensionAndCommunityService e JOIN fsr f ON e.id = f.id JOIN user u on f.userID = u.userID;
+
+-- viewLimitedPracticeOfProf
+-- shows userID, employeeID, fsrID, limitedPracticeOfProf fields
+CREATE OR REPLACE VIEW viewLimitedPracticeOfProf AS SELECT u.userID, u.employeeID, f.id as fsrID, 
+l.limitedPracticeOfProfID, l.askedPermission, l.date FROM limitedPracticeOfProf l JOIN fsr f ON l.id = f.id 
+JOIN user u on f.userID = u.userID;
+
+-- viewCreativeWork
+-- shows userID, employeeID, fsrID, creativeWork fields
+CREATE OR REPLACE VIEW viewCreativeWork AS SELECT u.userID, u.employeeID, f.id as fsrID, 
+c.creativeWorkID, c.date, c.title, c.type, c.credUnit FROM creativeWork c JOIN fsr f 
+ON c.id = f.id JOIN user u on f.userID = u.userID;
+
+-- viewResearch
+CREATE OR REPLACE VIEW viewResearch AS SELECT u.userID, u.employeeID, f.id as fsrID, 
+r.researchID, r.type, r.role, r.title, r.startDate, r.endDate, r.funding, r.approvedUnits 
+FROM research r JOIN fsr f ON r.id = f.id JOIN user u on f.userID = u.userID;
 
 -- Privileges
 GRANT SUPER ON *.* TO 'easyfsr'@'localhost';

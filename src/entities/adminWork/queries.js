@@ -32,7 +32,9 @@ export const getAdminWorks = (query, sortBy) => `
  SELECT * FROM adminWork ${
    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
  }
-  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} LIMIT :limit
+  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+  LIMIT :limit 
+  OFFSET :offset
 `;
 
 export const getAdminWork = `
@@ -40,21 +42,8 @@ export const getAdminWork = `
 	WHERE adminWorkID = :adminWorkID
 `;
 
-export const getTotalAdminWorks = `
-	SELECT count(*) as total FROM adminWork
+export const getTotalAdminWorks = query => `
+	SELECT COUNT(*) as total FROM adminWork ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  } 
 `;
-
-export const getTotalAdminWorksByFSR = `
-	SELECT count(*) as total FROM adminWork WHERE id = :id 
-`;
-
-/*
-
-// Supports single or multiple rows delete
-
-export const deleteAdminWork = query => `
-  DELETE FROM adminWork
-  ${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
-`;
-
-*/

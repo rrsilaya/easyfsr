@@ -3,9 +3,21 @@ import * as Query from './queries';
 import * as Utils from '../../utils';
 import { filtered, escapeSearch } from '../../utils';
 
-const adminWorkAttributes = ['id', 'position', 'officeUnit', 'approvedUnits'];
+const adminWorkAttributes = [
+  'adminWorkID',
+  'id',
+  'position',
+  'officeUnit',
+  'approvedUnits',
+];
 
-const searchFields = ['position', 'officeUnit', 'approvedUnits'];
+const searchFields = [
+  'adminWorkID',
+  'position',
+  'officeUnit',
+  'approvedUnits',
+  'id',
+];
 
 export const addAdminWork = adminWork => {
   return new Promise((resolve, reject) => {
@@ -45,7 +57,7 @@ export const getAdminWork = ({ adminWorkID }) => {
     db.query(Query.getAdminWork, { adminWorkID }, (err, results) => {
       if (err) return reject(500);
       else if (!results.length) return reject(404);
-      return resolve(results);
+      return resolve(results[0]);
     });
   });
 };
@@ -62,8 +74,25 @@ export const getAdminWorks = adminWork => {
         ...escapeSearch(adminWork, searchFields, adminWork.limit),
       },
       (err, results) => {
+        console.log(err);
         if (err) return reject(500);
         return resolve(results);
+      },
+    );
+  });
+};
+
+export const getTotalAdminWorks = adminWork => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      Query.getTotalAdminWorks(filtered(adminWork, adminWorkAttributes)),
+      {
+        field: 'position',
+        ...escapeSearch(adminWork, searchFields, adminWork.limit),
+      },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(results[0]);
       },
     );
   });
