@@ -1,6 +1,5 @@
 import { formatQueryParams } from '../../utils';
 
-// CREATIVE WORK
 export const addCreativeWork = `
 	INSERT INTO creativeWork (
 		id,

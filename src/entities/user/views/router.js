@@ -13,12 +13,10 @@ router.get('/user/:employeeID/award', async (req, res) => {
       data: awards,
     });
   } catch (err) {
-    res
-      .status(status)
-      .json({
-        status,
-        message: 'Internal server error while getting user awards',
-      });
+    res.status(status).json({
+      status,
+      message: 'Internal server error while getting user awards',
+    });
   }
 });
 
@@ -32,12 +30,10 @@ router.get('/user/:employeeID/research', async (req, res) => {
       data: research,
     });
   } catch (err) {
-    res
-      .status(status)
-      .json({
-        status,
-        message: 'Internal server error while getting user research',
-      });
+    res.status(status).json({
+      status,
+      message: 'Internal server error while getting user research',
+    });
   }
 });
 
@@ -51,12 +47,10 @@ router.get('/user/:employeeID/adminWork', async (req, res) => {
       data: adminWorks,
     });
   } catch (err) {
-    res
-      .status(status)
-      .json({
-        status,
-        message: 'Internal server error while getting user admin works',
-      });
+    res.status(status).json({
+      status,
+      message: 'Internal server error while getting user admin works',
+    });
   }
 });
 
@@ -74,13 +68,11 @@ router.get(
         data: extensionAndCommunityService,
       });
     } catch (err) {
-      res
-        .status(status)
-        .json({
-          status,
-          message:
-            'Internal server error while getting user extension and community service',
-        });
+      res.status(status).json({
+        status,
+        message:
+          'Internal server error while getting user extension and community service',
+      });
     }
   },
 );
@@ -95,12 +87,10 @@ router.get('/user/:employeeID/limitedPracticeOfProf', async (req, res) => {
       data: limitedPracticeOfProf,
     });
   } catch (err) {
-    res
-      .status(status)
-      .json({
-        status,
-        message: 'Internal server error while getting user limited practices',
-      });
+    res.status(status).json({
+      status,
+      message: 'Internal server error while getting user limited practices',
+    });
   }
 });
 
@@ -114,12 +104,10 @@ router.get('/user/:employeeID/creativeWork', async (req, res) => {
       data: creativeWorks,
     });
   } catch (err) {
-    res
-      .status(status)
-      .json({
-        status,
-        message: 'Internal server error while getting user creative works',
-      });
+    res.status(status).json({
+      status,
+      message: 'Internal server error while getting user creative works',
+    });
   }
 });
 
