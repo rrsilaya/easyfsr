@@ -56,11 +56,6 @@ export const getTotalExtensionAndCommunityServices = query => `
   }
 `;
 
-export const getTotalExtensionAndCommunityServicesByFSR = `
-  SELECT count(*) as total FROM extensionAndCommunityService WHERE id = :id
-  }
-`;
-
 /*
 
 // Supports single or multiple rows delete
