@@ -158,7 +158,7 @@ CREATE TABLE `chTimeslot`(
   `timeEnd` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
   CONSTRAINT `chTimeslot_consultationHours_fk`
     FOREIGN KEY (`chID`)
-    REFERENCES consultationHours(`chID`),
+    REFERENCES consultationHours(`chID`)
     ON DELETE CASCADE,
   CONSTRAINT `chTimeslot_consultationHours_fsr_fk`
     FOREIGN KEY (`id`)
@@ -362,7 +362,7 @@ UPDATE studyLoad
 -- VIEWS
 
 -- show profile of user 
------ used with `WHERE userID = :userID` can also add fsr's isApproved, acadYear and semester
+-- used with `WHERE userID = :userID` can also add fsr's isApproved, acadYear and semester
 CREATE OR REPLACE VIEW viewProfile AS SELECT u.userID, u.employeeID, u.password, u.firstName, u.middleName, u.lastName, 
 u.committee, u.isHead, u.officeNumber, u.contractType, u.emailAddress, u.rank, u.acctType, f.id, f.isChecked, f.acadYear, 
 f.semester FROM user u, fsr f WHERE u.userID = f.userID;
