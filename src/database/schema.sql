@@ -159,6 +159,7 @@ CREATE TABLE `chTimeslot`(
   CONSTRAINT `chTimeslot_consultationHours_fk`
     FOREIGN KEY (`chID`)
     REFERENCES consultationHours(`chID`),
+    ON DELETE CASCADE,
   CONSTRAINT `chTimeslot_consultationHours_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES consultationHours(`id`)
@@ -253,14 +254,11 @@ CREATE TABLE `creativeWork`(
 CREATE TABLE `cworkCoAuthor`(
   `cworkCoAuthorID` INT NOT NULL AUTO_INCREMENT,
   `creativeWorkID` INT NOT NULL,
-  `userID` INT NOT NULL,
+  `name` VARCHAR(50) NOT NULL,
   CONSTRAINT `cworkCoAuthor_creativeWork_fk`
     FOREIGN KEY (`creativeWorkID`)
     REFERENCES creativeWork(`creativeWorkID`)
   ON DELETE CASCADE,
-  CONSTRAINT `cworkCoAuthor_user_fk`
-    FOREIGN KEY (`userID`)
-    REFERENCES user(`userID`),
   CONSTRAINT `cworkCoAuthor_pk`
     PRIMARY KEY (`cworkCoAuthorID`)
 );
@@ -290,14 +288,11 @@ CREATE TABLE `research`(
 CREATE TABLE rCoAuthor(
   `rCoAuthorID` INT NOT NULL AUTO_INCREMENT,
   `researchID` INT NOT NULL,
-  `userID` INT NOT NULL,
+  `name` VARCHAR(50) NOT NULL,
   CONSTRAINT `rCoAuthor_research_fk`
     FOREIGN KEY (`researchID`)
     REFERENCES research(`researchID`)
   ON DELETE CASCADE,
-  CONSTRAINT `rCoAuthor_user_fk`
-    FOREIGN KEY (`userID`)
-    REFERENCES user(`userID`),
   CONSTRAINT `rCoAuthor_pk`
     PRIMARY KEY (`rCoAuthorID`)
 );

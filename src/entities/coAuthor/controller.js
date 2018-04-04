@@ -2,9 +2,9 @@ import db from '../../database/index';
 import * as Query from './queries';
 import { filtered, escapeSearch } from '../../utils';
 
-const cworkCoAuthorAttributes = ['creativeWorkID', 'userID', 'cworkCoAuthorID'];
+const cworkCoAuthorAttributes = ['creativeWorkID', 'name', 'cworkCoAuthorID'];
 
-const searchFields = ['creativeWorkID', 'userID'];
+const searchFields = ['creativeWorkID', 'name'];
 
 export const addCworkCoAuthor = cworkCoAuthor => {
   return new Promise((resolve, reject) => {
@@ -59,7 +59,7 @@ export const getCworkCoAuthors = cworkCoAuthor => {
         cworkCoAuthor.sortBy,
       ),
       {
-        field: 'creativeWorkID',
+        field: 'name',
         ...escapeSearch(cworkCoAuthor, searchFields, cworkCoAuthor.limit),
       },
       (err, results) => {
@@ -77,7 +77,7 @@ export const getTotalCworkCoAuthors = cworkCoAuthor => {
         filtered(cworkCoAuthor, cworkCoAuthorAttributes),
       ),
       {
-        field: 'userID',
+        field: 'name',
         ...escapeSearch(cworkCoAuthor, searchFields, cworkCoAuthor.limit),
       },
       (err, results) => {

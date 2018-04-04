@@ -3,11 +3,11 @@ import { formatQueryParams } from '../../utils';
 export const addCworkCoAuthor = `
 	INSERT INTO cworkCoAuthor (
 		creativeWorkID,
-		userID
+		name
 	)
 	VALUES (
 		:creativeWorkID,
-		:userID
+		:name
 	)
 `;
 

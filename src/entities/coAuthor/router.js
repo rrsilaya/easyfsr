@@ -9,12 +9,11 @@ const router = Router();
  * @apiName addCworkCoAuthor
  *
  * @apiParam (Body Params) {Number} creativeWorkID ID of creative work
- * @apiParam (Body Params) {Number} userID] ID of co-author as user
- * @apiParam (Body Params) {Number} cworkCoAuthorID ID of co-author
+ * @apiParam (Body Params) {String} name name of co-author as user
  *
  * @apiSuccess {Object} cworkCoAuthor CworkCoAuthor fetched
  * @apiSuccess {Number} cworkCoAuthor.creativeWorkID ID of creative work
- * @apiSuccess {Number} cworkCoAuthor.userID ID of co-author as user
+ * @apiSuccess {String} cworkCoAuthor.name name of co-author as user
  * @apiSuccess {Number} cworkCoAuthor.cworkCoAuthorID ID of cworkCoAuthor
  *
  * @apiSuccessExample {json} Success-Response:
@@ -25,7 +24,7 @@ const router = Router();
  *     "data": {
  *         "cworkCoAuthorID": 16,
  *         "creativeWorkID": 3,
- *         "userID": 1
+ *         "name": Erlen
  *     }
  * }
  * @apiError (Error 500) {String} status status code
@@ -64,7 +63,7 @@ router.post('/cworkCoAuthor/', async (req, res) => {
  * @apiName getCworkCoAuthors
  *
  * @apiParam (Query Params) {Number} creativeWorkID ID of creative work
- * @apiParam (Query Params) {Number} userID ID of co-author as user
+ * @apiParam (Query Params) {String} name name of co-author as user
  * @apiParam (Query Params) {Number} [page] page number
  * @apiParam (Query Params) {Number} [limit] count limit of awards to fetch
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
@@ -72,7 +71,7 @@ router.post('/cworkCoAuthor/', async (req, res) => {
  *
  * @apiSuccess {Object} cworkCoAuthor CworkCoAuthor fetched
  * @apiSuccess {Number} cworkCoAuthor.creativeWorkID ID of creative work
- * @apiSuccess {Number} cworkCoAuthor.userID ID of co-author as user
+ * @apiSuccess {Number} cworkCoAuthor.name ID of co-author as user
  * @apiSuccess {Number} cworkCoAuthor.cworkCoAuthorID ID of cworkCoAuthor
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -83,12 +82,12 @@ router.post('/cworkCoAuthor/', async (req, res) => {
  *         {
  *             "cworkCoAuthorID": 4,
  *             "creativeWorkID": 1,
- *             "userID": 1
+ *             "name": Erlen
  *         },
  *         {
  *             "cworkCoAuthorID": 5,
  *             "creativeWorkID": 1,
- *             "userID": 1
+ *             "name": Erlen
  *         }
  *     ],
  *     "total": 2,
@@ -152,7 +151,7 @@ router.get('/cworkCoAuthor/', async (req, res) => {
  *
  * @apiSuccess {Object} cworkCoAuthor CworkCoAuthor fetched
  * @apiSuccess {Number} cworkCoAuthor.creativeWorkID ID of creative work
- * @apiSuccess {Number} cworkCoAuthor.userID ID of co-author as user
+ * @apiSuccess {String} cworkCoAuthor.name name of co-author as user
  * @apiSuccess {Number} cworkCoAuthor.cworkCoAuthorID ID of cworkCoAuthor
  *
  * @apiSuccessExample {json} Success-Response:
@@ -163,7 +162,7 @@ router.get('/cworkCoAuthor/', async (req, res) => {
  *     "data": {
  *         "cworkCoAuthorID": 10,
  *         "creativeWorkID": 1,
- *         "userID": 1
+ *         "name": Erlen
  *     }
  * }
  * @apiError (Error 500) {String} status status code
@@ -216,7 +215,7 @@ router.delete('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
  *
  * @apiSuccess {Object} cworkCoAuthor CworkCoAuthor fetched
  * @apiSuccess {Number} cworkCoAuthor.creativeWorkID ID of creative work
- * @apiSuccess {Number} cworkCoAuthor.userID ID of co-author as user
+ * @apiSuccess {String} cworkCoAuthor.name name of co-author as user
  * @apiSuccess {Number} cworkCoAuthor.cworkCoAuthorID ID of cworkCoAuthor
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -226,7 +225,7 @@ router.delete('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
  *     "data": {
  *         "cworkCoAuthorID": 4,
  *         "creativeWorkID": 1,
- *         "userID": 1
+ *         "name": Erlen
  *     }
  * }
  * @apiError (Error 500) {String} status status code
@@ -276,11 +275,11 @@ router.get('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} cworkCoAuthorID ID of co-author
  * @apiParam (Body Params) {Number} creativeWorkID ID of creative work
- * @apiParam (Body Params) {Number} userID ID of co-author as user
+ * @apiParam (Body Params) {String} name name of co-author as user
  *
  * @apiSuccess {Object} cworkCoAuthor CworkCoAuthor fetched
  * @apiSuccess {Number} cworkCoAuthor.creativeWorkID ID of creative work
- * @apiSuccess {Number} cworkCoAuthor.userID ID of co-author as user
+ * @apiSuccess {String} cworkCoAuthor.name name of co-author as user
  * @apiSuccess {Number} cworkCoAuthor.cworkCoAuthorID ID of cworkCoAuthor
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -290,7 +289,7 @@ router.get('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
  *     "data": {
  *         "cworkCoAuthorID": 4,
  *         "creativeWorkID": 1,
- *         "userID": 1
+ *         "name": Erlen
  *     }
  * }
  * @apiError (Error 500) {String} status status code
