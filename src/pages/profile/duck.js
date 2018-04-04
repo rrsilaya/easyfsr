@@ -1,22 +1,26 @@
 import { handle } from 'redux-pack';
 import { notification } from 'antd';
+import { push } from 'react-router-redux';
 import * as Api from '../../api';
 
 // Action Types
 const GET_USER = 'PROFILE/GET_USER';
 
 // Action Creators
-export const getUserProfile = employeeID => ({
-  type: GET_USER,
-  promise: Api.getUser(employeeID),
-  meta: {
-    onFailure: () => {
-      notification.error({
-        message: 'An error occured while getting user profile',
-      });
+export const getUserProfile = employeeID => dispatch => {
+  dispatch({
+    type: GET_USER,
+    promise: Api.getUser(employeeID),
+    meta: {
+      onFailure: () => {
+        notification.error({
+          message: 'An error occured while getting user profile',
+        });
+        dispatch(push('/profile'));
+      },
     },
-  },
-});
+  });
+};
 
 // Initial State
 const initialState = {
