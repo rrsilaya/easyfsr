@@ -18,7 +18,7 @@ export const addStudyLoad = `
 
 export const updateStudyLoad = studyLoad => `
 	UPDATE studyLoad SET 
-		${formatQueryParams(studyLoad)}
+		${formatQueryParams(studyLoad, 'update')}
 		WHERE id = :id
 `;
 
@@ -35,7 +35,15 @@ export const getStudyLoad = `
 export const getStudyLoads = (query, sortBy) => `
 	SELECT * FROM studyLoad 
 	${query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''}
- 	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} LIMIT :limit
+ 	ORDER BY [field] ${
+    sortBy === 'DESC' ? 'DESC' : 'ASC'
+  } LIMIT :limit OFFSET :offset
+`;
+
+export const getTotalStudyLoad = query => `
+	SELECT count(*) as total FROM studyLoad ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
 `;
 
 export const dropStudyLoad = `

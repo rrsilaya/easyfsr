@@ -8,8 +8,7 @@ const searchFields = ['degree', 'university', 'totalSLcredits'];
 
 export const addStudyLoad = studyLoad => {
   return new Promise((resolve, reject) => {
-    db.query(Query.addStudyLoad, { ...studyLoad }, (err, results) => {
-      console.log(err);
+    db.query(Query.addStudyLoad, studyLoad, (err, results) => {
       if (err) return reject(500);
       return resolve(studyLoad.id);
     });
@@ -24,10 +23,8 @@ export const updateStudyLoad = ({ id }, studyLoad) => {
       { id, ...studyLoad },
       (err, results) => {
         if (err) {
-          console.log(err);
           return reject(500);
         }
-        // else if (!results.length) return reject(404);
         return resolve(results.insertId);
       },
     );
@@ -39,7 +36,7 @@ export const getStudyLoad = ({ id }) => {
     db.query(Query.getStudyLoad, { id }, (err, results) => {
       if (err) return reject(500);
       else if (!results.length) return reject(404);
-      return resolve(results);
+      return resolve(results[0]);
     });
   });
 };
@@ -70,5 +67,21 @@ export const deleteStudyLoad = ({ id }) => {
       else if (!results.affectedRows) return reject(404);
       return resolve(id);
     });
+  });
+};
+
+export const getTotalStudyLoad = studyLoad => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      Query.getTotalStudyLoad(filtered(studyLoad, studyLoadAttributes)),
+      {
+        field: 'degree',
+        ...escapeSearch(studyLoad, searchFields, studyLoad.limit),
+      },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(results[0]);
+      },
+    );
   });
 };
