@@ -40,6 +40,7 @@ CREATE TABLE fsr(
   `acadYear` VARCHAR (20) NOT NULL,
   `semester` VARCHAR (10) NOT NULL,
   `isChecked` boolean DEFAULT 0,
+  `isTurnedIn` boolean DEFAULT 0,
   `teachingLoadCreds` INT(2) DEFAULT 0,
   `filepath` TEXT (50),
   -- place all entitiesID here
