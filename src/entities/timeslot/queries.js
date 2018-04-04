@@ -23,6 +23,7 @@ export const getTimeslots = (query, sortBy) => `
   } 
   	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
   	LIMIT :limit
+  	OFFSET :offset
 `;
 
 export const getTimeslot = `
@@ -40,11 +41,6 @@ export const updateTimeslot = timeslot => `
 export const deleteTimeslot = `
 	DELETE FROM timeslot
 	WHERE timeslotID = :timeslotID
-`;
-
-export const deleteTimeslots = query => `
-	DELETE FROM timeslot
-	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
 `;
 
 export const getTotalTimeslots = query => `

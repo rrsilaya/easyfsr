@@ -8,14 +8,14 @@ const router = Router();
  * @apiGroup Timeslot
  * @apiName addTimeslot
 
- * @apiParam (Body Params) {Integer} timeslot.subjectID subject ID of subject
- * @apiParam (Body Params) {String} timeslot.day day assigned to timeslot
- * @apiParam (Body Params) {Time} timeslot.timeStart starting time of timeslot
- * @apiParam (Body Params) {Time} timeslot.timeEnd dismissal time of timeslot
+ * @apiParam (Body Params) {Number} subjectID subject ID of subject
+ * @apiParam (Body Params) {String} day day assigned to timeslot
+ * @apiParam (Body Params) {Time} timeStart starting time of timeslot
+ * @apiParam (Body Params) {Time} ttimeEnd dismissal time of timeslot
  *
  * @apiSuccess {Object}  timeslot timeslot added
- * @apiSuccess {Integer} timeslot.timeslotID ID of timeslot
- * @apiSuccess {Integer} timeslot.subjectID subject ID of timeslot
+ * @apiSuccess {Number} timeslot.timeslotID ID of timeslot
+ * @apiSuccess {Number} timeslot.subjectID subject ID of timeslot
  * @apiSuccess {String} timeslot.day day assigned to timeslot
  * @apiSuccess {Time} timeslot.timeStart starting time of timeslot
  * @apiSuccess {Time} timeslot.timeEnd dismissal time of timeslot
@@ -26,17 +26,16 @@ const router = Router();
  *     {
         "status": 200,
         "message": "Successfully created timeslot",
-        "data": [
+        "data": 
             {
-                "timeslotID": 19,
-                "subjectID": 12,
-                "day": "12",
-                "timeStart": "23:00:00",
-                "timeEnd": "24:00:00"
+              "timeslotID": 19,
+              "subjectID": 12,
+              "day": "12",
+              "timeStart": "23:00:00",
+              "timeEnd": "24:00:00"
             }
-        ]
-}
- *   }
+        }
+ *    }
  *
  * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message error message
@@ -71,10 +70,15 @@ router.post('/timeslot/', async (req, res) => {
  * @api {get} /timeslot/ getTimeslots
  * @apiGroup Timeslot
  * @apiName getTimeslots
+ 
+ * @apiParam (Query Params) {Number} [subjectID] ID of subject
+ * @apiParam (Query Params) {String} [day] day assigned to timeslot
+ * @apiParam (Query Params) {Time} [timeStart] starting time of timeslot
+ * @apiParam (Query Params) {Time} [timeEnd] dismissal time of timeslot
  * 
-  *@apiSuccess {Object} timeslot timeslots fetched
- * @apiSuccess {Integer} timeslot.timeslotID ID of timeslot
- * @apiSuccess {Integer} timeslot.subjectID ID of subject 
+ *@apiSuccess {Object} timeslot timeslots fetched
+ * @apiSuccess {Number} timeslot.timeslotID ID of timeslot
+ * @apiSuccess {Number} timeslot.subjectID ID of subject 
  * @apiSuccess {String} timeslot.day day assigned to timeslot
  * @apiSuccess {Time} timeslot.timeStart starting time of timeslot
  * @apiSuccess {Time} timeslot.timeEnd dismissal time of timeslot
@@ -84,7 +88,7 @@ router.post('/timeslot/', async (req, res) => {
  *  {
     "status": 200,
     "message": "Successfully fetched timeslots",
-    "data": [
+    "data": 
         {
             "timeslotID": 15,
             "subjectID": 15,
@@ -99,7 +103,7 @@ router.post('/timeslot/', async (req, res) => {
             "timeStart": "07:00:00",
             "timeEnd": "08:00:00"
         }
-    ],
+    ,
     "total": 2,
     "limit": 12,
     "page": 1,
@@ -157,11 +161,11 @@ router.get('/timeslot/', async (req, res) => {
  * @apiGroup Timeslot
  * @apiName getTimeslot
  *
- * @apiParam (Query Params) {Integer} timeslotID ID of timeslot
+ * @apiParam (Query Params) {Number} timeslotID ID of timeslot
  *
   *@apiSuccess {Object} timeslot timeslot fetched
- * @apiSuccess {Integer} timeslot.timeslotID ID of timeslot
- * @apiSuccess {Integer} timeslot.subjectID ID of subject 
+ * @apiSuccess {Number} timeslot.timeslotID ID of timeslot
+ * @apiSuccess {Number} timeslot.subjectID ID of subject 
  * @apiSuccess {String} timeslot.day day assigned to timeslot
  * @apiSuccess {Time} timeslot.timeStart starting time of timeslot
  * @apiSuccess {Time} timeslot.timeEnd dismissal time of timeslot
@@ -171,7 +175,7 @@ router.get('/timeslot/', async (req, res) => {
  *  {
     "status": 200,
     "message": "Successfully fetched timeslot",
-    "data": [
+    "data":
         {
             "timeslotID": 2,
             "subjectID": 2,
@@ -179,7 +183,7 @@ router.get('/timeslot/', async (req, res) => {
             "timeStart": "08:00:00",
             "timeEnd": "09:00:00"
         }
-    ]
+   
    }
  * @apiError (Error 500) {String} status error status code
  * @apiError (Error 500) {String} message Error message
@@ -226,15 +230,16 @@ router.get('/timeslot/:timeslotID/', async (req, res) => {
  * @apiGroup Timeslot
  * @apiName updateTimeslot
  *
- * @apiParam (Query Params) {Integer} timeslotID ID of timeslot
- * @apiParam (Body Params) {Integer} timeslot.subjectID subject ID of subject
- * @apiParam (Body Params) {String} timeslot.day day assigned to timeslot
- * @apiParam (Body Params) {Time} timeslot.timeStart starting time of timeslot
- * @apiParam (Body Params) {Time} timeslot.timeEnd dismissal time of timeslot
+ * @apiParam (Query Params) {Number} timeslotID ID of timeslot
+
+ * @apiParam (Body Params) {Number} subjectID subject ID of subject
+ * @apiParam (Body Params) {String} day day assigned to timeslot
+ * @apiParam (Body Params) {Time} timeStart starting time of timeslot
+ * @apiParam (Body Params) {Time} timeEnd dismissal time of timeslot
  *
  * @apiSuccess {Object} timeslot timeslot updated
- * @apiSuccess {Integer} timeslot.timeslotID ID of timeslot
- * @apiSuccess {Integer} timeslot.subjectID ID of subject 
+ * @apiSuccess {Number} timeslot.timeslotID ID of timeslot
+ * @apiSuccess {Number} timeslot.subjectID ID of subject 
  * @apiSuccess {String} timeslot.day day assigned to timeslot
  * @apiSuccess {Time} timeslot.timeStart starting time of timeslot
  * @apiSuccess {Time} timeslot.timeEnd dismissal time of timeslot
@@ -244,7 +249,7 @@ router.get('/timeslot/:timeslotID/', async (req, res) => {
  *  {
     "status": 200,
     "message": "Successfully updated timeslot",
-    "data": [
+    "data": 
         {
             "timeslotID": 2,
             "subjectID": 1,
@@ -252,7 +257,7 @@ router.get('/timeslot/:timeslotID/', async (req, res) => {
             "timeStart": "10:00:00",
             "timeEnd": "11:00:00"
         }
-    ]
+    
     }
  * @apiError (Error 500) {String} status error status code
  * @apiError (Error 500) {String} message Error message
@@ -300,11 +305,11 @@ router.put('/timeslot/:timeslotID/', async (req, res) => {
  * @apiGroup Timeslot
  * @apiName deleteTimeslot
  *
- * @apiParam (Query Params) {Integer} timeslot.timeslotID ID of timeslot
+ * @apiParam (Query Params) {Number} timeslotID ID of timeslot
  *
  * @apiSuccess {Object} timeslot subject deleted
- * @apiSuccess {Integer} timeslot.timeslotID ID of timeslot
- * @apiSuccess {Integer} timeslot.subjectID ID of subject 
+ * @apiSuccess {Number} timeslot.timeslotID ID of timeslot
+ * @apiSuccess {Number} timeslot.subjectID ID of subject 
  * @apiSuccess {String} timeslot.day day assigned to timeslot
  * @apiSuccess {Time} timeslot.timeStart starting time of timeslot
  * @apiSuccess {Time} timeslot.timeEnd dismissal time of timeslot 
@@ -313,7 +318,7 @@ router.put('/timeslot/:timeslotID/', async (req, res) => {
  *   {
     "status": 200,
     "message": "Successfully deleted timeslot",
-    "data": [
+    "data": 
         {
             "timeslotID": 2,
             "subjectID": 1,
@@ -321,7 +326,7 @@ router.put('/timeslot/:timeslotID/', async (req, res) => {
             "timeStart": "10:00:00",
             "timeEnd": "11:00:00"
         }
-    ]
+    
     }
  * @apiError (Error 500) {String} status error status code
  * @apiError (Error 500) {String} message Error message

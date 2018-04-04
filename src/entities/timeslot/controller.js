@@ -39,7 +39,7 @@ export const getTimeslot = ({ timeslotID }) => {
     db.query(Query.getTimeslot, { timeslotID }, (err, results) => {
       if (err) return reject(500);
       else if (!results.length) return reject(404);
-      return resolve(results);
+      return resolve(results[0]);
     });
   });
 };
@@ -52,7 +52,7 @@ export const updateTimeslot = ({ timeslotID }, timeslot) => {
       { timeslotID, ...timeslot },
       (err, results) => {
         if (err) return reject(500);
-        return resolve(results.timeslotID);
+        return resolve(results.insertId);
       },
     );
   });
@@ -63,7 +63,7 @@ export const deleteTimeslot = ({ timeslotID }) => {
     db.query(Query.deleteTimeslot, { timeslotID }, (err, results) => {
       if (err) return reject(500);
       else if (!results.affectedRows) return reject(404);
-      return resolve(results.insertId);
+      return resolve();
     });
   });
 };
