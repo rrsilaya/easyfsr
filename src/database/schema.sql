@@ -25,7 +25,7 @@ CREATE TABLE user(
   rank VARCHAR (30),
   isArchived BOOLEAN DEFAULT 0, 
   acctType VARCHAR(10) DEFAULT 'USER', -- ADMIN / USER
-  profileIcon TEXT,
+  `profileIcon` TEXT (50),
   CONSTRAINT `user_pk`
     PRIMARY KEY (`userID`),
   CONSTRAINT `user_empid_uk`
@@ -41,6 +41,7 @@ CREATE TABLE fsr(
   `semester` VARCHAR (10) NOT NULL,
   `isChecked` boolean DEFAULT 0,
   `teachingLoadCreds` INT(2) DEFAULT 0,
+  `filepath` TEXT (50),
   -- place all entitiesID here
   CONSTRAINT `fsr_pk` 
     PRIMARY KEY (`id`),
@@ -178,6 +179,7 @@ CREATE TABLE `award`(
   `professionalChair` VARCHAR (50) NOT NULL,
   `approvedStartDate` DATE NOT NULL, --                   DATE format: YYYY-MM-DD
   `endDate` DATE NOT NULL, --                             DATE format: YYYY-MM-DD
+  `filepath` TEXT (50),
   CONSTRAINT `award_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
@@ -240,6 +242,7 @@ CREATE TABLE `creativeWork`(
   `title` VARCHAR(50) NOT NULL,
   `type` VARCHAR(50) NOT NULL,
   `credUnit` INT (10) NOT NULL,
+  `filepath` TEXT (50),
   CONSTRAINT `creativeWork_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
@@ -275,6 +278,7 @@ CREATE TABLE `research`(
   `endDate` DATE DEFAULT NULL, --                 DATE format: YYYY-MM-DD
   `funding` VARCHAR (30) NOT NULL,
   `approvedUnits` VARCHAR (30) NOT NULL,
+  `filepath` TEXT (50),
   CONSTRAINT `research_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
@@ -364,6 +368,7 @@ UPDATE studyLoad
 
 -- show profile of user 
 -- used with `WHERE userID = :userID` can also add fsr's isApproved, acadYear and semester
+
 CREATE OR REPLACE VIEW viewProfile AS SELECT u.userID, u.employeeID, u.password, u.firstName, u.middleName, u.lastName, 
 u.committee, u.isHead, u.officeNumber, u.contractType, u.emailAddress, u.rank, u.acctType, f.id, f.isChecked, f.acadYear, 
 f.semester FROM user u, fsr f WHERE u.userID = f.userID;

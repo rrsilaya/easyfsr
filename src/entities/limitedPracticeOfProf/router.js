@@ -343,7 +343,7 @@ router.get('/ltdPractOfProf/', async (req, res) => {
       status: 200,
       message: 'Successfully fetched LtdPractOfProf',
       data: ltdPractOfProfs,
-      total: ltdPractOfProfs.length,
+      total: (await Ctrl.getTotalLtdPractOfProfs(req.query)).total,
       limit: parseInt(req.query.limit) || 12,
       page: parseInt(req.query.page) || 1,
       pages: Math.ceil(
