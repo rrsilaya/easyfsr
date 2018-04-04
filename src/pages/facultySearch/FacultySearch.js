@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { List, Icon, Row, Col } from 'antd';
 import { DataLoader } from '../../global';
-
+import { Link } from 'react-router-dom';
 import Search from './components/Search';
 import styles from './styles';
 
@@ -14,13 +14,16 @@ class FacultySearch extends Component {
       // State
       users,
       isSearching,
+      changeSelectedUser,
 
       // Dispatch
+      searchUser,
+      user,
     } = this.props;
 
     return (
       <div>
-        <Search />
+        <Search searchUser={searchUser} />
         <DataLoader
           isLoading={isSearching}
           content={
@@ -35,13 +38,13 @@ class FacultySearch extends Component {
                 <ListItem className="faculty-item" style={styles.listItem}>
                   <Row type="flex" justify="space-around" style={styles.info}>
                     <Col {...gridConfig} className="text normal">
-                      {item.name}
+                      {item.firstName}
                     </Col>
                     <Col {...gridConfig} className="text meta-2">
-                      {item.name}
+                      {item.lastName}
                     </Col>
                     <Col {...gridConfig} className="text meta-2">
-                      {item.name}
+                      {item.middleName}
                     </Col>
                   </Row>
                   <div style={styles.icons}>
@@ -51,7 +54,9 @@ class FacultySearch extends Component {
                       type="message"
                       style={styles.message}
                     />
-                    <Icon className="text secondary" type="profile" />
+                    <Link to={`/profile/${item.employeeID}`}>
+                      <Icon type="profile" className="text secondary" />
+                    </Link>,
                   </div>
                 </ListItem>
               )}

@@ -4,10 +4,11 @@ import FacultySearch from './FacultySearch';
 import { searchUser } from './duck';
 
 const mapStateToProps = state => {
-  const { users } = state.search;
+  const { users, isSearching } = state.search;
 
   return {
     users,
+    isSearching,
   };
 };
 
