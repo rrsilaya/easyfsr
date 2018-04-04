@@ -44,7 +44,7 @@ export const updateCreativeWork = ({ creativeWorkID }, creativeWork) => {
         if (err) {
           return reject(500);
         }
-        return resolve(results.creativeWorkID);
+        return resolve(results.insertID);
       },
     );
   });
@@ -83,20 +83,9 @@ export const getTotalCreativeWorks = creativeWork => {
         ...escapeSearch(creativeWork, searchFields, creativeWork.limit),
       },
       (err, results) => {
-        if (err) {
-          return reject(500);
-        } else if (!results.length) return reject(404);
+        if (err) return reject(500);
         return resolve(results[0]);
       },
     );
-  });
-};
-
-export const getTotalCreativeWorksByFSR = ({ id }) => {
-  return new Promise((resolve, reject) => {
-    db.query(Query.getTotalCreativeWorksByFSR, { id }, (err, results) => {
-      if (err) return reject(500);
-      return resolve(results);
-    });
   });
 };
