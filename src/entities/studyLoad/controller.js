@@ -3,8 +3,22 @@ import * as Query from './queries';
 import * as Utils from '../../utils';
 import { filtered, escapeSearch } from '../../utils';
 
-const studyLoadAttributes = ['id', 'degree', 'university', 'totalSLcredits'];
-const searchFields = ['degree', 'university', 'totalSLcredits'];
+const studyLoadAttributes = [
+  'id',
+  'fullLeaveWithPay',
+  'fellowshipRecipient',
+  'degree',
+  'university',
+  'totalSLcredits',
+];
+
+const searchFields = [
+  'fullLeaveWithPay',
+  'fellowshipRecipient',
+  'degree',
+  'university',
+  'totalSLcredits',
+];
 
 export const addStudyLoad = studyLoad => {
   return new Promise((resolve, reject) => {
@@ -49,7 +63,7 @@ export const getStudyLoads = studyLoad => {
         studyLoad.sortBy,
       ),
       {
-        field: 'degree',
+        field: 'fullLeaveWithPay',
         ...escapeSearch(studyLoad, searchFields, studyLoad.limit),
       },
       (err, results) => {
@@ -75,7 +89,7 @@ export const getTotalStudyLoad = studyLoad => {
     db.query(
       Query.getTotalStudyLoad(filtered(studyLoad, studyLoadAttributes)),
       {
-        field: 'degree',
+        field: 'fullLeaveWithPay',
         ...escapeSearch(studyLoad, searchFields, studyLoad.limit),
       },
       (err, results) => {
