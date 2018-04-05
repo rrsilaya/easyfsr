@@ -19,6 +19,18 @@ const style = {
   addButton: {
     marginLeft: '10px',
   },
+  searchForm: {
+    marginBottom: '2em',
+  },
+  searchGrid: {
+    display: 'flex',
+  },
+  inputSearch: {
+    width: '50%',
+  },
+  sort: {
+    width: 175,
+  },
 };
 
 export default style;

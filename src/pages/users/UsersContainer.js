@@ -23,6 +23,7 @@ const mapStateToProps = state => {
     isAddingUser,
     isEditingUser,
 
+    query,
     pagination,
     users,
     user,
@@ -37,6 +38,7 @@ const mapStateToProps = state => {
     isAddingUser,
     isEditingUser,
 
+    query,
     pagination,
     users,
     user,

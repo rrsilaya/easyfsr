@@ -108,6 +108,7 @@ const initialState = {
   isEditModalOpen: false,
   isAddModalOpen: false,
   isDeleteModalOpen: false,
+  isAdvancedSearchToggled: false,
 
   isGettingUsers: false,
   isAddingUser: false,

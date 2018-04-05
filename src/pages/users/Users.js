@@ -6,7 +6,7 @@ import User from './components/User';
 import EditModal from './components/EditModal';
 import AddModal from './components/AddModal';
 import DeleteModal from './components/DeleteModal';
-import SearchUser from './components/Search';
+import SearchUser from './components/SearchUser';
 
 import styles from './styles';
 
@@ -55,12 +55,7 @@ class Users extends Component {
 
     return (
       <div>
-        <SearchUser
-          toggleAddModal={toggleAddModal}
-          changeQuery={changeQuery}
-          query={query}
-          getUsers={getUsers}
-        />
+        <SearchUser getUsers={getUsers} query={query} />
         <DataLoader
           isLoading={isGettingUsers}
           content={
