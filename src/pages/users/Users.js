@@ -6,6 +6,7 @@ import User from './components/User';
 import EditModal from './components/EditModal';
 import AddModal from './components/AddModal';
 import DeleteModal from './components/DeleteModal';
+import SearchUser from './components/SearchUser';
 
 import styles from './styles';
 
@@ -24,12 +25,17 @@ class Users extends Component {
     });
   };
   componentDidMount() {
-    this.props.getUsers();
+    this.props.getUsers({ limit: 12 });
   }
 
   componentWillUnmount() {
     this.props.resetPage();
   }
+
+  handlePageSizeChange = (page, limit) => {
+    this.props.getUsers({ ...this.props.query, page, limit });
+    this.props.changeQuery({ page, limit });
+  };
 
   render() {
     const gridConfig = { xxl: 6, xl: 8, sm: 12, xs: 24 };
@@ -48,24 +54,22 @@ class Users extends Component {
       toggleDeleteModal,
       changeSelectedUser,
 
+      getUsers,
       addUser,
       editUser,
       deleteUser,
 
+      query,
+      pagination,
       users,
       user,
     } = this.props;
 
     return (
       <div>
-        <div style={styles.search}>
-          <Search
-            placeholder="Search user..."
-            enterButton="Search"
-            size="large"
-            style={styles.searchBar}
-          />
+        <div style={styles.add}>
           <Button
+            style={styles.addButton}
             size="large"
             icon="plus-circle-o"
             ghost
@@ -74,6 +78,7 @@ class Users extends Component {
             Add User
           </Button>
         </div>
+        <SearchUser getUsers={getUsers} query={query} />
         <DataLoader
           isLoading={isGettingUsers}
           content={
@@ -115,7 +120,15 @@ class Users extends Component {
           isDeletingUser={isDeletingUser}
         />
         <div className="pagination">
-          <Pagination defaultCurrent={1} total={50} />
+          <Pagination
+            current={pagination.page}
+            pageSize={pagination.limit}
+            total={pagination.total}
+            showSizeChanger
+            pageSizeOptions={['12', '24', '36', '48']}
+            onChange={this.handlePageSizeChange}
+            onShowSizeChange={this.handlePageSizeChange}
+          />
         </div>
       </div>
     );

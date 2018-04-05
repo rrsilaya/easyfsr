@@ -145,3 +145,21 @@ img.crop {
 .ant-card-meta-title {
   margin-bottom: 0 !important;
 }
+.ant-steps-item-finish .ant-steps-item-title {
+  color: #fff !important;
+}
+.ant-steps-item-process .ant-steps-item-title {
+  color: #fff !important;
+}
+.ant-steps-item-wait .ant-steps-item-title {
+  color: #805c72 !important;
+}
+.ant-table-thead span {
+  color: #483440 !important;
+}
+.ant-checkbox-wrapper span {
+  color: #483440 !important;
+}
+.ant-table-body td {
+  color: #483440 !important;
+}
