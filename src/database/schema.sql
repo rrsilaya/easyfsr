@@ -153,7 +153,6 @@ CREATE TABLE `consultationHours`(
     PRIMARY KEY (`chID`)   
 );
 
-
 -- Professorial Chair or Faculty Grant or Nominee (Award)
 
 CREATE TABLE `award`(
@@ -240,14 +239,11 @@ CREATE TABLE `creativeWork`(
 CREATE TABLE `cworkCoAuthor`(
   `cworkCoAuthorID` INT NOT NULL AUTO_INCREMENT,
   `creativeWorkID` INT NOT NULL,
-  `userID` INT NOT NULL,
+  `name` VARCHAR(50) NOT NULL,
   CONSTRAINT `cworkCoAuthor_creativeWork_fk`
     FOREIGN KEY (`creativeWorkID`)
     REFERENCES creativeWork(`creativeWorkID`)
   ON DELETE CASCADE,
-  CONSTRAINT `cworkCoAuthor_user_fk`
-    FOREIGN KEY (`userID`)
-    REFERENCES user(`userID`),
   CONSTRAINT `cworkCoAuthor_pk`
     PRIMARY KEY (`cworkCoAuthorID`)
 );
@@ -277,14 +273,11 @@ CREATE TABLE `research`(
 CREATE TABLE rCoAuthor(
   `rCoAuthorID` INT NOT NULL AUTO_INCREMENT,
   `researchID` INT NOT NULL,
-  `userID` INT NOT NULL,
+  `name` VARCHAR(50) NOT NULL,
   CONSTRAINT `rCoAuthor_research_fk`
     FOREIGN KEY (`researchID`)
     REFERENCES research(`researchID`)
   ON DELETE CASCADE,
-  CONSTRAINT `rCoAuthor_user_fk`
-    FOREIGN KEY (`userID`)
-    REFERENCES user(`userID`),
   CONSTRAINT `rCoAuthor_pk`
     PRIMARY KEY (`rCoAuthorID`)
 );
@@ -361,7 +354,7 @@ FOR EACH ROW
 -- VIEWS
 
 -- show profile of user 
---      used with `WHERE userID = :userID` can also add fsr's isApproved, acadYear and semester
+-- used with `WHERE userID = :userID` can also add fsr's isApproved, acadYear and semester
 CREATE OR REPLACE VIEW viewProfile AS SELECT u.userID, u.employeeID, u.password, u.firstName, u.middleName, u.lastName, 
 u.committee, u.isHead, u.officeNumber, u.contractType, u.emailAddress, u.rank, u.acctType, f.id, f.isChecked, f.acadYear, 
 f.semester FROM user u, fsr f WHERE u.userID = f.userID;
