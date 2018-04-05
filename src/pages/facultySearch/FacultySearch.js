@@ -43,10 +43,10 @@ class FacultySearch extends Component {
                       {item.firstName}
                     </Col>
                     <Col {...gridConfig} className="text meta-2">
-                      {item.lastName}
+                      {item.middleName}
                     </Col>
                     <Col {...gridConfig} className="text meta-2">
-                      {item.middleName}
+                      {item.lastName}
                     </Col>
                   </Row>
                   <div style={styles.icons}>
