@@ -32,8 +32,9 @@ class Login extends Component {
               >
                 <h1 className="super text primary">Form67 made easy</h1>
                 <p className="subtitle text meta">
-                  easyFSR is a system built to simplify the process of managing
-                  Faculty Service Records.
+                  A system built to simplify the process of managing Faculty
+                  Service Records with faculty members submitting information
+                  and processing their data through automation
                 </p>
                 <Form style={styles.form} onSubmit={this.handleFormSubmit}>
                   <InputGroup
