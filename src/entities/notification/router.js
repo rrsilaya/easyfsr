@@ -129,7 +129,7 @@ router.post('/notification/', async (req, res) => {
 
 router.delete('/notification/:notificationID', async (req, res) => {
   try {
-    const notification = await Ctrl.getCourse(req.params);
+    const notification = await Ctrl.getNotification(req.params);
     await Ctrl.deleteNotification(req.params);
 
     res.status(200).json({
@@ -310,7 +310,8 @@ router.get('/notification/', async (req, res) => {
       limit: parseInt(req.query.limit) || 12,
       page: parseInt(req.query.page) || 1,
       pages: Math.ceil(
-      (await Ctrl.getTotalNotifs(req.query)).total / (parseInt(req.query.limit) || 12),
+        (await Ctrl.getTotalNotifs(req.query)).total /
+          (parseInt(req.query.limit) || 12),
       ),
     });
   } catch (status) {
