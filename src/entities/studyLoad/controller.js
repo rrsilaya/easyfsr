@@ -36,12 +36,20 @@ export const updateStudyLoad = ({ id }, studyLoad) => {
       Query.updateStudyLoad(Utils.filtered(studyLoad, studyLoadAttributes)),
       { id, ...studyLoad },
       (err, results) => {
-        if (err) {
-          return reject(500);
-        }
+        if (err) return reject(500);
         return resolve(results.insertId);
       },
     );
+  });
+};
+
+export const deleteStudyLoad = ({ id }) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.deleteStudyLoad, { id }, (err, results) => {
+      if (err) return reject(500);
+      else if (!results.affectedRows) return reject(404);
+      return resolve();
+    });
   });
 };
 
@@ -71,16 +79,6 @@ export const getStudyLoads = studyLoad => {
         return resolve(results);
       },
     );
-  });
-};
-
-export const deleteStudyLoad = ({ id }) => {
-  return new Promise((resolve, reject) => {
-    db.query(Query.deleteStudyLoad, { id }, (err, results) => {
-      if (err) return reject(500);
-      else if (!results.affectedRows) return reject(404);
-      return resolve();
-    });
   });
 };
 

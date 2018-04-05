@@ -84,7 +84,6 @@ router.post('/studyLoad/', async (req, res) => {
  * @apiParam (Body Params) {String} university university of study load
  * @apiParam (Body Params) {Number} totalSLcredits total credits of study load
  *
- *
  * @apiSuccess {Object} studyLoad Study Load updated
  * @apiSuccess {String} studyLoad.fullLeaveWithPay full leave with pay of study load
  * @apiSuccess {String} studyLoad.fellowshipRecipient fellowship recipient of study load
@@ -134,6 +133,79 @@ router.put('/studyLoad/:id', async (req, res) => {
     res.status(200).json({
       status: 200,
       message: 'Successfully updated studyLoad',
+      data: studyLoad,
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'studyLoad not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
+    }
+    res.status(status).json({ status, message });
+  }
+});
+
+/**
+ * @api {delete} /studyLoad/:id deleteStudyLoad
+ * @apiGroup Study Load
+ * @apiName deleteStudyLoad
+ *
+ * @apiParam (Query Params) {Number} id ID of Study Load
+ *
+ * @apiSuccess {Object} studyLoad study load deleted
+ * @apiSuccess {Number} studyLoad.id ID of Study Load
+ * @apiSuccess {String} studyLoad.fullLeaveWithPay full leave with pay of study load
+ * @apiSuccess {String} studyLoad.fellowshipRecipient fellowship recipient of study load
+ * @apiSuccess {String} studyLoad.degree degree of study load
+ * @apiSuccess {String} studyLoad.university university of study load
+ * @apiSuccess {Number} studyLoad.totalSLcredits total credits of study load
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *   HTTP/1.1 200 OK
+ *   {
+ *     "status": 200,
+ *     "message": "Successfully deleted studyLoad"
+ *     "data": [
+ *       {
+ *           "fullLeaveWithPay: "NO",
+ *           "fellowshipRecipient: "NO",
+ *           "degree": "BSCS",
+ *           "courseNumber": "128",
+ *           "university": "UPLB",
+ *           "totalSLcredits": 3,
+ *           "id": 1
+ *       }
+ *     ]
+ *   }
+ *
+ * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ *   HTTP/1.1 500 Internal Server Error
+ *   {
+ *     "status": 500,
+ *     "message": "Internal server error"
+ *   }
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} message Error message
+ *   HTTP/1.1 404 studyLoad not found
+ *   {
+ *     "status": 404,
+ *     "message": "studyLoad not found"
+ *   }
+ */
+
+router.delete('/studyLoad/:id', async (req, res) => {
+  try {
+    const studyLoad = await Ctrl.getStudyLoad(req.params);
+    await Ctrl.deleteStudyLoad(req.params);
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully deleted studyLoad',
       data: studyLoad,
     });
   } catch (status) {
@@ -313,79 +385,6 @@ router.get('/studyLoad/', async (req, res) => {
     switch (status) {
       case 404:
         message = 'studyLoad/s not found';
-        break;
-      case 500:
-        message = 'Internal server error';
-        break;
-    }
-    res.status(status).json({ status, message });
-  }
-});
-
-/**
- * @api {delete} /studyLoad/:id deleteStudyLoad
- * @apiGroup Study Load
- * @apiName deleteStudyLoad
- *
- * @apiParam (Query Params) {Number} id ID of Study Load
- *
- * @apiSuccess {Object} studyLoad study load deleted
- * @apiSuccess {Number} studyLoad.id ID of Study Load
- * @apiSuccess {String} studyLoad.fullLeaveWithPay full leave with pay of study load
- * @apiSuccess {String} studyLoad.fellowshipRecipient fellowship recipient of study load
- * @apiSuccess {String} studyLoad.degree degree of study load
- * @apiSuccess {String} studyLoad.university university of study load
- * @apiSuccess {Number} studyLoad.totalSLcredits total credits of study load
- *
- * @apiSuccessExample {json} Success-Response:
- *   HTTP/1.1 200 OK
- *   {
- *     "status": 200,
- *     "message": "Successfully deleted studyLoad"
- *     "data": [
- *       {
- *           "fullLeaveWithPay: "NO",
- *           "fellowshipRecipient: "NO",
- *           "degree": "BSCS",
- *           "courseNumber": "128",
- *           "university": "UPLB",
- *           "totalSLcredits": 3,
- *           "id": 1
- *       }
- *     ]
- *   }
- *
- * @apiError (Error 500) {String} status status code
- * @apiError (Error 500) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- *   HTTP/1.1 500 Internal Server Error
- *   {
- *     "status": 500,
- *     "message": "Internal server error"
- *   }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- *   HTTP/1.1 404 studyLoad not found
- *   {
- *     "status": 404,
- *     "message": "studyLoad not found"
- *   }
- */
-
-router.delete('/studyLoad/:id', async (req, res) => {
-  try {
-    const studyLoad = await Ctrl.getStudyLoad(req.params);
-    await Ctrl.deleteStudyLoad(req.params);
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully deleted studyLoad',
-      data: studyLoad,
-    });
-  } catch (status) {
-    let message = '';
-    switch (status) {
-      case 404:
-        message = 'studyLoad not found';
         break;
       case 500:
         message = 'Internal server error';

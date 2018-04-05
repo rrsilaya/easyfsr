@@ -9,7 +9,6 @@ export const addStudyLoad = `
 		university, 
 		totalSLcredits 
 	)
-
 	VALUES ( 
 		:id,
 		:fullLeaveWithPay,
@@ -28,7 +27,7 @@ export const updateStudyLoad = studyLoad => `
 
 export const deleteStudyLoad = `
 	DELETE FROM studyLoad 
-		where id = :id
+		WHERE id = :id
 `;
 
 export const getStudyLoad = `
@@ -37,8 +36,9 @@ export const getStudyLoad = `
 `;
 
 export const getStudyLoads = (query, sortBy) => `
-	SELECT * FROM studyLoad 
-		${query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''}
+	SELECT * FROM studyLoad ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
  	ORDER BY [field] ${
     sortBy === 'DESC' ? 'DESC' : 'ASC'
   } LIMIT :limit OFFSET :offset
