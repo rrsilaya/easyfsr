@@ -40,8 +40,9 @@ CREATE TABLE fsr(
   `acadYear` VARCHAR (20) NOT NULL,
   `semester` VARCHAR (10) NOT NULL,
   `isChecked` boolean DEFAULT 0,
+  `isTurnedIn` boolean DEFAULT 0,
   `teachingLoadCreds` INT(2) DEFAULT 0,
-  `totalCHours` INT (2) DEFAULT 0,
+  `totalCHours` INT(2) DEFAULT 0, 
   `filepath` TEXT (50),
   -- place all entitiesID here
   CONSTRAINT `fsr_pk` 
@@ -102,6 +103,8 @@ CREATE TABLE `studyLoad`(
   `university` VARCHAR (50) NOT NULL,
   `totalSLcredits` INT (10) DEFAULT 0,
   `id` INT NOT NULL,
+  `fullLeaveWithPay` BOOLEAN DEFAULT 0,
+  `fellowshipRecipient` BOOLEAN DEFAULT 0,
   CONSTRAINT `studyLoad_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
@@ -141,11 +144,11 @@ CREATE TABLE `courseSched`(
 
 CREATE TABLE `consultationHours`(
   `chID` INT NOT NULL AUTO_INCREMENT,
-  `id` INT NOT NULL,
-  `place` varchar (50) NOT NULL,
   `day` varchar(10) NOT NULL,
+  `place` VARCHAR (30) NOT NULL,
   `timeStart` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
   `timeEnd` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
+  `id` INT NOT NULL,
   CONSTRAINT `consultationHours_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
@@ -348,7 +351,7 @@ CREATE TRIGGER insert_CHours
 AFTER INSERT ON consultationHours
 FOR EACH ROW
   UPDATE fsr
-    SET totalCHours = totalCHours + (SELECT TIMESTAMPDIFF(HOUR, timeStart, timeEnd))
+    SET totalCHours = totalCHours + (SELECT TIMESTAMPDIFF(HOUR, NEW.timeStart, NEW.timeEnd))
     WHERE id = NEW.id;
 
 -- VIEWS
@@ -392,6 +395,34 @@ ON c.id = f.id JOIN user u on f.userID = u.userID;
 CREATE OR REPLACE VIEW viewResearch AS SELECT u.userID, u.employeeID, f.id as fsrID, 
 r.researchID, r.type, r.role, r.title, r.startDate, r.endDate, r.funding, r.approvedUnits 
 FROM research r JOIN fsr f ON r.id = f.id JOIN user u on f.userID = u.userID;
+
+ -- viewConsultationHours
+-- userID, employeeID, fsrID, consultationHours fields, chTimeslot fields
+CREATE OR REPLACE VIEW viewConsultationHours AS SELECT u.userID, u.employeeID, f.id as fsrID, 
+c.chID, c.place, c.day, c.timeStart, c.timeEnd FROM user u JOIN fsr f ON u.userID = f.userID 
+JOIN consultationHours c ON f.id = c.id;
+
+-- viewSubjectTimeslot
+-- userID, employeeID, fsrID, subject fields, timeslot fields
+CREATE OR REPLACE VIEW viewSubjectTimeslot AS SELECT u.userID, u.employeeID, f.id as fsrID, 
+s.subjectID, s.subjectCode, s.teachingLoadCreds, s.noOfStudents, s.hoursPerWeek, s.room, 
+t.day, t.timeStart, t.timeEnd FROM user u JOIN fsr f ON u.userID = f.userID 
+JOIN subject s ON f.id = s.id JOIN timeslot t ON s.subjectID = t.subjectID;
+
+
+-- viewStudyLoad
+-- shows userID, employeeID, fsrID, studyLoad fields
+CREATE OR REPLACE VIEW viewStudyLoad AS SELECT u.userID, u.employeeID, f.id as fsrID, 
+s.degree, s.university, s.fullLeaveWithPay, s.fellowshipRecipient, s.totalSLcredits 
+FROM user u JOIN fsr f ON u.userID = f.userID JOIN studyLoad s ON f.id = s.id;
+
+-- view entities tied with studyLoad
+-- viewSLCourse
+CREATE OR REPLACE VIEW viewSLCourses AS SELECT u.userID, u.employeeID, f.id as fsrID, 
+s.university, s.degree, c.courseID, c.courseNumber, c.school, c.credit, c.hoursPerWeek, 
+cs.day, cs.timeStart, cs.timeEnd FROM user u JOIN fsr f ON u.userID = f.userID JOIN 
+studyLoad s ON f.id = s.id JOIN course c ON f.id = c.id JOIN courseSched cs ON c.courseID = cs.courseID;
+
 
 -- Privileges
 GRANT SUPER ON *.* TO 'easyfsr'@'localhost';
