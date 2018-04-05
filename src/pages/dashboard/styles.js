@@ -24,7 +24,7 @@ const style = {
     color: '#000000a6',
   },
   menuItems: {
-    width: 218,
+    width: '20%',
     height: '20%',
     color: '#FFF',
     marginBottom: 30,
