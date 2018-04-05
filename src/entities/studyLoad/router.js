@@ -120,7 +120,6 @@ router.post('/studyLoad/', async (req, res) => {
  *   }
  * @apiError (Error 404) {String} status status code
  * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 studyLoad not found
  * {
  *   "status": 404,
@@ -170,7 +169,7 @@ router.put('/studyLoad/:id', async (req, res) => {
  *   HTTP/1.1 200 OK
  *   {
  *     "status": 200,
- *     "message": "Successfully retrieved studyLoad details",
+ *     "message": "Successfully fetched studyLoad",
  *     "data": [
  *       {
  *           "fullLeaveWithPay: "NO",
@@ -194,7 +193,6 @@ router.put('/studyLoad/:id', async (req, res) => {
  *   }
  * @apiError (Error 404) {String} status status code
  * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 studyLoad not found
  * {
  *   "status": 404,
@@ -207,7 +205,7 @@ router.get('/studyLoad/:id', async (req, res) => {
     const studyLoad = await Ctrl.getStudyLoad(req.params);
     res.status(200).json({
       status: 200,
-      message: 'Successfully retrieved studyLoad details',
+      message: 'Successfully fetched studyLoad',
       data: studyLoad,
     });
   } catch (status) {
@@ -251,7 +249,7 @@ router.get('/studyLoad/:id', async (req, res) => {
  *   HTTP/1.1 200 OK
  *   {
  *     "status": 200,
- *     "message": "Successfully fetched all studyLoad details",
+ *     "message": "Successfully fetched studyLoads",
  *     "data": [
  *       {
  *           "fullLeaveWithPay: "NO",
@@ -288,7 +286,6 @@ router.get('/studyLoad/:id', async (req, res) => {
  *   }
  * @apiError (Error 404) {String} status status code
  * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 studyLoad not found
  * {
  *   "status": 404,
@@ -301,7 +298,7 @@ router.get('/studyLoad/', async (req, res) => {
     const studyLoads = await Ctrl.getStudyLoads(req.query);
     res.status(200).json({
       status: 200,
-      message: 'Successfully fetched all studyLoad details',
+      message: 'Successfully fetched studyLoads',
       data: studyLoads,
       total: (await Ctrl.getTotalStudyLoad(req.query)).total,
       limit: parseInt(req.query.limit) || 12,
@@ -358,14 +355,16 @@ router.get('/studyLoad/', async (req, res) => {
  *     ]
  *   }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} message Error message
  *   HTTP/1.1 404 studyLoad not found
  *   {
  *     "status": 404,

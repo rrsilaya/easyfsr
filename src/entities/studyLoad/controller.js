@@ -79,7 +79,7 @@ export const deleteStudyLoad = ({ id }) => {
     db.query(Query.deleteStudyLoad, { id }, (err, results) => {
       if (err) return reject(500);
       else if (!results.affectedRows) return reject(404);
-      return resolve(id);
+      return resolve();
     });
   });
 };
