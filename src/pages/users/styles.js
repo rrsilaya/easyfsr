@@ -16,11 +16,15 @@ const style = {
   searchBar: {
     marginRight: '10px',
   },
+  add: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
   addButton: {
-    marginLeft: '10px',
+    margin: '1em',
   },
   searchForm: {
-    marginBottom: '2em',
+    marginBottom: '1em',
   },
   searchGrid: {
     display: 'flex',

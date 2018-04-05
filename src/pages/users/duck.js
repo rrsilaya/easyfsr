@@ -202,8 +202,8 @@ const reducer = (state = initialState, action) => {
           ...prevState,
           users: prevState.users.map(
             user =>
-              user.userID === payload.data.data[0].userID
-                ? { ...payload.data.data[0] }
+              user.userID === payload.data.data.userID
+                ? { ...payload.data.data }
                 : user,
           ),
           isEditModalOpen: false,

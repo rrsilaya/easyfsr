@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Row, Col, Pagination, Input } from 'antd';
+import { Button, Row, Col, Pagination } from 'antd';
 import { DataLoader } from '../../global';
 
 import User from './components/User';
@@ -9,8 +9,6 @@ import DeleteModal from './components/DeleteModal';
 import SearchUser from './components/SearchUser';
 
 import styles from './styles';
-
-const { Search } = Input;
 
 class Users extends Component {
   componentDidMount() {
@@ -41,7 +39,6 @@ class Users extends Component {
       toggleAddModal,
       toggleDeleteModal,
       changeSelectedUser,
-      changeQuery,
 
       getUsers,
       addUser,
@@ -55,6 +52,17 @@ class Users extends Component {
 
     return (
       <div>
+        <div style={styles.add}>
+          <Button
+            style={styles.addButton}
+            size="large"
+            icon="plus-circle-o"
+            ghost
+            onClick={toggleAddModal}
+          >
+            Add User
+          </Button>
+        </div>
         <SearchUser getUsers={getUsers} query={query} />
         <DataLoader
           isLoading={isGettingUsers}
