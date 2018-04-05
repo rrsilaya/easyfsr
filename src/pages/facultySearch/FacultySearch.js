@@ -18,11 +18,9 @@ class FacultySearch extends Component {
       // State
       users,
       isSearching,
-      changeSelectedUser,
 
       // Dispatch
       searchUser,
-      user,
     } = this.props;
 
     return (
