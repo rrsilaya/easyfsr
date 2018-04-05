@@ -130,9 +130,6 @@ router.post('/studyLoad/', async (req, res) => {
 
 router.put('/studyLoad/:id', async (req, res) => {
   try {
-    // if (req.body.password) {
-    //   req.body.password = await bcrypt.hash(req.body.password, 10);
-    // }
     await Ctrl.updateStudyLoad(req.params, req.body);
     const studyLoad = await Ctrl.getStudyLoad(req.params);
     res.status(200).json({
