@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { List, Icon, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
 import { DataLoader } from '../../global';
-
 import Search from './components/Search';
 import styles from './styles';
 
@@ -21,11 +20,12 @@ class FacultySearch extends Component {
       isSearching,
 
       // Dispatch
+      searchUser,
     } = this.props;
 
     return (
       <div>
-        <Search />
+        <Search searchUser={searchUser} />
         <DataLoader
           isLoading={isSearching}
           content={
@@ -36,19 +36,17 @@ class FacultySearch extends Component {
               locale={{ emptyText: 'No users found' }}
               className="text white"
               dataSource={users}
-              renderItem={user => (
+              renderItem={item => (
                 <ListItem className="faculty-item" style={styles.listItem}>
                   <Row type="flex" justify="space-around" style={styles.info}>
                     <Col {...gridConfig} className="text normal">
-                      {`${user.firstName} ${user.middleName && ' '}${
-                        user.lastName
-                      }`}
+                      {item.firstName}
                     </Col>
-                    <Col {...gridConfig} className="text meta-2 center">
-                      {user.employeeID}
+                    <Col {...gridConfig} className="text meta-2">
+                      {item.middleName}
                     </Col>
-                    <Col {...gridConfig} className="text meta-2 center">
-                      {user.emailAddress}
+                    <Col {...gridConfig} className="text meta-2">
+                      {item.lastName}
                     </Col>
                   </Row>
                   <div style={styles.icons}>
@@ -58,9 +56,9 @@ class FacultySearch extends Component {
                       type="message"
                       style={styles.message}
                     />
-                    <Link to={`/profile/${user.employeeID}`}>
-                      <Icon className="text secondary" type="profile" />
-                    </Link>
+                    <Link to={`/profile/${item.employeeID}`}>
+                      <Icon type="profile" className="text secondary" />
+                    </Link>,
                   </div>
                 </ListItem>
               )}
