@@ -23,11 +23,6 @@ const columns = [
     key: 'room',
   },
   {
-    title: 'Days',
-    dataIndex: 'days',
-    key: 'days',
-  },
-  {
     title: 'Time',
     dataIndex: 'time',
     key: 'time',
@@ -46,6 +41,19 @@ const columns = [
     title: 'Course Credits',
     dataIndex: 'courseCredits',
     key: 'courseCredits',
+  },
+];
+
+const dataSource = [
+  {
+    key: '1',
+    subject: 'CMSC 128',
+    sectionCode: 'A-6L',
+    room: 'PCLAB 4',
+    time: '1:00 - 4:00',
+    hoursPerWeek: '3',
+    noOfStudents: '20',
+    courseCredits: '3',
   },
 ];
 
@@ -69,7 +77,7 @@ class TeachingLoadForm extends Component {
             Add Subject
           </Button>
         </div>
-        <Table columns={columns} />
+        <Table columns={columns} dataSource={dataSource} />
         <div style={styles.button}>
           <Button type="primary" onClick={nextStep}>
             Next

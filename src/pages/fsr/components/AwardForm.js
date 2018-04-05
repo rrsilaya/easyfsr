@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { Form, Select, Input, DatePicker, Button, Card } from 'antd';
+import {
+  Form,
+  Select,
+  Input,
+  DatePicker,
+  Button,
+  Card,
+  Upload,
+  Icon,
+} from 'antd';
 
 import styles from '../styles';
 
@@ -98,6 +107,22 @@ class AwardForm extends Component {
           </FormItem>
           <FormItem {...formItemLayout} label="End Date">
             {getFieldDecorator('endDate')(<DatePicker />)}
+          </FormItem>
+          <FormItem {...formItemLayout} label="File">
+            {getFieldDecorator('awardFile', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please attach award file',
+                },
+              ],
+            })(
+              <Upload>
+                <Button>
+                  <Icon type="upload" /> Upload File
+                </Button>
+              </Upload>,
+            )}
           </FormItem>
           <div style={styles.button}>
             <Button

@@ -154,6 +154,12 @@ img.crop {
 .ant-steps-item-wait .ant-steps-item-title {
   color: #805c72 !important;
 }
-.ant-table-thead .span {
+.ant-table-thead span {
+  color: #483440 !important;
+}
+.ant-checkbox-wrapper span {
+  color: #483440 !important;
+}
+.ant-table-body td {
   color: #483440 !important;
 }
