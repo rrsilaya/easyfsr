@@ -77,7 +77,6 @@ router.post('/adminWork/', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} adminWordkID ID of admin work
  * 
- * @apiParam (Body Params) {Number} [adminWorkID] ID of admin work
  * @apiParam (Body Params) {Number} [id] ID of FSR
  * @apiParam (Body Params) {String} [position] position of admin work
  * @apiParam (Body Params) {String} [officeUnit] office unit of admin work
@@ -96,7 +95,7 @@ router.post('/adminWork/', async (req, res) => {
  *		"data": {
  *   		"status": 200,
  *   		"message": "Successfully updated adminWork",
- *   		"data": [
+ *   		"data": 
             {
               "adminWorkID": 93,
               "position": "admin aide",
@@ -104,7 +103,7 @@ router.post('/adminWork/', async (req, res) => {
               "approvedUnits": 3,
               "id": 1
             }
- *   		]
+ *   		
  *	 	}
  *	 }
  *
@@ -221,7 +220,7 @@ router.delete('/adminWork/:adminWorkID', async (req, res) => {
  * @apiGroup AdminWork
  * @apiName getAdminWork
  *
- * @apiParam (Query Params) {Number} [adminWorkID] ID of admin work
+ * @apiParam (Query Params) {Number} adminWorkID ID of admin work
  *
  * @apiSuccess {Object} adminWork adminWork fetched
  * @apiSuccess {Number} adminWork.id ID of admin work
@@ -293,6 +292,10 @@ router.get('/adminWork/:adminWorkID', async (req, res) => {
  * @apiParam (Query Params) {String} [position] position of admin work
  * @apiParam (Query Params) {String} [officeUnit] office unit of admin work
  * @apiParam (Query Params) {String} [approvedUnits] approved units of admin work
+ * @apiParam (Query Params) {Number} [page] page number
+ * @apiParam (Query Params) {Number} [limit] count limit of admin works to fetch
+ * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
+ * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'position'
  *
  * @apiSuccess {Object} adminWork admin works fetched
  * @apiSuccess {Number} adminWork.adminWorkID ID of admin work
