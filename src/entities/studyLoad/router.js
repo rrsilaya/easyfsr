@@ -229,8 +229,8 @@ router.get('/studyLoad/:id', async (req, res) => {
  * @apiGroup Study Load
  * @apiName getStudyLoads
  *
- * @apiParam (Query Params) {String} fullLeaveWithPay full leave with pay of study load
- * @apiParam (Query Params) {String} fellowshipRecipient fellowship recipient of study load
+ * @apiParam (Query Params) {String} [fullLeaveWithPay] full leave with pay of study load
+ * @apiParam (Query Params) {String} [fellowshipRecipient] fellowship recipient of study load
  * @apiParam (Query Params) {String} [degree] degree of study load
  * @apiParam (Query Params) {String} [university] university of study load
  * @apiParam (Query Params) {Number} [totalSLCredits] total credits of study load
@@ -333,12 +333,12 @@ router.get('/studyLoad/', async (req, res) => {
  * @apiParam (Query Params) {Number} id ID of Study Load
  *
  * @apiSuccess {Object} studyLoad study load deleted
- * @apiSuccess {String} studyLoad.id ID of Study Load
+ * @apiSuccess {Number} studyLoad.id ID of Study Load
  * @apiSuccess {String} studyLoad.fullLeaveWithPay full leave with pay of study load
  * @apiSuccess {String} studyLoad.fellowshipRecipient fellowship recipient of study load
  * @apiSuccess {String} studyLoad.degree degree of study load
  * @apiSuccess {String} studyLoad.university university of study load
- * @apiSuccess {String} studyLoad.totalSLcredits total credits of study load
+ * @apiSuccess {Number} studyLoad.totalSLcredits total credits of study load
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK

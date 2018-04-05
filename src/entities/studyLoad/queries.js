@@ -38,7 +38,7 @@ export const getStudyLoad = `
 
 export const getStudyLoads = (query, sortBy) => `
 	SELECT * FROM studyLoad 
-	${query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''}
+		${query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''}
  	ORDER BY [field] ${
     sortBy === 'DESC' ? 'DESC' : 'ASC'
   } LIMIT :limit OFFSET :offset
@@ -48,8 +48,4 @@ export const getTotalStudyLoad = query => `
 	SELECT count(*) as total FROM studyLoad ${
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }
-`;
-
-export const dropStudyLoad = `
-	DROP TABLE studyLoad
 `;
