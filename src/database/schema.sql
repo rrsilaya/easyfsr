@@ -145,13 +145,10 @@ CREATE TABLE `courseSched`(
 CREATE TABLE `consultationHours`(
   `chID` INT NOT NULL AUTO_INCREMENT,
   `day` varchar(10) NOT NULL,
+  `place` VARCHAR (30) NOT NULL,
   `timeStart` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
   `timeEnd` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
   `id` INT NOT NULL,
-  `place` varchar (50) NOT NULL,
-  `day` varchar(10) NOT NULL,
-  `timeStart` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
-  `timeEnd` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
   CONSTRAINT `consultationHours_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
@@ -402,8 +399,8 @@ FROM research r JOIN fsr f ON r.id = f.id JOIN user u on f.userID = u.userID;
  -- viewConsultationHours
 -- userID, employeeID, fsrID, consultationHours fields, chTimeslot fields
 CREATE OR REPLACE VIEW viewConsultationHours AS SELECT u.userID, u.employeeID, f.id as fsrID, 
-c.chID, c.place, t.day, t.timeStart, t.timeEnd FROM user u JOIN fsr f ON u.userID = f.userID 
-JOIN consultationHours c ON f.id = c.id JOIN chTimeslot t ON c.chID = t.chID;
+c.chID, c.place, c.day, c.timeStart, c.timeEnd FROM user u JOIN fsr f ON u.userID = f.userID 
+JOIN consultationHours c ON f.id = c.id;
 
 -- viewSubjectTimeslot
 -- userID, employeeID, fsrID, subject fields, timeslot fields
