@@ -119,6 +119,7 @@ router.post('/studyLoad/', async (req, res) => {
  *   }
  * @apiError (Error 404) {String} status status code
  * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 studyLoad not found
  * {
  *   "status": 404,
@@ -192,6 +193,7 @@ router.put('/studyLoad/:id', async (req, res) => {
  *   }
  * @apiError (Error 404) {String} status status code
  * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 404 studyLoad not found
  *   {
  *     "status": 404,
@@ -265,6 +267,7 @@ router.delete('/studyLoad/:id', async (req, res) => {
  *   }
  * @apiError (Error 404) {String} status status code
  * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 studyLoad not found
  * {
  *   "status": 404,
@@ -358,6 +361,7 @@ router.get('/studyLoad/:id', async (req, res) => {
  *   }
  * @apiError (Error 404) {String} status status code
  * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 studyLoad not found
  * {
  *   "status": 404,
