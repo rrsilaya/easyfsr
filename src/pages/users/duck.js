@@ -14,6 +14,8 @@ const EDIT_USER = 'USER/EDIT_USER';
 
 const RESET_PAGE = 'USER/RESET_PAGE';
 
+const CHANGE_QUERY = 'USER/CHANGE_QUERY';
+
 export const toggleEditModal = () => ({
   type: TOGGLE_EDIT_MODAL,
 });
@@ -26,11 +28,11 @@ export const toggleDeleteModal = () => ({
   type: TOGGLE_DELETE_MODAL,
 });
 
-export const getUsers = () => {
+export const getUsers = query => {
   return dispatch => {
     return dispatch({
       type: GET_USERS,
-      promise: Api.getUsers(),
+      promise: Api.getUsers(query),
       meta: {
         onFailure: () => {
           notification.error({
@@ -48,7 +50,9 @@ export const changeSelectedUser = user => ({
 });
 
 export const addUser = user => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const { query } = getState().users;
+
     return dispatch({
       type: ADD_USER,
       promise: Api.addUser(user),
@@ -57,6 +61,7 @@ export const addUser = user => {
           notification.success({
             message: 'Successfully created user.',
           });
+          dispatch(getUsers(query));
         },
         onFailure: () => {
           notification.error({
@@ -94,14 +99,28 @@ export const resetPage = () => ({
   type: RESET_PAGE,
 });
 
+export const changeQuery = query => ({
+  type: CHANGE_QUERY,
+  payload: query,
+});
+
 const initialState = {
   isEditModalOpen: false,
   isAddModalOpen: false,
   isDeleteModalOpen: false,
+  isAdvancedSearchToggled: false,
 
   isGettingUsers: false,
   isAddingUser: false,
   isEditingUser: false,
+
+  query: {},
+  pagination: {
+    page: 0,
+    pages: 0,
+    limit: 0,
+    total: 0,
+  },
 
   users: [],
   user: {},
@@ -138,6 +157,12 @@ const reducer = (state = initialState, action) => {
         success: prevState => ({
           ...prevState,
           users: payload.data.data,
+          pagination: {
+            page: payload.data.page,
+            pages: payload.data.pages,
+            limit: payload.data.limit,
+            total: payload.data.total,
+          },
         }),
         finish: prevState => ({
           ...prevState,
@@ -159,7 +184,6 @@ const reducer = (state = initialState, action) => {
         }),
         success: prevState => ({
           ...prevState,
-          users: [...state.users, payload.data.data[0]],
           isAddModalOpen: false,
         }),
         finish: prevState => ({
@@ -178,8 +202,8 @@ const reducer = (state = initialState, action) => {
           ...prevState,
           users: prevState.users.map(
             user =>
-              user.userID === payload.data.data[0].userID
-                ? { ...payload.data.data[0] }
+              user.userID === payload.data.data.userID
+                ? { ...payload.data.data }
                 : user,
           ),
           isEditModalOpen: false,
@@ -192,6 +216,12 @@ const reducer = (state = initialState, action) => {
 
     case RESET_PAGE:
       return initialState;
+
+    case CHANGE_QUERY:
+      return {
+        ...state,
+        query: { ...state.query, ...payload },
+      };
 
     default:
       return state;
