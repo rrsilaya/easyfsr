@@ -17,7 +17,7 @@ const styles = {
     border: 'none',
   },
   searchForm: {
-    marginBottom: '0.5em',
+    marginBottom: '2em',
   },
   searchGrid: {
     display: 'flex',

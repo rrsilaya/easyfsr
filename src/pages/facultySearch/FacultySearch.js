@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { List, Icon, Row, Col } from 'antd';
-import { DataLoader } from '../../global';
 import { Link } from 'react-router-dom';
+import { DataLoader } from '../../global';
 import Search from './components/Search';
 import styles from './styles';
 
 const { Item: ListItem } = List;
 
 class FacultySearch extends Component {
+  componentWillUnmount() {
+    this.props.resetPage();
+  }
+
   render() {
     const gridConfig = { xl: 8, sm: 12, xs: 24 };
     const {

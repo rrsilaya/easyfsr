@@ -30,11 +30,10 @@ class Login extends Component {
                 className="container"
                 style={{ ...styles.section, ...styles.login }}
               >
-                <h1 className="super text primary">Lorem ipsum</h1>
+                <h1 className="super text primary">Form67 made easy</h1>
                 <p className="subtitle text meta">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et consectetur
-                  adipiscing elit.
+                  easyFSR is a system built to simplify the process of managing
+                  Faculty Service Records.
                 </p>
                 <Form style={styles.form} onSubmit={this.handleFormSubmit}>
                   <InputGroup
