@@ -944,8 +944,11 @@ INSERT INTO courseSched (courseID, day, timeStart, timeEnd) VALUES (88, 'Monday'
 INSERT INTO courseSched (courseID, day, timeStart, timeEnd) VALUES (89, 'Friday', '7:00:00', '8:00:00');
 INSERT INTO courseSched (courseID, day, timeStart, timeEnd) VALUES (90, 'Wednesday', '8:00:00', '9:00:00');
 
+<<<<<<< HEAD
 -- CONSULTATION HOURS
 
+=======
+>>>>>>> 058d9e86818bfbd2e28689c2ab5489217721b2fb
 -- AWARD
 INSERT INTO award (id, grantF, chairGrantTitle, collegeHasNominated, recipientOrNominee, professionalChair, approvedStartDate, endDate) VALUES (1, 'Sample Grant', 'Sample Grant Title', 'YES', 'Recipient', 'Sample Chair', '2017-07-02', '2018-01-27');
 INSERT INTO award (id, grantF, chairGrantTitle, collegeHasNominated, recipientOrNominee, professionalChair, approvedStartDate, endDate) VALUES (2, 'Sample Grant', 'Sample Grant Title', 'YES', 'Recipient', 'Sample Chair', '2017-09-05', '2018-01-12');
@@ -1406,6 +1409,7 @@ INSERT INTO creativeWork (id, date, title, type, credUnit) VALUES (88, '2018-02-
 INSERT INTO creativeWork (id, date, title, type, credUnit) VALUES (89, '2018-01-18', 'Sample Title', 'Book', 3);
 INSERT INTO creativeWork (id, date, title, type, credUnit) VALUES (90, '2017-09-03', 'Sample Title', 'ChapterInABook', 5);
 
+<<<<<<< HEAD
 -- CREATIVE WORK CO-AUTHOR
 INSERT INTO cworkCoAuthor (creativeWorkID, userID) VALUES (90, 23);
 INSERT INTO cworkCoAuthor (creativeWorkID, userID) VALUES (25, 12);
@@ -1611,6 +1615,99 @@ INSERT INTO cworkCoAuthor (creativeWorkID, userID) VALUES (68, 7);
 
 -- 
 -- RESEARCH CO-AUTHOR
+=======
+-- RESEARCH
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (1, 'Implementation', 'Sample Role', 'Sample Title', '2017-10-21', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (2, 'Implementation', 'Sample Role', 'Sample Title', '2017-05-23', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (3, 'Proposal', 'Sample Role', 'Sample Title', '2017-07-06', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (4, 'Proposal', 'Sample Role', 'Sample Title', '2017-10-13', 'Sample Funding', 4);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (5, 'Proposal', 'Sample Role', 'Sample Title', '2017-03-27', 'Sample Funding', 3);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (6, 'Implementation', 'Sample Role', 'Sample Title', '2018-03-04', 'Sample Funding', 3);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (7, 'Implementation', 'Sample Role', 'Sample Title', '2018-01-02', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (8, 'Implementation', 'Sample Role', 'Sample Title', '2017-03-31', 'Sample Funding', 3);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (9, 'Proposal', 'Sample Role', 'Sample Title', '2017-04-19', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (10, 'Proposal', 'Sample Role', 'Sample Title', '2017-10-19', 'Sample Funding', 4);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (11, 'Proposal', 'Sample Role', 'Sample Title', '2017-11-25', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (12, 'Proposal', 'Sample Role', 'Sample Title', '2017-03-31', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (13, 'Implementation', 'Sample Role', 'Sample Title', '2017-11-02', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (14, 'Implementation', 'Sample Role', 'Sample Title', '2017-09-15', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (15, 'Proposal', 'Sample Role', 'Sample Title', '2017-11-17', 'Sample Funding', 4);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (16, 'Proposal', 'Sample Role', 'Sample Title', '2018-01-13', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (17, 'Proposal', 'Sample Role', 'Sample Title', '2017-10-16', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (18, 'Implementation', 'Sample Role', 'Sample Title', '2017-09-20', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (19, 'Implementation', 'Sample Role', 'Sample Title', '2017-12-21', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (20, 'Implementation', 'Sample Role', 'Sample Title', '2017-04-08', 'Sample Funding', 3);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (21, 'Implementation', 'Sample Role', 'Sample Title', '2018-03-07', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (22, 'Proposal', 'Sample Role', 'Sample Title', '2017-11-22', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (23, 'Proposal', 'Sample Role', 'Sample Title', '2017-07-14', 'Sample Funding', 4);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (24, 'Proposal', 'Sample Role', 'Sample Title', '2017-08-12', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (25, 'Proposal', 'Sample Role', 'Sample Title', '2017-06-25', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (26, 'Proposal', 'Sample Role', 'Sample Title', '2017-09-03', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (27, 'Implementation', 'Sample Role', 'Sample Title', '2017-12-03', 'Sample Funding', 4);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (28, 'Implementation', 'Sample Role', 'Sample Title', '2017-04-07', 'Sample Funding', 3);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (29, 'Implementation', 'Sample Role', 'Sample Title', '2018-02-06', 'Sample Funding', 4);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (30, 'Proposal', 'Sample Role', 'Sample Title', '2017-04-21', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (31, 'Implementation', 'Sample Role', 'Sample Title', '2017-05-14', 'Sample Funding', 4);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (32, 'Implementation', 'Sample Role', 'Sample Title', '2017-07-03', 'Sample Funding', 4);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (33, 'Implementation', 'Sample Role', 'Sample Title', '2017-06-18', 'Sample Funding', 3);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (34, 'Proposal', 'Sample Role', 'Sample Title', '2017-04-03', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (35, 'Proposal', 'Sample Role', 'Sample Title', '2017-12-25', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (36, 'Implementation', 'Sample Role', 'Sample Title', '2018-02-26', 'Sample Funding', 4);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (37, 'Proposal', 'Sample Role', 'Sample Title', '2018-02-19', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (38, 'Implementation', 'Sample Role', 'Sample Title', '2017-07-13', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (39, 'Implementation', 'Sample Role', 'Sample Title', '2018-01-22', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (40, 'Implementation', 'Sample Role', 'Sample Title', '2017-06-19', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (41, 'Proposal', 'Sample Role', 'Sample Title', '2017-05-13', 'Sample Funding', 4);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (42, 'Implementation', 'Sample Role', 'Sample Title', '2018-02-02', 'Sample Funding', 4);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (43, 'Proposal', 'Sample Role', 'Sample Title', '2017-05-13', 'Sample Funding', 4);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (44, 'Implementation', 'Sample Role', 'Sample Title', '2018-03-16', 'Sample Funding', 3);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (45, 'Implementation', 'Sample Role', 'Sample Title', '2017-12-18', 'Sample Funding', 4);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (46, 'Implementation', 'Sample Role', 'Sample Title', '2017-05-17', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (47, 'Implementation', 'Sample Role', 'Sample Title', '2017-10-20', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (48, 'Implementation', 'Sample Role', 'Sample Title', '2017-11-24', 'Sample Funding', 4);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (49, 'Proposal', 'Sample Role', 'Sample Title', '2017-08-26', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (50, 'Implementation', 'Sample Role', 'Sample Title', '2017-10-12', 'Sample Funding', 4);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (51, 'Proposal', 'Sample Role', 'Sample Title', '2018-01-23', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (52, 'Proposal', 'Sample Role', 'Sample Title', '2017-12-01', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (53, 'Implementation', 'Sample Role', 'Sample Title', '2017-09-19', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (54, 'Implementation', 'Sample Role', 'Sample Title', '2017-10-22', 'Sample Funding', 3);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (55, 'Proposal', 'Sample Role', 'Sample Title', '2018-01-18', 'Sample Funding', 3);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (56, 'Implementation', 'Sample Role', 'Sample Title', '2017-05-01', 'Sample Funding', 3);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (57, 'Proposal', 'Sample Role', 'Sample Title', '2017-09-17', 'Sample Funding', 3);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (58, 'Proposal', 'Sample Role', 'Sample Title', '2017-10-28', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (59, 'Proposal', 'Sample Role', 'Sample Title', '2017-08-03', 'Sample Funding', 3);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (60, 'Implementation', 'Sample Role', 'Sample Title', '2018-02-02', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (61, 'Implementation', 'Sample Role', 'Sample Title', '2017-12-12', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (62, 'Proposal', 'Sample Role', 'Sample Title', '2017-07-03', 'Sample Funding', 3);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (63, 'Implementation', 'Sample Role', 'Sample Title', '2017-11-07', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (64, 'Proposal', 'Sample Role', 'Sample Title', '2017-06-27', 'Sample Funding', 4);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (65, 'Implementation', 'Sample Role', 'Sample Title', '2017-04-26', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (66, 'Proposal', 'Sample Role', 'Sample Title', '2018-03-08', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (67, 'Proposal', 'Sample Role', 'Sample Title', '2017-06-11', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (68, 'Implementation', 'Sample Role', 'Sample Title', '2017-07-04', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (69, 'Implementation', 'Sample Role', 'Sample Title', '2017-05-25', 'Sample Funding', 3);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (70, 'Proposal', 'Sample Role', 'Sample Title', '2017-08-26', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (71, 'Proposal', 'Sample Role', 'Sample Title', '2017-11-27', 'Sample Funding', 3);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (72, 'Proposal', 'Sample Role', 'Sample Title', '2018-03-07', 'Sample Funding', 3);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (73, 'Proposal', 'Sample Role', 'Sample Title', '2017-10-17', 'Sample Funding', 4);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (74, 'Implementation', 'Sample Role', 'Sample Title', '2017-06-11', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (75, 'Proposal', 'Sample Role', 'Sample Title', '2017-10-27', 'Sample Funding', 4);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (76, 'Implementation', 'Sample Role', 'Sample Title', '2018-01-23', 'Sample Funding', 3);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (77, 'Implementation', 'Sample Role', 'Sample Title', '2017-04-24', 'Sample Funding', 3);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (78, 'Proposal', 'Sample Role', 'Sample Title', '2017-05-16', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (79, 'Implementation', 'Sample Role', 'Sample Title', '2017-07-18', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (80, 'Proposal', 'Sample Role', 'Sample Title', '2017-05-29', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (81, 'Proposal', 'Sample Role', 'Sample Title', '2017-06-17', 'Sample Funding', 3);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (82, 'Implementation', 'Sample Role', 'Sample Title', '2017-09-25', 'Sample Funding', 4);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (83, 'Proposal', 'Sample Role', 'Sample Title', '2017-04-02', 'Sample Funding', 5);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (84, 'Implementation', 'Sample Role', 'Sample Title', '2017-10-27', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (85, 'Proposal', 'Sample Role', 'Sample Title', '2017-04-14', 'Sample Funding', 6);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (86, 'Proposal', 'Sample Role', 'Sample Title', '2018-01-04', 'Sample Funding', 3);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (87, 'Proposal', 'Sample Role', 'Sample Title', '2017-06-01', 'Sample Funding', 4);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (88, 'Proposal', 'Sample Role', 'Sample Title', '2017-09-13', 'Sample Funding', 4);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (89, 'Implementation', 'Sample Role', 'Sample Title', '2018-02-23', 'Sample Funding', 3);
+INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (90, 'Implementation', 'Sample Role', 'Sample Title', '2017-10-13', 'Sample Funding', 6);
+>>>>>>> 058d9e86818bfbd2e28689c2ab5489217721b2fb
 
 -- NOTIFICATION
 INSERT INTO notification (senderID, receiverID, message, dateSent, timeSent, isResolved) VALUES (2, 30, 'Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.', '2017-08-06', '11:36:51', true);

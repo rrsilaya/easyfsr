@@ -149,30 +149,14 @@ CREATE TABLE `consultationHours`(
   `timeEnd` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
   `id` INT NOT NULL,
   `place` varchar (50) NOT NULL,
+  `day` varchar(10) NOT NULL,
+  `timeStart` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
+  `timeEnd` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
   CONSTRAINT `consultationHours_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
   CONSTRAINT `consultationHours_pk`
     PRIMARY KEY (`chID`)   
-);
-
-CREATE TABLE `chTimeslot`(
-  `chTimeslotID`INT NOT NULL AUTO_INCREMENT,
-  `id` INT NOT NULL,
-  `chID` INT NOT NULL,
-  `day` varchar(10) NOT NULL,
-  `timeStart` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
-  `timeEnd` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
-  CONSTRAINT `chTimeslot_consultationHours_fk`
-    FOREIGN KEY (`chID`)
-    REFERENCES consultationHours(`chID`)
-    ON DELETE CASCADE,
-  CONSTRAINT `chTimeslot_consultationHours_fsr_fk`
-    FOREIGN KEY (`id`)
-    REFERENCES consultationHours(`id`)
-    ON DELETE CASCADE,
-  CONSTRAINT `chTimeslot_pk`
-    PRIMARY KEY(chTimeslotID)
 );
 
 -- Professorial Chair or Faculty Grant or Nominee (Award)
@@ -366,13 +350,12 @@ FOR EACH ROW
 UPDATE studyLoad 
   SET totalSLcredits = totalSLcredits - OLD.credit;
 
-CREATE TRIGGER insert_totalCHours 
+CREATE TRIGGER insert_CHours
 AFTER INSERT ON consultationHours
 FOR EACH ROW
   UPDATE fsr
-    SET totalCHours = totalCHours + (SELECT TIMESTAMPDIFF(HOUR, new.timeStart, new.timeEnd))
-      WHERE id = NEW.id;
-
+    SET totalCHours = totalCHours + (SELECT TIMESTAMPDIFF(HOUR, NEW.timeStart, NEW.timeEnd))
+    WHERE id = NEW.id;
 
 -- VIEWS
 
