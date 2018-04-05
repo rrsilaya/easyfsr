@@ -10,6 +10,7 @@ const CHANGE_SELECTED_USER = 'USER/CHANGE_SELECTED_USER';
 
 const GET_USERS = 'USER/GET_USERS';
 const ADD_USER = 'USER/ADD_USER';
+const DELETE_USER = 'USER/DELETE_USER';
 const EDIT_USER = 'USER/EDIT_USER';
 
 const RESET_PAGE = 'USER/RESET_PAGE';
@@ -73,6 +74,30 @@ export const addUser = user => {
   };
 };
 
+export const deleteUser = id => {
+  return (dispatch, getState) => {
+    const { user } = getState().users;
+
+    return dispatch({
+      type: DELETE_USER,
+      promise: Api.deleteUser(user.userID),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully deleted user.',
+          });
+          dispatch(getUsers());
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while deleting user.',
+          });
+        },
+      },
+    });
+  };
+};
+
 export const editUser = (user, body) => {
   const { userID } = user;
   return dispatch => {
@@ -112,6 +137,7 @@ const initialState = {
 
   isGettingUsers: false,
   isAddingUser: false,
+  isDeletingUser: false,
   isEditingUser: false,
 
   query: {},
@@ -189,6 +215,25 @@ const reducer = (state = initialState, action) => {
         finish: prevState => ({
           ...prevState,
           isAddingUser: false,
+        }),
+      });
+
+    case DELETE_USER:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isDeletingUser: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          users: state.users.filter(
+            user => user.userID !== payload.data.data.userID,
+          ),
+          isDeleteModalOpen: false,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isDeletingUser: false,
         }),
       });
 

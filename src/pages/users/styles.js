@@ -35,6 +35,10 @@ const style = {
   sort: {
     width: 175,
   },
+  confirmation: {
+    fontWeight: 'bold',
+    color: 'red',
+  },
 };
 
 export default style;

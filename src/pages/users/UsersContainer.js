@@ -8,6 +8,7 @@ import {
   changeSelectedUser,
   getUsers,
   addUser,
+  deleteUser,
   editUser,
   resetPage,
   changeQuery,
@@ -64,6 +65,9 @@ const mapDispatchToProps = dispatch => {
     },
     addUser: values => {
       dispatch(addUser(values));
+    },
+    deleteUser: id => {
+      dispatch(deleteUser(id));
     },
     editUser: (user, values) => {
       dispatch(editUser(user, values));

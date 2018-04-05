@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Row, Col, Pagination } from 'antd';
+import { Button, Row, Col, Pagination, Input, Modal } from 'antd';
 import { DataLoader } from '../../global';
 
 import User from './components/User';
@@ -10,7 +10,20 @@ import SearchUser from './components/SearchUser';
 
 import styles from './styles';
 
+const { Search } = Input;
+const { confirm } = Modal;
+
 class Users extends Component {
+  showConfirmDelete = () => {
+    confirm({
+      title: 'Are you sure you want to delete this user?',
+      content: 'You are about to archive this user.',
+      okText: 'Yes',
+      cancelText: 'No',
+      okType: 'primary',
+      onCancel() {},
+    });
+  };
   componentDidMount() {
     this.props.getUsers({ limit: 12 });
   }
@@ -34,6 +47,7 @@ class Users extends Component {
       isGettingUsers,
       isAddingUser,
       isEditingUser,
+      isDeletingUser,
 
       toggleEditModal,
       toggleAddModal,
@@ -43,6 +57,7 @@ class Users extends Component {
       getUsers,
       addUser,
       editUser,
+      deleteUser,
 
       query,
       pagination,
@@ -101,6 +116,8 @@ class Users extends Component {
           isDeleteModalOpen={isDeleteModalOpen}
           toggleDeleteModal={toggleDeleteModal}
           changeSelectedUser={changeSelectedUser}
+          deleteUser={deleteUser}
+          isDeletingUser={isDeletingUser}
         />
         <div className="pagination">
           <Pagination
