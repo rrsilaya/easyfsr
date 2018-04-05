@@ -70,7 +70,7 @@ export const getNotifications = notification => {
 
 export const getTotalNotifs = () => {
   return new Promise((resolve, reject) => {
-    db.query(Query.getTotalNotifs, (err, results) => {
+    db.query(Query.getTotalNotifications, (err, results) => {
       if (err) return reject(500);
       return resolve(results[0]);
     });
