@@ -79,6 +79,8 @@ export const getTotalNotifs = notification => {
         ...escapeSearch(notification, searchFields, notification.limit),
       },
       (err, results) => {
+        console.log(err);
+        console.log(results);
         if (err) return reject(500);
         return resolve(results[0]);
       },
