@@ -25,20 +25,17 @@ const router = Router();
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
- *   	"data": {
- *			"status": 200;
+ *  		"status": 200;
  *			"message": 'Succesfully created adminWork'
-        "data": [
-          {
-              "adminWorkID": 93,
-              "position": "admin",
-              "officeUnit": "ics",
-              "approvedUnits": 6,
-              "id": 1
-          }
-        ]
- *		}
- *   }
+ *       "data":
+ *        {
+ *             "adminWorkID": 93,
+ *             "position": "admin",
+ *             "officeUnit": "ics",
+ *             "approvedUnits": 6,
+ *             "id": 1
+ *         }
+ *	  }
  *
  * @apiError (Error 500) {String} status error status code
  * @apiError (Error 500) {String} message Error message
@@ -76,7 +73,7 @@ router.post('/adminWork/', async (req, res) => {
  * @apiName updateAdminWork
  *
  * @apiParam (Query Params) {Number} adminWordkID ID of admin work
- * 
+ *
  * @apiParam (Body Params) {Number} [id] ID of FSR
  * @apiParam (Body Params) {String} [position] position of admin work
  * @apiParam (Body Params) {String} [officeUnit] office unit of admin work
@@ -92,19 +89,17 @@ router.post('/adminWork/', async (req, res) => {
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *	 {
- *		"data": {
  *   		"status": 200,
  *   		"message": "Successfully updated adminWork",
- *   		"data": 
-            {
-              "adminWorkID": 93,
-              "position": "admin aide",
-              "officeUnit": "ics",
-              "approvedUnits": 3,
-              "id": 1
-            }
- *   		
- *	 	}
+ *   		"data":
+ *           {
+ *             "adminWorkID": 93,
+ *             "position": "admin aide",
+ *             "officeUnit": "ics",
+ *             "approvedUnits": 3,
+ *             "id": 1
+ *           }
+ *
  *	 }
  *
  * @apiError (Error 500) {String} status error status code
@@ -162,19 +157,17 @@ router.put('/adminWork/:adminWorkID', async (req, res) => {
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
- *     "data": {
  *        "status": 200;
  *        "message": 'Succesfully deleted adminWork'
-  *       "data": [
-            {
-              "adminWorkID": 93,
-              "position": "admin aide",
-              "officeUnit": "ics",
-              "approvedUnits": 3,
-              "id": 1
-            }
- *      ]
- *     }
+ *        "data":
+ *           {
+ *             "adminWorkID": 93,
+ *             "position": "admin aide",
+ *             "officeUnit": "ics",
+ *             "approvedUnits": 3,
+ *             "id": 1
+ *           }
+ *
  *   }
  *
  * @apiError (Error 500) {String} status error status code
@@ -232,16 +225,16 @@ router.delete('/adminWork/:adminWorkID', async (req, res) => {
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
-    "status": 200,
-    "message": "Successfully fetched admin work",
-    "data": {
-        "adminWorkID": 2,
-        "position": "Administrative Aide",
-        "officeUnit": "Institute of Computer Science",
-        "approvedUnits": 5,
-        "id": 2
-    }
-    }
+ *     "status": 200,
+ *     "message": "Successfully fetched admin work",
+ *     "data": {
+ *      "adminWorkID": 2,
+ *      "position": "Administrative Aide",
+ *      "officeUnit": "Institute of Computer Science",
+ *      "approvedUnits": 5,
+ *      "id": 2
+ *     }
+ *   }
  *
  * @apiError (Error 500) {String} status error status code
  * @apiError (Error 500) {String} message Error message
@@ -307,9 +300,9 @@ router.get('/adminWork/:adminWorkID', async (req, res) => {
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
-      "status": 200,
-      "message": "Successfully fetched admin works",
-      "data": [
+ *     "status": 200,
+ *     "message": "Successfully fetched admin works",
+ *     "data": [
  *				{
  *          	"adminWorkID": 1,
  *          	"position": "Position1",
@@ -325,10 +318,10 @@ router.get('/adminWork/:adminWorkID', async (req, res) => {
  *          	"id": 5
  *      		}
  *  		],
-        "total": 90,
-        "limit": 12,
-        "page": 1,
-        "pages": 8
+ *       "total": 90,
+ *       "limit": 12,
+ *       "page": 1,
+ *       "pages": 8
  *   }
  *
  * @apiError (Error 500) {String} status error status code
