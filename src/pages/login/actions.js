@@ -8,7 +8,7 @@ export function handleFormSubmit(e) {
     if (!err) {
       this.props.login(getFieldValues(values));
     } else {
-      notification.error({ message: 'Email and username are required.' });
+      notification.error({ message: 'Email and password are required.' });
     }
   });
 }
