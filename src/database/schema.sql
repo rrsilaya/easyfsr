@@ -41,6 +41,7 @@ CREATE TABLE fsr(
   `semester` VARCHAR (10) NOT NULL,
   `isChecked` boolean DEFAULT 0,
   `teachingLoadCreds` INT(2) DEFAULT 0,
+  `totalCHours` INT (2) DEFAULT 0,
   `filepath` TEXT (50),
   -- place all entitiesID here
   CONSTRAINT `fsr_pk` 
@@ -136,12 +137,15 @@ CREATE TABLE `courseSched`(
     PRIMARY KEY (courseSchedID)
 );
 
--- Consultation hours and CH Timeslot
+-- Consultation hours 
 
 CREATE TABLE `consultationHours`(
   `chID` INT NOT NULL AUTO_INCREMENT,
   `id` INT NOT NULL,
   `place` varchar (50) NOT NULL,
+  `day` varchar(10) NOT NULL,
+  `timeStart` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
+  `timeEnd` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
   CONSTRAINT `consultationHours_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
@@ -149,23 +153,6 @@ CREATE TABLE `consultationHours`(
     PRIMARY KEY (`chID`)   
 );
 
-CREATE TABLE `chTimeslot`(
-  `chTimeslotID`INT NOT NULL AUTO_INCREMENT,
-  `id` INT NOT NULL,
-  `chID` INT NOT NULL,
-  `day` varchar(10) NOT NULL,
-  `timeStart` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
-  `timeEnd` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
-  CONSTRAINT `chTimeslot_consultationHours_fk`
-    FOREIGN KEY (`chID`)
-    REFERENCES consultationHours(`chID`),
-  CONSTRAINT `chTimeslot_consultationHours_fsr_fk`
-    FOREIGN KEY (`id`)
-    REFERENCES consultationHours(`id`)
-    ON DELETE CASCADE,
-  CONSTRAINT `chTimeslot_pk`
-    PRIMARY KEY(chTimeslotID)
-);
 
 -- Professorial Chair or Faculty Grant or Nominee (Award)
 
@@ -364,10 +351,17 @@ FOR EACH ROW
 UPDATE studyLoad 
   SET totalSLcredits = totalSLcredits - OLD.credit;
 
+CREATE TRIGGER insert_CHours
+AFTER INSERT ON consultationHours
+FOR EACH ROW
+  UPDATE fsr
+    SET totalCHours = totalCHours + (SELECT TIMESTAMPDIFF(HOUR, timeStart, timeEnd))
+    WHERE id = NEW.id;
+
 -- VIEWS
 
 -- show profile of user 
------ used with `WHERE userID = :userID` can also add fsr's isApproved, acadYear and semester
+--      used with `WHERE userID = :userID` can also add fsr's isApproved, acadYear and semester
 CREATE OR REPLACE VIEW viewProfile AS SELECT u.userID, u.employeeID, u.password, u.firstName, u.middleName, u.lastName, 
 u.committee, u.isHead, u.officeNumber, u.contractType, u.emailAddress, u.rank, u.acctType, f.id, f.isChecked, f.acadYear, 
 f.semester FROM user u, fsr f WHERE u.userID = f.userID;
