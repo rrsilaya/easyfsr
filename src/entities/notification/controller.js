@@ -44,7 +44,7 @@ export const getNotification = ({ notificationID }) => {
     db.query(Query.getNotification, { notificationID }, (err, results) => {
       if (err) return reject(500);
       else if (!results.length) return reject(404);
-      return resolve(results);
+      return resolve(results[0]);
     });
   });
 };
@@ -68,12 +68,21 @@ export const getNotifications = notification => {
   });
 };
 
-export const getTotalNotifs = () => {
+export const getTotalNotifs = notification => {
   return new Promise((resolve, reject) => {
-    db.query(Query.getTotalNotifications, (err, results) => {
-      if (err) return reject(500);
-      return resolve(results);
-    });
+    db.query(
+      Query.getTotalNotifications(
+        filtered(notification, notificationAttributes),
+      ),
+      {
+        field: 'notificationID',
+        ...escapeSearch(notification, searchFields, notification.limit),
+      },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(results[0]);
+      },
+    );
   });
 };
 
