@@ -62,7 +62,7 @@ export const getNotifications = notification => {
       },
       (err, results) => {
         if (err) return reject(500);
-        return resolve(results[0]);
+        return resolve(results);
       },
     );
   });
@@ -72,7 +72,7 @@ export const getTotalNotifs = () => {
   return new Promise((resolve, reject) => {
     db.query(Query.getTotalNotifications, (err, results) => {
       if (err) return reject(500);
-      return resolve(results[0]);
+      return resolve(results);
     });
   });
 };
