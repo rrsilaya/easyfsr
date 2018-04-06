@@ -10,6 +10,7 @@ export const addUser = `
     contractType, 
     emailAddress,
     rank,
+    profileIcon
   )
   VALUES (
     :employeeID, 
@@ -19,7 +20,8 @@ export const addUser = `
     :lastName, 
     :contractType, 
     :emailAddress,
-    :rank
+    :rank,
+    :profileIcon
   )
 `;
 

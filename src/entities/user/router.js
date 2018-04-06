@@ -1,9 +1,8 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
-
+import { upload, unlink } from './../../utils';
 const router = Router();
-
 /**
  * @api {post} /user addUser
  * @apiGroup User
@@ -75,6 +74,8 @@ const router = Router();
 router.post('/user/', async (req, res) => {
   try {
     req.body.password = await bcrypt.hash(req.body.password, 10);
+    if (req.files.profileIcon)
+      req.body.profileIcon = await upload(req.files.profileIcon, 'users');
     const userID = await Ctrl.addUser(req.body);
     const user = await Ctrl.getUserByUserID({ userID });
     delete user.password;
@@ -476,6 +477,11 @@ router.put('/user/:userID', async (req, res) => {
   try {
     if (req.body.password) {
       req.body.password = await bcrypt.hash(req.body.password, 10);
+    }
+    if (req.files.profileIcon) {
+      let user = await Ctrl.getUserByUserID(req.params);
+      if (user.profileIcon) await unlink(user.profileIcon);
+      req.body.profileIcon = await upload(req.files.profileIcon, 'users');
     }
     await Ctrl.updateUser(req.params, req.body);
     const user = await Ctrl.getUserByUserID(req.params);

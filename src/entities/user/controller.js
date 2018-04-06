@@ -30,7 +30,7 @@ export const addUser = user => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.addUser,
-      { middleName: '', officeNumber: '', rank: '', ...user },
+      { middleName: '', officeNumber: '', rank: '', profileIcon: '', ...user },
       (err, results) => {
         if (err) return reject(500);
         return resolve(results.insertId);
