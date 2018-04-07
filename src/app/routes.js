@@ -18,16 +18,17 @@ const routes = [
   },
   {
     path: '/records',
+    exact: true,
     component: ServiceRecords,
+  },
+  {
+    path: '/records/:fsrID',
+    component: FSRForm,
   },
   {
     path: '/users',
     component: Users,
     restricted: true,
-  },
-  {
-    path: '/fsrForm',
-    component: FSRForm,
   },
   {
     path: '/search',
