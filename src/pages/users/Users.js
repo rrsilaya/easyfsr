@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Row, Col, Pagination, Input, Modal } from 'antd';
+import { Button, Row, Col, Pagination, Modal } from 'antd';
 import { DataLoader } from '../../global';
 
 import User from './components/User';
@@ -10,7 +10,6 @@ import SearchUser from './components/SearchUser';
 
 import styles from './styles';
 
-const { Search } = Input;
 const { confirm } = Modal;
 
 class Users extends Component {

@@ -37,7 +37,7 @@ class FacultySearch extends Component {
               className="text white"
               dataSource={users}
               renderItem={item => (
-                <ListItem className="faculty-item" style={styles.listItem}>
+                <ListItem className="list-item" style={styles.listItem}>
                   <Row type="flex" justify="space-around" style={styles.info}>
                     <Col {...gridConfig} className="text normal">
                       {item.firstName}
@@ -58,7 +58,7 @@ class FacultySearch extends Component {
                     />
                     <Link to={`/profile/${item.employeeID}`}>
                       <Icon type="profile" className="text secondary" />
-                    </Link>,
+                    </Link>
                   </div>
                 </ListItem>
               )}

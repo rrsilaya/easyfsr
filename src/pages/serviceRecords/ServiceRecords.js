@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { List, Row, Col, Icon } from 'antd';
-import { Link } from 'react-router-dom';
+import { List, Row, Col } from 'antd';
 import { DataLoader } from '../../global';
 
 import styles from './styles';
