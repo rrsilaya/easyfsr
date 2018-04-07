@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Icon, Avatar, Modal } from 'antd';
+import { Card, Icon, Avatar, Modal, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 
 import styles from '../styles';
@@ -39,18 +39,24 @@ class User extends Component {
           bordered={false}
           style={styles.card}
           actions={[
-            <Icon
-              type="edit"
-              className="text normal"
-              onClick={this.handleToggleEditModal}
-            />,
-            <Icon
-              type="delete"
-              className="text normal"
-              onClick={this.showDeleteConfirm}
-            />,
+            <Tooltip title="Edit user" arrowPointAtCenter>
+              <Icon
+                type="edit"
+                className="text normal"
+                onClick={this.handleToggleEditModal}
+              />
+            </Tooltip>,
+            <Tooltip title="Archive user" arrowPointAtCenter>
+              <Icon
+                type="delete"
+                className="text normal"
+                onClick={this.showDeleteConfirm}
+              />
+            </Tooltip>,
             <Link to={`/profile/${user.employeeID}`}>
-              <Icon type="profile" className="text normal" />
+              <Tooltip title="Visit profile" arrowPointAtCenter>
+                <Icon type="profile" className="text normal" />
+              </Tooltip>
             </Link>,
           ]}
         >
