@@ -11,6 +11,8 @@ import courseSchedRouter from './entities/courseSched/router';
 import fsrRouter from './entities/fsr/router';
 import limitedPracticeOfProfRouter from './entities/limitedPracticeOfProf/router';
 import serviceRouter from './entities/extensionAndCommunityService/router';
+import userRouter from './entities/user/router';
+import adminWorkRouter from './entities/adminWork/router';
 import creativeWorkRouter from './entities/creativeWork/router';
 import userViewRouter from './entities/user/views/router';
 import announcementRouter from './entities/announcement/router';
@@ -50,5 +52,7 @@ router.use(creativeWorkRouter);
 // });
 
 router.use(announcementRouter);
+router.use(userRouter);
+router.use(adminWorkRouter);
 
 export default router;

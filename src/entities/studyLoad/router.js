@@ -9,7 +9,7 @@ const router = Router();
  * @apiGroup Study Load
  * @apiName addStudyLoad
  *
- * @apiParam (Body Params) {Number} id ID of Study Load
+ * @apiParam (Body Params) {Number} id FSR ID of Study Load
  * @apiParam (Body Params) {String} fullLeaveWithPay full leave with pay of study load
  * @apiParam (Body Params) {String} fellowshipRecipient fellowship recipient of study load
  * @apiParam (Body Params) {String} degree degree of study load
@@ -17,7 +17,7 @@ const router = Router();
  * @apiParam (Body Params) {Number} totalSLcredits total credits of study load
  *
  * @apiSuccess {Object} studyLoad new Study Load created
- * @apiSuccess {Number} studyLoad.id ID of Study Load
+ * @apiSuccess {Number} studyLoad.id FSR ID and ID of Study Load
  * @apiSuccess {String} studyLoad.fullLeaveWithPay full leave with pay of study load
  * @apiSuccess {String} studyLoad.fellowshipRecipient fellowship recipient of study load
  * @apiSuccess {String} studyLoad.degree degree of study load
@@ -76,8 +76,7 @@ router.post('/studyLoad/', async (req, res) => {
  * @apiGroup Study Load
  * @apiName updateStudyLoad
  *
- * @apiParam (Query Params) {Number} id ID of Study Load
- * @apiParam (Body Params) {Number} id ID of Study Load
+ * @apiParam (Query Params) {Number} id FSR ID of Study Load
  * @apiParam (Body Params) {String} fullLeaveWithPay full leave with pay of study load
  * @apiParam (Body Params) {String} fellowshipRecipient fellowship recipient of study load
  * @apiParam (Body Params) {String} degree degree of study load
@@ -87,7 +86,7 @@ router.post('/studyLoad/', async (req, res) => {
  * @apiSuccess {Object} studyLoad Study Load updated
  * @apiSuccess {String} studyLoad.fullLeaveWithPay full leave with pay of study load
  * @apiSuccess {String} studyLoad.fellowshipRecipient fellowship recipient of study load
- * @apiSuccess {Number} studyLoad.id ID of Study Load
+ * @apiSuccess {Number} studyLoad.id FSR ID and ID of Study Load
  * @apiSuccess {String} studyLoad.degree degree of study load
  * @apiSuccess {String} studyLoad.university university of study load
  * @apiSuccess {Number} studyLoad.totalSLcredits total credits of study load
@@ -155,10 +154,10 @@ router.put('/studyLoad/:id', async (req, res) => {
  * @apiGroup Study Load
  * @apiName deleteStudyLoad
  *
- * @apiParam (Query Params) {Number} id ID of Study Load
+ * @apiParam (Query Params) {Number} id FSR ID of Study Load
  *
  * @apiSuccess {Object} studyLoad study load deleted
- * @apiSuccess {Number} studyLoad.id ID of Study Load
+ * @apiSuccess {Number} studyLoad.id FSR ID and ID of Study Load
  * @apiSuccess {String} studyLoad.fullLeaveWithPay full leave with pay of study load
  * @apiSuccess {String} studyLoad.fellowshipRecipient fellowship recipient of study load
  * @apiSuccess {String} studyLoad.degree degree of study load
@@ -170,7 +169,7 @@ router.put('/studyLoad/:id', async (req, res) => {
  *   {
  *     "status": 200,
  *     "message": "Successfully deleted studyLoad"
- *     "data": [
+ *     "data":
  *       {
  *           "fullLeaveWithPay: "NO",
  *           "fellowshipRecipient: "NO",
@@ -180,7 +179,6 @@ router.put('/studyLoad/:id', async (req, res) => {
  *           "totalSLcredits": 3,
  *           "id": 1
  *       }
- *     ]
  *   }
  *
  * @apiError (Error 500) {String} status status code
@@ -229,10 +227,10 @@ router.delete('/studyLoad/:id', async (req, res) => {
  * @apiGroup Study Load
  * @apiName getStudyLoad
  *
- * @apiParam (Query Params) {Number} id ID of Study Load
+ * @apiParam (Query Params) {Number} id FSR ID of Study Load
  *
  * @apiSuccess {Object} studyLoad Study Load fetched
- * @apiSuccess {Number} studyLoad.id ID of Study Load
+ * @apiSuccess {Number} studyLoad.id FSR ID and ID of Study Load
  * @apiSuccess {String} studyLoad.fullLeaveWithPay full leave with pay of study load
  * @apiSuccess {String} studyLoad.fellowshipRecipient fellowship recipient of study load
  * @apiSuccess {String} studyLoad.degree degree of study load
@@ -244,7 +242,7 @@ router.delete('/studyLoad/:id', async (req, res) => {
  *   {
  *     "status": 200,
  *     "message": "Successfully fetched studyLoad",
- *     "data": [
+ *     "data":
  *       {
  *           "fullLeaveWithPay: "NO",
  *           "fellowshipRecipient: "NO",
@@ -254,7 +252,6 @@ router.delete('/studyLoad/:id', async (req, res) => {
  *           "totalSLcredits": 3,
  *           "id": 1
  *       }
- *     ]
  *   }
  *
  * @apiError (Error 500) {String} status status code
@@ -313,7 +310,7 @@ router.get('/studyLoad/:id', async (req, res) => {
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'degree'
  *
  * @apiSuccess {Object} studyLoad Study Load fetched
- * @apiSuccess {Number} studyLoad.id ID of Study Load
+ * @apiSuccess {Number} studyLoad.id FSR ID and ID of Study Load
  * @apiSuccess {String} studyLoad.fullLeaveWithPay full leave with pay of study load
  * @apiSuccess {String} studyLoad.fellowshipRecipient fellowship recipient of study load
  * @apiSuccess {String} studyLoad.degree degree of study load
@@ -325,7 +322,7 @@ router.get('/studyLoad/:id', async (req, res) => {
  *   {
  *     "status": 200,
  *     "message": "Successfully fetched studyLoads",
- *     "data": [
+ *     "data":
  *       {
  *           "fullLeaveWithPay: "NO",
  *           "fellowshipRecipient: "NO",
@@ -343,8 +340,7 @@ router.get('/studyLoad/:id', async (req, res) => {
  *           "university": "UPLB",
  *           "totalSLcredits": 9,
  *           "id": 2
- *       }
- *       ],
+ *       },
  *    "total": 2,
  *    "limit": 12,
  *    "page": 1,
