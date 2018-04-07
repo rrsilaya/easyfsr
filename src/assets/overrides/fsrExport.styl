@@ -2,13 +2,32 @@
   display: inline-block;
   max-width: 100%;
   overflow: scroll;
+  font-family: "Arial", sans-serif;
 
   .document {
-    color: black;
     background-color: white;
+    font-size: 9pt;
 
     width: 8.5in;
     height: 11in;
     padding: 1in;
+    position: relative;
+    
+    * {
+      color: black !important;
+    }
+    
+    .bold { font-weight: bold; }
+    .center {
+      text-align: center;
+      
+      & > * { margin: auto; }
+    }
+  }
+  
+  .form-float {
+    position: absolute;
+    top: 1in;
+    left: 1in;
   }
 }

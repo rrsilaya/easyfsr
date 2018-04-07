@@ -4,6 +4,7 @@ import ServiceRecords from '../pages/serviceRecords/ServiceRecordsContainer';
 import FSRForm from '../pages/fsr/FSRFormContainer';
 import Users from '../pages/users/UsersContainer';
 import FacultySearch from '../pages/facultySearch/FacultySearchContainer';
+import FsrExport from '../pages/fsrExport/FsrExport';
 
 const routes = [
   {
@@ -23,7 +24,13 @@ const routes = [
   },
   {
     path: '/records/:fsrID',
+    exact: true,
     component: FSRForm,
+  },
+  {
+    path: '/records/:fsrID/preview',
+    exact: true,
+    component: FsrExport,
   },
   {
     path: '/users',

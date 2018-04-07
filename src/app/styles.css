@@ -150,6 +150,37 @@ img.crop {
   align-items: center;
   display: none;
 }
+.fsrExport {
+  display: inline-block;
+  max-width: 100%;
+  overflow: scroll;
+  font-family: "Arial", sans-serif;
+}
+.fsrExport .document {
+  background-color: #fff;
+  font-size: 9pt;
+  width: 8.5in;
+  height: 11in;
+  padding: 1in;
+  position: relative;
+}
+.fsrExport .document * {
+  color: #000 !important;
+}
+.fsrExport .document .bold {
+  font-weight: bold;
+}
+.fsrExport .document .center {
+  text-align: center;
+}
+.fsrExport .document .center > * {
+  margin: auto;
+}
+.fsrExport .form-float {
+  position: absolute;
+  top: 1in;
+  left: 1in;
+}
 .ant-card-meta-title {
   margin-bottom: 0 !important;
 }
