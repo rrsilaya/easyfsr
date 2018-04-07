@@ -28,9 +28,10 @@ export const escapeSearch = (query, appendList, limit = 12) => {
 
 export const upload = (file, dest) => {
   return new Promise((resolve, reject) => {
-    let splitName = file.name.split('.');
-    let filename = `${shortID.generate()}.${splitName[splitName.length - 1]}`;
-    let fileDest = `public/${dest}/${filename}`;
+    const [extension] = file.name.split('.').reverse();
+    const filename = `${shortID.generate()}.${extension}`;
+    const fileDest = `public/${dest}/${filename}`;
+
     file.mv(fileDest, err => {
       if (err) return reject(500);
       return resolve(fileDest);

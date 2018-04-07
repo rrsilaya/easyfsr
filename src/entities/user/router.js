@@ -478,11 +478,14 @@ router.put('/user/:userID', async (req, res) => {
     if (req.body.password) {
       req.body.password = await bcrypt.hash(req.body.password, 10);
     }
-    if (req.files.profileIcon) {
-      let user = await Ctrl.getUserByUserID(req.params);
+
+    if (req.files && req.files.profileIcon) {
+      const { user } = req.session;
+
       if (user.profileIcon) await unlink(user.profileIcon);
       req.body.profileIcon = await upload(req.files.profileIcon, 'users');
     }
+
     await Ctrl.updateUser(req.params, req.body);
     const user = await Ctrl.getUserByUserID(req.params);
     delete user.password;
@@ -494,6 +497,7 @@ router.put('/user/:userID', async (req, res) => {
     });
   } catch (status) {
     let message = '';
+
     switch (status) {
       case 404:
         message = 'User not found';
