@@ -46,13 +46,17 @@ class User extends Component {
                 onClick={this.handleToggleEditModal}
               />
             </Tooltip>,
-            <Icon
-              type="delete"
-              className="text normal"
-              onClick={this.showDeleteConfirm}
-            />,
+            <Tooltip title="Archive user" arrowPointAtCenter>
+              <Icon
+                type="delete"
+                className="text normal"
+                onClick={this.showDeleteConfirm}
+              />
+            </Tooltip>,
             <Link to={`/profile/${user.employeeID}`}>
-              <Icon type="profile" className="text normal" />
+              <Tooltip title="Visit profile" arrowPointAtCenter>
+                <Icon type="profile" className="text normal" />
+              </Tooltip>
             </Link>,
           ]}
         >
