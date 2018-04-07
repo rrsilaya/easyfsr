@@ -88,6 +88,9 @@
   color: #4d4d4d;
 }
 .text.white {
+  color: #fff !important;
+}
+.text.white > * {
   color: #fff;
 }
 .dark-mode {

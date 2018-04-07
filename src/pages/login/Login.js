@@ -70,6 +70,7 @@ class Login extends Component {
                     type="primary"
                     htmlType="submit"
                     size="large"
+                    className="text white"
                     style={styles.margin}
                     loading={isLoggingIn}
                   >
