@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { List, Row, Col, Icon } from 'antd';
+import { Link } from 'react-router-dom';
 import { DataLoader } from '../../global';
 
 import styles from './styles';
@@ -7,13 +8,23 @@ import styles from './styles';
 const { Item: ListItem } = List;
 
 class ServiceRecords extends Component {
+  componentDidMount() {
+    this.props.getFSRs();
+  }
+
   render() {
     const gridConfig = { xl: 8, sm: 12, xs: 24 };
+    const {
+      fsr,
+      isGettingFSR,
+
+      pushLink,
+    } = this.props;
 
     return (
       <div>
         <DataLoader
-          isLoading={true}
+          isLoading={isGettingFSR}
           content={
             <List
               bordered
@@ -21,16 +32,19 @@ class ServiceRecords extends Component {
               style={styles.list}
               className="text white"
               locale={{ emptyText: 'No service records found' }}
-              dataSource={[]}
+              dataSource={fsr}
               renderItem={fsr => (
-                <ListItem className="faculty-item">
+                <ListItem
+                  className="list-item set-cursor pointer"
+                  onClick={() => pushLink(`/records/${fsr.id}`)}
+                >
                   <Row
                     type="flex"
                     justify="space-around"
                     style={styles.listItem}
                   >
                     <Col {...gridConfig} className="text normal">
-                      {fsr.semester}
+                      {fsr.semester} Term
                     </Col>
                     <Col {...gridConfig} className="text meta-2">
                       {fsr.acadYear}

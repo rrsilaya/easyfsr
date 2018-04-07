@@ -51,10 +51,15 @@
 .ant-pagination-item.ant-pagination-item-active {
   background-color: #8b657c !important;
 }
-.ant-list-item.faculty-item {
+.ant-list-item.list-item {
   background-color: #fff !important;
+  transition: 0.3s all ease;
 }
-.ant-list-item.faculty-item > * {
+.ant-list-item.list-item:hover {
+  background-color: #ebe5ec !important;
+  transition: 0.3s all ease;
+}
+.ant-list-item.list-item > * {
   justify-content: space-between;
 }
 .background.primary {
