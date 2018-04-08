@@ -15,6 +15,7 @@ const router = Router();
  * @apiParam (Body Params) {Date} dateSent date when message is sent
  * @apiParam (Body Params) {Time} timeSent time when message is sent
  * @apiParam (Body Params) {Boolean} isResolved verification is message is resolved
+ * @apiParam (Body Params) {String} priority priority of the notification
  *
  * @apiSuccess {Object} notification new Notification is added
  * @apiSuccess {String} notification.notificationID notification ID
@@ -24,6 +25,7 @@ const router = Router();
  * @apiSuccess {Date} notification.dateSent date when message is sent
  * @apiSuccess {Time} notification.timeSent time when message is sent
  * @apiSuccess {Boolean} notification.isResolved verification is message is resolved
+ * @apiSuccess {String} priority priority of the notification
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -38,7 +40,8 @@ const router = Router();
 			"message": "HIIIIIIIIIIIIIIIIIIIIII",
 			"dateSent": "2018-01-01",
 			"timeSent": "01:01:01",
-			"isResolved": 1
+			"isResolved": 1,
+      "priority" : "LOW"
 		} 
  *   }
  *
@@ -88,6 +91,7 @@ router.post('/notification/', async (req, res) => {
  * @apiSuccess {Date} notification.dateSent date when message is sent
  * @apiSuccess {Time} notification.timeSent time when message is sent
  * @apiSuccess {Boolean} notification.isResolved verification is message is resolved
+ * @apiSuccess {String} priority priority of the notification
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -103,7 +107,8 @@ router.post('/notification/', async (req, res) => {
             "message": "HIIIIIIIIIIIIIIIIIIIIII",
             "dateSent": "2018-01-01",
             "timeSent": "01:01:01",
-            "isResolved": 1
+            "isResolved": 1,
+            "priority": "LOW"
  *        }
  *     }
  *   }
@@ -164,7 +169,7 @@ router.delete('/notification/:notificationID', async (req, res) => {
  * @apiSuccess {Date} notification.dateSent date notification is sent
  * @apiSuccess {Time} notification.timeSent time notification is sent
  * @apiSuccess {Boolean} notification.isResolved notification state
- *
+ * @apiSuccess {String} priority priority of the notification
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
@@ -180,6 +185,7 @@ router.delete('/notification/:notificationID', async (req, res) => {
             "dateSent": "2018-05-12",
             "timeSent": "23:23:11",
             "isResolved": 0,
+            "priority": "LOW"
  *        }
  *     ]
  *     }
@@ -238,6 +244,7 @@ router.get('/notification/:notificationID', async (req, res) => {
  * @apiParam (Body Params) {Date} dateSent date notification is sent
  * @apiParam (Body Params) {Time} timeSent time notification is sent
  * @apiParam (Body Params) {Boolean} isResolved notification state
+ * @apiParam (Body Params) {String} priority priority of the notification
  *
  * @apiSuccessExample {json} Success-Response:
  *    HTTP/1.1 200 OK
@@ -252,6 +259,7 @@ router.get('/notification/:notificationID', async (req, res) => {
             "dateSent": "2018-05-12",
             "timeSent": "23:23:11",
             "isResolved": 0,
+            "priority": "LOW"
  *        }
         ]
     }
@@ -278,7 +286,8 @@ router.get('/notification/', async (req, res) => {
       limit: req.query.limit || 10,
       page: req.query.page || 1,
       pages: Math.ceil(
-		(await Ctrl.getTotalNotifications(req.query)).total / (req.query.limit || 10),
+        (await Ctrl.getTotalNotifications(req.query)).total /
+          (req.query.limit || 10),
       ),
     });
   } catch (status) {
@@ -307,6 +316,7 @@ router.get('/notification/', async (req, res) => {
  * @apiParam (Body Params) {Date} dateSent date notification is sent
  * @apiParam (Body Params) {Time} timeSent time notification is sent
  * @apiParam (Body Params) {Boolean} isResolved notification state
+ * @apiParam (Body Params) {String} priority priority of the notification
  *
  * @apiSuccess {Object} notification Notification updated
  * @apiSuccess {Integer} notification.notificationID notification ID
@@ -316,6 +326,7 @@ router.get('/notification/', async (req, res) => {
  * @apiSuccess {Date} notification.dateSent date notification is sent
  * @apiSuccess {Time} notification.timeSent time notification is sent
  * @apiSuccess {Boolean} notification.isResolved notification state
+ * @apiSuccess {String} priority priority of the notification
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK

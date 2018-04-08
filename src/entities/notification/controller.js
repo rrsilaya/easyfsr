@@ -10,6 +10,7 @@ const notificationAttributes = [
   'dateSent',
   'timeSent',
   'isResolved',
+  'priority',
 ];
 
 const searchFields = [
@@ -18,6 +19,7 @@ const searchFields = [
   'receiverID',
   'dateSent',
   'isResolved',
+  'priority',
 ];
 
 export const addNotification = notification => {
@@ -71,16 +73,18 @@ export const getNotifications = notification => {
 export const getTotalNotifs = notification => {
   return new Promise((resolve, reject) => {
     db.query(
-		Query.getTotalNotifications(filtered(notification, notificationAttributes)),
-		{
-			field: 'notificationID',
-			...escapeSearch(notification, searchFields, notification.limit),
-		},
-		(err, results) => {
-			if (err) return reject(500);
-			return resolve(results[0]);
-		},
-	);
+      Query.getTotalNotifications(
+        filtered(notification, notificationAttributes),
+      ),
+      {
+        field: 'notificationID',
+        ...escapeSearch(notification, searchFields, notification.limit),
+      },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(results[0]);
+      },
+    );
   });
 };
 
