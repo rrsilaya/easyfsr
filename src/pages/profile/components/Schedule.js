@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Modal } from 'antd';
 import { Stage, Layer, Rect, Line, Text } from 'react-konva';
 
 class Schedule extends Component {
+  days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
   canvas = {
     width: 811,
     height: 391,
@@ -111,9 +113,84 @@ class Schedule extends Component {
     return labels;
   };
 
-  render() {
-    const days = ['Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Satur'];
+  getTimePoints = (day, start, end) => {
+    const [startHour, startMin] = start.split(':').map(parseFloat);
+    const [endHour, endMin] = end.split(':').map(parseFloat);
 
+    const offset = {
+      day: this.days.indexOf(day),
+      time: {
+        start: startHour - 6,
+        end: endHour - 6,
+      },
+    };
+
+    const points = [];
+
+    points.push(
+      this.canvas.timeWidth + this.canvas.col * offset.day,
+      this.canvas.row * offset.time.start,
+    );
+    if (startMin === 30) {
+      points.push(
+        this.canvas.timeWidth + this.canvas.col * (offset.day + 1),
+        this.canvas.row * (offset.time.start + 1),
+      );
+    } else {
+      points.push(
+        this.canvas.timeWidth + this.canvas.col * (offset.day + 1),
+        this.canvas.row * offset.time.start,
+      );
+    }
+    points.push(
+      this.canvas.timeWidth + this.canvas.col * (offset.day + 1),
+      this.canvas.row * offset.time.end,
+    );
+    if (endMin === 30) {
+      points.push(
+        this.canvas.timeWidth + this.canvas.col * (offset.day + 1),
+        this.canvas.row * (offset.time.end + 1),
+      );
+    }
+    points.push(
+      this.canvas.timeWidth + this.canvas.col * offset.day,
+      this.canvas.row * offset.time.end,
+    );
+
+    return points;
+  };
+
+  renderSubject = (day, start, end, content) => {
+    const shape = this.getTimePoints(day, start, end);
+    const dayOffset = this.days.indexOf(day);
+    const timeStart = parseFloat(start.split(':')[0]) - 7;
+    const duration = parseFloat(end.split(':')[0]) - 7 - timeStart;
+
+    return (
+      <Fragment>
+        <Line
+          points={this.getTimePoints(day, start, end)}
+          fill="red"
+          stroke="black"
+          strokeWidth={0.5}
+          closed
+        />
+        <Text
+          x={this.canvas.timeWidth + this.canvas.col * dayOffset}
+          y={this.canvas.row * (timeStart + 1)}
+          width={this.canvas.col}
+          height={this.canvas.row * 3}
+          align="center"
+          offset={{ y: -4 - this.canvas.row / 2 * duration }}
+          fontFamily="Arial"
+          text={content}
+          fill="white"
+        />
+      </Fragment>
+    );
+  };
+
+  render() {
     return (
       <Modal title="Faculty Schedule" visible={true} width={811 + 48}>
         <Stage width={this.canvas.width} height={this.canvas.height}>
@@ -133,7 +210,7 @@ class Schedule extends Component {
             {this.renderMainGrid()}
             {this.renderVerticalGrid()}
             {this.renderTimeLabels()}
-            {days.map((day, i) => (
+            {this.days.map((day, i) => (
               <Text
                 key={i}
                 x={this.canvas.timeWidth + this.canvas.col * i}
@@ -143,9 +220,12 @@ class Schedule extends Component {
                 fill="white"
                 align="center"
                 width={this.canvas.col}
-                text={`${day}day`}
+                text={day}
               />
             ))}
+          </Layer>
+          <Layer>
+            {this.renderSubject('Tuesday', '8:00', '9:30', `CMSC 100\nICSMH`)}
           </Layer>
         </Stage>
       </Modal>
