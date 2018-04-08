@@ -4,6 +4,7 @@ import { Icon } from 'antd';
 import { PageLoader } from '../../global';
 import ProfileIcon from './components/ProfileIcon';
 import ProfileInfo from './components/ProfileInfo';
+import Schedule from './components/Schedule';
 import styles from './styles';
 
 class Profile extends Component {
@@ -24,6 +25,7 @@ class Profile extends Component {
           <PageLoader />
         ) : (
           <Fragment>
+            <Schedule />
             <div className="center">
               <ProfileIcon />
               <h1 className="center text white" style={styles.profileName}>
