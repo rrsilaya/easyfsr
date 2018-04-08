@@ -25,41 +25,24 @@ const router = Router();
  * @apiSuccess {Date} notification.dateSent date when message is sent
  * @apiSuccess {Time} notification.timeSent time when message is sent
  * @apiSuccess {Boolean} notification.isResolved verification is message is resolved
- * @apiSuccess {String} priority priority of the notification
+ * @apiSuccess {String} notification.priority priority of the notification
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
-<<<<<<< HEAD
- *     "data": {
- *       "status": 200,
- *       "message": "Successfully created notification",
- *       "data": {
-			"notificationID": 1,
-			"senderID": "3",
-			"receiverID": "5",
-			"message": "HIIIIIIIIIIIIIIIIIIIIII",
-			"dateSent": "2018-01-01",
-			"timeSent": "01:01:01",
-			"isResolved": 1,
-      "priority" : "LOW"
-		} 
-=======
- *
-*       "status": 200,
-*       "message": 'Successfully created notification',
-*       "data":
-          {
-            "notificationID": 1,
-            "senderID": "3",
-            "receiverID": "5",
-            "message": "HIIIIIIIIIIIIIIIIIIIIII",
-            "dateSent": "2018-01-01",
-            "timeSent": "01:01:01",
-            "isResolved": 1
-          }
-
->>>>>>> c0c0fd083c83f227b06605b826f525684695740a
+ *      "status": 200,
+ *      "message": 'Successfully created notification',
+ *       "data":
+ *       {
+ *          "notificationID": 1,
+ *          "senderID": "3",
+ *          "receiverID": "5",
+ *          "message": "HIIIIIIIIIIIIIIIIIIIIII",
+ *          "dateSent": "2018-01-01",
+ *          "timeSent": "01:01:01",
+ *          "isResolved": 1,
+ *          "priority": "LOW"
+ *       }
  *   }
  *
  * @apiError (Error 500) {Number} status error status code
@@ -108,7 +91,7 @@ router.post('/notification/', async (req, res) => {
  * @apiSuccess {Date} notification.dateSent date when message is sent
  * @apiSuccess {Sent} notification.timeSent time when message is sent
  * @apiSuccess {Boolean} notification.isResolved verification is message is resolved
- * @apiSuccess {String} priority priority of the notification
+ * @apiSuccess {String} notification.priority priority of the notification
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -117,14 +100,14 @@ router.post('/notification/', async (req, res) => {
  *       "message": 'Succesfully deleted notification;
  *       "data":
  *        {
-            "notißficationID": 1,
-            "senderID": "3",
-            "receiverID": "5",
-            "message": "HIIIIIIIIIIIIIIIIIIIIII",
-            "dateSent": "2018-01-01",
-            "timeSent": "01:01:01",
-            "isResolved": 1,
-            "priority": "LOW"
+ *          "notißficationID": 1,
+ *          "senderID": "3",
+ *          "receiverID": "5",
+ *          "message": "HIIIIIIIIIIIIIIIIIIIIII",
+ *          "dateSent": "2018-01-01",
+ *          "timeSent": "01:01:01",
+ *          "isResolved": 1,
+ *          "priority": "LOW"
  *        }
  *
  *   }
@@ -186,25 +169,23 @@ router.delete('/notification/:notificationID', async (req, res) => {
  * @apiSuccess {Date} notification.dateSent date notification is sent
  * @apiSuccess {Time} notification.timeSent time notification is sent
  * @apiSuccess {Boolean} notification.isResolved notification state
- * @apiSuccess {String} priority priority of the notification
+ * @apiSuccess {String} notification.priority priority of the notification
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *       "status": 200;
- *       "message": 'Succesfully got course details'
+ *       "message": 'Succesfully got notification details'
  *       "data":
  *          {
-            "notificationID": 1,
-            "senderID": "05",
-            "receiverID": "30",
-            "message": "update",
-            "dateSent": "2018-05-12",
-            "timeSent": "23:23:11",
-            "isResolved": 0,
-            "priority": "LOW"
+ *          "notificationID": 1,
+ *          "senderID": "05",
+ *          "receiverID": "30",
+ *          "message": "update",
+ *          "dateSent": "2018-05-12",
+ *          "timeSent": "23:23:11",
+ *          "isResolved": 0,
+ *          "priority": "LOW"
  *        }
- *
- *
  *   }
  *
  * @apiError (Error 500) {Number} status error status code
@@ -231,7 +212,7 @@ router.get('/notification/:notificationID', async (req, res) => {
 
     res.status(200).json({
       status: 200,
-      message: 'Successfully fetched course',
+      message: 'Successfully fetched notification',
       data: notification,
     });
   } catch (status) {
@@ -253,18 +234,6 @@ router.get('/notification/:notificationID', async (req, res) => {
  * @apiGroup Notification
  * @apiName getNotifications
  *
-<<<<<<< HEAD
- * @apiSuccess {String} message Confirmation Message.
- * @apiSuccess {Object[]} notifications All notifications
- * @apiParam (Query Params) {Integer} notificationID id of notification
- * @apiParam (Body Params) {Integer} senderID id of user who sent the notification
- * @apiParam (Body Params) {Integer} receiverID id of user who received the notification
- * @apiParam (Body Params) {String} message content of the notification
- * @apiParam (Body Params) {Date} dateSent date notification is sent
- * @apiParam (Body Params) {Time} timeSent time notification is sent
- * @apiParam (Body Params) {Boolean} isResolved notification state
- * @apiParam (Body Params) {String} priority priority of the notification
-=======
  * @apiParam (Query Params) {Number} [notificationID] id of notification
  * @apiParam (Query Params) {Number} [senderID] id of user who sent the notification
  * @apiParam (Query Params) {Number} [receiverID] id of user who received the notification
@@ -272,6 +241,11 @@ router.get('/notification/:notificationID', async (req, res) => {
  * @apiParam (Query Params) {Date} [dateSent] date notification is sent
  * @apiParam (Query Params) {Time} [timeSent] time notification is sent
  * @apiParam (Query Params) {Boolean} [isResolved] notification state
+ * @apiParam (Query Params) {String} [priority] priority of the notification
+ * @apiParam (Query Params) {Number} [page] page number
+ * @apiParam (Query Params) {Number} [limit] count limit of notifications to fetch
+ * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
+ * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'courseNumber'
  *
  * @apiSuccess {Object[]} notification Notifications fetched
  * @apiSuccess {Number} notification.notificationID id of notification
@@ -281,50 +255,44 @@ router.get('/notification/:notificationID', async (req, res) => {
  * @apiSuccess {Date} notification.dateSent date notification is sent
  * @apiSuccess {Time} notification.timeSent time notification is sent
  * @apiSuccess {Boolean} notification.isResolved notification state
- *
->>>>>>> c0c0fd083c83f227b06605b826f525684695740a
+ * @apiSuccess {String} notification.priority priority of the notification
+ * @apiSuccess {Number} total total number of notifications
+ * @apiSuccess {Number} limit limit of notifications per page
+ * @apiSuccess {Number} page page number
+ * @apiSuccess {Number} pages number of pages
  *
  * @apiSuccessExample {json} Success-Response:
  *    HTTP/1.1 200 OK
  *   {
-        "status": 200,
-        "message": "Successfully fetched notifications",
-        "data": [
-            {
-<<<<<<< HEAD
-            "notificationID": 1,
-            "senderID": "05",
-            "receiverID": "30",
-            "message": "update",
-            "dateSent": "2018-05-12",
-            "timeSent": "23:23:11",
-            "isResolved": 0,
-            "priority": "LOW"
-=======
-              "notificationID": 1,
-              "senderID": "05",
-              "receiverID": "30",
-              "message": "update",
-              "dateSent": "2018-05-12",
-              "timeSent": "23:23:11",
-              "isResolved": 0
+ *      "status": 200,
+ *      "message": "Successfully fetched notifications",
+ *      "data": [
+ *        {
+ *          "notificationID": 1,
+ *          "senderID": "05",
+ *          "receiverID": "30",
+ *          "message": "update",
+ *          "dateSent": "2018-05-12",
+ *          "timeSent": "23:23:11",
+ *          "isResolved": 0,
+ *          "priority": "LOW"
  *        },
-          {
-              "notificationID": 2,
-              "senderID": "10",
-              "receiverID": "15",
-              "message": "update",
-              "dateSent": "2018-05-19",
-              "timeSent": "23:11:11",
-              "isResolved": 0
->>>>>>> c0c0fd083c83f227b06605b826f525684695740a
+ *        {
+ *          "notificationID": 2,
+ *          "senderID": "10",
+ *          "receiverID": "15",
+ *          "message": "update",
+ *          "dateSent": "2018-05-19",
+ *          "timeSent": "23:11:11",
+ *          "isResolved": 0,
+ *          "priority": "LOW"
  *        }
-        ],
-      "total": 2,
-      "limit": 10,
-      "page": 1,
-      "pages": 1
-    }
+ *      ],
+ *    "total": 2,
+ *    "limit": 10,
+ *    "page": 1,
+ *    "pages": 1
+ *  }
  *
  * @apiError (Error 500) {Number} status error status code
  * @apiError (Error 500) {String} message Error message
@@ -396,7 +364,7 @@ router.get('/notification/', async (req, res) => {
  * @apiSuccess {Date} notification.dateSent date notification is sent
  * @apiSuccess {Time} notification.timeSent time notification is sent
  * @apiSuccess {Boolean} notification.isResolved notification state
- * @apiSuccess {String} priority priority of the notification
+ * @apiSuccess {String} notification.priority priority of the notification
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -406,13 +374,14 @@ router.get('/notification/', async (req, res) => {
  *       "message": "Successfully updated notification",
  *       "data":
  *         {
-            "notificationID": 1,
-            "senderID": "05",
-            "receiverID": "30",
-            "message": "update",
-            "dateSent": "2018-05-12",
-            "timeSent": "23:23:11",
-            "isResolved": 0,
+ *          "notificationID": 1,
+ *          "senderID": "05",
+ *          "receiverID": "30",
+ *          "message": "update",
+ *          "dateSent": "2018-05-12",
+ *          "timeSent": "23:23:11",
+ *          "isResolved": 0,
+ *          "priority": "LOW"
  *        }
  *
  *   }

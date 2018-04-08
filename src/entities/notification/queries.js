@@ -26,7 +26,8 @@ export const addNotification = `
 		message,
 		dateSent,
 		timeSent,
-		isResolved
+		isResolved,
+		priority
 	)
 	VALUES (
 		:notificationID,
@@ -35,7 +36,8 @@ export const addNotification = `
 		:message,
 		:dateSent,
 		:timeSent,
-		:isResolved
+		:isResolved,
+		:priority
 	)
 `;
 

@@ -59,7 +59,7 @@ export const getNotifications = notification => {
         notification.sortBy,
       ),
       {
-        field: 'notificationID',
+        field: 'message',
         ...escapeSearch(notification, searchFields, notification.limit),
       },
       (err, results) => {
@@ -77,12 +77,12 @@ export const getTotalNotifs = notification => {
         filtered(notification, notificationAttributes),
       ),
       {
-        field: 'notificationID',
+        field: 'message',
         ...escapeSearch(notification, searchFields, notification.limit),
       },
       (err, results) => {
         if (err) return reject(500);
-        return resolve(results[0]);
+        return resolve(results);
       },
     );
   });
