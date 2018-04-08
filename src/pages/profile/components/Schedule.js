@@ -223,8 +223,6 @@ class Schedule extends Component {
                 text={day}
               />
             ))}
-          </Layer>
-          <Layer>
             {this.renderSubject('Tuesday', '8:00', '9:30', `CMSC 100\nICSMH`)}
           </Layer>
         </Stage>
