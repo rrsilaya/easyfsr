@@ -6,11 +6,11 @@
 
   .document {
     background-color: white;
-    font-size: 9pt;
+    font-size: 10pt;
 
     width: 8.5in;
     height: 11in;
-    padding: 1in;
+    padding: 0.75in 0.7in;
     position: relative;
     
     * {
@@ -23,11 +23,41 @@
       
       & > * { margin: auto; }
     }
+    header { font-size: 11pt; }
+    label { margin-right: 0.5em; }
   }
   
   .form-float {
     position: absolute;
-    top: 1in;
-    left: 1in;
+    top: 0.75in;
+    left: 0.7in;
+    font-size: 9pt;
+  }
+  
+  .grid {
+    display: flex;
+    width: 100%;
+  }
+  
+  .flex-mid {
+    display: flex;
+  }
+  
+  .field-line {
+    text-align: center;
+    flex: 1;
+    
+    &:after {
+      display: block;
+      border-top: 1px solid black;
+      padding: 0 3em;
+      
+      content: attr(data-label);
+    }
+  }
+  
+  .margin1 {
+    &.left { margin-left: 0.5em; }
+    &.right { margin-right: 0.5em; }
   }
 }
