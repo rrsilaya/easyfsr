@@ -8,7 +8,7 @@ const router = Router();
  * @apiGroup Notification
  * @apiName addNotification
  *
- * @apiParam (Body Params) {String} notificationID notification ID
+ * @apiParam (Body Params) {Number} notificationID notification ID
  * @apiParam (Body Params) {Number} senderID sender ID
  * @apiParam (Body Params) {Number} receiverID receiver ID
  * @apiParam (Body Params) {String} message the message of sender to receiver
@@ -18,7 +18,7 @@ const router = Router();
  * @apiParam (Body Params) {String} priority priority of the notification
  *
  * @apiSuccess {Object} notification new Notification is added
- * @apiSuccess {String} notification.notificationID notification ID
+ * @apiSuccess {Number} notification.notificationID notification ID
  * @apiSuccess {Number} notification.senderID sender ID
  * @apiSuccess {Number} notification.receiverID receiver ID
  * @apiSuccess {String} notification.message the message of sender to receiver
@@ -30,6 +30,7 @@ const router = Router();
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
+<<<<<<< HEAD
  *     "data": {
  *       "status": 200,
  *       "message": "Successfully created notification",
@@ -43,9 +44,25 @@ const router = Router();
 			"isResolved": 1,
       "priority" : "LOW"
 		} 
+=======
+ *
+*       "status": 200,
+*       "message": 'Successfully created notification',
+*       "data":
+          {
+            "notificationID": 1,
+            "senderID": "3",
+            "receiverID": "5",
+            "message": "HIIIIIIIIIIIIIIIIIIIIII",
+            "dateSent": "2018-01-01",
+            "timeSent": "01:01:01",
+            "isResolved": 1
+          }
+
+>>>>>>> c0c0fd083c83f227b06605b826f525684695740a
  *   }
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status error status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -62,7 +79,7 @@ router.post('/notification/', async (req, res) => {
 
     res.status(200).json({
       status: 200,
-      message: 'Successfully created notification',
+      message: 'Successfully added notification',
       data: notification,
     });
   } catch (status) {
@@ -81,27 +98,26 @@ router.post('/notification/', async (req, res) => {
  * @apiGroup Notification
  * @apiName deleteNotification
  *
- * @apiParam (Query Params) {String} notificationID notificationID of notification
+ * @apiParam (Query Params) {Number} notificationID notificationID of notification
  *
  * @apiSuccess {Object} notification Notification notification deleted
- * @apiSuccess {String} notification.notificationID notification ID
+ * @apiSuccess {Number} notification.notificationID notification ID
  * @apiSuccess {Number} notification.senderID sender ID
  * @apiSuccess {Number} notification.receiverID receiver ID
  * @apiSuccess {String} notification.message the message of sender to receiver
  * @apiSuccess {Date} notification.dateSent date when message is sent
- * @apiSuccess {Time} notification.timeSent time when message is sent
+ * @apiSuccess {Sent} notification.timeSent time when message is sent
  * @apiSuccess {Boolean} notification.isResolved verification is message is resolved
  * @apiSuccess {String} priority priority of the notification
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
- *     "data": {
- *        "status": 200;
- *        "message": 'Succesfully deleted notification;
- *        "data": 
- *         {
-            "notificationID": 1,
+ *       "status": 200;
+ *       "message": 'Succesfully deleted notification;
+ *       "data":
+ *        {
+            "notißficationID": 1,
             "senderID": "3",
             "receiverID": "5",
             "message": "HIIIIIIIIIIIIIIIIIIIIII",
@@ -110,19 +126,21 @@ router.post('/notification/', async (req, res) => {
             "isResolved": 1,
             "priority": "LOW"
  *        }
- *     }
+ *
  *   }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {Number} status error status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
-
-    HTTP/1.1 404 Notification not found
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 Notification not found
  * {
  *   "status": 404,
  *   "message": "Notification not found"
@@ -132,7 +150,6 @@ router.post('/notification/', async (req, res) => {
 router.delete('/notification/:notificationID', async (req, res) => {
   try {
     const notification = await Ctrl.getNotification(req.params);
-
     await Ctrl.deleteNotification(req.params);
 
     res.status(200).json({
@@ -159,10 +176,10 @@ router.delete('/notification/:notificationID', async (req, res) => {
  * @apiGroup Notification
  * @apiName getNotification
  *
- * @apiParam (Query Params) {Integer} notificationID notificationID of notification
- * 
+ * @apiParam (Query Params) {Number} notificationID notificationID of notification
+ *
  * @apiSuccess {Object} notification Notification updated
- * @apiSuccess {String} notification.notificationID notification ID
+ * @apiSuccess {Number} notification.notificationID notification ID
  * @apiSuccess {Number} notification.senderID id of user who sent the notification
  * @apiSuccess {Number} notification.receiverID id of user who received the notification
  * @apiSuccess {String} notification.message content of the notification
@@ -173,10 +190,9 @@ router.delete('/notification/:notificationID', async (req, res) => {
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
- *     "data": {
- *        "status": 200;
- *        "message": 'Succesfully got notification details'
- *        "data": [
+ *       "status": 200;
+ *       "message": 'Succesfully got course details'
+ *       "data":
  *          {
             "notificationID": 1,
             "senderID": "05",
@@ -187,20 +203,22 @@ router.delete('/notification/:notificationID', async (req, res) => {
             "isResolved": 0,
             "priority": "LOW"
  *        }
- *     ]
- *     }
+ *
+ *
  *   }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {Number} status error status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
-
-    HTTP/1.1 404 Notification not found
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 Notification not found
  * {
  *   "status": 404,
  *   "message": "Notification not found"
@@ -213,7 +231,7 @@ router.get('/notification/:notificationID', async (req, res) => {
 
     res.status(200).json({
       status: 200,
-      message: 'Successfully fetched notification',
+      message: 'Successfully fetched course',
       data: notification,
     });
   } catch (status) {
@@ -235,6 +253,7 @@ router.get('/notification/:notificationID', async (req, res) => {
  * @apiGroup Notification
  * @apiName getNotifications
  *
+<<<<<<< HEAD
  * @apiSuccess {String} message Confirmation Message.
  * @apiSuccess {Object[]} notifications All notifications
  * @apiParam (Query Params) {Integer} notificationID id of notification
@@ -245,13 +264,34 @@ router.get('/notification/:notificationID', async (req, res) => {
  * @apiParam (Body Params) {Time} timeSent time notification is sent
  * @apiParam (Body Params) {Boolean} isResolved notification state
  * @apiParam (Body Params) {String} priority priority of the notification
+=======
+ * @apiParam (Query Params) {Number} [notificationID] id of notification
+ * @apiParam (Query Params) {Number} [senderID] id of user who sent the notification
+ * @apiParam (Query Params) {Number} [receiverID] id of user who received the notification
+ * @apiParam (Query Params) {String} [message] content of the notification
+ * @apiParam (Query Params) {Date} [dateSent] date notification is sent
+ * @apiParam (Query Params) {Time} [timeSent] time notification is sent
+ * @apiParam (Query Params) {Boolean} [isResolved] notification state
+ *
+ * @apiSuccess {Object[]} notification Notifications fetched
+ * @apiSuccess {Number} notification.notificationID id of notification
+ * @apiSuccess {Number} notification.senderID id of user who sent the notification
+ * @apiSuccess {Number} notification.receiverID id of user who received the notification
+ * @apiSuccess {String} notification.message content of the notification
+ * @apiSuccess {Date} notification.dateSent date notification is sent
+ * @apiSuccess {Time} notification.timeSent time notification is sent
+ * @apiSuccess {Boolean} notification.isResolved notification state
+ *
+>>>>>>> c0c0fd083c83f227b06605b826f525684695740a
  *
  * @apiSuccessExample {json} Success-Response:
  *    HTTP/1.1 200 OK
  *   {
+        "status": 200,
         "message": "Successfully fetched notifications",
-        "courses": [
+        "data": [
             {
+<<<<<<< HEAD
             "notificationID": 1,
             "senderID": "05",
             "receiverID": "30",
@@ -260,19 +300,48 @@ router.get('/notification/:notificationID', async (req, res) => {
             "timeSent": "23:23:11",
             "isResolved": 0,
             "priority": "LOW"
+=======
+              "notificationID": 1,
+              "senderID": "05",
+              "receiverID": "30",
+              "message": "update",
+              "dateSent": "2018-05-12",
+              "timeSent": "23:23:11",
+              "isResolved": 0
+ *        },
+          {
+              "notificationID": 2,
+              "senderID": "10",
+              "receiverID": "15",
+              "message": "update",
+              "dateSent": "2018-05-19",
+              "timeSent": "23:11:11",
+              "isResolved": 0
+>>>>>>> c0c0fd083c83f227b06605b826f525684695740a
  *        }
-        ]
+        ],
+      "total": 2,
+      "limit": 10,
+      "page": 1,
+      "pages": 1
     }
  *
- * @apiError (Error 500) {String[]} errors List of errors.
- * @apiError (Error 500) {String} errors.message Error message.
+ * @apiError (Error 500) {Number} status error status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *    HTTP/1.1 500 Internal Server Error
  *    {
- *      "errors": [
- *        "Internal server error."
- *      ]
+ *     "status": 500,
+ *     "message": "Internal server error"
  *    }
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 Award not found
+ * {
+ *   "status": 404,
+ *   "message": "Notification not found"
+ * }
  **/
 
 router.get('/notification/', async (req, res) => {
@@ -282,19 +351,19 @@ router.get('/notification/', async (req, res) => {
       status: 200,
       message: 'Successfully fetched notifications',
       data: notifications,
-      total: notifications.length,
-      limit: req.query.limit || 10,
-      page: req.query.page || 1,
+      total: (await Ctrl.getTotalNotifs(req.query)).total,
+      limit: parseInt(req.query.limit) || 12,
+      page: parseInt(req.query.page) || 1,
       pages: Math.ceil(
-        (await Ctrl.getTotalNotifications(req.query)).total /
-          (req.query.limit || 10),
+        (await Ctrl.getTotalNotifs(req.query)).total /
+          (parseInt(req.query.limit) || 12),
       ),
     });
   } catch (status) {
     let message = '';
     switch (status) {
       case 404:
-        message = 'Notification not found';
+        message = 'Notification/s not found';
         break;
       case 500:
         message = 'Internal server error';
@@ -309,9 +378,10 @@ router.get('/notification/', async (req, res) => {
  * @apiGroup Notification
  * @apiName updateNotification
  *
- * @apiParam (Query Params) {Integer} notificationID id of notification
- * @apiParam (Body Params) {Integer} senderID id of user who sent the notification
- * @apiParam (Body Params) {Integer} receiverID id of user who received the notification
+ * @apiParam (Query Params) {Number} notificationID id of notification
+ *
+ * @apiParam (Body Params) {Number} senderID id of user who sent the notification
+ * @apiParam (Body Params) {Number} receiverID id of user who received the notification
  * @apiParam (Body Params) {String} message content of the notification
  * @apiParam (Body Params) {Date} dateSent date notification is sent
  * @apiParam (Body Params) {Time} timeSent time notification is sent
@@ -319,9 +389,9 @@ router.get('/notification/', async (req, res) => {
  * @apiParam (Body Params) {String} priority priority of the notification
  *
  * @apiSuccess {Object} notification Notification updated
- * @apiSuccess {Integer} notification.notificationID notification ID
- * @apiSuccess {Integer} notification.senderID id of user who sent the notification
- * @apiSuccess {Integer} notification.receiverID id of user who received the notification
+ * @apiSuccess {Number} notification.notificationID notification ID
+ * @apiSuccess {Number} notification.senderID id of user who sent the notification
+ * @apiSuccess {Number} notification.receiverID id of user who received the notification
  * @apiSuccess {String} notification.message content of the notification
  * @apiSuccess {Date} notification.dateSent date notification is sent
  * @apiSuccess {Time} notification.timeSent time notification is sent
@@ -333,8 +403,8 @@ router.get('/notification/', async (req, res) => {
  *   {
  *     "data": {
  *       "status": 200,
- *       "message": "Successfully updated course",
- *       "data": [
+ *       "message": "Successfully updated notification",
+ *       "data":
  *         {
             "notificationID": 1,
             "senderID": "05",
@@ -344,11 +414,9 @@ router.get('/notification/', async (req, res) => {
             "timeSent": "23:23:11",
             "isResolved": 0,
  *        }
- *      ]
+ *
  *   }
- *
- *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status error status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -356,8 +424,9 @@ router.get('/notification/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
-
-    HTTP/1.1 404 Notification not found
+ * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {String} message Error message
+ * HTTP/1.1 404 Notification not found
  * {
  *   "status": 404,
  *   "message": "Notification not found"
