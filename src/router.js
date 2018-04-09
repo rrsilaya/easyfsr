@@ -14,6 +14,7 @@ import adminWorkRouter from './entities/adminWork/router';
 import creativeWorkRouter from './entities/creativeWork/router';
 import userViewRouter from './entities/user/views/router';
 import announcementRouter from './entities/announcement/router';
+import consultationHoursRouter from './entities/consultationHours/router';
 
 const router = Router();
 
@@ -48,6 +49,7 @@ router.use(creativeWorkRouter);
 //   });
 // });
 
+router.use(consultationHoursRouter);
 router.use(announcementRouter);
 router.use(userRouter);
 router.use(adminWorkRouter);
