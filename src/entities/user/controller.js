@@ -85,12 +85,13 @@ export const getUserByEmpID = ({ employeeID }) => {
   });
 };
 
-export const getUsers = user => {
+export const getUsers = (user = {}) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getUsers(filtered(user, userAttributes), user.sortBy),
       { field: 'lastName', ...escapeSearch(user, searchFields, user.limit) },
       (err, results) => {
+        console.log(err);
         if (err) return reject(500);
         return resolve(results);
       },
