@@ -1,6 +1,8 @@
 import { Router } from 'express';
 
 import authRouter from './entities/auth/router';
+import userRouter from './entities/user/router';
+import studyLoadRouter from './entities/studyLoad/router';
 import awardRouter from './entities/award/router';
 import subjectRouter from './entities/subject/router';
 import timeslotRouter from './entities/timeslot/router';
@@ -14,7 +16,6 @@ import adminWorkRouter from './entities/adminWork/router';
 import creativeWorkRouter from './entities/creativeWork/router';
 import userViewRouter from './entities/user/views/router';
 import announcementRouter from './entities/announcement/router';
-
 const router = Router();
 
 router.use(authRouter);
@@ -28,6 +29,8 @@ router.use(authRouter);
 //     message: 'You must be logged in',
 //   });
 // });
+
+router.use(studyLoadRouter);
 router.use(userViewRouter);
 router.use(awardRouter);
 router.use(courseRouter);
