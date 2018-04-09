@@ -16,6 +16,10 @@ import steps from './steps';
 const { Step } = Steps;
 
 class FSRForm extends Component {
+  componentDidMount() {
+    this.props.getFSR(this.props.match.params.fsrID);
+  }
+
   render() {
     const {
       isAddSubjectModalOpen,
@@ -31,11 +35,14 @@ class FSRForm extends Component {
       prevStep,
 
       currentStep,
+      fsr,
     } = this.props;
 
     return (
       <div>
-        <h1>Academic Year 2017-2018 Second Semester</h1>
+        <h1>
+          Academic Year {fsr.acadYear} {fsr.semester} Semester
+        </h1>
         <Row>
           <Col span={5}>
             <Steps direction="vertical" size="small" current={currentStep}>

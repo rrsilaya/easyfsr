@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import FSRForm from './FSRForm';
 
-import { toggleModal, nextStep, prevStep } from './duck';
+import { toggleModal, nextStep, prevStep, getFSR } from './duck';
 
 const mapStateToProps = state => {
   const {
@@ -13,6 +13,8 @@ const mapStateToProps = state => {
     isAddCourseModalOpen,
     isAddConsultationHourModalOpen,
     currentStep,
+    fsr,
+    isGettingFSR,
   } = state.fsr;
 
   return {
@@ -24,6 +26,8 @@ const mapStateToProps = state => {
     isAddCourseModalOpen,
     isAddConsultationHourModalOpen,
     currentStep,
+    fsr,
+    isGettingFSR,
   };
 };
 
@@ -37,6 +41,9 @@ const mapDispatchToProps = dispatch => {
     },
     prevStep: () => {
       dispatch(prevStep());
+    },
+    getFSR: id => {
+      dispatch(getFSR(id));
     },
   };
 };
