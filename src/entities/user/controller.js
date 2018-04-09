@@ -30,7 +30,7 @@ const searchFields = [
 const defaultAttr = {
   middleName: '',
   officeNumber: '',
-  profileIcon: 'public/uploads/users/default.png',
+  profileIcon: '/uploads/users/default.png',
 };
 export const addUser = user => {
   return new Promise((resolve, reject) => {

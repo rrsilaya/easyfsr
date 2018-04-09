@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
+import { upload, unlink } from './../../utils';
 import { getUsers, getTotalUsers } from './../user/controller';
 import { getAdminWorks } from './../adminWork/controller';
 import { getAwards } from './../award/controller';
@@ -341,6 +342,13 @@ router.use('/fsr/:userID', (req, res, next) => {
 
 router.put('/fsr/:id', async (req, res) => {
   try {
+    if (req.files && req.files.filepath) {
+      const fsr = await Ctrl.getFSR(req.params);
+
+      if (fsr.filepath) await unlink(fsr.filepath);
+      req.body.filepath = await upload(req.files.filepath, 'service-record');
+    }
+
     await Ctrl.updateFSR(req.params, req.body);
     const fsr = await Ctrl.getFSR(req.params);
 
