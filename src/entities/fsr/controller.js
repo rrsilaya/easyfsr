@@ -8,6 +8,7 @@ const fsrAttributes = [
   'semester',
   'isChecked',
   'teachingLoadCreds',
+  'filepath',
 ];
 
 const searchFields = [

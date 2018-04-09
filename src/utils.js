@@ -31,9 +31,9 @@ export const upload = (file, dest) => {
     let [, filename, extension] = file.name.match(/(.+)\.([\w\d]+)$/);
     filename = filename.substring(0, 20);
     filename = `${filename}-${shortID.generate()}.${extension}`;
-    const fileDest = `public/${dest}/${filename}`;
+    const fileDest = `/uploads/${dest}/${filename}`;
 
-    file.mv(fileDest, err => {
+    file.mv(`public/${fileDest}`, err => {
       if (err) return reject(500);
       return resolve(fileDest);
     });
@@ -42,7 +42,7 @@ export const upload = (file, dest) => {
 
 export const unlink = path => {
   return new Promise((resolve, reject) => {
-    fs.remove(path, err => {
+    fs.remove(`public/${path}`, err => {
       if (err) return reject(500);
       return resolve();
     });

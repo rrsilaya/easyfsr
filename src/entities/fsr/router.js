@@ -1,6 +1,18 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
+import { upload, unlink } from './../../utils';
+import { getUsers, getTotalUsers } from './../user/controller';
+import { getAdminWorks } from './../adminWork/controller';
+import { getAwards } from './../award/controller';
+import { getCreativeWorks } from './../creativeWork/controller';
+import { getCworkCoAuthors } from './../coAuthor/controller';
+import { getCourses } from './../course/controller';
+import { getCourseScheds } from './../courseSched/controller';
+import { getExtensionAndCommunityServices } from './../extensionAndCommunityService/controller';
+import { getLtdPractOfProfs } from './../limitedPracticeOfProf/controller';
+import { getSubjects } from './../subject/controller';
+import { getTimeslots } from './../timeslot/controller';
 
 const router = Router();
 
@@ -49,12 +61,14 @@ const router = Router();
 
 router.post('/fsr/', async (req, res) => {
   try {
-    const id = await Ctrl.addFSR(req.body);
-    const fsr = await Ctrl.getFSR({ id });
+    const { total: limit } = await getTotalUsers({});
+    const users = await getUsers({ limit });
+    users.map(
+      async ({ userID } = user) => await Ctrl.addFSR({ userID, ...req.body }),
+    );
     res.status(200).json({
       status: 200,
-      message: 'Successfully created fsr',
-      data: fsr,
+      message: 'Successfully created fsr for users',
     });
   } catch (status) {
     let message = '';
@@ -116,7 +130,34 @@ router.post('/fsr/', async (req, res) => {
  */
 router.get('/fsr/:id', async (req, res) => {
   try {
-    const fsr = await Ctrl.getFSR(req.params);
+    let fsr = await Ctrl.getFSR(req.params);
+    const adminWorks = await getAdminWorks(req.params);
+    const awards = await getAwards(req.params);
+    const creativeWorks = await getCreativeWorks(req.params);
+    creativeWorks.map(
+      async ({ ...creativeWorkID } = cwork) =>
+        await getCworkCoAuthors(creativeWorkID),
+    );
+    const courses = await getCourses(req.params);
+    courses.map(
+      async ({ ...courseID } = course) => await getCourseScheds(courseID),
+    );
+    const services = await getExtensionAndCommunityServices(req.params);
+    const ltdPractices = await getLtdPractOfProfs(req.params);
+    const subjects = await getSubjects(req.params);
+    subjects.map(
+      async ({ ...subjectID } = subject) => await getTimeslots(subjectID),
+    );
+    fsr = {
+      fsr,
+      adminWorks,
+      awards,
+      creativeWorks,
+      courses,
+      services,
+      ltdPractices,
+      subjects,
+    };
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched fsr',
@@ -301,6 +342,13 @@ router.use('/fsr/:userID', (req, res, next) => {
 
 router.put('/fsr/:id', async (req, res) => {
   try {
+    if (req.files && req.files.filepath) {
+      const fsr = await Ctrl.getFSR(req.params);
+
+      if (fsr.filepath) await unlink(fsr.filepath);
+      req.body.filepath = await upload(req.files.filepath, 'service-record');
+    }
+
     await Ctrl.updateFSR(req.params, req.body);
     const fsr = await Ctrl.getFSR(req.params);
 

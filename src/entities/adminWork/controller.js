@@ -73,7 +73,6 @@ export const getAdminWorks = adminWork => {
         ...escapeSearch(adminWork, searchFields, adminWork.limit),
       },
       (err, results) => {
-        console.log(err);
         if (err) return reject(500);
         return resolve(results);
       },

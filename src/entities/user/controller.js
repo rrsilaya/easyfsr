@@ -24,18 +24,20 @@ const searchFields = [
   'lastName',
   'committee',
   'officeNumber',
+  'rank',
 ];
 
+const defaultAttr = {
+  middleName: '',
+  officeNumber: '',
+  profileIcon: '/uploads/users/default.png',
+};
 export const addUser = user => {
   return new Promise((resolve, reject) => {
-    db.query(
-      Query.addUser,
-      { middleName: '', officeNumber: '', rank: '', profileIcon: '', ...user },
-      (err, results) => {
-        if (err) return reject(500);
-        return resolve(results.insertId);
-      },
-    );
+    db.query(Query.addUser, { ...defaultAttr, ...user }, (err, results) => {
+      if (err) return reject(500);
+      return resolve(results.insertId);
+    });
   });
 };
 
@@ -83,12 +85,13 @@ export const getUserByEmpID = ({ employeeID }) => {
   });
 };
 
-export const getUsers = user => {
+export const getUsers = (user = {}) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getUsers(filtered(user, userAttributes), user.sortBy),
       { field: 'lastName', ...escapeSearch(user, searchFields, user.limit) },
       (err, results) => {
+        console.log(err);
         if (err) return reject(500);
         return resolve(results);
       },
