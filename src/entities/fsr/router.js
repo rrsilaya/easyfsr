@@ -343,7 +343,8 @@ router.use('/fsr/:userID', (req, res, next) => {
 router.put('/fsr/:id', async (req, res) => {
   try {
     if (req.files && req.files.filepath) {
-      const { fsr } = await Ctrl.getFSR(req.params);
+      const fsr = await Ctrl.getFSR(req.params);
+
       if (fsr.filepath) await unlink(fsr.filepath);
       req.body.filepath = await upload(req.files.filepath, 'service-record');
     }
