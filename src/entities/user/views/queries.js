@@ -26,7 +26,7 @@ export const getExtensionAndCommunityService = `
   SELECT * FROM
     viewExtensionAndCommunityService
   WHERE employeeID = :employeeID
-  ORDER BY date
+  ORDER BY startDate
   LIMIT 10
 `;
 

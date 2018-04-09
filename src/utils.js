@@ -31,7 +31,7 @@ export const upload = (file, dest) => {
     let [, filename, extension] = file.name.match(/(.+)\.([\w\d]+)$/);
     filename = filename.substring(0, 20);
     filename = `${filename}-${shortID.generate()}.${extension}`;
-    const fileDest = `public/${dest}/${filename}`;
+    const fileDest = `public/uploads/${dest}/${filename}`;
 
     file.mv(fileDest, err => {
       if (err) return reject(500);

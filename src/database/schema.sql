@@ -22,7 +22,7 @@ CREATE TABLE user(
   officeNumber VARCHAR (30), 
   contractType VARCHAR (40) NOT NULL, -- FULL-TIME / PART-TIME
   emailAddress VARCHAR (40) NOT NULL,
-  rank VARCHAR (30),
+  rank VARCHAR (30) NOT NULL,
   isArchived BOOLEAN DEFAULT 0, 
   acctType VARCHAR(10) DEFAULT 'USER', -- ADMIN / USER
   `profileIcon` TEXT (50),

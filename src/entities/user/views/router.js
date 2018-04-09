@@ -61,7 +61,6 @@ router.get(
       const extensionAndCommunityService = await Ctrl.getUserExtensionAndCommunityService(
         req.params,
       );
-
       res.status(200).json({
         status: 200,
         message: 'Successfully fetched extension and community service of user',
