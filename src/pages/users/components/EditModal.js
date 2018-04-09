@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form, Input, Select, AutoComplete } from 'antd';
+import { Modal, Button, Form, Input, Select } from 'antd';
 
 const FormItem = Form.Item;
-const SOption = Select.Option;
-const { OptGroup, Option } = AutoComplete;
+const { OptGroup, Option } = Select;
 
 class EditModal extends Component {
   handleFormSubmit = e => {
@@ -118,16 +117,6 @@ class EditModal extends Component {
   ];
 
   render() {
-    const options = this.ranks.map(rank => (
-      <OptGroup key={rank.title}>
-        {rank.children.map(opt => (
-          <Option key={opt.title} value={opt.title}>
-            {opt.title}
-          </Option>
-        ))}
-      </OptGroup>
-    ));
-
     const {
       isEditModalOpen,
       isEditingUser,
@@ -197,8 +186,8 @@ class EditModal extends Component {
               initialValue: user.acctType,
             })(
               <Select>
-                <SOption value="USER">User</SOption>
-                <SOption value="ADMIN">Admin</SOption>
+                <Option value="USER">User</Option>
+                <Option value="ADMIN">Admin</Option>
               </Select>,
             )}
           </FormItem>
@@ -206,10 +195,17 @@ class EditModal extends Component {
             {form.getFieldDecorator('rank', {
               initialValue: user.rank,
             })(
-              <AutoComplete
-                dataSource={options}
-                placeholder="Select rank..."
-              />,
+              <Select showSearch>
+                {this.ranks.map(rank => (
+                  <OptGroup key={rank.title}>
+                    {rank.children.map(opt => (
+                      <Option key={opt.title} value={opt.title}>
+                        {opt.title}
+                      </Option>
+                    ))}
+                  </OptGroup>
+                ))}
+              </Select>,
             )}
           </FormItem>
         </Form>

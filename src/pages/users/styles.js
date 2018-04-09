@@ -18,13 +18,15 @@ const style = {
   },
   add: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   addButton: {
     margin: '1em 0',
   },
   searchForm: {
-    marginBottom: '1em',
+    marginRight: '1em',
+    width: '100%',
   },
   searchGrid: {
     display: 'flex',

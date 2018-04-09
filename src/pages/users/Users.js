@@ -67,17 +67,17 @@ class Users extends Component {
     return (
       <div>
         <div style={styles.add}>
+          <SearchUser getUsers={getUsers} />
           <Button
             style={styles.addButton}
             size="large"
-            icon="plus-circle-o"
+            icon="plus"
             ghost
             onClick={toggleAddModal}
           >
-            Add New User
+            Add User
           </Button>
         </div>
-        <SearchUser getUsers={getUsers} query={query} />
         <DataLoader
           isLoading={isGettingUsers}
           content={
