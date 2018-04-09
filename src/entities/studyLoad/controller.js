@@ -1,6 +1,5 @@
 import db from '../../database/index';
 import * as Query from './queries';
-import * as Utils from '../../utils';
 import { filtered, escapeSearch } from '../../utils';
 
 const studyLoadAttributes = [
@@ -33,7 +32,7 @@ export const updateStudyLoad = ({ id }, studyLoad) => {
   return new Promise((resolve, reject) => {
     if (!studyLoad) return reject(500);
     db.query(
-      Query.updateStudyLoad(Utils.filtered(studyLoad, studyLoadAttributes)),
+      Query.updateStudyLoad(filtered(studyLoad, studyLoadAttributes)),
       { id, ...studyLoad },
       (err, results) => {
         if (err) return reject(500);
