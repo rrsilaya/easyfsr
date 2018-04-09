@@ -10,7 +10,8 @@ export const addAward = `
     recipientOrNominee,
     professionalChair,
     approvedStartDate,
-    endDate
+    endDate,
+    filepath
   )
   VALUES (
     :id,
@@ -21,7 +22,8 @@ export const addAward = `
     :recipientOrNominee,
     :professionalChair,
     :approvedStartDate,
-    :endDate
+    :endDate,
+    :filepath
   )
 `;
 

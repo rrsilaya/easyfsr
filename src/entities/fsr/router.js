@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
 import { getAdminWorks } from './../adminWork/controller';
 import { getAwards } from './../award/controller';
-import { getCreativeWorks } from './../creativework/controller';
+import { getCreativeWorks } from './../creativeWork/controller';
 import { getCworkCoAuthors } from './../coAuthor/controller';
 import { getCourses } from './../course/controller';
 import { getCourseScheds } from './../courseSched/controller';
