@@ -21,7 +21,7 @@ const style = {
     justifyContent: 'flex-end',
   },
   addButton: {
-    margin: '1em',
+    margin: '1em 0',
   },
   searchForm: {
     marginBottom: '1em',
