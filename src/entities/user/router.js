@@ -74,7 +74,7 @@ const router = Router();
 router.post('/user/', async (req, res) => {
   try {
     req.body.password = await bcrypt.hash(req.body.password, 10);
-    if (req.files.profileIcon)
+    if (req.files && req.files.profileIcon)
       req.body.profileIcon = await upload(req.files.profileIcon, 'users');
     const userID = await Ctrl.addUser(req.body);
     const user = await Ctrl.getUserByUserID({ userID });
