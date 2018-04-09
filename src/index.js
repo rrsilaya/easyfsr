@@ -39,7 +39,7 @@ app.use(
  * The documentation will be served at /docs. All API
  * functionalities will be prefixed with /api route.
  */
-app.use('/public/', express.static(__dirname + '/../public/uploads'));
+app.use('/uploads/', express.static(__dirname + '/../public/uploads'));
 app.use('/docs', express.static(__dirname + '/../docs'));
 app.use('/api', router);
 app.use(express.static(__dirname + '/../client'));
