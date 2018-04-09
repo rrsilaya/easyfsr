@@ -1,15 +1,55 @@
 import React, { Component } from 'react';
-import { Modal, Button } from 'antd';
+import { Modal, Button, Form, Input } from 'antd';
 import { CREATE_FSR } from '../duck';
+import styles from '../styles';
+
+const FormItem = Form.Item;
 
 class CreateFSRModal extends Component {
+  handleFormSubmit = e => {
+    e.preventDefault();
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        // this.props.deleteUser(this.props.user);
+        this.handleAfterClose();
+      }
+    });
+  };
+
+  handleAfterClose = () => {
+    // this.props.changeSelectedUser({});
+    this.props.form.resetFields();
+  };
+
+  handleCancel = () => {
+    this.props.toggleDeleteModal();
+    this.handleAfterClose();
+  };
+
+  validateMessage = async (rule, value, callback) => {
+    if (!value.match(/^Yes, I want to create a new FSR\.$/))
+      return callback('Please enter the correct message');
+  };
+
   render() {
     const {
       isCreateFSRModalOpen,
 
       toggleModal,
+
+      form,
     } = this.props;
 
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 8 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 16 },
+      },
+    };
     return (
       <Modal
         title="Create FSR"
@@ -22,14 +62,27 @@ class CreateFSRModal extends Component {
             Cancel
           </Button>,
           <Button key="submit" type="primary" htmlType="submit">
-            Add
+            Yes
           </Button>,
         ]}
       >
-        <h1>Create FSR</h1>
+        <p>Are you sure you want to create a new FSR?</p>
+        <p> Please type in the message below confirm. </p>
+        <p style={styles.confirmation}> Yes, I want to create a new FSR. </p>
+        <Form onSubmit={this.handleFormSubmit}>
+          <FormItem {...formItemLayout} required hasFeedback>
+            {form.getFieldDecorator('confirmation@@deleteUser', {
+              rules: [
+                {
+                  validator: this.validateMessage,
+                },
+              ],
+            })(<Input type="text" />)}
+          </FormItem>
+        </Form>
       </Modal>
     );
   }
 }
 
-export default CreateFSRModal;
+export default Form.create()(CreateFSRModal);

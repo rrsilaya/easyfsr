@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
 import { Form, Input, Select, Button, Icon } from 'antd';
-import { getFieldValues } from '../../../utils';
+
 import styles from '../styles';
+import { getFieldValues } from '../../../utils';
 
 const { Group: InputGroup } = Input;
 const { Option } = Select;
 
-class Search extends Component {
+class SearchUser extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
-    console.log(this.props);
-    this.props.form.validateFields((err, values) => {
-      this.props.searchUser(getFieldValues(values));
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        this.props.getUsers(getFieldValues(values));
+      }
     });
   };
+
   render() {
     const { form } = this.props;
 
@@ -43,4 +46,4 @@ class Search extends Component {
   }
 }
 
-export default Form.create()(Search);
+export default Form.create()(SearchUser);

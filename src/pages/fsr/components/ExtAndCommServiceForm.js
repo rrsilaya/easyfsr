@@ -8,7 +8,7 @@ import styles from '../styles';
 
 const columns = [
   {
-    title: 'Title of Activity/Program',
+    title: 'Activity/Program',
     dataIndex: 'title',
     key: 'title',
   },
@@ -18,12 +18,12 @@ const columns = [
     key: 'type',
   },
   {
-    title: 'No. Of Hours',
+    title: 'Hours',
     dataIndex: 'hours',
     key: 'hours',
   },
   {
-    title: 'No. Of Participants',
+    title: 'Participants',
     dataIndex: 'participant',
     key: 'participant',
   },

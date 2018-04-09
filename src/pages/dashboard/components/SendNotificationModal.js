@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import { Modal, Button } from 'antd';
+import { Modal, Button, Input, AutoComplete } from 'antd';
 import { SEND_NOTIFICATION } from '../duck';
+import styles from '../styles';
+
+const { Search } = Input;
+const { TextArea } = Input;
 
 class SendNotificationModal extends Component {
   render() {
@@ -22,11 +26,17 @@ class SendNotificationModal extends Component {
             Cancel
           </Button>,
           <Button key="submit" type="primary" htmlType="submit">
-            Add
+            Send
           </Button>,
         ]}
       >
-        <h1>Send Notification</h1>
+        <AutoComplete placeholder="Enter user name" style={styles.toUserBox} />
+
+        <TextArea
+          rows={5}
+          placeholder="Enter message here..."
+          style={styles.messageBox}
+        />
       </Modal>
     );
   }

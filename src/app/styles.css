@@ -51,10 +51,15 @@
 .ant-pagination-item.ant-pagination-item-active {
   background-color: #8b657c !important;
 }
-.ant-list-item.faculty-item {
+.ant-list-item.list-item {
   background-color: #fff !important;
+  transition: 0.3s all ease;
 }
-.ant-list-item.faculty-item > * {
+.ant-list-item.list-item:hover {
+  background-color: #ebe5ec !important;
+  transition: 0.3s all ease;
+}
+.ant-list-item.list-item > * {
   justify-content: space-between;
 }
 .background.primary {
@@ -88,6 +93,9 @@
   color: #4d4d4d;
 }
 .text.white {
+  color: #fff !important;
+}
+.text.white > * {
   color: #fff;
 }
 .dark-mode {
@@ -154,6 +162,12 @@ img.crop {
 .ant-steps-item-wait .ant-steps-item-title {
   color: #805c72 !important;
 }
-.ant-table-thead .span {
+.ant-table-thead span {
+  color: #483440 !important;
+}
+.ant-checkbox-wrapper span {
+  color: #483440 !important;
+}
+.ant-table-body td {
   color: #483440 !important;
 }

@@ -24,7 +24,7 @@ const style = {
     color: '#000000a6',
   },
   menuItems: {
-    width: '20%',
+    width: '33%',
     height: '20%',
     color: '#FFF',
     marginBottom: 30,
@@ -41,6 +41,16 @@ const style = {
   stats: {
     display: 'flex',
     flexWrap: 'wrap',
+  },
+  messageBox: {
+    marginTop: 10,
+  },
+  toUserBox: {
+    width: '100%',
+  },
+  confirmation: {
+    fontWeight: 'bold',
+    color: 'red',
   },
 };
 

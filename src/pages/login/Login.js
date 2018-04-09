@@ -30,11 +30,11 @@ class Login extends Component {
                 className="container"
                 style={{ ...styles.section, ...styles.login }}
               >
-                <h1 className="super text primary">Lorem ipsum</h1>
+                <h1 className="super text primary">Form67 made easy</h1>
                 <p className="subtitle text meta">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et consectetur
-                  adipiscing elit.
+                  A system built to simplify the process of managing Faculty
+                  Service Records with faculty members submitting information
+                  and processing their data through automation
                 </p>
                 <Form style={styles.form} onSubmit={this.handleFormSubmit}>
                   <InputGroup
@@ -70,6 +70,7 @@ class Login extends Component {
                     type="primary"
                     htmlType="submit"
                     size="large"
+                    className="text white"
                     style={styles.margin}
                     loading={isLoggingIn}
                   >

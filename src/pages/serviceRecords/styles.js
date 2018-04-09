@@ -1,18 +1,16 @@
 const styles = {
-  button: {
-    justifyContent: 'center',
+  list: {
+    border: 'none',
+  },
+  listItem: {
+    width: '100%',
+  },
+  icons: {
+    fontSize: 16,
+    borderLeft: '1px solid #afafaf',
+    paddingLeft: 15,
     display: 'flex',
     alignItems: 'center',
-  },
-  tableFSR: {
-    marginTop: 10,
-    marginBottom: 'auto',
-    size: 'large',
-  },
-  regFSR: {
-    marginBottom: 'auto',
-    marginLeft: 10,
-    marginRight: 'auto',
   },
 };
 

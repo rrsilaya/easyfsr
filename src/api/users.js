@@ -16,3 +16,7 @@ export const addUser = user => {
 export const editUser = (userID, body) => {
   return axios.put(`/api/user/${userID}`, body);
 };
+
+export const deleteUser = id => {
+  return axios.delete(`api/user/${id}`);
+};

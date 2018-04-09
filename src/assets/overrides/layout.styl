@@ -63,9 +63,15 @@
 }
 
 .ant-list-item {
-  &.faculty-item {
+  &.list-item {
     background-color: $white !important;
+    transition: 0.3s all ease;
     
+    &:hover {
+      background-color: lighten($secondary, 90%) !important;
+      transition: 0.3s all ease;
+    }
+
     & > * {
       justify-content: space-between;
     }

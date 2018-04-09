@@ -6,15 +6,38 @@ const style = {
     marginRight: 'auto',
   },
   search: {
-    marginTop: '10px',
-    marginBottom: '10px',
+    marginTop: '20px',
+    marginBottom: '20px',
     marginLeft: 'auto',
     marginRight: 'auto',
     display: 'flex',
     justifyContent: 'space-between',
   },
   searchBar: {
-    width: '66%',
+    marginRight: '10px',
+  },
+  add: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  addButton: {
+    margin: '1em',
+  },
+  searchForm: {
+    marginBottom: '1em',
+  },
+  searchGrid: {
+    display: 'flex',
+  },
+  inputSearch: {
+    width: '50%',
+  },
+  sort: {
+    width: 175,
+  },
+  confirmation: {
+    fontWeight: 'bold',
+    color: 'red',
   },
 };
 

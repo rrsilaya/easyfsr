@@ -1,20 +1,16 @@
 import React, { Component } from 'react';
-import { Icon, Button, Card, Progress, Table, Row, Col } from 'antd';
+import { Icon, Card, Progress, Table, Row, Col, Button } from 'antd';
 import styles from './styles';
 import dataSource from './datasource';
 import columns from './columns';
 
 import SendNotificationModal from './components/SendNotificationModal';
 import CreateFSRModal from './components/CreateFSRModal';
-import DownloadFSRModal from './components/DownloadFSRModal';
 import EditFSRModal from './components/EditFSRModal';
-import ViewFSRModal from './components/ViewFSRModal';
 
 import { SEND_NOTIFICATION } from './duck';
 import { CREATE_FSR } from './duck';
-import { DOWNLOAD_FSR } from './duck';
 import { EDIT_FSR } from './duck';
-import { VIEW_FSR } from './duck';
 
 class Dashboard extends Component {
   render() {
@@ -73,34 +69,6 @@ class Dashboard extends Component {
               >
                 <Icon type="edit" style={styles.icons} />
                 <p style={styles.description}>Edit FSR</p>
-              </Button>
-
-              <ViewFSRModal
-                isViewFSRModalOpen={isViewFSRModalOpen}
-                toggleModal={toggleModal}
-                handleAfterClose={this.handleAfterClose}
-              />
-              <Button
-                type="default"
-                style={styles.menuItems}
-                onClick={() => toggleModal(VIEW_FSR)}
-              >
-                <Icon type="eye-o" style={styles.icons} />
-                <p style={styles.description}>View FSR</p>
-              </Button>
-
-              <DownloadFSRModal
-                isDownloadFSRModalOpen={isDownloadFSRModalOpen}
-                toggleModal={toggleModal}
-                handleAfterClose={this.handleAfterClose}
-              />
-              <Button
-                type="default"
-                style={styles.menuItems}
-                onClick={() => toggleModal(DOWNLOAD_FSR)}
-              >
-                <Icon type="download" style={styles.icons} />
-                <p style={styles.description}>Download FSR</p>
               </Button>
             </Button.Group>
           </Col>
