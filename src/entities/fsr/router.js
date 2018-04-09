@@ -5,7 +5,7 @@ import { upload, unlink } from './../../utils';
 import { getUsers, getTotalUsers } from './../user/controller';
 import { getAdminWorks } from './../adminWork/controller';
 import { getAwards } from './../award/controller';
-import { getCreativeWorks } from './../creativework/controller';
+import { getCreativeWorks } from './../creativeWork/controller';
 import { getCworkCoAuthors } from './../coAuthor/controller';
 import { getCourses } from './../course/controller';
 import { getCourseScheds } from './../courseSched/controller';
@@ -343,8 +343,7 @@ router.use('/fsr/:userID', (req, res, next) => {
 router.put('/fsr/:id', async (req, res) => {
   try {
     if (req.files && req.files.filepath) {
-      const fsr = await Ctrl.getFSR(req.params);
-
+      const { fsr } = await Ctrl.getFSR(req.params);
       if (fsr.filepath) await unlink(fsr.filepath);
       req.body.filepath = await upload(req.files.filepath, 'service-record');
     }

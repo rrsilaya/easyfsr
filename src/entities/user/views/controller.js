@@ -28,7 +28,7 @@ export const getUserAdminWork = query => {
   });
 };
 
-export const getConsultationHours = query => {
+export const getUserConsultationHours = query => {
   return new Promise((resolve, reject) => {
     db.query(Query.getConsultationHours, query, (err, results) => {
       if (err) return reject(500);
@@ -37,7 +37,7 @@ export const getConsultationHours = query => {
   });
 };
 
-export const getSLCourse = query => {
+export const getUserSLCourse = query => {
   return new Promise((resolve, reject) => {
     db.query(Query.getSLCourse, query, (err, results) => {
       if (err) return reject(500);
@@ -46,7 +46,7 @@ export const getSLCourse = query => {
   });
 };
 
-export const getSubject = query => {
+export const getUserSubject = query => {
   return new Promise((resolve, reject) => {
     db.query(Query.getSubject, query, (err, results) => {
       if (err) return reject(500);
@@ -55,7 +55,7 @@ export const getSubject = query => {
   });
 };
 
-export const getStudyLoad = query => {
+export const getUserStudyLoad = query => {
   return new Promise((resolve, reject) => {
     db.query(Query.getStudyLoad, query, (err, results) => {
       if (err) return reject(500);
