@@ -75,7 +75,7 @@ router.get('/user/:employeeID/schedule', async (req, res) => {
   try {
     const subjects = await Ctrl.getUserSubject(req.params);
     const consultationHours = await Ctrl.getUserConsultationHours(req.params);
-    const courses = await Ctrl.getSLCourse(req.params);
+    const courses = await Ctrl.getUserSLCourse(req.params);
     const schedule = [...subjects, ...consultationHours, ...courses];
     res.status(200).json({
       status: 200,

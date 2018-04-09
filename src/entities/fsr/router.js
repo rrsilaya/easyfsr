@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
+import { upload, unlink } from './../../utils';
+import { getUsers, getTotalUsers } from './../user/controller';
 import { getAdminWorks } from './../adminWork/controller';
 import { getAwards } from './../award/controller';
 import { getCreativeWorks } from './../creativeWork/controller';
@@ -59,12 +61,14 @@ const router = Router();
 
 router.post('/fsr/', async (req, res) => {
   try {
-    const id = await Ctrl.addFSR(req.body);
-    const fsr = await Ctrl.getFSR({ id });
+    const { total: limit } = await getTotalUsers({});
+    const users = await getUsers({ limit });
+    users.map(
+      async ({ userID } = user) => await Ctrl.addFSR({ userID, ...req.body }),
+    );
     res.status(200).json({
       status: 200,
-      message: 'Successfully created fsr',
-      data: fsr,
+      message: 'Successfully created fsr for users',
     });
   } catch (status) {
     let message = '';
@@ -338,6 +342,13 @@ router.use('/fsr/:userID', (req, res, next) => {
 
 router.put('/fsr/:id', async (req, res) => {
   try {
+    if (req.files && req.files.filepath) {
+      const fsr = await Ctrl.getFSR(req.params);
+
+      if (fsr.filepath) await unlink(fsr.filepath);
+      req.body.filepath = await upload(req.files.filepath, 'service-record');
+    }
+
     await Ctrl.updateFSR(req.params, req.body);
     const fsr = await Ctrl.getFSR(req.params);
 
