@@ -36,7 +36,7 @@ export const updateStudyLoad = ({ id }, studyLoad) => {
       { id, ...studyLoad },
       (err, results) => {
         if (err) return reject(500);
-        return resolve(results.insertId);
+        return resolve(studyLoad.id);
       },
     );
   });
