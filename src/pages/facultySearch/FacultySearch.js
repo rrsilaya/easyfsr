@@ -18,7 +18,7 @@ class FacultySearch extends Component {
       // State
       users,
       isSearching,
-
+      pushLink,
       // Dispatch
       searchUser,
     } = this.props;
@@ -37,7 +37,11 @@ class FacultySearch extends Component {
               className="text white"
               dataSource={users}
               renderItem={item => (
-                <ListItem className="list-item" style={styles.listItem}>
+                <ListItem
+                  className="list-item set-cursor pointer"
+                  style={styles.listItem}
+                  onClick={() => pushLink(`/profile/${item.employeeID}`)}
+                >
                   <Row type="flex" justify="space-around" style={styles.info}>
                     <Col {...gridConfig} className="text normal">
                       {item.firstName}
