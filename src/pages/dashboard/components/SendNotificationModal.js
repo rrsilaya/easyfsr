@@ -1,17 +1,53 @@
 import React, { Component } from 'react';
-import { Modal, Button, Input, AutoComplete } from 'antd';
+import { Modal, Button, Input, Select, Spin } from 'antd';
 import { SEND_NOTIFICATION } from '../duck';
 import styles from '../styles';
+import { getFieldValues } from '../../../utils';
 
+const CHANGE_SELECTED_USER = 'USER/CHANGE_SELECTED_USER';
 const { Search } = Input;
 const { TextArea } = Input;
+const { Option } = Select;
 
 class SendNotificationModal extends Component {
+  handleFormSubmit = e => {
+    e.preventDefault();
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        this.props.getUsers(getFieldValues(values));
+      }
+    });
+  };
+
+  handleSearchUser = async value => {
+    this.setState({});
+    const { data } = await this.props.getUsers({
+      limit: 10,
+      page: 1,
+      name: value,
+    });
+    this.setState({ userOptions: [...data.data] });
+    if (!data.data.length) {
+      this.setState({});
+    } else {
+      this.setState({});
+    }
+    if (
+      this.state.userOptions
+        .find
+        // name => user.name.toLowerCase() === value.toLowerCase(),
+        ()
+    ) {
+      this.handleSelectUser(value);
+    }
+  };
+
   render() {
     const {
       isSendNotificationModalOpen,
 
       toggleModal,
+      user,
     } = this.props;
 
     return (
@@ -30,8 +66,19 @@ class SendNotificationModal extends Component {
           </Button>,
         ]}
       >
-        <AutoComplete placeholder="Enter user name" style={styles.toUserBox} />
-
+        <Select
+          mode="combobox"
+          onSearch={this.handleSearchUser}
+          // onSelect
+          // value={value}
+          placeholder="Select users"
+          filterOption={false}
+          style={styles.toUserBox}
+          defaultActiveFirstOption={false}
+          showArrow={false}
+        >
+          {/* {options} */}
+        </Select>
         <TextArea
           rows={5}
           placeholder="Enter message here..."

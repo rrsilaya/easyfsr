@@ -17,9 +17,7 @@ class Dashboard extends Component {
     const {
       isSendNotificationModalOpen,
       isCreateFSRModalOpen,
-      isDownloadFSRModalOpen,
       isEditFSRModalOpen,
-      isViewFSRModalOpen,
 
       toggleModal,
     } = this.props;
