@@ -17,6 +17,16 @@ class SearchUser extends Component {
     });
   };
 
+  handleClear = e => {
+    e.preventDefault();
+    this.props.form.validateFieldsAndScroll((err, value) => {
+      if (!err) {
+        this.props.form.resetFields();
+        this.props.getUsers();
+      }
+    });
+  };
+
   render() {
     const { form } = this.props;
 
@@ -37,6 +47,9 @@ class SearchUser extends Component {
               <Option value="DESC">Descending</Option>
             </Select>,
           )}
+          <Button size="large" onClick={this.handleClear}>
+            <Icon type="close" />
+          </Button>
           <Button size="large" htmlType="submit" type="primary">
             <Icon type="search" />
           </Button>
