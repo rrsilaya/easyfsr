@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Icon } from 'antd';
 
-import { PageLoader } from '../../global';
+import { PageLoader, Schedule } from '../../global';
 import ProfileIcon from './components/ProfileIcon';
 import ProfileInfo from './components/ProfileInfo';
 import styles from './styles';
