@@ -74,7 +74,7 @@ class Users extends Component {
             ghost
             onClick={toggleAddModal}
           >
-            Add User
+            Add New User
           </Button>
         </div>
         <SearchUser getUsers={getUsers} query={query} />

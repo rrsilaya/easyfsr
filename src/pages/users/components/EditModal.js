@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form, Input, Select } from 'antd';
+import { Modal, Button, Form, Input, Select, AutoComplete } from 'antd';
 
 const FormItem = Form.Item;
-const { Option } = Select;
+const SOption = Select.Option;
+const { OptGroup, Option } = AutoComplete;
 
 class EditModal extends Component {
   handleFormSubmit = e => {
@@ -51,7 +52,82 @@ class EditModal extends Component {
     isMatch: false,
   };
 
+  ranks = [
+    {
+      title: 'Instructor',
+      children: [
+        {
+          title: 'Instructor 1',
+        },
+        {
+          title: 'Instructor 2',
+        },
+        {
+          title: 'Instructor 3',
+        },
+      ],
+    },
+    {
+      title: 'Assistant Professor',
+      children: [
+        {
+          title: 'Assistant Professor 1',
+        },
+        {
+          title: 'Assistant Professor 2',
+        },
+        {
+          title: 'Assistant Professor 3',
+        },
+        {
+          title: 'Assistant Professor 4',
+        },
+        {
+          title: 'Assistant Professor 5',
+        },
+        {
+          title: 'Assistant Professor 6',
+        },
+        {
+          title: 'Assistant Professor 7',
+        },
+      ],
+    },
+    {
+      title: 'Associate Professor',
+      children: [
+        {
+          title: 'Associate Professor 1',
+        },
+        {
+          title: 'Associate Professor 2',
+        },
+      ],
+    },
+    {
+      title: 'Professor',
+      children: [
+        {
+          title: 'Professor 1',
+        },
+        {
+          title: 'Professor 2',
+        },
+      ],
+    },
+  ];
+
   render() {
+    const options = this.ranks.map(rank => (
+      <OptGroup key={rank.title}>
+        {rank.children.map(opt => (
+          <Option key={opt.title} value={opt.title}>
+            {opt.title}
+          </Option>
+        ))}
+      </OptGroup>
+    ));
+
     const {
       isEditModalOpen,
       isEditingUser,
@@ -121,9 +197,19 @@ class EditModal extends Component {
               initialValue: user.acctType,
             })(
               <Select>
-                <Option value="USER">User</Option>
-                <Option value="ADMIN">Admin</Option>
+                <SOption value="USER">User</SOption>
+                <SOption value="ADMIN">Admin</SOption>
               </Select>,
+            )}
+          </FormItem>
+          <FormItem {...formItemLayout} label="Rank">
+            {form.getFieldDecorator('rank', {
+              initialValue: user.rank,
+            })(
+              <AutoComplete
+                dataSource={options}
+                placeholder="Select rank..."
+              />,
             )}
           </FormItem>
         </Form>
