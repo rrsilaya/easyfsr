@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Input, Select } from 'antd';
+import ranks from './ranks';
 
 const FormItem = Form.Item;
-const { Option } = Select;
+const { OptGroup, Option } = Select;
 
 class EditModal extends Component {
   handleFormSubmit = e => {
@@ -123,6 +124,23 @@ class EditModal extends Component {
               <Select>
                 <Option value="USER">User</Option>
                 <Option value="ADMIN">Admin</Option>
+              </Select>,
+            )}
+          </FormItem>
+          <FormItem {...formItemLayout} label="Rank">
+            {form.getFieldDecorator('rank', {
+              initialValue: user.rank,
+            })(
+              <Select showSearch>
+                {ranks.map(rank => (
+                  <OptGroup key={rank.title}>
+                    {rank.children.map(opt => (
+                      <Option key={opt.title} value={opt.title}>
+                        {opt.title}
+                      </Option>
+                    ))}
+                  </OptGroup>
+                ))}
               </Select>,
             )}
           </FormItem>
