@@ -26,7 +26,8 @@ export const addNotification = `
 		message,
 		dateSent,
 		timeSent,
-		isResolved
+		isResolved,
+		priority
 	)
 	VALUES (
 		:notificationID,
@@ -35,7 +36,8 @@ export const addNotification = `
 		:message,
 		:dateSent,
 		:timeSent,
-		:isResolved
+		:isResolved,
+		:priority
 	)
 `;
 
@@ -45,8 +47,10 @@ export const deleteNotification = `
 	WHERE notificationID = :notificationID
 `;
 
-export const getTotalNotifications = `
-  SELECT count(*) as total FROM notification
+export const getTotalNotifications = query => `
+  SELECT count(*) as total FROM notification ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
 `;
 
 export const getTotalNotificationsBySender = `
