@@ -346,7 +346,7 @@ router.put('/fsr/:id', async (req, res) => {
       const fsr = await Ctrl.getFSR(req.params);
 
       if (fsr.filepath) await unlink(fsr.filepath);
-      req.body.filepath = await upload(req.files.filepath, 'service-record');
+      req.body.filepath = await upload(req.files.filepath, 'service-records');
     }
 
     await Ctrl.updateFSR(req.params, req.body);

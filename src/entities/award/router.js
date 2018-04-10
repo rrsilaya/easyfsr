@@ -65,7 +65,7 @@ const router = Router();
 router.post('/award/', async (req, res) => {
   try {
     if (req.files && req.files.filepath)
-      req.body.filepath = await upload(req.files.filepath, 'award');
+      req.body.filepath = await upload(req.files.filepath, 'awards');
     const awardID = await Ctrl.addAward(req.body);
     const award = await Ctrl.getAward({ awardID });
     res.status(200).json({
@@ -153,7 +153,7 @@ router.put('/award/:awardID', async (req, res) => {
       const award = await Ctrl.getAward(req.params);
 
       if (award.filepath) await unlink(award.filepath);
-      req.body.filepath = await upload(req.files.filepath, 'award');
+      req.body.filepath = await upload(req.files.filepath, 'awards');
     }
 
     await Ctrl.updateAward(req.params, req.body);
