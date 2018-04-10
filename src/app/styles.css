@@ -214,7 +214,7 @@ img.crop {
 }
 .fsrExport .document table.equal th,
 .fsrExport .document table.equal td {
-  width: calc(100% / 11);
+  width: 0.7273in;
 }
 .fsrExport .document .mvertical {
   margin: 0.8em 0;

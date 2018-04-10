@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
-class CreativeTable extends Component {
+class ExtTable extends Component {
   render() {
     const { section, title } = this.props;
 
@@ -12,14 +12,17 @@ class CreativeTable extends Component {
         <table className="equal">
           <tbody>
             <tr>
-              <th colSpan={4}>TITLE</th>
-              <th colSpan={2}>CO-WORKERS INVOLVED</th>
-              <th colSpan={3}>DATE OF PUBLICATION/COMPLETION</th>
+              <th colSpan={4}>TITLE OF ACTIVITY/PROGRAM</th>
+              <th>NO. OF HOURS INCLUDING PREPARATION</th>
+              <th>NO. OF PARTICIPANTS</th>
+              <th>DURATION</th>
+              <th>ROLE</th>
+              <th>FUNDING AGENCY</th>
               <th colSpan={2}>APPROVED CREDIT UNITS</th>
             </tr>
             <tr>
               <td colSpan={9} className="right">
-                Creative Work Load Credits (CLC)
+                Total Extension and Community Credits (ELC)
               </td>
               <td colSpan={2}>0</td>
             </tr>
@@ -30,4 +33,4 @@ class CreativeTable extends Component {
   }
 }
 
-export default CreativeTable;
+export default ExtTable;

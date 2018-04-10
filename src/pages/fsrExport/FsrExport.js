@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import Printer from 'react-to-print';
 import { Button, Icon } from 'antd';
-import { Header, TeachingLoad, ResearchCreativeWork } from './components';
+import {
+  Header,
+  TeachingLoad,
+  ResearchCreativeWork,
+  AdminWork,
+  ExtCommServe,
+} from './components';
 
 class FsrExport extends Component {
   render() {
@@ -22,6 +28,8 @@ class FsrExport extends Component {
             <Header />
             <TeachingLoad />
             <ResearchCreativeWork />
+            <AdminWork />
+            <ExtCommServe />
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 .fsrExport {
   $documentSize = 9pt;
   $headerSize = 11pt;
+  $tableCell = (8/11)in;
 
   display: inline-block;
   max-width: 100%;
@@ -12,11 +13,9 @@
     line-height: 1.25;
 
     width: 8.5in;
-    height: auto;
     padding: 0.7in 0.5in;
-    display: table;
-    table-layout: fixed;
     position: relative;
+    overflow: visible;
     
     * {
       color: black !important;
@@ -53,7 +52,7 @@
     
     table.equal {
       th, td {
-        width: calc(100% / 11);
+        width: $tableCell;
       }
     }
 
