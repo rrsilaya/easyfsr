@@ -7,7 +7,6 @@ const subjectAttributes = [
   'subjectCode',
   'teachingLoadCreds',
   'noOfStudents',
-  'hoursPerWeek',
   'sectionCode',
   'room',
 ];

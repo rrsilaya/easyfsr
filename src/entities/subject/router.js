@@ -13,7 +13,6 @@ const router = Router();
  * @apiParam (Body Params) {String} subject.subjectCode subject code of subject
  * @apiParam (Body Params) {Number} subject.teachingLoadCreds teaching load credits of subject
  * @apiParam (Body Params) {Number} subject.noOfStudents number of students enrolled in the subject
- * @apiParam (Body Params) {Number} subject.hoursPerWeek number of hours per week subject takes up
  * @apiParam (Body Params) {String} subject.sectionCode section code of subject
  * @apiParam (Body Params) {String} subject.room room where subject is being taught
  *
@@ -86,7 +85,6 @@ router.post('/subject/', async (req, res) => {
  * @apiParam (Body Params) {String} subject.subjectCode subject code of subject
  * @apiParam (Body Params) {Number} subject.teachingLoadCreds teaching load credits of subject
  * @apiParam (Body Params) {Number} subject.noOfStudents number of students enrolled in the subject
- * @apiParam (Body Params) {Number} subject.hoursPerWeek number of hours per week subject takes up
  * @apiParam (Body Params) {String} subject.sectionCode section code of subject
  * @apiParam (Body Params) {Number} subject.room room where subject is being taught
  *

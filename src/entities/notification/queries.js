@@ -52,11 +52,3 @@ export const getTotalNotifications = query => `
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }
 `;
-
-export const getTotalNotificationsBySender = `
-  SELECT count(*) as total FROM limitedPracticeOfProf WHERE senderID = :senderID 
-`;
-
-export const getTotalNotificationsByReceiver = `
-  SELECT count(*) as total FROM limitedPracticeOfProf WHERE receiverID = :receiverID 
-`;

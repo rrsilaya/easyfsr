@@ -4,14 +4,12 @@ export const addCourse = `
 	INSERT INTO course (
 		id,
 		courseNumber,
-		hoursPerWeek,
 		school,
 		credit
 	)
 	VALUES (
 		:id,
 		:courseNumber,
-		:hoursPerWeek,
 		:school,
 		:credit
 	)
