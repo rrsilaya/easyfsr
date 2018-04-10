@@ -1,15 +1,21 @@
 .fsrExport {
+  $documentSize = 9pt;
+  $headerSize = 11pt;
+
   display: inline-block;
   max-width: 100%;
-  overflow: scroll;
   font-family: "Arial", sans-serif;
 
   .document {
     background-color: white;
-    font-size: 9pt;
+    font-size: $documentSize;
+    line-height: 1.25;
 
     width: 8.5in;
+    height: auto;
     padding: 0.7in 0.5in;
+    display: table;
+    table-layout: fixed;
     position: relative;
     
     * {
@@ -23,9 +29,16 @@
       & > * { margin: auto; }
     }
     .right { text-align: right; }
-    header { font-size: 11pt; }
+    .justify { text-align: justify; }
+    header { font-size: $headerSize; }
     label { margin-right: 0.5em; }
     
+    table {
+      font-size: $documentSize;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+    section { margin: 1em 0; }
     tr, td, th {
       border-collapse: collapse;
       border: 1px solid black;
@@ -38,6 +51,16 @@
       line-height: 1;
     }
     
+    table.equal {
+      th, td {
+        width: calc(100% / 11);
+      }
+    }
+
+    .mvertical {
+      margin: 0.8em 0;
+    }
+
     .section-header {
       margin-top: 0.5em;
     }
@@ -52,7 +75,7 @@
     position: absolute;
     top: 0.7in;
     left: 0.5in;
-    font-size: 9pt;
+    font-size: $documentSize;
   }
   
   .grid {
@@ -71,7 +94,7 @@
     &:after {
       display: block;
       border-top: 1px solid black;
-      padding: 0 3em;
+      padding: 0 1em;
       
       content: attr(data-label);
     }

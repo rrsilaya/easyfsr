@@ -153,14 +153,17 @@ img.crop {
 .fsrExport {
   display: inline-block;
   max-width: 100%;
-  overflow: scroll;
   font-family: "Arial", sans-serif;
 }
 .fsrExport .document {
   background-color: #fff;
   font-size: 9pt;
+  line-height: 1.25;
   width: 8.5in;
+  height: auto;
   padding: 0.7in 0.5in;
+  display: table;
+  table-layout: fixed;
   position: relative;
 }
 .fsrExport .document * {
@@ -178,11 +181,22 @@ img.crop {
 .fsrExport .document .right {
   text-align: right;
 }
+.fsrExport .document .justify {
+  text-align: justify;
+}
 .fsrExport .document header {
   font-size: 11pt;
 }
 .fsrExport .document label {
   margin-right: 0.5em;
+}
+.fsrExport .document table {
+  font-size: 9pt;
+  margin-bottom: 10px;
+  width: 100%;
+}
+.fsrExport .document section {
+  margin: 1em 0;
 }
 .fsrExport .document tr,
 .fsrExport .document td,
@@ -197,6 +211,13 @@ img.crop {
 }
 .fsrExport .document th {
   line-height: 1;
+}
+.fsrExport .document table.equal th,
+.fsrExport .document table.equal td {
+  width: calc(100% / 11);
+}
+.fsrExport .document .mvertical {
+  margin: 0.8em 0;
 }
 .fsrExport .document .section-header {
   margin-top: 0.5em;
@@ -227,7 +248,7 @@ img.crop {
 .fsrExport .field-line:after {
   display: block;
   border-top: 1px solid #000;
-  padding: 0 3em;
+  padding: 0 1em;
   content: attr(data-label);
 }
 .fsrExport .margin1.left {

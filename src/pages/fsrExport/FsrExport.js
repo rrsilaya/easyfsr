@@ -1,14 +1,27 @@
 import React, { Component } from 'react';
-import { Header, TeachingLoad } from './components/';
+import Printer from 'react-to-print';
+import { Button, Icon } from 'antd';
+import { Header, TeachingLoad, ResearchCreativeWork } from './components';
 
 class FsrExport extends Component {
   render() {
     return (
       <div>
-        <div className="fsrExport">
+        <Printer
+          trigger={() => (
+            <Button type="primary" size="large">
+              Print
+            </Button>
+          )}
+          content={() => this.document}
+        />
+        <br />
+        <br />
+        <div className="fsrExport" ref={el => (this.document = el)}>
           <div className="document">
             <Header />
             <TeachingLoad />
+            <ResearchCreativeWork />
           </div>
         </div>
       </div>

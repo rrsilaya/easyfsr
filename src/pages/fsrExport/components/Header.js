@@ -19,18 +19,18 @@ class Header extends Component {
           <div className="flex-mid" style={{ width: '75%' }}>
             <label>PRINTED NAME:</label>
             <div className="field-line" data-label="(Family)">
-              sdfkjjkjkjdsf
+              Silaya
             </div>
             <div className="field-line" data-label="(Given)">
-              sdfkjjkjkjdsf
+              Ralph Lawrence
             </div>
             <div className="field-line" data-label="(MI)">
-              sdfkjjkjkjdsf
+              R.
             </div>
           </div>
           <div className="flex-mid margin1 left" style={{ width: '25%' }}>
             <label>RANK:</label>
-            <div className="field-line">&nbsp;</div>
+            <div className="field-line">Assistant Professor I</div>
           </div>
         </div>
       </div>
