@@ -34,7 +34,6 @@ export const upload = (file, dest) => {
     const fileDest = `/uploads/${dest}/${filename}`;
 
     file.mv(`public/${fileDest}`, err => {
-      console.log(err);
       if (err) return reject(500);
       return resolve(fileDest);
     });
