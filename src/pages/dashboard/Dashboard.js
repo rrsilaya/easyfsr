@@ -22,8 +22,7 @@ class Dashboard extends Component {
       toggleModal,
     } = this.props;
     return (
-      <div style={{ padding: '30px' }}>
-        <h1>Dashboard</h1>
+      <div>
         <Row type="flex">
           <Col span={24}>
             <Button.Group style={styles.menu}>
