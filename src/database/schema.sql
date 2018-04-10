@@ -25,7 +25,7 @@ CREATE TABLE user(
   rank VARCHAR (30) NOT NULL,
   isArchived BOOLEAN DEFAULT 0, 
   acctType VARCHAR(10) DEFAULT 'USER', -- ADMIN / USER
-  `profileIcon` TEXT (50),
+  profileIcon VARCHAR (50) DEFAULT '/uploads/users/default.png',
   CONSTRAINT `user_pk`
     PRIMARY KEY (`userID`),
   CONSTRAINT `user_empid_uk`
@@ -100,8 +100,6 @@ CREATE TABLE `timeslot`(
   -- study load, course, courseSched
 
 CREATE TABLE `studyLoad`(
-  `fullLeaveWithPay` VARCHAR (10) DEFAULT 'NO', -- YES / NO
-  `fellowshipRecipient`  VARCHAR (10) DEFAULT 'NO', -- YES / NO
   `degree` VARCHAR (50) NOT NULL,
   `university` VARCHAR (50) NOT NULL,
   `totalSLcredits` INT (10) DEFAULT 0,
