@@ -20,11 +20,15 @@ class App extends Component {
       user,
       isGettingSession,
       isLoggingIn,
+      isAccountSettingsToggled,
+      isEditingSettings,
 
       // Dispatch
       toggleSidebar,
       login,
       logout,
+      toggleAccountSettings,
+      editSettings,
     } = this.props;
 
     return (
@@ -45,6 +49,10 @@ class App extends Component {
                     toggleSidebar={toggleSidebar}
                     logout={logout}
                     user={user}
+                    toggleAccountSettings={toggleAccountSettings}
+                    isAccountSettingsToggled={isAccountSettingsToggled}
+                    isEditingSettings={isEditingSettings}
+                    editSettings={editSettings}
                   />
                   <Layout.Content style={{ paddingBottom: '2em' }}>
                     <Switch>
