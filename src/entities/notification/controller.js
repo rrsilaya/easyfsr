@@ -82,7 +82,7 @@ export const getTotalNotifs = notification => {
       },
       (err, results) => {
         if (err) return reject(500);
-        return resolve(results);
+        return resolve(results[0]);
       },
     );
   });
