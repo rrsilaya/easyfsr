@@ -6,6 +6,8 @@ import { GridLines, Grid, VerticalGrid, Time, TimeSlot } from './components';
 
 class Schedule extends Component {
   render() {
+    const { data } = this.props;
+
     return (
       <Stage width={canvas.width} height={canvas.height}>
         <Layer>
@@ -35,12 +37,17 @@ class Schedule extends Component {
               {...text}
             />
           ))}
-          <TimeSlot
-            day="Tuesday"
-            start="8:00"
-            end="9:30"
-            content={`CMSC 100\nICSMH`}
-          />
+          {data.map((timeslot, i) => (
+            <Timeslot
+              key={i}
+              day={timeslot.day}
+              start={timeslot.timeStart}
+              end={timeslot.timeEnd}
+              content={`${timeslot.subjectCode ||
+                timeslot.courseNumber}\n${timeslot.room ||
+                timeslot.university}`}
+            />
+          ))}
         </Layer>
       </Stage>
     );
