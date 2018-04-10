@@ -1,24 +1,23 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Input, Select } from 'antd';
-import ranks from './ranks';
 
 const FormItem = Form.Item;
 const { OptGroup, Option } = Select;
 
-class EditModal extends Component {
+class AccountSettingsModal extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log(values);
-        this.props.editUser(this.props.user, values);
+        this.props.editSettings(this.props.user, values);
         this.handleAfterClose();
       }
     });
   };
 
   handleCancel = () => {
-    this.props.toggleEditModal();
+    this.props.toggleAccountSettings();
     this.handleAfterClose();
   };
 
@@ -43,7 +42,6 @@ class EditModal extends Component {
   };
 
   handleAfterClose = () => {
-    this.props.changeSelectedUser({});
     this.props.form.resetFields();
   };
 
@@ -54,13 +52,10 @@ class EditModal extends Component {
 
   render() {
     const {
-      isEditModalOpen,
-      isEditingUser,
-
-      toggleEditModal,
-
       user,
       form,
+      toggleAccountSettings,
+      isAccountSettingsToggled,
     } = this.props;
 
     const formItemLayout = {
@@ -76,9 +71,9 @@ class EditModal extends Component {
 
     return (
       <Modal
-        title="Edit User"
-        visible={isEditModalOpen}
-        onOk={toggleEditModal}
+        title="Account Settings"
+        visible={isAccountSettingsToggled}
+        onOk={toggleAccountSettings}
         onCancel={this.handleCancel}
         footer={[
           <Button key="back" onClick={this.handleCancel}>
@@ -89,7 +84,6 @@ class EditModal extends Component {
             type="primary"
             htmlType="submit"
             onClick={this.handleFormSubmit}
-            loading={isEditingUser}
           >
             Save
           </Button>,
@@ -117,37 +111,10 @@ class EditModal extends Component {
               ],
             })(<Input type="password" onBlur={this.handleConfirmBlur} />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="User Type">
-            {form.getFieldDecorator('acctType', {
-              initialValue: user.acctType,
-            })(
-              <Select>
-                <Option value="USER">User</Option>
-                <Option value="ADMIN">Admin</Option>
-              </Select>,
-            )}
-          </FormItem>
-          <FormItem {...formItemLayout} label="Rank">
-            {form.getFieldDecorator('rank', {
-              initialValue: user.rank,
-            })(
-              <Select showSearch>
-                {ranks.map(rank => (
-                  <OptGroup key={rank.title}>
-                    {rank.children.map(opt => (
-                      <Option key={opt.title} value={opt.title}>
-                        {opt.title}
-                      </Option>
-                    ))}
-                  </OptGroup>
-                ))}
-              </Select>,
-            )}
-          </FormItem>
         </Form>
       </Modal>
     );
   }
 }
 
-export default Form.create()(EditModal);
+export default Form.create()(AccountSettingsModal);

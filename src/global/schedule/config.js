@@ -27,3 +27,16 @@ export const text = {
   fill: 'white',
   fontFamily: 'Arial',
 };
+
+export const theme = [
+  '#FF6600',
+  '#086B08',
+  '#4B7188',
+  '#8C0005',
+  '#FF69B1',
+  '#191973',
+  '#474747',
+  '#8B5928',
+  '#C824F9',
+  '#8EEFC2',
+];
