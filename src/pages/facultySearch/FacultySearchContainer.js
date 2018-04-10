@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import FacultySearch from './FacultySearch';
-
+import { push } from 'react-router-redux';
 import { searchUser, resetPage } from './duck';
 
 const mapStateToProps = state => {
@@ -19,6 +19,9 @@ const mapDispatchToProps = dispatch => {
     },
     resetPage: () => {
       dispatch(resetPage());
+    },
+    pushLink: route => {
+      dispatch(push(route));
     },
   };
 };
