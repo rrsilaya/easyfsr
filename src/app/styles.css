@@ -158,10 +158,9 @@ img.crop {
 }
 .fsrExport .document {
   background-color: #fff;
-  font-size: 10pt;
+  font-size: 9pt;
   width: 8.5in;
-  height: 11in;
-  padding: 0.75in 0.7in;
+  padding: 0.7in 0.5in;
   position: relative;
 }
 .fsrExport .document * {
@@ -176,16 +175,42 @@ img.crop {
 .fsrExport .document .center > * {
   margin: auto;
 }
+.fsrExport .document .right {
+  text-align: right;
+}
 .fsrExport .document header {
   font-size: 11pt;
 }
 .fsrExport .document label {
   margin-right: 0.5em;
 }
+.fsrExport .document tr,
+.fsrExport .document td,
+.fsrExport .document th {
+  border-collapse: collapse;
+  border: 1px solid #000;
+  text-align: center;
+}
+.fsrExport .document td,
+.fsrExport .document th {
+  padding: 5px;
+}
+.fsrExport .document th {
+  line-height: 1;
+}
+.fsrExport .document .section-header {
+  margin-top: 0.5em;
+}
+.fsrExport .document .highlight.orange {
+  background: #f90;
+}
+.fsrExport .document .highlight.blue {
+  background: #9cc;
+}
 .fsrExport .form-float {
   position: absolute;
-  top: 0.75in;
-  left: 0.7in;
+  top: 0.7in;
+  left: 0.5in;
   font-size: 9pt;
 }
 .fsrExport .grid {

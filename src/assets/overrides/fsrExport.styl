@@ -6,11 +6,10 @@
 
   .document {
     background-color: white;
-    font-size: 10pt;
+    font-size: 9pt;
 
     width: 8.5in;
-    height: 11in;
-    padding: 0.75in 0.7in;
+    padding: 0.7in 0.5in;
     position: relative;
     
     * {
@@ -23,14 +22,36 @@
       
       & > * { margin: auto; }
     }
+    .right { text-align: right; }
     header { font-size: 11pt; }
     label { margin-right: 0.5em; }
+    
+    tr, td, th {
+      border-collapse: collapse;
+      border: 1px solid black;
+      text-align: center;
+    }
+    
+    td, th { padding: 5px; }
+
+    th {
+      line-height: 1;
+    }
+    
+    .section-header {
+      margin-top: 0.5em;
+    }
+
+    .highlight {
+      &.orange { background: #FF9900; }
+      &.blue { background: #99CCCC; }
+    }
   }
   
   .form-float {
     position: absolute;
-    top: 0.75in;
-    left: 0.7in;
+    top: 0.7in;
+    left: 0.5in;
     font-size: 9pt;
   }
   

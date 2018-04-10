@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import { Header } from './components/';
+import { Header, TeachingLoad } from './components/';
 
 class FsrExport extends Component {
   render() {
     return (
-      <div className="fsrExport">
-        <div className="document">
-          <Header />
+      <div>
+        <div className="fsrExport">
+          <div className="document">
+            <Header />
+            <TeachingLoad />
+          </div>
         </div>
       </div>
     );
