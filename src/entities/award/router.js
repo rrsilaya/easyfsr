@@ -19,6 +19,7 @@ const router = Router();
  * @apiParam (Body Params) {String} proffesionalChair professional chai of award
  * @apiParam (Body Params) {Date} approvedStartDate approved start date of award
  * @apiParam (Body Params) {Date} endDate end date of award
+ * @apiParam (Body Params) {File} [filepath] file path to image of award
  *
  * @apiSuccess {Object} award new Award
  * @apiSuccess {Number} award.id ID of award
@@ -30,24 +31,25 @@ const router = Router();
  * @apiSuccess {String} award.professionalChair professional chair of award
  * @apiSuccess {Date} award.approvedStartDate approved start date of award
  * @apiSuccess {Date} award.endDate end date of award
+ * @apiSuccess {String} award.filepath file path to image of award
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *  {
- *     "status": 200,
- *     "message": "Successfully added award",
- *     "data":
- *        {
- *           "awardID": 4,
- *           "id": 3,
- *           "grantF": "Hi",
- *           "chairGrantTitle": "Meaee",
- *           "collegeHasNominated": "156",
- *           "recipientOrNominee": "Youuuu",
- *           "professionalChair": "her",
- *           "approvedStartDate": "1999-12-31T16:00:00.000Z",
- *           "endDate": "2000-12-31T16:00:00.000Z"
- *         }
+ *    "status": 200,
+ *    "message": "Successfully created award",
+ *    "data": {
+ *        "awardID": 94,
+ *        "id": 1,
+ *        "grantF": "samp",
+ *        "chairGrantTitle": "samp",
+ *        "collegeHasNominated": "YES",
+ *        "recipientOrNominee": "nominee",
+ *        "professionalChair": "samp",
+ *        "approvedStartDate": "2018-09-08T16:00:00.000Z",
+ *        "endDate": "2019-09-08T16:00:00.000Z",
+ *        "filepath": "/uploads/award/Screenshot from 2018-r1EV-S5sM.png"
+ *    }
  *   }
  *
  * @apiError (Error 500) {String} status status code
@@ -96,6 +98,7 @@ router.post('/award/', async (req, res) => {
  * @apiParam (Body Params) {String} proffesionalChair professional chair of award
  * @apiParam (Body Params) {Date} approvedStartDate approved start date of award
  * @apiParam (Body Params) {Date} endDate end date of award
+ * @apiParam (Body Params) {File} [filepath] file path to image of award
  *
  * @apiSuccess {Object} award Award updated
  * @apiSuccess {Number} award.id ID of award
@@ -106,23 +109,24 @@ router.post('/award/', async (req, res) => {
  * @apiSuccess {String} award.professionalChair professional chair of award
  * @apiSuccess {Date} award.approvedStartDate approved start date of award
  * @apiSuccess {Date} award.endDate end date of award
+ * @apiSuccess {String} award.filepath file path to image of award
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
- *    "status": 200,
- *    "message": "Successfully updated award",
- *    "data":
- *        {
- *            "awardID": 4,
- *            "id": 3,
- *            "grantF": "Hlloasdsad",
- *            "chairGrantTitle": "Mea123123",
- *            "collegeHasNominated": "hl1445",
- *            "recipientOrNominee": "You456",
- *            "professionalChair": "him334",
- *            "approvedStartDate": "1999-12-31T16:00:00.000Z",
- *            "endDate": "2000-12-31T16:00:00.000Z"
+ *      "status": 200,
+ *      "message": "Successfully created award",
+ *      "data": {
+ *          "awardID": 94,
+ *          "id": 1,
+ *          "grantF": "samp",
+ *          "chairGrantTitle": "samp",
+ *          "collegeHasNominated": "YES",
+ *          "recipientOrNominee": "nominee",
+ *          "professionalChair": "samp",
+ *          "approvedStartDate": "2018-09-08T16:00:00.000Z",
+ *          "endDate": "2019-09-08T16:00:00.000Z",
+ *          "filepath": "/uploads/award/Screenshot from 2018-r1EV-S5sM.png"
  *        }
  *   }
  *
@@ -191,6 +195,7 @@ router.put('/award/:awardID', async (req, res) => {
  * @apiSuccess {String} award.professionalChair professional chair of award
  * @apiSuccess {Date} award.approvedStartDate approved start date of award
  * @apiSuccess {Date} award.endDate end date of award
+ * @apiSuccess {String} award.filepath file path to image of award
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -270,6 +275,7 @@ router.delete('/award/:awardID', async (req, res) => {
  * @apiSuccess {String} award.professionalChair professional chair of award
  * @apiSuccess {Date} award.approvedStartDate approved start date of award
  * @apiSuccess {Date} award.endDate end date of award
+ * @apiSuccess {String} award.filepath file path to image of award
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -355,6 +361,7 @@ router.get('/award/:awardID', async (req, res) => {
  * @apiSuccess {String} award.professionalChair professional chair of award
  * @apiSuccess {Date} award.approvedStartDate approved start date of award
  * @apiSuccess {Date} award.endDate end date of award
+ * @apiSuccess {String} award.filepath file path to image of award
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
