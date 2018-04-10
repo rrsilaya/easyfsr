@@ -38,7 +38,7 @@ class Schedule extends Component {
             />
           ))}
           {data.map((timeslot, i) => (
-            <Timeslot
+            <TimeSlot
               key={i}
               day={timeslot.day}
               start={timeslot.timeStart}
