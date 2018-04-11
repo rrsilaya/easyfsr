@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
 import { upload, unlink } from './../../utils';
 
@@ -11,19 +10,19 @@ const router = Router();
  * @apiName addCreativeWork
 
  * @apiParam (Body Params) {Integer} id ID of related FSR
- * @apiParam (Body Params) {Date} creativeWork.date date of creative work
- * @apiParam (Body Params) {String} creativeWork.title title of creative work
- * @apiParam (Body Params) {String} creativeWork.type type of creative work
- * @apiParam (Body Params) {Integer} creativeWork.credUnit credit units of creative work
- * @apiParam (Body Params) {Integer} creativeWork.userID user ID of creative work
- *
+ * @apiParam (Body Params) {Date} date date of creative work
+ * @apiParam (Body Params) {String} title title of creative work
+ * @apiParam (Body Params) {String}  type type of creative work
+ * @apiParam (Body Params) {Integer} credUnit credit units of creative work
+ * @apiParam (Body Params) {File} filepath filepath 
+ * 
  * @apiSuccess {Object} creativeWork createWork added
  * @apiSuccess {Integer} id ID of related FSR
  * @apiSuccess {Date} creativeWork.date date of creative work
  * @apiSuccess {String} creativeWork.title title of creative work
  * @apiSuccess {String} creativeWork.type type of creative work
  * @apiSuccess {Integer} creativeWork.credUnit credit units of creative work
- * @apiSuccess {Integer} creativeWork.userID user ID of creative work
+ * @apiSuccess {String} creativeWork.filepath filepath
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -36,7 +35,8 @@ const router = Router();
  *         "date": "0000-00-00",
  *         "title": "test",
  *         "type": "writer",
- *         "credUnit": 1
+ *         "credUnit": 1,
+ *         "filepath":/uploads/creativeWorls/asdasdalsd-192e02d.png
  *     }
  * }
  *
