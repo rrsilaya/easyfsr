@@ -97,7 +97,7 @@ router.post('/fsr/', async (req, res) => {
  * @apiSuccess {Number} fsr.userID ID of user
  * @apiSuccess {String} fsr.acadYear academic year the fsr is filed
  * @apiSuccess {String} fsr.semester semester the fsr is filed
- * @apiSucess {Number} fsr.teachingLoadCreds  teaching load credits
+ * @apiSuccess {Number} fsr.teachingLoadCreds  teaching load credits
  * @apiSuccess {Boolean} fsr.isChecked indicates if fsr is approved or not
  * @apiSuccess {Boolean} fsr.isTurnedIn indicates if fsr is turned in or not
  *
@@ -169,7 +169,7 @@ router.delete('/fsr/:id', async (req, res) => {
  * @apiSuccess {Number} fsr.userID ID of user
  * @apiSuccess {String} fsr.acadYear academic year the fsr is filed
  * @apiSuccess {String} fsr.semester semester the fsr is filed
- * @apiSucess {Number} fsr.teachingLoadCreds  teaching load credits
+ * @apiSuccess {Number} fsr.teachingLoadCreds  teaching load credits
  * @apiSuccess {Boolean} fsr.isChecked indicates if fsr is approved or not
  * @apiSuccess {Boolean} fsr.isTurnedIn indicates if fsr is turned in or not
  *
