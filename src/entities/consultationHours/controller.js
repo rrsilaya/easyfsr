@@ -72,7 +72,6 @@ export const getConsultationHours = consultationHours => {
 
       (err, results) => {
         if (err) return reject(500);
-        else if (!results.length) return reject(404);
         return resolve(results);
       },
     );
