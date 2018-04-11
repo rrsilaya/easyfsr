@@ -2,6 +2,7 @@ import { handle } from 'redux-pack';
 import { notification } from 'antd';
 import { push } from 'react-router-redux';
 import * as Api from '../../api';
+import { updateProfileIcon } from '../../app/duck';
 
 // Action Types
 const GET_USER = 'PROFILE/GET_USER';
@@ -34,6 +35,7 @@ export const uploadIcon = (user, form) => {
           notification.success({
             message: 'Successfully upload profile icon.',
           });
+          dispatch(updateProfileIcon(user, form));
         },
         onFailure: () => {
           notification.error({

@@ -9,6 +9,7 @@ const GET_SESSION = 'APP/GET_SESSION';
 const LOGOUT = 'APP/LOGOUT';
 const TOGGLE_ACCOUNT_SETTINGS = 'APP/TOGGLE_ACCOUNT_SETTINGS';
 const EDIT_SETTINGS = 'APP/EDIT_SETTINGS';
+const UPDATE_ICON = 'APP/UPDATE_ICON';
 // Action Creators
 export const toggleSidebar = () => ({
   type: TOGGLE_SIDEBAR,
@@ -68,6 +69,29 @@ export const editSettings = (user, body) => {
     });
   };
 };
+
+export const updateProfileIcon = (user, form) => {
+  const { userID } = user;
+  return dispatch => {
+    return dispatch({
+      type: UPDATE_ICON,
+      promise: Api.editUser(userID, form),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Succesfully uploaded profile icon.',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while uploading icon.',
+          });
+        },
+      },
+    });
+  };
+};
+
 // Initial State
 const initialState = {
   isSidebarCollapsed: false,
@@ -75,6 +99,7 @@ const initialState = {
   isGettingSession: true,
   isLoggingIn: false,
   isEditingSettings: false,
+  isUpdatingIcon: false,
 
   user: null,
 };
@@ -153,6 +178,22 @@ const reducer = (state = initialState, action) => {
           isEditingSettings: false,
         }),
       });
+    case UPDATE_ICON:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isUpdatingIcon: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          user: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isUpdatingIcon: false,
+        }),
+      });
+
     default:
       return state;
   }
