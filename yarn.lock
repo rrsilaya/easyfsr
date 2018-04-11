@@ -6880,6 +6880,13 @@ react-slick@~0.17.0:
     object-assign "^4.1.0"
     opencollective "^1.0.3"
 
+react-to-print@^1.0.14:
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/react-to-print/-/react-to-print-1.0.14.tgz#556d70f1582c1618091301028a685138e9d2deb4"
+  dependencies:
+    prop-types "^15.6.0"
+    react "^16.2.0"
+
 react@^16.2.0:
   version "16.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.2.0.tgz#a31bd2dab89bff65d42134fa187f24d054c273ba"
