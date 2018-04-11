@@ -100,7 +100,7 @@ router.delete('/rCoAuthor/:rCoAuthorID', async (req, res) => {
 router.put('/rCoAuthor/:rCoAuthorID', async (req, res) => {
   try {
     await Ctrl.updaterCoAuthor(req.params, req.body);
-    const rCoAuthor = await Ctrl.getResearch(req.params);
+    const rCoAuthor = await Ctrl.getrCoAuthor(req.params);
     res.status(200).json({
       status: 200,
       message: 'Successfully updated research co-author',

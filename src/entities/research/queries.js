@@ -1,6 +1,6 @@
 import { formatQueryParams } from '../../utils';
 
-export const addReseach = `
+export const addResearch = `
 	INSERT INTO research (
 		id,
 		researchID,

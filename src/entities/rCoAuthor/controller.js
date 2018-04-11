@@ -70,7 +70,7 @@ export const getrCoAuthors = rCoAuthor => {
 export const getTotalrCoAuthors = rCoAuthor => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getTotalResearches(filtered(rCoAuthor, rCoAuthorAttributes)),
+      Query.getTotalrCoAuthors(filtered(rCoAuthor, rCoAuthorAttributes)),
       {
         field: 'name',
         ...escapeSearch(rCoAuthor, searchFields, rCoAuthor.limit),
