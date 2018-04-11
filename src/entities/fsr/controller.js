@@ -9,6 +9,7 @@ const fsrAttributes = [
   'isChecked',
   'teachingLoadCreds',
   'filepath',
+  'isTurnedIn',
 ];
 
 const searchFields = [
@@ -17,6 +18,7 @@ const searchFields = [
   'semester',
   'isChecked',
   'teachingLoadCreds',
+  'isTurnedIn',
 ];
 
 export const addFSR = fsr => {
