@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
 
 const router = Router();
@@ -7,7 +6,7 @@ const router = Router();
 router.post('/rCoAuthor/', async (req, res) => {
   try {
     const rCoAuthorID = await Ctrl.addrCoAuthor(req.body);
-    const rCoAuthor = await Ctrl.getrCoAuthor(id);
+    const rCoAuthor = await Ctrl.getrCoAuthor(rCoAuthorID);
     res.status(200).json({
       status: 200,
       message: 'Successfully created research co-author',
