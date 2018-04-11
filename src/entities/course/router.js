@@ -8,7 +8,6 @@ const router = Router();
  * @apiGroup Course
  * @apiName addCourse
  *
- * @apiParam (Body Params) {Number} hoursPerWeek number of hours of course per week
  * @apiParam (Body Params) {String} school school course is being taken
  * @apiParam (Body Params) {Number} credit credit of course
  * @apiParam (Body Params) {String} courseNumber courseNumber of course
@@ -76,7 +75,6 @@ router.post('/course', async (req, res) => {
  * @apiName updateCourse
  *
  * @apiParam (Query Params) {String} [courseNumber] courseNumber of course
- * @apiParam (Body Params) {Number} [hoursPerWeek] number of hours of course per week
  * @apiParam (Body Params) {String} [school] school course is being taken
  * @apiParam (Body Params) {Number} [credit] credit of course
  * @apiParam (Body Params) {String} [id] fsr id

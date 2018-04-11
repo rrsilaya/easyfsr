@@ -6,7 +6,6 @@ export const addSubject = `
 		subjectCode,
 		teachingLoadCreds,
 		noOfStudents,
-		hoursPerWeek,
 		sectionCode,
 		room
 	)
@@ -15,7 +14,6 @@ export const addSubject = `
 		:subjectCode,
 		:teachingLoadCreds,
 		:noOfStudents,
-		:hoursPerWeek,
 		:sectionCode,
 		:room
 	)

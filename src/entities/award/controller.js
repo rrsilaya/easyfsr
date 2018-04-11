@@ -11,6 +11,7 @@ const awardAttributes = [
   'professionalChair',
   'approvedStartDate',
   'endDate',
+  'filepath',
 ];
 
 const searchFields = [
@@ -24,7 +25,7 @@ const searchFields = [
 
 export const addAward = award => {
   return new Promise((resolve, reject) => {
-    db.query(Query.addAward, award, (err, results) => {
+    db.query(Query.addAward, { filepath: '', ...award }, (err, results) => {
       if (err) return reject(500);
       return resolve(results.insertId);
     });
