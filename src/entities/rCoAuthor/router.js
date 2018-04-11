@@ -4,53 +4,34 @@ import * as Ctrl from './controller';
 const router = Router();
 
 /**
- * @api {post} /research addResearch
- * @apiGroup Research
- * @apiName addResearch
+ * @api {post} /rCoAuthor addrCoAuthor
+ * @apiGroup rCoAuthor
+ * @apiName addrCoAuthor
  *
- * @apiParam (Body Params) {String} id of fsr
- * @apiParam (Body Params) {String} researchID ID of research
- * @apiParam (Body Params) {String} type type of research
- * @apiParam (Body Params) {String} role role of research
- * @apiParam (Body Params) {String} title title of research
- * @apiParam (Body Params) {String} startDate start date of research
- * @apiParam (Body Params) {String} endDate end date of research
- * @apiParam (Body Params) {String} funding funding of research
- * @apiParam (Body Params) {String} approvedUnits approved units of research
+ * @apiParam (Body Params) {Number} id of fsr
+ * @apiParam (Body Params) {Number} researchID ID of research
+ * @apiParam (Body Params) {String} name name of co-author
  *
  * @apiSuccess {Object} research Successfully added research
- * @apiSuccess {String} research.researchID ID of research
- * @apiSuccess {String} research.type type of research
- * @apiSuccess {String} research.role role of research
- * @apiSuccess {String} research.title title of research
- * @apiSuccess {String} research.startDate start date of research
- * @apiSuccess {String} research.endDate end date of research
- * @apiSuccess {String} research.funding funding of research
- * @apiSuccess {String} research.approvedUnits approved units of research
+ * @apiSuccess {Number} research.id ID of fsr
+ * @apiSuccess {Number} research.researchID ID of research
+ * @apiSuccess {String} research.name name of co-author
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *     "status": 200,
- *     "message": "Successfully created research",
- *     "data": [
+ *     "message": "Successfully created research co-author",
+ *     "data":
  *         {
  *           "id": 1,
  *           "researchID": 92,
- *           "type": "annyeonglol",
- *           "role": "role1",
- *           "title": "title",
- *           "startDate": "2013-01-31T16:00:00.000Z",
- *           "endDate": "2015-01-31T16:00:00.000Z",
- *           "funding": "fund",
- *           "approvedUnits": "20",
- *           "filepath": "/uploads/researches/gold-SJ8tMl3sf.png"
+ *           "name": "annyeonglol",
  *         }
- *     ]
  *   }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {Number} status status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
@@ -79,51 +60,46 @@ router.post('/rCoAuthor/', async (req, res) => {
 });
 
 /**
- * @api {get} /research/:researchID getResearch
- * @apiGroup Research
- * @apiName getResearch
+ * @api {get} /rCoAuthor/:rCoAuthorID getrCoAuthor
+ * @apiGroup rCoAuthor
+ * @apiName getrCoAuthor
  *
- * @apiParam (Query Params) {String} id of fsr
+ * @apiParam (Query Params) {Number} researchID ID of research
  *
- * @apiSuccess {Object} research Successfully fetched research
- * @apiSuccess {String} research.researchID ID of research
- * @apiSuccess {String} research.type type of research
- * @apiSuccess {String} research.role role of research
- * @apiSuccess {String} research.title title of research
- * @apiSuccess {Date} research.startDate start date of research
- * @apiSuccess {Date} research.endDate end date of research
- * @apiSuccess {String} research.funding funding of research
- * @apiSuccess {String} research.approvedUnits approved units of research
+ * @apiSuccess {Object} research Successfully added research
+ * @apiSuccess {Number} research.id ID of fsr
+ * @apiSuccess {Number} research.researchID ID of research
+ * @apiSuccess {String} research.name name of co-author
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
- *   "status": 200,
- *   "message": "Successfully fetched researches",
- *   "data": [
- *       {
+ *     "status": 200,
+ *     "message": "Successfully fetched research co-author",
+ *     "data":
+ *         {
  *           "id": 1,
- *           "researchID": 1,
- *           "type": "Implementation",
- *           "role": "Sample Role",
- *           "title": "Sample Title",
- *           "startDate": "2017-10-20T16:00:00.000Z",
- *           "endDate": null,
- *           "funding": "Sample Funding",
- *           "approvedUnits": "6",
- *           "filepath": "/uploads/researches/gold-SJ8tMl3sf.png"
- *       }
- *    ]
+ *           "researchID": 92,
+ *           "name": "annyeonglol",
+ *         }
  *   }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {Number} status status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 Research co-author not found
+ * {
+ *   "status": 404,
+ *   "message": "Research co-author not found"
+ * }
  */
 router.get('/rCoAuthor/:rCoAuthorID', async (req, res) => {
   try {
@@ -148,72 +124,47 @@ router.get('/rCoAuthor/:rCoAuthorID', async (req, res) => {
 });
 
 /**
- * @api {get} /research getResearches
- * @apiGroup Research
- * @apiName getResearches
+ * @api {get} /rCoAuthor getrCoAuthors
+ * @apiGroup rCoAuthor
+ * @apiName getrCoAuthors
  *
- * @apiParam (Query Params) {String} [id] of fsr
- * @apiParam (Query Params) {String} [researchID] ID of research
- * @apiParam (Query Params) {String} [type] type of research
- * @apiParam (Query Params) {String} [role] role of research
- * @apiParam (Query Params) {String} [title] title of research
- * @apiParam (Query Params) {Date} [startDate] start date of research
- * @apiParam (Query Params) {Date} [endDate] end date of research
- * @apiParam (Query Params) {String} [funding] funding of research
- * @apiParam (Query Params) {String} [approvedUnits] approved units of research
- * @apiParam (Query Params) {Number} [limit] count limit of researches to fetch
+ * @apiParam (Query Params) {Number} [id] ID of research
+ * @apiParam (Query Params) {Number} [researchID] ID of research
+ * @apiParam (Query Params) {String} [name] name of co-author
+ * @apiParam (Query Params) {Number} [page] page number
+ * @apiParam (Query Params) {Number} [limit] count limit of users to fetch
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
- * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'type'
+ * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'name'
  *
- *
- * @apiSuccess {Object} research Successfully fetched researches
- * @apiSuccess {String} research.researchID ID of research
- * @apiSuccess {String} research.type type of research
- * @apiSuccess {String} research.role role of research
- * @apiSuccess {String} research.title title of research
- * @apiSuccess {Date} research.startDate start date of research
- * @apiSuccess {Date} research.endDate end date of research
- * @apiSuccess {String} research.funding funding of research
- * @apiSuccess {String} research.approvedUnits approved units of research
+ * @apiSuccess {Object} research Successfully added research
+ * @apiSuccess {Number} research.id ID of fsr
+ * @apiSuccess {Number} research.researchID ID of research
+ * @apiSuccess {String} research.name name of co-author
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
- *   "status": 200,
- *   "message": "Successfully fetched researches",
- *   "data": [
- *       {
+ *     "status": 200,
+ *     "message": "Successfully fetched research co-authors",
+ *     "data": [
+ *         {
  *           "id": 1,
- *           "researchID": 1,
- *           "type": "Implementation",
- *           "role": "Sample Role",
- *           "title": "Sample Title",
- *           "startDate": "2017-10-20T16:00:00.000Z",
- *           "endDate": null,
- *           "funding": "Sample Funding",
- *           "approvedUnits": "6",
- *           "filepath": "/uploads/researches/gold-SJ8tMl3sf.png"
- *       },
- *       {
- *           "id": 27,
- *           "researchID": 27,
- *           "type": "Implementation",
- *           "role": "Sample Role",
- *           "title": "Sample Title",
- *           "startDate": "2017-12-02T16:00:00.000Z",
- *           "endDate": null,
- *           "funding": "Sample Funding",
- *           "approvedUnits": "4",
- *           "filepath": "/uploads/researches/gold-SJ8tMl3sf.png"
- *       }
- *    ],
+ *           "researchID": 92,
+ *           "name": "annyeonglol",
+ *         },
+ *         {
+ *           "id": 1,
+ *           "researchID": 92,
+ *           "name": "annyeonglol",
+ *         },
+ *       ]
  *     "total": 2,
- *     "limit": 12,
- *     "page": 1,
- *     "pages": 1
- *   }
+ *     "limit": 2,
+ *     "page": 8,
+ *     "pages": 8
+ * }
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -221,6 +172,14 @@ router.get('/rCoAuthor/:rCoAuthorID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 Research co-author not found
+ * {
+ *   "status": 404,
+ *   "message": "Research co-author not found"
+ * }
  */
 router.get('/rCoAuthor/', async (req, res) => {
   try {
@@ -252,51 +211,46 @@ router.get('/rCoAuthor/', async (req, res) => {
 });
 
 /**
- * @api {delete} /research/:researchID deleteResearch
- * @apiGroup Research
- * @apiName deleteResearch
+ * @api {delete} /rCoAuthor/:rCoAuthorID deleterCoAuthor
+ * @apiGroup rCoAuthor
+ * @apiName deleterCoAuthor
  *
- * @apiParam (Query Params) {String} id of fsr
+ * @apiParam (Query Params) {Number} researchID ID of research
  *
- * @apiSuccess {Object} research Successfully deleted research
- * @apiSuccess {String} research.researchID ID of research
- * @apiSuccess {String} research.type type of research
- * @apiSuccess {String} research.role role of research
- * @apiSuccess {String} research.title title of research
- * @apiSuccess {String} research.startDate start date of research
- * @apiSuccess {String} research.endDate end date of research
- * @apiSuccess {String} research.funding funding of research
- * @apiSuccess {String} research.approvedUnits approved units of research
+ * @apiSuccess {Object} research Successfully added research
+ * @apiSuccess {Number} research.id ID of fsr
+ * @apiSuccess {Number} research.researchID ID of research
+ * @apiSuccess {String} research.name name of co-author
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
- *      "status": 200,
- *      "message": "Successfully deleted research",
- *       "data": [
- *       {
- *           "id": 13,
- *           "researchID": 13,
- *           "type": "Implementation",
- *           "role": "Sample Role",
- *           "title": "Sample Title",
- *           "startDate": "2017-11-01T16:00:00.000Z",
- *           "endDate": null,
- *           "funding": "Sample Funding",
- *           "approvedUnits": "5",
- *           "filepath": "/uploads/researches/gold-SJ8tMl3sf.png"
- *       }
- *     ]
+ *     "status": 200,
+ *     "message": "Successfully deleted research co-author",
+ *     "data":
+ *         {
+ *           "id": 1,
+ *           "researchID": 92,
+ *           "name": "annyeonglol",
+ *         }
  *   }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {Number} status status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 Research co-author not found
+ * {
+ *   "status": 404,
+ *   "message": "Research co-author not found"
+ * }
  */
 router.delete('/rCoAuthor/:rCoAuthorID', async (req, res) => {
   try {
@@ -322,53 +276,35 @@ router.delete('/rCoAuthor/:rCoAuthorID', async (req, res) => {
 });
 
 /**
- * @api {put} /research/:researchID updateResearch
- * @apiGroup Research
- * @apiName updateResearch
+ * @api {put} /rCoAuthor updaterCoAuthor
+ * @apiGroup rCoAuthor
+ * @apiName updaterCoAuthor
  *
- * @apiParam (Query Params) {String} id of fsr
- * @apiParam (Body Params) {String} researchID ID of research
- * @apiParam (Body Params) {String} type type of research
- * @apiParam (Body Params) {String} role role of research
- * @apiParam (Body Params) {String} title title of research
- * @apiParam (Body Params) {String} startDate start date of research
- * @apiParam (Body Params) {String} endDate end date of research
- * @apiParam (Body Params) {String} funding funding of research
- * @apiParam (Body Params) {String} approvedUnits approved units of research
+ * @apiParam (Query Params) {Number} researchID ID of research
  *
- * @apiSuccess {Object} research Successfully updated research
- * @apiSuccess {String} research.researchID ID of research
- * @apiSuccess {String} research.type type of research
- * @apiSuccess {String} research.role role of research
- * @apiSuccess {String} research.title title of research
- * @apiSuccess {String} research.startDate start date of research
- * @apiSuccess {String} research.endDate end date of research
- * @apiSuccess {String} research.funding funding of research
- * @apiSuccess {String} research.approvedUnits approved units of research
+ * @apiParam (Body Params) {Number} [id] of fsr
+ * @apiParam (Body Params) {String} [name] name of co-author
+ *
+ * @apiSuccess {Object} research Successfully added research
+ * @apiSuccess {Number} research.id ID of fsr
+ * @apiSuccess {Number} research.researchID ID of research
+ * @apiSuccess {String} research.name name of co-author
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
- *      "status": 200,
- *      "message": "Successfully updated research",
- *      "data": [
- *       {
+ *     "status": 200,
+ *     "message": "Successfully updated research co-author",
+ *     "data":
+ *         {
  *           "id": 1,
- *           "researchID": 17,
- *           "type": "annyeonglol",
- *           "role": "role1",
- *           "title": "title",
- *           "startDate": "2013-01-31T16:00:00.000Z",
- *           "endDate": "2015-01-31T16:00:00.000Z",
- *           "funding": "fund",
- *           "approvedUnits": "20",
- *           "filepath": "/uploads/researches/gold-SJ8tMl3sf.png"
- *       }
- *      ]
+ *           "researchID": 92,
+ *           "name": "annyeonglol",
+ *         }
  *   }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {Number} status status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
@@ -376,7 +312,6 @@ router.delete('/rCoAuthor/:rCoAuthorID', async (req, res) => {
  *     "message": "Internal server error"
  *   }
  */
-
 router.put('/rCoAuthor/:rCoAuthorID', async (req, res) => {
   try {
     await Ctrl.updaterCoAuthor(req.params, req.body);

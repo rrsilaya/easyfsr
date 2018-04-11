@@ -8,32 +8,35 @@ const router = Router();
  * @apiGroup Research
  * @apiName addResearch
  *
- * @apiParam (Body Params) {String} id of fsr
- * @apiParam (Body Params) {String} researchID ID of research
+ * @apiParam (Body Params) {Number} id of fsr
+ * @apiParam (Body Params) {Number} researchID ID of research
  * @apiParam (Body Params) {String} type type of research
  * @apiParam (Body Params) {String} role role of research
  * @apiParam (Body Params) {String} title title of research
- * @apiParam (Body Params) {String} startDate start date of research
- * @apiParam (Body Params) {String} endDate end date of research
+ * @apiParam (Body Params) {Date} startDate start date of research
+ * @apiParam (Body Params) {Date} endDate end date of research
  * @apiParam (Body Params) {String} funding funding of research
  * @apiParam (Body Params) {String} approvedUnits approved units of research
+ * @apiParam (Body Params) {File} [filepath] filepath
  *
  * @apiSuccess {Object} research Successfully added research
  * @apiSuccess {String} research.researchID ID of research
+ * @apiSuccess {String} research.id ID of fsr
  * @apiSuccess {String} research.type type of research
  * @apiSuccess {String} research.role role of research
  * @apiSuccess {String} research.title title of research
- * @apiSuccess {String} research.startDate start date of research
- * @apiSuccess {String} research.endDate end date of research
+ * @apiSuccess {Date} research.startDate start date of research
+ * @apiSuccess {Date} research.endDate end date of research
  * @apiSuccess {String} research.funding funding of research
  * @apiSuccess {String} research.approvedUnits approved units of research
+ * @apiSuccess {String} research.filepath filepath
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *     "status": 200,
  *     "message": "Successfully created research",
- *     "data": [
+ *     "data":
  *         {
  *           "id": 1,
  *           "researchID": 92,
@@ -46,11 +49,10 @@ const router = Router();
  *           "approvedUnits": "20",
  *           "filepath": "/uploads/researches/gold-Hk9N-l2sf.png"
  *         }
- *     ]
  *   }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {Number} status status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
@@ -86,10 +88,11 @@ router.post('/research/', async (req, res) => {
  * @apiGroup Research
  * @apiName getResearch
  *
- * @apiParam (Query Params) {String} id of fsr
+ * @apiParam (Query Params) {Number} researchID id of research
  *
  * @apiSuccess {Object} research Successfully fetched research
- * @apiSuccess {String} research.researchID ID of research
+ * @apiSuccess {Number} research.id ID of fsr
+ * @apiSuccess {Number} research.researchID ID of research
  * @apiSuccess {String} research.type type of research
  * @apiSuccess {String} research.role role of research
  * @apiSuccess {String} research.title title of research
@@ -97,13 +100,14 @@ router.post('/research/', async (req, res) => {
  * @apiSuccess {Date} research.endDate end date of research
  * @apiSuccess {String} research.funding funding of research
  * @apiSuccess {String} research.approvedUnits approved units of research
+ * @apiSuccess {String} research.filepath filepath
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *   "status": 200,
- *   "message": "Successfully fetched researches",
- *   "data": [
+ *   "message": "Successfully fetched research",
+ *   "data":
  *       {
  *           "id": 1,
  *           "researchID": 1,
@@ -117,17 +121,24 @@ router.post('/research/', async (req, res) => {
  *           "filepath": "/uploads/researches/gold-Hk9N-l2sf.png"
  *
  *       }
- *    ]
  *   }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {Number} status error status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 FSR not found
+ * {
+ *   "status": 404,
+ *   "message": "Research not found"
+ * }
  */
 router.get('/research/:researchID', async (req, res) => {
   try {
@@ -156,8 +167,8 @@ router.get('/research/:researchID', async (req, res) => {
  * @apiGroup Research
  * @apiName getResearches
  *
- * @apiParam (Query Params) {String} [id] of fsr
- * @apiParam (Query Params) {String} [researchID] ID of research
+ * @apiParam (Query Params) {Number} [id] of fsr
+ * @apiParam (Query Params) {Number} [researchID] ID of research
  * @apiParam (Query Params) {String} [type] type of research
  * @apiParam (Query Params) {String} [role] role of research
  * @apiParam (Query Params) {String} [title] title of research
@@ -165,13 +176,15 @@ router.get('/research/:researchID', async (req, res) => {
  * @apiParam (Query Params) {Date} [endDate] end date of research
  * @apiParam (Query Params) {String} [funding] funding of research
  * @apiParam (Query Params) {String} [approvedUnits] approved units of research
+ * @apiParam (Query Params) {File} [filepath] filepath
  * @apiParam (Query Params) {Number} [limit] count limit of researches to fetch
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'type'
- *
+ * @apiParam (Query Params) {String} [page] page number
  *
  * @apiSuccess {Object} research Successfully fetched researches
- * @apiSuccess {String} research.researchID ID of research
+ * @apiSuccess {Number} research.id ID of fsr
+ * @apiSuccess {Number} research.researchID ID of research
  * @apiSuccess {String} research.type type of research
  * @apiSuccess {String} research.role role of research
  * @apiSuccess {String} research.title title of research
@@ -179,13 +192,15 @@ router.get('/research/:researchID', async (req, res) => {
  * @apiSuccess {Date} research.endDate end date of research
  * @apiSuccess {String} research.funding funding of research
  * @apiSuccess {String} research.approvedUnits approved units of research
+ * @apiSuccess {String} research.filepath filepath
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *   "status": 200,
  *   "message": "Successfully fetched researches",
- *   "data": [
+ *   "data":
+ *     [
  *       {
  *           "id": 1,
  *           "researchID": 1,
@@ -210,7 +225,7 @@ router.get('/research/:researchID', async (req, res) => {
  *           "approvedUnits": "4",
  *           "filepath": "/uploads/researches/gold-Hk9N-l2sf.png"
  *       }
- *    ],
+ *       ],
  *     "total": 2,
  *     "limit": 12,
  *     "page": 1,
@@ -260,10 +275,11 @@ router.get('/research/', async (req, res) => {
  * @apiGroup Research
  * @apiName deleteResearch
  *
- * @apiParam (Query Params) {String} id of fsr
+ * @apiParam (Query Params) {Number} researchID ID of research
  *
  * @apiSuccess {Object} research Successfully deleted research
- * @apiSuccess {String} research.researchID ID of research
+ * @apiSuccess {Number} research.id ID of fsr
+ * @apiSuccess {Number} research.researchID ID of research
  * @apiSuccess {String} research.type type of research
  * @apiSuccess {String} research.role role of research
  * @apiSuccess {String} research.title title of research
@@ -271,13 +287,14 @@ router.get('/research/', async (req, res) => {
  * @apiSuccess {String} research.endDate end date of research
  * @apiSuccess {String} research.funding funding of research
  * @apiSuccess {String} research.approvedUnits approved units of research
+ * @apiSuccess {String} research.filepath filepath
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *      "status": 200,
  *      "message": "Successfully deleted research",
- *       "data": [
+ *       "data":
  *       {
  *           "id": 13,
  *           "researchID": 13,
@@ -290,17 +307,25 @@ router.get('/research/', async (req, res) => {
  *           "approvedUnits": "5",
  *           "filepath": "/uploads/researches/gold-SJ8tMl3sf.png"
  *       }
- *     ]
+ *
  *   }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {Number} status error status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 FSR not found
+ * {
+ *   "status": 404,
+ *   "message": "Research not found"
+ * }
  */
 router.delete('/research/:researchID', async (req, res) => {
   try {
@@ -330,32 +355,35 @@ router.delete('/research/:researchID', async (req, res) => {
  * @apiGroup Research
  * @apiName updateResearch
  *
- * @apiParam (Query Params) {String} id of fsr
- * @apiParam (Body Params) {String} researchID ID of research
- * @apiParam (Body Params) {String} type type of research
- * @apiParam (Body Params) {String} role role of research
- * @apiParam (Body Params) {String} title title of research
- * @apiParam (Body Params) {String} startDate start date of research
- * @apiParam (Body Params) {String} endDate end date of research
- * @apiParam (Body Params) {String} funding funding of research
- * @apiParam (Body Params) {String} approvedUnits approved units of research
+ * @apiParam (Query Params) {Number} researchID id of research
+ *
+ * @apiParam (Body Params) {Number} [id] ID of fsr
+ * @apiParam (Body Params) {String} [type] type of research
+ * @apiParam (Body Params) {String} [role] role of research
+ * @apiParam (Body Params) {String} [title] title of research
+ * @apiParam (Body Params) {Date} [startDate] start date of research
+ * @apiParam (Body Params) {Date} [endDate] end date of research
+ * @apiParam (Body Params) {String} [funding] funding of research
+ * @apiParam (Body Params) {String} [approvedUnits] approved units of research
+ * @apiParam (Body Params) {File} [filepath] filepath
  *
  * @apiSuccess {Object} research Successfully updated research
- * @apiSuccess {String} research.researchID ID of research
+ * @apiSuccess {Number} research.researchID ID of research
+ * @apiSuccess {Number} research.id ID of fsr
  * @apiSuccess {String} research.type type of research
  * @apiSuccess {String} research.role role of research
  * @apiSuccess {String} research.title title of research
- * @apiSuccess {String} research.startDate start date of research
- * @apiSuccess {String} research.endDate end date of research
+ * @apiSuccess {Date} research.startDate start date of research
+ * @apiSuccess {Date} research.endDate end date of research
  * @apiSuccess {String} research.funding funding of research
  * @apiSuccess {String} research.approvedUnits approved units of research
- *
+ * @apiSuccess {String} research.filepath filepath
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *      "status": 200,
  *      "message": "Successfully updated research",
- *      "data": [
+ *      "data":
  *       {
  *           "id": 1,
  *           "researchID": 17,
@@ -368,11 +396,10 @@ router.delete('/research/:researchID', async (req, res) => {
  *           "approvedUnits": "20",
  *           "filepath": "/uploads/researches/gold-SJ8tMl3sf.png"
  *       }
- *      ]
  *   }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {String} statuc status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
