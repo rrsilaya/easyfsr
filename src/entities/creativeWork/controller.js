@@ -2,16 +2,27 @@ import db from '../../database/index';
 import * as Query from './queries';
 import { filtered, escapeSearch } from '../../utils';
 
-const creativeWorkAttributes = ['id', 'date', 'title', 'type', 'credUnit'];
+const creativeWorkAttributes = [
+  'id',
+  'date',
+  'title',
+  'type',
+  'credUnit',
+  'filepath',
+];
 
 const searchFields = ['date', 'title', 'type', 'credUnit'];
 
 export const addCreativeWork = creativeWork => {
   return new Promise((resolve, reject) => {
-    db.query(Query.addCreativeWork, creativeWork, (err, results) => {
-      if (err) return reject(500);
-      return resolve(results.insertId);
-    });
+    db.query(
+      Query.addCreativeWork,
+      { filepath: '', ...creativeWork },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(results.insertId);
+      },
+    );
   });
 };
 
