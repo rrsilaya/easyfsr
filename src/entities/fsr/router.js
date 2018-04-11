@@ -9,9 +9,11 @@ import { getCreativeWorks } from './../creativeWork/controller';
 import { getCworkCoAuthors } from './../coAuthor/controller';
 import { getCourses } from './../course/controller';
 import { getCourseScheds } from './../courseSched/controller';
+import { getConsultationHours } from './../consultationHours/controller';
 import { getExtensionAndCommunityServices } from './../extensionAndCommunityService/controller';
 import { getLtdPractOfProfs } from './../limitedPracticeOfProf/controller';
 import { getSubjects } from './../subject/controller';
+import { getStudyLoads } from './../studyLoad/controller';
 import { getTimeslots } from './../timeslot/controller';
 
 const router = Router();
@@ -142,21 +144,25 @@ router.get('/fsr/:id', async (req, res) => {
     courses.map(
       async ({ ...courseID } = course) => await getCourseScheds(courseID),
     );
+    const consultationHours = await getConsultationHours(req.params);
     const services = await getExtensionAndCommunityServices(req.params);
     const ltdPractices = await getLtdPractOfProfs(req.params);
     const subjects = await getSubjects(req.params);
     subjects.map(
       async ({ ...subjectID } = subject) => await getTimeslots(subjectID),
     );
+    const studyLoads = await getStudyLoads(req.params);
     fsr = {
       fsr,
       adminWorks,
       awards,
       creativeWorks,
       courses,
+      consultationHours,
       services,
       ltdPractices,
       subjects,
+      studyLoads,
     };
     res.status(200).json({
       status: 200,
