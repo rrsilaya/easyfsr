@@ -2,16 +2,15 @@ import db from '../../database/index';
 import * as Query from './queries';
 import { filtered, escapeSearch } from '../../utils';
 
-const courseAttributes = [
-  'id',
+const courseAttributes = ['id', 'courseNumber', 'courseID', 'school', 'credit'];
+
+const searchFields = [
   'courseNumber',
   'courseID',
-  'hoursPerWeek',
   'school',
   'credit',
+  'hoursPerWeek',
 ];
-
-const searchFields = ['courseNumber', 'courseID', 'school', 'credit'];
 
 export const addCourse = course => {
   return new Promise((resolve, reject) => {

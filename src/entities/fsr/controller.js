@@ -8,6 +8,8 @@ const fsrAttributes = [
   'semester',
   'isChecked',
   'teachingLoadCreds',
+  'filepath',
+  'isTurnedIn',
 ];
 
 const searchFields = [
@@ -16,6 +18,7 @@ const searchFields = [
   'semester',
   'isChecked',
   'teachingLoadCreds',
+  'isTurnedIn',
 ];
 
 export const addFSR = fsr => {
@@ -38,6 +41,16 @@ export const updateFSR = ({ id }, fsr) => {
         return resolve(results.insertId);
       },
     );
+  });
+};
+
+export const deleteFSR = ({ id }) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.deleteFSR, { id }, (err, results) => {
+      if (err) return reject(500);
+      else if (!results.affectedRows) return reject(404);
+      return resolve();
+    });
   });
 };
 

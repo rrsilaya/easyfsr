@@ -22,9 +22,10 @@ CREATE TABLE user(
   officeNumber VARCHAR (30), 
   contractType VARCHAR (40) NOT NULL, -- FULL-TIME / PART-TIME
   emailAddress VARCHAR (40) NOT NULL,
-  rank VARCHAR (30),
+  rank VARCHAR (30) NOT NULL,
   isArchived BOOLEAN DEFAULT 0, 
   acctType VARCHAR(10) DEFAULT 'USER', -- ADMIN / USER
+  profileIcon VARCHAR (50) DEFAULT '/uploads/users/default.png',
   CONSTRAINT `user_pk`
     PRIMARY KEY (`userID`),
   CONSTRAINT `user_empid_uk`
@@ -39,7 +40,9 @@ CREATE TABLE fsr(
   `acadYear` VARCHAR (20) NOT NULL,
   `semester` VARCHAR (10) NOT NULL,
   `isChecked` boolean DEFAULT 0,
+  `isTurnedIn` boolean DEFAULT 0,
   `teachingLoadCreds` INT(2) DEFAULT 0,
+  `totalCHours` INT(2) DEFAULT 0, 
   `filepath` TEXT (50),
   -- place all entitiesID here
   CONSTRAINT `fsr_pk` 
@@ -58,7 +61,7 @@ CREATE TABLE fsr(
 --   `teachingLoadCreds` INT(2) NOT NULL,
 --   CONSTRAINT `teachingLoad_user_fk`
 --     FOREIGN KEY (`id`)
---     REFERENCES fsr(`id`),
+--     REFERENCES fsr(`id`),  
 --   CONSTRAINT `teachingLoad_pk`  
 --     PRIMARY KEY(`id`)
 -- );
@@ -69,7 +72,7 @@ CREATE TABLE `subject`(
   `subjectID` INT NOT NULL AUTO_INCREMENT,
   `teachingLoadCreds` INT(2) DEFAULT 0,
   `noOfStudents` INT(3) NOT NULL, 
-  `hoursPerWeek` INT(2) NOT NULL,
+  `hoursPerWeek` INT(2) NOT NULL DEFAULT 0,
   `sectionCode` VARCHAR(10) NOT NULL,
   `room` VARCHAR(10) NOT NULL,
   CONSTRAINT `subject_pk` 
@@ -77,6 +80,7 @@ CREATE TABLE `subject`(
   CONSTRAINT `subject_teachingLoad_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`)
+  ON DELETE CASCADE
 );
 
 CREATE TABLE `timeslot`(
@@ -100,6 +104,8 @@ CREATE TABLE `studyLoad`(
   `university` VARCHAR (50) NOT NULL,
   `totalSLcredits` INT (10) DEFAULT 0,
   `id` INT NOT NULL,
+  `fullLeaveWithPay` BOOLEAN DEFAULT 0,
+  `fellowshipRecipient` BOOLEAN DEFAULT 0,
   CONSTRAINT `studyLoad_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
@@ -109,7 +115,7 @@ CREATE TABLE `studyLoad`(
 
 CREATE TABLE `course`(
   `courseID` INT NOT NULL AUTO_INCREMENT,
-  `hoursPerWeek` VARCHAR (10) NOT NULL,
+  `hoursPerWeek` VARCHAR (10) NOT NULL DEFAULT 0,
   `school` VARCHAR (30) NOT NULL,
   `credit` INT (2) NOT NULL,
   `courseNumber` VARCHAR (20) NOT NULL,
@@ -135,35 +141,20 @@ CREATE TABLE `courseSched`(
     PRIMARY KEY (courseSchedID)
 );
 
--- Consultation hours and CH Timeslot
+-- Consultation hours 
 
 CREATE TABLE `consultationHours`(
   `chID` INT NOT NULL AUTO_INCREMENT,
+  `day` varchar(10) NOT NULL,
+  `place` VARCHAR (30) NOT NULL,
+  `timeStart` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
+  `timeEnd` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
   `id` INT NOT NULL,
-  `place` varchar (50) NOT NULL,
   CONSTRAINT `consultationHours_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`),
   CONSTRAINT `consultationHours_pk`
     PRIMARY KEY (`chID`)   
-);
-
-CREATE TABLE `chTimeslot`(
-  `chTimeslotID`INT NOT NULL AUTO_INCREMENT,
-  `id` INT NOT NULL,
-  `chID` INT NOT NULL,
-  `day` varchar(10) NOT NULL,
-  `timeStart` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
-  `timeEnd` TIME NOT NULL, -- TIME FORMAT HH:MM:SS
-  CONSTRAINT `chTimeslot_consultationHours_fk`
-    FOREIGN KEY (`chID`)
-    REFERENCES consultationHours(`chID`),
-  CONSTRAINT `chTimeslot_consultationHours_fsr_fk`
-    FOREIGN KEY (`id`)
-    REFERENCES consultationHours(`id`)
-    ON DELETE CASCADE,
-  CONSTRAINT `chTimeslot_pk`
-    PRIMARY KEY(chTimeslotID)
 );
 
 -- Professorial Chair or Faculty Grant or Nominee (Award)
@@ -252,14 +243,11 @@ CREATE TABLE `creativeWork`(
 CREATE TABLE `cworkCoAuthor`(
   `cworkCoAuthorID` INT NOT NULL AUTO_INCREMENT,
   `creativeWorkID` INT NOT NULL,
-  `userID` INT NOT NULL,
+  `name` VARCHAR(50) NOT NULL,
   CONSTRAINT `cworkCoAuthor_creativeWork_fk`
     FOREIGN KEY (`creativeWorkID`)
     REFERENCES creativeWork(`creativeWorkID`)
   ON DELETE CASCADE,
-  CONSTRAINT `cworkCoAuthor_user_fk`
-    FOREIGN KEY (`userID`)
-    REFERENCES user(`userID`),
   CONSTRAINT `cworkCoAuthor_pk`
     PRIMARY KEY (`cworkCoAuthorID`)
 );
@@ -289,14 +277,11 @@ CREATE TABLE `research`(
 CREATE TABLE rCoAuthor(
   `rCoAuthorID` INT NOT NULL AUTO_INCREMENT,
   `researchID` INT NOT NULL,
-  `userID` INT NOT NULL,
+  `name` VARCHAR(50) NOT NULL,
   CONSTRAINT `rCoAuthor_research_fk`
     FOREIGN KEY (`researchID`)
     REFERENCES research(`researchID`)
   ON DELETE CASCADE,
-  CONSTRAINT `rCoAuthor_user_fk`
-    FOREIGN KEY (`userID`)
-    REFERENCES user(`userID`),
   CONSTRAINT `rCoAuthor_pk`
     PRIMARY KEY (`rCoAuthorID`)
 );
@@ -309,6 +294,7 @@ CREATE TABLE `notification`(
   `dateSent` DATE NOT NULL, --                   DATE format: YYYY-MM-DD
   `timeSent` TIME NOT NULL,
   `isResolved` BOOLEAN,
+  `priority` VARCHAR (10) DEFAULT 'LOW', -- LOW / MEDIUM / HIGH
   CONSTRAINT `notification_pk`
     PRIMARY KEY(`notificationID`),
   CONSTRAINT `notification_user_fk`
@@ -363,36 +349,118 @@ FOR EACH ROW
 UPDATE studyLoad 
   SET totalSLcredits = totalSLcredits - OLD.credit;
 
+-- Triggers for consultationHours
+CREATE TRIGGER insert_CHours
+AFTER INSERT ON consultationHours
+FOR EACH ROW
+  UPDATE fsr
+    SET totalCHours = totalCHours + (SELECT TIMESTAMPDIFF(HOUR, NEW.timeStart, NEW.timeEnd))
+    WHERE id = NEW.id;
+
+CREATE TRIGGER delete_CHours
+BEFORE DELETE ON consultationHours
+FOR EACH ROW
+  UPDATE fsr
+    SET totalCHours = totalCHours - (SELECT TIMESTAMPDIFF(HOUR, OLD.timeStart, OLD.timeEnd))
+    WHERE id = OLD.id;
+
+-- Triggers for subject and timeslot
+CREATE TRIGGER insert_subjectTimeslot
+AFTER INSERT ON timeslot
+FOR EACH ROW
+  UPDATE subject
+    SET hoursPerWeek = hoursPerWeek + (SELECT TIMESTAMPDIFF(HOUR, NEW.timeStart, NEW.timeEnd))
+    WHERE subjectID = NEW.subjectID;
+
+CREATE TRIGGER delete_subjectTimeslot
+BEFORE DELETE ON timeslot
+FOR EACH ROW
+  UPDATE subject
+    SET hoursPerWeek = hoursPerWeek - (SELECT TIMESTAMPDIFF(HOUR, OLD.timeStart, OLD.timeEnd))
+    WHERE subjectID = OLD.subjectID;
+
+-- Triggers for course and courseSched
+CREATE TRIGGER insert_courseSched
+AFTER INSERT ON courseSched
+FOR EACH ROW
+  UPDATE course
+    SET hoursPerWeek = hoursPerWeek + (SELECT TIMESTAMPDIFF(HOUR, NEW.timeStart, NEW.timeEnd))
+    WHERE courseID = NEW.courseID;
+
+CREATE TRIGGER delete_courseSched
+BEFORE DELETE ON courseSched
+FOR EACH ROW
+  UPDATE course
+    SET hoursPerWeek = hoursPerWeek - (SELECT TIMESTAMPDIFF(HOUR, OLD.timeStart, OLD.timeEnd))
+    WHERE courseID = OLD.courseID;
+
+
+
 -- VIEWS
 
 -- show profile of user 
------ used with `WHERE userID = :userID` can also add fsr's isApproved, acadYear and semester
-CREATE OR REPLACE VIEW viewProfile AS SELECT u.userID, u.employeeID, u.password, u.firstName, u.middleName, u.lastName, 
+-- used with `WHERE userID = :userID` can also add fsr's isApproved, acadYear and semester
+
+CREATE OR REPLACE VIEW viewProfile AS SELECT u.employeeID, u.middleName, u.lastName, 
 u.committee, u.isHead, u.officeNumber, u.contractType, u.emailAddress, u.rank, u.acctType, f.id, f.isChecked, f.acadYear, 
 f.semester FROM user u, fsr f WHERE u.userID = f.userID;
 
 -- viewAdminWork
 -- shows userID, employeeID, fsrID, adminWork fields
-CREATE OR REPLACE VIEW viewAdminWork AS SELECT u.userID, u.employeeID, f.id as fsrID, a.adminWorkID, a.position, a.officeUnit, a.approvedUnits FROM adminWork a JOIN fsr f ON a.id = f.id JOIN user u on f.userID = u.userID;
+CREATE OR REPLACE VIEW viewAdminWork AS SELECT  u.employeeID, a.position, 
+a.officeUnit, a.approvedUnits FROM adminWork a JOIN fsr f ON a.id = f.id JOIN user u on f.userID = u.userID;
 
 -- viewAward
 -- shows userID, employeeID, fsrID, award fields
-CREATE OR REPLACE VIEW viewAward AS SELECT u.userID, u.employeeID, f.id as fsrID, a.awardID, a.grantF, a.chairGrantTitle, a.collegeHasNominated, a.recipientOrNominee, a.professionalChair, a.approvedStartDate, a.endDate FROM award a JOIN fsr f ON a.id = f.id JOIN user u on f.userID = u.userID;
+CREATE OR REPLACE VIEW viewAward AS SELECT  u.employeeID, a.grantF, 
+a.chairGrantTitle, a.collegeHasNominated, a.recipientOrNominee, a.professionalChair, a.approvedStartDate, 
+a.endDate FROM award a JOIN fsr f ON a.id = f.id JOIN user u on f.userID = u.userID;
 
 -- viewExtensionAndCommunityService
 -- shows userID, employeeID, fsrID, limitedPracticeOfProf fields
-CREATE OR REPLACE VIEW viewExtensionAndCommunityService AS SELECT u.userID, u.employeeID, f.id as fsrID, e.extAndCommServiceID, e.participant, e.role, e.hours, e.title, e.creditUnit, e.type, e.startDate, e.endDate FROM extensionAndCommunityService e JOIN fsr f ON e.id = f.id JOIN user u on f.userID = u.userID;
+CREATE OR REPLACE VIEW viewExtensionAndCommunityService AS SELECT  u.employeeID, e.participant, e.role, e.hours, e.title, e.creditUnit, e.type, e.startDate, e.endDate 
+FROM extensionAndCommunityService e JOIN fsr f ON e.id = f.id JOIN user u on f.userID = u.userID;
 
 -- viewLimitedPracticeOfProf
 -- shows userID, employeeID, fsrID, limitedPracticeOfProf fields
-CREATE OR REPLACE VIEW viewLimitedPracticeOfProf AS SELECT u.userID, u.employeeID, f.id as fsrID, l.limitedPracticeOfProfID, l.askedPermission, l.date FROM limitedPracticeOfProf l JOIN fsr f ON l.id = f.id JOIN user u on f.userID = u.userID;
+CREATE OR REPLACE VIEW viewLimitedPracticeOfProf AS SELECT u.employeeID, l.askedPermission, l.date FROM limitedPracticeOfProf l JOIN fsr f ON l.id = f.id 
+JOIN user u on f.userID = u.userID;
 
 -- viewCreativeWork
 -- shows userID, employeeID, fsrID, creativeWork fields
-CREATE OR REPLACE VIEW viewCreativeWork AS SELECT u.userID, u.employeeID, f.id as fsrID, c.creativeWorkID, c.date, c.title, c.type, c.credUnit FROM creativeWork c JOIN fsr f ON c.id = f.id JOIN user u on f.userID = u.userID;
+CREATE OR REPLACE VIEW viewCreativeWork AS SELECT u.employeeID, c.date, c.title, c.type, c.credUnit FROM creativeWork c JOIN fsr f 
+ON c.id = f.id JOIN user u on f.userID = u.userID;
 
 -- viewResearch
-CREATE OR REPLACE VIEW viewResearch AS SELECT u.userID, u.employeeID, f.id as fsrID, r.researchID, r.type, r.role, r.title, r.startDate, r.endDate, r.funding, r.approvedUnits FROM research r JOIN fsr f ON r.id = f.id JOIN user u on f.userID = u.userID;
+CREATE OR REPLACE VIEW viewResearch AS SELECT  u.employeeID, r.type, r.role, r.title, r.startDate, r.endDate, r.funding, r.approvedUnits 
+FROM research r JOIN fsr f ON r.id = f.id JOIN user u on f.userID = u.userID;
+
+ -- viewConsultationHours
+-- userID, employeeID, fsrID, consultationHours fields, chTimeslot fields
+CREATE OR REPLACE VIEW viewConsultationHours AS SELECT u.employeeID, c.place, c.day, c.timeStart, c.timeEnd FROM user u JOIN fsr f ON u.userID = f.userID 
+JOIN consultationHours c ON f.id = c.id;
+
+-- viewSubjectTimeslot
+-- userID, employeeID, fsrID, subject fields, timeslot fields
+CREATE OR REPLACE VIEW viewSubjectTimeslot AS SELECT  u.employeeID
+,s.subjectCode, s.teachingLoadCreds, s.noOfStudents, s.hoursPerWeek, s.room, 
+t.day, t.timeStart, t.timeEnd FROM user u JOIN fsr f ON u.userID = f.userID 
+JOIN subject s ON f.id = s.id JOIN timeslot t ON s.subjectID = t.subjectID;
+
+
+-- viewStudyLoad
+-- shows userID, employeeID, fsrID, studyLoad fields
+CREATE OR REPLACE VIEW viewStudyLoad AS SELECT  u.employeeID, 
+s.degree, s.university, s.fullLeaveWithPay, s.fellowshipRecipient, s.totalSLcredits 
+FROM user u JOIN fsr f ON u.userID = f.userID JOIN studyLoad s ON f.id = s.id;
+
+-- view entities tied with studyLoad
+-- viewSLCourse
+CREATE OR REPLACE VIEW viewSLCourses AS SELECT u.employeeID,
+s.university, s.degree, c.courseID, c.courseNumber, c.school, c.credit, c.hoursPerWeek, 
+cs.day, cs.timeStart, cs.timeEnd FROM user u JOIN fsr f ON u.userID = f.userID JOIN 
+studyLoad s ON f.id = s.id JOIN course c ON f.id = c.id JOIN courseSched cs ON c.courseID = cs.courseID;
+
 
 -- Privileges
 GRANT SUPER ON *.* TO 'easyfsr'@'localhost';

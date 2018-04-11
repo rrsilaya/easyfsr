@@ -7,7 +7,6 @@ const subjectAttributes = [
   'subjectCode',
   'teachingLoadCreds',
   'noOfStudents',
-  'hoursPerWeek',
   'sectionCode',
   'room',
 ];
@@ -19,6 +18,7 @@ const searchFields = [
   'hoursPerWeek',
   'sectionCode',
   'room',
+  'id',
 ];
 
 export const addSubject = subject => {
@@ -91,66 +91,6 @@ export const getTotalSubjects = subject => {
       (err, results) => {
         if (err) return reject(500);
         return resolve(results[0]);
-      },
-    );
-  });
-};
-
-//ADDITIONAL GET FOR SUBJECTS
-
-export const getSubjectsWithSched = subject => {
-  return new Promise((resolve, reject) => {
-    db.query(
-      Query.getSubjectsWithSched(
-        filtered(subject, subjectAttributes),
-        subject.sortBy,
-      ),
-      {
-        field: 'subjectCode',
-        ...escapeSearch(subject, searchFields, subject.limit),
-      },
-      (err, results) => {
-        if (err) return reject(500);
-        else if (!results.length) return reject(404);
-        return resolve(results);
-      },
-    );
-  });
-};
-
-export const getSubjectWithSched = ({ subjectID }) => {
-  return new Promise((resolve, reject) => {
-    db.query(Query.getSubjectWithSched, { subjectID }, (err, results) => {
-      if (err) return reject(500);
-      else if (!results.length) return reject(404);
-      return resolve(results);
-    });
-  });
-};
-
-export const getTotalSubjectsByFSR = ({ id }) => {
-  return new Promise((resolve, reject) => {
-    db.query(Query.getTotalSubjectsByFSR, { id }, (err, results) => {
-      if (err) return reject(500);
-      return resolve(results);
-    });
-  });
-};
-
-export const deleteSubjects = subject => {
-  return new Promise((resolve, reject) => {
-    db.query(
-      Query.deleteSubjects(
-        filtered(subject, subjectAttributes),
-        subject.sortBy,
-      ),
-      {
-        field: 'subjectCode',
-        ...escapeSearch(subject, searchFields, subject.limit),
-      },
-      (err, results) => {
-        if (err) return reject(500);
-        return resolve(results);
       },
     );
   });
