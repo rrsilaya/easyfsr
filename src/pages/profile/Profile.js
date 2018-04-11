@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Icon } from 'antd';
+import { Icon, Button } from 'antd';
 
 import { PageLoader, Schedule } from '../../global';
 import ProfileIcon from './components/ProfileIcon';
@@ -47,6 +47,14 @@ class Profile extends Component {
                   {user.emailAddress}
                 </div>
               </div>
+              <Button
+                type="primary"
+                size="large"
+                style={{ margin: 20, bottom: 20 }}
+                onClick={Schedule}
+              >
+                Schedule
+              </Button>
             </div>
             <ProfileInfo />
           </Fragment>
