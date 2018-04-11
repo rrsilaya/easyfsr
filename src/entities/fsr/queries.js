@@ -38,7 +38,7 @@ export const getFSRs = (query, sortBy) => `
   } LIMIT :limit OFFSET :offset
 `;
 
-export const getTotalFSRs = `
+export const getTotalFSRs = query => `
   SELECT * FROM fsr ${
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   } 
