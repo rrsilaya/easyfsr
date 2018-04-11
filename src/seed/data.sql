@@ -1404,6 +1404,7 @@ INSERT INTO creativeWork (id, date, title, type, credUnit) VALUES (88, '2018-02-
 INSERT INTO creativeWork (id, date, title, type, credUnit) VALUES (89, '2018-01-18', 'Sample Title', 'Book', 3);
 INSERT INTO creativeWork (id, date, title, type, credUnit) VALUES (90, '2017-09-03', 'Sample Title', 'ChapterInABook', 5);
 
+
 -- RESEARCH
 INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (1, 'Implementation', 'Sample Role', 'Sample Title', '2017-10-21', 'Sample Funding', 6);
 INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (2, 'Implementation', 'Sample Role', 'Sample Title', '2017-05-23', 'Sample Funding', 6);

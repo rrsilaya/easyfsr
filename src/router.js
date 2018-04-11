@@ -2,6 +2,8 @@ import { Router } from 'express';
 
 import authRouter from './entities/auth/router';
 import userRouter from './entities/user/router';
+import researchRouter from './entities/research/router';
+import rCoAuthorRouter from './entities/rCoAuthor/router';
 import studyLoadRouter from './entities/studyLoad/router';
 import awardRouter from './entities/award/router';
 import subjectRouter from './entities/subject/router';
@@ -51,8 +53,10 @@ router.use(creativeWorkRouter);
 //     status:403,
 //     message: 'Forbidden access',
 //   });
-// });
+// });]
 
+router.use(researchRouter);
+router.use(rCoAuthorRouter);
 router.use(consultationHoursRouter);
 router.use(announcementRouter);
 router.use(userRouter);
