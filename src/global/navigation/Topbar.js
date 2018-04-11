@@ -38,7 +38,7 @@ class Topbar extends Component {
         />
 
         <div style={styles.account}>
-          <img style={styles.image} alt="" />
+          <img style={styles.image} src={user.profileIcon} alt="" />
           <Dropdown overlay={menu} trigger={['click']}>
             <div className="set-cursor pointer">
               <span>{`${user.firstName} ${user.lastName}`}</span>

@@ -1,14 +1,15 @@
 import { connect } from 'react-redux';
 import Profile from './Profile';
 
-import { getUserProfile } from './duck';
+import { getUserProfile, uploadIcon } from './duck';
 
 const mapStateToProps = state => {
-  const { user, isGettingUser } = state.profile;
+  const { user, isGettingUser, isUploadingIcon } = state.profile;
 
   return {
     user,
     isGettingUser,
+    isUploadingIcon,
   };
 };
 
@@ -16,6 +17,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getUserProfile: id => {
       dispatch(getUserProfile(id));
+    },
+    uploadIcon: (user, form) => {
+      dispatch(uploadIcon(user, form));
     },
   };
 };
