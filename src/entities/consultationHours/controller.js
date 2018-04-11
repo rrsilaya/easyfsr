@@ -52,7 +52,7 @@ export const getConsultationHour = ({ chID }) => {
     db.query(Query.getConsultationHour, { chID }, (err, results) => {
       if (err) return reject(500);
       else if (!results.length) return reject(404);
-      return resolve(results);
+      return resolve(results[0]);
     });
   });
 };

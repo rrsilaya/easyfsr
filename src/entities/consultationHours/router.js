@@ -55,7 +55,7 @@ router.post('/consultationHours/', async (req, res) => {
     const consultationHour = await Ctrl.getConsultationHour({ chID });
     res.status(200).json({
       status: 200,
-      message: 'Successfully created consultation hours details',
+      message: 'Successfully created consultation hours',
       data: consultationHour,
     });
   } catch (status) {
@@ -129,14 +129,14 @@ router.put('/consultationHours/:chID', async (req, res) => {
 
     res.status(200).json({
       status: 200,
-      message: 'Successfully updated consultation hours details',
+      message: 'Successfully updated consultation hours',
       data: consultationHour,
     });
   } catch (status) {
     let message = '';
     switch (status) {
       case 404:
-        message = 'Consultation hours details not found';
+        message = 'Consultation hours not found';
         break;
       case 500:
         message = 'Internal server error';
@@ -201,14 +201,14 @@ router.delete('/consultationHours/:chID', async (req, res) => {
 
     res.status(200).json({
       status: 200,
-      message: 'Successfully deleted consultation hours details',
+      message: 'Successfully deleted consultation hours',
       data: consultationHour,
     });
   } catch (status) {
     let message = '';
     switch (status) {
       case 404:
-        message = 'Consultation hours details not found';
+        message = 'Consultation hours not found';
         break;
       case 500:
         message = 'Internal server error';
@@ -272,14 +272,14 @@ router.get('/consultationHours/:chID', async (req, res) => {
 
     res.status(200).json({
       status: 200,
-      message: 'Successfully fetched consultation hours details',
+      message: 'Successfully fetched consultation hours',
       data: consultationHour,
     });
   } catch (status) {
     let message = '';
     switch (status) {
       case 404:
-        message = 'Consultation hours details not found';
+        message = 'Consultation hours not found';
         break;
       case 500:
         message = 'Internal server error';
@@ -359,10 +359,9 @@ router.get('/consultationHours/:chID', async (req, res) => {
 router.get('/consultationHours/', async (req, res) => {
   try {
     const consultationHours = await Ctrl.getConsultationHours(req.query);
-
     res.status(200).json({
       status: 200,
-      message: 'Successfully fetched consultation hours details',
+      message: 'Successfully fetched consultation hours',
       data: consultationHours,
       total: (await Ctrl.getTotalConsultationHours(req.query)).total,
       limit: parseInt(req.query.limit) || 12,
@@ -376,7 +375,7 @@ router.get('/consultationHours/', async (req, res) => {
     let message = '';
     switch (status) {
       case 404:
-        message = 'Consultation hours details not found';
+        message = 'Consultation hours not found';
         break;
       case 500:
         message = 'Internal server error';
