@@ -42,3 +42,9 @@ export const deleteConsultationHour = `
   DELETE FROM consultationHours
   WHERE chID = :chID
 `;
+
+export const getTotalConsultationHours = query => `
+  SELECT count(*) as total FROM consultationHours ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
+`;

@@ -8,12 +8,12 @@ const router = Router();
  * @apiGroup ConsultationHours
  * @apiName addConsultationHour
  *
- * @apiParam (Body Params) {Number} chID chID of consultationHour
- * @apiParam (Body Params) {Number} id ID of FSR
- * @apiParam (Body Params) {String} place place of consultationHour
- * @apiParam (Body Params) {String} day day of consultationHour
- * @apiParam (Body Params) {Time} timeStart timeStart of consultationHour
- * @apiParam (Body Params) {Time} timeEnd timeEnd of consultationHour
+ * @apiParam (Body Params) {Number} [chID] chID of consultationHour
+ * @apiParam (Body Params) {Number} [id] ID of FSR
+ * @apiParam (Body Params) {String} [place] place of consultationHour
+ * @apiParam (Body Params) {String} [day] day of consultationHour
+ * @apiParam (Body Params) {Time} [timeStart] timeStart of consultationHour
+ * @apiParam (Body Params) {Time} [timeEnd] timeEnd of consultationHour
  *
  * @apiSuccess {Object} consultationHour new Consultation Hour
  * @apiSuccess {Number} consultationHour.chID chID of consultationHour
@@ -74,12 +74,12 @@ router.post('/consultationHours/', async (req, res) => {
  * @apiGroup ConsultationHours
  * @apiName updateConsultationHour
  *
- * @apiParam (Query Params) {Number} chID chID of consultationHour
- * @apiParam (Body Params) {Number} id ID of FSR
- * @apiParam (Body Params) {String} place place of consultationHour
- * @apiParam (Body Params) {String} day day of consultationHour
- * @apiParam (Body Params) {Time} timeStart timeStart of consultationHour
- * @apiParam (Body Params) {Time} timeEnd timeEnd of consultationHour
+ * @apiParam (Query Params) {Number} [chID] chID of consultationHour
+ * @apiParam (Body Params) {Number} [id] ID of FSR
+ * @apiParam (Body Params) {String} [place] place of consultationHour
+ * @apiParam (Body Params) {String} [day] day of consultationHour
+ * @apiParam (Body Params) {Time} [timeStart] timeStart of consultationHour
+ * @apiParam (Body Params) {Time} [timeEnd] timeEnd of consultationHour
  *
  * @apiSuccess {Object} consultationHour Consultation Hour updated
  * @apiSuccess {Number} consultationHour.chID chID of consultationHour
@@ -151,7 +151,7 @@ router.put('/consultationHours/:chID', async (req, res) => {
  * @apiGroup ConsultationHours
  * @apiName deleteConsultationHour
  *
- * @apiParam (Query Params) {Number} chID chID of consultationHour
+ * @apiParam (Query Params) {Number} [chID] chID of consultationHour
  *
  * @apiSuccess {Object} consultationHour Consultation Hour deleted
  * @apiSuccess {Number} consultationHour.chID chID of consultationHour
@@ -223,7 +223,7 @@ router.delete('/consultationHours/:chID', async (req, res) => {
  * @apiGroup ConsultationHours
  * @apiName getConsultationHour
  *
- * @apiParam (Query Params) {Number} chID chID of consultationHour
+ * @apiParam (Query Params) {Number} [chID] chID of consultationHour
  *
  * @apiSuccess {Object} consultationHour Consulatation Hour fetched
  * @apiSuccess {Number} consultationHour.chID chID of consultationHour
@@ -301,7 +301,7 @@ router.get('/consultationHours/:chID', async (req, res) => {
  * @apiParam (Query Params) {Number} [page] page number
  * @apiParam (Query Params) {Number} [limit] count limit of consultationHours to fetch
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
- * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'place'
+ * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'day'
  *
  * @apiSuccess {Object} consultationHour consulatationHours fetched
  * @apiSuccess {Number} consultationHour.chID chID of consultationHour
@@ -333,6 +333,10 @@ router.get('/consultationHours/:chID', async (req, res) => {
  *              "timeStart": "01:00:00",
  *              "timeEnd": "02:00:00"
  *          },
+ *      "total": 2,
+ *      "limit": 12,
+ *      "page": 1,
+ *      "pages": 1
  *  }
  *
  * @apiError (Error 404) {String} status status code
@@ -360,6 +364,13 @@ router.get('/consultationHours/', async (req, res) => {
       status: 200,
       message: 'Successfully fetched consultation hours details',
       data: consultationHours,
+      total: (await Ctrl.getTotalConsultationHours(req.query)).total,
+      limit: parseInt(req.query.limit) || 12,
+      page: parseInt(req.query.page) || 1,
+      pages: Math.ceil(
+        (await Ctrl.getTotalConsultationHours(req.query)).total /
+          (parseInt(req.query.limit) || 12),
+      ),
     });
   } catch (status) {
     let message = '';

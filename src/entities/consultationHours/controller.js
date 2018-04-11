@@ -15,7 +15,6 @@ const fields = ['id', 'place', 'day', 'timeStart', 'timeEnd'];
 export const addConsultationHour = consultationHours => {
   return new Promise((resolve, reject) => {
     db.query(Query.addConsultationHour, consultationHours, (err, results) => {
-      console.log(err);
       if (err) return reject(500);
       return resolve(results.insertId);
     });
@@ -31,7 +30,6 @@ export const updateConsultationHour = ({ chID }, consultationHour) => {
       ),
       { chID, ...consultationHour },
       (err, results) => {
-        console.log(err);
         if (err) return reject(500);
         return resolve(results.insertId);
       },
@@ -42,7 +40,6 @@ export const updateConsultationHour = ({ chID }, consultationHour) => {
 export const deleteConsultationHour = ({ chID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.deleteConsultationHour, { chID }, (err, results) => {
-      console.log(err);
       if (err) return reject(500);
       else if (!results.affectedRows) return reject(404);
       return resolve();
@@ -53,7 +50,6 @@ export const deleteConsultationHour = ({ chID }) => {
 export const getConsultationHour = ({ chID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getConsultationHour, { chID }, (err, results) => {
-      console.log(results);
       if (err) return reject(500);
       else if (!results.length) return reject(404);
       return resolve(results);
@@ -70,15 +66,33 @@ export const getConsultationHours = consultationHours => {
       ),
 
       {
-        field: 'id',
+        field: 'day',
         ...escapeSearch(consultationHours, fields, consultationHours.limit),
       },
 
       (err, results) => {
-        console.log(results);
         if (err) return reject(500);
         else if (!results.length) return reject(404);
         return resolve(results);
+      },
+    );
+  });
+};
+
+export const getTotalConsultationHours = consultationHours => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      Query.getTotalConsultationHours(
+        filtered(consultationHours, consultationHoursAttributes),
+      ),
+      {
+        field: 'day',
+        ...escapeSearch(consultationHours, fields, consultationHours.limit),
+      },
+
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(results[0]);
       },
     );
   });
