@@ -1,5 +1,7 @@
 import { Router } from 'express';
+import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
+import { upload, unlink } from './../../utils';
 
 const router = Router();
 
@@ -51,6 +53,9 @@ const router = Router();
 
 router.post('/creativeWork/', async (req, res) => {
   try {
+    if (req.files && req.files.filepath) {
+      req.body.filepath = await upload(req.files.filepath, 'creativeWorks');
+    }
     const creativeWorkID = await Ctrl.addCreativeWork(req.body);
     const creativeWork = await Ctrl.getCreativeWork({ creativeWorkID });
     res.status(200).json({
@@ -369,6 +374,13 @@ router.get('/creativeWork/:creativeWorkID', async (req, res) => {
 
 router.put('/creativeWork/:creativeWorkID', async (req, res) => {
   try {
+    if (req.files && req.files.filepath) {
+      const creativeWork = await Ctrl.getCreativeWork(req.params);
+
+      if (creativeWork.filepath) await unlink(creativeWork.filepath);
+      req.body.filepath = await upload(req.files.filepath, 'creativeWorks');
+    }
+
     await Ctrl.updateCreativeWork(req.params, req.body);
     const creativeWork = await Ctrl.getCreativeWork(req.params);
     res.status(200).json({
