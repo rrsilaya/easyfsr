@@ -10,5 +10,5 @@ fs.copy(`${__dirname}/uploads`, 'public/uploads/', err => {
 
 // Populate with seed data
 exec('mysql -u root -p < ./src/seed/data.sql', err => {
-  console.log(err);
+  if (err) console.log(err);
 });
