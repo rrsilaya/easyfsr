@@ -19,6 +19,11 @@ export const updateFSR = fsr => `
   WHERE id = :id
 `;
 
+export const deleteFSR = `
+  DELETE FROM fsr 
+  WHERE id = :id
+`;
+
 export const getFSR = `
   SELECT * from fsr
   WHERE id = :id 
@@ -33,8 +38,8 @@ export const getFSRs = (query, sortBy) => `
   } LIMIT :limit OFFSET :offset
 `;
 
-export const getTotalFSRs = query => `
-  SELECT count(*) as total FROM fsr ${
+export const getTotalFSRs = `
+  SELECT * FROM fsr ${
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
-  }
+  } 
 `;

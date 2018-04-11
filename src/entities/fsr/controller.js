@@ -44,6 +44,16 @@ export const updateFSR = ({ id }, fsr) => {
   });
 };
 
+export const deleteFSR = ({ id }) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.deleteFSR, { id }, (err, results) => {
+      if (err) return reject(500);
+      else if (!results.affectedRows) return reject(404);
+      return resolve();
+    });
+  });
+};
+
 export const getFSR = ({ id }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getFSR, { id }, (err, results) => {
