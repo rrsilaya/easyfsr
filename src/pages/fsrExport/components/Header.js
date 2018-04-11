@@ -8,12 +8,16 @@ const styles = {
 
 class Header extends Component {
   render() {
+    const { meta } = this.props;
+
     return (
       <div style={styles.header}>
         <div className="form-float">Form 67 (Revised October 25, 2013)</div>
         <div className="center" style={{ marginBottom: '1em' }}>
           <header className="bold">FACULTY SERVICE RECORD</header>
-          <div>First Semester 2011-2012</div>
+          <div>
+            {meta.semester} Semester {meta.acadYear}
+          </div>
         </div>
         <div className="grid">
           <div className="flex-mid" style={{ width: '75%' }}>

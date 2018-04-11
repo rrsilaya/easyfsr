@@ -14,7 +14,7 @@ const styles = {
 
 class TeachingLoad extends Component {
   render() {
-    const { data } = this.props;
+    const { teachingLoad } = this.props;
     const headers = [
       'SUBJECT',
       'SECTION CODE',
@@ -46,18 +46,20 @@ class TeachingLoad extends Component {
                 </th>
               ))}
             </tr>
-            {[].map((row, i) => (
-              <tr key={i}>
+            {teachingLoad.map(subject => (
+              <tr key={subject.id}>
+                <td>{subject.subjectCode}</td>
+                <td>{subject.sectionCode}</td>
+                <td>{subject.room}</td>
                 <td />
                 <td />
-                <td />
-                <td />
-                <td />
-                <td />
-                <td />
+                <td>{subject.hoursPerWeek}</td>
+                <td>{subject.noOfStudents}</td>
                 <td className="highlight blue" />
                 <td />
-                <td className="highlight orange" />
+                <td className="highlight orange">
+                  {subject.teachingLoadCreds}
+                </td>
               </tr>
             ))}
             <tr>

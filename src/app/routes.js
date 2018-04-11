@@ -4,7 +4,7 @@ import ServiceRecords from '../pages/serviceRecords/ServiceRecordsContainer';
 import FSRForm from '../pages/fsr/FSRFormContainer';
 import Users from '../pages/users/UsersContainer';
 import FacultySearch from '../pages/facultySearch/FacultySearchContainer';
-import FsrExport from '../pages/fsrExport/FsrExport';
+import FsrExport from '../pages/fsrExport/FsrExportContainer';
 
 const routes = [
   {

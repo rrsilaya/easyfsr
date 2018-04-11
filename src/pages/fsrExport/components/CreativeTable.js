@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from 'react';
+import moment from 'moment';
 
 class CreativeTable extends Component {
   render() {
-    const { section, title } = this.props;
+    const { section, title, data } = this.props;
 
     return (
       <Fragment>
@@ -17,6 +18,14 @@ class CreativeTable extends Component {
               <th colSpan={3}>DATE OF PUBLICATION/COMPLETION</th>
               <th colSpan={2}>APPROVED CREDIT UNITS</th>
             </tr>
+            {data.map(row => (
+              <tr key={row.id}>
+                <td colSpan={4}>{row.title}</td>
+                <td colSpan={2}>&nbsp;</td>
+                <td colSpan={3}>{moment(row.date).format('MMMM DD, YYYY')}</td>
+                <td colSpan={2}>{row.credUnit}</td>
+              </tr>
+            ))}
             <tr>
               <td colSpan={9} className="right">
                 Creative Work Load Credits (CLC)

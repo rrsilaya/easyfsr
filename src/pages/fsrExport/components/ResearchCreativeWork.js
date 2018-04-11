@@ -3,6 +3,8 @@ import CreativeTable from './CreativeTable';
 
 class ResearchCreativeWork extends Component {
   render() {
+    const { creativeWorks } = this.props;
+
     return (
       <section>
         <div className="header bold">
@@ -63,22 +65,38 @@ class ResearchCreativeWork extends Component {
         <CreativeTable
           section="II. B1."
           title="ORAL/POSTER PAPERS PRESENTED IN CONFERENCES"
+          data={creativeWorks.filter(work => work.type === 'Oral/Poster')}
         />
         <CreativeTable
           section="II. B2."
           title="PAPERS PUBLISHED IN PROCEEDINGS OF CONFERENCES"
+          data={creativeWorks.filter(work => work.type === 'PublishedPapers')}
         />
         <CreativeTable
           section="II. B3."
           title="MONOGRAPHS: manuals, training modules"
+          data={creativeWorks.filter(work => work.type === 'Monograph')}
         />
         <CreativeTable
           section="II. B4."
           title="ARTICLES IN REFERRED JOURNALS"
+          data={creativeWorks.filter(work => work.type === 'Article')}
         />
-        <CreativeTable section="II. B5." title="CHAPTERS IN A BOOK" />
-        <CreativeTable section="II. B6." title="BOOKS" />
-        <CreativeTable section="II. B7." title="OTHERS" />
+        <CreativeTable
+          section="II. B5."
+          title="CHAPTERS IN A BOOK"
+          data={creativeWorks.filter(work => work.type === 'ChapterInABook')}
+        />
+        <CreativeTable
+          section="II. B6."
+          title="BOOKS"
+          data={creativeWorks.filter(work => work.type === 'Books')}
+        />
+        <CreativeTable
+          section="II. B7."
+          title="OTHERS"
+          data={creativeWorks.filter(work => work.type === 'Others')}
+        />
       </section>
     );
   }
