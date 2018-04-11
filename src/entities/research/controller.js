@@ -1,6 +1,6 @@
 import db from '../../database/index';
 import * as Query from './queries';
-import { filtered } from '../../utils';
+import { filtered, escapeSearch } from '../../utils';
 
 const researchAttributes = [
   'id',
@@ -85,6 +85,7 @@ export const getResearches = research => {
         ...escapeSearch(research, searchFields, research.limit),
       },
       (err, results) => {
+        console.log(err);
         if (err) return reject(500);
         return resolve(results);
       },
@@ -101,6 +102,8 @@ export const getTotalResearches = research => {
         ...escapeSearch(research, searchFields, research.limit),
       },
       (err, results) => {
+        console.log(err);
+
         if (err) return reject(500);
         return resolve(results[0]);
       },

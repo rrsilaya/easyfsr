@@ -61,7 +61,7 @@ router.get('/rCoAuthor/', async (req, res) => {
           (parseInt(req.query.limit) || 12),
       ),
     });
-  } catch (err) {
+  } catch (status) {
     let message = '';
     switch (status) {
       case 404:

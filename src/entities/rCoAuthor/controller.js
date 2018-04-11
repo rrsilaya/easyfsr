@@ -1,6 +1,6 @@
 import db from '../../database/index';
 import * as Query from './queries';
-import { filtered } from '../../utils';
+import { filtered, escapeSearch } from '../../utils';
 
 const rCoAuthorAttributes = ['researchID', 'rCoAuthorID', 'name'];
 
