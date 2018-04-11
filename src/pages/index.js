@@ -10,6 +10,8 @@ import fsr from './fsr/duck';
 import serviceRecords from './serviceRecords/duck';
 import search from './facultySearch/duck';
 import profile from './profile/duck';
+import dashboard from './dashboard/duck';
+import fsrExport from './fsrExport/duck';
 
 const reducers = combineReducers({
   router,
@@ -18,7 +20,9 @@ const reducers = combineReducers({
   fsr,
   search,
   profile,
+  dashboard,
   serviceRecords,
+  fsrExport,
 });
 
 export default reducers;

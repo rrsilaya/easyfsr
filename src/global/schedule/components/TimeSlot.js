@@ -49,7 +49,7 @@ const getTimePoints = (day, start, end) => {
   return points;
 };
 
-const TimeSlot = ({ day, start, end, content }) => {
+const TimeSlot = ({ day, start, end, content, color = '#000' }) => {
   const shape = getTimePoints(day, start, end);
   const dayOffset = days.indexOf(day);
   const timeStart = parseFloat(start.split(':')[0]) - 7;
@@ -57,7 +57,7 @@ const TimeSlot = ({ day, start, end, content }) => {
 
   return (
     <Fragment>
-      <Line points={shape} fill="red" stroke="black" strokeWidth={0.5} closed />
+      <Line points={shape} fill={color} closed />
       <Text
         x={canvas.timeWidth + canvas.col * dayOffset}
         y={canvas.row * (timeStart + 1)}
