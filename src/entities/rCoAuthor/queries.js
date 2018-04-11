@@ -21,7 +21,7 @@ export const getrCoAuthors = (query, sortBy) => `
 `;
 
 export const getrCoAuthor = `
-	SELECT * FROM research 
+	SELECT * FROM rCoAuthor 
 	where rCoAuthorID = :rCoAuthorID
 `;
 

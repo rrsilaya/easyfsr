@@ -85,7 +85,6 @@ export const getResearches = research => {
         ...escapeSearch(research, searchFields, research.limit),
       },
       (err, results) => {
-        console.log(err);
         if (err) return reject(500);
         return resolve(results);
       },
@@ -102,8 +101,6 @@ export const getTotalResearches = research => {
         ...escapeSearch(research, searchFields, research.limit),
       },
       (err, results) => {
-        console.log(err);
-
         if (err) return reject(500);
         return resolve(results[0]);
       },
