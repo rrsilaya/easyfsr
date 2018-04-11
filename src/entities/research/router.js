@@ -10,7 +10,7 @@ router.post('/research/', async (req, res) => {
     if (req.files && req.files.filepath)
       req.body.filepath = await upload(req.files.filepath, 'researches');
     const researchID = await Ctrl.addResearch(req.body);
-    const research = await Ctrl.selectResearch(id);
+    const research = await Ctrl.getResearch(id);
     res.status(200).json({
       status: 200,
       message: 'Successfully created research',

@@ -3,12 +3,10 @@ import { formatQueryParams } from '../../utils';
 export const addrCoAuthor = `
 	INSERT INTO rCoAuthor (
 		researchID,
-		rCoAuthorID,
 		name
 	)
 	VALUES (
 		:researchID,
-		DEFAULT,
 		:name
 	)
 `;
@@ -23,7 +21,7 @@ export const getrCoAuthors = (query, sortBy) => `
 `;
 
 export const getrCoAuthor = `
-	SELECT * FROM research NATURAL JOIN rCoAuthor
+	SELECT * FROM research 
 	where rCoAuthorID = :rCoAuthorID
 `;
 
@@ -34,7 +32,7 @@ export const updaterCoAuthor = rCoAuthor => `
 `;
 
 export const deleterCoAuthor = `
-	delete from rCoAuthor
+	DELETE from rCoAuthor
 	where rCoAuthorID = :rCoAuthorID
 `;
 
