@@ -160,11 +160,9 @@ img.crop {
   font-size: 9pt;
   line-height: 1.25;
   width: 8.5in;
-  height: auto;
   padding: 0.7in 0.5in;
-  display: table;
-  table-layout: fixed;
   position: relative;
+  overflow: visible;
 }
 .fsrExport .document * {
   color: #000 !important;
@@ -214,7 +212,7 @@ img.crop {
 }
 .fsrExport .document table.equal th,
 .fsrExport .document table.equal td {
-  width: 0.7273in;
+  width: 0.727272727272727in;
 }
 .fsrExport .document .mvertical {
   margin: 0.8em 0;

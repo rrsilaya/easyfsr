@@ -8,7 +8,7 @@ const styles = {
 
 class Header extends Component {
   render() {
-    const { meta } = this.props;
+    const { meta, user } = this.props;
 
     return (
       <div style={styles.header}>
@@ -23,18 +23,21 @@ class Header extends Component {
           <div className="flex-mid" style={{ width: '75%' }}>
             <label>PRINTED NAME:</label>
             <div className="field-line" data-label="(Family)">
-              Silaya
+              {user.lastName}
             </div>
             <div className="field-line" data-label="(Given)">
-              Ralph Lawrence
+              {user.firstName}
             </div>
             <div className="field-line" data-label="(MI)">
-              R.
+              {user.middleName
+                .split(' ')
+                .map(word => word[0])
+                .join('.')}
             </div>
           </div>
           <div className="flex-mid margin1 left" style={{ width: '25%' }}>
             <label>RANK:</label>
-            <div className="field-line">Assistant Professor I</div>
+            <div className="field-line">{user.rank}</div>
           </div>
         </div>
       </div>

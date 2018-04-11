@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Printer from 'react-to-print';
-import { Button, Icon } from 'antd';
+import { Button } from 'antd';
 import { PageLoader } from '../../global';
 import {
   Header,
@@ -36,7 +36,7 @@ class FsrExport extends Component {
             <br />
             <div className="fsrExport" ref={el => (this.document = el)}>
               <div className="document">
-                <Header meta={fsr.fsr} />
+                <Header meta={fsr.fsr} user={fsr.user} />
                 <TeachingLoad teachingLoad={fsr.subjects} />
                 <ResearchCreativeWork creativeWorks={fsr.creativeWorks} />
                 <AdminWork adminWorks={fsr.adminWorks} />
