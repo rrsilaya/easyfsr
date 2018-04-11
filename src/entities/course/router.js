@@ -38,7 +38,7 @@ const router = Router();
  *           }
  *   }
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status  status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -74,10 +74,12 @@ router.post('/course', async (req, res) => {
  * @apiGroup Course
  * @apiName updateCourse
  *
- * @apiParam (Query Params) {String} [courseNumber] courseNumber of course
+ * @apiParam (Query Params) {Number} courseID courseNumber of course
+ *
+ * @apiParam (Body Params) {String} [courseNumber] courseNumber of course
  * @apiParam (Body Params) {String} [school] school course is being taken
  * @apiParam (Body Params) {Number} [credit] credit of course
- * @apiParam (Body Params) {String} [id] fsr id
+ * @apiParam (Body Params) {Number} [id] fsr id
  *
  * @apiSuccess {Object} course Course updated
  * @apiSuccess {Number} course.courseID course ID
@@ -93,7 +95,7 @@ router.post('/course', async (req, res) => {
  *     "data": {
  *       "status": 200,
  *       "message": "Successfully updated course",
- *       "data": [
+ *       "data":
  *         {
  *           "courseID": 1,
  *           "hoursPerWeek": "5",
@@ -102,11 +104,10 @@ router.post('/course', async (req, res) => {
  *           "courseNumber": "999",
  *           "id": 1
  *        }
- *      ]
  *   }
  *
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status  status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -114,7 +115,7 @@ router.post('/course', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 User not found

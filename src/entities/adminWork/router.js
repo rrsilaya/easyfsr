@@ -13,14 +13,14 @@ const router = Router();
  * @apiParam (Body Params) {Number} id ID of fsr
  * @apiParam (Body Params) {String} position position of admin work
  * @apiParam (Body Params) {String} officeUnit office unit of admin work
- * @apiParam (Body Params) {String} approvedUnits approved units of admin work
+ * @apiParam (Body Params) {Number} approvedUnits approved units of admin work
  *
  * @apiSuccess {Object} adminWork new AdminWork is added
  * @apiSuccess {Number} adminWork.adminWorkID ID of admin work
  * @apiSuccess {Number} adminWork.id ID of FSR
  * @apiSuccess {String} adminWork.position position of admin work
  * @apiSuccess {String} adminWork.officeUnit office unit of admin work
- * @apiSuccess {String} adminWork.approvedUnits approved units of admin work
+ * @apiSuccess {Number} adminWork.approvedUnits approved units of admin work
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -37,7 +37,7 @@ const router = Router();
  *         }
  *	  }
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status  status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -77,14 +77,14 @@ router.post('/adminWork/', async (req, res) => {
  * @apiParam (Body Params) {Number} [id] ID of FSR
  * @apiParam (Body Params) {String} [position] position of admin work
  * @apiParam (Body Params) {String} [officeUnit] office unit of admin work
- * @apiParam (Body Params) {String} [approvedUnits] approved units of admin work
+ * @apiParam (Body Params) {Number} [approvedUnits] approved units of admin work
  *
  * @apiSuccess {Object} adminWork adminWork updated
  * @apiSuccess {Number} adminWork.adminWorkID ID of admin work
  * @apiSuccess {Number} adminWork.id ID of FSR
  * @apiSuccess {String} adminWork.position position of admin work
  * @apiSuccess {String} adminWork.officeUnit office unit of admin work
- * @apiSuccess {String} adminWork.approvedUnits approved units of admin work
+ * @apiSuccess {Number} adminWork.approvedUnits approved units of admin work
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -102,7 +102,7 @@ router.post('/adminWork/', async (req, res) => {
  *
  *	 }
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status  status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -113,7 +113,7 @@ router.post('/adminWork/', async (req, res) => {
  *   HTTP/1.1 404 adminWork not found
  * 	 {
  *   	"status": 404,
- *   	"message": "adminWork not found"
+ *   	"message": "AdminWork not found"
  *   }
  */
 
@@ -152,7 +152,7 @@ router.put('/adminWork/:adminWorkID', async (req, res) => {
  * @apiSuccess {Number} adminWork.id ID of FSR
  * @apiSuccess {String} adminWork.position position of admin work
  * @apiSuccess {String} adminWork.officeUnit office unit of admin work
- * @apiSuccess {String} adminWork.approvedUnits approved units of admin work
+ * @apiSuccess {Number} adminWork.approvedUnits approved units of admin work
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -170,7 +170,7 @@ router.put('/adminWork/:adminWorkID', async (req, res) => {
  *
  *   }
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -178,11 +178,14 @@ router.put('/adminWork/:adminWorkID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- *   HTTP/1.1 404 adminWork not found
- * 	 {
- *   	"status": 404,
- *   	"message": "adminWork not found"
- *   }
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 Admin Work not found
+ * {
+ *   "status": 404,
+ *   "message": "Admin Work not found"
+ * }
  */
 
 router.delete('/adminWork/:adminWorkID', async (req, res) => {
@@ -220,7 +223,7 @@ router.delete('/adminWork/:adminWorkID', async (req, res) => {
  * @apiSuccess {Number} adminWork.id ID of FSR
  * @apiSuccess {String} adminWork.position position of admin work
  * @apiSuccess {String} adminWork.officeUnit office unit of admin work
- * @apiSuccess {String} adminWork.approvedUnits approved units of admin work
+ * @apiSuccess {Number} adminWork.approvedUnits approved units of admin work
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -236,7 +239,7 @@ router.delete('/adminWork/:adminWorkID', async (req, res) => {
  *     }
  *   }
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status  status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -244,7 +247,7 @@ router.delete('/adminWork/:adminWorkID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Admin Work not found
@@ -284,7 +287,7 @@ router.get('/adminWork/:adminWorkID', async (req, res) => {
  * @apiParam (Query Params) {Number} [id] ID of FSR
  * @apiParam (Query Params) {String} [position] position of admin work
  * @apiParam (Query Params) {String} [officeUnit] office unit of admin work
- * @apiParam (Query Params) {String} [approvedUnits] approved units of admin work
+ * @apiParam (Query Params) {Number} [approvedUnits] approved units of admin work
  * @apiParam (Query Params) {Number} [page] page number
  * @apiParam (Query Params) {Number} [limit] count limit of admin works to fetch
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
@@ -295,7 +298,7 @@ router.get('/adminWork/:adminWorkID', async (req, res) => {
  * @apiSuccess {Number} adminWork.id ID of FSR
  * @apiSuccess {String} adminWork.position position of admin work
  * @apiSuccess {String} adminWork.officeUnit office unit of admin work
- * @apiSuccess {String} adminWork.approvedUnits approved units of admin work
+ * @apiSuccess {Number} adminWork.approvedUnits approved units of admin work
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -324,7 +327,7 @@ router.get('/adminWork/:adminWorkID', async (req, res) => {
  *       "pages": 8
  *   }
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status  status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -332,14 +335,6 @@ router.get('/adminWork/:adminWorkID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 Admin Works not found
- * {
- *   "status": 404,
- *   "message": "Admin Works not found"
- * }
  */
 
 router.get('/adminWork/', async (req, res) => {

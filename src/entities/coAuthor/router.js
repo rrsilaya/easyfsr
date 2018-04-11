@@ -27,7 +27,7 @@ const router = Router();
  *         "name": Erlen
  *     }
  * }
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -95,7 +95,7 @@ router.post('/cworkCoAuthor/', async (req, res) => {
  *     "page": 1,
  *     "pages": 1
  * }
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -103,13 +103,6 @@ router.post('/cworkCoAuthor/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 Co-author not found
- * {
- *   "status": 404,
- *   "message": "Co-authors not found"
  * }
  */
 
@@ -165,7 +158,7 @@ router.get('/cworkCoAuthor/', async (req, res) => {
  *         "name": Erlen
  *     }
  * }
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -173,7 +166,7 @@ router.get('/cworkCoAuthor/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Co-author not found
@@ -228,7 +221,7 @@ router.delete('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
  *         "name": Erlen
  *     }
  * }
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -236,7 +229,7 @@ router.delete('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Co-author not found
@@ -292,7 +285,7 @@ router.get('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
  *         "name": Erlen
  *     }
  * }
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -300,7 +293,7 @@ router.get('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Co-author not found

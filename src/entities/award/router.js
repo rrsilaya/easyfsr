@@ -49,10 +49,10 @@ const router = Router();
  *        "approvedStartDate": "2018-09-08T16:00:00.000Z",
  *        "endDate": "2019-09-08T16:00:00.000Z",
  *        "filepath": "/uploads/award/Screenshot from 2018-r1EV-S5sM.png"
- *    }
+ *      }
  *   }
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -130,7 +130,7 @@ router.post('/award/', async (req, res) => {
  *        }
  *   }
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -138,7 +138,7 @@ router.post('/award/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * HTTP/1.1 404 Award not found
  * {
@@ -202,7 +202,7 @@ router.put('/award/:awardID', async (req, res) => {
  *   {
  *    "status": 200,
  *    "message": "Successfully deleted award",
- *    "data": [
+ *    "data":
  *        {
  *            "awardID": 4,
  *            "id": 3,
@@ -212,13 +212,13 @@ router.put('/award/:awardID', async (req, res) => {
  *            "recipientOrNominee": "You456",
  *            "professionalChair": "him334",
  *            "approvedStartDate": "1999-12-31T16:00:00.000Z",
- *            "endDate": "2000-12-31T16:00:00.000Z"
+ *            "endDate": "2000-12-31T16:00:00.000Z",
+ *            "filepath": "/uploads/award/Screenshot from 2018-r1EV-S5sM.png"
  *        }
- *     ]
  *   }
  *
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -282,7 +282,7 @@ router.delete('/award/:awardID', async (req, res) => {
  *   {
  *       "status": 200,
  *       "message": "Successfully fetched award",
- *       "data": [
+ *       "data":
  *           {
  *               "awardID": 4,
  *               "id": 3,
@@ -292,11 +292,11 @@ router.delete('/award/:awardID', async (req, res) => {
  *               "recipientOrNominee": "You456",
  *               "professionalChair": "him334",
  *               "approvedStartDate": "1999-12-31T16:00:00.000Z",
- *               "endDate": "2001-12-31T16:00:00.000Z"
+ *               "endDate": "2001-12-31T16:00:00.000Z",
+ *               "filepath": "/uploads/award/Screenshot from 2018-r1EV-S5sM.png"
  *           }
- *       ]
  *   }
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -304,7 +304,7 @@ router.delete('/award/:awardID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * HTTP/1.1 404 Award not found
  * {
@@ -378,7 +378,8 @@ router.get('/award/:awardID', async (req, res) => {
  *           "recipientOrNominee": "Youuuu",
  *           "professionalChair": "her",
  *           "approvedStartDate": "2000-12-31T16:00:00.000Z",
- *           "endDate": "2009-12-31T16:00:00.000Z"
+ *           "endDate": "2009-12-31T16:00:00.000Z",
+ *           "filepath": "/uploads/award/Screenshot from 2018-r1EV-S5sM.png"
  *         },
  *        {
  *           "awardID": 5,
@@ -389,7 +390,8 @@ router.get('/award/:awardID', async (req, res) => {
  *           "recipientOrNominee": "me",
  *           "professionalChair": "him",
  *           "approvedStartDate": "1999-12-31T16:00:00.000Z",
- *           "endDate": "2003-12-31T16:00:00.000Z"
+ *           "endDate": "2003-12-31T16:00:00.000Z",
+ *           "filepath": "/uploads/award/Screenshot from 2018-r1EV-S5sM.png"
  *         }
  *       ],
  *    "total": 2,
@@ -397,7 +399,7 @@ router.get('/award/:awardID', async (req, res) => {
  *    "page": 1,
  *    "pages": 1
  *   }
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -405,7 +407,7 @@ router.get('/award/:awardID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Award not found

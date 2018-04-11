@@ -13,7 +13,7 @@ const router = Router();
  * @apiParam (Body Params) {Number} userID ID of user who posted announcement
  * @apiParam (Body Params) {String} title title of the announcement
  * @apiParam (Body Params) {String} body body of the announcement
- * @apiParam (Body Params) {String} [isResolved] indicates if announcement entry is resolved
+ * @apiParam (Body Params) {Boolean} [isResolved] indicates if announcement entry is resolved
  *
  * @apiSuccess {Object} announcement new Announcement created
  * @apiSuccess {Number} announcement.announcementID ID of announcement
@@ -36,7 +36,7 @@ const router = Router();
  *    }
  *}
  *
- * @apiError (Error 500) {String} status List of errors
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -91,7 +91,7 @@ router.post('/announcement', async (req, res) => {
  *   }
  * }
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -99,7 +99,7 @@ router.post('/announcement', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Announcement not found
@@ -178,7 +178,7 @@ router.delete('/announcement/:announcementID', async (req, res) => {
  *    "page": 1,
  *    "pages": 1
  *		}
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -186,14 +186,6 @@ router.delete('/announcement/:announcementID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 Announcement not found
- * {
- *   "status": 404,
- *   "message": "Announcements not found"
- * }
  */
 router.get('/announcement', async (req, res) => {
   try {
@@ -251,7 +243,7 @@ router.get('/announcement', async (req, res) => {
  *             "isResolved": 0
  *         }
  * }
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status  status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -259,7 +251,7 @@ router.get('/announcement', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Announcement not found
@@ -296,10 +288,12 @@ router.get('/announcement/:announcementID', async (req, res) => {
  * @apiName updateAnnouncement
  *
  * @apiParam (Query Params) {Number} announcementID ID of announcement
+ *
  * @apiParam (Body Params) {Number} [userID] ID of user who posted announcement
  * @apiParam (Body Params) {String} [title] title of the announcement
  * @apiParam (Body Params) {String} [body] body of the announcement
  * @apiParam (Body Params) {Boolean} [isResolved] isResolved indicates if announcement entry is resolved
+ *
  * @apiSuccess {Object} announcement Announcement announcement updated
  * @apiSuccess {Number} announcement.announcementID ID of announcement
  * @apiSuccess {Number} announcement.userID ID of user who posted announcement
@@ -321,7 +315,7 @@ router.get('/announcement/:announcementID', async (req, res) => {
  *    }
  *}
  *
- * @apiError (Error 500) {String} status List of errors
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -329,7 +323,7 @@ router.get('/announcement/:announcementID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Announcement not found

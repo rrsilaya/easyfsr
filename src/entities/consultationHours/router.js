@@ -8,12 +8,12 @@ const router = Router();
  * @apiGroup ConsultationHours
  * @apiName addConsultationHour
  *
- * @apiParam (Body Params) {Number} [chID] chID of consultationHour
- * @apiParam (Body Params) {Number} [id] ID of FSR
- * @apiParam (Body Params) {String} [place] place of consultationHour
- * @apiParam (Body Params) {String} [day] day of consultationHour
- * @apiParam (Body Params) {Time} [timeStart] timeStart of consultationHour
- * @apiParam (Body Params) {Time} [timeEnd] timeEnd of consultationHour
+ * @apiParam (Body Params) {Number} chID chID of consultationHour
+ * @apiParam (Body Params) {Number} id ID of FSR
+ * @apiParam (Body Params) {String} place place of consultationHour
+ * @apiParam (Body Params) {String} day day of consultationHour
+ * @apiParam (Body Params) {Time} timeStart timeStart of consultationHour
+ * @apiParam (Body Params) {Time} timeEnd timeEnd of consultationHour
  *
  * @apiSuccess {Object} consultationHour new Consultation Hour
  * @apiSuccess {Number} consultationHour.chID chID of consultationHour
@@ -27,7 +27,7 @@ const router = Router();
  *   HTTP/1.1 200 OK
  *  {
  *      "status": 200,
- *      "message": "Successfully created consultation hours details",
+ *      "message": "Successfully created consultation hours",
  *      "data":
  *          {
  *              "chID": 1,
@@ -39,7 +39,7 @@ const router = Router();
  *          }
  *  }
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -74,7 +74,8 @@ router.post('/consultationHours/', async (req, res) => {
  * @apiGroup ConsultationHours
  * @apiName updateConsultationHour
  *
- * @apiParam (Query Params) {Number} [chID] chID of consultationHour
+ * @apiParam (Query Params) {Number} chID chID of consultationHour
+ *
  * @apiParam (Body Params) {Number} [id] ID of FSR
  * @apiParam (Body Params) {String} [place] place of consultationHour
  * @apiParam (Body Params) {String} [day] day of consultationHour
@@ -93,7 +94,7 @@ router.post('/consultationHours/', async (req, res) => {
  *   HTTP/1.1 200 OK
  *  {
  *      "status": 200,
- *      "message": "Successfully updated consultation hours details",
+ *      "message": "Successfully updated consultation hours",
  *      "data":
  *          {
  *              "chID": 1,
@@ -105,13 +106,6 @@ router.post('/consultationHours/', async (req, res) => {
  *          }
  *  }
  *
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * HTTP/1.1 404 Consultation Hour not found
- * {
- *   "status": 404,
- *   "message": "Consultation hours details not found"
- * }
  * @apiError (Error 500) {String} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
@@ -151,7 +145,7 @@ router.put('/consultationHours/:chID', async (req, res) => {
  * @apiGroup ConsultationHours
  * @apiName deleteConsultationHour
  *
- * @apiParam (Query Params) {Number} [chID] chID of consultationHour
+ * @apiParam (Query Params) {Number} chID chID of consultationHour
  *
  * @apiSuccess {Object} consultationHour Consultation Hour deleted
  * @apiSuccess {Number} consultationHour.chID chID of consultationHour
@@ -165,7 +159,7 @@ router.put('/consultationHours/:chID', async (req, res) => {
  *   HTTP/1.1 200 OK
  *  {
  *      "status": 200,
- *      "message": "Successfully deleted consultation hours details",
+ *      "message": "Successfully deleted consultation hours",
  *      "data":
  *          {
  *              "chID": 1,
@@ -177,14 +171,14 @@ router.put('/consultationHours/:chID', async (req, res) => {
  *          }
  *  }
  *
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * HTTP/1.1 404 Consultation Hour not found
  * {
  *   "status": 404,
  *   "message": "Consultation hours details not found"
  * }
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -223,7 +217,7 @@ router.delete('/consultationHours/:chID', async (req, res) => {
  * @apiGroup ConsultationHours
  * @apiName getConsultationHour
  *
- * @apiParam (Query Params) {Number} [chID] chID of consultationHour
+ * @apiParam (Query Params) {Number} chID chID of consultationHour
  *
  * @apiSuccess {Object} consultationHour Consulatation Hour fetched
  * @apiSuccess {Number} consultationHour.chID chID of consultationHour
@@ -237,7 +231,7 @@ router.delete('/consultationHours/:chID', async (req, res) => {
  *   HTTP/1.1 200 OK
  *  {
  *      "status": 200,
- *      "message": "Successfully fetched consultation hours details",
+ *      "message": "Successfully fetched consultation hours",
  *      "data":
  *          {
  *              "chID": 1,
@@ -249,14 +243,14 @@ router.delete('/consultationHours/:chID', async (req, res) => {
  *          }
  *  }
  *
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * HTTP/1.1 404 Consultation Hour not found
  * {
  *   "status": 404,
  *   "message": "Consultation hours details not found"
  * }
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -315,7 +309,7 @@ router.get('/consultationHours/:chID', async (req, res) => {
  *   HTTP/1.1 200 OK
  *  {
  *      "status": 200,
- *      "message": "Successfully fetched consultation hours details",
+ *      "message": "Successfully fetched consultation hours",
  *      "data":
  *          {
  *              "chID": 1,
@@ -339,14 +333,7 @@ router.get('/consultationHours/:chID', async (req, res) => {
  *      "pages": 1
  *  }
  *
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * HTTP/1.1 404 ConsultationHours not found
- * {
- *   "status": 404,
- *   "message": "Consultation hours details not found"
- * }
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error

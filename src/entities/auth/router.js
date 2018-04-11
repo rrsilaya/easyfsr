@@ -25,6 +25,7 @@ const router = Router();
  * @apiSuccess {String} user.rank rank of employee
  * @apiSuccess {String} user.isArchived indicates if employee entry is archived
  * @apiSuccess {String} user.acctType account type of employee
+ * @apiSuccess {String} user.filepath filepath
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -47,11 +48,12 @@ const router = Router();
  *               "rank": null,
  *               "isArchived": 0,
  *               "acctType": "USER"
+ *               "filepath": "/uploads/users/dads-223asda.png"
  *           }
  *     }
  *   }
  *
- * @apiError (Error 500) {String} status List of errors
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -59,7 +61,7 @@ const router = Router();
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 401) {String} status List of errors
+ * @apiError (Error 401) {Number} status status code
  * @apiError (Error 401) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 401 Internal Server Error
@@ -67,7 +69,7 @@ const router = Router();
  *     "status": 401,
  *     "message": "Invalid credentials"
  *   }
- * @apiError (Error 404) {String} status List of errors
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 404 Internal Server Error
@@ -127,6 +129,7 @@ router.post('/login', async (req, res) => {
  * @apiSuccess {String} user.rank rank of employee
  * @apiSuccess {String} user.isArchived indicates if employee entry is archived
  * @apiSuccess {String} user.acctType account type of employee
+ * @apiSuccess {String} user.filepath filepath
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -148,12 +151,13 @@ router.post('/login', async (req, res) => {
  *               "emailAddress": "marieSmith@up.edu.ph",
  *               "rank": null,
  *               "isArchived": 0,
- *               "acctType": "USER"
+ *               "acctType": "USER",
+ *               "filepath": "/uploads/users/dads-223asda.png"
  *           }
  *     }
  *   }
  *
- * @apiError (Error 500) {String} status List of errors
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -161,7 +165,7 @@ router.post('/login', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 401) {String} status List of errors
+ * @apiError (Error 401) {Number} status status code
  * @apiError (Error 401) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 401 Internal Server Error
@@ -169,7 +173,7 @@ router.post('/login', async (req, res) => {
  *     "status": 401,
  *     "message": "Invalid credentials"
  *   }
- * @apiError (Error 404) {String} status List of errors
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 404 Internal Server Error
@@ -244,6 +248,7 @@ router.post('/logout', async (req, res) => {
  * @apiSuccess {String} user.rank rank of employee
  * @apiSuccess {String} user.isArchived indicates if employee entry is archived
  * @apiSuccess {String} user.acctType account type of employee
+ * @apiSuccess {String} user.filepath filepath
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -265,7 +270,8 @@ router.post('/logout', async (req, res) => {
  *               "emailAddress": "marieSmith@up.edu.ph",
  *               "rank": null,
  *               "isArchived": 0,
- *               "acctType": "USER"
+ *               "acctType": "USER",
+ *               "filepath": "/uploads/users/dads-223asda.png"
  *           }
  *     }
  *   }
