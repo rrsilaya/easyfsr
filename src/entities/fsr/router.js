@@ -211,21 +211,22 @@ router.get('/fsr/:id', async (req, res) => {
     let fsr = await Ctrl.getFSR(req.params);
     const adminWorks = await getAdminWorks(req.params);
     const awards = await getAwards(req.params);
-    const creativeWorks = await getCreativeWorks(req.params);
-    creativeWorks.map(
-      async ({ ...creativeWorkID } = cwork) =>
-        await getCworkCoAuthors(creativeWorkID),
+    let creativeWorks = await getCreativeWorks(req.params);
+    creativeWorks = creativeWorks.map(
+      async ({ creativeWorkID } = cwork) =>
+        await getCworkCoAuthors({ creativeWorkID }),
     );
-    const courses = await getCourses(req.params);
-    courses.map(
-      async ({ ...courseID } = course) => await getCourseScheds(courseID),
+    let courses = await getCourses(req.params);
+    courses = courses.map(
+      async ({ courseID } = course) => await getCourseScheds({ courseID }),
     );
+    console.log(courses);
     const consultationHours = await getConsultationHours(req.params);
     const services = await getExtensionAndCommunityServices(req.params);
     const ltdPractices = await getLtdPractOfProfs(req.params);
-    const subjects = await getSubjects(req.params);
-    subjects.map(
-      async ({ ...subjectID } = subject) => await getTimeslots(subjectID),
+    let subjects = await getSubjects(req.params);
+    subjects = subjects.map(
+      async ({ subjectID } = subject) => await getTimeslots({ subjectID }),
     );
     const studyLoads = await getStudyLoads(req.params);
     fsr = {
