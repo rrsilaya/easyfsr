@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
+import * as MiddlewareCtrl from '../../middlewares/controller';
 
 const router = Router();
 
@@ -53,6 +54,10 @@ const router = Router();
 
 router.post('/studyLoad/', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.body.id,
+      req.session.user.userID,
+    );
     const id = await Ctrl.addStudyLoad(req.body);
     const studyLoad = await Ctrl.getStudyLoad({ id });
     res.status(200).json({
@@ -63,6 +68,12 @@ router.post('/studyLoad/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
+      case 404:
+        message = 'FSR not found';
+        break;
       case 500:
         message = 'Internal server error';
         break;
@@ -128,6 +139,10 @@ router.post('/studyLoad/', async (req, res) => {
 
 router.put('/studyLoad/:id', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.id,
+      req.session.user.userID,
+    );
     await Ctrl.updateStudyLoad(req.params, req.body);
     const studyLoad = await Ctrl.getStudyLoad(req.params);
     res.status(200).json({
@@ -138,6 +153,9 @@ router.put('/studyLoad/:id', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'studyLoad not found';
         break;
@@ -201,6 +219,10 @@ router.put('/studyLoad/:id', async (req, res) => {
 
 router.delete('/studyLoad/:id', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.id,
+      req.session.user.userID,
+    );
     const studyLoad = await Ctrl.getStudyLoad(req.params);
     await Ctrl.deleteStudyLoad(req.params);
     res.status(200).json({
@@ -211,6 +233,9 @@ router.delete('/studyLoad/:id', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'studyLoad not found';
         break;
@@ -274,6 +299,10 @@ router.delete('/studyLoad/:id', async (req, res) => {
 
 router.get('/studyLoad/:id', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.id,
+      req.session.user.userID,
+    );
     const studyLoad = await Ctrl.getStudyLoad(req.params);
     res.status(200).json({
       status: 200,
@@ -283,6 +312,9 @@ router.get('/studyLoad/:id', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'studyLoad not found';
         break;

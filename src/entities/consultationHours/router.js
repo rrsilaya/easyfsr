@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import * as MiddlewareCtrl from '../../middlewares/controller';
 
 const router = Router();
 
@@ -51,6 +52,10 @@ const router = Router();
 
 router.post('/consultationHours/', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.body.id,
+      req.session.user.userID,
+    );
     const chID = await Ctrl.addConsultationHour(req.body);
     const consultationHour = await Ctrl.getConsultationHour({ chID });
     res.status(200).json({
@@ -61,6 +66,12 @@ router.post('/consultationHours/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
+      case 404:
+        message = 'FSR not found';
+        break;
       case 500:
         message = 'Internal server error';
         break;
@@ -124,6 +135,10 @@ router.post('/consultationHours/', async (req, res) => {
 
 router.put('/consultationHours/:chID', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.chID,
+      req.session.user.userID,
+    );
     await Ctrl.updateConsultationHour(req.params, req.body);
     const consultationHour = await Ctrl.getConsultationHour(req.params);
 
@@ -135,6 +150,9 @@ router.put('/consultationHours/:chID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Consultation hours not found';
         break;
@@ -196,6 +214,10 @@ router.put('/consultationHours/:chID', async (req, res) => {
 
 router.delete('/consultationHours/:chID', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.chID,
+      req.session.user.userID,
+    );
     const consultationHour = await Ctrl.getConsultationHour(req.params);
     await Ctrl.deleteConsultationHour(req.params);
 
@@ -207,6 +229,9 @@ router.delete('/consultationHours/:chID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Consultation hours not found';
         break;
@@ -268,6 +293,10 @@ router.delete('/consultationHours/:chID', async (req, res) => {
 
 router.get('/consultationHours/:chID', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.chID,
+      req.session.user.userID,
+    );
     const consultationHour = await Ctrl.getConsultationHour(req.params);
 
     res.status(200).json({
@@ -278,6 +307,9 @@ router.get('/consultationHours/:chID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Consultation hours not found';
         break;

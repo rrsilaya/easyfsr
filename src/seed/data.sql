@@ -1549,6 +1549,8 @@ INSERT INTO notification (senderID, receiverID, message, dateSent, timeSent, isR
 INSERT INTO notification (senderID, receiverID, message, dateSent, timeSent, isResolved) VALUES (1, 12, 'Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.', '2017-07-26', '17:30:53', false);
 INSERT INTO notification (senderID, receiverID, message, dateSent, timeSent, isResolved) VALUES (2, 23, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.', '2018-05-03', '10:05:13', true);
 
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ("Tuesday", "C-100", '10:00', '12:00', 1);
+
 -- ANNOUNCEMENT
 INSERT INTO announcement (userID, title, body, isResolved) VALUES (2, 'Flipper', 'Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.
 
