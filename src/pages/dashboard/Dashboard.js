@@ -101,8 +101,15 @@ class Dashboard extends Component {
                   dataSource={data}
                   itemLayout="horizontal"
                   renderItem={item => (
-                    <ListItem actions={[<Icon type="close-circle" />]}>
-                      {item}
+                    <ListItem
+                      style={styles.listItems}
+                      actions={[
+                        <Icon style={styles.listItems} type="close-circle" />,
+                      ]}
+                    >
+                      <Row type="flex" style={styles.listItems}>
+                        {item}
+                      </Row>
                     </ListItem>
                   )}
                 />
@@ -127,8 +134,15 @@ class Dashboard extends Component {
                   dataSource={data}
                   itemLayout="horizontal"
                   renderItem={item => (
-                    <ListItem actions={[<Icon type="close-circle" />]}>
-                      {item}
+                    <ListItem
+                      style={styles.listItems}
+                      actions={[
+                        <Icon style={styles.listItems} type="close-circle" />,
+                      ]}
+                    >
+                      <Row type="flex" style={styles.listItems}>
+                        {item}
+                      </Row>
                     </ListItem>
                   )}
                 />
