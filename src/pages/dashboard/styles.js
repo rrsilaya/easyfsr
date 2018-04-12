@@ -1,6 +1,6 @@
 const style = {
   announcement: {
-    marginBottom: '10px',
+    marginBottom: '30px',
     marginLeft: 'auto',
     marginRight: 'auto',
   },
@@ -24,7 +24,7 @@ const style = {
     color: '#000000a6',
   },
   menuItems: {
-    width: '33%',
+    width: '33.3%',
     height: '20%',
     color: '#FFF',
     marginBottom: 30,
@@ -51,6 +51,9 @@ const style = {
   confirmation: {
     fontWeight: 'bold',
     color: 'red',
+  },
+  iconsAnnouncement: {
+    color: '#000000a6',
   },
 };
 

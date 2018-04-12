@@ -6,18 +6,18 @@ import columns from './columns';
 
 import SendNotificationModal from './components/SendNotificationModal';
 import CreateFSRModal from './components/CreateFSRModal';
-import EditFSRModal from './components/EditFSRModal';
+import CreateAnnouncementModal from './components/CreateAnnouncementModal';
 
 import { SEND_NOTIFICATION } from './duck';
 import { CREATE_FSR } from './duck';
-import { EDIT_FSR } from './duck';
+import { CREATE_ANNOUNCEMENT } from './duck';
 
 class Dashboard extends Component {
   render() {
     const {
       isSendNotificationModalOpen,
       isCreateFSRModalOpen,
-      isEditFSRModalOpen,
+      isCreateAnnouncementModalOpen,
 
       toggleModal,
     } = this.props;
@@ -36,7 +36,7 @@ class Dashboard extends Component {
                 style={styles.menuItems}
                 onClick={() => toggleModal(SEND_NOTIFICATION)}
               >
-                <Icon type="notification" style={styles.icons} />
+                <Icon type="bell" style={styles.icons} />
                 <p style={styles.description}>Send Notification</p>
               </Button>
 
@@ -54,23 +54,53 @@ class Dashboard extends Component {
                 <p style={styles.description}>Create FSR</p>
               </Button>
 
-              <EditFSRModal
-                isEditFSRModalOpen={isEditFSRModalOpen}
+              <CreateAnnouncementModal
+                isCreateAnnouncementModalOpen={isCreateAnnouncementModalOpen}
                 toggleModal={toggleModal}
                 handleAfterClose={this.handleAfterClose}
               />
               <Button
                 type="default"
                 style={styles.menuItems}
-                onClick={() => toggleModal(EDIT_FSR)}
+                onClick={() => toggleModal(CREATE_ANNOUNCEMENT)}
               >
-                <Icon type="edit" style={styles.icons} />
-                <p style={styles.description}>Edit FSR</p>
+                <Icon type="notification" style={styles.icons} />
+                <p style={styles.description}>Create Announcement</p>
               </Button>
             </Button.Group>
           </Col>
         </Row>
         <div>
+          <Row>
+            <Col>
+              <Card
+                style={styles.announcement}
+                title="Announcements"
+                actions={[
+                  <Icon type="setting" style={styles.iconsAnnouncement} />,
+                  <Icon type="edit" style={styles.iconsAnnouncement} />,
+                  <Icon type="delete" style={styles.iconsAnnouncement} />,
+                ]}
+              >
+                <Card bordered={false}>No announcements available.</Card>
+              </Card>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Card
+                style={styles.announcement}
+                title="Notifications"
+                actions={[
+                  <Icon type="setting" style={styles.iconsAnnouncement} />,
+                  <Icon type="edit" style={styles.iconsAnnouncement} />,
+                  <Icon type="delete" style={styles.iconsAnnouncement} />,
+                ]}
+              >
+                <Card bordered={false}>No notifications available.</Card>
+              </Card>
+            </Col>
+          </Row>
           <Row gutter={12} type="flex">
             <Col span={8}>
               <Card title="Faculty Progress">
