@@ -6,8 +6,10 @@ export const getAnnouncement = `
 `;
 
 export const getAnnouncements = (query, sortBy) => `
-  SELECT * FROM announcement ${
-    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  SELECT * FROM announcement WHERE ${
+    query.length
+      ? `isResolved = 0 AND ${formatQueryParams(query, 'get')}`
+      : 'isResolved = 0'
   } 
   ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
   LIMIT :limit OFFSET :offset
