@@ -16,6 +16,9 @@ class Profile extends Component {
       user,
 
       isGettingUser,
+      isUploadingIcon,
+
+      uploadIcon,
     } = this.props;
 
     return (
@@ -25,7 +28,11 @@ class Profile extends Component {
         ) : (
           <Fragment>
             <div className="center">
-              <ProfileIcon />
+              <ProfileIcon
+                user={user}
+                isUploadingIcon={isUploadingIcon}
+                uploadIcon={uploadIcon}
+              />
               <h1 className="center text white" style={styles.profileName}>
                 {user.firstName} {user.middleName} {user.lastName}
               </h1>

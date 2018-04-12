@@ -7,7 +7,9 @@ const TOGGLE_SIDEBAR = 'APP/TOGGLE_SIDEBAR';
 const LOGIN = 'APP/LOGIN';
 const GET_SESSION = 'APP/GET_SESSION';
 const LOGOUT = 'APP/LOGOUT';
-
+const TOGGLE_ACCOUNT_SETTINGS = 'APP/TOGGLE_ACCOUNT_SETTINGS';
+const EDIT_SETTINGS = 'APP/EDIT_SETTINGS';
+const UPDATE_ICON = 'APP/UPDATE_ICON';
 // Action Creators
 export const toggleSidebar = () => ({
   type: TOGGLE_SIDEBAR,
@@ -42,13 +44,62 @@ export const logout = () => ({
     },
   },
 });
+export const toggleAccountSettings = () => ({
+  type: TOGGLE_ACCOUNT_SETTINGS,
+});
+
+export const editSettings = (user, body) => {
+  const { userID } = user;
+  return dispatch => {
+    return dispatch({
+      type: EDIT_SETTINGS,
+      promise: Api.editUser(userID, body),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Succesfully updated user.',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while updating user.',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const updateProfileIcon = (user, form) => {
+  const { userID } = user;
+  return dispatch => {
+    return dispatch({
+      type: UPDATE_ICON,
+      promise: Api.editUser(userID, form),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Succesfully uploaded profile icon.',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while uploading icon.',
+          });
+        },
+      },
+    });
+  };
+};
 
 // Initial State
 const initialState = {
   isSidebarCollapsed: false,
-
+  isAccountSettingsToggled: false,
   isGettingSession: true,
   isLoggingIn: false,
+  isEditingSettings: false,
+  isUpdatingIcon: false,
 
   user: null,
 };
@@ -105,6 +156,41 @@ const reducer = (state = initialState, action) => {
         finish: prevState => ({
           ...prevState,
           isGettingSession: false,
+        }),
+      });
+    case TOGGLE_ACCOUNT_SETTINGS:
+      return {
+        ...state,
+        isAccountSettingsToggled: !state.isAccountSettingsToggled,
+      };
+    case EDIT_SETTINGS:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isEditingSettings: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          isAccountSettingsToggled: false,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isEditingSettings: false,
+        }),
+      });
+    case UPDATE_ICON:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isUpdatingIcon: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          user: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isUpdatingIcon: false,
         }),
       });
 
