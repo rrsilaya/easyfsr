@@ -19,6 +19,7 @@ export const getrCoAuthor = ({ rCoAuthorID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getrCoAuthor, { rCoAuthorID }, (err, results) => {
       if (err) return reject(500);
+      else if (!results.length) return reject(404);
       return resolve(results[0]);
     });
   });
