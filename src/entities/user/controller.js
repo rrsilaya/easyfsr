@@ -31,6 +31,7 @@ const defaultAttr = {
   middleName: '',
   officeNumber: '',
   profileIcon: '/uploads/users/default.png',
+  committee: '',
 };
 export const addUser = user => {
   return new Promise((resolve, reject) => {

@@ -9,6 +9,7 @@ export const addUser = `
     lastName, 
     contractType, 
     emailAddress,
+    committee,
     rank,
     profileIcon
   )
@@ -20,6 +21,7 @@ export const addUser = `
     :lastName, 
     :contractType, 
     :emailAddress,
+    :committee,
     :rank,
     :profileIcon
   )
