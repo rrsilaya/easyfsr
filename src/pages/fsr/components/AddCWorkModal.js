@@ -9,21 +9,12 @@ import {
   Upload,
   Icon,
 } from 'antd';
-import { ADD_CWORK } from '../duck';
+import { CWORK } from '../duck';
 
 const FormItem = Form.Item;
 const { Option } = Select;
 
 class AddCWorkModal extends Component {
-  handleAfterClose = () => {
-    this.props.form.resetFields();
-  };
-
-  handleCancel = () => {
-    this.props.toggleModal(ADD_CWORK);
-    this.handleAfterClose();
-  };
-
   render() {
     const {
       isAddCWorkModalOpen,
@@ -48,11 +39,11 @@ class AddCWorkModal extends Component {
       <Modal
         title="Add Creative Work"
         visible={isAddCWorkModalOpen}
-        onOk={() => toggleModal(ADD_CWORK)}
-        onCancel={() => toggleModal(ADD_CWORK)}
+        onOk={() => toggleModal(CWORK)}
+        onCancel={() => toggleModal(CWORK)}
         destroyOnClose
         footer={[
-          <Button key="back" onClick={() => toggleModal(ADD_CWORK)}>
+          <Button key="back" onClick={() => toggleModal(CWORK)}>
             Cancel
           </Button>,
           <Button key="submit" type="primary" htmlType="submit">

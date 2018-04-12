@@ -1,7 +1,18 @@
 import { connect } from 'react-redux';
 import FSRForm from './FSRForm';
 
-import { toggleModal, nextStep, prevStep, getFSR } from './duck';
+import {
+  toggleModal,
+  nextStep,
+  prevStep,
+  getFSR,
+  getSubjects,
+  addSubject,
+  deleteSubject,
+  editSubject,
+  changeSelectedSubject,
+  getTimeslots,
+} from './duck';
 
 const mapStateToProps = state => {
   const {
@@ -12,9 +23,18 @@ const mapStateToProps = state => {
     isAddExtAndCommServiceModalOpen,
     isAddCourseModalOpen,
     isAddConsultationHourModalOpen,
+    isEditSubjectModalOpen,
     currentStep,
     fsr,
+    subjects,
+    subject,
+    timeslots,
     isGettingFSR,
+    isGettingSubjects,
+    isAddingSubject,
+    isAddingTimeslot,
+    isEditingSubject,
+    isGettingTimeslots,
   } = state.fsr;
 
   return {
@@ -25,9 +45,18 @@ const mapStateToProps = state => {
     isAddExtAndCommServiceModalOpen,
     isAddCourseModalOpen,
     isAddConsultationHourModalOpen,
+    isEditSubjectModalOpen,
     currentStep,
     fsr,
+    subjects,
+    subject,
+    timeslots,
     isGettingFSR,
+    isGettingSubjects,
+    isAddingSubject,
+    isAddingTimeslot,
+    isEditingSubject,
+    isGettingTimeslots,
   };
 };
 
@@ -44,6 +73,24 @@ const mapDispatchToProps = dispatch => {
     },
     getFSR: id => {
       dispatch(getFSR(id));
+    },
+    getSubjects: query => {
+      dispatch(getSubjects(query));
+    },
+    addSubject: subject => {
+      dispatch(addSubject(subject));
+    },
+    deleteSubject: subjectID => {
+      dispatch(deleteSubject(subjectID));
+    },
+    editSubject: (subjectID, body) => {
+      dispatch(editSubject(subjectID, body));
+    },
+    changeSelectedSubject: subject => {
+      dispatch(changeSelectedSubject(subject));
+    },
+    getTimeslots: query => {
+      dispatch(getTimeslots(query));
     },
   };
 };

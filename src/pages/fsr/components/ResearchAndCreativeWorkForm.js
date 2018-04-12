@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Button, Card } from 'antd';
-import { ADD_CWORK, ADD_RESEARCH } from '../duck';
+import { CWORK, RESEARCH } from '../duck';
 
 import AddCWorkModal from './AddCWorkModal';
 import AddResearchModal from './AddResearchModal';
@@ -12,41 +12,49 @@ const columns1 = [
     title: 'Title',
     dataIndex: 'title',
     key: 'title',
+    align: 'center',
   },
   {
     title: 'Role',
     dataIndex: 'role',
     key: 'role',
+    align: 'center',
   },
   {
     title: 'Co-Workers',
     dataIndex: 'rCoWorker',
     key: 'rCoWorker',
+    align: 'center',
   },
   {
     title: 'Start Date',
     dataIndex: 'startDate',
     key: 'startDate',
+    align: 'center',
   },
   {
     title: 'End Date',
     dataIndex: 'endDate',
     key: 'endDate',
+    align: 'center',
   },
   {
     title: 'Funding',
     dataIndex: 'funding',
     key: 'funding',
+    align: 'center',
   },
   {
     title: 'File',
     dataIndex: 'file',
     key: 'file',
+    align: 'center',
   },
   {
     title: 'Approved Credit Units',
     dataIndex: 'credUnit',
     key: 'credUnit',
+    align: 'center',
   },
 ];
 
@@ -55,31 +63,37 @@ const columns2 = [
     title: 'Title',
     dataIndex: 'title',
     key: 'title',
+    align: 'center',
   },
   {
     title: 'Type',
     dataIndex: 'type',
     key: 'type',
+    align: 'center',
   },
   {
     title: 'Co-Authors',
     dataIndex: 'cworkCoAuthor',
     key: 'cworkCoAuthor',
+    align: 'center',
   },
   {
     title: 'Date of Publication',
     dataIndex: 'date',
     key: 'date',
+    align: 'center',
   },
   {
     title: 'File',
     dataIndex: 'cworkFile',
     key: 'cworkFile',
+    align: 'center',
   },
   {
     title: 'Approved Credit Units',
     dataIndex: 'credUnit',
     key: 'credUnit',
+    align: 'center',
   },
 ];
 
@@ -107,7 +121,7 @@ class ResearchAndCreativeWorkForm extends Component {
           <Button
             icon="plus-circle-o"
             type="primary"
-            onClick={() => toggleModal(ADD_RESEARCH)}
+            onClick={() => toggleModal(RESEARCH)}
           >
             Add Research
           </Button>
@@ -122,7 +136,7 @@ class ResearchAndCreativeWorkForm extends Component {
           <Button
             icon="plus-circle-o"
             type="primary"
-            onClick={() => toggleModal(ADD_CWORK)}
+            onClick={() => toggleModal(CWORK)}
           >
             Add Creative Work
           </Button>
