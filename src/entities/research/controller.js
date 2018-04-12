@@ -44,6 +44,7 @@ export const getResearch = ({ researchID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getResearch, { researchID }, (err, results) => {
       if (err) return reject(500);
+      else if (!results.length) return reject(404);
       return resolve(results[0]);
     });
   });
