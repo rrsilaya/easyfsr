@@ -14,6 +14,9 @@ const style = {
   iconPad: {
     marginRight: '1em',
   },
+  editButton: {
+    margin: '1em',
+  },
 };
 
 export default style;

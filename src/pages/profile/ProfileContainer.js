@@ -1,19 +1,27 @@
 import { connect } from 'react-redux';
 import Profile from './Profile';
 
-import { getUserProfile } from './duck';
+import { toggleEditModal, getUsers, getUserProfile, editUser } from './duck';
 
 const mapStateToProps = state => {
-  const { user, isGettingUser } = state.profile;
+  const { isEditModalOpen, isGettingUser, isEditingUser, user } = state.profile;
 
   return {
-    user,
+    isEditModalOpen,
     isGettingUser,
+    isEditingUser,
+    user,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    toggleEditModal: () => {
+      dispatch(toggleEditModal());
+    },
+    editUser: (user, values) => {
+      dispatch(editUser(user, values));
+    },
     getUserProfile: id => {
       dispatch(getUserProfile(id));
     },

@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
-import { Icon } from 'antd';
-
+import { Icon, Button } from 'antd';
 import { PageLoader, Schedule } from '../../global';
+
 import ProfileIcon from './components/ProfileIcon';
 import ProfileInfo from './components/ProfileInfo';
+import EditModal from './components/EditModal';
+
 import styles from './styles';
 
 class Profile extends Component {
@@ -14,6 +16,10 @@ class Profile extends Component {
   render() {
     const {
       user,
+      isEditModalOpen,
+      isEditingUser,
+      toggleEditModal,
+      editUser,
 
       isGettingUser,
     } = this.props;
@@ -49,8 +55,26 @@ class Profile extends Component {
               </div>
             </div>
             <ProfileInfo />
+            <div className="center">
+              <Button
+                style={styles.editButton}
+                size="medium"
+                icon="edit"
+                ghost
+                onClick={toggleEditModal}
+              >
+                Edit Profile
+              </Button>
+            </div>
           </Fragment>
         )}
+        <EditModal
+          user={user}
+          isEditModalOpen={isEditModalOpen}
+          toggleEditModal={toggleEditModal}
+          editUser={editUser}
+          isEditingUser={isEditingUser}
+        />
       </div>
     );
   }
