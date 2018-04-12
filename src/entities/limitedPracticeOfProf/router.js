@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
+import * as MiddlewareCtrl from '../../middlewares/controller';
 
 const router = Router();
 
@@ -46,6 +47,10 @@ const router = Router();
 
 router.post('/ltdPractOfProf/', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.body.id,
+      req.session.user.userID,
+    );
     const limitedPracticeOfProfID = await Ctrl.addLtdPractOfProf(req.body);
     const ltdPractOfProf = await Ctrl.getLtdPractOfProf({
       limitedPracticeOfProfID,
@@ -58,6 +63,12 @@ router.post('/ltdPractOfProf/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
+      case 404:
+        message = 'FSR not found';
+        break;
       case 500:
         message = 'Internal server error';
         break;
@@ -116,6 +127,10 @@ router.post('/ltdPractOfProf/', async (req, res) => {
 
 router.put('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.limitedPracticeOfProfID,
+      req.session.user.userID,
+    );
     await Ctrl.updateLtdPractOfProf(req.params, req.body);
     const ltdPractOfProf = await Ctrl.getLtdPractOfProf(req.params);
     res.status(200).json({
@@ -126,6 +141,9 @@ router.put('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'LtdPractOfProf not found';
         break;
@@ -185,6 +203,10 @@ router.put('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
 
 router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.limitedPracticeOfProfID,
+      req.session.user.userID,
+    );
     const ltdPractOfProf = await Ctrl.getLtdPractOfProf(req.params);
     await Ctrl.deleteLtdPractOfProf(req.params);
     res.status(200).json({
@@ -195,6 +217,9 @@ router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'LtdPractOfProf not found';
         break;
@@ -254,6 +279,10 @@ router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
 
 router.get('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.limitedPracticeOfProfID,
+      req.session.user.userID,
+    );
     const ltdPractOfProf = await Ctrl.getLtdPractOfProf(req.params);
     res.status(200).json({
       status: 200,
@@ -263,6 +292,9 @@ router.get('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'LtdPractOfProf not found';
         break;
