@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form, Input, Select } from 'antd';
+import { Modal, Button, Form, Input, Select, Switch } from 'antd';
 
 import { getFieldValues } from '../../../utils';
 import { getUsers } from '../../../api';
 import ranks from './ranks';
+import committees from './committees';
 
 const FormItem = Form.Item;
 const { OptGroup, Option } = Select;
@@ -76,6 +77,10 @@ class AddModal extends Component {
     });
 
     if (data.total) return callback('Email address must be unique.');
+  };
+
+  changeToggle = checked => {
+    console.log(checked);
   };
 
   state = {
@@ -209,6 +214,17 @@ class AddModal extends Component {
                       </Option>
                     ))}
                   </OptGroup>
+                ))}
+              </Select>,
+            )}
+          </FormItem>
+          <FormItem {...formItemLayout} label="Committee">
+            {form.getFieldDecorator('committee@@addUser')(
+              <Select showSearch>
+                {committees.map(committee => (
+                  <Option key={committee} value={committee}>
+                    {committee}
+                  </Option>
                 ))}
               </Select>,
             )}
