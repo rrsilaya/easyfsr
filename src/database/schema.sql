@@ -193,7 +193,7 @@ CREATE TABLE `limitedPracticeOfProf`(
 CREATE TABLE `extensionAndCommunityService`(
   `id` INT NOT NULL, 
   `extAndCommServiceID` INT NOT NULL AUTO_INCREMENT,
-  `participant` VARCHAR (50) NOT NULL,
+  `participant` INT (3) NOT NULL,
   `role` VARCHAR (50) NOT NULL,
   `hours` INT (3) NOT NULL,
   `title` VARCHAR (50) NOT NULL,
