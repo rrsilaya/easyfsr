@@ -5,8 +5,13 @@ import * as Api from '../../api';
 
 // Action Types
 const GET_USER = 'PROFILE/GET_USER';
+const VIEW_SCHEDULE = 'PROFILE/VIEW_SCHEDULE';
 
 // Action Creators
+export const viewSchedule = () => ({
+  type: VIEW_SCHEDULE,
+});
+
 export const getUserProfile = employeeID => dispatch => {
   dispatch({
     type: GET_USER,
@@ -25,6 +30,7 @@ export const getUserProfile = employeeID => dispatch => {
 // Initial State
 const initialState = {
   isGettingUser: true,
+  isViewingSchedule: false,
   user: {},
 };
 
@@ -44,6 +50,12 @@ const reducer = (state = initialState, action) => {
           isGettingUser: false,
         }),
       });
+
+    case VIEW_SCHEDULE:
+      return {
+        ...state,
+        isViewingSchedule: !state.isViewingSchedule,
+      };
 
     default:
       return state;

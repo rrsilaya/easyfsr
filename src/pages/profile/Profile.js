@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Icon, Button } from 'antd';
+import { Icon, Button, Modal } from 'antd';
 
 import { PageLoader, Schedule } from '../../global';
 import ProfileIcon from './components/ProfileIcon';
@@ -11,12 +11,30 @@ class Profile extends Component {
     this.props.getUserProfile(this.props.match.params.userID);
   }
 
+  state = {
+    loading: false,
+    visible: false,
+  };
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+  };
+  handleOk = () => {
+    this.setState({ loading: true });
+    setTimeout(() => {
+      this.setState({ loading: false, visible: false });
+    }, 3000);
+  };
+  handleCancel = e => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  };
   render() {
-    const {
-      user,
-
-      isGettingUser,
-    } = this.props;
+    const { user, viewSchedule, isViewingSchedule, isGettingUser } = this.props;
+    const { visible, loading } = this.state;
 
     return (
       <div>
@@ -50,11 +68,36 @@ class Profile extends Component {
               <Button
                 type="primary"
                 size="large"
-                style={{ margin: 20, bottom: 20 }}
-                onClick={Schedule}
+                onClick={this.showModal}
+                style={{ margin: 30 }}
               >
-                Schedule
+                View Schedule
               </Button>
+              <Modal
+                title="Schedule"
+                visible={this.state.visible}
+                onOk={this.handleOk}
+                onCancel={this.handleCancel}
+                width={811 + 48}
+                footer={[
+                  <Button
+                    key="download"
+                    loading={loading}
+                    onClick={this.handleOk}
+                  >
+                    Download
+                  </Button>,
+                  <Button
+                    key="submit"
+                    type="primary"
+                    onClick={this.handleCancel}
+                  >
+                    Close
+                  </Button>,
+                ]}
+              >
+                <Schedule data={[]} />
+              </Modal>
             </div>
             <ProfileInfo />
           </Fragment>
