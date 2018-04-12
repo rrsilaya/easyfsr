@@ -85,18 +85,11 @@ class EditModal extends Component {
           <FormItem {...formItemLayout} label="Employee No.">
             <Input value={user.employeeID} disabled />
           </FormItem>
+          <FormItem {...formItemLayout} label="Contract Type">
+            <Input value={user.contractType} disabled />
+          </FormItem>
           <FormItem {...formItemLayout} label="Room No.">
             <Input placeholder="C-112" />
-          </FormItem>
-          <FormItem {...formItemLayout} label="User Type">
-            {form.getFieldDecorator('contractType', {
-              initialValue: user.contractType,
-            })(
-              <Select>
-                <Option value="FULL-TIME">FULL-TIME</Option>
-                <Option value="PART-TIME">PART-TIME</Option>
-              </Select>,
-            )}
           </FormItem>
         </Form>
       </Modal>
