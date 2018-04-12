@@ -482,14 +482,15 @@ router.put('/user/:userID', async (req, res) => {
     if (req.files && req.files.profileIcon) {
       const user = await Ctrl.getUserByUserID(req.params);
 
-      if (user.profileIcon && user.profileIcon !== '/uploads/users/default.png') await unlink(user.profileIcon);
+      if (user.profileIcon && user.profileIcon !== '/uploads/users/default.png')
+        await unlink(user.profileIcon);
       req.body.profileIcon = await upload(req.files.profileIcon, 'users');
     }
 
     await Ctrl.updateUser(req.params, req.body);
     const user = await Ctrl.getUserByUserID(req.params);
     delete user.password;
-
+    if (req.session.user.userID == user.userID) req.session.user = user;
     res.status(200).json({
       status: 200,
       message: 'Successfully updated user',

@@ -101,21 +101,20 @@ router.post('/subject/', async (req, res) => {
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *  {
-      "status": 200,
-      "message": "Successfully updated subject",
-      "data": [
-          {
-              "id": 1,
-              "subjectCode": "NEW CODE",
-              "subjectID": 1,
-              "teachingLoadCreds": 2,
-              "noOfStudents": 2,
-              "hoursPerWeek": 2,
-              "sectionCode": "sd",
-              "room": "12"
-          }
-      ]
-    }
+ *     "status": 200,
+ *     "message": "Successfully updated subject",
+ *     "data": 
+ *         {
+ *             "id": 1,
+ *             "subjectCode": "NEW CODE",
+ *             "subjectID": 1,
+ *             "teachingLoadCreds": 2,
+ *             "noOfStudents": 2,
+ *             "hoursPerWeek": 2,
+ *             "sectionCode": "sd",
+ *             "room": "12"
+ *         }
+ *   }
  * @apiError (Error 500) {String} status error status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
@@ -178,7 +177,7 @@ router.put('/subject/:subjectID', async (req, res) => {
  *   {
  *        "status": 200;
  *        "message": 'Succesfully deleted subject'
- *         "data": [
+ *         "data":
  *         {
  *           "id": 1,
  *           "subjectCode": "NEW CODE",
@@ -189,7 +188,6 @@ router.put('/subject/:subjectID', async (req, res) => {
  *           "sectionCode": "sd",
  *           "room": "12"
  *         }
- *     ]
  *   }
  *
  * @apiError (Error 500) {String} status error status code
