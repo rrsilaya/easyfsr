@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
 
-import * as Middleware from '../../middlewares';
+import * as Middleware from '../../middlewares/middlewares';
 import * as Ctrl from './controller';
 import { upload, unlink } from './../../utils';
 const router = Router();

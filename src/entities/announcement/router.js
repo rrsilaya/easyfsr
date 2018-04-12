@@ -1,7 +1,8 @@
 import { Router } from 'express';
 
-import * as Middleware from '../../middlewares';
+import * as Middleware from '../../middlewares/middlewares';
 import * as Ctrl from './controller';
+import * as MiddlewareCtrl from '../../middlewares/controller';
 
 const router = Router();
 

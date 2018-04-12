@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
+import * as MiddlewareCtrl from '../../middlewares/controller';
+import * as Middleware from '../../middlewares/middlewares';
 
 const router = Router();
 
@@ -49,6 +51,10 @@ const router = Router();
 
 router.post('/adminWork/', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.body.id,
+      req.session.user.userID,
+    );
     const adminWorkID = await Ctrl.addAdminWork(req.body);
     const adminWork = await Ctrl.getAdminWork({ adminWorkID });
     res.status(200).json({
@@ -59,6 +65,12 @@ router.post('/adminWork/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
+      case 404:
+        message = 'FSR not found';
+        break;
       case 500:
         message = 'Internal server error';
         break;
@@ -119,6 +131,10 @@ router.post('/adminWork/', async (req, res) => {
 
 router.put('/adminWork/:adminWorkID', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.adminWorkID,
+      req.session.user.userID,
+    );
     await Ctrl.updateAdminWork(req.params, req.body);
     const adminWork = await Ctrl.getAdminWork(req.params);
     res.status(200).json({
@@ -129,6 +145,9 @@ router.put('/adminWork/:adminWorkID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'adminWork not found';
         break;
@@ -187,6 +206,10 @@ router.put('/adminWork/:adminWorkID', async (req, res) => {
 
 router.delete('/adminWork/:adminWorkID', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.adminWorkID,
+      req.session.user.userID,
+    );
     const adminWork = await Ctrl.getAdminWork(req.params);
     await Ctrl.deleteAdminWork(req.params);
     res.status(200).json({
@@ -197,6 +220,9 @@ router.delete('/adminWork/:adminWorkID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'adminWork not found';
         break;
@@ -256,6 +282,10 @@ router.delete('/adminWork/:adminWorkID', async (req, res) => {
 
 router.get('/adminWork/:adminWorkID', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.adminWorkID,
+      req.session.user.userID,
+    );
     const adminWork = await Ctrl.getAdminWork(req.params);
     res.status(200).json({
       status: 200,
@@ -265,6 +295,9 @@ router.get('/adminWork/:adminWorkID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'adminWork not found';
         break;

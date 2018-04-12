@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import * as Middleware from './middlewares';
+import * as Middleware from './middlewares/middlewares';
 
 import authRouter from './entities/auth/router';
 import userRouter from './entities/user/router';

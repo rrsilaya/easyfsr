@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import * as Middleware from '../../middlewares/middlewares';
 
 const router = Router();
 
@@ -55,7 +56,7 @@ const router = Router();
  *   }
  */
 
-router.post('/notification/', async (req, res) => {
+router.post('/notification/', Middleware.isAdmin, async (req, res) => {
   try {
     const notificationID = await Ctrl.addNotification(req.body);
     const notification = await Ctrl.getNotification({ notificationID });
@@ -130,29 +131,33 @@ router.post('/notification/', async (req, res) => {
  * }
  */
 
-router.delete('/notification/:notificationID', async (req, res) => {
-  try {
-    const notification = await Ctrl.getNotification(req.params);
-    await Ctrl.deleteNotification(req.params);
+router.delete(
+  '/notification/:notificationID',
+  Middleware.isAdmin,
+  async (req, res) => {
+    try {
+      const notification = await Ctrl.getNotification(req.params);
+      await Ctrl.deleteNotification(req.params);
 
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully deleted notification',
-      data: notification,
-    });
-  } catch (status) {
-    let message = '';
-    switch (status) {
-      case 404:
-        message = 'Notification not found';
-        break;
-      case 500:
-        message = 'Internal server error';
-        break;
+      res.status(200).json({
+        status: 200,
+        message: 'Successfully deleted notification',
+        data: notification,
+      });
+    } catch (status) {
+      let message = '';
+      switch (status) {
+        case 404:
+          message = 'Notification not found';
+          break;
+        case 500:
+          message = 'Internal server error';
+          break;
+      }
+      res.status(status).json({ status, message });
     }
-    res.status(status).json({ status, message });
-  }
-});
+  },
+);
 
 /**
  * @api {get} /notification/:notificationID getNotification
@@ -402,28 +407,32 @@ router.get('/notification/', async (req, res) => {
  * }
  */
 
-router.put('/notification/:notificationID', async (req, res) => {
-  try {
-    await Ctrl.updateNotification(req.params, req.body);
-    const notification = await Ctrl.getNotification(req.params);
+router.put(
+  '/notification/:notificationID',
+  Middleware.isAdmin,
+  async (req, res) => {
+    try {
+      await Ctrl.updateNotification(req.params, req.body);
+      const notification = await Ctrl.getNotification(req.params);
 
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully updated notification',
-      data: notification,
-    });
-  } catch (status) {
-    let message = '';
-    switch (status) {
-      case 404:
-        message = 'Notification not found';
-        break;
-      case 500:
-        message = 'Internal server error';
-        break;
+      res.status(200).json({
+        status: 200,
+        message: 'Successfully updated notification',
+        data: notification,
+      });
+    } catch (status) {
+      let message = '';
+      switch (status) {
+        case 404:
+          message = 'Notification not found';
+          break;
+        case 500:
+          message = 'Internal server error';
+          break;
+      }
+      res.status(status).json({ status, message });
     }
-    res.status(status).json({ status, message });
-  }
-});
+  },
+);
 
 export default router;

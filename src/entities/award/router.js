@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
+import * as MiddlewareCtrl from '../../middlewares/controller';
 import { upload, unlink } from './../../utils';
 
 const router = Router();
@@ -64,6 +65,10 @@ const router = Router();
 
 router.post('/award/', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.body.id,
+      req.session.user.userID,
+    );
     if (req.files && req.files.filepath)
       req.body.filepath = await upload(req.files.filepath, 'awards');
     const awardID = await Ctrl.addAward(req.body);
@@ -76,6 +81,12 @@ router.post('/award/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
+      case 404:
+        message = 'FSR not found';
+        break;
       case 500:
         message = 'Internal server error';
         break;
@@ -149,6 +160,10 @@ router.post('/award/', async (req, res) => {
 
 router.put('/award/:awardID', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.id,
+      req.session.user.userID,
+    );
     if (req.files && req.files.filepath) {
       const award = await Ctrl.getAward(req.params);
 
@@ -167,6 +182,9 @@ router.put('/award/:awardID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Award not found';
         break;
@@ -237,6 +255,10 @@ router.put('/award/:awardID', async (req, res) => {
 
 router.delete('/award/:awardID', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.awardID,
+      req.session.user.userID,
+    );
     const award = await Ctrl.getAward(req.params);
     await Ctrl.deleteAward(req.params);
     res.status(200).json({
@@ -247,6 +269,9 @@ router.delete('/award/:awardID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Award not found';
         break;
@@ -315,6 +340,10 @@ router.delete('/award/:awardID', async (req, res) => {
 
 router.get('/award/:awardID', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.awardID,
+      req.session.user.userID,
+    );
     const award = await Ctrl.getAward(req.params);
     res.status(200).json({
       status: 200,
@@ -324,6 +353,9 @@ router.get('/award/:awardID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Award not found';
         break;
