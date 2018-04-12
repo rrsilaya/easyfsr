@@ -56,7 +56,7 @@ const style = {
     color: '#000000a6',
   },
   listItems: {
-    color: '000000a6',
+    color: '#000000a6',
   },
 };
 
