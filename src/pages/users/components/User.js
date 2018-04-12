@@ -61,7 +61,7 @@ class User extends Component {
           ]}
         >
           <Meta
-            avatar={<Avatar size="large" icon="user" />}
+            avatar={<Avatar size="large" src={user.profileIcon} />}
             title={this.props.title}
             description={this.props.description}
           />
