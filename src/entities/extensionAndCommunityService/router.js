@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
+import * as MiddlewareCtrl from '../../middlewares/controller';
 
 const router = Router();
 
@@ -63,6 +64,10 @@ const router = Router();
 
 router.post('/service/', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.body.id,
+      req.session.user.userID,
+    );
     const extAndCommServiceID = await Ctrl.addExtensionAndCommunityService(
       req.body,
     );
@@ -77,6 +82,12 @@ router.post('/service/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
+      case 404:
+        message = 'FSR not found';
+        break;
       case 500:
         message = 'Internal server error';
         break;
@@ -144,6 +155,10 @@ router.post('/service/', async (req, res) => {
 
 router.put('/service/:extAndCommServiceID/', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.extAndCommServiceID,
+      req.session.user.userID,
+    );
     await Ctrl.updateExtensionAndCommunityService(req.params, req.body);
     const service = await Ctrl.getExtensionAndCommunityService(req.params);
     res.status(200).json({
@@ -154,6 +169,9 @@ router.put('/service/:extAndCommServiceID/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Service not found';
         break;
@@ -315,6 +333,10 @@ router.get('/service/', async (req, res) => {
 
 router.delete('/service/:extAndCommServiceID/', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.extAndCommServiceID,
+      req.session.user.userID,
+    );
     const service = await Ctrl.getExtensionAndCommunityService(req.params);
     await Ctrl.deleteExtensionAndCommunityService(req.params);
     res.status(200).json({
@@ -325,6 +347,9 @@ router.delete('/service/:extAndCommServiceID/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'ExtensionAndCommunityService not found';
         break;
@@ -393,6 +418,10 @@ router.delete('/service/:extAndCommServiceID/', async (req, res) => {
 
 router.get('/service/:extAndCommServiceID/', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.extAndCommServiceID,
+      req.session.user.userID,
+    );
     const service = await Ctrl.getExtensionAndCommunityService(req.params);
     res.status(200).json({
       status: 200,
@@ -402,6 +431,9 @@ router.get('/service/:extAndCommServiceID/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Service not found';
         break;
