@@ -55,6 +55,9 @@ const style = {
   iconsAnnouncement: {
     color: '#000000a6',
   },
+  listItems: {
+    color: '000000a6',
+  },
 };
 
 export default style;
