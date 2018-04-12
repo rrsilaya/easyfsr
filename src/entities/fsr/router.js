@@ -15,6 +15,7 @@ import { getLtdPractOfProfs } from './../limitedPracticeOfProf/controller';
 import { getSubjects } from './../subject/controller';
 import { getStudyLoads } from './../studyLoad/controller';
 import { getTimeslots } from './../timeslot/controller';
+import { getUserByUserID } from './../user/controller';
 
 const router = Router();
 
@@ -72,7 +73,6 @@ router.post('/fsr/', async (req, res) => {
     res.status(200).json({
       status: 200,
       message: 'Successfully created fsr for users',
-      data: fsr,
     });
   } catch (status) {
     let message = '';
@@ -211,25 +211,28 @@ router.get('/fsr/:id', async (req, res) => {
     let fsr = await Ctrl.getFSR(req.params);
     const adminWorks = await getAdminWorks(req.params);
     const awards = await getAwards(req.params);
-    let creativeWorks = await getCreativeWorks(req.params);
-    creativeWorks = creativeWorks.map(
+    const creativeWorks = await getCreativeWorks(req.params);
+    creativeWorks.map(
       async ({ creativeWorkID } = cwork) =>
         await getCworkCoAuthors({ creativeWorkID }),
     );
-    let courses = await getCourses(req.params);
-    courses = courses.map(
+    const courses = await getCourses(req.params);
+    courses.map(
       async ({ courseID } = course) => await getCourseScheds({ courseID }),
     );
-    console.log(courses);
     const consultationHours = await getConsultationHours(req.params);
     const services = await getExtensionAndCommunityServices(req.params);
     const ltdPractices = await getLtdPractOfProfs(req.params);
-    let subjects = await getSubjects(req.params);
-    subjects = subjects.map(
+    const subjects = await getSubjects(req.params);
+    subjects.map(
       async ({ subjectID } = subject) => await getTimeslots({ subjectID }),
     );
     const studyLoads = await getStudyLoads(req.params);
+    const userID = fsr.userID;
+    const user = await getUserByUserID({ userID });
+
     fsr = {
+      user,
       fsr,
       adminWorks,
       awards,
