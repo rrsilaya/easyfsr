@@ -20,11 +20,15 @@ class App extends Component {
       user,
       isGettingSession,
       isLoggingIn,
+      isAccountSettingsToggled,
+      isEditingSettings,
 
       // Dispatch
       toggleSidebar,
       login,
       logout,
+      toggleAccountSettings,
+      editSettings,
     } = this.props;
 
     return (
@@ -35,7 +39,7 @@ class App extends Component {
             <Loader />
           ) : user ? (
             <Layout className="fullpage">
-              <Sidebar isSidebarCollapsed={isSidebarCollapsed} />
+              <Sidebar isSidebarCollapsed={isSidebarCollapsed} user={user} />
               <Layout.Content
                 className="dark-mode"
                 style={{ overflowY: 'auto' }}
@@ -45,12 +49,23 @@ class App extends Component {
                     toggleSidebar={toggleSidebar}
                     logout={logout}
                     user={user}
+                    toggleAccountSettings={toggleAccountSettings}
+                    isAccountSettingsToggled={isAccountSettingsToggled}
+                    isEditingSettings={isEditingSettings}
+                    editSettings={editSettings}
                   />
                   <Layout.Content style={{ paddingBottom: '2em' }}>
                     <Switch>
-                      {routes.map(route => (
-                        <Route key={route.path} {...route} />
-                      ))}
+                      {routes.map(
+                        route =>
+                          !route.restricted ? (
+                            <Route key={route.path} {...route} />
+                          ) : user.acctType === 'ADMIN' ? (
+                            <Route key={route.path} {...route} />
+                          ) : (
+                            ''
+                          ),
+                      )}
                       <Redirect
                         from="/profile"
                         to={`/profile/${user.employeeID}`}

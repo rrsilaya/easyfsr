@@ -8,6 +8,7 @@ import {
   changeSelectedUser,
   getUsers,
   addUser,
+  deleteUser,
   editUser,
   resetPage,
   changeQuery,
@@ -23,6 +24,7 @@ const mapStateToProps = state => {
     isAddingUser,
     isEditingUser,
 
+    query,
     pagination,
     users,
     user,
@@ -37,6 +39,7 @@ const mapStateToProps = state => {
     isAddingUser,
     isEditingUser,
 
+    query,
     pagination,
     users,
     user,
@@ -62,6 +65,9 @@ const mapDispatchToProps = dispatch => {
     },
     addUser: values => {
       dispatch(addUser(values));
+    },
+    deleteUser: id => {
+      dispatch(deleteUser(id));
     },
     editUser: (user, values) => {
       dispatch(editUser(user, values));

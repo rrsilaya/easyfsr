@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form, Input, Select } from 'antd';
+import { Modal, Button, Form, Input, Select, Switch } from 'antd';
 
 import { getFieldValues } from '../../../utils';
 import { getUsers } from '../../../api';
+import ranks from './ranks';
+import committees from './committees';
 
 const FormItem = Form.Item;
-const { Option } = Select;
+const { OptGroup, Option } = Select;
 
 class AddModal extends Component {
   handleFormSubmit = e => {
@@ -75,6 +77,10 @@ class AddModal extends Component {
     });
 
     if (data.total) return callback('Email address must be unique.');
+  };
+
+  changeToggle = checked => {
+    console.log(checked);
   };
 
   state = {
@@ -190,9 +196,37 @@ class AddModal extends Component {
               ],
             })(<Input type="password" onBlur={this.handleConfirmBlur} />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="Room Number">
-            {form.getFieldDecorator('officeNumber')(
-              <Input placeholder="C-112" />,
+          <FormItem {...formItemLayout} label="Rank">
+            {form.getFieldDecorator('rank@@addUser', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please select rank of user',
+                },
+              ],
+            })(
+              <Select placeholder="Select User Rank" showSearch>
+                {ranks.map(rank => (
+                  <OptGroup key={rank.title}>
+                    {rank.children.map(opt => (
+                      <Option key={opt.title} value={opt.title}>
+                        {opt.title}
+                      </Option>
+                    ))}
+                  </OptGroup>
+                ))}
+              </Select>,
+            )}
+          </FormItem>
+          <FormItem {...formItemLayout} label="Committee">
+            {form.getFieldDecorator('committee@@addUser')(
+              <Select showSearch>
+                {committees.map(committee => (
+                  <Option key={committee} value={committee}>
+                    {committee}
+                  </Option>
+                ))}
+              </Select>,
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="Contract Type">
@@ -208,6 +242,11 @@ class AddModal extends Component {
                 <Option value="FULL-TIME">Full-time Employment</Option>
                 <Option value="PART-TIME">Part-time Employment</Option>
               </Select>,
+            )}
+          </FormItem>
+          <FormItem {...formItemLayout} label="Room Number">
+            {form.getFieldDecorator('officeNumber')(
+              <Input placeholder="C-112" />,
             )}
           </FormItem>
         </Form>

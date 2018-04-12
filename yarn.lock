@@ -4726,6 +4726,10 @@ klaw@^1.0.0:
   optionalDependencies:
     graceful-fs "^4.1.9"
 
+konva@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/konva/-/konva-2.0.2.tgz#e9b22f18c5fe3fb0012cd6ef234bf602818a60e1"
+
 latest-version@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/latest-version/-/latest-version-3.1.0.tgz#a205383fea322b33b5ae3b18abee0dc2f356ee15"
@@ -6746,6 +6750,13 @@ react-helmet@^5.2.0:
     prop-types "^15.5.4"
     react-side-effect "^1.1.0"
 
+react-konva@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/react-konva/-/react-konva-1.7.1.tgz#5acbb721148a4628ccea83d984ecfe864a251461"
+  dependencies:
+    fbjs "^0.8.16"
+    react-reconciler "^0.7.0"
+
 react-lazy-load@^3.0.12:
   version "3.0.13"
   resolved "https://registry.yarnpkg.com/react-lazy-load/-/react-lazy-load-3.0.13.tgz#3b0a92d336d43d3f0d73cbe6f35b17050b08b824"
@@ -6754,6 +6765,15 @@ react-lazy-load@^3.0.12:
     lodash.debounce "^4.0.0"
     lodash.throttle "^4.0.0"
     prop-types "^15.5.8"
+
+react-reconciler@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.7.0.tgz#9614894103e5f138deeeb5eabaf3ee80eb1d026d"
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
 
 react-redux@^5.0.7:
   version "5.0.7"
@@ -6859,6 +6879,13 @@ react-slick@~0.17.0:
     json2mq "^0.2.0"
     object-assign "^4.1.0"
     opencollective "^1.0.3"
+
+react-to-print@^1.0.14:
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/react-to-print/-/react-to-print-1.0.14.tgz#556d70f1582c1618091301028a685138e9d2deb4"
+  dependencies:
+    prop-types "^15.6.0"
+    react "^16.2.0"
 
 react@^16.2.0:
   version "16.2.0"

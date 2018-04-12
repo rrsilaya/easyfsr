@@ -10,6 +10,7 @@ const CHANGE_SELECTED_USER = 'USER/CHANGE_SELECTED_USER';
 
 const GET_USERS = 'USER/GET_USERS';
 const ADD_USER = 'USER/ADD_USER';
+const DELETE_USER = 'USER/DELETE_USER';
 const EDIT_USER = 'USER/EDIT_USER';
 
 const RESET_PAGE = 'USER/RESET_PAGE';
@@ -50,7 +51,9 @@ export const changeSelectedUser = user => ({
 });
 
 export const addUser = user => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const { query } = getState().users;
+
     return dispatch({
       type: ADD_USER,
       promise: Api.addUser(user),
@@ -59,10 +62,35 @@ export const addUser = user => {
           notification.success({
             message: 'Successfully created user.',
           });
+          dispatch(getUsers(query));
         },
         onFailure: () => {
           notification.error({
             message: 'Server error while creating user.',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const deleteUser = id => {
+  return (dispatch, getState) => {
+    const { user } = getState().users;
+
+    return dispatch({
+      type: DELETE_USER,
+      promise: Api.deleteUser(user.userID),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully deleted user.',
+          });
+          dispatch(getUsers());
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while deleting user.',
           });
         },
       },
@@ -105,9 +133,11 @@ const initialState = {
   isEditModalOpen: false,
   isAddModalOpen: false,
   isDeleteModalOpen: false,
+  isAdvancedSearchToggled: false,
 
   isGettingUsers: false,
   isAddingUser: false,
+  isDeletingUser: false,
   isEditingUser: false,
 
   query: {},
@@ -180,12 +210,30 @@ const reducer = (state = initialState, action) => {
         }),
         success: prevState => ({
           ...prevState,
-          users: [...state.users, payload.data.data[0]],
           isAddModalOpen: false,
         }),
         finish: prevState => ({
           ...prevState,
           isAddingUser: false,
+        }),
+      });
+
+    case DELETE_USER:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isDeletingUser: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          users: state.users.filter(
+            user => user.userID !== payload.data.data.userID,
+          ),
+          isDeleteModalOpen: false,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isDeletingUser: false,
         }),
       });
 
@@ -199,8 +247,8 @@ const reducer = (state = initialState, action) => {
           ...prevState,
           users: prevState.users.map(
             user =>
-              user.userID === payload.data.data[0].userID
-                ? { ...payload.data.data[0] }
+              user.userID === payload.data.data.userID
+                ? { ...payload.data.data }
                 : user,
           ),
           isEditModalOpen: false,

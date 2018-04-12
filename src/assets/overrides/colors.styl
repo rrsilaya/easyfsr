@@ -13,6 +13,10 @@
   
   &.clear {
     background-color: #fff;
+    
+    & * {
+      color: lighten(#000, 15%);
+    }
   }
 }
 
@@ -29,12 +33,20 @@
     color: lighten($secondary, 40%);
   }
   
+  &.meta-2 {
+    color: lighten(#000, 70%);
+  }
+  
   &.normal {
     color: lighten(#000, 30%);
   }
   
   &.white {
-    color: #fff;
+    color: #fff !important;
+    
+    & > * {
+      color: #fff;
+    }
   }
 }
 
@@ -43,5 +55,13 @@
   
   * {
     color: lighten($primary, 90%);
+  }
+}
+
+.text {
+  &.white {
+    .ant-list-empty-text {
+      color: lighten($secondary, 70%);
+    }
   }
 }

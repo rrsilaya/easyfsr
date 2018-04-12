@@ -26,7 +26,7 @@ class Sidebar extends Component {
   };
 
   render() {
-    const { isSidebarCollapsed } = this.props;
+    const { isSidebarCollapsed, user } = this.props;
 
     return (
       <Layout.Sider
@@ -43,14 +43,26 @@ class Sidebar extends Component {
           theme="dark"
           defaultSelectedKeys={[this.getActiveTab()]}
         >
-          {links.map(link => (
-            <Item key={link.label}>
-              <Link to={link.path}>
-                <Icon type={link.icon} />
-                <span>{link.label}</span>
-              </Link>
-            </Item>
-          ))}
+          {links.map(
+            link =>
+              !link.restricted ? (
+                <Item key={link.label}>
+                  <Link to={link.path}>
+                    <Icon type={link.icon} />
+                    <span>{link.label}</span>
+                  </Link>
+                </Item>
+              ) : user.acctType === 'ADMIN' ? (
+                <Item key={link.label}>
+                  <Link to={link.path}>
+                    <Icon type={link.icon} />
+                    <span>{link.label}</span>
+                  </Link>
+                </Item>
+              ) : (
+                ''
+              ),
+          )}
         </Menu>
       </Layout.Sider>
     );

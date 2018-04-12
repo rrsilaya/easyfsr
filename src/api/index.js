@@ -5,3 +5,6 @@
 
 export * from './auth';
 export * from './users';
+export * from './fsr';
+export * from './subject';
+export * from './timeslot';
