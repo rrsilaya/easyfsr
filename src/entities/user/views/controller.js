@@ -10,7 +10,7 @@ export const getUserAwards = query => {
   });
 };
 
-export const getUserResearch = query => {
+export const getUserResearches = query => {
   return new Promise((resolve, reject) => {
     db.query(Query.getResearch, query, (err, results) => {
       if (err) return reject(500);
@@ -19,7 +19,7 @@ export const getUserResearch = query => {
   });
 };
 
-export const getUserAdminWork = query => {
+export const getUserAdminWorks = query => {
   return new Promise((resolve, reject) => {
     db.query(Query.getAdminWork, query, (err, results) => {
       if (err) return reject(500);
@@ -37,7 +37,7 @@ export const getUserConsultationHours = query => {
   });
 };
 
-export const getUserSLCourse = query => {
+export const getUserSLCourses = query => {
   return new Promise((resolve, reject) => {
     db.query(Query.getSLCourse, query, (err, results) => {
       if (err) return reject(500);
@@ -46,7 +46,7 @@ export const getUserSLCourse = query => {
   });
 };
 
-export const getUserSubject = query => {
+export const getUserSubjects = query => {
   return new Promise((resolve, reject) => {
     db.query(Query.getSubject, query, (err, results) => {
       if (err) return reject(500);
@@ -55,7 +55,7 @@ export const getUserSubject = query => {
   });
 };
 
-export const getUserStudyLoad = query => {
+export const getUserStudyLoads = query => {
   return new Promise((resolve, reject) => {
     db.query(Query.getStudyLoad, query, (err, results) => {
       if (err) return reject(500);
@@ -64,7 +64,7 @@ export const getUserStudyLoad = query => {
   });
 };
 
-export const getUserExtensionAndCommunityService = query => {
+export const getUserExtensionAndCommunityServices = query => {
   return new Promise((resolve, reject) => {
     db.query(Query.getExtensionAndCommunityService, query, (err, results) => {
       if (err) return reject(500);
@@ -73,7 +73,7 @@ export const getUserExtensionAndCommunityService = query => {
   });
 };
 
-export const getUserLimitedPractice = query => {
+export const getUserLimitedPractices = query => {
   return new Promise((resolve, reject) => {
     db.query(Query.getLimitedPracticeOfProf, query, (err, results) => {
       if (err) return reject(500);
@@ -82,7 +82,7 @@ export const getUserLimitedPractice = query => {
   });
 };
 
-export const getUserCreativeWork = query => {
+export const getUserCreativeWorks = query => {
   return new Promise((resolve, reject) => {
     db.query(Query.getCreativeWork, query, (err, results) => {
       if (err) return reject(500);
