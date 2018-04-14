@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
+import * as MiddlewareCtrl from '../../middlewares/controller';
 
 const router = Router();
 
@@ -57,6 +58,10 @@ const router = Router();
 
 router.post('/subject/', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.body.id,
+      req.session.user.userID,
+    );
     const subjectID = await Ctrl.addSubject(req.body);
     const subject = await Ctrl.getSubject({ subjectID });
     res.status(200).json({
@@ -67,6 +72,12 @@ router.post('/subject/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
+      case 404:
+        message = 'FSR not found';
+        break;
       case 500:
         message = 'Internal server error';
         break;
@@ -135,6 +146,10 @@ router.post('/subject/', async (req, res) => {
  */
 router.put('/subject/:subjectID', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.subjectID,
+      req.session.user.userID,
+    );
     await Ctrl.updateSubject(req.params, req.body);
     const subject = await Ctrl.getSubject(req.params);
     res.status(200).json({
@@ -145,6 +160,9 @@ router.put('/subject/:subjectID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Subject not found';
         break;
@@ -212,6 +230,10 @@ router.put('/subject/:subjectID', async (req, res) => {
 
 router.delete('/subject/:subjectID', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.subjectID,
+      req.session.user.userID,
+    );
     const subject = await Ctrl.getSubject(req.params);
     await Ctrl.deleteSubject(req.params);
     res.status(200).json({
@@ -222,6 +244,9 @@ router.delete('/subject/:subjectID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Subject not found';
         break;
@@ -288,6 +313,10 @@ router.delete('/subject/:subjectID', async (req, res) => {
 
 router.get('/subject/:subjectID', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.subjectID,
+      req.session.user.userID,
+    );
     const subject = await Ctrl.getSubject(req.params);
     res.status(200).json({
       status: 200,
@@ -297,6 +326,9 @@ router.get('/subject/:subjectID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Subject not found';
         break;

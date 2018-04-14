@@ -51,12 +51,8 @@ const router = Router();
 
 router.post('/courseSched/', async (req, res) => {
   try {
-    const idOfCourse = await MiddlewareCtrl.getIDofFSRfromCourse(
-      req.body.courseID,
-      req.session.user.userID,
-    );
     const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
-      idOfCourse,
+      req.body.id,
       req.session.user.userID,
     );
     const courseSchedID = await Ctrl.addCourseSched(req.body);
@@ -138,7 +134,7 @@ router.post('/courseSched/', async (req, res) => {
 router.put('/courseSched/:courseSchedID', async (req, res) => {
   try {
     const idOfCourse = await MiddlewareCtrl.getIDofFSRfromCourse(
-      req.param.courseSchedID,
+      req.params.courseSchedID,
       req.session.user.userID,
     );
     const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(

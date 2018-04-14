@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import * as MiddlewareCtrl from '../../middlewares/controller';
 import { upload, unlink } from './../../utils';
 
 const router = Router();
@@ -51,7 +52,23 @@ const router = Router();
  *         }
  *   }
  *
- * @apiError (Error 500) {Number} status status code
+ * @apiError (Error 403) {Number} status status code
+ * @apiError (Error 403) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 403 Unauthorized access
+ * {
+ *   "status": 403,
+ *   "message": "Unauthorized access"
+ * }
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 FSR not found
+ * {
+ *   "status": 404,
+ *   "message": "FSR not found"
+ * }
+ * @apiError (Error 500) {String} statuc status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -63,6 +80,10 @@ const router = Router();
 
 router.post('/research/', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.body.id,
+      req.session.user.userID,
+    );
     if (req.files && req.files.filepath)
       req.body.filepath = await upload(req.files.filepath, 'researches');
     const researchID = await Ctrl.addResearch(req.body);
@@ -75,6 +96,12 @@ router.post('/research/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
+      case 404:
+        message = 'FSR not found';
+        break;
       case 500:
         message = 'Internal server error';
         break;
@@ -123,7 +150,23 @@ router.post('/research/', async (req, res) => {
  *       }
  *   }
  *
- * @apiError (Error 500) {Number} status error status code
+ * @apiError (Error 403) {Number} status status code
+ * @apiError (Error 403) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 403 Unauthorized access
+ * {
+ *   "status": 403,
+ *   "message": "Unauthorized access"
+ * }
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 Research not found
+ * {
+ *   "status": 404,
+ *   "message": "Research not found"
+ * }
+ * @apiError (Error 500) {String} statuc status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -131,17 +174,13 @@ router.post('/research/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {Number} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 FSR not found
- * {
- *   "status": 404,
- *   "message": "Research not found"
- * }
  */
 router.get('/research/:researchID', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.researchID,
+      req.session.user.userID,
+    );
     const research = await Ctrl.getResearch(req.params);
     res.status(200).json({
       status: 200,
@@ -151,6 +190,9 @@ router.get('/research/:researchID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Research not found';
         break;
@@ -232,7 +274,23 @@ router.get('/research/:researchID', async (req, res) => {
  *     "pages": 1
  *   }
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 403) {Number} status status code
+ * @apiError (Error 403) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 403 Unauthorized access
+ * {
+ *   "status": 403,
+ *   "message": "Unauthorized access"
+ * }
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 Research not found
+ * {
+ *   "status": 404,
+ *   "message": "Research not found"
+ * }
+ * @apiError (Error 500) {String} statuc status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -310,7 +368,23 @@ router.get('/research/', async (req, res) => {
  *
  *   }
  *
- * @apiError (Error 500) {Number} status error status code
+ * @apiError (Error 403) {Number} status status code
+ * @apiError (Error 403) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 403 Unauthorized access
+ * {
+ *   "status": 403,
+ *   "message": "Unauthorized access"
+ * }
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 Research not found
+ * {
+ *   "status": 404,
+ *   "message": "Research not found"
+ * }
+ * @apiError (Error 500) {String} statuc status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -318,17 +392,13 @@ router.get('/research/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {Number} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 FSR not found
- * {
- *   "status": 404,
- *   "message": "Research not found"
- * }
  */
 router.delete('/research/:researchID', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.researchID,
+      req.session.user.userID,
+    );
     const research = await Ctrl.getResearch(req.params);
     await Ctrl.deleteResearch(req.params);
     res.status(200).json({
@@ -339,6 +409,9 @@ router.delete('/research/:researchID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Research not found';
         break;
@@ -398,6 +471,22 @@ router.delete('/research/:researchID', async (req, res) => {
  *       }
  *   }
  *
+ * @apiError (Error 403) {Number} status status code
+ * @apiError (Error 403) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 403 Unauthorized access
+ * {
+ *   "status": 403,
+ *   "message": "Unauthorized access"
+ * }
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 Research not found
+ * {
+ *   "status": 404,
+ *   "message": "Research not found"
+ * }
  * @apiError (Error 500) {String} statuc status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
@@ -409,6 +498,10 @@ router.delete('/research/:researchID', async (req, res) => {
  */
 router.put('/research/:researchID', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.researchID,
+      req.session.user.userID,
+    );
     if (req.files && req.files.filepath) {
       const research = await Ctrl.getResearch(req.params);
 
@@ -425,6 +518,9 @@ router.put('/research/:researchID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Research not found';
         break;
