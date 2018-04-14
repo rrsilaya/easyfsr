@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import * as MiddlewareCtrl from '../../middlewares/controller';
 
 const router = Router();
 
@@ -50,6 +51,10 @@ const router = Router();
 
 router.post('/course', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.body.id,
+      req.session.user.userID,
+    );
     const courseID = await Ctrl.addCourse(req.body);
     const course = await Ctrl.getCourse({ courseID });
 
@@ -61,6 +66,12 @@ router.post('/course', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
+      case 404:
+        message = 'FSR not found';
+        break;
       case 500:
         message = 'Internal server error';
         break;
@@ -126,6 +137,10 @@ router.post('/course', async (req, res) => {
 
 router.put('/course/:courseID', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.courseID,
+      req.session.user.userID,
+    );
     await Ctrl.updateCourse(req.params, req.body);
     const course = await Ctrl.getCourse(req.params);
 
@@ -137,6 +152,9 @@ router.put('/course/:courseID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Course not found';
         break;
@@ -202,6 +220,10 @@ router.put('/course/:courseID', async (req, res) => {
 
 router.delete('/course/:courseID', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.courseID,
+      req.session.user.userID,
+    );
     const course = await Ctrl.getCourse(req.params);
     await Ctrl.deleteCourse(req.params);
 
@@ -213,6 +235,9 @@ router.delete('/course/:courseID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Course not found';
         break;
@@ -278,6 +303,10 @@ router.delete('/course/:courseID', async (req, res) => {
 
 router.get('/course/:courseID', async (req, res) => {
   try {
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      req.params.courseID,
+      req.session.user.userID,
+    );
     const course = await Ctrl.getCourse(req.params);
 
     res.status(200).json({
@@ -288,6 +317,9 @@ router.get('/course/:courseID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Course not found';
         break;
