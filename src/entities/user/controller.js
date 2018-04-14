@@ -25,6 +25,9 @@ const searchFields = [
   'committee',
   'officeNumber',
   'rank',
+  'contractType',
+  'acctType',
+  'emailAddress',
 ];
 
 const defaultAttr = {

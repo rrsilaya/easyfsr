@@ -8,18 +8,17 @@ const router = Router();
  * @apiGroup CourseSched
  * @apiName addCourseSched
  *
- * @apiParam (Body Params) {Number} courseSchedID course schedule id
  * @apiParam (Body Params) {Number} courseID course id
  * @apiParam (Body Params) {String} day day course is being taught
  * @apiParam (Body Params) {Time} timeStart time course starts
  * @apiParam (Body Params) {Time} timeEnd time course end
  *
- * @apiSuccess {Object} courseSched new courseSched is added
- * @apiSuccess {Number} courseSched.courseSchedID course schedule id
- * @apiSuccess {Number} courseSched.courseID course id
- * @apiSuccess {String} courseSched.day day course is being taught
- * @apiSuccess {Time} courseSched.timeStart time course start
- * @apiSuccess {Time} courseSched.timeEnd time course end
+ * @apiSuccess {Object} data new courseSched added
+ * @apiSuccess {Number} data.courseSchedID course schedule id
+ * @apiSuccess {Number} data.courseID course id
+ * @apiSuccess {String} data.day day course is being taught
+ * @apiSuccess {Time} data.timeStart time course start
+ * @apiSuccess {Time} data.timeEnd time course end
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -38,7 +37,7 @@ const router = Router();
  *     }
  *   }
  *
- * @apiError (Error 500) {String} status  status code
+ * @apiError (Error 500) {Number} status  status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -72,39 +71,39 @@ router.post('/courseSched/', async (req, res) => {
  * @api {put} /courseSched/:courseSchedID updateCourseSched
  * @apiGroup CourseSched
  * @apiName updateCourseSched
- * 
+ *
  * @apiParam (Query Params) {Number} courseSchedID course schedule id
-
+ *
  * @apiParam (Body Params) {Number} [courseID] course id
  * @apiParam (Body Params) {String} [day] day course is being taught
  * @apiParam (Body Params) {Time} [timeStart] time course starts
  * @apiParam (Body Params) {Time} [timeEnd] time course end
-
- * @apiSuccess {Object} courseSched new courseSched is updated
- * @apiSuccess {Number} courseSched.courseSchedID course schedule id
- * @apiSuccess {Number} courseSched.courseID course id
- * @apiSuccess {String} courseSched.day day course is being taught
- * @apiSuccess {Time} courseSched.timeStart time course start
- * @apiSuccess {Time} courseSched.timeEnd time course end
- 
+ *
+ * @apiSuccess {Object} data  courseSched updated
+ * @apiSuccess {Number} data.courseSchedID course schedule id
+ * @apiSuccess {Number} data.courseID course id
+ * @apiSuccess {String} data.day day course is being taught
+ * @apiSuccess {Time} data.timeStart time course start
+ * @apiSuccess {Time} data.timeEnd time course end
+ *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *     "data": {
  *         "status": 200,
  *         "message": "Successfully updated course schedule",
- *         "data": 
+ *         "data":
  *           {
  *             "courseSchedID": 2,
  *             "courseID": 1,
  *             "day": "monday",
  *             "timeStart": "09:00:00",
  *             "timeEnd": "010:00:00"
- *           }         
+ *           }
  *     }
  *   }
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status error status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -112,8 +111,11 @@ router.post('/courseSched/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
-
-    HTTP/1.1 404 Course not found
+ *
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 Course Sched not found
  * {
  *   "status": 404,
  *   "message": "Course schedule not found"
@@ -151,12 +153,12 @@ router.put('/courseSched/:courseSchedID', async (req, res) => {
 
  * @apiParam (Query Params) {Number} courseSchedID course schedule id
  *
- * @apiSuccess {Object} courseSched new courseSched is deleted
- * @apiSuccess {Number} courseSched.courseSchedID course schedule id
- * @apiSuccess {Number} courseSched.courseID course id
- * @apiSuccess {String} courseSched.day day course is being taught
- * @apiSuccess {Time} courseSched.timeStart time course start
- * @apiSuccess {Time} courseSched.timeEnd time course end
+ * @apiSuccess {Object} data courseSched deleted
+ * @apiSuccess {Number} data.courseSchedID course schedule id
+ * @apiSuccess {Number} data.courseID course id
+ * @apiSuccess {String} data.day day course is being taught
+ * @apiSuccess {Time} data.timeStart time course start
+ * @apiSuccess {Time} data.timeEnd time course end
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -175,7 +177,7 @@ router.put('/courseSched/:courseSchedID', async (req, res) => {
  *     }
  *   }
  *
- * @apiError (Error 500) {String} errors List of errors
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -183,8 +185,10 @@ router.put('/courseSched/:courseSchedID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
-
-    HTTP/1.1 404 Course schedule not found
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ *  HTTP/1.1 404 Course schedule not found
  * {
  *   "status": 404,
  *   "message": "Course schedule not found"
@@ -221,12 +225,12 @@ router.delete('/courseSched/:courseSchedID', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} courseSchedID course schedule id
  *
- * @apiSuccess {Object} courseSched new courseSched is deleted
- * @apiSuccess {Number} courseSched.courseSchedID course schedule id
- * @apiSuccess {Number} courseSched.courseID course id
- * @apiSuccess {String} courseSched.day day course is being taught
- * @apiSuccess {Time} courseSched.timeStart time course start
- * @apiSuccess {Time} courseSched.timeEnd time course end
+ * @apiSuccess {Object} data  courseSched fetched
+ * @apiSuccess {Number} data.courseSchedID course schedule id
+ * @apiSuccess {Number} data.courseID course id
+ * @apiSuccess {String} data.day day course is being taught
+ * @apiSuccess {Time} data.timeStart time course start
+ * @apiSuccess {Time} data.timeEnd time course end
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -245,7 +249,7 @@ router.delete('/courseSched/:courseSchedID', async (req, res) => {
  *     }
  *   }
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -253,13 +257,13 @@ router.delete('/courseSched/:courseSchedID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 Course not found
+ * HTTP/1.1 404 Course Schedule not found
  * {
  *   "status": 404,
- *   "message": "Course not found"
+ *   "message": "Course schedule not found"
  * }
  */
 
@@ -289,29 +293,33 @@ router.get('/courseSched/:courseSchedID', async (req, res) => {
  * @api {get} /courseSched getCourseSchedules
  * @apiGroup CourseSched
  * @apiName getCourseSchedules
- *
+ * 
+ * @apiParam (Query Params) {Number} [courseID] id of course
  * @apiParam (Query Params) {String} [day] day course is being taught
  * @apiParam (Query Params) {Time} [timeStart] time course start
  * @apiParam (Query Params) {Time} [timeEnd] time course end *
  * @apiParam (Query Params) {Number} [page] page number
  * @apiParam (Query Params) {Number} [limit] count limit of course scheds to fetch
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
- * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'lastName'
+ * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'day'
 
- * @apiSuccess {Object[]} courseSchedules All course schedules
- * @apiSuccess {String} courseSched.courseSchedID course schedule id
- * @apiSuccess {String} courseSched.courseID course id
- * @apiSuccess {String} courseSched.day day course is being taught
- * @apiSuccess {String} courseSched.timeStart time course start
- * @apiSuccess {String} courseSched.timeEnd time course end
- 
- 
+ * @apiSuccess {Object[]} data All course schedules
+ * @apiSuccess {String} data.courseSchedID course schedule id
+ * @apiSuccess {String} data.courseID course id
+ * @apiSuccess {String} data.day day course is being taught
+ * @apiSuccess {String} data.timeStart time course start
+ * @apiSuccess {String} data.timeEnd time course end
+ * @apiSuccess {Integer} total Total amount of documents.
+ * @apiSuccess {Integer} limit Max number of documents
+ * @apiSuccess {Integer} page nth page this query is.
+ * @apiSuccess {Integer} pages Number of total pages
+ * 
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *     "data": {
  *         "status": 200,
- *         "message": "Successfully fetched course schedule",
+ *         "message": "Successfully fetched course schedules",
  *         "data": [
  *           {
  *             "courseSchedID": 2,
@@ -335,7 +343,7 @@ router.get('/courseSched/:courseSchedID', async (req, res) => {
  *     }
  *   }
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -343,13 +351,13 @@ router.get('/courseSched/:courseSchedID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 Course not found
+ * HTTP/1.1 404 Course Schedule not found
  * {
  *   "status": 404,
- *   "message": "Course not found"
+ *   "message": "Course Schedule not found"
  * }
  */
 
