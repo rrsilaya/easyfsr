@@ -12,10 +12,11 @@ const router = Router();
  * @apiParam (Body Params) {Number} researchID ID of research
  * @apiParam (Body Params) {String} name name of co-author
  *
- * @apiSuccess {Object} research Successfully added research
- * @apiSuccess {Number} research.id ID of fsr
- * @apiSuccess {Number} research.researchID ID of research
- * @apiSuccess {String} research.name name of co-author
+ * @apiSuccess {Object} data new research created
+ * @apiSuccess {Number} data.rCoAuthorID ID of research co-authot
+ * @apiSuccess {Number} data.id ID of fsr
+ * @apiSuccess {Number} data.researchID ID of research
+ * @apiSuccess {String} data.name name of co-author
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -24,6 +25,7 @@ const router = Router();
  *     "message": "Successfully created research co-author",
  *     "data":
  *         {
+ *           "rCoAuthorID":1,
  *           "id": 1,
  *           "researchID": 92,
  *           "name": "annyeonglol",
@@ -64,12 +66,13 @@ router.post('/rCoAuthor/', async (req, res) => {
  * @apiGroup rCoAuthor
  * @apiName getrCoAuthor
  *
- * @apiParam (Query Params) {Number} researchID ID of research
+ * @apiParam (Query Params) {Number} rCoAuthorID ID of research co-authot
  *
- * @apiSuccess {Object} research Successfully added research
- * @apiSuccess {Number} research.id ID of fsr
- * @apiSuccess {Number} research.researchID ID of research
- * @apiSuccess {String} research.name name of co-author
+ * @apiSuccess {Object} data Research fetched
+ * @apiSuccess {Number} data.rCoAuthorID ID of research co-authot
+ * @apiSuccess {Number} data.id ID of fsr
+ * @apiSuccess {Number} data.researchID ID of research
+ * @apiSuccess {String} data.name name of co-author
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -78,6 +81,7 @@ router.post('/rCoAuthor/', async (req, res) => {
  *     "message": "Successfully fetched research co-author",
  *     "data":
  *         {
+ *           "rCoAuthorID":1,
  *           "id": 1,
  *           "researchID": 92,
  *           "name": "annyeonglol",
@@ -136,10 +140,15 @@ router.get('/rCoAuthor/:rCoAuthorID', async (req, res) => {
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'name'
  *
- * @apiSuccess {Object} research Successfully added research
- * @apiSuccess {Number} research.id ID of fsr
- * @apiSuccess {Number} research.researchID ID of research
- * @apiSuccess {String} research.name name of co-author
+ * @apiSuccess {Object[]} data Researches fetched
+ * @apiSuccess {Number} data.rCoAuthorID ID of research co-authot
+ * @apiSuccess {Number} data.id ID of fsr
+ * @apiSuccess {Number} data.researchID ID of research
+ * @apiSuccess {String} data.name name of co-author
+ * @apiSuccess {Number} total Total amount of documents.
+ * @apiSuccess {Number} limit Max number of documents
+ * @apiSuccess {Number} page nth page this query is.
+ * @apiSuccess {Number} pages Number of total pages.
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -148,15 +157,17 @@ router.get('/rCoAuthor/:rCoAuthorID', async (req, res) => {
  *     "message": "Successfully fetched research co-authors",
  *     "data": [
  *         {
+ *           "rCoAuthorID":1,
  *           "id": 1,
  *           "researchID": 92,
  *           "name": "annyeonglol",
  *         },
  *         {
+ *           "rCoAuthorID":1,
  *           "id": 1,
  *           "researchID": 92,
  *           "name": "annyeonglol",
- *         },
+ *         }
  *       ]
  *     "total": 2,
  *     "limit": 2,
@@ -175,10 +186,10 @@ router.get('/rCoAuthor/:rCoAuthorID', async (req, res) => {
  * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 Research co-author not found
+ * HTTP/1.1 404 Research co-author/s not found
  * {
  *   "status": 404,
- *   "message": "Research co-author not found"
+ *   "message": "Research co-author/s not found"
  * }
  */
 router.get('/rCoAuthor/', async (req, res) => {
@@ -215,12 +226,13 @@ router.get('/rCoAuthor/', async (req, res) => {
  * @apiGroup rCoAuthor
  * @apiName deleterCoAuthor
  *
- * @apiParam (Query Params) {Number} researchID ID of research
+ * @apiParam (Query Params) {Number} rCoAuthorID ID of research co-author
  *
- * @apiSuccess {Object} research Successfully added research
- * @apiSuccess {Number} research.id ID of fsr
- * @apiSuccess {Number} research.researchID ID of research
- * @apiSuccess {String} research.name name of co-author
+ * @apiSuccess {Object} data Deleted research
+ * @apiSuccess {Number} data.rCoAuthorID ID of research co-authot
+ * @apiSuccess {Number} data.id ID of fsr
+ * @apiSuccess {Number} data.researchID ID of research
+ * @apiSuccess {String} data.name name of co-author
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -228,7 +240,8 @@ router.get('/rCoAuthor/', async (req, res) => {
  *     "status": 200,
  *     "message": "Successfully deleted research co-author",
  *     "data":
- *         {
+ *          {
+ *           "rCoAuthorID":1,
  *           "id": 1,
  *           "researchID": 92,
  *           "name": "annyeonglol",
@@ -252,6 +265,7 @@ router.get('/rCoAuthor/', async (req, res) => {
  *   "message": "Research co-author not found"
  * }
  */
+
 router.delete('/rCoAuthor/:rCoAuthorID', async (req, res) => {
   try {
     const rCoAuthor = await Ctrl.getrCoAuthor(req.params);
@@ -280,15 +294,17 @@ router.delete('/rCoAuthor/:rCoAuthorID', async (req, res) => {
  * @apiGroup rCoAuthor
  * @apiName updaterCoAuthor
  *
- * @apiParam (Query Params) {Number} researchID ID of research
+ * @apiParam (Query Params) {Number} rCoAuthorID ID of research co-author
  *
  * @apiParam (Body Params) {Number} [id] of fsr
  * @apiParam (Body Params) {String} [name] name of co-author
+ * @apiParam (Query Params) {Number} [researchID ID] of research
  *
- * @apiSuccess {Object} research Successfully added research
- * @apiSuccess {Number} research.id ID of fsr
- * @apiSuccess {Number} research.researchID ID of research
- * @apiSuccess {String} research.name name of co-author
+ * @apiSuccess {Object} data Updated research
+ * @apiSuccess {Number} data.rCoAuthorID ID of research co-authot
+ * @apiSuccess {Number} data.id ID of fsr
+ * @apiSuccess {Number} data.researchID ID of research
+ * @apiSuccess {String} data.name name of co-author
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -297,6 +313,7 @@ router.delete('/rCoAuthor/:rCoAuthorID', async (req, res) => {
  *     "message": "Successfully updated research co-author",
  *     "data":
  *         {
+ *           "rCoAuthorID":1,
  *           "id": 1,
  *           "researchID": 92,
  *           "name": "annyeonglol",

@@ -9,20 +9,20 @@ const router = Router();
  * @apiGroup Study Load
  * @apiName addStudyLoad
  *
- * @apiParam (Body Params) {Number} id FSR ID of Study Load
- * @apiParam (Body Params) {String} fullLeaveWithPay full leave with pay of study load
- * @apiParam (Body Params) {String} fellowshipRecipient fellowship recipient of study load
+ * @apiParam (Body Params) {Number} id ID of study load
+ * @apiParam (Body Params) {Boolean} [fullLeaveWithPay] full leave with pay of study load
+ * @apiParam (Body Params) {Boolean} [fellowshipRecipient] fellowship recipient of study load
  * @apiParam (Body Params) {String} degree degree of study load
  * @apiParam (Body Params) {String} university university of study load
  * @apiParam (Body Params) {Number} totalSLcredits total credits of study load
  *
- * @apiSuccess {Object} studyLoad new Study Load created
- * @apiSuccess {Number} studyLoad.id FSR ID and ID of Study Load
- * @apiSuccess {String} studyLoad.fullLeaveWithPay full leave with pay of study load
- * @apiSuccess {String} studyLoad.fellowshipRecipient fellowship recipient of study load
- * @apiSuccess {String} studyLoad.degree degree of study load
- * @apiSuccess {String} studyLoad.university university of study load
- * @apiSuccess {Number} studyLoad.totalSLcredits total credits of study load
+ * @apiSuccess {Object} data new Study Load created
+ * @apiSuccess {Number} data.id FSR ID and ID of Study Load
+ * @apiSuccess {Boolean} data.fullLeaveWithPay full leave with pay of study load
+ * @apiSuccess {Boolean} data.fellowshipRecipient fellowship recipient of study load
+ * @apiSuccess {String} data.degree degree of study load
+ * @apiSuccess {String} data.university university of study load
+ * @apiSuccess {Number} data.totalSLcredits total credits of study load
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -41,7 +41,7 @@ const router = Router();
  *       }
  *   }
  *
- * @apiError (Error 500) {String[]} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -76,20 +76,19 @@ router.post('/studyLoad/', async (req, res) => {
  * @apiGroup Study Load
  * @apiName updateStudyLoad
  *
- * @apiParam (Query Params) {Number} id FSR ID of Study Load
- * @apiParam (Body Params) {String} fullLeaveWithPay full leave with pay of study load
- * @apiParam (Body Params) {String} fellowshipRecipient fellowship recipient of study load
- * @apiParam (Body Params) {String} degree degree of study load
- * @apiParam (Body Params) {String} university university of study load
- * @apiParam (Body Params) {Number} totalSLcredits total credits of study load
+ * @apiParam (Body Params) {Boolean} [fullLeaveWithPay] full leave with pay of study load
+ * @apiParam (Body Params) {Boolean} [fellowshipRecipient] fellowship recipient of study load
+ * @apiParam (Body Params) {String} [degree] degree of study load
+ * @apiParam (Body Params) {String} [university] university of study load
+ * @apiParam (Body Params) {Number} [totalSLcredits] total credits of study load
  *
- * @apiSuccess {Object} studyLoad Study Load updated
- * @apiSuccess {String} studyLoad.fullLeaveWithPay full leave with pay of study load
- * @apiSuccess {String} studyLoad.fellowshipRecipient fellowship recipient of study load
- * @apiSuccess {Number} studyLoad.id FSR ID and ID of Study Load
- * @apiSuccess {String} studyLoad.degree degree of study load
- * @apiSuccess {String} studyLoad.university university of study load
- * @apiSuccess {Number} studyLoad.totalSLcredits total credits of study load
+ * @apiSuccess {Object} data Study Load updated
+ * @apiSuccess {Number} data.id FSR ID and ID of Study Load
+ * @apiSuccess {Boolean} data.fullLeaveWithPay full leave with pay of study load
+ * @apiSuccess {Boolean} data.fellowshipRecipient fellowship recipient of study load
+ * @apiSuccess {String} data.degree degree of study load
+ * @apiSuccess {String} data.university university of study load
+ * @apiSuccess {Number} data.totalSLcredits total credits of study loadNumber
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -108,7 +107,7 @@ router.post('/studyLoad/', async (req, res) => {
  *       }
  *   }
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -116,7 +115,7 @@ router.post('/studyLoad/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 studyLoad not found
@@ -154,15 +153,15 @@ router.put('/studyLoad/:id', async (req, res) => {
  * @apiGroup Study Load
  * @apiName deleteStudyLoad
  *
- * @apiParam (Query Params) {Number} id FSR ID of Study Load
+ * @apiParam (Query Params) {Number} id ID of Study Load
  *
- * @apiSuccess {Object} studyLoad study load deleted
- * @apiSuccess {Number} studyLoad.id FSR ID and ID of Study Load
- * @apiSuccess {String} studyLoad.fullLeaveWithPay full leave with pay of study load
- * @apiSuccess {String} studyLoad.fellowshipRecipient fellowship recipient of study load
- * @apiSuccess {String} studyLoad.degree degree of study load
- * @apiSuccess {String} studyLoad.university university of study load
- * @apiSuccess {Number} studyLoad.totalSLcredits total credits of study load
+ * @apiSuccess {Object} data Study Load deleted
+ * @apiSuccess {Number} data.id FSR ID and ID of Study Load
+ * @apiSuccess {Boolean} data.fullLeaveWithPay full leave with pay of study load
+ * @apiSuccess {Boolean} data.fellowshipRecipient fellowship recipient of study load
+ * @apiSuccess {String} data.degree degree of study load
+ * @apiSuccess {String} data.university university of study load
+ * @apiSuccess {Number} data.totalSLcredits total credits of study load
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -181,7 +180,7 @@ router.put('/studyLoad/:id', async (req, res) => {
  *       }
  *   }
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -189,7 +188,7 @@ router.put('/studyLoad/:id', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 404 studyLoad not found
@@ -227,15 +226,15 @@ router.delete('/studyLoad/:id', async (req, res) => {
  * @apiGroup Study Load
  * @apiName getStudyLoad
  *
- * @apiParam (Query Params) {Number} id FSR ID of Study Load
+ * @apiParam (Query Params) {Number} id ID of Study Load
  *
  * @apiSuccess {Object} studyLoad Study Load fetched
- * @apiSuccess {Number} studyLoad.id FSR ID and ID of Study Load
- * @apiSuccess {String} studyLoad.fullLeaveWithPay full leave with pay of study load
- * @apiSuccess {String} studyLoad.fellowshipRecipient fellowship recipient of study load
- * @apiSuccess {String} studyLoad.degree degree of study load
- * @apiSuccess {String} studyLoad.university university of study load
- * @apiSuccess {Number} studyLoad.totalSLcredits total credits of study load
+ * @apiSuccess {Number} data.id FSR ID and ID of Study Load
+ * @apiSuccess {Boolean} data.fullLeaveWithPay full leave with pay of study load
+ * @apiSuccess {Boolean} data.fellowshipRecipient fellowship recipient of study load
+ * @apiSuccess {String} data.degree degree of study load
+ * @apiSuccess {String} data.university university of study load
+ * @apiSuccess {Number} data.totalSLcredits total credits of study load
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -254,7 +253,7 @@ router.delete('/studyLoad/:id', async (req, res) => {
  *       }
  *   }
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -262,7 +261,7 @@ router.delete('/studyLoad/:id', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 studyLoad not found
@@ -299,6 +298,7 @@ router.get('/studyLoad/:id', async (req, res) => {
  * @apiGroup Study Load
  * @apiName getStudyLoads
  *
+ * @apiParam (Query Params) {String} [id] id of study load
  * @apiParam (Query Params) {String} [fullLeaveWithPay] full leave with pay of study load
  * @apiParam (Query Params) {String} [fellowshipRecipient] fellowship recipient of study load
  * @apiParam (Query Params) {String} [degree] degree of study load
@@ -309,20 +309,24 @@ router.get('/studyLoad/:id', async (req, res) => {
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'degree'
  *
- * @apiSuccess {Object} studyLoad Study Load fetched
- * @apiSuccess {Number} studyLoad.id FSR ID and ID of Study Load
- * @apiSuccess {String} studyLoad.fullLeaveWithPay full leave with pay of study load
- * @apiSuccess {String} studyLoad.fellowshipRecipient fellowship recipient of study load
- * @apiSuccess {String} studyLoad.degree degree of study load
- * @apiSuccess {String} studyLoad.university university of study load
- * @apiSuccess {Number} studyLoad.totalSLcredits total credits of study load
+ * @apiSuccess {Object[]} data Study loads fetched
+ * @apiSuccess {Number} data.id FSR ID and ID of Study Load
+ * @apiSuccess {Boolean} data.fullLeaveWithPay full leave with pay of study load
+ * @apiSuccess {Boolean} data.fellowshipRecipient fellowship recipient of study load
+ * @apiSuccess {String} data.degree degree of study load
+ * @apiSuccess {String} data.university university of study load
+ * @apiSuccess {Number} data.totalSLcredits total credits of study load
+ * @apiSuccess {Number} total Total amount of documents.
+ * @apiSuccess {Number} limit Max number of documents
+ * @apiSuccess {Number} page nth page this query is.
+ * @apiSuccess {Number} pages Number of total pages.
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *     "status": 200,
  *     "message": "Successfully fetched studyLoads",
- *     "data":
+ *     "data":[
  *       {
  *           "fullLeaveWithPay: "NO",
  *           "fellowshipRecipient: "NO",
@@ -341,13 +345,14 @@ router.get('/studyLoad/:id', async (req, res) => {
  *           "totalSLcredits": 9,
  *           "id": 2
  *       },
+ *    ],
  *    "total": 2,
  *    "limit": 12,
  *    "page": 1,
  *    "pages": 1
  *   }
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -355,14 +360,6 @@ router.get('/studyLoad/:id', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 studyLoad not found
- * {
- *   "status": 404,
- *   "message": "studyLoad not found"
- * }
  */
 
 router.get('/studyLoad/', async (req, res) => {

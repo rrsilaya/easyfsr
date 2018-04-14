@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
 import { upload, unlink } from './../../utils';
 
@@ -10,28 +9,28 @@ const router = Router();
  * @apiGroup Award
  * @apiName addAward
  *
- * @apiParam (Body Params) {Number} id ID of award
+ * @apiParam (Body Params) {Number} id ID of fsr
  * @apiParam (Body Params) {Number} awardID awardID of award
  * @apiParam (Body Params) {String} grantF grantF of award
  * @apiParam (Body Params) {String} chairGrantTitle chair grant title of award
  * @apiParam (Body Params) {String} collegeHasNominated which college has nominated the award
  * @apiParam (Body Params) {String} recipientOrNominee recipient or nominee of award
- * @apiParam (Body Params) {String} proffesionalChair professional chai of award
+ * @apiParam (Body Params) {String} proffesionalChair professional chair of award
  * @apiParam (Body Params) {Date} approvedStartDate approved start date of award
  * @apiParam (Body Params) {Date} endDate end date of award
  * @apiParam (Body Params) {File} [filepath] file path to image of award
  *
- * @apiSuccess {Object} award new Award
- * @apiSuccess {Number} award.id ID of award
- * @apiSuccess {Number} award.awardID awardID of award
- * @apiSuccess {String} award.grantF grantf of award
- * @apiSuccess {String} award.chairGrantTitle chair grant title of award
- * @apiSuccess {String} award.collegeHasNominated which college has nominated the award
- * @apiSuccess {String} award.recipientOrNominee recipient or nominee of award
- * @apiSuccess {String} award.professionalChair professional chair of award
- * @apiSuccess {Date} award.approvedStartDate approved start date of award
- * @apiSuccess {Date} award.endDate end date of award
- * @apiSuccess {String} award.filepath file path to image of award
+ * @apiSuccess {Object} data new Award
+ * @apiSuccess {Number} data.id ID of fsr
+ * @apiSuccess {Number} data.awardID awardID of award
+ * @apiSuccess {String} data.grantF grantf of award
+ * @apiSuccess {String} data.chairGrantTitle chair grant title of award
+ * @apiSuccess {String} data.collegeHasNominated which college has nominated the award
+ * @apiSuccess {String} data.recipientOrNominee recipient or nominee of award
+ * @apiSuccess {String} data.professionalChair professional chair of award
+ * @apiSuccess {Date} data.approvedStartDate approved start date of award
+ * @apiSuccess {Date} data.endDate end date of award
+ * @apiSuccess {String} datadata.filepath file path to image of award
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -89,27 +88,28 @@ router.post('/award/', async (req, res) => {
  * @apiGroup Award
  * @apiName updateAward
  *
- * @apiParam (Query Params) {Number} awardID awardID of award
- * @apiParam (Body Params) {Number} id ID of award
- * @apiParam (Body Params) {String} grantF grantF of award
- * @apiParam (Body Params) {String} chairGrantTitle chair grant title of award
- * @apiParam (Body Params) {String} collegeHasNominated which college nominated the award
- * @apiParam (Body Params) {String} recipientOrNominee recipient or nominee of award
- * @apiParam (Body Params) {String} proffesionalChair professional chair of award
- * @apiParam (Body Params) {Date} approvedStartDate approved start date of award
- * @apiParam (Body Params) {Date} endDate end date of award
+ * @apiParam (Query Params) {Number} [awardID] awardID of award
+ *
+ * @apiParam (Body Params) {Number} [id] ID of award
+ * @apiParam (Body Params) {String} [grantF] grantF of award
+ * @apiParam (Body Params) {String} [chairGrantTitle] chair grant title of award
+ * @apiParam (Body Params) {String} [collegeHasNominated] which college nominated the award
+ * @apiParam (Body Params) {String} [recipientOrNominee] recipient or nominee of award
+ * @apiParam (Body Params) {String} [proffesionalChair] professional chair of award
+ * @apiParam (Body Params) {Date} [approvedStartDate] approved start date of award
+ * @apiParam (Body Params) {Date} [endDate] end date of award
  * @apiParam (Body Params) {File} [filepath] file path to image of award
  *
- * @apiSuccess {Object} award Award updated
- * @apiSuccess {Number} award.id ID of award
- * @apiSuccess {String} award.grantF grantf of award
- * @apiSuccess {String} award.chairGrantTitle chair grant title of award
- * @apiSuccess {String} award.collegeHasNominated which college nominated the award
- * @apiSuccess {String} award.recipientOrNominee recipient or nominee of award
- * @apiSuccess {String} award.professionalChair professional chair of award
- * @apiSuccess {Date} award.approvedStartDate approved start date of award
- * @apiSuccess {Date} award.endDate end date of award
- * @apiSuccess {String} award.filepath file path to image of award
+ * @apiSuccess {Object} data Updated awarddata
+ * @apiSuccess {Number} data.id ID of fsr
+ * @apiSuccess {String} data.grantF grantf of award
+ * @apiSuccess {String} data.chairGrantTitle chair grant title of award
+ * @apiSuccess {String} data.collegeHasNominated which college nominated the award
+ * @apiSuccess {String} data.recipientOrNominee recipient or nominee of award
+ * @apiSuccess {String} data.professionalChair professional chair of award
+ * @apiSuccess {Date} data.approvedStartDate approved start date of award
+ * @apiSuccess {Date} data.endDate end date of award
+ * @apiSuccess {String} data.filepath file path to image of award
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -185,17 +185,17 @@ router.put('/award/:awardID', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} awardID ID of award
  *
- * @apiSuccess {Object} award Award deleted
- * @apiSuccess {Number} award.awardID awardID of award
- * @apiSuccess {Number} award.id ID of award
- * @apiSuccess {String} award.grantF grantf of award
- * @apiSuccess {String} award.chairGrantTitle chair grant title of award
- * @apiSuccess {String} award.collegeHasNominated which college has nominated theaward
- * @apiSuccess {String} award.recipientOrNominee recipient or nominee of award
- * @apiSuccess {String} award.professionalChair professional chair of award
- * @apiSuccess {Date} award.approvedStartDate approved start date of award
- * @apiSuccess {Date} award.endDate end date of award
- * @apiSuccess {String} award.filepath file path to image of award
+ * @apiSuccess {Object} data Award deleted
+ * @apiSuccess {Number} data.awardID awardID of award
+ * @apiSuccess {Number} data.id ID of fsr
+ * @apiSuccess {String} data.grantF grantf of award
+ * @apiSuccess {String} data.chairGrantTitle chair grant title of award
+ * @apiSuccess {String} data.collegeHasNominated which college has nominated theaward
+ * @apiSuccess {String} data.recipientOrNominee recipient or nominee of award
+ * @apiSuccess {String} data.professionalChair professional chair of award
+ * @apiSuccess {Date} data.approvedStartDate approved start date of award
+ * @apiSuccess {Date} data.endDate end date of award
+ * @apiSuccess {String} data.filepath file path to image of award
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -265,17 +265,17 @@ router.delete('/award/:awardID', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} awardID ID of award
  *
- * @apiSuccess {Object} award Award fetched
- * @apiSuccess {Number} award.awardID awardID of award
- * @apiSuccess {Number} award.id ID of award
- * @apiSuccess {String} award.grantF grantf of award
- * @apiSuccess {String} award.chairGrantTitle chair grant title of award
- * @apiSuccess {String} award.collegeHasNominated which college nominated the award
- * @apiSuccess {String} award.recipientOrNominee recipient or nominee of award
- * @apiSuccess {String} award.professionalChair professional chair of award
- * @apiSuccess {Date} award.approvedStartDate approved start date of award
- * @apiSuccess {Date} award.endDate end date of award
- * @apiSuccess {String} award.filepath file path to image of award
+ * @apiSuccess {Object} data Award fetched
+ * @apiSuccess {Number} data.awardID awardID of award
+ * @apiSuccess {Number} data.id ID of fsr
+ * @apiSuccess {String} data.grantF grantf of award
+ * @apiSuccess {String} data.chairGrantTitle chair grant title of award
+ * @apiSuccess {String} data.collegeHasNominated which college nominated the award
+ * @apiSuccess {String} data.recipientOrNominee recipient or nominee of award
+ * @apiSuccess {String} data.professionalChair professional chair of award
+ * @apiSuccess {Date} data.approvedStartDate approved start date of award
+ * @apiSuccess {Date} data.endDate end date of award
+ * @apiSuccess {String} data.filepath file path to image of award
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -340,6 +340,8 @@ router.get('/award/:awardID', async (req, res) => {
  * @apiGroup Award
  * @apiName getAwards
  *
+ * @apiParam (Query Params) {Number} [awardID] awardID of award
+ * @apiParam (Query Params) {Number} [id] ID of fsr
  * @apiParam (Query Params) {String} [chairGrantTitle] chair grant title of award
  * @apiParam (Query Params) {String} [collegeHasNominated] which college nominated the award
  * @apiParam (Query Params) {String} [recipientOrNominee] recipient or nominee of award
@@ -351,17 +353,21 @@ router.get('/award/:awardID', async (req, res) => {
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'chairGrantTitle'
  *
- * @apiSuccess {Object} award Awards fetched
- * @apiSuccess {Number} award.awardID ID of award
- * @apiSuccess {Number} award.id ID of award
- * @apiSuccess {String} award.grantF grantf of award
- * @apiSuccess {String} award.chairGrantTitle chair grant title of award
- * @apiSuccess {String} award.collegeHasNominated which college nominated the award
- * @apiSuccess {String} award.recipientOrNominee recipient or nominee of award
- * @apiSuccess {String} award.professionalChair professional chair of award
- * @apiSuccess {Date} award.approvedStartDate approved start date of award
- * @apiSuccess {Date} award.endDate end date of award
- * @apiSuccess {String} award.filepath file path to image of award
+ * @apiSuccess {Object[]} data Awards fetched
+ * @apiSuccess {Number} data.awardID ID of award
+ * @apiSuccess {Number} data.id ID of fsr
+ * @apiSuccess {String} data.grantF grantf of award
+ * @apiSuccess {String} data.chairGrantTitle chair grant title of award
+ * @apiSuccess {String} data.collegeHasNominated which college nominated the award
+ * @apiSuccess {String} data.recipientOrNominee recipient or nominee of award
+ * @apiSuccess {String} data.professionalChair professional chair of award
+ * @apiSuccess {Date} data.approvedStartDate approved start date of award
+ * @apiSuccess {Date} data.endDate end date of award
+ * @apiSuccess {String} data.filepath file path to image of award
+ * @apiSuccess {Number} total Total amount of documents.
+ * @apiSuccess {Number} limit Max number of documents
+ * @apiSuccess {Number} page nth page this query is.
+ * @apiSuccess {Number} pages Number of total pages.
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -407,14 +413,6 @@ router.get('/award/:awardID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {Number} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 Award not found
- * {
- *   "status": 404,
- *   "message": "Award not found"
- * }
  */
 
 router.get('/award/', async (req, res) => {

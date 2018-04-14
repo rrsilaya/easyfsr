@@ -8,20 +8,19 @@ const router = Router();
  * @apiGroup ConsultationHours
  * @apiName addConsultationHour
  *
- * @apiParam (Body Params) {Number} chID chID of consultationHour
  * @apiParam (Body Params) {Number} id ID of FSR
  * @apiParam (Body Params) {String} place place of consultationHour
  * @apiParam (Body Params) {String} day day of consultationHour
  * @apiParam (Body Params) {Time} timeStart timeStart of consultationHour
  * @apiParam (Body Params) {Time} timeEnd timeEnd of consultationHour
  *
- * @apiSuccess {Object} consultationHour new Consultation Hour
- * @apiSuccess {Number} consultationHour.chID chID of consultationHour
- * @apiSuccess {Number} consultationHour.id ID of FSR
- * @apiSuccess {String} consultationHour.place place of consultationHour
- * @apiSuccess {String} consultationHour.day day of consultationHour
- * @apiSuccess {Time} consultationHour.timeStart timeStart of consultationHour
- * @apiSuccess {Time} consultationHour.timeEnd timeEnd of consultationHour
+ * @apiSuccess {Object} data new Consultation Hour
+ * @apiSuccess {Number} data.chID chID of consultationHour
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {String} data.place place of consultationHour
+ * @apiSuccess {String} data.day day of consultationHour
+ * @apiSuccess {Time} data.timeStart timeStart of consultationHour
+ * @apiSuccess {Time} data.timeEnd timeEnd of consultationHour
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -82,13 +81,13 @@ router.post('/consultationHours/', async (req, res) => {
  * @apiParam (Body Params) {Time} [timeStart] timeStart of consultationHour
  * @apiParam (Body Params) {Time} [timeEnd] timeEnd of consultationHour
  *
- * @apiSuccess {Object} consultationHour Consultation Hour updated
- * @apiSuccess {Number} consultationHour.chID chID of consultationHour
- * @apiSuccess {Number} consultationHour.id ID of FSR
- * @apiSuccess {String} consultationHour.place place of consultationHour
- * @apiSuccess {String} consultationHour.day day of consultationHour
- * @apiSuccess {Time} consultationHour.timeStart timeStart of consultationHour
- * @apiSuccess {Time} consultationHour.timeEnd timeEnd of consultationHour
+ * @apiSuccess {Object} data Consultation Hour updated
+ * @apiSuccess {Number} data.chID chID of consultationHour
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {String} data.place place of consultationHour
+ * @apiSuccess {String} data.day day of consultationHour
+ * @apiSuccess {Time} data.timeStart timeStart of consultationHour
+ * @apiSuccess {Time} data.timeEnd timeEnd of consultationHour
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -106,7 +105,7 @@ router.post('/consultationHours/', async (req, res) => {
  *          }
  *  }
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -114,6 +113,13 @@ router.post('/consultationHours/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message Error message
+ * HTTP/1.1 404 Consultation Hour not found
+ * {
+ *   "status": 404,
+ *   "message": "Consultation hours details not found"
+ * }
  */
 
 router.put('/consultationHours/:chID', async (req, res) => {
@@ -147,13 +153,13 @@ router.put('/consultationHours/:chID', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} chID chID of consultationHour
  *
- * @apiSuccess {Object} consultationHour Consultation Hour deleted
- * @apiSuccess {Number} consultationHour.chID chID of consultationHour
- * @apiSuccess {Number} consultationHour.id ID of FSR
- * @apiSuccess {String} consultationHour.place place of consultationHour
- * @apiSuccess {String} consultationHour.day day of consultationHour
- * @apiSuccess {Time} consultationHour.timeStart timeStart of consultationHour
- * @apiSuccess {Time} consultationHour.timeEnd timeEnd of consultationHour
+ * @apiSuccess {Object} data Consultation Hour deleted
+ * @apiSuccess {Number} data.chID chID of consultationHour
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {String} data.place place of consultationHour
+ * @apiSuccess {String} data.day day of consultationHour
+ * @apiSuccess {Time} data.timeStart timeStart of consultationHour
+ * @apiSuccess {Time} data.timeEnd timeEnd of consultationHour
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -219,13 +225,13 @@ router.delete('/consultationHours/:chID', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} chID chID of consultationHour
  *
- * @apiSuccess {Object} consultationHour Consulatation Hour fetched
- * @apiSuccess {Number} consultationHour.chID chID of consultationHour
- * @apiSuccess {Number} consultationHour.id ID of FSR
- * @apiSuccess {String} consultationHour.place place of consultationHour
- * @apiSuccess {String} consultationHour.day day of consultationHour
- * @apiSuccess {Time} consultationHour.timeStart timeStart of consultationHour
- * @apiSuccess {Time} consultationHour.timeEnd timeEnd of consultationHour
+ * @apiSuccess {Object[]} data Consulatation Hours fetched
+ * @apiSuccess {Number} data.chID chID of consultationHour
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {String} data.place place of consultationHour
+ * @apiSuccess {String} data.day day of consultationHour
+ * @apiSuccess {Time} data.timeStart timeStart of consultationHour
+ * @apiSuccess {Time} data.timeEnd timeEnd of consultationHour
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -288,6 +294,7 @@ router.get('/consultationHours/:chID', async (req, res) => {
  * @apiGroup ConsultationHours
  * @apiName getConsultationHours
  *
+ * @apiParam (Query Params) {Number} [id] id of fsr
  * @apiParam (Query Params) {String} [place] chair grant title of award
  * @apiParam (Query Params) {String} [day] professional chair of award
  * @apiParam (Query Params) {Time} [timeStart] approved start date of award
@@ -297,13 +304,17 @@ router.get('/consultationHours/:chID', async (req, res) => {
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'day'
  *
- * @apiSuccess {Object} consultationHour consulatationHours fetched
- * @apiSuccess {Number} consultationHour.chID chID of consultationHour
- * @apiSuccess {Number} consultationHour.id ID of FSR
- * @apiSuccess {String} consultationHour.place place of consultationHours
- * @apiSuccess {String} consultationHour.day day of consultationHours
- * @apiSuccess {Time} consultationHour.timeStart timeStart of consultationHours
- * @apiSuccess {Time} consultationHour.timeEnd timeEnd of consultationHours
+ * @apiSuccess {Object} data consulatationHours fetched
+ * @apiSuccess {Number} data.chID chID of consultationHour
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {String} data.place place of consultationHours
+ * @apiSuccess {String} data.day day of consultationHours
+ * @apiSuccess {Time} data.timeStart timeStart of consultationHours
+ * @apiSuccess {Time} data.timeEnd timeEnd of consultationHours
+ * @apiSuccess {Number} total Total amount of documents.
+ * @apiSuccess {Number} limit Max number of documents
+ * @apiSuccess {Number} page nth page this query is.
+ * @apiSuccess {Number} pages Number of total pages.
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK

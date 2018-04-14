@@ -8,7 +8,6 @@ const fsrAttributes = [
   'semester',
   'isChecked',
   'teachingLoadCreds',
-  'filepath',
   'isTurnedIn',
 ];
 

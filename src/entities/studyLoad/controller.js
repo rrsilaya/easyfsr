@@ -3,7 +3,6 @@ import * as Query from './queries';
 import { filtered, escapeSearch } from '../../utils';
 
 const studyLoadAttributes = [
-  'id',
   'fullLeaveWithPay',
   'fellowshipRecipient',
   'degree',
@@ -12,6 +11,7 @@ const studyLoadAttributes = [
 ];
 
 const searchFields = [
+  'id',
   'fullLeaveWithPay',
   'fellowshipRecipient',
   'degree',

@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
 
 const router = Router();
@@ -14,11 +13,11 @@ const router = Router();
  * @apiParam (Body Params) {String} askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
  * @apiParam (Body Params) {Date} [date] Date of limitedPracticeOfProf
  *
- * @apiSuccess {Object} ltdPractOfProf new LtdPractOfProf
- * @apiSuccess {Number} ltdPractOfProf.id ID of fsr
- * @apiSuccess {Number} ltdPractOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
- * @apiSuccess {String} ltdPractOfProf.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
- * @apiSuccess {Date} ltdPractOfProf.date Date of limitedPracticeOfProf
+ * @apiSuccess {Object} data new LtdPractOfProf created
+ * @apiSuccess {Number} data.id ID of fsr
+ * @apiSuccess {Number} data.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
+ * @apiSuccess {String} data.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
+ * @apiSuccess {Date} data.date Date of limitedPracticeOfProf
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -34,7 +33,7 @@ const router = Router();
  *	        }
  *	}
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -77,11 +76,11 @@ router.post('/ltdPractOfProf/', async (req, res) => {
  * @apiParam (Body Params) {String} [askedPermssion] Asked permission of limitedPracticeOfProf.Can be 'YES' OR 'NO'
  * @apiParam (Body Params) {Date} [date] Date of limitedPracticeOfProf
  *
- * @apiSuccess {Object} ltdPractOfProf LtdPractOfProf updated
- * @apiSuccess {Number} ltdPractOfProf.id ID of fsr
- * @apiSuccess {Number} ltdPractOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
- * @apiSuccess {String} ltdPractOfProf.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
- * @apiSuccess {Date} ltdPractOfProf.date Date of limitedPracticeOfProf
+ * @apiSuccess {Object} data LtdPractOfProf updated
+ * @apiSuccess {Number} data.id ID of fsr
+ * @apiSuccess {Number} data.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
+ * @apiSuccess {String} data.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
+ * @apiSuccess {Date} data.date Date of limitedPracticeOfProf
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -97,7 +96,7 @@ router.post('/ltdPractOfProf/', async (req, res) => {
  *	        }
  *	}
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -105,7 +104,7 @@ router.post('/ltdPractOfProf/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * 	HTTP/1.1 404 LtdPractOfProf not found
  *	 {
@@ -145,28 +144,27 @@ router.put('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
  *
- * @apiSuccess {Object} ltdPractOfProf LtdPractOfProf deleted
- * @apiSuccess {Number} ltdPractOfProf.id ID of fsr
- * @apiSuccess {Number} ltdPractOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
- * @apiSuccess {String} ltdPractOfProf.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
- * @apiSuccess {Date} ltdPractOfProf.date Date of limitedPracticeOfProf
+ * @apiSuccess {Object} data LtdPractOfProf deleted
+ * @apiSuccess {Number} data.id ID of fsr
+ * @apiSuccess {Number} data.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
+ * @apiSuccess {String} data.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
+ * @apiSuccess {Date} data.date Date of limitedPracticeOfProf
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *	{
  *	    "status": 200,
  *	    "message": "Successfully deleted LtdPractOfProf",
- *	    "data": [
+ *	    "data":
  *	        {
  *	            "limitedPracticeOfProfID": 97,
  *	            "id": 5,
  *	            "askedPermission": "YES",
  *	            "date": "2002-12-31T16:00:00.000Z"
  *	        }
- *	    ]
  *	}
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {data} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -174,7 +172,7 @@ router.put('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {data} status status code
  * @apiError (Error 404) {String} message Error message
  * 	HTTP/1.1 404 LtdPractOfProf not found
  *	 {
@@ -214,11 +212,11 @@ router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
  *
- * @apiSuccess {Object} ltdPractOfProf LtdPractOfProf details
- * @apiSuccess {Number} ltdPractOfProf.id ID of fsr
- * @apiSuccess {Number} ltdPractOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
- * @apiSuccess {String} ltdPractOfProf.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
- * @apiSuccess {Date} ltdPractOfProf.date Date of limitedPracticeOfProf
+ * @apiSuccess {Object} data LtdPractOfProf fetchedNumber
+ * @apiSuccess {Number} data.id ID of fsr
+ * @apiSuccess {Number} data.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
+ * @apiSuccess {String} data.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
+ * @apiSuccess {Date} data.date Date of limitedPracticeOfProf
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -235,7 +233,7 @@ router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  *	    ]
  *	}
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -243,7 +241,7 @@ router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * 	HTTP/1.1 404 LtdPractOfProf not found
  *	 {
@@ -288,17 +286,21 @@ router.get('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'id'
  *
- * @apiSuccess {Object} ltdPractOfProf All LtdPractOfProf
- * @apiSuccess {Number} ltdPractOfProf.id ID of fsr
- * @apiSuccess {Number} ltdPractOfProf.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
- * @apiSuccess {String} ltdPractOfProf.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
- * @apiSuccess {Date} ltdPractOfProf.date Date of limitedPracticeOfProf
+ * @apiSuccess {Object[]} data All LtdPractOfProf fecthed
+ * @apiSuccess {Number} data.id ID of fsr
+ * @apiSuccess {Number} data.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
+ * @apiSuccess {String} data.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
+ * @apiSuccess {Date} data.date Date of limitedPracticeOfProf
+ * @apiSuccess {Number} total Total amount of documents.
+ * @apiSuccess {Number} limit Max number of documents
+ * @apiSuccess {Number} page nth page this query is.
+ * @apiSuccess {Number} pages Number of total pages.
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *	{
  *	    "status": 200,
- *	    "message": "Successfully fetched ltdPractOfProf",
+ *	    "message": "Successfully fetched ltdPractOfProfs",
  *	    "data": [
  *	        {
  *	            "limitedPracticeOfProfID": 97,
@@ -319,7 +321,7 @@ router.get('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  *      "pages": 8
  *	}
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -327,12 +329,12 @@ router.get('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
- * 	HTTP/1.1 404 LtdPractOfProf not found
+ * 	HTTP/1.1 404 LtdPractOfProf/s not found
  *	 {
  * 	  "status": 404,
- * 	  "message": "LtdPractOfProf not found"
+ * 	  "message": "LtdPractOfProf/s not found"
  * 	 }
  */
 

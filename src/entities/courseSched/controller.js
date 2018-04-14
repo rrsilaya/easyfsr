@@ -62,7 +62,7 @@ export const getCourseScheds = courseSched => {
         courseSched.sortBy,
       ),
       {
-        field: 'courseSchedID',
+        field: 'day',
         ...escapeSearch(courseSched, searchFields, courseSched.limit),
       },
       (err, results) => {
@@ -81,7 +81,7 @@ export const getTotalCourseScheds = courseSched => {
         courseSched.sortBy,
       ),
       {
-        field: 'courseSchedID',
+        field: 'day',
         ...escapeSearch(courseSched, searchFields, courseSched.limit),
       },
       (err, results) => {

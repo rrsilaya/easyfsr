@@ -11,21 +11,22 @@ const router = Router();
  * @apiParam (Body Params) {String} emailAddress Email of the user.
  * @apiParam (Body Params) {String} password Password of the user.
  *
- * @apiSuccess {Object} user new User created
- * @apiSuccess {String} user.employeeID ID of employee
- * @apiSuccess {String} user.password password of employee
- * @apiSuccess {String} user.firstName first name of employee
- * @apiSuccess {String} user.middleName middle name of employee
- * @apiSuccess {String} user.lastName last name of employee
- * @apiSuccess {String} user.committee committee of employee, if exists
- * @apiSuccess {Boolean} user.isHead  indicates if employee is head
- * @apiSuccess {String} user.officeNumber office number of employee
- * @apiSuccess {String} user.contractType contract type of employee
- * @apiSuccess {String} user.emailAddress email address of employee
- * @apiSuccess {String} user.rank rank of employee
- * @apiSuccess {String} user.isArchived indicates if employee entry is archived
- * @apiSuccess {String} user.acctType account type of employee
- * @apiSuccess {String} user.filepath filepath
+ * @apiSuccess {Object} data new User created
+ * @apiSuccess {String} data.userID auto-inc ID of employee
+ * @apiSuccess {Number} data.employeeID ID of employee
+ * @apiSuccess {Number} data.password password of employee
+ * @apiSuccess {String} data.firstName first name of employee
+ * @apiSuccess {String} data.middleName middle name of employee
+ * @apiSuccess {String} data.lastName last name of employee
+ * @apiSuccess {String} data.committee committee of employee, if exists
+ * @apiSuccess {Boolean} data.isHead  indicates if employee is head
+ * @apiSuccess {String} data.officeNumber office number of employee
+ * @apiSuccess {String} data.contractType contract type of employee
+ * @apiSuccess {String} data.emailAddress email address of employee
+ * @apiSuccess {String} data.rank rank of employee
+ * @apiSuccess {Boolean} data.isArchived indicates if employee entry is archived
+ * @apiSuccess {String} data.acctType account type of employee
+ * @apiSuccess {String} data.filepath filepath
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -64,18 +65,10 @@ const router = Router();
  * @apiError (Error 401) {Number} status status code
  * @apiError (Error 401) {String} message Error message
  * @apiErrorExample {json} Error-Response:
- *   HTTP/1.1 401 Internal Server Error
+ *   HTTP/1.1 401 Invalid credentials
  *   {
  *     "status": 401,
  *     "message": "Invalid credentials"
- *   }
- * @apiError (Error 404) {Number} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- *   HTTP/1.1 404 Internal Server Error
- *   {
- *     "status": 404,
- *     "message": "User not found"
  *   }
  */
 
@@ -115,21 +108,22 @@ router.post('/login', async (req, res) => {
  *
  * @apiParam (Body Params) {String} password Password of the user.
  *
- * @apiSuccess {Object} user new User user logged in
- * @apiSuccess {String} user.employeeID ID of employee
- * @apiSuccess {String} user.password password of employee
- * @apiSuccess {String} user.firstName first name of employee
- * @apiSuccess {String} user.middleName middle name of employee
- * @apiSuccess {String} user.lastName last name of employee
- * @apiSuccess {String} user.committee committee of employee, if exists
- * @apiSuccess {Boolean} user.isHead  indicates if employee is head
- * @apiSuccess {String} user.officeNumber office number of employee
- * @apiSuccess {String} user.contractType contract type of employee
- * @apiSuccess {String} user.emailAddress email address of employee
- * @apiSuccess {String} user.rank rank of employee
- * @apiSuccess {String} user.isArchived indicates if employee entry is archived
- * @apiSuccess {String} user.acctType account type of employee
- * @apiSuccess {String} user.filepath filepath
+ * @apiSuccess {Object} data new User created
+ * @apiSuccess {String} data.userID auto-inc ID of employee
+ * @apiSuccess {Number} data.employeeID ID of employee
+ * @apiSuccess {Number} data.password password of employee
+ * @apiSuccess {String} data.firstName first name of employee
+ * @apiSuccess {String} data.middleName middle name of employee
+ * @apiSuccess {String} data.lastName last name of employee
+ * @apiSuccess {String} data.committee committee of employee, if exists
+ * @apiSuccess {Boolean} data.isHead  indicates if employee is head
+ * @apiSuccess {String} data.officeNumber office number of employee
+ * @apiSuccess {String} data.contractType contract type of employee
+ * @apiSuccess {String} data.emailAddress email address of employee
+ * @apiSuccess {String} data.rank rank of employee
+ * @apiSuccess {Boolean} data.isArchived indicates if employee entry is archived
+ * @apiSuccess {String} data.acctType account type of employee
+ * @apiSuccess {String} data.filepath filepath
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -168,18 +162,10 @@ router.post('/login', async (req, res) => {
  * @apiError (Error 401) {Number} status status code
  * @apiError (Error 401) {String} message Error message
  * @apiErrorExample {json} Error-Response:
- *   HTTP/1.1 401 Internal Server Error
+ *   HTTP/1.1 401 Invalid credentials
  *   {
  *     "status": 401,
  *     "message": "Invalid credentials"
- *   }
- * @apiError (Error 404) {Number} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- *   HTTP/1.1 404 Internal Server Error
- *   {
- *     "status": 404,
- *     "message": "User not found"
  *   }
  */
 
@@ -234,21 +220,22 @@ router.post('/logout', async (req, res) => {
  * @apiGroup Auth
  * @apiName Session
  *
- * @apiSuccess {Object} user new User created
- * @apiSuccess {String} user.employeeID ID of employee
- * @apiSuccess {String} user.password password of employee
- * @apiSuccess {String} user.firstName first name of employee
- * @apiSuccess {String} user.middleName middle name of employee
- * @apiSuccess {String} user.lastName last name of employee
- * @apiSuccess {String} user.committee committee of employee, if exists
- * @apiSuccess {Boolean} user.isHead  indicates if employee is head
- * @apiSuccess {String} user.officeNumber office number of employee
- * @apiSuccess {String} user.contractType contract type of employee
- * @apiSuccess {String} user.emailAddress email address of employee
- * @apiSuccess {String} user.rank rank of employee
- * @apiSuccess {String} user.isArchived indicates if employee entry is archived
- * @apiSuccess {String} user.acctType account type of employee
- * @apiSuccess {String} user.filepath filepath
+ * @apiSuccess {Object} data new User created
+ * @apiSuccess {String} data.userID auto-inc ID of employee
+ * @apiSuccess {Number} data.employeeID ID of employee
+ * @apiSuccess {Number} data.password password of employee
+ * @apiSuccess {String} data.firstName first name of employee
+ * @apiSuccess {String} data.middleName middle name of employee
+ * @apiSuccess {String} data.lastName last name of employee
+ * @apiSuccess {String} data.committee committee of employee, if exists
+ * @apiSuccess {Boolean} data.isHead  indicates if employee is head
+ * @apiSuccess {String} data.officeNumber office number of employee
+ * @apiSuccess {String} data.contractType contract type of employee
+ * @apiSuccess {String} data.emailAddress email address of employee
+ * @apiSuccess {String} data.rank rank of employee
+ * @apiSuccess {Boolean} data.isArchived indicates if employee entry is archived
+ * @apiSuccess {String} data.acctType account type of employee
+ * @apiSuccess {String} data.filepath filepath
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK

@@ -15,19 +15,19 @@ const router = Router();
  * @apiParam (Body Params) {String} officeUnit office unit of admin work
  * @apiParam (Body Params) {Number} approvedUnits approved units of admin work
  *
- * @apiSuccess {Object} adminWork new AdminWork is added
- * @apiSuccess {Number} adminWork.adminWorkID ID of admin work
- * @apiSuccess {Number} adminWork.id ID of FSR
- * @apiSuccess {String} adminWork.position position of admin work
- * @apiSuccess {String} adminWork.officeUnit office unit of admin work
- * @apiSuccess {Number} adminWork.approvedUnits approved units of admin work
+ * @apiSuccess {Object} data new AdminWork is added
+ * @apiSuccess {Number} data.adminWorkID ID of admin work
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {String} data.position position of admin work
+ * @apiSuccess {String} data.officeUnit office unit of admin work
+ * @apiSuccess {Number} data.approvedUnits approved units of admin work
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *  		"status": 200;
  *			"message": 'Succesfully created adminWork'
- *       "data":
+ *      "data":
  *        {
  *             "adminWorkID": 93,
  *             "position": "admin",
@@ -79,12 +79,12 @@ router.post('/adminWork/', async (req, res) => {
  * @apiParam (Body Params) {String} [officeUnit] office unit of admin work
  * @apiParam (Body Params) {Number} [approvedUnits] approved units of admin work
  *
- * @apiSuccess {Object} adminWork adminWork updated
- * @apiSuccess {Number} adminWork.adminWorkID ID of admin work
- * @apiSuccess {Number} adminWork.id ID of FSR
- * @apiSuccess {String} adminWork.position position of admin work
- * @apiSuccess {String} adminWork.officeUnit office unit of admin work
- * @apiSuccess {Number} adminWork.approvedUnits approved units of admin work
+ * @apiSuccess {Object} data adminWork updated
+ * @apiSuccess {Number} data.adminWorkID ID of admin work
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {String} data.position position of admin work
+ * @apiSuccess {String} data.officeUnit office unit of admin work
+ * @apiSuccess {Number} data.approvedUnits approved units of admin work
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -105,12 +105,15 @@ router.post('/adminWork/', async (req, res) => {
  * @apiError (Error 500) {Number} status  status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
- *   HTTP/1.1 500 Internal Server Error
+ * HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- *   HTTP/1.1 404 adminWork not found
+ * @apiError (Error 404) {Number} status  status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 adminWork not found
  * 	 {
  *   	"status": 404,
  *   	"message": "AdminWork not found"
@@ -147,14 +150,13 @@ router.put('/adminWork/:adminWorkID', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} adminWordkID ID of admin work
  *
- * @apiSuccess {Object} adminWork new AdminWork deleted
- * @apiSuccess {Number} adminWork.adminWorkID ID of admin work
- * @apiSuccess {Number} adminWork.id ID of FSR
- * @apiSuccess {String} adminWork.position position of admin work
- * @apiSuccess {String} adminWork.officeUnit office unit of admin work
- * @apiSuccess {Number} adminWork.approvedUnits approved units of admin work
- *
- * @apiSuccessExample {json} Success-Response:
+ * @apiSuccess {Object} data new AdminWork deleted
+ * @apiSuccess {Number} data.adminWorkID ID of admin work
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {String} data.position position of admin work
+ * @apiSuccess {String} data.officeUnit office unit of admin work
+ * @apiSuccess {Number} data.approvedUnits approved units of admin work
+ data * @apiSuccessExample {jsondataSuccess-Response:
  *   HTTP/1.1 200 OK
  *   {
  *        "status": 200;
@@ -218,18 +220,15 @@ router.delete('/adminWork/:adminWorkID', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} adminWorkID ID of admin work
  *
- * @apiSuccess {Object} adminWork adminWork fetched
- * @apiSuccess {Number} adminWork.id ID of admin work
- * @apiSuccess {Number} adminWork.id ID of FSR
- * @apiSuccess {String} adminWork.position position of admin work
- * @apiSuccess {String} adminWork.officeUnit office unit of admin work
- * @apiSuccess {Number} adminWork.approvedUnits approved units of admin work
+ * @apiSuccess {Object} data adminWork fetched
+ * @apiSuccess {Number} data.id ID of admin work
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {String} data.position position of admin work
+ * @apiSuccess {String} data.officeUnit office unit of admin work
+ * @apiSuccess {Number} data.approvedUnits approved units of admin work
  *
- * @apiSuccessExample {json} Success-Response:
- *   HTTP/1.1 200 OK
- *   {
- *     "status": 200,
- *     "message": "Successfully fetched admin work",
+ * @apiSuccessExample {jdataess-Response:
+ *   HTTP/1.1 20data   "status": data"message": "Successfully fetched admin work",
  *     "data": {
  *      "adminWorkID": 2,
  *      "position": "Administrative Aide",
@@ -290,15 +289,19 @@ router.get('/adminWork/:adminWorkID', async (req, res) => {
  * @apiParam (Query Params) {Number} [approvedUnits] approved units of admin work
  * @apiParam (Query Params) {Number} [page] page number
  * @apiParam (Query Params) {Number} [limit] count limit of admin works to fetch
- * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
+ * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'. Default is 'ASC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'position'
  *
- * @apiSuccess {Object} adminWork admin works fetched
- * @apiSuccess {Number} adminWork.adminWorkID ID of admin work
- * @apiSuccess {Number} adminWork.id ID of FSR
- * @apiSuccess {String} adminWork.position position of admin work
- * @apiSuccess {String} adminWork.officeUnit office unit of admin work
- * @apiSuccess {Number} adminWork.approvedUnits approved units of admin work
+ * @apiSuccess {Object[]} data admin works fetched
+ * @apiSuccess {Number} data.adminWorkID ID of admin work
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {String} data.position position of admin work
+ * @apiSuccess {String} data.officeUnit office unit of admin work
+ * @apiSuccess {Number} data.approvedUnits approved units of admin work
+ * @apiSuccess {Number} total Total amount of documents.
+ * @apiSuccess {Number} limit Max number of documents
+ * @apiSuccess {Number} page nth page this query is.
+ * @apiSuccess {Number} pages Number of total pages.
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK

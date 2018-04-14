@@ -43,8 +43,6 @@ CREATE TABLE fsr(
   `isTurnedIn` boolean DEFAULT 0,
   `teachingLoadCreds` INT(2) DEFAULT 0,
   `totalCHours` INT(2) DEFAULT 0, 
-  `filepath` TEXT (50),
-  -- place all entitiesID here
   CONSTRAINT `fsr_pk` 
     PRIMARY KEY (`id`),
   CONSTRAINT `user_fsr_fk`

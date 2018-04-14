@@ -39,7 +39,7 @@ export const getFSRs = (query, sortBy) => `
 `;
 
 export const getTotalFSRs = query => `
-  SELECT * FROM fsr ${
+  SELECT count(*) as total FROM fsr ${
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   } 
 `;

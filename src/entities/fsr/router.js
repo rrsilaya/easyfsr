@@ -1,7 +1,5 @@
 import { Router } from 'express';
-import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
-import { upload, unlink } from './../../utils';
 import { getUsers, getTotalUsers } from './../user/controller';
 import { getAdminWorks } from './../adminWork/controller';
 import { getAwards } from './../award/controller';
@@ -24,18 +22,16 @@ const router = Router();
  * @apiGroup FSR
  * @apiName addFSR
  *
- * @apiParam (Body Params) {Number} userID ID of user
  * @apiParam (Body Params) {String} acadYear academic year the fsr is filed
  * @apiParam (Body Params) {String} semester semester the fsr is filed
  *
- * @apiSuccess {Object} fsr new FSR created
- * @apiSuccess {Number} fsr.id ID of FSR
- * @apiSuccess {Number} fsr.userID ID of user
- * @apiSuccess {String} fsr.acadYear academic year the fsr is filed
- * @apiSuccess {String} fsr.semester semester the fsr is filed
- * @apiSuccess {Number} fsr.teachingLoadCreds  teaching load credits
- * @apiSuccess {Boolean} fsr.isChecked indicates if fsr is approved or not
- * @apiSuccess {Boolean} fsr.isTurnedIn indicates if fsr is turned in or not
+ * @apiSuccess {Object} data new FSR created
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {Number} data.userID ID of user
+ * @apiSuccess {String} data.acadYear academic year the fsr is filed
+ * @apiSuccess {String} data.semester semester the fsr is filed
+ * @apiSuccess {Boolean} data.isChecked indicates if fsr is approved or not
+ * @apiSuccess {Boolean} data.isTurnedIn indicates if fsr is turned in or not
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -53,7 +49,7 @@ const router = Router();
  *      }
  *   }
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -67,7 +63,7 @@ router.post('/fsr/', async (req, res) => {
   try {
     const { total: limit } = await getTotalUsers({});
     const users = await getUsers({ limit });
-    users.map(
+    users.mapdata(
       async ({ userID } = user) => await Ctrl.addFSR({ userID, ...req.body }),
     );
     res.status(200).json({
@@ -92,14 +88,14 @@ router.post('/fsr/', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} id ID of FSR
  *
- * @apiSuccess {Object} fsr new FSR created
- * @apiSuccess {Number} fsr.id ID of FSR
- * @apiSuccess {Number} fsr.userID ID of user
- * @apiSuccess {String} fsr.acadYear academic year the fsr is filed
- * @apiSuccess {String} fsr.semester semester the fsr is filed
- * @apiSuccess {Number} fsr.teachingLoadCreds  teaching load credits
- * @apiSuccess {Boolean} fsr.isChecked indicates if fsr is approved or not
- * @apiSuccess {Boolean} fsr.isTurnedIn indicates if fsr is turned in or not
+ * @apiSuccess {Object} data  FSR deleted
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {Number} data.userID ID of user
+ * @apiSuccess {String} data.acadYear academic year the fsr is filed
+ * @apiSuccess {String} data.semester semester the fsr is filed
+ * @apiSuccess {Number} data.teachingLoadCreds  teaching load credits
+ * @apiSuccess {Boolean} data.isChecked indicates if fsr is approved or not
+ * @apiSuccess {Boolean} data.isTurnedIn indicates if fsr is turned in or not
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -117,7 +113,7 @@ router.post('/fsr/', async (req, res) => {
  *      }
  *   }
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status  status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -125,7 +121,7 @@ router.post('/fsr/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 FSR not found
@@ -164,7 +160,7 @@ router.delete('/fsr/:id', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} id ID of FSR
  *
- * @apiSuccess {Object} fsr new FSR created
+ * @apiSuccess {Object} fsr  FSR fetched
  * @apiSuccess {Number} fsr.id ID of FSR
  * @apiSuccess {Number} fsr.userID ID of user
  * @apiSuccess {String} fsr.acadYear academic year the fsr is filed
@@ -189,7 +185,7 @@ router.delete('/fsr/:id', async (req, res) => {
  *      }
  *   }
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status  status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -197,7 +193,7 @@ router.delete('/fsr/:id', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 FSR not found
@@ -280,14 +276,18 @@ router.get('/fsr/:id', async (req, res) => {
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'isChecked'
  *
- * @apiSuccess {Object[]} fsrs new FSR created
- * @apiSuccess {Number} fsrs.id ID of FSR
- * @apiSuccess {Number} fsrs.userID ID of user
- * @apiSuccess {String} fsrs.acadYear academic year the fsr is filed
- * @apiSuccess {String} fsrs.semester semester the fsr is filed
- * @apiSuccess {Number} fsrs.teachingLoadCreds teaching load credits
- * @apiSuccess {Boolean} fsrs.isChecked indicates if fsr is approved or not
- * @apiSuccess {Boolean} fsr.isTurnedIn indicates if fsr is turned in or not
+ * @apiSuccess {Object[]} data  FSRs fetched
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {Number} data.userID ID of user
+ * @apiSuccess {String} data.acadYear academic year the fsr is filed
+ * @apiSuccess {String} data.semester semester the fsr is filed
+ * @apiSuccess {Number} data.teachingLoadCreds teaching load credits
+ * @apiSuccess {Boolean} data.isChecked indicates if fsr is approved or not
+ * @apiSuccess {Boolean} data.isTurnedIn indicates if fsr is turned in or not
+ * @apiSuccess {Number} total Total amount of documents.
+ * @apiSuccess {Number} limit Max number of documents
+ * @apiSuccess {Number} page nth page this query is.
+ * @apiSuccess {Number} pages Number of total pages.
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -318,7 +318,7 @@ router.get('/fsr/:id', async (req, res) => {
  *     "pages": 8
  *   }
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status  status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -326,13 +326,13 @@ router.get('/fsr/:id', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 User not found
+ * HTTP/1.1 404 FSR/s not found
  * {
  *   "status": 404,
- *   "message": "FSR not found"
+ *   "message": "FSR/s not found"
  * }
  */
 
@@ -385,18 +385,17 @@ router.use('/fsr/:userID', (req, res, next) => {
  * @apiParam (Body Params) {Number} [userID] ID of user
  * @apiParam (Body Params) {String} [acadYear] academic year the fsr is filed
  * @apiParam (Body Params) {String} [semester] semester the fsr is filed
- * @apiParam (Body Params) {Number} [teachingLoadCreds] teaching load credit
  * @apiParam (Body Params) {Boolean} [isChecked] indicates if fsr is approved or not
  * @apiParam (Query Params) {Boolean} [isTurnedIn] indicates if fsr is turned in or not
  *
- * @apiSuccess {Object} fsr new FSR created
- * @apiSuccess {Number} fsr.id ID of FSR
- * @apiSuccess {Number} fsr.userID ID of user
- * @apiSuccess {String} fsr.acadYear academic year the fsr is filed
- * @apiSuccess {String} fsr.semester semester the fsr is filed
- * @apiSuccess {Number} fsr.teachingLoadCreds  teaching load credits
- * @apiSuccess {Boolean} fsr.isChecked indicates if fsr is approved or not
- * @apiSuccess {Boolean} fsr.isTurnedIn indicates if fsr is turned in or not
+ * @apiSuccess {Object} data  FSR updated
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {Number} data.userID ID of user
+ * @apiSuccess {String} data.acadYear academic year the fsr is filed
+ * @apiSuccess {String} data.semester semester the fsr is filed
+ * @apiSuccess {Number} data.teachingLoadCreds  teaching load credits
+ * @apiSuccess {Boolean} data.isChecked indicates if fsr is approved or not
+ * @apiSuccess {Boolean} data.isTurnedIn indicates if fsr is turned in or not
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -414,7 +413,7 @@ router.use('/fsr/:userID', (req, res, next) => {
  *      }
  *   }
  *
- * @apiError (Error 500) {String} status  status code
+ * @apiError (Error 500) {Number} status  status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -422,7 +421,7 @@ router.use('/fsr/:userID', (req, res, next) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 FSR not found
@@ -434,13 +433,6 @@ router.use('/fsr/:userID', (req, res, next) => {
 
 router.put('/fsr/:id', async (req, res) => {
   try {
-    if (req.files && req.files.filepath) {
-      const fsr = await Ctrl.getFSR(req.params);
-
-      if (fsr.filepath) await unlink(fsr.filepath);
-      req.body.filepath = await upload(req.files.filepath, 'service-records');
-    }
-
     await Ctrl.updateFSR(req.params, req.body);
     const fsr = await Ctrl.getFSR(req.params);
 
