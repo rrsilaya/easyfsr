@@ -156,7 +156,7 @@ router.put('/adminWork/:adminWorkID', async (req, res) => {
  * @apiSuccess {String} data.position position of admin work
  * @apiSuccess {String} data.officeUnit office unit of admin work
  * @apiSuccess {Number} data.approvedUnits approved units of admin work
- data * @apiSuccessExample {jsondataSuccess-Response:
+ * @apiSuccessExample {jsondataSuccess-Response:
  *   HTTP/1.1 200 OK
  *   {
  *        "status": 200;
