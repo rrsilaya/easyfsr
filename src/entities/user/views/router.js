@@ -5,20 +5,20 @@ const router = Router();
 
 /**
  * @api {get} /user/:employeeID/award getUserAwards
- * @apiGroup UserView
+ * @apiGroup userView
  * @apiName getUserAwards
  *
- * @apiParam (Query Params) {Number} employeeID ID of UserView
+ * @apiParam (Query Params) {String} employeeID employee ID of user
  *
- * @apiSuccess {Object} userView User View award fetched
- * @apiSuccess {Number} userView.employeeID ID of UserView
- * @apiSuccess {String} userView.grantF grantf of UserView
- * @apiSuccess {String} userView.chairGrantTitle chair grant title of UserView
- * @apiSuccess {String} userView.collegeHasNominated which college nominated the UserView
- * @apiSuccess {String} userView.recipientOrNominee recipient or nominee of UserView
- * @apiSuccess {String} userView.professionalChair professional chair of UserView
- * @apiSuccess {Date} userView.approvedStartDate approved start date of UserView
- * @apiSuccess {Date} userView.endDate end date of UserView
+ * @apiSuccess {Object[]} data Awards fetched
+ * @apiSuccess {String} data.employeeID ID of user
+ * @apiSuccess {String} data.grantF grantf of user's award
+ * @apiSuccess {String} data.chairGrantTitle chair grant title of user's award
+ * @apiSuccess {String} data.collegeHasNominated which college nominated the user's award
+ * @apiSuccess {String} data.recipientOrNominee recipient or nominee of user's award
+ * @apiSuccess {String} data.professionalChair professional chair of user's award
+ * @apiSuccess {Date} data.approvedStartDate approved start date of user's award
+ * @apiSuccess {Date} data.endDate end date of user's award
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -48,30 +48,14 @@ const router = Router();
  *           }
  *       ]
  *   }
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status error status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
- *     "message": "Internal server error while getting usre awards"
+ *     "message": "Internal server error while getting user awards"
  *   }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 User not found
- * {
- *   "status": 404,
- *   "message": "User not found"
- * }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 403 Unauthorized Access
- * {
- *   "status": 403,
- *   "message": "Unauthorized access"
- * }
  */
 
 router.get('/user/:employeeID/award', async (req, res) => {
@@ -91,21 +75,21 @@ router.get('/user/:employeeID/award', async (req, res) => {
   }
 });
 /**
- * @api {get} /user/:employeeID/research getUserResearch
- * @apiGroup UserView
- * @apiName getUserResearch
+ * @api {get} /user/:employeeID/research getUserResearches
+ * @apiGroup userView
+ * @apiName getUserResearches
  *
- * @apiParam (Query Params) {String} employeeID ID of UserView
+ * @apiParam (Query Params) {String} employeeID employee ID of user
  *
- * @apiSuccess {Object} userView User View research fetched
- * @apiSuccess {Number} userView.employeeID ID of UserView
- * @apiSuccess {String} userView.type type of UserView
- * @apiSuccess {String} userView.role role of UserView
- * @apiSuccess {String} userView.title title of UserView
- * @apiSuccess {Date} userView.startDate start date of UserView
- * @apiSuccess {Date} userView.endDate end date of UserView
- * @apiSuccess {String} userView.funding funding of UserView
- * @apiSuccess {String} userView.approvedUnits approved units of UserView
+ * @apiSuccess {Object} data Researches fetched
+ * @apiSuccess {String} data.employeeID ID of user
+ * @apiSuccess {String} data.type type of user's research
+ * @apiSuccess {String} data.role role of user's research
+ * @apiSuccess {String} data.title title of user's research
+ * @apiSuccess {Date} data.startDate start date of user's research
+ * @apiSuccess {Date} data.endDate end date of user's research
+ * @apiSuccess {String} data.funding funding of user's research
+ * @apiSuccess {String} data.approvedUnits approved units of user's research
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -135,61 +119,45 @@ router.get('/user/:employeeID/award', async (req, res) => {
  *           }
  *       ]
  *   }
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status error status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
- *     "message": "Internal server error while getting user research"
+ *     "message": "Internal server error while getting user researches"
  *   }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 User not found
- * {
- *   "status": 404,
- *   "message": "User not found"
- * }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 403 Unauthorized Access
- * {
- *   "status": 403,
- *   "message": "Unauthorized access"
- * }
  */
 
 router.get('/user/:employeeID/research', async (req, res) => {
   try {
-    const research = await Ctrl.getUserResearch(req.params);
+    const research = await Ctrl.getUserResearches(req.params);
 
     res.status(200).json({
       status: 200,
-      message: 'Successfully fetched research of user',
+      message: 'Successfully fetched researches of user',
       data: research,
     });
   } catch (err) {
     res.status(status).json({
       status,
-      message: 'Internal server error while getting user research',
+      message: 'Internal server error while getting user researches',
     });
   }
 });
 
 /**
- * @api {get} /user/:employeeID/adminWork  getUserAdminWork
- * @apiGroup UserView
- * @apiName getUserAdminWork
+ * @api {get} /user/:employeeID/adminWork  getUserAdminWorks
+ * @apiGroup userView
+ * @apiName getUserAdminWorks
  *
- * @apiParam (Query Params) {Nuumber} employeeID ID of UserView
+ * @apiParam (Query Params) {String} employeeID ID of UserView
  *
- * @apiSuccess {Object} UserView User View adminWork fetched
- * @apiSuccess {Number} UserView.employeeID ID of UserView
- * @apiSuccess {String} UserView.position position of UserView
- * @apiSuccess {String} UserView.officeUnit office unit of UserView
- * @apiSuccess {Number} UserView.approvedUnits approved units of UserView
+ * @apiSuccess {Object} data AdminWorks fetched
+ * @apiSuccess {String} data.employeeID ID of user
+ * @apiSuccess {String} data.position position of user
+ * @apiSuccess {String} data.officeUnit office unit of user
+ * @apiSuccess {Number} data.approvedUnits approved units of user
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -210,7 +178,7 @@ router.get('/user/:employeeID/research', async (req, res) => {
  *               "approvedUnits": 5
  *           }
  *   }
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status error status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -218,27 +186,11 @@ router.get('/user/:employeeID/research', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error while getting user admin works"
  *   }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 User not found
- * {
- *   "status": 404,
- *   "message": "User not found"
- * }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 403 Unauthorized Access
- * {
- *   "status": 403,
- *   "message": "Unauthorized access"
- * }
  */
 
 router.get('/user/:employeeID/adminWork', async (req, res) => {
   try {
-    const adminWorks = await Ctrl.getUserAdminWork(req.params);
+    const adminWorks = await Ctrl.getUserAdminWorks(req.params);
 
     res.status(200).json({
       status: 200,
@@ -254,19 +206,19 @@ router.get('/user/:employeeID/adminWork', async (req, res) => {
 });
 
 /**
- * @api {get} /user/:employeeID/studyLoad  getUserStudyLoad
- * @apiGroup UserView
- * @apiName getUserStudyLoad
+ * @api {get} /user/:employeeID/studyLoad  getUserStudyLoads
+ * @apiGroup userView
+ * @apiName getUserStudyLoads
  *
- * @apiParam (Query Params) {Number} employeeID ID of UserView
+ * @apiParam (Query Params) {String} employeeID employee ID of UserView
  *
- * @apiSuccess {Object} UserView User View adminWork fetched
- * @apiSuccess {Number} UserView.employeeID ID of UserView
- * @apiSuccess {String} UserView.degree degree of UserView
- * @apiSuccess {String} UserView.university university of UserView
- * @apiSuccess {Boolean} UserView.fullLeaveWithPay full leave with pay of UserView
- * @apiSuccess {Boolean} UserView.fellowshipRecipient fellowship recipient of UserView
- * @apiSuccess {Number} UserView.totalSLcredits total credits of UserView
+ * @apiSuccess {Object[]} data Study loads fetched
+ * @apiSuccess {String} data.employeeID ID of user
+ * @apiSuccess {String} data.degree degree of user
+ * @apiSuccess {String} data.university university of user
+ * @apiSuccess {Boolean} data.fullLeaveWithPay full leave with pay of user
+ * @apiSuccess {Boolean} data.fellowshipRecipient fellowship recipient of user
+ * @apiSuccess {Number} data.totalSLcredits total credits of user
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -292,7 +244,7 @@ router.get('/user/:employeeID/adminWork', async (req, res) => {
  *           }
  *       ]
  *   }
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status error status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -300,26 +252,11 @@ router.get('/user/:employeeID/adminWork', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error while getting user study loads"
  *   }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 User not found
- * {
- *   "status": 404,
- *   "message": "User not found"
- * }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 403 Unauthorized Access
- * {
- *   "status": 403,
- *   "message": "Unauthorized access"
- * }
  */
+
 router.get('/user/:employeeID/studyLoad', async (req, res) => {
   try {
-    const studyLoad = await Ctrl.getUserStudyLoad(req.params);
+    const studyLoad = await Ctrl.getUserStudyLoads(req.params);
 
     res.status(200).json({
       status: 200,
@@ -329,28 +266,28 @@ router.get('/user/:employeeID/studyLoad', async (req, res) => {
   } catch (err) {
     res.status(status).json({
       status,
-      message: 'Internal server error while getting user admin works',
+      message: 'Internal server error while getting user study loads',
     });
   }
 });
 
 /**
- * @api {get} /user/:employeeID/schedule  getUserSchedule
- * @apiGroup UserView
- * @apiName getUserSchedule
+ * @api {get} /user/:employeeID/schedule  getUserSchedules
+ * @apiGroup userView
+ * @apiName getUserSchedules
  *
- * @apiParam (Query Params) {Number} employeeID ID of UserView
+ * @apiParam (Query Params) {String} employeeID employee ID of user
  *
- * @apiSuccess {Object} UserView User View adminWork fetched
- * @apiSuccess {Number} UserView.employeeID ID of UserView
- * @apiSuccess {Number} UserView.subjectCode subject code of UserView
- * @apiSuccess {Number} UserView.teachingLoadCreds teaching load of UserView
- * @apiSuccess {Number} UserView.noOfStudents number of students of UserView
- * @apiSuccess {Number} UserView.hoursPerWeek number of hours per week of UserView
- * @apiSuccess {String} UserView.room room of UserView
- * @apiSuccess {String} UserView.day day assigned to UserView
- * @apiSuccess {Time} UserView.timeStart starting time of UserView
- * @apiSuccess {Time} UserView.timeEnd dismissal time of UserView
+ * @apiSuccess {Object[]} data Schedulesfetched
+ * @apiSuccess {String} data.employeeID employee ID of user
+ * @apiSuccess {Number} data.subjectCode subject code of subject
+ * @apiSuccess {Number} data.teachingLoadCreds teaching load of subject
+ * @apiSuccess {Number} data.noOfStudents number of students of subject
+ * @apiSuccess {Number} data.hoursPerWeek number of hours per week of subject
+ * @apiSuccess {String} data.room room of subject
+ * @apiSuccess {String} data.day day assigned to subject
+ * @apiSuccess {Time} data.timeStart starting time of subject
+ * @apiSuccess {Time} data.timeEnd dismissal time of subject
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -382,7 +319,7 @@ router.get('/user/:employeeID/studyLoad', async (req, res) => {
  *           }
  *       ]
  *   }
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status error status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -390,29 +327,13 @@ router.get('/user/:employeeID/studyLoad', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error while getting user schedule"
  *   }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 User not found
- * {
- *   "status": 404,
- *   "message": "User not found"
- * }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 403 Unauthorized Access
- * {
- *   "status": 403,
- *   "message": "Unauthorized access"
- * }
  */
 
 router.get('/user/:employeeID/schedule', async (req, res) => {
   try {
-    const subjects = await Ctrl.getUserSubject(req.params);
+    const subjects = await Ctrl.getUserSubjects(req.params);
     const consultationHours = await Ctrl.getUserConsultationHours(req.params);
-    const courses = await Ctrl.getUserSLCourse(req.params);
+    const courses = await Ctrl.getUserSLCourses(req.params);
     const schedule = [...subjects, ...consultationHours, ...courses];
     res.status(200).json({
       status: 200,
@@ -428,22 +349,22 @@ router.get('/user/:employeeID/schedule', async (req, res) => {
 });
 
 /**
- * @api {get} /user/:employeeID/extensionAndCommunityService  getUserExtensionAndCommunityService
- * @apiGroup UserView
- * @apiName getUserExtensionAndCommunityService
+ * @api {get} /user/:employeeID/extensionAndCommunityService  getUserExtensionAndCommunityServices
+ * @apiGroup userView
+ * @apiName getUserExtensionAndCommunityServices
  *
- * @apiParam (Query Params) {Number} employeeID ID of UserView
+ * @apiParam (Query Params) {String} employeeID employee ID of user
  *
- * @apiSuccess {Object} UserView User View adminWork fetched
- * @apiSuccess {Number} UserView.employeeID ID of UserView
- * @apiSuccess {String} UserView.participant participant of UserView
- * @apiSuccess {String} UserView.role role o UserView
- * @apiSuccess {Number} UserView.hours hours of UserView
- * @apiSuccess {String} UserView.title title of UserView
- * @apiSuccess {Number} UserView.creditUnit creditUnit of UserView
- * @apiSuccess {String} UserView.type type of UserView
- * @apiSuccess {Date} UserView.startdate startdate of UserView
- * @apiSuccess {Date} UserView.enddate enddate of UserView
+ * @apiSuccess {Object} data Services fetched
+ * @apiSuccess {String} data.employeeID employee ID of user
+ * @apiSuccess {String} data.participant number of participants in user's service
+ * @apiSuccess {String} data.role role in user's service
+ * @apiSuccess {Number} data.hours hours of user's service
+ * @apiSuccess {String} data.title title of user's service
+ * @apiSuccess {Number} data.creditUnit creditUnit of user's service
+ * @apiSuccess {String} data.type type of user's service
+ * @apiSuccess {Date} data.startDate startDate of user's service
+ * @apiSuccess {Date} data.endDate endDate of user's service
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -475,7 +396,7 @@ router.get('/user/:employeeID/schedule', async (req, res) => {
  *           }
  *       ]
  *   }
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status error status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -483,29 +404,13 @@ router.get('/user/:employeeID/schedule', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error while getting user extension and community service"
  *   }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 User not found
- * {
- *   "status": 404,
- *   "message": "User not found"
- * }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 403 Unauthorized Access
- * {
- *   "status": 403,
- *   "message": "Unauthorized access"
- * }
  */
 
 router.get(
   '/user/:employeeID/extensionAndCommunityService',
   async (req, res) => {
     try {
-      const extensionAndCommunityService = await Ctrl.getUserExtensionAndCommunityService(
+      const extensionAndCommunityService = await Ctrl.getUserExtensionAndCommunityServices(
         req.params,
       );
       res.status(200).json({
@@ -524,16 +429,16 @@ router.get(
 );
 
 /**
- * @api {get} /user/:employeeID/limitedPracticeOfProf  getUserLimitedPractice
- * @apiGroup UserView
- * @apiName getUserLimitedPractice
+ * @api {get} /user/:employeeID/limitedPracticeOfProf  getUserLimitedPractices
+ * @apiGroup userView
+ * @apiName getUserLimitedPractices
  *
- * @apiParam (Query Params) {Number} employeeID ID of UserView
+ * @apiParam (Query Params) {String} employeeID employee ID of user
  *
- * @apiSuccess {Object} UserView User View adminWork fetched
- * @apiSuccess {Number} UserView.employeeID ID of UserView
- * @apiSuccess {String} UserView.askedPermssion Asked permission of UserView. Can be 'YES' OR 'NO'
- * @apiSuccess {Date} UserView.date Date of UserView
+ * @apiSuccess {Object[]} data AdminWorks fetched
+ * @apiSuccess {String} data.employeeID employee ID of user
+ * @apiSuccess {String} dataaskedPermssion Asked permission of user's limited pratice.
+ * @apiSuccess {Date} data.date Date of user's limited pratice
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -553,7 +458,7 @@ router.get(
  *           }
  *       ]
  *   }
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status error status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -561,27 +466,13 @@ router.get(
  *     "status": 500,
  *     "message": "Internal server error while getting user limited practices"
  *   }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 User not found
- * {
- *   "status": 404,
- *   "message": "User not found"
- * }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 403 Unauthorized Access
- * {
- *   "status": 403,
- *   "message": "Unauthorized access"
- * }
  */
 
 router.get('/user/:employeeID/limitedPracticeOfProf', async (req, res) => {
   try {
-    const limitedPracticeOfProf = await Ctrl.getUserLimitedPractice(req.params);
+    const limitedPracticeOfProf = await Ctrl.getUserLimitedPractices(
+      req.params,
+    );
 
     res.status(200).json({
       status: 200,
@@ -597,17 +488,18 @@ router.get('/user/:employeeID/limitedPracticeOfProf', async (req, res) => {
 });
 
 /**
- * @api {get} /user/:employeeID/creativeWork  getUserCreativeWork
- * @apiGroup UserView
- * @apiName getUserCreativeWork
+ * @api {get} /user/:employeeID/creativeWork  getUserCreativeWorks
+ * @apiGroup userView
+ * @apiName getUserCreativeWorks
  *
- * @apiParam (Query Params) {Number} employeeID ID of UserView
+ * @apiParam (Query Params) {String} employeeID employee ID of user
  *
- * @apiSuccess {Object} UserView User View adminWork fetched
- * @apiSuccess {Date} UserView.date date of UserView
- * @apiSuccess {String} UserView.title title of UserView
- * @apiSuccess {String} UserView.type type of UserView
- * @apiSuccess {Number} UserView.credUnit credit units of UserView
+ * @apiSuccess {Object[]} data adminWork fetched
+ * @apiSuccess {String} employeeID employee ID of user
+ * @apiSuccess {Date} data.date date of admin work
+ * @apiSuccess {String} data.title title of admin work
+ * @apiSuccess {String} data.type type of admin work
+ * @apiSuccess {Number} data.credUnit credit units of admin work
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -631,7 +523,7 @@ router.get('/user/:employeeID/limitedPracticeOfProf', async (req, res) => {
  *           }
  *       ]
  *   }
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status error status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -639,27 +531,11 @@ router.get('/user/:employeeID/limitedPracticeOfProf', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error while getting user creative works"
  *   }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 User not found
- * {
- *   "status": 404,
- *   "message": "User not found"
- * }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 403 Unauthorized Access
- * {
- *   "status": 403,
- *   "message": "Unauthorized access"
- * }
  */
 
 router.get('/user/:employeeID/creativeWork', async (req, res) => {
   try {
-    const creativeWorks = await Ctrl.getUserCreativeWork(req.params);
+    const creativeWorks = await Ctrl.getUserCreativeWorks(req.params);
 
     res.status(200).json({
       status: 200,
