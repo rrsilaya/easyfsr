@@ -106,6 +106,7 @@ router.post('/ltdPractOfProf/', async (req, res) => {
  *   }
  * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
  * 	HTTP/1.1 404 LtdPractOfProf not found
  *	 {
  * 	  "status": 404,
@@ -174,6 +175,7 @@ router.put('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  *   }
  * @apiError (Error 404) {data} status status code
  * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
  * 	HTTP/1.1 404 LtdPractOfProf not found
  *	 {
  * 	  "status": 404,
@@ -243,6 +245,7 @@ router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  *   }
  * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
  * 	HTTP/1.1 404 LtdPractOfProf not found
  *	 {
  * 	  "status": 404,
@@ -331,6 +334,7 @@ router.get('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  *   }
  * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
  * 	HTTP/1.1 404 LtdPractOfProf/s not found
  *	 {
  * 	  "status": 404,

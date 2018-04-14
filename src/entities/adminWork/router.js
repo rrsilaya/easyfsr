@@ -92,13 +92,13 @@ router.post('/adminWork/', async (req, res) => {
  *   		"status": 200,
  *   		"message": "Successfully updated adminWork",
  *   		"data":
- *           {
- *             "adminWorkID": 93,
- *             "position": "admin aide",
- *             "officeUnit": "ics",
- *             "approvedUnits": 3,
- *             "id": 1
- *           }
+ *       {
+ *         "adminWorkID": 93,
+ *         "position": "admin aide",
+ *         "officeUnit": "ics",
+ *         "approvedUnits": 3,
+ *         "id": 1
+ *       }
  *
  *	 }
  *
@@ -228,7 +228,9 @@ router.delete('/adminWork/:adminWorkID', async (req, res) => {
  * @apiSuccess {Number} data.approvedUnits approved units of admin work
  *
  * @apiSuccessExample {jdataess-Response:
- *   HTTP/1.1 20data   "status": data"message": "Successfully fetched admin work",
+ *   HTTP/1.1 200
+ *     "status": 200
+ *     "message": "Successfully fetched admin work",
  *     "data": {
  *      "adminWorkID": 2,
  *      "position": "Administrative Aide",

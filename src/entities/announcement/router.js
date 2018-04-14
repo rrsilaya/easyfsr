@@ -78,6 +78,7 @@ router.post('/announcement', async (req, res) => {
  * @apiSuccess {String} data.body body of announcement
  * @apiSuccess {Boolean} data.isResolved isResolved indicates if announcement is resolved
  *
+ * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *   "status": 200,
