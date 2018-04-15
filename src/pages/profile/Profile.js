@@ -14,6 +14,10 @@ class Profile extends Component {
     this.props.getUserExtensionAndCommService(this.props.match.params.userID);
   }
 
+  componentWillUnmount() {
+    this.props.resetPage();
+  }
+
   render() {
     const {
       user,

@@ -6,6 +6,7 @@ import {
   getAdminWork,
   getUserExtensionAndCommService,
   uploadIcon,
+  resetPage,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -39,6 +40,9 @@ const mapDispatchToProps = dispatch => {
     },
     uploadIcon: (user, form) => {
       dispatch(uploadIcon(user, form));
+    },
+    resetPage: () => {
+      dispatch(resetPage());
     },
   };
 };

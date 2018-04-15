@@ -9,6 +9,7 @@ const GET_USER = 'PROFILE/GET_USER';
 const GET_ADMIN_WORK = 'PROFILE/GET_ADMIN_WORK';
 const GET_EXT_AND_COMM_SERVICE = 'PROFILE/GET_EXT_AND_COMM_SERVICE';
 const UPLOAD_ICON = 'PROFILE/UPLOAD_ICON';
+const RESET_PAGE = 'PROFILE/RESET_PAGE';
 
 // Action Creators
 export const getUserProfile = employeeID => dispatch => {
@@ -76,6 +77,10 @@ export const uploadIcon = (user, form) => {
     });
   };
 };
+
+export const resetPage = () => ({
+  type: RESET_PAGE,
+});
 
 // Initial State
 const initialState = {
@@ -157,6 +162,9 @@ const reducer = (state = initialState, action) => {
           isUploadingIcon: false,
         }),
       });
+
+    case RESET_PAGE:
+      return initialState;
 
     default:
       return state;
