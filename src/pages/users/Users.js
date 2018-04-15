@@ -33,7 +33,7 @@ class Users extends Component {
 
   handlePageSizeChange = (page, limit) => {
     this.props.getUsers({ ...this.props.query, page, limit });
-    this.props.changeQuery({ page, limit });
+    this.props.changeQuery({ ...this.props.query, page, limit });
   };
 
   render() {
