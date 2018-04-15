@@ -62,18 +62,20 @@ export const getStudyLoad = ({ id }) => {
   });
 };
 
-export const getStudyLoads = studyLoad => {
+export const getStudyLoads = (studyLoad, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getStudyLoads(
         filtered(studyLoad, studyLoadAttributes),
         studyLoad.sortBy,
+        userID,
       ),
       {
         field: 'fullLeaveWithPay',
         ...escapeSearch(studyLoad, searchFields, studyLoad.limit),
       },
       (err, results) => {
+        console.log(err);
         if (err) return reject(500);
         return resolve(results);
       },
@@ -81,10 +83,10 @@ export const getStudyLoads = studyLoad => {
   });
 };
 
-export const getTotalStudyLoad = studyLoad => {
+export const getTotalStudyLoad = (studyLoad, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getTotalStudyLoad(filtered(studyLoad, studyLoadAttributes)),
+      Query.getTotalStudyLoad(filtered(studyLoad, studyLoadAttributes), userID),
       {
         field: 'fullLeaveWithPay',
         ...escapeSearch(studyLoad, searchFields, studyLoad.limit),

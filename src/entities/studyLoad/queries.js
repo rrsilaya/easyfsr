@@ -35,17 +35,35 @@ export const getStudyLoad = `
 		WHERE id = :id
 `;
 
-export const getStudyLoads = (query, sortBy) => `
-	SELECT * FROM studyLoad ${
-    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
-  }
+export const getStudyLoads = (query, sortBy, userID) => `
+	SELECT ${
+    userID
+      ? `
+		fullLeaveWithPay,
+	  fellowshipRecipient,
+	  degree,
+	  university,
+	  totalSLcredits
+		`
+      : `*`
+  } FROM studyLoad x ${
+  userID
+    ? `LEFT JOIN fsr f ON x.id = f.id WHERE f.userID = :userID ${
+        query.length ? `AND ${formatQueryParams(query, 'getUser')}` : ''
+      }`
+    : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+}
  	ORDER BY [field] ${
     sortBy === 'DESC' ? 'DESC' : 'ASC'
   } LIMIT :limit OFFSET :offset
 `;
 
-export const getTotalStudyLoad = query => `
-	SELECT count(*) as total FROM studyLoad ${
-    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+export const getTotalStudyLoad = (query, userID) => `
+	SELECT count(*) as total FROM studyLoad x ${
+    userID
+      ? `WHERE id IN (SELECT id FROM fsr WHERE userID=:userID) ${
+          query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
+        }`
+      : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }
 `;
