@@ -88,7 +88,17 @@ class ProfileInfo extends Component {
           </Card>
         </Col>
         <Col {...gridConfig}>
-          <Card title="Consultation Hours" loading>
+          <Card title="Creative Works" loading>
+            Content
+          </Card>
+        </Col>
+        <Col {...gridConfig}>
+          <Card title="Limited Practices" loading>
+            Content
+          </Card>
+        </Col>
+        <Col {...gridConfig}>
+          <Card title="Study Load" loading>
             Content
           </Card>
         </Col>
