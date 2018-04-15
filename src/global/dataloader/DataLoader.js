@@ -5,12 +5,15 @@ import styles from './styles';
 
 class DataLoader extends Component {
   render() {
-    const { content, isLoading } = this.props;
+    const { content, isLoading, opaque = false } = this.props;
 
     return (
       <div style={styles.wrapper}>
         {!!isLoading && (
-          <div className="background primary overlay" style={styles.overlay}>
+          <div
+            className={`background primary ${opaque ? '' : 'overlay'}`}
+            style={styles.overlay}
+          >
             <Spin
               style={styles.loader}
               indicator={<Icon type="loading" style={styles.spinner} spin />}

@@ -1,22 +1,33 @@
 import React, { Component, Fragment } from 'react';
 import { Icon } from 'antd';
 
-import { PageLoader, Schedule } from '../../global';
+import { PageLoader, Schedule, DataLoader } from '../../global';
 import ProfileIcon from './components/ProfileIcon';
 import ProfileInfo from './components/ProfileInfo';
 import styles from './styles';
 
 class Profile extends Component {
   componentDidMount() {
-    this.props.getUserProfile(this.props.match.params.userID);
+    const { userID } = this.props.match.params;
+
+    this.props.getUserProfile(userID);
+    this.props.getAdminWork(userID);
+    this.props.getUserExtensionAndCommService(userID);
+  }
+
+  componentWillUnmount() {
+    this.props.resetPage();
   }
 
   render() {
     const {
       user,
+      adminWork,
+      service,
 
       isGettingUser,
       isUploadingIcon,
+      isLoadingCards,
 
       uploadIcon,
     } = this.props;
@@ -55,7 +66,15 @@ class Profile extends Component {
                 </div>
               </div>
             </div>
-            <ProfileInfo />
+            {Object.values(isLoadingCards).every(e => e) ? (
+              <DataLoader isLoading opaque />
+            ) : (
+              <ProfileInfo
+                adminWork={adminWork}
+                service={service}
+                isLoadingCards={isLoadingCards}
+              />
+            )}
           </Fragment>
         )}
       </div>

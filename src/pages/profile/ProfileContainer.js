@@ -1,15 +1,31 @@
 import { connect } from 'react-redux';
 import Profile from './Profile';
 
-import { getUserProfile, uploadIcon } from './duck';
+import {
+  getUserProfile,
+  getAdminWork,
+  getUserExtensionAndCommService,
+  uploadIcon,
+  resetPage,
+} from './duck';
 
 const mapStateToProps = state => {
-  const { user, isGettingUser, isUploadingIcon } = state.profile;
-
-  return {
+  const {
     user,
     isGettingUser,
     isUploadingIcon,
+    adminWork,
+    service,
+    isLoadingCards,
+  } = state.profile;
+
+  return {
+    adminWork,
+    user,
+    service,
+    isGettingUser,
+    isUploadingIcon,
+    isLoadingCards,
   };
 };
 
@@ -18,8 +34,17 @@ const mapDispatchToProps = dispatch => {
     getUserProfile: id => {
       dispatch(getUserProfile(id));
     },
+    getAdminWork: id => {
+      dispatch(getAdminWork(id));
+    },
+    getUserExtensionAndCommService: id => {
+      dispatch(getUserExtensionAndCommService(id));
+    },
     uploadIcon: (user, form) => {
       dispatch(uploadIcon(user, form));
+    },
+    resetPage: () => {
+      dispatch(resetPage());
     },
   };
 };

@@ -1,43 +1,60 @@
 import React, { Component } from 'react';
-import { Row, Col, Card } from 'antd';
+import { Card, Row, List } from 'antd';
+import moment from 'moment';
+import StackGrid from 'react-stack-grid';
+
+import {
+  Research,
+  Awards,
+  AdminWork,
+  CommunityService,
+  CreativeWorks,
+  LimitedPractices,
+  StudyLoad,
+} from './profileInfo';
+import style from '../styles';
+
+const { Item: ListItem } = List;
 
 class ProfileInfo extends Component {
+  componentDidUpdate() {
+    if (!Object.values(this.props.isLoadingCards).every(e => e)) {
+      setTimeout(() => {
+        this.grid.updateLayout();
+      }, 1000);
+    }
+  }
+
   render() {
-    const gridConfig = { xxl: 6, xl: 8, sm: 12, xs: 24 };
+    const {
+      userID,
+
+      getAdminWork,
+      getService,
+
+      adminWork,
+      service,
+    } = this.props;
 
     return (
-      <Row type="flex" justify="center" gutter={16} className="gridTiles">
-        <Col {...gridConfig}>
-          <Card title="Service Records" loading>
-            Content
-          </Card>
-        </Col>
-        <Col {...gridConfig}>
-          <Card title="Awards" loading>
-            Content
-          </Card>
-        </Col>
-        <Col {...gridConfig}>
-          <Card title="Research" loading>
-            Content
-          </Card>
-        </Col>
-        <Col {...gridConfig}>
-          <Card title="Administrative Works" loading>
-            Content
-          </Card>
-        </Col>
-        <Col {...gridConfig}>
-          <Card title="Community Service" loading>
-            Content
-          </Card>
-        </Col>
-        <Col {...gridConfig}>
-          <Card title="Consultation Hours" loading>
-            Content
-          </Card>
-        </Col>
-      </Row>
+      <StackGrid
+        columnWidth="33.3333%"
+        gutterWidth={16}
+        gutterHeight={16}
+        duration={0}
+        gridRef={grid => (this.grid = grid)}
+      >
+        <Card title="Service Records" loading>
+          Content
+        </Card>
+        <Research />
+        <Awards />
+        <AdminWork adminWork={adminWork} />
+        <CommunityService service={service} />
+        <CreativeWorks />
+        <LimitedPractices />
+        <StudyLoad />
+      </StackGrid>
     );
   }
 }
