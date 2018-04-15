@@ -28,14 +28,12 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "stylus": "stylus -w ./src/pages/styles.styl -o ./src/app/styles.css",
-    "start": "concurrently 'yarn serve' 'yarn stylus' -n 'React,Stylus' -c 'bgBlue.bold,bgRed.bold'",
+    "start":
+      "concurrently 'yarn serve' 'yarn stylus' -n 'React,Stylus' -c 'bgBlue.bold,bgRed.bold'",
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.{js,json,md}": [
-      "prettier --config ./.prettierrc --write",
-      "git add"
-    ]
+    "*.{js,json,md}": ["prettier --config ./.prettierrc --write", "git add"]
   },
   "devDependencies": {
     "babel-plugin-import": "^1.6.5",

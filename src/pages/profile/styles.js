@@ -14,6 +14,12 @@ const style = {
   iconPad: {
     marginRight: '1em',
   },
+  list: {
+    border: 'none',
+  },
+  listItem: {
+    width: '100%',
+  },
 };
 
 export default style;

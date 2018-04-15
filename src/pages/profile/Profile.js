@@ -9,11 +9,16 @@ import styles from './styles';
 class Profile extends Component {
   componentDidMount() {
     this.props.getUserProfile(this.props.match.params.userID);
+
+    this.props.getAdminWork(this.props.match.params.userID);
+    this.props.getUserExtensionAndCommService(this.props.match.params.userID);
   }
 
   render() {
     const {
       user,
+      adminWork,
+      service,
 
       isGettingUser,
       isUploadingIcon,
@@ -55,7 +60,11 @@ class Profile extends Component {
                 </div>
               </div>
             </div>
-            <ProfileInfo />
+            <ProfileInfo
+              userID={this.props.match.params.employeeID}
+              adminWork={adminWork}
+              service={service}
+            />
           </Fragment>
         )}
       </div>
