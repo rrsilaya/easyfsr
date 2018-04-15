@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { Icon, Modal, Button } from 'antd';
 
-import { PageLoader, Schedule, DataLoader } from '../../global';
+import { PageLoader, DataLoader } from '../../global';
+import Schedule from './components/Schedule';
 import ProfileIcon from './components/ProfileIcon';
 import ProfileInfo from './components/ProfileInfo';
 
@@ -30,14 +31,17 @@ class Profile extends Component {
       user,
       adminWork,
       service,
+      schedule,
 
       isGettingUser,
       isUploadingIcon,
       isLoadingCards,
+      isGettingSchedule,
       isSchedModalOpen,
 
       uploadIcon,
       toggleModal,
+      getUserSchedule,
     } = this.props;
 
     return (
@@ -46,15 +50,14 @@ class Profile extends Component {
           <PageLoader />
         ) : (
           <Fragment>
-            <Modal
-              title="Schedule"
-              visible={isSchedModalOpen}
-              width={811 + 48}
-              onOk={this.toggleScheduleModal}
-              onCancel={this.toggleScheduleModal}
-            >
-              <Schedule data={[]} />
-            </Modal>
+            <Schedule
+              isSchedModalOpen={isSchedModalOpen}
+              toggleScheduleModal={this.toggleScheduleModal}
+              getUserSchedule={getUserSchedule}
+              employeeID={user.employeeID}
+              isGettingSchedule={isGettingSchedule}
+              schedule={schedule}
+            />
             <div className="center" style={styles.header}>
               <ProfileIcon
                 user={user}

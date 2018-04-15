@@ -36,3 +36,7 @@ export const getUserExtensionAndCommServices = query => {
 export const getUserExtensionAndCommService = id => {
   return axios.get(`/api/user/${id}/extensionAndCommunityService`);
 };
+
+export const getUserSchedule = user => {
+  return axios.get(`/api/user/${user}/schedule`);
+};

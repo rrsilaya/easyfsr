@@ -8,6 +8,7 @@ import {
   uploadIcon,
   resetPage,
   toggleModal,
+  getUserSchedule,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -19,6 +20,8 @@ const mapStateToProps = state => {
     service,
     isLoadingCards,
     isSchedModalOpen,
+    isGettingSchedule,
+    schedule,
   } = state.profile;
 
   return {
@@ -29,6 +32,8 @@ const mapStateToProps = state => {
     isUploadingIcon,
     isLoadingCards,
     isSchedModalOpen,
+    isGettingSchedule,
+    schedule,
   };
 };
 
@@ -45,6 +50,9 @@ const mapDispatchToProps = dispatch => {
     },
     uploadIcon: (user, form) => {
       dispatch(uploadIcon(user, form));
+    },
+    getUserSchedule: user => {
+      dispatch(getUserSchedule(user));
     },
     toggleModal: modal => {
       dispatch(toggleModal(modal));
