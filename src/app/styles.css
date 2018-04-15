@@ -169,6 +169,111 @@ img.crop {
   align-items: center;
   display: none;
 }
+.fsrExport {
+  display: inline-block;
+  max-width: 100%;
+  font-family: "Arial", sans-serif;
+}
+.fsrExport .document {
+  background-color: #fff;
+  font-size: 9pt;
+  line-height: 1.25;
+  width: 8.5in;
+  padding: 0.7in 0.5in;
+  position: relative;
+  overflow: visible;
+}
+.fsrExport .document * {
+  color: #000 !important;
+}
+.fsrExport .document .bold {
+  font-weight: bold;
+}
+.fsrExport .document .center {
+  text-align: center;
+}
+.fsrExport .document .center > * {
+  margin: auto;
+}
+.fsrExport .document .right {
+  text-align: right;
+}
+.fsrExport .document .justify {
+  text-align: justify;
+}
+.fsrExport .document header {
+  font-size: 11pt;
+}
+.fsrExport .document label {
+  margin-right: 0.5em;
+}
+.fsrExport .document table {
+  font-size: 9pt;
+  margin-bottom: 10px;
+  width: 100%;
+}
+.fsrExport .document section {
+  margin: 1em 0;
+}
+.fsrExport .document tr,
+.fsrExport .document td,
+.fsrExport .document th {
+  border-collapse: collapse;
+  border: 1px solid #000;
+  text-align: center;
+}
+.fsrExport .document td,
+.fsrExport .document th {
+  padding: 5px;
+}
+.fsrExport .document th {
+  line-height: 1;
+}
+.fsrExport .document table.equal th,
+.fsrExport .document table.equal td {
+  width: 0.727272727272727in;
+}
+.fsrExport .document .mvertical {
+  margin: 0.8em 0;
+}
+.fsrExport .document .section-header {
+  margin-top: 0.5em;
+}
+.fsrExport .document .highlight.orange {
+  background: #f90;
+}
+.fsrExport .document .highlight.blue {
+  background: #9cc;
+}
+.fsrExport .form-float {
+  position: absolute;
+  top: 0.7in;
+  left: 0.5in;
+  font-size: 9pt;
+}
+.fsrExport .grid {
+  display: flex;
+  width: 100%;
+}
+.fsrExport .flex-mid {
+  display: flex;
+}
+.fsrExport .field-line {
+  text-align: center;
+  flex: 1;
+}
+.fsrExport .field-line:after {
+  display: block;
+  border-top: 1px solid #000;
+  padding: 0 1em;
+  content: attr(data-label);
+}
+.fsrExport .margin1.left {
+  margin-left: 0.5em;
+}
+.fsrExport .margin1.right {
+  margin-right: 0.5em;
+}
 .ant-card-meta-title {
   margin-bottom: 0 !important;
 }

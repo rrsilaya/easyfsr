@@ -5,15 +5,24 @@ import {
   getUserProfile,
   getAdminWork,
   getUserExtensionAndCommService,
+  uploadIcon,
 } from './duck';
 
 const mapStateToProps = state => {
-  const { user, isGettingUser, adminWork, service } = state.profile;
+  const {
+    user,
+    isGettingUser,
+    isUploadingIcon,
+    adminWork,
+    service,
+  } = state.profile;
+
   return {
     adminWork,
     user,
     service,
     isGettingUser,
+    isUploadingIcon,
   };
 };
 
@@ -27,6 +36,9 @@ const mapDispatchToProps = dispatch => {
     },
     getUserExtensionAndCommService: id => {
       dispatch(getUserExtensionAndCommService(id));
+    },
+    uploadIcon: (user, form) => {
+      dispatch(uploadIcon(user, form));
     },
   };
 };

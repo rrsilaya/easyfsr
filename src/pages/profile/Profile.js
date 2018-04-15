@@ -9,12 +9,22 @@ import styles from './styles';
 class Profile extends Component {
   componentDidMount() {
     this.props.getUserProfile(this.props.match.params.userID);
+
     this.props.getAdminWork(this.props.match.params.userID);
     this.props.getUserExtensionAndCommService(this.props.match.params.userID);
   }
 
   render() {
-    const { user, adminWork, service, isGettingUser } = this.props;
+    const {
+      user,
+      adminWork,
+      service,
+
+      isGettingUser,
+      isUploadingIcon,
+
+      uploadIcon,
+    } = this.props;
 
     return (
       <div>
@@ -23,7 +33,11 @@ class Profile extends Component {
         ) : (
           <Fragment>
             <div className="center">
-              <ProfileIcon />
+              <ProfileIcon
+                user={user}
+                isUploadingIcon={isUploadingIcon}
+                uploadIcon={uploadIcon}
+              />
               <h1 className="center text white" style={styles.profileName}>
                 {user.firstName} {user.middleName} {user.lastName}
               </h1>

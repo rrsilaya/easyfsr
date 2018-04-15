@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Input, TimePicker } from 'antd';
-import { ADD_COURSE } from '../duck';
+import { COURSE } from '../duck';
 
 const FormItem = Form.Item;
 
@@ -29,11 +29,11 @@ class AddCourseModal extends Component {
       <Modal
         title="Add Course"
         visible={isAddCourseModalOpen}
-        onOk={() => toggleModal(ADD_COURSE)}
-        onCancel={() => toggleModal(ADD_COURSE)}
+        onOk={() => toggleModal(COURSE)}
+        onCancel={() => toggleModal(COURSE)}
         destroyOnClose
         footer={[
-          <Button key="back" onClick={() => toggleModal(ADD_COURSE)}>
+          <Button key="back" onClick={() => toggleModal(COURSE)}>
             Cancel
           </Button>,
           <Button key="submit" type="primary" htmlType="submit">

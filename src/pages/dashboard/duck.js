@@ -3,9 +3,7 @@ import * as Api from '../../api';
 import { notification } from 'antd';
 export const SEND_NOTIFICATION = 'SEND_NOTIFICATION';
 export const CREATE_FSR = 'CREATE_FSR';
-export const DOWNLOAD_FSR = 'DOWNLOAD_FSR';
-export const EDIT_FSR = 'EDIT_FSR';
-export const VIEW_FSR = 'VIEW_FSR';
+export const CREATE_ANNOUNCEMENT = 'CREATE_ANNOUNCEMENT';
 export const GET_USERS = 'GET_USERS';
 // Action Types
 export const TOGGLE_MODAL = 'DASHBOARD/TOGGLE_MODAL';
@@ -39,9 +37,7 @@ export const toggleModal = modal => ({
 const initialState = {
   isSendNotificationModalOpen: false,
   isCreateNotificationModalOpen: false,
-  isDownloadFSRModalOpen: false,
-  isEditFSRModalOpen: false,
-  isViewFSRModalOpen: false,
+  isCreateAnnouncementModalOpen: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -60,21 +56,12 @@ const reducer = (state = initialState, action) => {
             ...state,
             isCreateFSRModalOpen: !state.isCreateFSRModalOpen,
           };
-        case DOWNLOAD_FSR:
+        case CREATE_ANNOUNCEMENT:
           return {
             ...state,
-            isDownloadFSRModalOpen: !state.isDownloadFSRModalOpen,
+            isCreateAnnouncementModalOpen: !state.isCreateAnnouncementModalOpen,
           };
-        case EDIT_FSR:
-          return {
-            ...state,
-            isEditFSRModalOpen: !state.isEditFSRModalOpen,
-          };
-        case VIEW_FSR:
-          return {
-            ...state,
-            isViewFSRModalOpen: !state.isViewFSRModalOpen,
-          };
+
         case GET_USERS:
           return handle(state, action, {
             start: prevState => ({

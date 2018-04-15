@@ -7,17 +7,13 @@ const mapStateToProps = state => {
   const {
     isSendNotificationModalOpen,
     isCreateFSRModalOpen,
-    isDownloadFSRModalOpen,
-    isEditFSRModalOpen,
-    isViewFSRModalOpen,
+    isCreateAnnouncementModalOpen,
   } = state.dashboard;
 
   return {
     isSendNotificationModalOpen,
     isCreateFSRModalOpen,
-    isDownloadFSRModalOpen,
-    isEditFSRModalOpen,
-    isViewFSRModalOpen,
+    isCreateAnnouncementModalOpen,
   };
 };
 
