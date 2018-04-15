@@ -85,13 +85,16 @@ export const resetPage = () => ({
 // Initial State
 const initialState = {
   isGettingUser: true,
-  isGettingAdminWork: true,
-  isGettingExtAndCommService: true,
   isUploadingIcon: false,
 
   user: {},
   adminWork: [],
   service: [],
+
+  isLoadingCards: {
+    adminWork: true,
+    extAndCommService: true,
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -127,7 +130,10 @@ const reducer = (state = initialState, action) => {
         }),
         finish: prevState => ({
           ...prevState,
-          isGettingAdminWork: false,
+          isLoadingCards: {
+            ...prevState.isLoadingCards,
+            adminWork: false,
+          },
         }),
       });
 
@@ -143,7 +149,10 @@ const reducer = (state = initialState, action) => {
         }),
         finish: prevState => ({
           ...prevState,
-          isGettingAdmingWork: false,
+          isLoadingCards: {
+            ...prevState.isLoadingCards,
+            extAndCommService: false,
+          },
         }),
       });
 

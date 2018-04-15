@@ -17,6 +17,14 @@ import style from '../styles';
 const { Item: ListItem } = List;
 
 class ProfileInfo extends Component {
+  componentDidUpdate() {
+    if (!Object.values(this.props.isLoadingCards).every(e => e)) {
+      setTimeout(() => {
+        this.grid.updateLayout();
+      }, 1000);
+    }
+  }
+
   render() {
     const {
       userID,
@@ -33,7 +41,6 @@ class ProfileInfo extends Component {
         columnWidth="33.3333%"
         gutterWidth={16}
         gutterHeight={16}
-        appearDelay={0}
         duration={0}
         gridRef={grid => (this.grid = grid)}
       >
@@ -42,16 +49,8 @@ class ProfileInfo extends Component {
         </Card>
         <Research />
         <Awards />
-        <AdminWork
-          adminWork={adminWork}
-          getAdminWork={getAdminWork}
-          userID={userID}
-        />
-        <CommunityService
-          service={service}
-          getService={getService}
-          userID={userID}
-        />
+        <AdminWork adminWork={adminWork} />
+        <CommunityService service={service} />
         <CreativeWorks />
         <LimitedPractices />
         <StudyLoad />

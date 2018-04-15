@@ -16,6 +16,7 @@ const mapStateToProps = state => {
     isUploadingIcon,
     adminWork,
     service,
+    isLoadingCards,
   } = state.profile;
 
   return {
@@ -24,6 +25,7 @@ const mapStateToProps = state => {
     service,
     isGettingUser,
     isUploadingIcon,
+    isLoadingCards,
   };
 };
 

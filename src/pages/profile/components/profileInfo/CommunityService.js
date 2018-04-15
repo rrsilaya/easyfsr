@@ -7,10 +7,6 @@ import style from '../../styles';
 const { Item: ListItem } = List;
 
 class CommunityService extends Component {
-  componentDidMount() {
-    this.props.getService(this.props.userID);
-  }
-
   render() {
     const { service } = this.props;
 

@@ -6,10 +6,6 @@ import style from '../../styles';
 const { Item: ListItem } = List;
 
 class AdminWork extends Component {
-  componentDidMount() {
-    this.props.getAdminWork(this.props.userID);
-  }
-
   render() {
     const { adminWork } = this.props;
 
