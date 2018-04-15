@@ -66,10 +66,10 @@ export const getAward = ({ awardID }) => {
   });
 };
 
-export const getAwards = award => {
+export const getAwards = (award, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getAwards(filtered(award, awardAttributes), award.sortBy),
+      Query.getAwards(filtered(award, awardAttributes), award.sortBy, userID),
       {
         field: 'chairGrantTitle',
         ...escapeSearch(award, searchFields, award.limit),
@@ -82,10 +82,10 @@ export const getAwards = award => {
   });
 };
 
-export const getTotalAwards = award => {
+export const getTotalAwards = (award, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getTotalAwards(filtered(award, awardAttributes)),
+      Query.getTotalAwards(filtered(award, awardAttributes), userID),
       {
         field: 'chairGrantTitle',
         ...escapeSearch(award, searchFields, award.limit),

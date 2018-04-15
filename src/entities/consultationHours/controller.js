@@ -57,12 +57,13 @@ export const getConsultationHour = ({ chID }) => {
   });
 };
 
-export const getConsultationHours = consultationHours => {
+export const getConsultationHours = (consultationHours, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getConsultationHours(
         filtered(consultationHours, consultationHoursAttributes),
         consultationHours.sortBy,
+        userID,
       ),
 
       {
@@ -78,11 +79,12 @@ export const getConsultationHours = consultationHours => {
   });
 };
 
-export const getTotalConsultationHours = consultationHours => {
+export const getTotalConsultationHours = (consultationHours, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getTotalConsultationHours(
         filtered(consultationHours, consultationHoursAttributes),
+        userID,
       ),
       {
         field: 'day',
