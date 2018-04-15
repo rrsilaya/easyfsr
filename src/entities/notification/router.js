@@ -219,6 +219,7 @@ router.get('/notification/:notificationID', async (req, res) => {
     if (req.session.user.acctType === 'USER')
       receiverIDofNotification = await MiddlewareCtrl.getReceiverIDofNotification(
         req.params.notificationID,
+        req.session.user.userID,
       );
     const notification = await Ctrl.getNotification(req.params);
 

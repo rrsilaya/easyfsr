@@ -6,11 +6,8 @@ export const getUserIDofFSR = (id, userID) => {
     db.query(Query.getUserIDofFSR, { id }, (err, results) => {
       if (err) return reject(500);
       if (results.length == 0) return reject(404);
-      else {
-        console.log(results);
-        if (results[0].userID == userID) return resolve(results[0].userID);
-        else return reject(403);
-      }
+      else if (results[0].userID == userID) return resolve(results[0].userID);
+      else return reject(403);
     });
   });
 };
@@ -171,16 +168,17 @@ export const getIDofFSRfromLtd = limitedPracticeOfProfID => {
   });
 };
 
-export const getReceiverIDofNotification = notificationID => {
+export const getReceiverIDofNotification = (notificationID, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getReceiverIDofNotification,
       { notificationID },
       (err, results) => {
-        console.log(results);
         if (err) return reject(500);
-        if (results.length != 0) return resolve(results[0].id);
-        return reject(404);
+        if (results.length == 0) return reject(404);
+        else if (results[0].receiverID == userID)
+          return resolve(results[0].userID);
+        else return reject(403);
       },
     );
   });

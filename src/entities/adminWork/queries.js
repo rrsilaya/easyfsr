@@ -28,9 +28,13 @@ export const deleteAdminWork = `
 	WHERE adminWorkID = :adminWorkID
 `;
 
-export const getAdminWorks = (query, sortBy) => `
- SELECT * FROM adminWork ${
-   query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+export const getAdminWorks = (query, sortBy, userID) => `
+ SELECT * FROM adminWork x ${
+   userID
+     ? `JOIN fsr f ON x.id = f.id WHERE f.userID = :userID ${
+         query.length ? `AND ${formatQueryParams(query, 'getUser')}` : ''
+       }`
+     : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
  }
   ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
   LIMIT :limit 
@@ -42,8 +46,12 @@ export const getAdminWork = `
 	WHERE adminWorkID = :adminWorkID
 `;
 
-export const getTotalAdminWorks = query => `
-	SELECT COUNT(*) as total FROM adminWork ${
-    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
-  } 
+export const getTotalAdminWorks = (query, userID) => `
+	SELECT COUNT(*) as total FROM adminWork x ${
+    userID
+      ? `JOIN fsr f ON x.id = f.id WHERE f.userID = :userID ${
+          query.length ? `AND ${formatQueryParams(query, 'getUser')}` : ''
+        }`
+      : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
 `;

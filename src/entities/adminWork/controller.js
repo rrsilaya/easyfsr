@@ -61,12 +61,13 @@ export const getAdminWork = ({ adminWorkID }) => {
   });
 };
 
-export const getAdminWorks = adminWork => {
+export const getAdminWorks = (adminWork, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getAdminWorks(
         filtered(adminWork, adminWorkAttributes),
         adminWork.sortBy,
+        userID,
       ),
       {
         field: 'position',
@@ -80,10 +81,13 @@ export const getAdminWorks = adminWork => {
   });
 };
 
-export const getTotalAdminWorks = adminWork => {
+export const getTotalAdminWorks = (adminWork, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getTotalAdminWorks(filtered(adminWork, adminWorkAttributes)),
+      Query.getTotalAdminWorks(
+        filtered(adminWork, adminWorkAttributes),
+        userID,
+      ),
       {
         field: 'position',
         ...escapeSearch(adminWork, searchFields, adminWork.limit),
