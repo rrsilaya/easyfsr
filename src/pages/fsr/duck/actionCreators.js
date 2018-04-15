@@ -45,7 +45,7 @@ export const addSubject = values => (dispatch, getState) => {
     promise: Api.addSubject(values),
     meta: {
       onSuccess: () => {
-        const { subject, fsr } = getState().fsr;
+        const { subject } = getState().fsr;
 
         values.days.forEach(day => {
           dispatch(
@@ -54,7 +54,6 @@ export const addSubject = values => (dispatch, getState) => {
         });
 
         notification.success({ message: 'Successfully added subject' });
-        dispatch(getSubjects({ id: fsr.fsrID }));
       },
       onFailure: () => {
         notification.error({ message: 'Server error while creating subject' });
@@ -77,41 +76,46 @@ export const addTimeslot = timeslot => {
   };
 };
 
-export const deleteSubject = subjectID => (dispatch, getState) => {
-  dispatch({
-    type: Action.DELETE_SUBJECT,
-    promise: Api.deleteSubject(subjectID),
-    meta: {
-      onSuccess: () => {
-        const { fsr } = getState().fsr;
-
-        notification.success({ message: 'Successfully deleted subject' });
-        dispatch(getSubjects({ id: fsr.fsrID }));
-      },
-      onFailure: () => {
-        notification.error({ message: 'Server error while deleting subject' });
-      },
-    },
-  });
-};
-
-export const editSubject = (subjectID, body) => {
+export const deleteSubject = subjectID => {
   return dispatch => {
-    return dispatch({
-      type: Action.EDIT_SUBJECT,
-      promise: Api.editSubject(subjectID, body),
+    dispatch({
+      type: Action.DELETE_SUBJECT,
+      promise: Api.deleteSubject(subjectID),
       meta: {
         onSuccess: () => {
-          notification.success({ message: 'Successfully edited subject' });
+          notification.success({ message: 'Successfully deleted subject' });
         },
         onFailure: () => {
           notification.error({
-            message: 'Server error while updating subject',
+            message: 'Server error while deleting subject',
           });
         },
       },
     });
   };
+};
+
+export const editSubject = (subjectID, body) => (dispatch, getState) => {
+  dispatch({
+    type: Action.EDIT_SUBJECT,
+    promise: Api.editSubject(subjectID, body),
+    meta: {
+      onSuccess: () => {
+        const { timeslots } = getState().fsr;
+
+        timeslots.forEach(timeslot => {
+          dispatch(editTimeslot(timeslot.timeslotID, { ...body }));
+        });
+
+        notification.success({ message: 'Successfully edited subject' });
+      },
+      onFailure: () => {
+        notification.error({
+          message: 'Server error while updating subject',
+        });
+      },
+    },
+  });
 };
 
 export const changeSelectedSubject = subject => ({
@@ -127,6 +131,22 @@ export const getTimeslots = query => {
       meta: {
         onFailure: () => {
           notification.error({ message: 'Failure to fetch timeslots' });
+        },
+      },
+    });
+  };
+};
+
+export const editTimeslot = (timeslotID, body) => {
+  return dispatch => {
+    return dispatch({
+      type: Action.EDIT_TIMESLOT,
+      promise: Api.editTimeslot(timeslotID, body),
+      meta: {
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while editing timeslot',
+          });
         },
       },
     });

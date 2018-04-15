@@ -109,16 +109,20 @@ class TeachingLoadForm extends Component {
           isAddSubjectModalOpen={isAddSubjectModalOpen}
           toggleModal={toggleModal}
         />
-        <EditSubjectModal
-          id={fsrID}
-          subject={subject}
-          timeslots={timeslots}
-          editSubject={editSubject}
-          getTimeslots={getTimeslots}
-          isEditingSubject={isEditingSubject}
-          isEditSubjectModalOpen={isEditSubjectModalOpen}
-          toggleModal={toggleModal}
-        />
+        {isEditSubjectModalOpen ? (
+          <EditSubjectModal
+            id={fsrID}
+            subject={subject}
+            timeslots={timeslots}
+            editSubject={editSubject}
+            getTimeslots={getTimeslots}
+            isEditingSubject={isEditingSubject}
+            isEditSubjectModalOpen={isEditSubjectModalOpen}
+            toggleModal={toggleModal}
+          />
+        ) : (
+          ''
+        )}
         <Schedule data={[]} />
         <div style={styles.button}>
           <Button

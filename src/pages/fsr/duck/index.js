@@ -15,6 +15,7 @@ const initialState = {
   isAddingTimeslot: false,
   isDeletingSubject: false,
   isEditingSubject: false,
+  isEditingTimeslot: false,
 
   isAddSubjectModalOpen: false,
   isEditSubjectModalOpen: false,
@@ -72,6 +73,7 @@ const reducer = (state = initialState, action) => {
         success: prevState => ({
           ...prevState,
           subject: payload.data.data,
+          subjects: [...state.subjects, payload.data.data],
         }),
         finish: prevState => ({
           ...prevState,
@@ -127,11 +129,26 @@ const reducer = (state = initialState, action) => {
                 ? { ...payload.data.data }
                 : subject,
           ),
-          isEditSubjectModalOpen: false,
         }),
         finish: prevState => ({
           ...prevState,
           isEditingSubject: false,
+        }),
+      });
+
+    case Action.EDIT_TIMESLOT:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isEditingTimeslot: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          isEditSubjectModalOpen: false,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isEditingTimeslot: false,
         }),
       });
 
