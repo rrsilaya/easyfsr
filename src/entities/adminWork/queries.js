@@ -36,9 +36,8 @@ export const getAdminWorks = (query, sortBy, userID) => `
        }`
      : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
  }
-  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
-  LIMIT :limit 
-  OFFSET :offset
+  ORDER BY ${userID ? `f.` : ''}[field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+  LIMIT :limit OFFSET :offset
 `;
 
 export const getAdminWork = `
