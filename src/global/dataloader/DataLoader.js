@@ -5,14 +5,19 @@ import styles from './styles';
 
 class DataLoader extends Component {
   render() {
-    const { content, isLoading, opaque = false } = this.props;
+    const {
+      content,
+      isLoading,
+      opaque = false,
+      color: backgroundColor,
+    } = this.props;
 
     return (
       <div style={styles.wrapper}>
         {!!isLoading && (
           <div
             className={`background primary ${opaque ? '' : 'overlay'}`}
-            style={styles.overlay}
+            style={{ ...styles.overlay, backgroundColor }}
           >
             <Spin
               style={styles.loader}
