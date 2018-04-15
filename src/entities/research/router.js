@@ -151,8 +151,7 @@ router.post('/research/', async (req, res) => {
  *
  *       }
  *   }
- *
-<<<<<<< HEAD
+ 
  * @apiError (Error 403) {Number} status status code
  * @apiError (Error 403) {String} message Error message
  * @apiErrorExample {json} Error-Response:
@@ -180,8 +179,11 @@ router.post('/research/', async (req, res) => {
  */
 router.get('/research/:researchID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfResearch = await MiddlewareCtrl.getIDofFSRfromResearch(
       req.params.researchID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfResearch,
       req.session.user.userID,
     );
     const research = await Ctrl.getResearch(req.params);
@@ -276,7 +278,6 @@ router.get('/research/:researchID', async (req, res) => {
  *     "pages": 1
  *   }
  *
-<<<<<<< HEAD
  * @apiError (Error 403) {Number} status status code
  * @apiError (Error 403) {String} message Error message
  * @apiErrorExample {json} Error-Response:
@@ -398,8 +399,11 @@ router.get('/research/', async (req, res) => {
  */
 router.delete('/research/:researchID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfResearch = await MiddlewareCtrl.getIDofFSRfromResearch(
       req.params.researchID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfResearch,
       req.session.user.userID,
     );
     const research = await Ctrl.getResearch(req.params);
@@ -475,7 +479,6 @@ router.delete('/research/:researchID', async (req, res) => {
  *       }
  *   }
  *
-<<<<<<< HEAD
  * @apiError (Error 403) {Number} status status code
  * @apiError (Error 403) {String} message Error message
  * @apiErrorExample {json} Error-Response:
@@ -503,8 +506,11 @@ router.delete('/research/:researchID', async (req, res) => {
  */
 router.put('/research/:researchID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfResearch = await MiddlewareCtrl.getIDofFSRfromResearch(
       req.params.researchID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfResearch,
       req.session.user.userID,
     );
     if (req.files && req.files.filepath) {

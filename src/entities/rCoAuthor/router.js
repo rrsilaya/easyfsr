@@ -43,6 +43,13 @@ const router = Router();
  */
 router.post('/rCoAuthor/', async (req, res) => {
   try {
+    const idOfResearch = await MiddlewareCtrl.getIDofFSRfromResearch(
+      req.body.researchID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfResearch,
+      req.session.user.userID,
+    );
     const rCoAuthorID = await Ctrl.addrCoAuthor(req.body);
     const rCoAuthor = await Ctrl.getrCoAuthor({ rCoAuthorID });
     res.status(200).json({
@@ -53,6 +60,12 @@ router.post('/rCoAuthor/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
+      case 404:
+        message = 'Research not found';
+        break;
       case 500:
         message = 'Internal server error';
         break;
@@ -107,6 +120,13 @@ router.post('/rCoAuthor/', async (req, res) => {
  */
 router.get('/rCoAuthor/:rCoAuthorID', async (req, res) => {
   try {
+    const idOfResearch = await MiddlewareCtrl.getIDofFSRfromRCoAuth(
+      req.params.rCoAuthorID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfResearch,
+      req.session.user.userID,
+    );
     const rCoAuthor = await Ctrl.getrCoAuthor(req.params);
     res.status(200).json({
       status: 200,
@@ -210,6 +230,9 @@ router.get('/rCoAuthor/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Research co-author not found';
         break;
@@ -268,6 +291,13 @@ router.get('/rCoAuthor/', async (req, res) => {
 
 router.delete('/rCoAuthor/:rCoAuthorID', async (req, res) => {
   try {
+    const idOfResearch = await MiddlewareCtrl.getIDofFSRfromRCoAuth(
+      req.params.rCoAuthorID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfResearch,
+      req.session.user.userID,
+    );
     const rCoAuthor = await Ctrl.getrCoAuthor(req.params);
     await Ctrl.deleterCoAuthor(req.params);
     res.status(200).json({
@@ -278,6 +308,9 @@ router.delete('/rCoAuthor/:rCoAuthorID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Research co-author not found';
         break;
@@ -331,6 +364,13 @@ router.delete('/rCoAuthor/:rCoAuthorID', async (req, res) => {
  */
 router.put('/rCoAuthor/:rCoAuthorID', async (req, res) => {
   try {
+    const idOfResearch = await MiddlewareCtrl.getIDofFSRfromRCoAuth(
+      req.params.rCoAuthorID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfResearch,
+      req.session.user.userID,
+    );
     await Ctrl.updaterCoAuthor(req.params, req.body);
     const rCoAuthor = await Ctrl.getrCoAuthor(req.params);
     res.status(200).json({
@@ -341,6 +381,9 @@ router.put('/rCoAuthor/:rCoAuthorID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Research co-author not found';
         break;

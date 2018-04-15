@@ -47,8 +47,12 @@ const router = Router();
 
 router.post('/timeslot/', async (req, res) => {
   try {
+    const idOfSubject = await MiddlewareCtrl.getIDofFSRfromSubject(
+      req.body.subjectID,
+      req.session.user.userID,
+    );
     const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
-      req.body.id,
+      idOfSubject,
       req.session.user.userID,
     );
     const timeslotID = await Ctrl.addTimeslot(req.body);
@@ -209,7 +213,7 @@ router.get('/timeslot/', async (req, res) => {
 
 router.get('/timeslot/:timeslotID/', async (req, res) => {
   try {
-    const idOfSubject = await MiddlewareCtrl.getIDofFSRfromCourse(
+    const idOfSubject = await MiddlewareCtrl.getIDofFSRfromTimeslot(
       req.params.timeslotID,
       req.session.user.userID,
     );
@@ -295,7 +299,7 @@ router.get('/timeslot/:timeslotID/', async (req, res) => {
 
 router.put('/timeslot/:timeslotID/', async (req, res) => {
   try {
-    const idOfSubject = await MiddlewareCtrl.getIDofFSRfromCourse(
+    const idOfSubject = await MiddlewareCtrl.getIDofFSRfromTimeslot(
       req.params.timeslotID,
       req.session.user.userID,
     );
@@ -376,7 +380,7 @@ router.put('/timeslot/:timeslotID/', async (req, res) => {
 
 router.delete('/timeslot/:timeslotID/', async (req, res) => {
   try {
-    const idOfSubject = await MiddlewareCtrl.getIDofFSRfromCourse(
+    const idOfSubject = await MiddlewareCtrl.getIDofFSRfromTimeslot(
       req.params.timeslotID,
       req.session.user.userID,
     );

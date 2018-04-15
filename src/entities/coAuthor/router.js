@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import * as MiddlewareCtrl from '../../middlewares/controller';
 
 const router = Router();
 
@@ -39,6 +40,13 @@ const router = Router();
 
 router.post('/cworkCoAuthor/', async (req, res) => {
   try {
+    const idOfCreativeWork = await MiddlewareCtrl.getIDofFSRfromCreativeWork(
+      req.body.creativeWorkID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfCreativeWork,
+      req.session.user.userID,
+    );
     const cworkCoAuthorID = await Ctrl.addCworkCoAuthor(req.body);
     const cworkCoAuthor = await Ctrl.getCworkCoAuthor({ cworkCoAuthorID });
     res.status(200).json({
@@ -49,6 +57,12 @@ router.post('/cworkCoAuthor/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
+      case 404:
+        message = 'Creative work not found';
+        break;
       case 500:
         message = 'Internal server error';
         break;
@@ -129,6 +143,9 @@ router.get('/cworkCoAuthor/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Co-authors not found';
         break;
@@ -183,6 +200,13 @@ router.get('/cworkCoAuthor/', async (req, res) => {
 
 router.delete('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
   try {
+    const idOfCreativeWork = await MiddlewareCtrl.getIDofFSRfromCWorkCoAuth(
+      req.params.cworkCoAuthorID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfCreativeWork,
+      req.session.user.userID,
+    );
     const cworkCoAuthor = await Ctrl.getCworkCoAuthor(req.params);
     await Ctrl.deleteCworkCoAuthor(req.params);
     res.status(200).json({
@@ -193,6 +217,9 @@ router.delete('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Co-author not found';
         break;
@@ -247,6 +274,13 @@ router.delete('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
 
 router.get('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
   try {
+    const idOfCreativeWork = await MiddlewareCtrl.getIDofFSRfromCWorkCoAuth(
+      req.params.cworkCoAuthorID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfCreativeWork,
+      req.session.user.userID,
+    );
     const cworkCoAuthor = await Ctrl.getCworkCoAuthor(req.params);
     res.status(200).json({
       status: 200,
@@ -256,6 +290,9 @@ router.get('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Co-author not found';
         break;
@@ -313,6 +350,13 @@ router.get('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
 
 router.put('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
   try {
+    const idOfCreativeWork = await MiddlewareCtrl.getIDofFSRfromCWorkCoAuth(
+      req.params.cworkCoAuthorID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfCreativeWork,
+      req.session.user.userID,
+    );
     await Ctrl.updateCworkCoAuthor(req.params, req.body);
     const cworkCoAuthor = await Ctrl.getCworkCoAuthor(req.params);
     res.status(200).json({
@@ -323,6 +367,9 @@ router.put('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Co-author not found';
         break;

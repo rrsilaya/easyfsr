@@ -57,7 +57,6 @@ router.post('/course', async (req, res) => {
     );
     const courseID = await Ctrl.addCourse(req.body);
     const course = await Ctrl.getCourse({ courseID });
-
     res.status(200).json({
       status: 200,
       message: 'Successfully created course',
@@ -138,8 +137,12 @@ router.post('/course', async (req, res) => {
 
 router.put('/course/:courseID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfCourse = await MiddlewareCtrl.getIDofFSRfromCourse(
       req.params.courseID,
+      req.session.user.userID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfCourse,
       req.session.user.userID,
     );
     await Ctrl.updateCourse(req.params, req.body);
@@ -220,8 +223,12 @@ router.put('/course/:courseID', async (req, res) => {
 
 router.delete('/course/:courseID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfCourse = await MiddlewareCtrl.getIDofFSRfromCourse(
       req.params.courseID,
+      req.session.user.userID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfCourse,
       req.session.user.userID,
     );
     const course = await Ctrl.getCourse(req.params);
@@ -302,8 +309,12 @@ router.delete('/course/:courseID', async (req, res) => {
 
 router.get('/course/:courseID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfCourse = await MiddlewareCtrl.getIDofFSRfromCourse(
       req.params.courseID,
+      req.session.user.userID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfCourse,
       req.session.user.userID,
     );
     const course = await Ctrl.getCourse(req.params);

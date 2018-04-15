@@ -50,8 +50,12 @@ const router = Router();
 
 router.post('/courseSched/', async (req, res) => {
   try {
+    const idOfCourse = await MiddlewareCtrl.getIDofFSRfromCourse(
+      req.body.courseID,
+      req.session.user.userID,
+    );
     const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
-      req.body.id,
+      idOfCourse,
       req.session.user.userID,
     );
     const courseSchedID = await Ctrl.addCourseSched(req.body);
@@ -135,7 +139,7 @@ router.post('/courseSched/', async (req, res) => {
 
 router.put('/courseSched/:courseSchedID', async (req, res) => {
   try {
-    const idOfCourse = await MiddlewareCtrl.getIDofFSRfromCourse(
+    const idOfCourse = await MiddlewareCtrl.getIDofFSRfromCourseSched(
       req.params.courseSchedID,
       req.session.user.userID,
     );
@@ -219,7 +223,7 @@ router.put('/courseSched/:courseSchedID', async (req, res) => {
 
 router.delete('/courseSched/:courseSchedID', async (req, res) => {
   try {
-    const idOfCourse = await MiddlewareCtrl.getIDofFSRfromCourse(
+    const idOfCourse = await MiddlewareCtrl.getIDofFSRfromCourseSched(
       req.params.courseSchedID,
       req.session.user.userID,
     );
@@ -302,12 +306,10 @@ router.delete('/courseSched/:courseSchedID', async (req, res) => {
 
 router.get('/courseSched/:courseSchedID', async (req, res) => {
   try {
-    console.log(req.params.courseSchedID);
-    const idOfCourse = await MiddlewareCtrl.getIDofFSRfromCourse(
+    const idOfCourse = await MiddlewareCtrl.getIDofFSRfromCourseSched(
       req.params.courseSchedID,
       req.session.user.userID,
     );
-    console.log('FSR id of course is ' + idOfCourse);
     const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
       idOfCourse,
       req.session.user.userID,

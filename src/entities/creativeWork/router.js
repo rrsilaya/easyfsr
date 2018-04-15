@@ -232,8 +232,11 @@ router.get('/creativeWork/', async (req, res) => {
 
 router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfCreativeWork = await MiddlewareCtrl.getIDofFSRfromCreativeWork(
       req.params.creativeWorkID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfCreativeWork,
       req.session.user.userID,
     );
     const creativeWork = await Ctrl.getCreativeWork(req.params);
@@ -318,8 +321,11 @@ router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
 
 router.get('/creativeWork/:creativeWorkID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfCreativeWork = await MiddlewareCtrl.getIDofFSRfromCreativeWork(
       req.params.creativeWorkID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfCreativeWork,
       req.session.user.userID,
     );
     const creativeWork = await Ctrl.getCreativeWork(req.params);
@@ -403,8 +409,11 @@ router.get('/creativeWork/:creativeWorkID', async (req, res) => {
  */
 router.put('/creativeWork/:creativeWorkID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfCreativeWork = await MiddlewareCtrl.getIDofFSRfromCreativeWork(
       req.params.creativeWorkID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfCreativeWork,
       req.session.user.userID,
     );
     if (req.files && req.files.filepath) {

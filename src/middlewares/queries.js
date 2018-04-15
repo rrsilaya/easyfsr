@@ -5,14 +5,50 @@ export const getUserIDofFSR = `
 
 export const getIDofFSRfromCourse = `
 	SELECT id FROM course c
-	JOIN courseSched cs ON 
-	c.courseID = cs.courseID
 	WHERE c.courseID = :courseID
+`;
+
+export const getIDofFSRfromCourseSched = `
+	SELECT id FROM course c
+	JOIN courseSched cs ON
+	c.courseID = cs.courseID
+	WHERE cs.courseID = c.courseID 
+	AND cs.courseSchedID = :courseSchedID
 `;
 
 export const getIDofFSRfromSubject = `
 	SELECT id FROM subject s
-	JOIN timeslot t ON 
-	s.subjectID = t.subjectID
 	WHERE s.subjectID = :subjectID
+`;
+
+export const getIDofFSRfromTimeslot = `
+	SELECT id FROM subject s
+	JOIN timeslot t ON
+	s.subjectID = t.subjectID
+	WHERE t.subjectID = s.subjectID 
+	AND t.timeslotID = :timeslotID
+`;
+
+export const getIDofFSRfromResearch = `
+	SELECT id FROM research r
+	WHERE r.researchID = :researchID
+`;
+
+export const getIDofFSRfromRCoAuth = `
+	SELECT id FROM research r
+	JOIN rCoAuthor rc ON 
+	r.researchID = rc.researchID
+	WHERE r.researchID = :researchID
+`;
+
+export const getIDofFSRfromCreativeWork = `
+	SELECT id FROM creativeWork c
+	WHERE c.creativeWorkID = :creativeWorkID
+`;
+
+export const getIDofFSRfromCWorkCoAuth = `
+	SELECT id FROM creativeWork c
+	JOIN cworkCoAuthor cc ON 
+	c.creativeWorkID = cc.creativeWorkID
+	WHERE c.creativeWorkID = :creativeWorkID
 `;

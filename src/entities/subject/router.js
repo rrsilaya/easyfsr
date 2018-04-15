@@ -144,8 +144,12 @@ router.post('/subject/', async (req, res) => {
  */
 router.put('/subject/:subjectID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfSubject = await MiddlewareCtrl.getIDofFSRfromSubject(
       req.params.subjectID,
+      req.session.user.userID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfSubject,
       req.session.user.userID,
     );
     await Ctrl.updateSubject(req.params, req.body);
@@ -227,8 +231,12 @@ router.put('/subject/:subjectID', async (req, res) => {
 
 router.delete('/subject/:subjectID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfSubject = await MiddlewareCtrl.getIDofFSRfromSubject(
       req.params.subjectID,
+      req.session.user.userID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfSubject,
       req.session.user.userID,
     );
     const subject = await Ctrl.getSubject(req.params);
@@ -310,8 +318,12 @@ router.delete('/subject/:subjectID', async (req, res) => {
 
 router.get('/subject/:subjectID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfSubject = await MiddlewareCtrl.getIDofFSRfromSubject(
       req.params.subjectID,
+      req.session.user.userID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfSubject,
       req.session.user.userID,
     );
     const subject = await Ctrl.getSubject(req.params);
@@ -445,4 +457,5 @@ router.get('/subject/', async (req, res) => {
     res.status(status).json({ status, message });
   }
 });
+
 export default router;
