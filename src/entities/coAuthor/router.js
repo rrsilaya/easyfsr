@@ -127,16 +127,23 @@ router.post('/cworkCoAuthor/', async (req, res) => {
 
 router.get('/cworkCoAuthor/', async (req, res) => {
   try {
-    const cworkCoAuthor = await Ctrl.getCworkCoAuthors(req.query);
+    req.session.user.acctType === 'USER'
+      ? (req.query.userID = req.session.user.userID)
+      : '';
+    const cworkCoAuthor = await Ctrl.getCworkCoAuthors(
+      req.query,
+      req.query.userID,
+    );
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched co-authors',
       data: cworkCoAuthor,
-      total: (await Ctrl.getTotalCworkCoAuthors(req.query)).total,
+      total: (await Ctrl.getTotalCworkCoAuthors(req.query, req.query.userID))
+        .total,
       limit: req.query.limit || 12,
       page: req.query.page || 1,
       pages: Math.ceil(
-        (await Ctrl.getTotalCworkCoAuthors(req.query)).total /
+        (await Ctrl.getTotalCworkCoAuthors(req.query, req.query.userID)).total /
           (req.query.limit || 12),
       ),
     });

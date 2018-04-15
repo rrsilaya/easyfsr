@@ -49,12 +49,13 @@ export const deleterCoAuthor = ({ rCoAuthorID }) => {
   });
 };
 
-export const getrCoAuthors = rCoAuthor => {
+export const getrCoAuthors = (rCoAuthor, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getrCoAuthors(
         filtered(rCoAuthor, rCoAuthorAttributes),
         rCoAuthor.sortBy,
+        userID,
       ),
       {
         field: 'name',
@@ -68,10 +69,13 @@ export const getrCoAuthors = rCoAuthor => {
   });
 };
 
-export const getTotalrCoAuthors = rCoAuthor => {
+export const getTotalrCoAuthors = (rCoAuthor, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getTotalrCoAuthors(filtered(rCoAuthor, rCoAuthorAttributes)),
+      Query.getTotalrCoAuthors(
+        filtered(rCoAuthor, rCoAuthorAttributes),
+        userID,
+      ),
       {
         field: 'name',
         ...escapeSearch(rCoAuthor, searchFields, rCoAuthor.limit),
