@@ -73,12 +73,13 @@ export const deleteLtdPractOfProf = ({ limitedPracticeOfProfID }) => {
   });
 };
 
-export const getLtdPractOfProfs = limitedPracticeOfProf => {
+export const getLtdPractOfProfs = (limitedPracticeOfProf, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getLtdPractOfProfs(
         filtered(limitedPracticeOfProf, LtdPractAttributes),
         limitedPracticeOfProf.sortBy,
+        userID,
       ),
       {
         field: 'id',
@@ -95,11 +96,12 @@ export const getLtdPractOfProfs = limitedPracticeOfProf => {
     );
   });
 };
-export const getTotalLtdPractOfProfs = limitedPracticeOfProf => {
+export const getTotalLtdPractOfProfs = (limitedPracticeOfProf, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getTotalLtdPractOfProfs(
         filtered(limitedPracticeOfProf, LtdPractAttributes),
+        userID,
       ),
       {
         field: 'id',

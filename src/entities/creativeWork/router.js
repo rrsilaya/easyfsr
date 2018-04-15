@@ -153,16 +153,23 @@ router.post('/creativeWork/', async (req, res) => {
  */
 router.get('/creativeWork/', async (req, res) => {
   try {
-    const creativeWorks = await Ctrl.getCreativeWorks(req.query);
+    req.session.user.acctType === 'USER'
+      ? (req.query.userID = req.session.user.userID)
+      : '';
+    const creativeWorks = await Ctrl.getCreativeWorks(
+      req.query,
+      req.query.userID,
+    );
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched creative works',
       data: creativeWorks,
-      total: (await Ctrl.getTotalCreativeWorks(req.query)).total,
+      total: (await Ctrl.getTotalCreativeWorks(req.query, req.query.userID))
+        .total,
       limit: req.query.limit || 12,
       page: req.query.page || 1,
       pages: Math.ceil(
-        (await Ctrl.getTotalCreativeWorks(req.query)).total /
+        (await Ctrl.getTotalCreativeWorks(req.query, req.query.userID)).total /
           (req.query.limit || 12),
       ),
     });

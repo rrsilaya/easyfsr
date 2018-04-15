@@ -32,9 +32,13 @@ export const deleteCreativeWork = `
 	WHERE creativeWorkID = :creativeWorkID
 `;
 
-export const getCreativeWorks = (query, sortBy) => `
-	SELECT * FROM creativeWork ${
-    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+export const getCreativeWorks = (query, sortBy, userID) => `
+	SELECT * FROM creativeWork x ${
+    userID
+      ? `JOIN fsr f ON x.id = f.id WHERE f.userID = :userID ${
+          query.length ? `AND ${formatQueryParams(query, 'getUser')}` : ''
+        }`
+      : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }
 	ORDER BY [field] ${
     sortBy === 'DESC' ? 'DESC' : 'ASC'
@@ -46,8 +50,12 @@ export const getCreativeWork = `
 	WHERE creativeWorkID = :creativeWorkID
 `;
 
-export const getTotalCreativeWorks = query => `
-	SELECT count(*) as total FROM creativeWork ${
-    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+export const getTotalCreativeWorks = (query, userID) => `
+	SELECT count(*) as total FROM creativeWork x ${
+    userID
+      ? `JOIN fsr f ON x.id = f.id WHERE f.userID = :userID ${
+          query.length ? `AND ${formatQueryParams(query, 'getUser')}` : ''
+        }`
+      : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }
 `;

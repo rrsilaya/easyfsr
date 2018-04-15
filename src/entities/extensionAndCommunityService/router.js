@@ -277,18 +277,28 @@ router.put('/service/:extAndCommServiceID/', async (req, res) => {
 
 router.get('/service/', async (req, res) => {
   try {
-    const services = await Ctrl.getExtensionAndCommunityServices(req.query);
+    req.session.user.acctType === 'USER'
+      ? (req.query.userID = req.session.user.userID)
+      : '';
+    const services = await Ctrl.getExtensionAndCommunityServices(
+      req.query,
+      req.query.userID,
+    );
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched services',
       data: services,
-      total: (await Ctrl.getTotalExtensionAndCommunityServices(req.query))
-        .total,
+      total: (await Ctrl.getTotalExtensionAndCommunityServices(
+        req.query,
+        req.query.userID,
+      )).total,
       limit: parseInt(req.query.limit) || 12,
       page: parseInt(req.query.page) || 1,
       pages: Math.ceil(
-        (await Ctrl.getTotalExtensionAndCommunityServices(req.query)).total /
-          (parseInt(req.query.limit) || 12),
+        (await Ctrl.getTotalExtensionAndCommunityServices(
+          req.query,
+          req.query.userID,
+        )).total / (parseInt(req.query.limit) || 12),
       ),
     });
   } catch (status) {
