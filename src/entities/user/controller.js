@@ -115,3 +115,12 @@ export const getTotalUsers = user => {
     );
   });
 };
+
+export const deleteSession = ({ employeeID }) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.deleteSession, { employeeID }, (err, results) => {
+      if (err) return reject(500);
+      return resolve();
+    });
+  });
+};

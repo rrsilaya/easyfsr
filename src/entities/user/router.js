@@ -507,6 +507,7 @@ router.put('/user/:userID', async (req, res) => {
     await Ctrl.updateUser(req.params, req.body);
     const user = await Ctrl.getUserByUserID(req.params);
     delete user.password;
+    await Ctrl.deleteSession(user.employeeID);
     if (req.session.user.userID == user.userID) req.session.user = user;
     res.status(200).json({
       status: 200,
