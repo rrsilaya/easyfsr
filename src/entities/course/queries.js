@@ -31,15 +31,34 @@ export const getCourse = `
   WHERE courseID = :courseID
 `;
 
-export const getCourses = (query, sortBy) => `
-  SELECT * FROM course ${
-    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
-  }
-  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} LIMIT :limit
+export const getCourses = (query, sortBy, userID) => `
+  SELECT ${
+    userID
+      ? `
+    courseNumber,
+  courseID,
+  school,
+  credit,
+  hoursPerWeek
+  `
+      : `*`
+  } FROM course x ${
+  userID
+    ? `LEFT JOIN fsr f ON x.id = f.id WHERE f.userID = :userID ${
+        query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
+      }`
+    : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+}
+  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+  LIMIT :limit OFFSET :offset
 `;
 
-export const getTotalCourses = query => `
-  SELECT count(*) as total FROM course ${
-    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+export const getTotalCourses = (query, userID) => `
+  SELECT count(*) as total FROM course x ${
+    userID
+      ? `WHERE id IN (SELECT id FROM fsr WHERE userID=:userID) ${
+          query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
+        }`
+      : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }
 `;

@@ -27,17 +27,25 @@ export const getCworkCoAuthor = `
 	WHERE cworkCoAuthorID = :cworkCoAuthorID
 `;
 
-export const getCworkCoAuthors = (query, sortBy) => `
-	SELECT * FROM cworkCoAuthor ${
-    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+export const getCworkCoAuthors = (query, sortBy, userID) => `
+	SELECT * FROM cworkCoAuthor x ${
+    userID
+      ? `JOIN creativeWork c ON x.creativeWorkID = c.creativeWorkID LEFT JOIN fsr f ON c.id = f.id WHERE f.userID = :userID ${
+          query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
+        }`
+      : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }
 	ORDER BY [field] ${
     sortBy === 'DESC' ? 'DESC' : 'ASC'
   } LIMIT :limit OFFSET :offset
 `;
 
-export const getTotalCworkCoAuthors = query => `
-  SELECT count(*) as total FROM cworkCoAuthor ${
-    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+export const getTotalCworkCoAuthors = (query, userID) => `
+  SELECT count(*) as total FROM cworkCoAuthor x ${
+    userID
+      ? `JOIN creativeWork c ON x.creativeWorkID = c.creativeWorkID WHERE id IN (SELECT id FROM fsr WHERE userID=:userID) ${
+          query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
+        }`
+      : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }
 `;

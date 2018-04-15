@@ -74,12 +74,13 @@ export const deleteResearch = ({ researchID }) => {
   });
 };
 
-export const getResearches = research => {
+export const getResearches = (research, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getResearches(
         filtered(research, researchAttributes),
         research.sortBy,
+        userID,
       ),
       {
         field: 'title',
@@ -93,10 +94,10 @@ export const getResearches = research => {
   });
 };
 
-export const getTotalResearches = research => {
+export const getTotalResearches = (research, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getTotalResearches(filtered(research, researchAttributes)),
+      Query.getTotalResearches(filtered(research, researchAttributes), userID),
       {
         field: 'title',
         ...escapeSearch(research, searchFields, research.limit),

@@ -433,17 +433,20 @@ router.get('/subject/:subjectID', async (req, res) => {
  */
 router.get('/subject/', async (req, res) => {
   try {
-    const subjects = await Ctrl.getSubjects(req.query);
+    req.session.user.acctType === 'USER'
+      ? (req.query.userID = req.session.user.userID)
+      : '';
+    const subjects = await Ctrl.getSubjects(req.query, req.query.userID);
 
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched subjects',
       data: subjects,
-      total: (await Ctrl.getTotalSubjects(req.query)).total,
+      total: (await Ctrl.getTotalSubjects(req.query, req.query.userID)).total,
       limit: req.query.limit || 12,
       page: req.query.page || 1,
       pages: Math.ceil(
-        (await Ctrl.getTotalSubjects(req.query)).total /
+        (await Ctrl.getTotalSubjects(req.query, req.query.userID)).total /
           (req.query.limit || 12),
       ),
     });

@@ -51,12 +51,13 @@ export const getCworkCoAuthor = ({ cworkCoAuthorID }) => {
   });
 };
 
-export const getCworkCoAuthors = cworkCoAuthor => {
+export const getCworkCoAuthors = (cworkCoAuthor, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getCworkCoAuthors(
         filtered(cworkCoAuthor, cworkCoAuthorAttributes),
         cworkCoAuthor.sortBy,
+        userID,
       ),
       {
         field: 'name',
@@ -70,11 +71,12 @@ export const getCworkCoAuthors = cworkCoAuthor => {
   });
 };
 
-export const getTotalCworkCoAuthors = cworkCoAuthor => {
+export const getTotalCworkCoAuthors = (cworkCoAuthor, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getTotalCworkCoAuthors(
         filtered(cworkCoAuthor, cworkCoAuthorAttributes),
+        userID,
       ),
       {
         field: 'name',

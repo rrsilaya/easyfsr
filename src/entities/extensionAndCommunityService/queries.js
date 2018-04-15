@@ -41,18 +41,38 @@ export const getExtensionAndCommunityService = `
   WHERE extAndCommServiceID = :extAndCommServiceID
 `;
 
-export const getExtensionAndCommunityServices = (query, sortBy) => `
-  SELECT * FROM extensionAndCommunityService ${
-    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
-  }
-  ORDER BY [field] ${
-    sortBy === 'DESC' ? 'DESC' : 'ASC'
-  } LIMIT :limit OFFSET :offset
+export const getExtensionAndCommunityServices = (query, sortBy, userID) => `
+  SELECT ${
+    userID
+      ? ` x.id,
+      participant,
+    role,
+    hours,
+    title,
+    creditUnit,
+    type,
+    startDate,
+    endDate
+    `
+      : `*`
+  } FROM extensionAndCommunityService x ${
+  userID
+    ? `LEFT JOIN fsr f ON x.id = f.id WHERE f.userID = :userID ${
+        query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
+      }`
+    : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+}
+  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+  LIMIT :limit OFFSET :offset
 `;
 
-export const getTotalExtensionAndCommunityServices = query => `
-  SELECT count(*) as total FROM extensionAndCommunityService ${
-    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+export const getTotalExtensionAndCommunityServices = (query, userID) => `
+  SELECT count(*) as total FROM extensionAndCommunityService x ${
+    userID
+      ? `WHERE id IN (SELECT id FROM fsr WHERE userID=:userID) ${
+          query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
+        }`
+      : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }
 `;
 

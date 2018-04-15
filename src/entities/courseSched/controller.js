@@ -54,12 +54,13 @@ export const getCourseSched = ({ courseSchedID }) => {
   });
 };
 
-export const getCourseScheds = courseSched => {
+export const getCourseScheds = (courseSched, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getCourseScheds(
         filtered(courseSched, courseSchedAttributes),
         courseSched.sortBy,
+        userID,
       ),
       {
         field: 'day',
@@ -73,12 +74,12 @@ export const getCourseScheds = courseSched => {
   });
 };
 
-export const getTotalCourseScheds = courseSched => {
+export const getTotalCourseScheds = (courseSched, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getTotalCourseScheds(
         filtered(courseSched, courseSchedAttributes),
-        courseSched.sortBy,
+        userID,
       ),
       {
         field: 'day',

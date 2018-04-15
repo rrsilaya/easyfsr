@@ -79,12 +79,13 @@ export const getExtensionAndCommunityService = ({ extAndCommServiceID }) => {
   });
 };
 
-export const getExtensionAndCommunityServices = service => {
+export const getExtensionAndCommunityServices = (service, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getExtensionAndCommunityServices(
         filtered(service, serviceAttributes),
         service.sortBy,
+        userID,
       ),
       {
         field: 'title',
@@ -98,11 +99,12 @@ export const getExtensionAndCommunityServices = service => {
   });
 };
 
-export const getTotalExtensionAndCommunityServices = service => {
+export const getTotalExtensionAndCommunityServices = (service, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getTotalExtensionAndCommunityServices(
         filtered(service, serviceAttributes),
+        userID,
       ),
       {
         field: 'participant',

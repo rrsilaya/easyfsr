@@ -420,16 +420,19 @@ router.get('/course/:courseID', async (req, res) => {
 
 router.get('/course', async (req, res) => {
   try {
-    const courses = await Ctrl.getCourses(req.query);
+    req.session.user.acctType === 'USER'
+      ? (req.query.userID = req.session.user.userID)
+      : '';
+    const courses = await Ctrl.getCourses(req.query, req.query.userID);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched courses',
       data: courses,
-      total: (await Ctrl.getTotalCourses(req.query)).total,
+      total: (await Ctrl.getTotalCourses(req.query, req.query.userID)).total,
       limit: parseInt(req.query.limit) || 12,
       page: parseInt(req.query.page) || 1,
       pages: Math.ceil(
-        (await Ctrl.getTotalCourses(req.query)).total /
+        (await Ctrl.getTotalCourses(req.query, req.query.userID)).total /
           (parseInt(req.query.limit) || 12),
       ),
     });

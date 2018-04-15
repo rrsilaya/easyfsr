@@ -15,7 +15,6 @@ export const getUserIDofFSR = (id, userID) => {
 export const getIDofFSRfromAdminWork = adminWorkID => {
   return new Promise((resolve, reject) => {
     db.query(Query.getIDofFSRfromAdminWork, { adminWorkID }, (err, results) => {
-      console.log(results);
       if (err) return reject(500);
       if (results.length != 0) return resolve(results[0].id);
       return reject(404);
@@ -29,7 +28,6 @@ export const getIDofFSRfromConsultationHours = chID => {
       Query.getIDofFSRfromConsultationHours,
       { chID },
       (err, results) => {
-        console.log(results);
         if (err) return reject(500);
         if (results.length != 0) return resolve(results[0].id);
         return reject(404);
@@ -41,7 +39,6 @@ export const getIDofFSRfromConsultationHours = chID => {
 export const getIDofFSRfromCourse = (courseID, userID) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getIDofFSRfromCourse, { courseID }, (err, results) => {
-      console.log(results);
       if (err) return reject(500);
       if (results.length != 0) return resolve(results[0].id);
       return reject(404);
@@ -55,7 +52,6 @@ export const getIDofFSRfromCourseSched = (courseSchedID, userID) => {
       Query.getIDofFSRfromCourseSched,
       { courseSchedID },
       (err, results) => {
-        console.log(results);
         if (err) return reject(500);
         if (results.length != 0) return resolve(results[0].id);
         return reject(404);
@@ -67,7 +63,6 @@ export const getIDofFSRfromCourseSched = (courseSchedID, userID) => {
 export const getIDofFSRfromSubject = (subjectID, userID) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getIDofFSRfromSubject, { subjectID }, (err, results) => {
-      console.log(results);
       if (err) return reject(500);
       if (results.length != 0) return resolve(results[0].id);
       return reject(404);
@@ -78,7 +73,6 @@ export const getIDofFSRfromSubject = (subjectID, userID) => {
 export const getIDofFSRfromTimeslot = (timeslotID, userID) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getIDofFSRfromTimeslot, { timeslotID }, (err, results) => {
-      console.log(results);
       if (err) return reject(500);
       if (results.length != 0) return resolve(results[0].id);
       return reject(404);
@@ -89,7 +83,6 @@ export const getIDofFSRfromTimeslot = (timeslotID, userID) => {
 export const getIDofFSRfromResearch = researchID => {
   return new Promise((resolve, reject) => {
     db.query(Query.getIDofFSRfromResearch, { researchID }, (err, results) => {
-      console.log(results);
       if (err) return reject(500);
       if (results.length != 0) return resolve(results[0].id);
       return reject(404);
@@ -100,7 +93,6 @@ export const getIDofFSRfromResearch = researchID => {
 export const getIDofFSRfromRCoAuth = (rCoAuthorID, userID) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getIDofFSRfromRCoAuth, { rCoAuthorID }, (err, results) => {
-      console.log(results);
       if (err) return reject(500);
       if (results.length != 0) return resolve(results[0].id);
       return reject(404);
@@ -114,7 +106,6 @@ export const getIDofFSRfromCreativeWork = creativeWorkID => {
       Query.getIDofFSRfromCreativeWork,
       { creativeWorkID },
       (err, results) => {
-        console.log(results);
         if (err) return reject(500);
         if (results.length != 0) return resolve(results[0].id);
         return reject(404);
@@ -129,7 +120,6 @@ export const getIDofFSRfromCWorkCoAuth = cworkCoAuthorID => {
       Query.getIDofFSRfromCWorkCoAuth,
       { cworkCoAuthorID },
       (err, results) => {
-        console.log(results);
         if (err) return reject(500);
         if (results.length != 0) return resolve(results[0].id);
         return reject(404);
@@ -144,7 +134,6 @@ export const getIDofFSRfromService = extAndCommServiceID => {
       Query.getIDofFSRfromService,
       { extAndCommServiceID },
       (err, results) => {
-        console.log(results);
         if (err) return reject(500);
         if (results.length != 0) return resolve(results[0].id);
         return reject(404);
@@ -159,7 +148,6 @@ export const getIDofFSRfromLtd = limitedPracticeOfProfID => {
       Query.getIDofFSRfromLtd,
       { limitedPracticeOfProfID },
       (err, results) => {
-        console.log(results);
         if (err) return reject(500);
         if (results.length != 0) return resolve(results[0].id);
         return reject(404);

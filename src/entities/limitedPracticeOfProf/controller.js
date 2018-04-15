@@ -64,7 +64,6 @@ export const deleteLtdPractOfProf = ({ limitedPracticeOfProfID }) => {
       Query.deleteLtdPractOfProf,
       { limitedPracticeOfProfID },
       (err, results) => {
-        console.log(err);
         if (err) return reject(500);
         else if (!results.affectedRows) return reject(404);
         return resolve();
@@ -73,12 +72,13 @@ export const deleteLtdPractOfProf = ({ limitedPracticeOfProfID }) => {
   });
 };
 
-export const getLtdPractOfProfs = limitedPracticeOfProf => {
+export const getLtdPractOfProfs = (limitedPracticeOfProf, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getLtdPractOfProfs(
         filtered(limitedPracticeOfProf, LtdPractAttributes),
         limitedPracticeOfProf.sortBy,
+        userID,
       ),
       {
         field: 'id',
@@ -95,11 +95,12 @@ export const getLtdPractOfProfs = limitedPracticeOfProf => {
     );
   });
 };
-export const getTotalLtdPractOfProfs = limitedPracticeOfProf => {
+export const getTotalLtdPractOfProfs = (limitedPracticeOfProf, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getTotalLtdPractOfProfs(
         filtered(limitedPracticeOfProf, LtdPractAttributes),
+        userID,
       ),
       {
         field: 'id',

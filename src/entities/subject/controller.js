@@ -64,10 +64,14 @@ export const getSubject = ({ subjectID }) => {
   });
 };
 
-export const getSubjects = subject => {
+export const getSubjects = (subject, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getSubjects(filtered(subject, subjectAttributes), subject.sortBy),
+      Query.getSubjects(
+        filtered(subject, subjectAttributes),
+        subject.sortBy,
+        userID,
+      ),
       {
         field: 'subjectCode',
         ...escapeSearch(subject, searchFields, subject.limit),
@@ -80,10 +84,10 @@ export const getSubjects = subject => {
   });
 };
 
-export const getTotalSubjects = subject => {
+export const getTotalSubjects = (subject, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getTotalSubjects(filtered(subject, subjectAttributes)),
+      Query.getTotalSubjects(filtered(subject, subjectAttributes), userID),
       {
         field: 'subjectCode',
         ...escapeSearch(subject, searchFields, subject.limit),
