@@ -156,6 +156,7 @@ img.crop {
 }
 .profileIcon > img {
   object-fit: cover;
+  display: block;
 }
 .profileIcon:hover > .overlay {
   display: flex;

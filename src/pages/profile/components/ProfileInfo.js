@@ -31,7 +31,6 @@ class ProfileInfo extends Component {
         <Col {...gridConfig}>
           <Card title="Administrative Works">
             <List
-              bordered
               size="small"
               style={style.list}
               dataSource={adminWork}
