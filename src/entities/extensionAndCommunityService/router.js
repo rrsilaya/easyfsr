@@ -1,7 +1,10 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
-import * as MiddlewareCtrl from '../../middlewares/controller';
+import {
+  getUserIDofFSR,
+  getIDofFSRfromService,
+} from '../../middlewares/controller';
 
 const router = Router();
 
@@ -63,7 +66,7 @@ const router = Router();
 
 router.post('/service/', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       req.body.id,
       req.session.user.userID,
     );
@@ -164,10 +167,10 @@ router.post('/service/', async (req, res) => {
 
 router.put('/service/:extAndCommServiceID/', async (req, res) => {
   try {
-    const idOfService = await MiddlewareCtrl.getIDofFSRfromService(
+    const idOfService = await getIDofFSRfromService(
       req.params.extAndCommServiceID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfService,
       req.session.user.userID,
     );
@@ -366,10 +369,10 @@ router.get('/service/', async (req, res) => {
 
 router.delete('/service/:extAndCommServiceID/', async (req, res) => {
   try {
-    const idOfService = await MiddlewareCtrl.getIDofFSRfromService(
+    const idOfService = await getIDofFSRfromService(
       req.params.extAndCommServiceID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfService,
       req.session.user.userID,
     );
@@ -457,10 +460,10 @@ router.delete('/service/:extAndCommServiceID/', async (req, res) => {
 
 router.get('/service/:extAndCommServiceID/', async (req, res) => {
   try {
-    const idOfService = await MiddlewareCtrl.getIDofFSRfromService(
+    const idOfService = await getIDofFSRfromService(
       req.params.extAndCommServiceID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfService,
       req.session.user.userID,
     );

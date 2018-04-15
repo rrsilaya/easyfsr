@@ -1,8 +1,10 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
+import {
+  getUserIDofFSR,
+  getIDofFSRfromAdminWork,
+} from '../../middlewares/controller';
 import * as Ctrl from './controller';
-import * as MiddlewareCtrl from '../../middlewares/controller';
-import * as Middleware from '../../middlewares/middlewares';
 
 const router = Router();
 
@@ -51,7 +53,7 @@ const router = Router();
 
 router.post('/adminWork/', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       req.body.id,
       req.session.user.userID,
     );
@@ -134,10 +136,8 @@ router.post('/adminWork/', async (req, res) => {
 
 router.put('/adminWork/:adminWorkID', async (req, res) => {
   try {
-    const idOfAdminWork = await MiddlewareCtrl.getIDofFSRfromAdminWork(
-      req.params.adminWorkID,
-    );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfAdminWork = await getIDofFSRfromAdminWork(req.params.adminWorkID);
+    const userIDofFSR = await getUserIDofFSR(
       idOfAdminWork,
       req.session.user.userID,
     );
@@ -214,10 +214,8 @@ router.put('/adminWork/:adminWorkID', async (req, res) => {
 
 router.delete('/adminWork/:adminWorkID', async (req, res) => {
   try {
-    const idOfAdminWork = await MiddlewareCtrl.getIDofFSRfromAdminWork(
-      req.params.adminWorkID,
-    );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfAdminWork = await getIDofFSRfromAdminWork(req.params.adminWorkID);
+    const userIDofFSR = await getUserIDofFSR(
       idOfAdminWork,
       req.session.user.userID,
     );
@@ -292,10 +290,8 @@ router.delete('/adminWork/:adminWorkID', async (req, res) => {
 
 router.get('/adminWork/:adminWorkID', async (req, res) => {
   try {
-    const idOfAdminWork = await MiddlewareCtrl.getIDofFSRfromAdminWork(
-      req.params.adminWorkID,
-    );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfAdminWork = await getIDofFSRfromAdminWork(req.params.adminWorkID);
+    const userIDofFSR = await getUserIDofFSR(
       idOfAdminWork,
       req.session.user.userID,
     );

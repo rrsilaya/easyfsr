@@ -316,6 +316,19 @@ CREATE TABLE announcement(
     REFERENCES user(`userID`)
 );
 
+CREATE TABLE meta (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `acadYear` VARCHAR (20) NOT NULL,
+  `semester` VARCHAR (10) NOT NULL,
+  `universityRegistrar` VARCHAR(50),
+  `homeDepartment` VARCHAR(50),
+  `formRevision` DATE,
+  `homeCollege` VARCHAR(50),
+
+  CONSTRAINT `meta_pk`
+    PRIMARY KEY(`id`)
+);
+
 -- Trigger for Teaching Load of FSR
 
 CREATE TRIGGER insert_teachingLoadCreds 
@@ -331,6 +344,12 @@ FOR EACH ROW
 UPDATE fsr 
   SET teachingLoadCreds = teachingLoadCreds - OLD.teachingLoadCreds;
 
+CREATE TRIGGER update_teachingLoadCreds 
+AFTER update ON subject
+FOR EACH ROW 
+UPDATE fsr 
+  SET teachingLoadCreds = teachingLoadCreds - OLD.teachingLoadCreds + NEW.teachingLoadCreds
+  WHERE id = NEW.id;
 
 -- Trigger for Study Load of FSR 
 
@@ -347,6 +366,13 @@ FOR EACH ROW
 UPDATE studyLoad 
   SET totalSLcredits = totalSLcredits - OLD.credit;
 
+CREATE TRIGGER update_totalSLcredits 
+AFTER update ON course
+FOR EACH ROW 
+UPDATE studyLoad 
+  SET totalSLcredits = totalSLcredits - OLD.credit + NEW.credit
+  WHERE id = NEW.id;
+
 -- Triggers for consultationHours
 CREATE TRIGGER insert_CHours
 AFTER INSERT ON consultationHours
@@ -360,7 +386,16 @@ BEFORE DELETE ON consultationHours
 FOR EACH ROW
   UPDATE fsr
     SET totalCHours = totalCHours - (SELECT TIMESTAMPDIFF(HOUR, OLD.timeStart, OLD.timeEnd))
-    WHERE id = OLD.id;
+    WHERE id = OLD.id AND chID = OLD.chID;
+
+CREATE TRIGGER update_totalCHours 
+AFTER update ON consultationHours
+FOR EACH ROW 
+UPDATE fsr 
+  SET totalCHours = totalCHours - (SELECT TIMESTAMPDIFF(HOUR, OLD.timeStart, OLD.timeEnd)) 
+  + (SELECT TIMESTAMPDIFF(HOUR, NEW.timeStart, NEW.timeEnd))
+  WHERE chID = NEW.chID; 
+
 
 -- Triggers for subject and timeslot
 CREATE TRIGGER insert_subjectTimeslot
@@ -377,6 +412,14 @@ FOR EACH ROW
     SET hoursPerWeek = hoursPerWeek - (SELECT TIMESTAMPDIFF(HOUR, OLD.timeStart, OLD.timeEnd))
     WHERE subjectID = OLD.subjectID;
 
+CREATE TRIGGER update_hoursPerWeekSubj 
+AFTER update ON timeslot
+FOR EACH ROW 
+UPDATE subject 
+  SET hoursPerWeek = hoursPerWeek - (SELECT TIMESTAMPDIFF(HOUR, OLD.timeStart, OLD.timeEnd)) 
+  + (SELECT TIMESTAMPDIFF(HOUR, NEW.timeStart, NEW.timeEnd))
+  WHERE subjectID = OLD.subjectID;
+
 -- Triggers for course and courseSched
 CREATE TRIGGER insert_courseSched
 AFTER INSERT ON courseSched
@@ -392,6 +435,13 @@ FOR EACH ROW
     SET hoursPerWeek = hoursPerWeek - (SELECT TIMESTAMPDIFF(HOUR, OLD.timeStart, OLD.timeEnd))
     WHERE courseID = OLD.courseID;
 
+CREATE TRIGGER update_hoursPerWeekCourse 
+AFTER update ON courseSched
+FOR EACH ROW 
+UPDATE course 
+  SET hoursPerWeek = hoursPerWeek - (SELECT TIMESTAMPDIFF(HOUR, OLD.timeStart, OLD.timeEnd)) + 
+  (SELECT TIMESTAMPDIFF(HOUR, NEW.timeStart, NEW.timeEnd))
+  WHERE courseID = new.courseID;
 
 
 -- VIEWS

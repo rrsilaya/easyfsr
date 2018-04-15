@@ -1,6 +1,9 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
-import * as MiddlewareCtrl from '../../middlewares/controller';
+import {
+  getUserIDofFSR,
+  getIDofFSRfromSubject,
+} from '../../middlewares/controller';
 
 const router = Router();
 
@@ -57,7 +60,7 @@ const router = Router();
 
 router.post('/subject/', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       req.body.id,
       req.session.user.userID,
     );
@@ -144,11 +147,11 @@ router.post('/subject/', async (req, res) => {
  */
 router.put('/subject/:subjectID', async (req, res) => {
   try {
-    const idOfSubject = await MiddlewareCtrl.getIDofFSRfromSubject(
+    const idOfSubject = await getIDofFSRfromSubject(
       req.params.subjectID,
       req.session.user.userID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfSubject,
       req.session.user.userID,
     );
@@ -231,11 +234,11 @@ router.put('/subject/:subjectID', async (req, res) => {
 
 router.delete('/subject/:subjectID', async (req, res) => {
   try {
-    const idOfSubject = await MiddlewareCtrl.getIDofFSRfromSubject(
+    const idOfSubject = await getIDofFSRfromSubject(
       req.params.subjectID,
       req.session.user.userID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfSubject,
       req.session.user.userID,
     );
@@ -318,11 +321,11 @@ router.delete('/subject/:subjectID', async (req, res) => {
 
 router.get('/subject/:subjectID', async (req, res) => {
   try {
-    const idOfSubject = await MiddlewareCtrl.getIDofFSRfromSubject(
+    const idOfSubject = await getIDofFSRfromSubject(
       req.params.subjectID,
       req.session.user.userID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfSubject,
       req.session.user.userID,
     );

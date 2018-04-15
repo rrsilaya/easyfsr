@@ -1,6 +1,9 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
-import * as MiddlewareCtrl from '../../middlewares/controller';
+import {
+  getUserIDofFSR,
+  getIDofFSRfromResearch,
+} from '../../middlewares/controller';
 import { upload, unlink } from './../../utils';
 
 const router = Router();
@@ -80,7 +83,7 @@ const router = Router();
 
 router.post('/research/', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       req.body.id,
       req.session.user.userID,
     );
@@ -179,10 +182,8 @@ router.post('/research/', async (req, res) => {
  */
 router.get('/research/:researchID', async (req, res) => {
   try {
-    const idOfResearch = await MiddlewareCtrl.getIDofFSRfromResearch(
-      req.params.researchID,
-    );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfResearch = await getIDofFSRfromResearch(req.params.researchID);
+    const userIDofFSR = await getUserIDofFSR(
       idOfResearch,
       req.session.user.userID,
     );
@@ -399,10 +400,8 @@ router.get('/research/', async (req, res) => {
  */
 router.delete('/research/:researchID', async (req, res) => {
   try {
-    const idOfResearch = await MiddlewareCtrl.getIDofFSRfromResearch(
-      req.params.researchID,
-    );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfResearch = await getIDofFSRfromResearch(req.params.researchID);
+    const userIDofFSR = await getUserIDofFSR(
       idOfResearch,
       req.session.user.userID,
     );
@@ -506,10 +505,8 @@ router.delete('/research/:researchID', async (req, res) => {
  */
 router.put('/research/:researchID', async (req, res) => {
   try {
-    const idOfResearch = await MiddlewareCtrl.getIDofFSRfromResearch(
-      req.params.researchID,
-    );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfResearch = await getIDofFSRfromResearch(req.params.researchID);
+    const userIDofFSR = await getUserIDofFSR(
       idOfResearch,
       req.session.user.userID,
     );

@@ -1,6 +1,10 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
-import * as MiddlewareCtrl from '../../middlewares/controller';
+import {
+  getIDofFSRfromCourse,
+  getUserIDofFSR,
+  getIDofFSRfromCourseSched,
+} from '../../middlewares/controller';
 
 const router = Router();
 
@@ -50,11 +54,11 @@ const router = Router();
 
 router.post('/courseSched/', async (req, res) => {
   try {
-    const idOfCourse = await MiddlewareCtrl.getIDofFSRfromCourse(
+    const idOfCourse = await getIDofFSRfromCourse(
       req.body.courseID,
       req.session.user.userID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfCourse,
       req.session.user.userID,
     );
@@ -139,11 +143,11 @@ router.post('/courseSched/', async (req, res) => {
 
 router.put('/courseSched/:courseSchedID', async (req, res) => {
   try {
-    const idOfCourse = await MiddlewareCtrl.getIDofFSRfromCourseSched(
+    const idOfCourse = await getIDofFSRfromCourseSched(
       req.params.courseSchedID,
       req.session.user.userID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfCourse,
       req.session.user.userID,
     );
@@ -223,11 +227,11 @@ router.put('/courseSched/:courseSchedID', async (req, res) => {
 
 router.delete('/courseSched/:courseSchedID', async (req, res) => {
   try {
-    const idOfCourse = await MiddlewareCtrl.getIDofFSRfromCourseSched(
+    const idOfCourse = await getIDofFSRfromCourseSched(
       req.params.courseSchedID,
       req.session.user.userID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfCourse,
       req.session.user.userID,
     );
@@ -306,11 +310,11 @@ router.delete('/courseSched/:courseSchedID', async (req, res) => {
 
 router.get('/courseSched/:courseSchedID', async (req, res) => {
   try {
-    const idOfCourse = await MiddlewareCtrl.getIDofFSRfromCourseSched(
+    const idOfCourse = await getIDofFSRfromCourseSched(
       req.params.courseSchedID,
       req.session.user.userID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfCourse,
       req.session.user.userID,
     );

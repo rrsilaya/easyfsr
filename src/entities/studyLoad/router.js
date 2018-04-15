@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
-import * as MiddlewareCtrl from '../../middlewares/controller';
+import { getUserIDofFSR } from '../../middlewares/controller';
 
 const router = Router();
 
@@ -54,7 +54,7 @@ const router = Router();
 
 router.post('/studyLoad/', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       req.body.id,
       req.session.user.userID,
     );
@@ -138,7 +138,7 @@ router.post('/studyLoad/', async (req, res) => {
 
 router.put('/studyLoad/:id', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       req.params.id,
       req.session.user.userID,
     );
@@ -218,7 +218,7 @@ router.put('/studyLoad/:id', async (req, res) => {
 
 router.delete('/studyLoad/:id', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       req.params.id,
       req.session.user.userID,
     );
@@ -298,7 +298,7 @@ router.delete('/studyLoad/:id', async (req, res) => {
 
 router.get('/studyLoad/:id', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       req.params.id,
       req.session.user.userID,
     );

@@ -1,6 +1,9 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
-import * as MiddlewareCtrl from '../../middlewares/controller';
+import {
+  getUserIDofFSR,
+  getIDofFSRfromCourse,
+} from '../../middlewares/controller';
 
 const router = Router();
 
@@ -51,7 +54,7 @@ const router = Router();
 
 router.post('/course', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       req.body.id,
       req.session.user.userID,
     );
@@ -137,11 +140,11 @@ router.post('/course', async (req, res) => {
 
 router.put('/course/:courseID', async (req, res) => {
   try {
-    const idOfCourse = await MiddlewareCtrl.getIDofFSRfromCourse(
+    const idOfCourse = await getIDofFSRfromCourse(
       req.params.courseID,
       req.session.user.userID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfCourse,
       req.session.user.userID,
     );
@@ -223,11 +226,11 @@ router.put('/course/:courseID', async (req, res) => {
 
 router.delete('/course/:courseID', async (req, res) => {
   try {
-    const idOfCourse = await MiddlewareCtrl.getIDofFSRfromCourse(
+    const idOfCourse = await getIDofFSRfromCourse(
       req.params.courseID,
       req.session.user.userID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfCourse,
       req.session.user.userID,
     );
@@ -309,11 +312,11 @@ router.delete('/course/:courseID', async (req, res) => {
 
 router.get('/course/:courseID', async (req, res) => {
   try {
-    const idOfCourse = await MiddlewareCtrl.getIDofFSRfromCourse(
+    const idOfCourse = await getIDofFSRfromCourse(
       req.params.courseID,
       req.session.user.userID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfCourse,
       req.session.user.userID,
     );

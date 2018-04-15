@@ -1,6 +1,9 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
-import * as MiddlewareCtrl from '../../middlewares/controller';
+import {
+  getUserIDofFSR,
+  getIDofFSRfromLtd,
+} from '../../middlewares/controller';
 
 const router = Router();
 
@@ -46,7 +49,7 @@ const router = Router();
 
 router.post('/ltdPractOfProf/', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       req.body.id,
       req.session.user.userID,
     );
@@ -127,10 +130,10 @@ router.post('/ltdPractOfProf/', async (req, res) => {
 
 router.put('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
   try {
-    const idOfLtdPractOfProf = await MiddlewareCtrl.getIDofFSRfromLtd(
+    const idOfLtdPractOfProf = await getIDofFSRfromLtd(
       req.params.limitedPracticeOfProfID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfLtdPractOfProf,
       req.session.user.userID,
     );
@@ -206,10 +209,10 @@ router.put('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
 
 router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
   try {
-    const idOfLtdPractOfProf = await MiddlewareCtrl.getIDofFSRfromLtd(
+    const idOfLtdPractOfProf = await getIDofFSRfromLtd(
       req.params.limitedPracticeOfProfID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfLtdPractOfProf,
       req.session.user.userID,
     );
@@ -286,10 +289,10 @@ router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
 
 router.get('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
   try {
-    const idOfLtdPractOfProf = await MiddlewareCtrl.getIDofFSRfromLtd(
+    const idOfLtdPractOfProf = await getIDofFSRfromLtd(
       req.params.limitedPracticeOfProfID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfLtdPractOfProf,
       req.session.user.userID,
     );

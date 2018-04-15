@@ -1,6 +1,9 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
-import * as MiddlewareCtrl from '../../middlewares/controller';
+import {
+  getUserIDofFSR,
+  getIDofFSRfromSubject,
+} from '../../middlewares/controller';
 
 const router = Router();
 /**
@@ -47,11 +50,11 @@ const router = Router();
 
 router.post('/timeslot/', async (req, res) => {
   try {
-    const idOfSubject = await MiddlewareCtrl.getIDofFSRfromSubject(
+    const idOfSubject = await getIDofFSRfromSubject(
       req.body.subjectID,
       req.session.user.userID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfSubject,
       req.session.user.userID,
     );
@@ -213,11 +216,11 @@ router.get('/timeslot/', async (req, res) => {
 
 router.get('/timeslot/:timeslotID/', async (req, res) => {
   try {
-    const idOfSubject = await MiddlewareCtrl.getIDofFSRfromTimeslot(
+    const idOfSubject = await getIDofFSRfromTimeslot(
       req.params.timeslotID,
       req.session.user.userID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfSubject,
       req.session.user.userID,
     );
@@ -299,11 +302,11 @@ router.get('/timeslot/:timeslotID/', async (req, res) => {
 
 router.put('/timeslot/:timeslotID/', async (req, res) => {
   try {
-    const idOfSubject = await MiddlewareCtrl.getIDofFSRfromTimeslot(
+    const idOfSubject = await getIDofFSRfromTimeslot(
       req.params.timeslotID,
       req.session.user.userID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfSubject,
       req.session.user.userID,
     );
@@ -380,11 +383,11 @@ router.put('/timeslot/:timeslotID/', async (req, res) => {
 
 router.delete('/timeslot/:timeslotID/', async (req, res) => {
   try {
-    const idOfSubject = await MiddlewareCtrl.getIDofFSRfromTimeslot(
+    const idOfSubject = await getIDofFSRfromTimeslot(
       req.params.timeslotID,
       req.session.user.userID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfSubject,
       req.session.user.userID,
     );

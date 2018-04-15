@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as Middleware from '../../middlewares/middlewares';
+import { isAdmin, isHead } from '../../middlewares/middlewares';
 import * as Ctrl from './controller';
 import { getUsers, getTotalUsers } from './../user/controller';
 import { getAdminWorks } from './../adminWork/controller';
@@ -59,7 +59,7 @@ const router = Router();
  *     "message": "Internal server error"
  *   }
  */
-router.post('/fsr', Middleware.isAdmin, async (req, res) => {
+router.post('/fsr', isAdmin, async (req, res) => {
   try {
     const { total: limit } = await getTotalUsers({});
     const users = await getUsers({ limit });
@@ -202,7 +202,7 @@ router.delete('/fsr/:id', async (req, res) => {
  *   "message": "FSR not found"
  * }
  */
-router.get('/fsr/:id', Middleware.isHead, async (req, res) => {
+router.get('/fsr/:id', isHead, async (req, res) => {
   try {
     let fsr = await Ctrl.getFSR(req.params);
     const adminWorks = await getAdminWorks(req.params);
@@ -337,7 +337,7 @@ router.get('/fsr/:id', Middleware.isHead, async (req, res) => {
  *   "message": "FSR/s not found"
  * }
  */
-router.get('/fsr', Middleware.isHead, async (req, res) => {
+router.get('/fsr', isHead, async (req, res) => {
   try {
     const FSRs = await Ctrl.getFSRs(req.query);
     res.status(200).json({

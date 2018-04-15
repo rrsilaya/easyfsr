@@ -1,8 +1,6 @@
 import { Router } from 'express';
-
-import * as Middleware from '../../middlewares/middlewares';
+import { isAdmin } from '../../middlewares/middlewares';
 import * as Ctrl from './controller';
-import * as MiddlewareCtrl from '../../middlewares/controller';
 
 const router = Router();
 
@@ -47,7 +45,7 @@ const router = Router();
  *     "message": "Internal server error"
  *   }
  */
-router.post('/announcement', Middleware.isAdmin, async (req, res) => {
+router.post('/announcement', isAdmin, async (req, res) => {
   try {
     const announcementID = await Ctrl.addAnnouncement(req.body);
     const announcement = await Ctrl.getAnnouncement({ announcementID });
@@ -112,35 +110,31 @@ router.post('/announcement', Middleware.isAdmin, async (req, res) => {
  *   "message": "Announcement not found"
  * }
  */
-router.delete(
-  '/announcement/:announcementID',
-  Middleware.isAdmin,
-  async (req, res) => {
-    try {
-      const announcement = await Ctrl.getAnnouncement(req.params);
-      await Ctrl.deleteAnnouncement(req.params);
+router.delete('/announcement/:announcementID', isAdmin, async (req, res) => {
+  try {
+    const announcement = await Ctrl.getAnnouncement(req.params);
+    await Ctrl.deleteAnnouncement(req.params);
 
-      res.status(200).json({
-        status: 200,
-        message: 'Successfully deleted announcement',
-        data: announcement,
-      });
-    } catch (status) {
-      let message = '';
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully deleted announcement',
+      data: announcement,
+    });
+  } catch (status) {
+    let message = '';
 
-      switch (status) {
-        case 404:
-          message = 'Announcement not found';
-          break;
-        case 500:
-          message = 'Internal server error';
-          break;
-      }
-
-      res.status(status).json({ status, message });
+    switch (status) {
+      case 404:
+        message = 'Announcement not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
     }
-  },
-);
+
+    res.status(status).json({ status, message });
+  }
+});
 
 /**
  * @api {get} /announcement getAnnouncements
@@ -351,30 +345,26 @@ router.get('/announcement/:announcementID', async (req, res) => {
  *   "message": "Announcement not found"
  * }
  */
-router.put(
-  '/announcement/:announcementID',
-  Middleware.isAdmin,
-  async (req, res) => {
-    try {
-      await Ctrl.updateAnnouncement(req.params, req.body);
-      const announcement = await Ctrl.getAnnouncement(req.params);
-      res.status(200).json({
-        status: 200,
-        message: 'Successfully updated announcement',
-        data: announcement,
-      });
-    } catch (status) {
-      let message = '';
-      switch (status) {
-        case 404:
-          message = 'Announcement not found';
-          break;
-        case 500:
-          message = 'Internal server error';
-          break;
-      }
+router.put('/announcement/:announcementID', isAdmin, async (req, res) => {
+  try {
+    await Ctrl.updateAnnouncement(req.params, req.body);
+    const announcement = await Ctrl.getAnnouncement(req.params);
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully updated announcement',
+      data: announcement,
+    });
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 404:
+        message = 'Announcement not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
     }
-  },
-);
+  }
+});
 
 export default router;

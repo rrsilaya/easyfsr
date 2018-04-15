@@ -1,7 +1,10 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
-
-import * as Middleware from '../../middlewares/middlewares';
+import {
+  isAdmin,
+  isEmployeeAuthorized,
+  isNotSameUser,
+} from '../../middlewares/middlewares';
 import * as Ctrl from './controller';
 import { upload, unlink } from './../../utils';
 
@@ -74,7 +77,7 @@ const router = Router();
  *   }
  */
 
-router.post('/user', Middleware.isAdmin, async (req, res) => {
+router.post('/user', isAdmin, async (req, res) => {
   try {
     req.body.password = await bcrypt.hash(req.body.password, 10);
 
@@ -303,8 +306,8 @@ router.get('/user', async (req, res) => {
 
 router.delete(
   '/user/:userID',
-  Middleware.isEmployeeAuthorized('userID'),
-  Middleware.isNotSameUser('userID'),
+  isEmployeeAuthorized('userID'),
+  isNotSameUser('userID'),
   async (req, res) => {
     try {
       const user = await Ctrl.getUserByUserID(req.params);
@@ -505,7 +508,7 @@ router.get('/user/:employeeID', async (req, res) => {
  */
 router.put(
   '/user/:userID',
-  Middleware.isEmployeeAuthorized('userID'),
+  isEmployeeAuthorized('userID'),
   async (req, res) => {
     try {
       if (req.body.password) {
@@ -521,10 +524,10 @@ router.put(
           await unlink(user.profileIcon);
         req.body.profileIcon = await upload(req.files.profileIcon, 'users');
       }
-
       await Ctrl.updateUser(req.params, req.body);
       const user = await Ctrl.getUserByUserID(req.params);
       delete user.password;
+      await Ctrl.deleteSession(user.employeeID);
       if (req.session.user.userID == user.userID) req.session.user = user;
       res.status(200).json({
         status: 200,
@@ -533,6 +536,7 @@ router.put(
       });
     } catch (status) {
       let message = '';
+
       switch (status) {
         case 404:
           message = 'User not found';

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
-import * as MiddlewareCtrl from '../../middlewares/controller';
+import { getUserIDofFSR } from '../../middlewares/controller';
 import { upload, unlink } from './../../utils';
 
 const router = Router();
@@ -64,7 +64,7 @@ const router = Router();
 
 router.post('/award/', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       req.body.id,
       req.session.user.userID,
     );
@@ -160,7 +160,7 @@ router.post('/award/', async (req, res) => {
 
 router.put('/award/:awardID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       req.params.id,
       req.session.user.userID,
     );
@@ -255,7 +255,7 @@ router.put('/award/:awardID', async (req, res) => {
 
 router.delete('/award/:awardID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       req.params.awardID,
       req.session.user.userID,
     );
@@ -340,7 +340,7 @@ router.delete('/award/:awardID', async (req, res) => {
 
 router.get('/award/:awardID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       req.params.awardID,
       req.session.user.userID,
     );

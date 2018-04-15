@@ -1,6 +1,9 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
-import * as MiddlewareCtrl from '../../middlewares/controller';
+import {
+  getIDofFSRfromConsultationHours,
+  getUserIDofFSR,
+} from '../../middlewares/controller';
 
 const router = Router();
 
@@ -51,7 +54,7 @@ const router = Router();
 
 router.post('/consultationHours/', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       req.body.id,
       req.session.user.userID,
     );
@@ -135,10 +138,8 @@ router.post('/consultationHours/', async (req, res) => {
 
 router.put('/consultationHours/:chID', async (req, res) => {
   try {
-    const idOfCHours = await MiddlewareCtrl.getIDofFSRfromConsultationHours(
-      req.params.chID,
-    );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfCHours = await getIDofFSRfromConsultationHours(req.params.chID);
+    const userIDofFSR = await getUserIDofFSR(
       idOfCHours,
       req.session.user.userID,
     );
@@ -217,10 +218,8 @@ router.put('/consultationHours/:chID', async (req, res) => {
 
 router.delete('/consultationHours/:chID', async (req, res) => {
   try {
-    const idOfCHours = await MiddlewareCtrl.getIDofFSRfromConsultationHours(
-      req.params.chID,
-    );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfCHours = await getIDofFSRfromConsultationHours(req.params.chID);
+    const userIDofFSR = await getUserIDofFSR(
       idOfCHours,
       req.session.user.userID,
     );
@@ -299,10 +298,8 @@ router.delete('/consultationHours/:chID', async (req, res) => {
 
 router.get('/consultationHours/:chID', async (req, res) => {
   try {
-    const idOfCHours = await MiddlewareCtrl.getIDofFSRfromConsultationHours(
-      req.params.chID,
-    );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfCHours = await getIDofFSRfromConsultationHours(req.params.chID);
+    const userIDofFSR = await getUserIDofFSR(
       idOfCHours,
       req.session.user.userID,
     );

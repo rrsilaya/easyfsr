@@ -1,6 +1,10 @@
 import { Router } from 'express';
+import {
+  getIDofFSRfromCreativeWork,
+  getUserIDofFSR,
+  getIDofFSRfromCWorkCoAuth,
+} from '../../middlewares/controller';
 import * as Ctrl from './controller';
-import * as MiddlewareCtrl from '../../middlewares/controller';
 
 const router = Router();
 
@@ -40,10 +44,10 @@ const router = Router();
 
 router.post('/cworkCoAuthor/', async (req, res) => {
   try {
-    const idOfCreativeWork = await MiddlewareCtrl.getIDofFSRfromCreativeWork(
+    const idOfCreativeWork = await getIDofFSRfromCreativeWork(
       req.body.creativeWorkID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfCreativeWork,
       req.session.user.userID,
     );
@@ -200,10 +204,10 @@ router.get('/cworkCoAuthor/', async (req, res) => {
 
 router.delete('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
   try {
-    const idOfCreativeWork = await MiddlewareCtrl.getIDofFSRfromCWorkCoAuth(
+    const idOfCreativeWork = await getIDofFSRfromCWorkCoAuth(
       req.params.cworkCoAuthorID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfCreativeWork,
       req.session.user.userID,
     );
@@ -274,10 +278,10 @@ router.delete('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
 
 router.get('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
   try {
-    const idOfCreativeWork = await MiddlewareCtrl.getIDofFSRfromCWorkCoAuth(
+    const idOfCreativeWork = await getIDofFSRfromCWorkCoAuth(
       req.params.cworkCoAuthorID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfCreativeWork,
       req.session.user.userID,
     );
@@ -350,10 +354,10 @@ router.get('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
 
 router.put('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
   try {
-    const idOfCreativeWork = await MiddlewareCtrl.getIDofFSRfromCWorkCoAuth(
+    const idOfCreativeWork = await getIDofFSRfromCWorkCoAuth(
       req.params.cworkCoAuthorID,
     );
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const userIDofFSR = await getUserIDofFSR(
       idOfCreativeWork,
       req.session.user.userID,
     );
