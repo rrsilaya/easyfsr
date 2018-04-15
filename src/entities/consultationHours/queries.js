@@ -26,13 +26,23 @@ export const updateConsultationHour = consultationHour => `
 `;
 
 export const getConsultationHours = (query, sortBy, userID) => `
-  SELECT * FROM consultationHours x ${
+  SELECT ${
     userID
-      ? `JOIN fsr f ON x.id = f.id WHERE f.userID = :userID ${
-          query.length ? `AND ${formatQueryParams(query, 'getUser')}` : ''
-        }`
-      : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
-  }
+      ? `
+    chID,
+  id,
+  place,
+  day,
+  timeStart,
+  timeEnd`
+      : `*`
+  } FROM consultationHours x ${
+  userID
+    ? `LEFT JOIN fsr f ON x.id = f.id WHERE f.userID = :userID ${
+        query.length ? `AND ${formatQueryParams(query, 'getUser')}` : ''
+      }`
+    : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+}
   ORDER BY ${userID ? `f.` : ''}[field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
   LIMIT :limit OFFSET :offset
 `;
@@ -50,8 +60,8 @@ export const deleteConsultationHour = `
 export const getTotalConsultationHours = (query, userID) => `
   SELECT count(*) as total FROM consultationHours x ${
     userID
-      ? `JOIN fsr f ON x.id = f.id WHERE f.userID = :userID ${
-          query.length ? `AND ${formatQueryParams(query, 'getUser')}` : ''
+      ? `WHERE id IN (SELECT id FROM fsr WHERE userID=:userID) ${
+          query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
         }`
       : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }

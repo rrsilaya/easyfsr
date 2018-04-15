@@ -22,14 +22,23 @@ export const updateLtdPractOfProf = limitedPracticeOfProf => `
 `;
 
 export const getLtdPractOfProfs = (query, sortBy, userID) => `
-  SELECT * FROM limitedPracticeOfProf x ${
+  SELECT ${
     userID
-      ? `JOIN fsr f ON x.id = f.id WHERE f.userID = :userID ${
-          query.length ? `AND ${formatQueryParams(query, 'getUser')}` : ''
-        }`
-      : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
-  }
-  ORDER BY ${userID ? `f.` : ''}[field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+      ? `
+    x.id,
+    limitedPracticeOfProfID,
+    askedPermission,
+    date
+    `
+      : `*`
+  } FROM limitedPracticeOfProf x ${
+  userID
+    ? `LEFT JOIN fsr f ON x.id = f.id WHERE f.userID = :userID ${
+        query.length ? `AND ${formatQueryParams(query, 'getUser')}` : ''
+      }`
+    : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+}
+  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
   LIMIT :limit OFFSET :offset
 `;
 
@@ -46,8 +55,8 @@ export const deleteLtdPractOfProf = `
 export const getTotalLtdPractOfProfs = (query, userID) => `
   SELECT count(*) as total FROM limitedPracticeOfProf x ${
     userID
-      ? `JOIN fsr f ON x.id = f.id WHERE f.userID = :userID ${
-          query.length ? `AND ${formatQueryParams(query, 'getUser')}` : ''
+      ? `WHERE id IN (SELECT id FROM fsr WHERE userID=:userID) ${
+          query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
         }`
       : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }
