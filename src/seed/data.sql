@@ -33,7 +33,7 @@ INSERT INTO user (employeeID, password, firstName, middleName, lastName, committ
 INSERT INTO user (employeeID, password, firstName, middleName, lastName, committee, officeNumber, contractType, emailAddress, rank) VALUES ('1000597752', '$2a$10$JQL/6dENt1TQofx49huAmu1e/K/m8UPn4SGXixRU5NYDK/QzpudbW', 'Aurora', 'Popov', 'Shinton', 'Curriculum & Instruction', 'C-113', 'PART-TIME', 'ashintons@up.edu.ph', 'Instructor 1');
 
 -- FSR
-INSERT INTO fsr (userID, acadYear, semester, filepath) VALUES (1, '2017-2018', 'Second', '/uploads/service-record/HJKcbvHoG.png');
+INSERT INTO fsr (userID, acadYear, semester) VALUES (1, '2017-2018', 'Second');
 INSERT INTO fsr (userID, acadYear, semester) VALUES (1, '2017-2018', 'First');
 INSERT INTO fsr (userID, acadYear, semester) VALUES (1, '2016-2017', 'Second');
 INSERT INTO fsr (userID, acadYear, semester) VALUES (2, '2017-2018', 'Second');
