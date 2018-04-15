@@ -36,11 +36,6 @@ class Users extends Component {
     this.props.changeQuery({ page, limit });
   };
 
-  handlePageSizeChange = (page, limit) => {
-    this.props.getUsers({ ...this.props.query, page, limit });
-    this.props.changeQuery({ page, limit });
-  };
-
   render() {
     const gridConfig = { xxl: 6, xl: 8, sm: 12, xs: 24 };
     const {
@@ -57,6 +52,7 @@ class Users extends Component {
       toggleAddModal,
       toggleDeleteModal,
       changeSelectedUser,
+      changeQuery,
 
       getUsers,
       addUser,
@@ -72,7 +68,11 @@ class Users extends Component {
     return (
       <div>
         <div style={styles.add}>
-          <SearchUser getUsers={getUsers} />
+          <SearchUser
+            getUsers={getUsers}
+            query={query}
+            changeQuery={changeQuery}
+          />
           <Button
             style={styles.addButton}
             size="large"
