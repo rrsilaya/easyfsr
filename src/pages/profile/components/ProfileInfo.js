@@ -4,9 +4,10 @@ import { Row, Col, Card, List } from 'antd';
 import style from '../styles';
 
 const { Item: ListItem } = List;
+
 class ProfileInfo extends Component {
   render() {
-    const { user, adminWork, service, isAdminWork } = this.props;
+    const { adminWork, service, isAdminWork } = this.props;
 
     const gridConfig = { xxl: 6, xl: 8, sm: 12, xs: 24 };
 
@@ -34,24 +35,18 @@ class ProfileInfo extends Component {
               size="small"
               style={style.list}
               dataSource={adminWork}
-              renderItem={(user, i) => (
-                <List.Item>
-                  <Row
-                    justify="space-around"
-                    style={style.listItem}
-                    className="profileInfo"
-                  >
-                    <h3 style={{ color: '#483440' }}>
-                      Position: {user.position}{' '}
-                    </h3>
-                    <p style={{ color: '#483440' }}>
-                      Office Unit: {user.officeUnit}{' '}
-                    </p>
-                    <p style={{ color: '#483440' }}>
-                      Approved Units: {user.approvedUnits}{' '}
-                    </p>
+              renderItem={adminWork => (
+                <ListItem>
+                  <Row style={style.listItem} justify="center">
+                    <h3 className="text primary">{adminWork.position}</h3>
+                    <div>
+                      <dl>
+                        <dt>Office Unit</dt>
+                        <dd>{adminWork.officeUnit}</dd>
+                      </dl>
+                    </div>
                   </Row>
-                </List.Item>
+                </ListItem>
               )}
             />
           </Card>
@@ -62,29 +57,33 @@ class ProfileInfo extends Component {
               size="small"
               style={style.list}
               dataSource={service}
-              renderItem={(user, j) => (
-                <List.Item>
+              renderItem={service => (
+                <ListItem>
                   <Row style={style.listItem} justify="center">
-                    <h3 style={{ color: '#483440' }}>Title: {user.title} </h3>
-                    <p style={{ color: '#483440' }}>
-                      Participant: {user.participant}{' '}
-                    </p>
-                    <p style={{ color: '#483440' }}>Role: {user.role} </p>
-                    <p style={{ color: '#483440' }}>Hours: {user.hours} </p>
-                    <p style={{ color: '#483440' }}>
-                      Credit Unit: {user.creditUnit}{' '}
-                    </p>
-                    <p style={{ color: '#483440' }}>Type: {user.type} </p>
-                    <p style={{ color: '#483440' }}>
-                      Start:{' '}
-                      {moment(user.startDate).format('MMMM Do YYYY, h:mm:ss a')}{' '}
-                    </p>
-                    <p style={{ color: '#483440' }}>
-                      End:{' '}
-                      {moment(user.endDate).format('MMMM Do YYYY, h:mm:ss a')}{' '}
-                    </p>
+                    <h3 className="text primary">{service.title}</h3>
+                    <div>
+                      <dl>
+                        <dt>Type</dt>
+                        <dd>{service.type}</dd>
+                      </dl>
+                      <dl>
+                        <dt>Role</dt>
+                        <dd>{service.role}</dd>
+                      </dl>
+                      <dl>
+                        <dt>Participants</dt>
+                        <dd>{service.participant}</dd>
+                      </dl>
+                      <dl>
+                        <dt>Date</dt>
+                        <dd>
+                          {moment(service.startDate).format('MMMM D, YYYY')} to{' '}
+                          {moment(service.endDate).format('MMMM D, YYYY')}
+                        </dd>
+                      </dl>
+                    </div>
                   </Row>
-                </List.Item>
+                </ListItem>
               )}
             />
           </Card>
