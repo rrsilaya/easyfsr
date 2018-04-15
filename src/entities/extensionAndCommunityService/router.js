@@ -164,8 +164,11 @@ router.post('/service/', async (req, res) => {
 
 router.put('/service/:extAndCommServiceID/', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfService = await MiddlewareCtrl.getIDofFSRfromService(
       req.params.extAndCommServiceID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfService,
       req.session.user.userID,
     );
     await Ctrl.updateExtensionAndCommunityService(req.params, req.body);
@@ -363,8 +366,11 @@ router.get('/service/', async (req, res) => {
 
 router.delete('/service/:extAndCommServiceID/', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfService = await MiddlewareCtrl.getIDofFSRfromService(
       req.params.extAndCommServiceID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfService,
       req.session.user.userID,
     );
     const service = await Ctrl.getExtensionAndCommunityService(req.params);
@@ -451,8 +457,11 @@ router.delete('/service/:extAndCommServiceID/', async (req, res) => {
 
 router.get('/service/:extAndCommServiceID/', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfService = await MiddlewareCtrl.getIDofFSRfromService(
       req.params.extAndCommServiceID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfService,
       req.session.user.userID,
     );
     const service = await Ctrl.getExtensionAndCommunityService(req.params);

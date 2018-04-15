@@ -134,8 +134,11 @@ router.post('/adminWork/', async (req, res) => {
 
 router.put('/adminWork/:adminWorkID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfAdminWork = await MiddlewareCtrl.getIDofFSRfromAdminWork(
       req.params.adminWorkID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfAdminWork,
       req.session.user.userID,
     );
     await Ctrl.updateAdminWork(req.params, req.body);
@@ -211,8 +214,11 @@ router.put('/adminWork/:adminWorkID', async (req, res) => {
 
 router.delete('/adminWork/:adminWorkID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfAdminWork = await MiddlewareCtrl.getIDofFSRfromAdminWork(
       req.params.adminWorkID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfAdminWork,
       req.session.user.userID,
     );
     const adminWork = await Ctrl.getAdminWork(req.params);
@@ -286,8 +292,11 @@ router.delete('/adminWork/:adminWorkID', async (req, res) => {
 
 router.get('/adminWork/:adminWorkID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfAdminWork = await MiddlewareCtrl.getIDofFSRfromAdminWork(
       req.params.adminWorkID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfAdminWork,
       req.session.user.userID,
     );
     const adminWork = await Ctrl.getAdminWork(req.params);

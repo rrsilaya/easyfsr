@@ -52,3 +52,28 @@ export const getIDofFSRfromCWorkCoAuth = `
 	c.creativeWorkID = cc.creativeWorkID
 	WHERE c.creativeWorkID = :creativeWorkID
 `;
+
+export const getIDofFSRfromAdminWork = `
+	SELECT id FROM adminWork a
+	WHERE a.adminWorkID = :adminWorkID
+`;
+
+export const getIDofFSRfromConsultationHours = `
+	SELECT id FROM consultationHours ch
+	WHERE ch.consultationHoursID = :consultationHoursID
+`;
+
+export const getIDofFSRfromService = `
+	SELECT id FROM extensionAndCommunityService e
+	WHERE e.extensionAndCommunityServiceID = :extensionAndCommunityServiceID
+`;
+
+export const getIDofFSRfromLtd = `
+	SELECT id FROM limitedPracticeOfProf l
+	WHERE l.limitedPracticeOfProfID = :limitedPracticeOfProfID
+`;
+
+export const getReceiverIDofNotification = `
+	SELECT receiverID FROM notification
+	WHERE notificationID = :notificationID
+`;

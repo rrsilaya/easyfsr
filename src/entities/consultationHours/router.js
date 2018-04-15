@@ -135,8 +135,11 @@ router.post('/consultationHours/', async (req, res) => {
 
 router.put('/consultationHours/:chID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfCHours = await MiddlewareCtrl.getIDofFSRfromConsultationHours(
       req.params.chID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfCHours,
       req.session.user.userID,
     );
     await Ctrl.updateConsultationHour(req.params, req.body);
@@ -214,8 +217,11 @@ router.put('/consultationHours/:chID', async (req, res) => {
 
 router.delete('/consultationHours/:chID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfCHours = await MiddlewareCtrl.getIDofFSRfromConsultationHours(
       req.params.chID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfCHours,
       req.session.user.userID,
     );
     const consultationHour = await Ctrl.getConsultationHour(req.params);
@@ -293,8 +299,11 @@ router.delete('/consultationHours/:chID', async (req, res) => {
 
 router.get('/consultationHours/:chID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfCHours = await MiddlewareCtrl.getIDofFSRfromConsultationHours(
       req.params.chID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfCHours,
       req.session.user.userID,
     );
     const consultationHour = await Ctrl.getConsultationHour(req.params);

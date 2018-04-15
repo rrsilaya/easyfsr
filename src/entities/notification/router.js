@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
 import * as Middleware from '../../middlewares/middlewares';
+import * as MiddlewareCtrl from '../../middlewares/controller';
 
 const router = Router();
 
@@ -214,6 +215,11 @@ router.delete(
 
 router.get('/notification/:notificationID', async (req, res) => {
   try {
+    let receiverIDofNotification = '';
+    if (req.session.user.acctType === 'USER')
+      receiverIDofNotification = await MiddlewareCtrl.getReceiverIDofNotification(
+        req.params.notificationID,
+      );
     const notification = await Ctrl.getNotification(req.params);
 
     res.status(200).json({
@@ -224,6 +230,9 @@ router.get('/notification/:notificationID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Notification not found';
         break;

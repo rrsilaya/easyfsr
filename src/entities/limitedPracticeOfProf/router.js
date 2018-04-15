@@ -127,8 +127,11 @@ router.post('/ltdPractOfProf/', async (req, res) => {
 
 router.put('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfLtdPractOfProf = await MiddlewareCtrl.getIDofFSRfromLtd(
       req.params.limitedPracticeOfProfID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfLtdPractOfProf,
       req.session.user.userID,
     );
     await Ctrl.updateLtdPractOfProf(req.params, req.body);
@@ -203,8 +206,11 @@ router.put('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
 
 router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfLtdPractOfProf = await MiddlewareCtrl.getIDofFSRfromLtd(
       req.params.limitedPracticeOfProfID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfLtdPractOfProf,
       req.session.user.userID,
     );
     const ltdPractOfProf = await Ctrl.getLtdPractOfProf(req.params);
@@ -280,8 +286,11 @@ router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
 
 router.get('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
   try {
-    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+    const idOfLtdPractOfProf = await MiddlewareCtrl.getIDofFSRfromLtd(
       req.params.limitedPracticeOfProfID,
+    );
+    const userIDofFSR = await MiddlewareCtrl.getUserIDofFSR(
+      idOfLtdPractOfProf,
       req.session.user.userID,
     );
     const ltdPractOfProf = await Ctrl.getLtdPractOfProf(req.params);

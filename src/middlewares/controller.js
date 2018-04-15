@@ -15,6 +15,32 @@ export const getUserIDofFSR = (id, userID) => {
   });
 };
 
+export const getIDofFSRfromAdminWork = adminWorkID => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getIDofFSRfromAdminWork, { adminWorkID }, (err, results) => {
+      console.log(results);
+      if (err) return reject(500);
+      if (results.length != 0) return resolve(results[0].id);
+      return reject(404);
+    });
+  });
+};
+
+export const getIDofFSRfromConsultationHours = chID => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      Query.getIDofFSRfromConsultationHours,
+      { chID },
+      (err, results) => {
+        console.log(results);
+        if (err) return reject(500);
+        if (results.length != 0) return resolve(results[0].id);
+        return reject(404);
+      },
+    );
+  });
+};
+
 export const getIDofFSRfromCourse = (courseID, userID) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getIDofFSRfromCourse, { courseID }, (err, results) => {
@@ -105,6 +131,51 @@ export const getIDofFSRfromCWorkCoAuth = cworkCoAuthorID => {
     db.query(
       Query.getIDofFSRfromCWorkCoAuth,
       { cworkCoAuthorID },
+      (err, results) => {
+        console.log(results);
+        if (err) return reject(500);
+        if (results.length != 0) return resolve(results[0].id);
+        return reject(404);
+      },
+    );
+  });
+};
+
+export const getIDofFSRfromService = extAndCommServiceID => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      Query.getIDofFSRfromService,
+      { extAndCommServiceID },
+      (err, results) => {
+        console.log(results);
+        if (err) return reject(500);
+        if (results.length != 0) return resolve(results[0].id);
+        return reject(404);
+      },
+    );
+  });
+};
+
+export const getIDofFSRfromLtd = limitedPracticeOfProfID => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      Query.getIDofFSRfromLtd,
+      { limitedPracticeOfProfID },
+      (err, results) => {
+        console.log(results);
+        if (err) return reject(500);
+        if (results.length != 0) return resolve(results[0].id);
+        return reject(404);
+      },
+    );
+  });
+};
+
+export const getReceiverIDofNotification = notificationID => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      Query.getReceiverIDofNotification,
+      { notificationID },
       (err, results) => {
         console.log(results);
         if (err) return reject(500);
