@@ -1650,3 +1650,5 @@ INSERT INTO announcement (userID, title, body, isResolved) VALUES (1, 'Open Grav
 INSERT INTO announcement (userID, title, body, isResolved) VALUES (1, 'Zombie Strippers!', 'Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.
 
 In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.', false);
+
+INSERT INTO meta (acadYear, semester, universityRegistrar, homeDepartment, formRevision, homeCollege) VALUES ('2017-2018', 'Second', 'Myrna G. Carandang', 'Institute of Computer Science', '2013-10-25', 'CAS');

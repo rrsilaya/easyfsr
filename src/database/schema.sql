@@ -315,6 +315,20 @@ CREATE TABLE announcement(
     FOREIGN KEY (`userID`)
     REFERENCES user(`userID`)
 );
+
+CREATE TABLE meta (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `acadYear` VARCHAR (20) NOT NULL,
+  `semester` VARCHAR (10) NOT NULL,
+  `universityRegistrar` VARCHAR(50),
+  `homeDepartment` VARCHAR(50),
+  `formRevision` DATE,
+  `homeCollege` VARCHAR(50),
+
+  CONSTRAINT `meta_pk`
+    PRIMARY KEY(`id`)
+);
+
 -- Trigger for Teaching Load of FSR
 
 CREATE TRIGGER insert_teachingLoadCreds 
