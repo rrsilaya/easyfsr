@@ -61,11 +61,8 @@ const router = Router();
 
 router.post('/fsr/', async (req, res) => {
   try {
-    const { total: limit } = await getTotalUsers({});
-    const users = await getUsers({ limit });
-    users.mapdata(
-      async ({ userID } = user) => await Ctrl.addFSR({ userID, ...req.body }),
-    );
+    const users = req.body.users;
+    users.map(async userID => await Ctrl.addFSR({ userID, ...req.body }));
     res.status(200).json({
       status: 200,
       message: 'Successfully created fsr for users',
