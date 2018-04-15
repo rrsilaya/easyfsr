@@ -14,13 +14,13 @@ const router = Router();
  * @apiParam (Body Params) {String} courseNumber courseNumber of course
  * @apiParam (Body Params) {Number} id fsr id
  *
- * @apiSuccess {Object} course new Course is added
- * @apiSuccess {Number} course.courseID course ID
- * @apiSuccess {Number} course.hoursPerWeek number of hours of course per week
- * @apiSuccess {String} course.school school course is being taken
- * @apiSuccess {Number} course.credit credit of course
- * @apiSuccess {String} course.courseNumber courseNumber of course
- * @apiSuccess {Number} course.id fsr id
+ * @apiSuccess {Object} data new Course added
+ * @apiSuccess {Number} data.courseID course ID
+ * @apiSuccess {Number} data.hoursPerWeek number of hours of course per week
+ * @apiSuccess {String} data.school school course is being taken
+ * @apiSuccess {Number} data.credit credit of course
+ * @apiSuccess {String} data.courseNumber courseNumber of course
+ * @apiSuccess {Number} data.id fsr id
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -39,7 +39,7 @@ const router = Router();
  *           }
  *   }
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status  status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -85,18 +85,20 @@ router.post('/course', async (req, res) => {
  * @apiGroup Course
  * @apiName updateCourse
  *
- * @apiParam (Query Params) {String} [courseNumber] courseNumber of course
+ * @apiParam (Query Params) {Number} courseID courseNumber of course
+ *
+ * @apiParam (Body Params) {String} [courseNumber] courseNumber of course
  * @apiParam (Body Params) {String} [school] school course is being taken
  * @apiParam (Body Params) {Number} [credit] credit of course
- * @apiParam (Body Params) {String} [id] fsr id
+ * @apiParam (Body Params) {Number} [id] fsr id
  *
- * @apiSuccess {Object} course Course updated
- * @apiSuccess {Number} course.courseID course ID
- * @apiSuccess {Number} course.hoursPerWeek number of hours of course per week
- * @apiSuccess {String} course.school school course is being taken
- * @apiSuccess {Number} course.credit credit of course
- * @apiSuccess {String} course.courseNumber courseNumber of course
- * @apiSuccess {Number} course.id fsr id
+ * @apiSuccess {Object} data Course updated
+ * @apiSuccess {Number} data.courseID course ID
+ * @apiSuccess {Number} data.hoursPerWeek number of hours of course per week
+ * @apiSuccess {String} data.school school course is being taken
+ * @apiSuccess {Number} data.credit credit of course
+ * @apiSuccess {String} data.courseNumber courseNumber of course
+ * @apiSuccess {Number} data.id fsr id
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -104,7 +106,7 @@ router.post('/course', async (req, res) => {
  *     "data": {
  *       "status": 200,
  *       "message": "Successfully updated course",
- *       "data": [
+ *       "data":
  *         {
  *           "courseID": 1,
  *           "hoursPerWeek": "5",
@@ -113,11 +115,10 @@ router.post('/course', async (req, res) => {
  *           "courseNumber": "999",
  *           "id": 1
  *        }
- *      ]
  *   }
  *
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status  status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -125,13 +126,13 @@ router.post('/course', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 User not found
+ * HTTP/1.1 404 Course not found
  * {
  *   "status": 404,
- *   "message": "course not found"
+ *   "message": "Course not found"
  * }
  */
 
@@ -167,19 +168,19 @@ router.put('/course/:courseID', async (req, res) => {
 });
 
 /**
- * @api {delete} /course/:courseNumber deleteCourse
+ * @api {delete} /course/:courseID deleteCourse
  * @apiGroup Course
  * @apiName deleteCourse
  *
- * @apiParam (Query Params) {String} courseNumber courseNumber of course
+ * @apiParam (Query Params) {Number} courseID courseID of course
  *
- * @apiSuccess {Object} course Course course deleted
- * @apiSuccess {Number} course.courseID course ID
- * @apiSuccess {Number} course.hoursPerWeek number of hours of course per week
- * @apiSuccess {String} course.school school course is being taken
- * @apiSuccess {Number} course.credit credit of course
- * @apiSuccess {String} course.courseNumber courseNumber of course
- * @apiSuccess {Number} course.id fsr id
+ * @apiSuccess {Object} data Course course deleted
+ * @apiSuccess {Number} data.courseID course ID
+ * @apiSuccess {Number} data.hoursPerWeek number of hours of course per week
+ * @apiSuccess {String} data.school school course is being taken
+ * @apiSuccess {Number} data.credit credit of course
+ * @apiSuccess {String} data.courseNumber courseNumber of course
+ * @apiSuccess {Number} data.id fsr id
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -187,7 +188,7 @@ router.put('/course/:courseID', async (req, res) => {
  *     "data": {
  *       "status": 200,
  *       "message": "Successfully deleted course",
- *       "data": [
+ *       "data":
  *         {
  *           "courseID": 1,
  *           "hoursPerWeek": "5",
@@ -196,11 +197,10 @@ router.put('/course/:courseID', async (req, res) => {
  *           "courseNumber": "999",
  *           "id": 1
  *        }
- *      ]
  *   }
  *
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status error status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -208,13 +208,13 @@ router.put('/course/:courseID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 User not found
+ * HTTP/1.1 404 Course not found
  * {
  *   "status": 404,
- *   "message": "course not found"
+ *   "message": "Course not found"
  * }
  */
 
@@ -256,13 +256,13 @@ router.delete('/course/:courseID', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} courseID courseID of course
  *
- * @apiSuccess {Object} course Course details
- * @apiSuccess {Number} course.courseID course ID
- * @apiSuccess {Number} course.hoursPerWeek number of hours of course per week
- * @apiSuccess {String} course.school school course is being taken
- * @apiSuccess {Number} course.credit credit of course
- * @apiSuccess {String} course.courseNumber courseNumber of course
- * @apiSuccess {Number} course.id fsr
+ * @apiSuccess {Object} data Course fetched
+ * @apiSuccess {Number} data.courseID course ID
+ * @apiSuccess {Number} data.hoursPerWeek number of hours of course per week
+ * @apiSuccess {String} data.school school course is being taken
+ * @apiSuccess {Number} data.credit credit of course
+ * @apiSuccess {String} data.courseNumber courseNumber of course
+ * @apiSuccess {Number} data.id fsr id
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -270,7 +270,7 @@ router.delete('/course/:courseID', async (req, res) => {
  *     "data": {
  *       "status": 200,
  *       "message": "Successfully fetched course",
- *       "data": [
+ *       "data":
  *         {
  *           "courseID": 1,
  *           "hoursPerWeek": "5",
@@ -279,7 +279,6 @@ router.delete('/course/:courseID', async (req, res) => {
  *           "courseNumber": "999",
  *           "id": 1
  *        }
- *      ]
  *   }
  *
  *
@@ -291,10 +290,10 @@ router.delete('/course/:courseID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 User not found
+ * HTTP/1.1 404 Course not found
  * {
  *   "status": 404,
  *   "message": "course not found"
@@ -336,6 +335,7 @@ router.get('/course/:courseID', async (req, res) => {
  * @apiGroup Course
  * @apiName getCourses
  *
+ * @apiParam (Query Params) {Number} [id] id of fsr
  * @apiParam (Query Params) {Number} [hoursPerWeek] number of hours of course per week
  * @apiParam (Query Params) {String} [school] school course is being taken
  * @apiParam (Query Params) {Numner} [credit] credit of course
@@ -345,13 +345,17 @@ router.get('/course/:courseID', async (req, res) => {
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'courseNumber'
  *
- * @apiSuccess {Object[]} courses All courses
- * @apiSuccess {String} course.courseID course ID
- * @apiSuccess {String} course.hoursPerWeek number of hours of course per week
- * @apiSuccess {String} course.school school course is being taken
- * @apiSuccess {String} course.credit credit of course
- * @apiSuccess {String} course.courseNumber courseNumber of course
- * @apiSuccess {String} course.id fsr id
+ * @apiSuccess {Object[]} data All courses fetched
+ * @apiSuccess {Number} data.courseID course ID
+ * @apiSuccess {Number} data.hoursPerWeek number of hours of course per week
+ * @apiSuccess {String} data.school school course is being taken
+ * @apiSuccess {Number} data.credit credit of course
+ * @apiSuccess {String} data.courseNumber courseNumber of course
+ * @apiSuccess {Number} data.id fsr id
+ * @apiSuccess {Number} total Total amount of documents.
+ * @apiSuccess {Number} limit Max number of documents
+ * @apiSuccess {Number} page nth page this query is.
+ * @apiSuccess {Number} pages Number of total pages.
  *
  * @apiSuccessExample {json} Success-Response:
  *    HTTP/1.1 200 OK

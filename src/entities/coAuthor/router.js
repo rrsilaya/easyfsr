@@ -11,10 +11,10 @@ const router = Router();
  * @apiParam (Body Params) {Number} creativeWorkID ID of creative work
  * @apiParam (Body Params) {String} name name of co-author as user
  *
- * @apiSuccess {Object} cworkCoAuthor CworkCoAuthor fetched
- * @apiSuccess {Number} cworkCoAuthor.creativeWorkID ID of creative work
- * @apiSuccess {String} cworkCoAuthor.name name of co-author as user
- * @apiSuccess {Number} cworkCoAuthor.cworkCoAuthorID ID of cworkCoAuthor
+ * @apiSuccess {Object} data CworkCoAuthor fetched
+ * @apiSuccess {Number} data.creativeWorkID ID of creative work
+ * @apiSuccess {String} data.name name of co-author as user
+ * @apiSuccess {Number} data.cworkCoAuthorID ID of cworkCoAuthor
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -27,7 +27,7 @@ const router = Router();
  *         "name": Erlen
  *     }
  * }
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -62,6 +62,7 @@ router.post('/cworkCoAuthor/', async (req, res) => {
  * @apiGroup CworkCoAuthor
  * @apiName getCworkCoAuthors
  *
+ * @apiParam (Query Params) {Number} cworkCoAuthorID ID of creative work co-author
  * @apiParam (Query Params) {Number} creativeWorkID ID of creative work
  * @apiParam (Query Params) {String} name name of co-author as user
  * @apiParam (Query Params) {Number} [page] page number
@@ -69,10 +70,14 @@ router.post('/cworkCoAuthor/', async (req, res) => {
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'chairGrantTitle'
  *
- * @apiSuccess {Object} cworkCoAuthor CworkCoAuthor fetched
- * @apiSuccess {Number} cworkCoAuthor.creativeWorkID ID of creative work
- * @apiSuccess {Number} cworkCoAuthor.name ID of co-author as user
- * @apiSuccess {Number} cworkCoAuthor.cworkCoAuthorID ID of cworkCoAuthor
+ * @apiSuccess {Object[]} data CworkCoAuthors fetched
+ * @apiSuccess {Number} data.creativeWorkID ID of creative work
+ * @apiSuccess {Number} data.name ID of co-author as user
+ * @apiSuccess {Number} data.cworkCoAuthorID ID of cworkCoAuthor
+ * @apiSuccess {Number} total Total amount of documents.
+ * @apiSuccess {Number} limit Max number of documents
+ * @apiSuccess {Number} page nth page this query is.
+ * @apiSuccess {Number} pages Number of total pages.
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  * {
@@ -95,7 +100,7 @@ router.post('/cworkCoAuthor/', async (req, res) => {
  *     "page": 1,
  *     "pages": 1
  * }
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -103,13 +108,6 @@ router.post('/cworkCoAuthor/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 Co-author not found
- * {
- *   "status": 404,
- *   "message": "Co-authors not found"
  * }
  */
 
@@ -149,10 +147,10 @@ router.get('/cworkCoAuthor/', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} cworkCoAuthorID ID of co-author
  *
- * @apiSuccess {Object} cworkCoAuthor CworkCoAuthor fetched
- * @apiSuccess {Number} cworkCoAuthor.creativeWorkID ID of creative work
- * @apiSuccess {String} cworkCoAuthor.name name of co-author as user
- * @apiSuccess {Number} cworkCoAuthor.cworkCoAuthorID ID of cworkCoAuthor
+ * @apiSuccess {Object} data CworkCoAuthor fetched
+ * @apiSuccess {Number} data.creativeWorkID ID of creative work
+ * @apiSuccess {String} data.name name of co-author as user
+ * @apiSuccess {Number} data.cworkCoAuthorID ID of cworkCoAuthor
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -165,7 +163,7 @@ router.get('/cworkCoAuthor/', async (req, res) => {
  *         "name": Erlen
  *     }
  * }
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -173,7 +171,7 @@ router.get('/cworkCoAuthor/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Co-author not found
@@ -213,10 +211,11 @@ router.delete('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} cworkCoAuthorID ID of co-author
  *
- * @apiSuccess {Object} cworkCoAuthor CworkCoAuthor fetched
- * @apiSuccess {Number} cworkCoAuthor.creativeWorkID ID of creative work
- * @apiSuccess {String} cworkCoAuthor.name name of co-author as user
- * @apiSuccess {Number} cworkCoAuthor.cworkCoAuthorID ID of cworkCoAuthor
+ * @apiSuccess {Object} datadata CworkCoAuthor fetched
+ * @apiSuccess {Number} datadata.creativeWorkID ID of creative work
+ * @apiSuccess {String} datadata.name name of co-author as user
+ * @apiSuccess {Number} datadata.cworkCoAuthorID ID of cworkCoAuthor
+ *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  * {
@@ -228,7 +227,7 @@ router.delete('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
  *         "name": Erlen
  *     }
  * }
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -236,7 +235,7 @@ router.delete('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Co-author not found
@@ -274,13 +273,15 @@ router.get('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
  * @apiName updateCworkCoAuthor
  *
  * @apiParam (Query Params) {Number} cworkCoAuthorID ID of co-author
- * @apiParam (Body Params) {Number} creativeWorkID ID of creative work
- * @apiParam (Body Params) {String} name name of co-author as user
  *
- * @apiSuccess {Object} cworkCoAuthor CworkCoAuthor fetched
- * @apiSuccess {Number} cworkCoAuthor.creativeWorkID ID of creative work
- * @apiSuccess {String} cworkCoAuthor.name name of co-author as user
- * @apiSuccess {Number} cworkCoAuthor.cworkCoAuthorID ID of cworkCoAuthor
+ * @apiParam (Body Params) {Number} [creativeWorkID] ID of creative work
+ * @apiParam (Body Params) {String} [name] name of co-author as user
+ *
+ * @apiSuccess {Object} data CworkCoAuthor fetched
+ * @apiSuccess {Number} data.creativeWorkID ID of creative work
+ * @apiSuccess {String} data.name name of co-author as user
+ * @apiSuccess {Number} data.cworkCoAuthorID ID of cworkCoAuthor
+ *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  * {
@@ -292,7 +293,7 @@ router.get('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
  *         "name": Erlen
  *     }
  * }
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -300,7 +301,7 @@ router.get('/cworkCoAuthor/:cworkCoAuthorID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Co-author not found

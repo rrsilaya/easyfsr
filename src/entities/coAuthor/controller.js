@@ -4,7 +4,7 @@ import { filtered, escapeSearch } from '../../utils';
 
 const cworkCoAuthorAttributes = ['creativeWorkID', 'name', 'cworkCoAuthorID'];
 
-const searchFields = ['creativeWorkID', 'name'];
+const searchFields = ['cworkCoAuthorID', 'creativeWorkID', 'name'];
 
 export const addCworkCoAuthor = cworkCoAuthor => {
   return new Promise((resolve, reject) => {

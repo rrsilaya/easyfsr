@@ -43,8 +43,6 @@ CREATE TABLE fsr(
   `isTurnedIn` boolean DEFAULT 0,
   `teachingLoadCreds` INT(2) DEFAULT 0,
   `totalCHours` INT(2) DEFAULT 0, 
-  `filepath` TEXT (50),
-  -- place all entitiesID here
   CONSTRAINT `fsr_pk` 
     PRIMARY KEY (`id`),
   CONSTRAINT `user_fsr_fk`
@@ -193,7 +191,7 @@ CREATE TABLE `limitedPracticeOfProf`(
 CREATE TABLE `extensionAndCommunityService`(
   `id` INT NOT NULL, 
   `extAndCommServiceID` INT NOT NULL AUTO_INCREMENT,
-  `participant` VARCHAR (50) NOT NULL,
+  `participant` INT (3) NOT NULL,
   `role` VARCHAR (50) NOT NULL,
   `hours` INT (3) NOT NULL,
   `title` VARCHAR (50) NOT NULL,

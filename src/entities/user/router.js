@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import * as Middleware from '../../middlewares/middlewares';
 import * as Ctrl from './controller';
 import { upload, unlink } from './../../utils';
+
 const router = Router();
 /**
  * @api {post} /user addUser
@@ -15,30 +16,30 @@ const router = Router();
  * @apiParam (Body Params) {String} firstName first name of employee
  * @apiParam (Body Params) {String} [middleName] middle name of employee
  * @apiParam (Body Params) {String} lastName last name of employee
- * @apiParam (Body Params) {String} [committee] committee of employee, if exists
+ * @apiParam (Body Params) {String} committee committee of employee, if exists
  * @apiParam (Body Params) {Boolean} [isHead] indicates if employee is head
  * @apiParam (Body Params) {String} [officeNumber] office number of employee
  * @apiParam (Body Params) {String} [contractType] contract type of employee. Can be "FULL-TIME" or "PART-TIME"
  * @apiParam (Body Params) {String} emailAddress email address of employee
  * @apiParam (Body Params) {String} [rank] rank of employee
- * @apiParam (Body Params) {String} [isArchived] indicates if employee entry is archived
+ * @apiParam (Body Params) {Boolean} [isArchived] indicates if employee entry is archived
  * @apiParam (Body Params) {String} [acctType] account type of employee. Can be "USER" or "ADMIN"
  *
- * @apiSuccess {Object} user new User created
- * @apiSuccess {Number} user.userID ID of user
- * @apiSuccess {String} user.employeeID ID of employee
- * @apiSuccess {String} user.password password of employee
- * @apiSuccess {String} user.firstName first name of employee
- * @apiSuccess {String} user.middleName middle name of employee
- * @apiSuccess {String} user.lastName last name of employee
- * @apiSuccess {String} user.committee committee of employee, if exists
- * @apiSuccess {Boolean} user.isHead  indicates if employee is head
- * @apiSuccess {String} user.officeNumber office number of employee
- * @apiSuccess {String} user.contractType contract type of employee
- * @apiSuccess {String} user.emailAddress email address of employee
- * @apiSuccess {String} user.rank rank of employee
- * @apiSuccess {String} user.isArchived indicates if employee entry is archived
- * @apiSuccess {String} user.acctType account type of employee
+ * @apiSuccess {Object} data new User created
+ * @apiSuccess {Number} data.userID ID of user
+ * @apiSuccess {String} data.employeeID ID of employee
+ * @apiSuccess {String} data.password password of employee
+ * @apiSuccess {String} data.firstName first name of employee
+ * @apiSuccess {String} data.middleName middle name of employee
+ * @apiSuccess {String} data.lastName last name of employee
+ * @apiSuccess {String} data.committee committee of employee, if exists
+ * @apiSuccess {Boolean} data.isHead  indicates if employee is head
+ * @apiSuccess {String} data.officeNumber office number of employee
+ * @apiSuccess {String} data.contractType contract type of employee
+ * @apiSuccess {String} data.emailAddress email address of employee
+ * @apiSuccess {String} data.rank rank of employee
+ * @apiSuccess {Boolean} data.isArchived indicates if employee entry is archived
+ * @apiSuccess {String} data.acctType account type of employee
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -63,7 +64,7 @@ const router = Router();
  *         }
  *   }
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -76,8 +77,10 @@ const router = Router();
 router.post('/user', Middleware.isAdmin, async (req, res) => {
   try {
     req.body.password = await bcrypt.hash(req.body.password, 10);
+
     if (req.files && req.files.profileIcon)
       req.body.profileIcon = await upload(req.files.profileIcon, 'users');
+
     const userID = await Ctrl.addUser(req.body);
     const user = await Ctrl.getUserByUserID({ userID });
 
@@ -111,26 +114,34 @@ router.post('/user', Middleware.isAdmin, async (req, res) => {
  * @apiParam (Query Params) {String} [middleName] middle name of employee
  * @apiParam (Query Params) {String} [committee]  committee of employee
  * @apiParam (Query Params) {Number} [officeNumber] room number of employee
+ * @apiParam (Query Params) {Boolean} [isHead] indicates if employee is head
+ * @apiParam (Query Params) {String} [contractType] contract type of employee. Can be "FULL-TIME" or "PART-TIME"
+ * @apiParam (Query Params) {String} [emailAddress] email address of employee
+ * @apiParam (Body Params) {String} [rank] rank of employee
  * @apiParam (Query Params) {Number} [page] page number
  * @apiParam (Query Params) {Number} [limit] count limit of users to fetch
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'lastName'
  *
- * @apiSuccess {Object[]} users All users
- * @apiSuccess {Number} users.userID ID of employee
- * @apiSuccess {String} users.employeeID employee ID
- * @apiSuccess {String} users.password password of employee
- * @apiSuccess {String} users.firstName first name of employee
- * @apiSuccess {String} users.middleName middle name of employee
- * @apiSuccess {String} users.lastName last name of employee
- * @apiSuccess {String} users.committee committee of employee, if exists
- * @apiSuccess {Boolean} users.isHead indicates if employee is head
- * @apiSuccess {String} users.officeNumber office number of employee
- * @apiSuccess {String} users.contractType contract type of employee
- * @apiSuccess {String} users.emailAddress email address of employee
- * @apiSuccess {String} users.rank rank of employee
- * @apiSuccess {Boolean} users.isArchived indicates if employee entry is archived
- * @apiSuccess {String} users.acctType account type of employee
+ * @apiSuccess {Object[]} data All users fetched
+ * @apiSuccess {Number} data.userID ID of employee
+ * @apiSuccess {String} data.employeeID employee ID
+ * @apiSuccess {String} data.password password of employee
+ * @apiSuccess {String} data.firstName first name of employee
+ * @apiSuccess {String} data.middleName middle name of employee
+ * @apiSuccess {String} data.lastName last name of employee
+ * @apiSuccess {String} data.committee committee of employee, if exists
+ * @apiSuccess {Boolean} data.isHead indicates if employee is head
+ * @apiSuccess {String} data.officeNumber office number of employee
+ * @apiSuccess {String} data.contractType contract type of employee
+ * @apiSuccess {String} data.emailAddress email address of employee
+ * @apiSuccess {String} data.rank rank of employee
+ * @apiSuccess {Boolean} data.isArchived indicates if employee entry is archived
+ * @apiSuccess {String} data.acctType account type of employee
+ * @apiSuccess {Number} total Total amount of documents.
+ * @apiSuccess {Number} limit Max number of documents
+ * @apiSuccess {Number} page nth page this query is.
+ * @apiSuccess {Number} pages Number of total pages.
  *
  * @apiSuccessExample {json} Success-Response:
  *    HTTP/1.1 200 OK
@@ -173,7 +184,7 @@ router.post('/user', Middleware.isAdmin, async (req, res) => {
  *     "pages": 8
  *   }
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status  status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -184,7 +195,7 @@ router.post('/user', Middleware.isAdmin, async (req, res) => {
  * @apiError (Error 404) {String} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 User not found
+ * HTTP/1.1 404 Users not found
  * {
  *   "status": 404,
  *   "message": "Users not found"
@@ -233,21 +244,22 @@ router.get('/user', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} userID ID of employee
  *
- * @apiSuccess {Object} user User user deleted
- * @apiSuccess {Number} user.userID ID of user
- * @apiSuccess {String} user.employeeID ID of employee
- * @apiSuccess {String} user.password password of employee
- * @apiSuccess {String} user.firstName first name of employee
- * @apiSuccess {String} user.middleName middle name of employee
- * @apiSuccess {String} user.lastName last name of employee
- * @apiSuccess {String} user.committee committee of employee, if exists
- * @apiSuccess {Boolean} user.isHead indicates if employee is head
- * @apiSuccess {String} user.officeNumber office number of employee
- * @apiSuccess {String} user.contractType contract type of employee
- * @apiSuccess {String} user.emailAddress email address of employee
- * @apiSuccess {String} user.rank rank of employee
- * @apiSuccess {Boolean} user.isArchived indicates if employee entry is archived
- * @apiSuccess {String} user.acctType account type of employee
+ * @apiSuccess {Object} data user deleted
+ * @apiSuccess {Number} data.userID ID of user
+ * @apiSuccess {String} data.employeeID ID of employee
+ * @apiSuccess {String} data.password password of employee
+ * @apiSuccess {String} data.firstName first name of employee
+ * @apiSuccess {String} data.middleName middle name of employee
+ * @apiSuccess {String} data.lastName last name of employee
+ * @apiSuccess {String} data.committee committee of employee, if exists
+ * @apiSuccess {Boolean} data.isHead indicates if employee is head
+ * @apiSuccess {String} data.officeNumber office number of employee
+ * @apiSuccess {String} data.contractType contract type of employee
+ * @apiSuccess {String} data.emailAddress email address of employee
+ * @apiSuccess {String} data.rank rank of employee
+ * @apiSuccess {Boolean} data.isArchived indicates if employee entry is archived
+ * @apiSuccess {String} data.acctType account type of employee
+ *
  * @apiSuccessExample {json} Success-Response:
  *    HTTP/1.1 200 OK
  *   {
@@ -271,7 +283,7 @@ router.get('/user', async (req, res) => {
  *         }
  *  }
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status  status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -279,7 +291,7 @@ router.get('/user', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 User not found
@@ -329,44 +341,47 @@ router.delete(
  *
  * @apiParam (Query Params) {String} employeeID ID of employee
  *
- * @apiSuccess {Object} user User details
- * @apiSuccess {Number} user.userID ID of employee
- * @apiSuccess {String} user.employeeID ID of employee
- * @apiSuccess {String} user.firstName first name of employee
- * @apiSuccess {String} user.middleName middle name of employee
- * @apiSuccess {String} user.lastName last name of employee
- * @apiSuccess {String} user.committee committee of employee, if exists
- * @apiSuccess {Boolean} user.isHead indicates if employee is head
- * @apiSuccess {String} user.officeNumber office number of employee
- * @apiSuccess {String} user.contractType contract type of employee
- * @apiSuccess {String} user.emailAddress email address of employee
- * @apiSuccess {String} user.rank rank of employee
- * @apiSuccess {Boolean} user.isArchived indicates if employee entry is archived
- * @apiSuccess {String} user.acctType account type of employee
+ *
+ * @apiSuccess {Object} data user fetched
+ * @apiSuccess {Number} data.userID ID of user
+ * @apiSuccess {String} data.employeeID ID of employee
+ * @apiSuccess {String} data.password password of employee
+ * @apiSuccess {String} data.firstName first name of employee
+ * @apiSuccess {String} data.middleName middle name of employee
+ * @apiSuccess {String} data.lastName last name of employee
+ * @apiSuccess {String} data.committee committee of employee, if exists
+ * @apiSuccess {Boolean} data.isHead indicates if employee is head
+ * @apiSuccess {String} data.officeNumber office number of employee
+ * @apiSuccess {String} data.contractType contract type of employee
+ * @apiSuccess {String} data.emailAddress email address of employee
+ * @apiSuccess {String} data.rank rank of employee
+ * @apiSuccess {Boolean} data.isArchived indicates if employee entry is archived
+ * @apiSuccess {String} data.acctType account type of employee
  *
  * @apiSuccessExample {json} Success-Response:
- *   HTTP/1.1 200 OK
+ *    HTTP/1.1 200 OK
  *   {
- *     "status":200,
- *     "message":"Successfully fetched user",
- *     "data":
+ *    "status": 200,
+ *    "message": "Successfully deleted user",
+ *    "data":
  *        {
- *          "employeeID":"5121328320",
- *          "firstName":"Erlen Mae",
- *          "middleName":"S",
- *          "lastName":"Evangelista",
- *          "committee":null,
- *          "isHead":null,
- *          "officeNumber":"128",
- *          "contractType":"full-time",
- *          "emailAddress":"esevangelista1@up.edu.ph",
- *          "rank":null,
- *          "isArchived":0,
- *          "acctType":"USER"
- *        }
- *   }
+ *          "userID": 3,
+ *          "employeeID": "51111231223",
+ *          "firstName": "Marie",
+ *          "middleName": "S",
+ *          "lastName": "Smith",
+ *          "committee": null,
+ *          "isHead": null,
+ *          "officeNumber": "118",
+ *          "contractType": "part-time",
+ *          "emailAddress": "marieSmith@up.edu.ph",
+ *          "rank": null,
+ *          "isArchived": 0,
+ *          "acctType": "USER"
+ *         }
+ *  }
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status  status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -374,7 +389,7 @@ router.delete(
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 User not found
@@ -383,6 +398,7 @@ router.delete(
  *   "message": "User not found"
  * }
  */
+
 router.get('/user/:employeeID', async (req, res) => {
   try {
     const user = await Ctrl.getUserByEmpID(req.params);
@@ -417,35 +433,35 @@ router.get('/user/:employeeID', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} userID ID of employee
  *
- * @apiParam (Body Params) {String} user.employeeID employee ID
- * @apiParam (Body Params) {String} password password of employee
- * @apiParam (Body Params) {String} firstName first name of employee
+ * @apiParam (Body Params) {String} [employeeID] employee ID
+ * @apiParam (Body Params) {String} [password] password of employee
+ * @apiParam (Body Params) {String} [firstName] first name of employee
  * @apiParam (Body Params) {String} [middleName] middle name of employee
- * @apiParam (Body Params) {String} lastName last name of employee
+ * @apiParam (Body Params) {String} [lastName last name of employee
  * @apiParam (Body Params) {String} [committee] committee of employee, if exists
  * @apiParam (Body Params) {Boolean} [isHead] indicates if employee is head
- * @apiParam (Body Params) {String} officeNumber office number of employee
- * @apiParam (Body Params) {String} contractType contract type of employee
- * @apiParam (Body Params) {String} emailAddress email address of employee
+ * @apiParam (Body Params) {String} [officeNumber] office number of employee
+ * @apiParam (Body Params) {String} [contractType] contract type of employee
+ * @apiParam (Body Params) {String} [emailAddress] email address of employee
  * @apiParam (Body Params) {String} [rank] rank of employee
  * @apiParam (Body Params) {Boolean} [isArchived] indicates if employee entry is archived
  * @apiParam (Body Params) {String} [acctType] account type of employee
  *
- * @apiSuccess {Object} user User updated
- * @apiSuccess {String} user.userID ID of employee
- * @apiSuccess {String} user.employeeID employee ID
- * @apiSuccess {String} user.password password of employee
- * @apiSuccess {String} user.firstName first name of employee
- * @apiSuccess {String} user.middleName middle name of employee
- * @apiSuccess {String} user.lastName last name of employee
- * @apiSuccess {String} user.committee committee of employee, if exists
- * @apiSuccess {Boolean} user.isHead indicates if employee is head
- * @apiSuccess {String} user.officeNumber office number of employee
- * @apiSuccess {String} user.contractType contract type of employee
- * @apiSuccess {String} user.emailAddress email address of employee
- * @apiSuccess {String} user.rank rank of employee
- * @apiSuccess {Boolean} user.isArchived indicates if employee entry is archived
- * @apiSuccess {String} user.acctType account type of employee
+ * @apiSuccess {Object} data user updated
+ * @apiSuccess {Number} data.userID ID of user
+ * @apiSuccess {String} data.employeeID ID of employee
+ * @apiSuccess {String} data.password password of employee
+ * @apiSuccess {String} data.firstName first name of employee
+ * @apiSuccess {String} data.middleName middle name of employee
+ * @apiSuccess {String} data.lastName last name of employee
+ * @apiSuccess {String} data.committee committee of employee, if exists
+ * @apiSuccess {Boolean} data.isHead indicates if employee is head
+ * @apiSuccess {String} data.officeNumber office number of employee
+ * @apiSuccess {String} data.contractType contract type of employee
+ * @apiSuccess {String} data.emailAddress email address of employee
+ * @apiSuccess {String} data.rank rank of employee
+ * @apiSuccess {Boolean} data.isArchived indicates if employee entry is archived
+ * @apiSuccess {String} data.acctType account type of employee
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -470,7 +486,7 @@ router.get('/user/:employeeID', async (req, res) => {
  *           }
  *   }
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status error status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -478,7 +494,7 @@ router.get('/user/:employeeID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 User not found
@@ -509,7 +525,7 @@ router.put(
       await Ctrl.updateUser(req.params, req.body);
       const user = await Ctrl.getUserByUserID(req.params);
       delete user.password;
-
+      if (req.session.user.userID == user.userID) req.session.user = user;
       res.status(200).json({
         status: 200,
         message: 'Successfully updated user',

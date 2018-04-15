@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
 import * as MiddlewareCtrl from '../../middlewares/controller';
 
@@ -10,22 +9,22 @@ const router = Router();
  * @apiGroup Subject
  * @apiName addSubject
 
- * @apiParam (Body Params) {Number} subject.id ID of subject
- * @apiParam (Body Params) {String} subject.subjectCode subject code of subject
- * @apiParam (Body Params) {Number} subject.teachingLoadCreds teaching load credits of subject
- * @apiParam (Body Params) {Number} subject.noOfStudents number of students enrolled in the subject
- * @apiParam (Body Params) {String} subject.sectionCode section code of subject
- * @apiParam (Body Params) {String} subject.room room where subject is being taught
+ * @apiParam (Body Params) {Number} id ID of FSR
+ * @apiParam (Body Params) {String} subjectCode subject code of subject
+ * @apiParam (Body Params) {Number} [teachingLoadCreds] teaching load credits of subject
+ * @apiParam (Body Params) {Number} noOfStudents number of students enrolled in the subject
+ * @apiParam (Body Params) {String} sectionCode section code of subject
+ * @apiParam (Body Params) {String} room room where subject is being taught
  *
- * @apiSuccess {Object}  subject subject added
- * @apiSuccess {Number} subject.id ID of FSR
- * @apiSuccess {String} subject.subjectCode subject code of subject
- * @apiSuccess {Number} subject.subjectID ID of subject
- * @apiSuccess {Number} subject.teachingLoadCreds teaching load credits of subject
- * @apiSuccess {Number} subject.noOfStudents number of students enrolled in the subject
- * @apiSuccess {Number} subject.hoursPerWeek number of hours per week subject takes up
- * @apiSuccess {String} subject.sectionCode section code of subject
- * @apiSuccess {String} subject.room room where subject is being taught
+ * @apiSuccess {Object} data subject added
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {String} data.subjectCode subject code of subject
+ * @apiSuccess {Number} data.subjectID ID of subject
+ * @apiSuccess {Number} data.teachingLoadCreds teaching load credits of subject
+ * @apiSuccess {Number} data.noOfStudents number of students enrolled in the subject
+ * @apiSuccess {Number} data.hoursPerWeek number of hours per week subject takes up
+ * @apiSuccess {String} data.sectionCode section code of subject
+ * @apiSuccess {String} data.room room where subject is being taught
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -46,7 +45,7 @@ const router = Router();
  *       
  *   }
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -92,42 +91,41 @@ router.post('/subject/', async (req, res) => {
  * @apiName updateSubject
  *
  * @apiParam (Query Params) {Number} subjectID ID of subject
-
- * @apiParam (Body Params) {String} subject.subjectCode subject code of subject
- * @apiParam (Body Params) {Number} subject.teachingLoadCreds teaching load credits of subject
- * @apiParam (Body Params) {Number} subject.noOfStudents number of students enrolled in the subject
- * @apiParam (Body Params) {String} subject.sectionCode section code of subject
- * @apiParam (Body Params) {Number} subject.room room where subject is being taught
  *
- * @apiSuccess {Object} subject Subject updated
- * @apiSuccess {Number} subject.id ID of subject
- * @apiSuccess {String} subject.subjectCode subject code of subject
- * @apiSuccess {Number} subject.subjectID subject ID of subject
- * @apiSuccess {Number} subject.teachingLoadCreds teaching load credits of subject
- * @apiSuccess {Number} subject.noOfStudents number of students enrolled in the subject
- * @apiSuccess {Number} subject.hoursPerWeek number of hours per week subject takes up
- * @apiSuccess {String} subject.sectionCode section code of subject
- * @apiSuccess {String} subject.room room where subject is being taught
+ * @apiParam (Body Params) {Number} [id] ID of fsr
+ * @apiParam (Body Params) {String} [subjectCode] subject code of subject
+ * @apiParam (Body Params) {Number} [noOfStudents] number of students enrolled in the subject
+ * @apiParam (Body Params) {String} [sectionCode] section code of subject
+ * @apiParam (Body Params) {Number} [room] room where subject is being taught
+ *
+ * @apiSuccess {Object} data Subject updated
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {String} data.subjectCode subject code of subject
+ * @apiSuccess {Number} data.subjectID ID of subject
+ * @apiSuccess {Number} data.teachingLoadCreds teaching load credits of subject
+ * @apiSuccess {Number} data.noOfStudents number of students enrolled in the subject
+ * @apiSuccess {Number} data.hoursPerWeek number of hours per week subject takes up
+ * @apiSuccess {String} data.sectionCode section code of subject
+ * @apiSuccess {String} data.room room where subject is being taught
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *  {
-      "status": 200,
-      "message": "Successfully updated subject",
-      "data": [
-          {
-              "id": 1,
-              "subjectCode": "NEW CODE",
-              "subjectID": 1,
-              "teachingLoadCreds": 2,
-              "noOfStudents": 2,
-              "hoursPerWeek": 2,
-              "sectionCode": "sd",
-              "room": "12"
-          }
-      ]
-    }
- * @apiError (Error 500) {String} status error status code
+ *     "status": 200,
+ *     "message": "Successfully updated subject",
+ *     "data":
+ *         {
+ *             "id": 1,
+ *             "subjectCode": "NEW CODE",
+ *             "subjectID": 1,
+ *             "teachingLoadCreds": 2,
+ *             "noOfStudents": 2,
+ *             "hoursPerWeek": 2,
+ *             "sectionCode": "sd",
+ *             "room": "12"
+ *         }
+ *   }
+ * @apiError (Error 500) {Number} status error status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -135,7 +133,7 @@ router.post('/subject/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Subject not found
@@ -181,22 +179,22 @@ router.put('/subject/:subjectID', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} subjectID ID of subject
  *
- * @apiSuccess {Object} subject Subject deleted
- * @apiSuccess {Number} subject.id ID of FSR
- * @apiSuccess {String} subject.subjectCode subject code of subject
- * @apiSuccess {Number} subject.subjectID ID of subject
- * @apiSuccess {Number} subject.teachingLoadCreds teaching load credits of subject
- * @apiSuccess {Number} subject.noOfStudents number of students enrolled in the subject
- * @apiSuccess {Number} subject.hoursPerWeek number of hours per week subject takes up
- * @apiSuccess {String} subject.sectionCode section code of subject
- * @apiSuccess {String} subject.room room where subject is being taught
+ * @apiSuccess {Object} data Subject deleted
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {String} data.subjectCode subject code of subject
+ * @apiSuccess {Number} data.subjectID ID of subject
+ * @apiSuccess {Number} data.teachingLoadCreds teaching load credits of subject
+ * @apiSuccess {Number} data.noOfStudents number of students enrolled in the subject
+ * @apiSuccess {Number} data.hoursPerWeek number of hours per week subject takes up
+ * @apiSuccess {String} data.sectionCode section code of subject
+ * @apiSuccess {String} data.room room where subject is being taught
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *        "status": 200;
  *        "message": 'Succesfully deleted subject'
- *         "data": [
+ *         "data":
  *         {
  *           "id": 1,
  *           "subjectCode": "NEW CODE",
@@ -207,10 +205,9 @@ router.put('/subject/:subjectID', async (req, res) => {
  *           "sectionCode": "sd",
  *           "room": "12"
  *         }
- *     ]
  *   }
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status error status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -218,7 +215,7 @@ router.put('/subject/:subjectID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Subject not found
@@ -265,15 +262,15 @@ router.delete('/subject/:subjectID', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} subjectID ID of subject
  *
- * @apiSuccess {Object} subject Subject fetched
- * @apiSuccess {Number} subject.id ID of FSR
- * @apiSuccess {Number} subject.subjectCode subject code of subject
- * @apiSuccess {String} subject.subjectID ID of subject
- * @apiSuccess {Number} subject.teachingLoadCreds teaching load credits of subject
- * @apiSuccess {Number} subject.noOfStudents number of students enrolled in the subject
- * @apiSuccess {Number} subject.hoursPerWeek number of hours per week subject takes up
- * @apiSuccess {String} subject.sectionCode section code of subject
- * @apiSuccess {String} subject.room room where subject is being taught
+ * @apiSuccess {Object} data Subject fetched
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {String} data.subjectCode subject code of subject
+ * @apiSuccess {Number} data.subjectID ID of subject
+ * @apiSuccess {Number} data.teachingLoadCreds teaching load credits of subject
+ * @apiSuccess {Number} data.noOfStudents number of students enrolled in the subject
+ * @apiSuccess {Number} data.hoursPerWeek number of hours per week subject takes up
+ * @apiSuccess {String} data.sectionCode section code of subject
+ * @apiSuccess {String} data.room room where subject is being taught
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -293,7 +290,7 @@ router.delete('/subject/:subjectID', async (req, res) => {
  *       }
  *
  *  }
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status error status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -301,7 +298,7 @@ router.delete('/subject/:subjectID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Subject not found
@@ -345,7 +342,7 @@ router.get('/subject/:subjectID', async (req, res) => {
  * @apiName getSubjects
  *
  * @apiParam (Query Params) {Number} [id]  fsr id 
- * @apiParam (Query Params) {Number} [subjectCode] subject code of subject
+ * @apiParam (Query Params) {String} [subjectCode] subject code of subject
  * @apiParam (Query Params) {Number} [teachingLoadCreds] teaching load credits of subject
  * @apiParam (Query Params) {Number} [noOfStudents] number of students enrolled in the subject
  * @apiParam (Query Params) {Number} [hoursPerWeek] number of hours per week subject takes up
@@ -356,16 +353,20 @@ router.get('/subject/:subjectID', async (req, res) => {
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'subjectCode'
  * 
- * @apiSuccess {Object} subject Subjects fetched
- * @apiSuccess {Number} subject.id ID of FSR
- * @apiSuccess {Number} subject.subjectCode subject code of subject
- * @apiSuccess {String} subject.subjectID ID of subject
- * @apiSuccess {Number} subject.teachingLoadCreds teaching load credits of subject
- * @apiSuccess {Number} subject.noOfStudents number of students enrolled in the subject
- * @apiSuccess {Number} subject.hoursPerWeek number of hours per week subject takes up
- * @apiSuccess {String} subject.sectionCode section code of subject
- * @apiSuccess {String} subject.room room where subject is being taught
- *
+ * @apiSuccess {Object[]} data Subjects fetched
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {String} data.subjectCode subject code of subject
+ * @apiSuccess {Number} data.subjectID ID of subject
+ * @apiSuccess {Number} data.teachingLoadCreds teaching load credits of subject
+ * @apiSuccess {Number} data.noOfStudents number of students enrolled in the subject
+ * @apiSuccess {Number} data.hoursPerWeek number of hours per week subject takes up
+ * @apiSuccess {String} data.sectionCode section code of subject
+ * @apiSuccess {String} data.room room where subject is being taught
+ * @apiSuccess {Number} total Total amount of documents.
+ * @apiSuccess {Number} limit Max number of documents
+ * @apiSuccess {Number} page nth page this query is.
+ * @apiSuccess {Number} pages Number of total pages.
+ * 
  @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *  {
@@ -398,7 +399,7 @@ router.get('/subject/:subjectID', async (req, res) => {
  *     "page": 8,
  *     "pages": 8
  *  }
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -406,7 +407,7 @@ router.get('/subject/:subjectID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Subjects not found

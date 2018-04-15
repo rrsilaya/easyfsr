@@ -9,26 +9,25 @@ const router = Router();
  * @apiGroup ConsultationHours
  * @apiName addConsultationHour
  *
- * @apiParam (Body Params) {Number} [chID] chID of consultationHour
- * @apiParam (Body Params) {Number} [id] ID of FSR
- * @apiParam (Body Params) {String} [place] place of consultationHour
- * @apiParam (Body Params) {String} [day] day of consultationHour
- * @apiParam (Body Params) {Time} [timeStart] timeStart of consultationHour
- * @apiParam (Body Params) {Time} [timeEnd] timeEnd of consultationHour
+ * @apiParam (Body Params) {Number} id ID of FSR
+ * @apiParam (Body Params) {String} place place of consultationHour
+ * @apiParam (Body Params) {String} day day of consultationHour
+ * @apiParam (Body Params) {Time} timeStart timeStart of consultationHour
+ * @apiParam (Body Params) {Time} timeEnd timeEnd of consultationHour
  *
- * @apiSuccess {Object} consultationHour new Consultation Hour
- * @apiSuccess {Number} consultationHour.chID chID of consultationHour
- * @apiSuccess {Number} consultationHour.id ID of FSR
- * @apiSuccess {String} consultationHour.place place of consultationHour
- * @apiSuccess {String} consultationHour.day day of consultationHour
- * @apiSuccess {Time} consultationHour.timeStart timeStart of consultationHour
- * @apiSuccess {Time} consultationHour.timeEnd timeEnd of consultationHour
+ * @apiSuccess {Object} data new Consultation Hour
+ * @apiSuccess {Number} data.chID chID of consultationHour
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {String} data.place place of consultationHour
+ * @apiSuccess {String} data.day day of consultationHour
+ * @apiSuccess {Time} data.timeStart timeStart of consultationHour
+ * @apiSuccess {Time} data.timeEnd timeEnd of consultationHour
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *  {
  *      "status": 200,
- *      "message": "Successfully created consultation hours details",
+ *      "message": "Successfully created consultation hours",
  *      "data":
  *          {
  *              "chID": 1,
@@ -40,7 +39,7 @@ const router = Router();
  *          }
  *  }
  *
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -85,26 +84,27 @@ router.post('/consultationHours/', async (req, res) => {
  * @apiGroup ConsultationHours
  * @apiName updateConsultationHour
  *
- * @apiParam (Query Params) {Number} [chID] chID of consultationHour
+ * @apiParam (Query Params) {Number} chID chID of consultationHour
+ *
  * @apiParam (Body Params) {Number} [id] ID of FSR
  * @apiParam (Body Params) {String} [place] place of consultationHour
  * @apiParam (Body Params) {String} [day] day of consultationHour
  * @apiParam (Body Params) {Time} [timeStart] timeStart of consultationHour
  * @apiParam (Body Params) {Time} [timeEnd] timeEnd of consultationHour
  *
- * @apiSuccess {Object} consultationHour Consultation Hour updated
- * @apiSuccess {Number} consultationHour.chID chID of consultationHour
- * @apiSuccess {Number} consultationHour.id ID of FSR
- * @apiSuccess {String} consultationHour.place place of consultationHour
- * @apiSuccess {String} consultationHour.day day of consultationHour
- * @apiSuccess {Time} consultationHour.timeStart timeStart of consultationHour
- * @apiSuccess {Time} consultationHour.timeEnd timeEnd of consultationHour
+ * @apiSuccess {Object} data Consultation Hour updated
+ * @apiSuccess {Number} data.chID chID of consultationHour
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {String} data.place place of consultationHour
+ * @apiSuccess {String} data.day day of consultationHour
+ * @apiSuccess {Time} data.timeStart timeStart of consultationHour
+ * @apiSuccess {Time} data.timeEnd timeEnd of consultationHour
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *  {
  *      "status": 200,
- *      "message": "Successfully updated consultation hours details",
+ *      "message": "Successfully updated consultation hours",
  *      "data":
  *          {
  *              "chID": 1,
@@ -116,14 +116,7 @@ router.post('/consultationHours/', async (req, res) => {
  *          }
  *  }
  *
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * HTTP/1.1 404 Consultation Hour not found
- * {
- *   "status": 404,
- *   "message": "Consultation hours details not found"
- * }
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -131,6 +124,13 @@ router.post('/consultationHours/', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message Error message
+ * HTTP/1.1 404 Consultation Hour not found
+ * {
+ *   "status": 404,
+ *   "message": "Consultation hours details not found"
+ * }
  */
 
 router.put('/consultationHours/:chID', async (req, res) => {
@@ -169,21 +169,21 @@ router.put('/consultationHours/:chID', async (req, res) => {
  * @apiGroup ConsultationHours
  * @apiName deleteConsultationHour
  *
- * @apiParam (Query Params) {Number} [chID] chID of consultationHour
+ * @apiParam (Query Params) {Number} chID chID of consultationHour
  *
- * @apiSuccess {Object} consultationHour Consultation Hour deleted
- * @apiSuccess {Number} consultationHour.chID chID of consultationHour
- * @apiSuccess {Number} consultationHour.id ID of FSR
- * @apiSuccess {String} consultationHour.place place of consultationHour
- * @apiSuccess {String} consultationHour.day day of consultationHour
- * @apiSuccess {Time} consultationHour.timeStart timeStart of consultationHour
- * @apiSuccess {Time} consultationHour.timeEnd timeEnd of consultationHour
+ * @apiSuccess {Object} data Consultation Hour deleted
+ * @apiSuccess {Number} data.chID chID of consultationHour
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {String} data.place place of consultationHour
+ * @apiSuccess {String} data.day day of consultationHour
+ * @apiSuccess {Time} data.timeStart timeStart of consultationHour
+ * @apiSuccess {Time} data.timeEnd timeEnd of consultationHour
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *  {
  *      "status": 200,
- *      "message": "Successfully deleted consultation hours details",
+ *      "message": "Successfully deleted consultation hours",
  *      "data":
  *          {
  *              "chID": 1,
@@ -195,14 +195,14 @@ router.put('/consultationHours/:chID', async (req, res) => {
  *          }
  *  }
  *
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * HTTP/1.1 404 Consultation Hour not found
  * {
  *   "status": 404,
  *   "message": "Consultation hours details not found"
  * }
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -248,21 +248,21 @@ router.delete('/consultationHours/:chID', async (req, res) => {
  * @apiGroup ConsultationHours
  * @apiName getConsultationHour
  *
- * @apiParam (Query Params) {Number} [chID] chID of consultationHour
+ * @apiParam (Query Params) {Number} chID chID of consultationHour
  *
- * @apiSuccess {Object} consultationHour Consulatation Hour fetched
- * @apiSuccess {Number} consultationHour.chID chID of consultationHour
- * @apiSuccess {Number} consultationHour.id ID of FSR
- * @apiSuccess {String} consultationHour.place place of consultationHour
- * @apiSuccess {String} consultationHour.day day of consultationHour
- * @apiSuccess {Time} consultationHour.timeStart timeStart of consultationHour
- * @apiSuccess {Time} consultationHour.timeEnd timeEnd of consultationHour
+ * @apiSuccess {Object[]} data Consulatation Hours fetched
+ * @apiSuccess {Number} data.chID chID of consultationHour
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {String} data.place place of consultationHour
+ * @apiSuccess {String} data.day day of consultationHour
+ * @apiSuccess {Time} data.timeStart timeStart of consultationHour
+ * @apiSuccess {Time} data.timeEnd timeEnd of consultationHour
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *  {
  *      "status": 200,
- *      "message": "Successfully fetched consultation hours details",
+ *      "message": "Successfully fetched consultation hours",
  *      "data":
  *          {
  *              "chID": 1,
@@ -274,14 +274,14 @@ router.delete('/consultationHours/:chID', async (req, res) => {
  *          }
  *  }
  *
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * HTTP/1.1 404 Consultation Hour not found
  * {
  *   "status": 404,
  *   "message": "Consultation hours details not found"
  * }
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -326,6 +326,7 @@ router.get('/consultationHours/:chID', async (req, res) => {
  * @apiGroup ConsultationHours
  * @apiName getConsultationHours
  *
+ * @apiParam (Query Params) {Number} [id] id of fsr
  * @apiParam (Query Params) {String} [place] chair grant title of award
  * @apiParam (Query Params) {String} [day] professional chair of award
  * @apiParam (Query Params) {Time} [timeStart] approved start date of award
@@ -335,19 +336,23 @@ router.get('/consultationHours/:chID', async (req, res) => {
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'day'
  *
- * @apiSuccess {Object} consultationHour consulatationHours fetched
- * @apiSuccess {Number} consultationHour.chID chID of consultationHour
- * @apiSuccess {Number} consultationHour.id ID of FSR
- * @apiSuccess {String} consultationHour.place place of consultationHours
- * @apiSuccess {String} consultationHour.day day of consultationHours
- * @apiSuccess {Time} consultationHour.timeStart timeStart of consultationHours
- * @apiSuccess {Time} consultationHour.timeEnd timeEnd of consultationHours
+ * @apiSuccess {Object} data consulatationHours fetched
+ * @apiSuccess {Number} data.chID chID of consultationHour
+ * @apiSuccess {Number} data.id ID of FSR
+ * @apiSuccess {String} data.place place of consultationHours
+ * @apiSuccess {String} data.day day of consultationHours
+ * @apiSuccess {Time} data.timeStart timeStart of consultationHours
+ * @apiSuccess {Time} data.timeEnd timeEnd of consultationHours
+ * @apiSuccess {Number} total Total amount of documents.
+ * @apiSuccess {Number} limit Max number of documents
+ * @apiSuccess {Number} page nth page this query is.
+ * @apiSuccess {Number} pages Number of total pages.
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *  {
  *      "status": 200,
- *      "message": "Successfully fetched consultation hours details",
+ *      "message": "Successfully fetched consultation hours",
  *      "data":
  *          {
  *              "chID": 1,
@@ -371,14 +376,7 @@ router.get('/consultationHours/:chID', async (req, res) => {
  *      "pages": 1
  *  }
  *
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * HTTP/1.1 404 ConsultationHours not found
- * {
- *   "status": 404,
- *   "message": "Consultation hours details not found"
- * }
- * @apiError (Error 500) {String} status status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error

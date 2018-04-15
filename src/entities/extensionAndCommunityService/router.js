@@ -10,33 +10,33 @@ const router = Router();
  * @apiGroup ExtensionAndCommunityService
  * @apiName addExtensionAndCommunityService
  *
- * @apiParam (Body Params) {String} id of service
- * @apiParam (Body Params) {String} participant
- * @apiParam (Body Params) {String} role
- * @apiParam (Body Params) {Integer} hours
- * @apiParam (Body Params) {String} title
- * @apiParam (Body Params) {Integer} creditUnit of service
- * @apiParam (Body Params) {String} type of service
- * @apiParam (Body Params) {String} startdate of service
- * @apiParam (Body Params) {String} enddateof service
+ * @apiParam (Body Params) {Number} id id of fsr
+ * @apiParam (Body Params) {Number} participant number of participants
+ * @apiParam (Body Params) {String} role role
+ * @apiParam (Body Params) {Number} hours hours spent
+ * @apiParam (Body Params) {String} title comminity service title
+ * @apiParam (Body Params) {Number} creditUnit credit units of service
+ * @apiParam (Body Params) {String} type type of service
+ * @apiParam (Body Params) {Date} startDate date the service started
+ * @apiParam (Body Params) {Date} endDate date service ended
  *
- * @apiParam {String} service.id id of service
- * @apiParam {String} service.participant participant
- * @apiParam {String} service.role role
- * @apiParam {Integer} service.hours hours of service
- * @apiParam {String} service.title title of service
- * @apiParam {Integer} service.creditUnit creditUnit of service
- * @apiParam {String} service.type type of service
- * @apiParam {String} service.startdate startdate of service
- * @apiParam {String} service.enddate enddate of service
- * @apiSuccess {Object} service new service created
+ * @apiSuccess {Object} data new service created
+ * @apiSuccess {Number} data.id id of service
+ * @apiSuccess {Number} data.participant participant
+ * @apiSuccess {String} data.role role
+ * @apiSuccess {Number} data.hours hours of service
+ * @apiSuccess {String} data.title title of service
+ * @apiSuccess {Number} data.creditUnit creditUnit of service
+ * @apiSuccess {String} data.type type of service
+ * @apiSuccess {Date} data.startDate start date of service
+ * @apiSuccess {Date} data.endDate end date of service
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  * {
  *    "status": 200,
  *    "message": "Successfully created service",
- *    "data": [
+ *    "data":
  *        {
  *            "id": 1,
  *            "extAndCommServiceID": 1,
@@ -47,13 +47,12 @@ const router = Router();
  *            "creditUnit": 1,
  *            "type": "rest",
  *            "startDate": "010118",
- *           "endDate": "123118"
+ *            "endDate": "123118"
  *        }
- *   ]
  * }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {Number} status status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
@@ -97,37 +96,39 @@ router.post('/service/', async (req, res) => {
 });
 
 /**
- * @api {put} /service updateExtensionAndCommunityService
+ * @api {put} /service/:extAndCommServiceID updateExtensionAndCommunityService
  * @apiGroup ExtensionAndCommunityService
  * @apiName updateExtensionAndCommunityService
  *
- * @apiParam (Body Params) {String} id of service
- * @apiParam (Body Params) {String} participant
- * @apiParam (Body Params) {String} role
- * @apiParam (Body Params) {Integer} hours
- * @apiParam (Body Params) {String} title
- * @apiParam (Body Params) {Integer} creditUnit of service
- * @apiParam (Body Params) {String} type of service
- * @apiParam (Body Params) {String} startdate of service
- * @apiParam (Body Params) {String} enddateof service
+ * @apiParam (Query Params) {Number} extAndCommServiceID id of service
  *
- * @apiParam {String} service.id id of service
- * @apiParam {String} service.participant participant
- * @apiParam {String} service.role role
- * @apiParam {Integer} service.hours hours of service
- * @apiParam {String} service.title title of service
- * @apiParam {Integer} service.creditUnit creditUnit of service
- * @apiParam {String} service.type type of service
- * @apiParam {String} service.startdate startdate of service
- * @apiParam {String} service.enddate enddate of service
- * @apiSuccess {Object} service new service created
+ * @apiParam (Body Params) {Number} [id] id of fsr
+ * @apiParam (Body Params) {Number} [participant] number of participants
+ * @apiParam (Body Params) {String} [role] role
+ * @apiParam (Body Params) {Number} [hours] hours spent
+ * @apiParam (Body Params) {String}  [title] comminity service title
+ * @apiParam (Body Params) {Number} [creditUnit] credit units of service
+ * @apiParam (Body Params) {String} [type] type of service
+ * @apiParam (Body Params) {Date} [startDate] date the service started
+ * @apiParam (Body Params) {Date} [endDate] date service ended
+ *
+ * @apiSuccess {Object} data  service updated
+ * @apiSuccess {Number} data.id id of service
+ * @apiSuccess {Number} data.participant participant
+ * @apiSuccess {String} data.role role
+ * @apiSuccess {Number} data.hours hours of service
+ * @apiSuccess {String} data.title title of service
+ * @apiSuccess {Number} data.creditUnit creditUnit of service
+ * @apiSuccess {String} data.type type of service
+ * @apiSuccess {Date} data.startDate start date of service
+ * @apiSuccess {Date} data.endDate end date of service
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  * {
  *    "status": 200,
  *    "message": "Successfully updated service",
- *    "data": [
+ *    "data":
  *        {
  *            "id": 1,
  *            "extAndCommServiceID": 1,
@@ -140,16 +141,24 @@ router.post('/service/', async (req, res) => {
  *            "startDate": "010118",
  *            "endDate": "123118"
  *        }
- *    ]
  * }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {Number} status status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
+ *   }
+ *
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ *   HTTP/1.1 404 Service not found
+ *   {
+ *     "status": 404,
+ *     "message": "Service not found"
  *   }
  */
 
@@ -188,26 +197,34 @@ router.put('/service/:extAndCommServiceID/', async (req, res) => {
  * @apiGroup ExtensionAndCommunityService
  * @apiName getExtensionAndCommunityServices
  *
- * @apiParam (Body Params) {String} id of service
- * @apiParam (Body Params) {String} participant
- * @apiParam (Body Params) {String} role
- * @apiParam (Body Params) {Integer} hours
- * @apiParam (Body Params) {String} title
- * @apiParam (Body Params) {Integer} creditUnit of service
- * @apiParam (Body Params) {String} type of service
- * @apiParam (Body Params) {String} startdate of service
- * @apiParam (Body Params) {String} enddateof service
+ * @apiParam (Query Params) {Number} [id] id of fsr
+ * @apiParam (Query Params) {Number} [participant] number of participants
+ * @apiParam (Query Params) {String} [role] role
+ * @apiParam (Query Params) {Number} [hours] hours spent
+ * @apiParam (Query Params) {String}  [title] comminity service title
+ * @apiParam (Query Params) {Number} [creditUnit] credit units of service
+ * @apiParam (Query Params) {String} [type] type of service
+ * @apiParam (Query Params) {Date} [startDate] date the service started
+ * @apiParam (Query Params) {Date} [endDate] date service ended
+ * @apiParam (Query Params) {Number} [page] page number
+ * @apiParam (Query Params) {Number} [limit] count limit of creative works to fetch
+ * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
+ * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'date'
  *
- * @apiParam {String} service.id id of service
- * @apiParam {String} service.participant participant
- * @apiParam {String} service.role role
- * @apiParam {Integer} service.hours hours of service
- * @apiParam {String} service.title title of service
- * @apiParam {Integer} service.creditUnit creditUnit of service
- * @apiParam {String} service.type type of service
- * @apiParam {String} service.startdate startdate of service
- * @apiParam {String} service.enddate enddate of service
- * @apiSuccess {Object} service new service created
+ * @apiSuccess {Object[]} data  services fetched
+ * @apiSuccess {Number} data.id id of service
+ * @apiSuccess {Number} data.participant participant
+ * @apiSuccess {String} data.role role
+ * @apiSuccess {Number} data.hours hours of service
+ * @apiSuccess {String} data.title title of service
+ * @apiSuccess {Number} data.creditUnit creditUnit of service
+ * @apiSuccess {String} data.type type of service
+ * @apiSuccess {Date} data.startDate start date of service
+ * @apiSuccess {Date} data.endDate end date of service
+ * @apiSuccess {Number} total Total amount of documents.
+ * @apiSuccess {Number} limit Max number of documents
+ * @apiSuccess {Number} page nth page this query is.
+ * @apiSuccess {Number} pages Number of total pages.
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -226,6 +243,18 @@ router.put('/service/:extAndCommServiceID/', async (req, res) => {
  *            "type": "rest",
  *            "startDate": "010118",
  *            "endDate": "123118"
+ *        },
+ *        {
+ *            "id": 2,
+ *            "extAndCommServiceID": 2,
+ *            "participant": "ren",
+ *            "role": "wala",
+ *            "hours": 3,
+ *            "title": "tulog",
+ *            "creditUnit": 1,
+ *            "type": "rest",
+ *            "startDate": "010118",
+ *            "endDate": "123118"
  *        }
  *   ],
  *    "total": 1,
@@ -233,15 +262,15 @@ router.put('/service/:extAndCommServiceID/', async (req, res) => {
  *    "page": 1,
  *    "pages": 1
  * }
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {Number} status status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- **/
+ */
 
 router.get('/service/', async (req, res) => {
   try {
@@ -275,37 +304,29 @@ router.get('/service/', async (req, res) => {
 });
 
 /**
- * @api {delete} /service deleteExtensionAndCommunityService
+ * @api {delete} /service/:extAndCommServiceID deleteExtensionAndCommunityService
  * @apiGroup ExtensionAndCommunityService
  * @apiName deleteExtensionAndCommunityService
  *
- * @apiParam (Body Params) {String} id of service
- * @apiParam (Body Params) {String} participant
- * @apiParam (Body Params) {String} role
- * @apiParam (Body Params) {Integer} hours
- * @apiParam (Body Params) {String} title
- * @apiParam (Body Params) {Integer} creditUnit of service
- * @apiParam (Body Params) {String} type of service
- * @apiParam (Body Params) {String} startdate of service
- * @apiParam (Body Params) {String} enddateof service
+ * @apiParam (Query Params) {Number} extAndCommServiceID id of service
  *
- * @apiParam {String} service.id id of service
- * @apiParam {String} service.participant participant
- * @apiParam {String} service.role role
- * @apiParam {Integer} service.hours hours of service
- * @apiParam {String} service.title title of service
- * @apiParam {Integer} service.creditUnit creditUnit of service
- * @apiParam {String} service.type type of service
- * @apiParam {String} service.startdate startdate of service
- * @apiParam {String} service.enddate enddate of service
- * @apiSuccess {Object} service new service created
+ * @apiSuccess {Object} data  service deleted
+ * @apiSuccess {Number} data.id id of service
+ * @apiSuccess {Number} data.participant participant
+ * @apiSuccess {String} data.role role
+ * @apiSuccess {Number} data.hours hours of service
+ * @apiSuccess {String} data.title title of service
+ * @apiSuccess {Number} data.creditUnit creditUnit of service
+ * @apiSuccess {String} data.type type of service
+ * @apiSuccess {Date} data.startDate start date of service
+ * @apiSuccess {Date} data.endDate end date of service
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  * {
  *    "status": 200,
  *    "message": "Successfully deleted service",
- *    "data": [
+ *    "data":
  *        {
  *            "id": 1,
  *            "extAndCommServiceID": 1,
@@ -318,18 +339,27 @@ router.get('/service/', async (req, res) => {
  *           "startDate": "010118",
  *           "endDate": "123118"
  *       }
- *   ]
+ *
  * }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * @apiError (Error 500) {Number} status status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- **/
+ *
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ *   HTTP/1.1 404 Service not found
+ *   {
+ *     "status": 404,
+ *     "message": "Service not found"
+ *   }
+ */
 
 router.delete('/service/:extAndCommServiceID/', async (req, res) => {
   try {
@@ -362,59 +392,62 @@ router.delete('/service/:extAndCommServiceID/', async (req, res) => {
 });
 
 /**
- * @api {get} /service getExtensionAndCommunityService
+ * @api {get} /service/:extAndCommServiceID getExtensionAndCommunityService
  * @apiGroup ExtensionAndCommunityService
  * @apiName getExtensionAndCommunityService
  *
- * @apiParam (Body Params) {String} id of service
- * @apiParam (Body Params) {String} participant
- * @apiParam (Body Params) {String} role
- * @apiParam (Body Params) {Integer} hours
- * @apiParam (Body Params) {String} title
- * @apiParam (Body Params) {Integer} creditUnit of service
- * @apiParam (Body Params) {String} type of service
- * @apiParam (Body Params) {String} startdate of service
- * @apiParam (Body Params) {String} enddateof service
+ * @apiParam (Query Params) {Number} extAndCommServiceID id of service
  *
- * @apiParam {String} service.id id of service
- * @apiParam {String} service.participant participant
- * @apiParam {String} service.role role
- * @apiParam {Integer} service.hours hours of service
- * @apiParam {String} service.title title of service
- * @apiParam {Integer} service.creditUnit creditUnit of service
- * @apiParam {String} service.type type of service
- * @apiParam {String} service.startdate startdate of service
- * @apiParam {String} service.enddate enddate of service
- * @apiSuccess {Object} service new service created
+ * @apiSuccess {Object} data  service fetched
+ * @apiSuccess {Number} data.id id of service
+ * @apiSuccess {Number} data.participant participant
+ * @apiSuccess {String} data.role role
+ * @apiSuccess {Number} data.hours hours of service
+ * @apiSuccess {String} data.title title of service
+ * @apiSuccess {Number} data.creditUnit creditUnit of service
+ * @apiSuccess {String} data.type type of service
+ * @apiSuccess {Date} data.startDate start date of service
+ * @apiSuccess {Date} data.endDate end date of service
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
- *  {
- *   "status": 200,
- *   "message": "Successfully fetched service".
- *   "data": [{
- *       "id": 1,
- *       "extAndCommServiceID": 1,
- *       "participant": "ren",
- *       "role": "wala",
- *       "hours": 3,
- *       "title": "tulog",
- *       "creditUnit": 1,
- *       "type": "rest",
- *       "startDate": "010118",
- *       "endDate": "123118"
- *    }]
- *  }
+ * {
+ *    "status": 200,
+ *    "message": "Successfully fetched service",
+ *    "data":
+ *        {
+ *            "id": 1,
+ *            "extAndCommServiceID": 1,
+ *            "participant": "ren",
+ *            "role": "wala",
+ *            "hours": 3,
+ *            "title": "tulog",
+ *           "creditUnit": 1,
+ *           "type": "rest",
+ *           "startDate": "010118",
+ *           "endDate": "123118"
+ *       }
  *
- * @apiError (Error 500) {String[]} errors List of errors
- * @apiError (Error 500) {String} errors.message Error message
+ * }
+ *
+ * @apiError (Error 500) {Number} status status code
+ * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
  *   {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- **/
+ *
+ * @apiError (Error 404) {Number} status status code
+ * @apiError (Error 404) {String} message Error message
+ * @apiErrorExample {json} Error-Response:
+ *   HTTP/1.1 404 Service not found
+ *   {
+ *     "status": 404,
+ *     "message": "Service not found"
+ *   }
+ */
 
 router.get('/service/:extAndCommServiceID/', async (req, res) => {
   try {
