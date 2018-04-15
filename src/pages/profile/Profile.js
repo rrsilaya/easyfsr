@@ -9,9 +9,6 @@ import styles from './styles';
 class Profile extends Component {
   componentDidMount() {
     this.props.getUserProfile(this.props.match.params.userID);
-
-    this.props.getAdminWork(this.props.match.params.userID);
-    this.props.getUserExtensionAndCommService(this.props.match.params.userID);
   }
 
   componentWillUnmount() {
@@ -28,6 +25,10 @@ class Profile extends Component {
       isUploadingIcon,
 
       uploadIcon,
+      getAdminWork,
+      getUserExtensionAndCommService,
+
+      match: { params: { userID } },
     } = this.props;
 
     return (
@@ -65,9 +66,11 @@ class Profile extends Component {
               </div>
             </div>
             <ProfileInfo
-              userID={this.props.match.params.employeeID}
+              userID={userID}
               adminWork={adminWork}
               service={service}
+              getAdminWork={getAdminWork}
+              getService={getUserExtensionAndCommService}
             />
           </Fragment>
         )}
