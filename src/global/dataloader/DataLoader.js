@@ -10,6 +10,7 @@ class DataLoader extends Component {
       isLoading,
       opaque = false,
       color: backgroundColor,
+      spinColor = '#fff',
     } = this.props;
 
     return (
@@ -21,7 +22,13 @@ class DataLoader extends Component {
           >
             <Spin
               style={styles.loader}
-              indicator={<Icon type="loading" style={styles.spinner} spin />}
+              indicator={
+                <Icon
+                  type="loading"
+                  style={{ ...styles.spinner, color: spinColor }}
+                  spin
+                />
+              }
             />
           </div>
         )}
