@@ -63,3 +63,8 @@ export const getTotalUsers = query => `
     query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
   }
 `;
+
+export const deleteSession = `
+  DELETE FROM sessions 
+  WHERE data LIKE "%<employeeID>%"
+`;
