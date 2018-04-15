@@ -7,6 +7,7 @@ import {
   getUserExtensionAndCommService,
   uploadIcon,
   resetPage,
+  toggleModal,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -17,6 +18,7 @@ const mapStateToProps = state => {
     adminWork,
     service,
     isLoadingCards,
+    isSchedModalOpen,
   } = state.profile;
 
   return {
@@ -26,6 +28,7 @@ const mapStateToProps = state => {
     isGettingUser,
     isUploadingIcon,
     isLoadingCards,
+    isSchedModalOpen,
   };
 };
 
@@ -42,6 +45,9 @@ const mapDispatchToProps = dispatch => {
     },
     uploadIcon: (user, form) => {
       dispatch(uploadIcon(user, form));
+    },
+    toggleModal: modal => {
+      dispatch(toggleModal(modal));
     },
     resetPage: () => {
       dispatch(resetPage());

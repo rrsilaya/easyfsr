@@ -4,11 +4,15 @@ import { push } from 'react-router-redux';
 import * as Api from '../../api';
 import { updateProfileIcon } from '../../app/duck';
 
+// Constants
+export const SCHEDULE_MODAL = 'SCHEDULE_MODAL';
+
 // Action Types
 const GET_USER = 'PROFILE/GET_USER';
 const GET_ADMIN_WORK = 'PROFILE/GET_ADMIN_WORK';
 const GET_EXT_AND_COMM_SERVICE = 'PROFILE/GET_EXT_AND_COMM_SERVICE';
 const UPLOAD_ICON = 'PROFILE/UPLOAD_ICON';
+const TOGGLE_MODAL = 'PROFILE/TOGGLE_MODAL';
 const RESET_PAGE = 'PROFILE/RESET_PAGE';
 
 // Action Creators
@@ -78,6 +82,11 @@ export const uploadIcon = (user, form) => {
   };
 };
 
+export const toggleModal = modal => ({
+  type: TOGGLE_MODAL,
+  payload: modal,
+});
+
 export const resetPage = () => ({
   type: RESET_PAGE,
 });
@@ -95,6 +104,8 @@ const initialState = {
     adminWork: true,
     extAndCommService: true,
   },
+
+  isSchedModalOpen: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -171,6 +182,18 @@ const reducer = (state = initialState, action) => {
           isUploadingIcon: false,
         }),
       });
+
+    case TOGGLE_MODAL:
+      switch (payload) {
+        case SCHEDULE_MODAL:
+          return {
+            ...state,
+            isSchedModalOpen: !state.isSchedModalOpen,
+          };
+
+        default:
+          return state;
+      }
 
     case RESET_PAGE:
       return initialState;

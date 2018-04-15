@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
-import { Icon } from 'antd';
+import { Icon, Modal, Button } from 'antd';
 
 import { PageLoader, Schedule, DataLoader } from '../../global';
 import ProfileIcon from './components/ProfileIcon';
 import ProfileInfo from './components/ProfileInfo';
+
+import { SCHEDULE_MODAL } from './duck';
 import styles from './styles';
 
 class Profile extends Component {
@@ -19,6 +21,10 @@ class Profile extends Component {
     this.props.resetPage();
   }
 
+  toggleScheduleModal = () => {
+    this.props.toggleModal(SCHEDULE_MODAL);
+  };
+
   render() {
     const {
       user,
@@ -28,8 +34,10 @@ class Profile extends Component {
       isGettingUser,
       isUploadingIcon,
       isLoadingCards,
+      isSchedModalOpen,
 
       uploadIcon,
+      toggleModal,
     } = this.props;
 
     return (
@@ -38,7 +46,16 @@ class Profile extends Component {
           <PageLoader />
         ) : (
           <Fragment>
-            <div className="center">
+            <Modal
+              title="Schedule"
+              visible={isSchedModalOpen}
+              width={811 + 48}
+              onOk={this.toggleScheduleModal}
+              onCancel={this.toggleScheduleModal}
+            >
+              <Schedule data={[]} />
+            </Modal>
+            <div className="center" style={styles.header}>
               <ProfileIcon
                 user={user}
                 isUploadingIcon={isUploadingIcon}
@@ -64,6 +81,12 @@ class Profile extends Component {
                   <Icon type="mail" style={styles.iconPad} />
                   {user.emailAddress}
                 </div>
+              </div>
+              <div style={styles.actions}>
+                <Button ghost onClick={this.toggleScheduleModal}>
+                  View Schedule
+                  <Icon type="right" />
+                </Button>
               </div>
             </div>
             {Object.values(isLoadingCards).every(e => e) ? (
