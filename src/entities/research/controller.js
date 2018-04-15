@@ -87,7 +87,6 @@ export const getResearches = (research, userID) => {
         ...escapeSearch(research, searchFields, research.limit),
       },
       (err, results) => {
-        console.log(err);
         if (err) return reject(500);
         return resolve(results);
       },

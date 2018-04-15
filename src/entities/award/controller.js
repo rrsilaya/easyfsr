@@ -75,7 +75,6 @@ export const getAwards = (award, userID) => {
         ...escapeSearch(award, searchFields, award.limit),
       },
       (err, results) => {
-        console.log(err);
         if (err) return reject(500);
         return resolve(results);
       },
@@ -92,7 +91,6 @@ export const getTotalAwards = (award, userID) => {
         ...escapeSearch(award, searchFields, award.limit),
       },
       (err, results) => {
-        console.log(err);
         if (err) return reject(500);
         return resolve(results[0]);
       },

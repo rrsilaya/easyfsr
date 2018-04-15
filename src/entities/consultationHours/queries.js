@@ -30,7 +30,7 @@ export const getConsultationHours = (query, sortBy, userID) => `
     userID
       ? `
     chID,
-  id,
+  x.id,
   place,
   day,
   timeStart,
@@ -39,11 +39,11 @@ export const getConsultationHours = (query, sortBy, userID) => `
   } FROM consultationHours x ${
   userID
     ? `LEFT JOIN fsr f ON x.id = f.id WHERE f.userID = :userID ${
-        query.length ? `AND ${formatQueryParams(query, 'getUser')}` : ''
+        query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
       }`
     : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
 }
-  ORDER BY ${userID ? `f.` : ''}[field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
   LIMIT :limit OFFSET :offset
 `;
 

@@ -4,15 +4,9 @@ import shortID from 'shortid';
 
 export const formatQueryParams = (query, method) =>
   query.reduce((field, key, i) => {
-    method === 'getUser'
-      ? (field += `f.${key} LIKE :${key}${
-          i === query.length - 1 ? '' : ' AND '
-        }`)
-      : method === 'get'
-        ? (field += `${key} LIKE :${key}${
-            i === query.length - 1 ? '' : ' AND '
-          }`)
-        : (field += `${key} = :${key}${i === query.length - 1 ? '' : ', '}`);
+    method === 'get'
+      ? (field += `${key} LIKE :${key}${i === query.length - 1 ? '' : ' AND '}`)
+      : (field += `${key} = :${key}${i === query.length - 1 ? '' : ', '}`);
     return field;
   }, '');
 

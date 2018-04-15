@@ -64,7 +64,6 @@ export const deleteLtdPractOfProf = ({ limitedPracticeOfProfID }) => {
       Query.deleteLtdPractOfProf,
       { limitedPracticeOfProfID },
       (err, results) => {
-        console.log(err);
         if (err) return reject(500);
         else if (!results.affectedRows) return reject(404);
         return resolve();

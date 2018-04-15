@@ -54,7 +54,7 @@ export const getResearches = (query, sortBy, userID) => `
   } FROM research x ${
   userID
     ? `LEFT JOIN fsr f ON x.id = f.id WHERE f.userID = :userID ${
-        query.length ? `AND ${formatQueryParams(query, 'getUser')}` : ''
+        query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
       }`
     : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
 }

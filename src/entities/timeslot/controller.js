@@ -15,12 +15,13 @@ export const addTimeslot = timeslot => {
   });
 };
 
-export const getTimeslots = timeslot => {
+export const getTimeslots = (timeslot, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getTimeslots(
         filtered(timeslot, timeslotAttributes),
         timeslot.sortBy,
+        userID,
       ),
       {
         field: 'day',
@@ -68,10 +69,10 @@ export const deleteTimeslot = ({ timeslotID }) => {
   });
 };
 
-export const getTotalTimeslots = timeslot => {
+export const getTotalTimeslots = (timeslot, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getTotalTimeslots(filtered(timeslot, timeslotAttributes)),
+      Query.getTotalTimeslots(filtered(timeslot, timeslotAttributes), userID),
       {
         field: 'day',
         ...escapeSearch(timeslot, searchFields, timeslot.limit),

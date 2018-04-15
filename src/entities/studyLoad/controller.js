@@ -75,7 +75,6 @@ export const getStudyLoads = (studyLoad, userID) => {
         ...escapeSearch(studyLoad, searchFields, studyLoad.limit),
       },
       (err, results) => {
-        console.log(err);
         if (err) return reject(500);
         return resolve(results);
       },

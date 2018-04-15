@@ -46,7 +46,7 @@ export const getCreativeWorks = (query, sortBy, userID) => `
   } FROM creativeWork x ${
   userID
     ? `LEFT JOIN fsr f ON x.id = f.id WHERE f.userID = :userID ${
-        query.length ? `AND ${formatQueryParams(query, 'getUser')}` : ''
+        query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
       }`
     : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
 }
