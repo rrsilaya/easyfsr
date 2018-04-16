@@ -294,6 +294,7 @@ router.get('/consultationHours/:chID', async (req, res) => {
  * @apiGroup ConsultationHours
  * @apiName getConsultationHours
  *
+ * @apiParam (Query Params) {Number} [chID] id of consultation hours
  * @apiParam (Query Params) {Number} [id] id of fsr
  * @apiParam (Query Params) {String} [place] chair grant title of award
  * @apiParam (Query Params) {String} [day] professional chair of award

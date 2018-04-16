@@ -62,9 +62,9 @@ router.post('/cworkCoAuthor/', async (req, res) => {
  * @apiGroup CworkCoAuthor
  * @apiName getCworkCoAuthors
  *
- * @apiParam (Query Params) {Number} cworkCoAuthorID ID of creative work co-author
- * @apiParam (Query Params) {Number} creativeWorkID ID of creative work
- * @apiParam (Query Params) {String} name name of co-author as user
+ * @apiParam (Query Params) {Number} [cworkCoAuthorID] ID of creative work co-author
+ * @apiParam (Query Params) {Number} [creativeWorkID] ID of creative work
+ * @apiParam (Query Params) {String} [name] name of co-author as user
  * @apiParam (Query Params) {Number} [page] page number
  * @apiParam (Query Params) {Number} [limit] count limit of awards to fetch
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'

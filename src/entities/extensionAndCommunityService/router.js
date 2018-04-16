@@ -20,7 +20,8 @@ const router = Router();
  * @apiParam (Body Params) {Date} endDate date service ended
  *
  * @apiSuccess {Object} data new service created
- * @apiSuccess {Number} data.id id of service
+ * @apiSuccess {Number} data.id id of fsr
+ * @apiSuccess {Number} data.extAndCommServiceID id of service
  * @apiSuccess {Number} data.participant participant
  * @apiSuccess {String} data.role role
  * @apiSuccess {Number} data.hours hours of service
@@ -102,7 +103,8 @@ router.post('/service/', async (req, res) => {
  * @apiParam (Body Params) {Date} [endDate] date service ended
  *
  * @apiSuccess {Object} data  service updated
- * @apiSuccess {Number} data.id id of service
+ * @apiSuccess {Number} data.id id of fsr
+ * @apiSuccess {Number} data.extAndCommServiceID id of service
  * @apiSuccess {Number} data.participant participant
  * @apiSuccess {String} data.role role
  * @apiSuccess {Number} data.hours hours of service
@@ -179,6 +181,7 @@ router.put('/service/:extAndCommServiceID/', async (req, res) => {
  * @apiGroup ExtensionAndCommunityService
  * @apiName getExtensionAndCommunityServices
  *
+ * @apiParam (Query Params) {Number} [extAndCommServiceID] id of service
  * @apiParam (Query Params) {Number} [id] id of fsr
  * @apiParam (Query Params) {Number} [participant] number of participants
  * @apiParam (Query Params) {String} [role] role
@@ -194,7 +197,8 @@ router.put('/service/:extAndCommServiceID/', async (req, res) => {
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'date'
  *
  * @apiSuccess {Object[]} data  services fetched
- * @apiSuccess {Number} data.id id of service
+ * @apiSuccess {Number} data.id id of fsr
+ * @apiSuccess {Number} data.extAndCommServiceID id of service
  * @apiSuccess {Number} data.participant participant
  * @apiSuccess {String} data.role role
  * @apiSuccess {Number} data.hours hours of service
@@ -293,7 +297,8 @@ router.get('/service/', async (req, res) => {
  * @apiParam (Query Params) {Number} extAndCommServiceID id of service
  *
  * @apiSuccess {Object} data  service deleted
- * @apiSuccess {Number} data.id id of service
+ * @apiSuccess {Number} data.id id of fsr
+ * @apiSuccess {Number} data.extAndCommServiceID id of service
  * @apiSuccess {Number} data.participant participant
  * @apiSuccess {String} data.role role
  * @apiSuccess {Number} data.hours hours of service
@@ -374,7 +379,8 @@ router.delete('/service/:extAndCommServiceID/', async (req, res) => {
  * @apiParam (Query Params) {Number} extAndCommServiceID id of service
  *
  * @apiSuccess {Object} data  service fetched
- * @apiSuccess {Number} data.id id of service
+ * @apiSuccess {Number} data.id id of fsr
+ * @apiSuccess {Number} data.extAndCommServiceID id of service
  * @apiSuccess {Number} data.participant participant
  * @apiSuccess {String} data.role role
  * @apiSuccess {Number} data.hours hours of service

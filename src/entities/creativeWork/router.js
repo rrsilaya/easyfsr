@@ -19,6 +19,7 @@ const router = Router();
  * 
  * @apiSuccess {Object} data Creative work added
  * @apiSuccess {Number} data.id ID of related FSR
+ * @apiSuccess {Number} data.creativeWorkID ID of creative work
  * @apiSuccess {Date} data.date date of creative work
  * @apiSuccess {String} data.title title of creative work
  * @apiSuccess {String} data.type type of creative work
@@ -78,6 +79,7 @@ router.post('/creativeWork/', async (req, res) => {
  * @apiGroup Creative Work
  * @apiName getCreativeWorks
  *
+ * @apiParam (Query Params) {Number} [creativeWorkID] ID of creative work
  * @apiParam (Query Params) {Number} [id] ID of related FSR
  * @apiParam (Query Params) {Date} [date] date of creative work
  * @apiParam (Query Params) {String} [title] title of creative work
@@ -91,6 +93,7 @@ router.post('/creativeWork/', async (req, res) => {
  *
  * @apiSuccess {Object[]} data creative works fetched
  * @apiSuccess {Number} data.id ID of related FSR
+ * @apiSuccess {Number} data.creativeWorkID ID of creative work
  * @apiSuccess {Date} data.date date of creative work
  * @apiSuccess {String} data.title title of creative work
  * @apiSuccess {String} data.type type of creative work
@@ -184,6 +187,7 @@ router.get('/creativeWork/', async (req, res) => {
  *
  * @apiSuccess {Object} data Creative work deleted
  * @apiSuccess {Number} data.id ID of related FSR
+ * @apiSuccess {Number} data.creativeWorkID ID of creative work
  * @apiSuccess {Date} data.date date of creative work
  * @apiSuccess {String} data.title title of creative work
  * @apiSuccess {String} data.type type of creative work
@@ -264,6 +268,7 @@ router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
  *
  * @apiSuccess {Object} data Creative work fetched
  * @apiSuccess {Number} data.id ID of related FSR
+ * @apiSuccess {Number} data.creativeWorkID ID of creative work
  * @apiSuccess {Date} data.date date of creative work
  * @apiSuccess {String} data.title title of creative work
  * @apiSuccess {String} data.type type of creative work
@@ -343,6 +348,7 @@ router.get('/creativeWork/:creativeWorkID', async (req, res) => {
  *
  * @apiSuccess {Object} data creativeWork updated
  * @apiSuccess {Number} data.id ID of related FSR
+ * @apiSuccess {Number} data.creativeWorkID ID of creative work
  * @apiSuccess {Date} data.date date of creative work
  * @apiSuccess {String} data.title title of creative work
  * @apiSuccess {String} data.type type of creative work

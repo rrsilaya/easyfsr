@@ -21,6 +21,7 @@ const searchFields = [
   'professionalChair',
   'approvedStartDate',
   'endDate',
+  'grantF',
 ];
 
 export const addAward = award => {

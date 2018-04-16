@@ -342,6 +342,7 @@ router.get('/award/:awardID', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} [awardID] awardID of award
  * @apiParam (Query Params) {Number} [id] ID of fsr
+ * @apiParam (Query Params) {String} [grantF]  grantF of award
  * @apiParam (Query Params) {String} [chairGrantTitle] chair grant title of award
  * @apiParam (Query Params) {String} [collegeHasNominated] which college nominated the award
  * @apiParam (Query Params) {String} [recipientOrNominee] recipient or nominee of award

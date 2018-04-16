@@ -9,7 +9,7 @@ const router = Router();
  * @apiGroup Study Load
  * @apiName addStudyLoad
  *
- * @apiParam (Body Params) {Number} id ID of study load
+ * @apiParam (Body Params) {Number} id ID of fsr
  * @apiParam (Body Params) {Boolean} [fullLeaveWithPay] full leave with pay of study load
  * @apiParam (Body Params) {Boolean} [fellowshipRecipient] fellowship recipient of study load
  * @apiParam (Body Params) {String} degree degree of study load

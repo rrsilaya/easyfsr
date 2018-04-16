@@ -67,7 +67,8 @@ router.post('/timeslot/', async (req, res) => {
  * @api {get} /timeslot/ getTimeslots
  * @apiGroup Timeslot
  * @apiName getTimeslots
- 
+ * 
+ * @apiParam (Query Params) {Number} [timeslotID] ID of timeslot
  * @apiParam (Query Params) {Number} [subjectID] ID of subject
  * @apiParam (Query Params) {String} [day] day assigned to timeslot
  * @apiParam (Query Params) {Time} [timeStart] starting time of timeslot

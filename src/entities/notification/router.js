@@ -235,6 +235,7 @@ router.get('/notification/:notificationID', async (req, res) => {
  * @apiGroup Notification
  * @apiName getNotifications
  *
+ * @apiParam (Query Params) {Number} [notificationID] id of notification
  * @apiParam (Query Params) {Number} [senderID] id of user who sent the notification
  * @apiParam (Query Params) {Number} [receiverID] id of user who received the notification
  * @apiParam (Query Params) {String} [message] content of the notification

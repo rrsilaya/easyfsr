@@ -284,6 +284,7 @@ router.get('/adminWork/:adminWorkID', async (req, res) => {
  * @apiGroup AdminWork
  * @apiName getAdminWorks
  *
+ * @apiParam (Query Params) {Number} [adminWorkID] ID of admin work
  * @apiParam (Query Params) {Number} [id] ID of FSR
  * @apiParam (Query Params) {String} [position] position of admin work
  * @apiParam (Query Params) {String} [officeUnit] office unit of admin work

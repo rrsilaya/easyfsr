@@ -136,7 +136,7 @@ router.delete('/announcement/:announcementID', async (req, res) => {
  * @apiGroup Announcement
  * @apiName getAnnouncements
  *
- *
+ * @apiParam (Query Params) {Number} [announcementID] ID of announcement
  * @apiParam (Query Params) {Number} [userID] ID of user who posted announcement
  * @apiParam (Query Params) {String} [title] title of the announcement
  * @apiParam (Query Params) {String} [body] body of the announcement

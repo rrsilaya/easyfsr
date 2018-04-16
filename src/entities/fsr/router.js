@@ -262,6 +262,7 @@ router.get('/fsr/:id', async (req, res) => {
  * @apiGroup FSR
  * @apiName getFSRs
  *
+ * @apiParam (Query Params) {Number} [id] ID of fsr
  * @apiParam (Query Params) {Number} [userID] ID of user
  * @apiParam (Query Params) {String} [acadYear] academic year the fsr is filed
  * @apiParam (Query Params) {String} [semester] semester the fsr is filed

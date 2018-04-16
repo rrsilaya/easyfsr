@@ -127,6 +127,7 @@ router.get('/rCoAuthor/:rCoAuthorID', async (req, res) => {
  * @apiGroup rCoAuthor
  * @apiName getrCoAuthors
  *
+ * @apiParam (Query Params) {Number} [rCoAuthorID] ID of research co-author
  * @apiParam (Query Params) {Number} [researchID] ID of research
  * @apiParam (Query Params) {String} [name] name of co-author
  * @apiParam (Query Params) {Number} [page] page number
@@ -135,7 +136,7 @@ router.get('/rCoAuthor/:rCoAuthorID', async (req, res) => {
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'name'
  *
  * @apiSuccess {Object[]} data Researches fetched
- * @apiSuccess {Number} data.rCoAuthorID ID of research co-authot
+ * @apiSuccess {Number} data.rCoAuthorID ID of research co-author
  * @apiSuccess {Number} data.researchID ID of research
  * @apiSuccess {String} data.name name of co-author
  * @apiSuccess {Number} total Total amount of documents.

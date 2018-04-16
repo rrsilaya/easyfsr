@@ -103,7 +103,10 @@ router.post('/user/', async (req, res) => {
  * @api {get} /user getUsers
  * @apiGroup User
  * @apiName getUsers
- *
+ * @apiParam (Query Params) {Number}  [userID] ID of employee
+ * @apiParam (Query Params) {String}  [employeeID] employee ID
+ * @apiParam (Query Params) {String}  [acctType] account type of employee
+ * @apiParam (Query Params) {Boolean} [isArchived] indicates if employee entry is archived
  * @apiParam (Query Params) {String} [firstName] first name of employee
  * @apiParam (Query Params) {String} [lastName] last name of employee
  * @apiParam (Query Params) {String} [middleName] middle name of employee

@@ -303,6 +303,7 @@ router.get('/course/:courseID', async (req, res) => {
  * @apiGroup Course
  * @apiName getCourses
  *
+ * @apiParam (Query Params) {Number} [courseID] id of course
  * @apiParam (Query Params) {Number} [id] id of fsr
  * @apiParam (Query Params) {Number} [hoursPerWeek] number of hours of course per week
  * @apiParam (Query Params) {String} [school] school course is being taken
