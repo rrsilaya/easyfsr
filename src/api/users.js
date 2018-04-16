@@ -20,3 +20,23 @@ export const editUser = (userID, body) => {
 export const deleteUser = id => {
   return axios.delete(`api/user/${id}`);
 };
+
+export const getAdminWorks = query => {
+  return axios.get(`/api/AdminWork?${qs.stringify(query)}`);
+};
+
+export const getAdminWork = id => {
+  return axios.get(`/api/user/${id}/adminWork`);
+};
+
+export const getUserExtensionAndCommServices = query => {
+  return axios.get(`/api/extensionAndCommunityService?${qs.stringify(query)}`);
+};
+
+export const getUserExtensionAndCommService = id => {
+  return axios.get(`/api/user/${id}/extensionAndCommunityService`);
+};
+
+export const getUserSchedule = user => {
+  return axios.get(`/api/user/${user}/schedule`);
+};
