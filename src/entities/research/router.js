@@ -9,7 +9,6 @@ const router = Router();
  * @apiName addResearch
  *
  * @apiParam (Body Params) {Number} id of fsr
- * @apiParam (Body Params) {Number} researchID ID of research
  * @apiParam (Body Params) {String} type type of research
  * @apiParam (Body Params) {String} role role of research
  * @apiParam (Body Params) {String} title title of research
