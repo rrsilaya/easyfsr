@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
 import { upload, unlink } from './../../utils';
-
+import { getrCoAuthors } from './../rCoAuthor/controller';
 const router = Router();
 /**
  * @api {post} /research addResearch
@@ -145,6 +145,7 @@ router.post('/research/', async (req, res) => {
 router.get('/research/:researchID', async (req, res) => {
   try {
     const research = await Ctrl.getResearch(req.params);
+    research.coAuthors = await getrCoAuthors(req.params);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched research',
@@ -245,6 +246,12 @@ router.get('/research/:researchID', async (req, res) => {
 router.get('/research/', async (req, res) => {
   try {
     const researches = await Ctrl.getResearches(req.query);
+    researches.forEach(async research => {
+      research.coAuthors = await getrCoAuthors({
+        researchID: research.researchID,
+      });
+    });
+
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched researches',

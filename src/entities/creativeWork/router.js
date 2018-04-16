@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
 import { upload, unlink } from './../../utils';
+import { getCworkCoAuthors } from './../coAuthor/controller';
 
 const router = Router();
 
@@ -16,7 +17,7 @@ const router = Router();
  * @apiParam (Body Params) {Number} credUnit credit units of creative work
  * @apiParam (Body Params) {File} filepath filepath 
  * 
- * @apiSuccess {Object} data creativeWork added
+ * @apiSuccess {Object} data Creative work added
  * @apiSuccess {Number} data.id ID of related FSR
  * @apiSuccess {Date} data.date date of creative work
  * @apiSuccess {String} data.title title of creative work
@@ -88,7 +89,7 @@ router.post('/creativeWork/', async (req, res) => {
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'date'
  *
- * @apiSuccess {Object[]} data createWorks fetched
+ * @apiSuccess {Object[]} data creative works fetched
  * @apiSuccess {Number} data.id ID of related FSR
  * @apiSuccess {Date} data.date date of creative work
  * @apiSuccess {String} data.title title of creative work
@@ -143,6 +144,11 @@ router.post('/creativeWork/', async (req, res) => {
 router.get('/creativeWork/', async (req, res) => {
   try {
     const creativeWorks = await Ctrl.getCreativeWorks(req.query);
+    creativeWorks.forEach(async cwork => {
+      cwork.coAuthors = await getCworkCoAuthors({
+        creativeWorkID: cwork.creativeWorkID,
+      });
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched creative works',
@@ -176,7 +182,7 @@ router.get('/creativeWork/', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} creativeWorkID ID of creativeWork
  *
- * @apiSuccess {Object} data createWork deleted
+ * @apiSuccess {Object} data Creative work deleted
  * @apiSuccess {Number} data.id ID of related FSR
  * @apiSuccess {Date} data.date date of creative work
  * @apiSuccess {String} data.title title of creative work
@@ -256,7 +262,7 @@ router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
  * @apiParam (Body Params) {Number} creativeWork.credUnit credit units of creative work
  * @apiParam (Body Params) {Number} creativeWork.userID user ID of creative work
  *
- * @apiSuccess {Object} data createWork fetched
+ * @apiSuccess {Object} data Creative work fetched
  * @apiSuccess {Number} data.id ID of related FSR
  * @apiSuccess {Date} data.date date of creative work
  * @apiSuccess {String} data.title title of creative work
@@ -301,6 +307,7 @@ router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
 router.get('/creativeWork/:creativeWorkID', async (req, res) => {
   try {
     const creativeWork = await Ctrl.getCreativeWork(req.params);
+    creativeWork.coAuthors = await getCworkCoAuthors(req.params);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched creative work',
@@ -334,7 +341,7 @@ router.get('/creativeWork/:creativeWorkID', async (req, res) => {
  * @apiParam (Body Params) {Number} [credUnit] credit units of creative work
  * @apiParam (Body Params) {Number} [userID] user ID of creative work
  *
- * @apiSuccess {Object} data createWork updated
+ * @apiSuccess {Object} data creativeWork updated
  * @apiSuccess {Number} data.id ID of related FSR
  * @apiSuccess {Date} data.date date of creative work
  * @apiSuccess {String} data.title title of creative work
