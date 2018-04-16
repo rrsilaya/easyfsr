@@ -52,17 +52,7 @@ CREATE TABLE fsr(
 
 -- Entities under FSR 
 
-  -- teaching_load, subject, timeslot
-
--- CREATE TABLE `teachingLoad`(
---   `id` INT NOT NULL,
---   `teachingLoadCreds` INT(2) NOT NULL,
---   CONSTRAINT `teachingLoad_user_fk`
---     FOREIGN KEY (`id`)
---     REFERENCES fsr(`id`),  
---   CONSTRAINT `teachingLoad_pk`  
---     PRIMARY KEY(`id`)
--- );
+  -- (teaching_load) subject, timeslot
 
 CREATE TABLE `subject`(
   `id` INT NOT NULL,
@@ -329,6 +319,22 @@ CREATE TABLE meta (
     PRIMARY KEY(`id`)
 );
 
+CREATE TABLE log (
+  `id` VARCHAR(17) NOT NULL,
+  `timestamp` TIMESTAMP NOT NULL,
+  `action` VARCHAR(40) NOT NULL, -- INSERT_ENTITY | UPDATE_ENTITY | DELETE_ENTITY 
+  `changes` TEXT (64), -- may contain other details that are necessary / could be used for UPDATE 
+  `affectedID` INT NOT NULL, -- specifies ID affected
+  `userID` INT NOT NULL,
+
+  CONSTRAINT `log_pk`
+    PRIMARY KEY(`id`),
+  CONSTRAINT `log_user_fk`
+    FOREIGN KEY(`userID`)
+    REFERENCES user(`userID`)
+    ON DELETE CASCADE
+);
+
 -- Trigger for Teaching Load of FSR
 
 CREATE TRIGGER insert_teachingLoadCreds 
@@ -513,3 +519,23 @@ studyLoad s ON f.id = s.id JOIN course c ON f.id = c.id JOIN courseSched cs ON c
 -- Privileges
 GRANT SUPER ON *.* TO 'easyfsr'@'localhost';
 GRANT ALL PRIVILEGES ON easyfsr.* TO 'easyfsr'@'localhost';
+
+DROP PROCEDURE IF EXISTS log;
+DELIMITER $$
+CREATE PROCEDURE log (
+  IN action VARCHAR(40),
+  IN changes TEXT(64),
+  IN id VARCHAR(17),
+  IN userID INT)
+BEGIN
+  INSERT INTO log VALUES (
+    UUID_SHORT(),
+    NOW(),
+    action,
+    changes,
+    id,
+    userID
+  );
+END;
+$$
+DELIMITER ;

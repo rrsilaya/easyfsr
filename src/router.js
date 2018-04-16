@@ -19,6 +19,7 @@ import creativeWorkRouter from './entities/creativeWork/router';
 import userViewRouter from './entities/user/views/router';
 import announcementRouter from './entities/announcement/router';
 import consultationHoursRouter from './entities/consultationHours/router';
+import metaRouter from './entities/meta/router';
 
 const router = Router();
 
@@ -34,6 +35,7 @@ router.use(authRouter);
 //   });
 // });
 
+router.use(metaRouter);
 router.use(studyLoadRouter);
 router.use(userViewRouter);
 router.use(awardRouter);
