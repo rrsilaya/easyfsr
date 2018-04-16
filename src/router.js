@@ -22,12 +22,25 @@ import creativeWorkRouter from './entities/creativeWork/router';
 import userViewRouter from './entities/user/views/router';
 import announcementRouter from './entities/announcement/router';
 import consultationHoursRouter from './entities/consultationHours/router';
+import metaRouter from './entities/meta/router';
+import logRouter from './entities/log/router';
 
 const router = Router();
 
 router.use(authRouter);
 router.use(Middleware.isLoggedIn);
 
+// router.use( (req,res,next) => {
+//   if(req.session.user){
+//     return next;
+//   }
+//   res.status(401).json({
+//     status:401,
+//     message: 'You must be logged in',
+//   });
+// });
+router.use(logRouter);
+router.use(metaRouter);
 router.use(studyLoadRouter);
 router.use(userViewRouter);
 router.use(awardRouter);
@@ -39,6 +52,16 @@ router.use(serviceRouter);
 router.use(timeslotRouter);
 router.use(subjectRouter);
 router.use(creativeWorkRouter);
+router.use(cworkCoAuthorRouter);
+// router.use( (req,res,next) => {
+//   if(req.session.user.acctType == 'ADMIN'){
+//     return next;
+//   }
+//   res.status(403).json({
+//     status:403,
+//     message: 'Forbidden access',
+//   });
+// });]
 
 router.use(researchRouter);
 router.use(cworkCoAuthorRouter);
