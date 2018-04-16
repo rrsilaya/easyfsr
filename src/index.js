@@ -42,7 +42,7 @@ app.use(
 app.use('/uploads/', express.static(__dirname + '/../public/uploads'));
 app.use('/docs', express.static(__dirname + '/../docs'));
 app.use('/api', router);
-app.use(express.static(__dirname + '/../client'));
+app.use(express.static(__dirname + '/../public/client'));
 
 app.use('*', (req, res) => res.redirect('/'));
 
