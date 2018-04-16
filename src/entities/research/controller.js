@@ -32,7 +32,6 @@ export const addResearch = research => {
       Query.addResearch,
       { filepath: '', endDate: null, ...research },
       (err, results) => {
-        console.log(err);
         if (err) return reject(500);
         return resolve(results.insertId);
       },
