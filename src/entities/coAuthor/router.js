@@ -113,11 +113,11 @@ router.post('/cworkCoAuthor/', async (req, res) => {
 
 router.get('/cworkCoAuthor/', async (req, res) => {
   try {
-    const cworkCoAuthor = await Ctrl.getCworkCoAuthors(req.query);
+    const cworkCoAuthors = await Ctrl.getCworkCoAuthors(req.query);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched co-authors',
-      data: cworkCoAuthor,
+      data: cworkCoAuthors,
       total: (await Ctrl.getTotalCworkCoAuthors(req.query)).total,
       limit: req.query.limit || 12,
       page: req.query.page || 1,
