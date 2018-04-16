@@ -8,7 +8,6 @@ const router = Router();
  * @apiGroup AdminWork
  * @apiName addAdminWork
  *
- * @apiParam (Body Params) {Number} adminWorkID ID of admin work
  * @apiParam (Body Params) {Number} id ID of fsr
  * @apiParam (Body Params) {String} position position of admin work
  * @apiParam (Body Params) {String} officeUnit office unit of admin work

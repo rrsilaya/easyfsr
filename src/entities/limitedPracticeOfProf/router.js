@@ -9,7 +9,6 @@ const router = Router();
  * @apiName addLtdPractOfProf
  *
  * @apiParam (Body Params) {Number} id ID of fsr
- * @apiParam (Body Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
  * @apiParam (Body Params) {String} askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
  * @apiParam (Body Params) {Date} [date] Date of limitedPracticeOfProf
  *

@@ -10,7 +10,6 @@ const router = Router();
  * @apiName addAward
  *
  * @apiParam (Body Params) {Number} id ID of fsr
- * @apiParam (Body Params) {Number} awardID awardID of award
  * @apiParam (Body Params) {String} grantF grantF of award
  * @apiParam (Body Params) {String} chairGrantTitle chair grant title of award
  * @apiParam (Body Params) {String} collegeHasNominated which college has nominated the award
