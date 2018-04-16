@@ -16,7 +16,6 @@ const researchAttributes = [
 ];
 
 const searchFields = [
-  'id',
   'type',
   'role',
   'title',

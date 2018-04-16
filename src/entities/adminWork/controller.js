@@ -10,13 +10,7 @@ const adminWorkAttributes = [
   'approvedUnits',
 ];
 
-const searchFields = [
-  'adminWorkID',
-  'position',
-  'officeUnit',
-  'approvedUnits',
-  'id',
-];
+const searchFields = ['position', 'officeUnit', 'approvedUnits'];
 
 export const addAdminWork = adminWork => {
   return new Promise((resolve, reject) => {

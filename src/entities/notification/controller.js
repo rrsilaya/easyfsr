@@ -13,14 +13,7 @@ const notificationAttributes = [
   'priority',
 ];
 
-const searchFields = [
-  'notificationID',
-  'senderID',
-  'receiverID',
-  'dateSent',
-  'isResolved',
-  'priority',
-];
+const searchFields = ['dateSent', 'isResolved', 'priority'];
 
 export const addNotification = notification => {
   return new Promise((resolve, reject) => {

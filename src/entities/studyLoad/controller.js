@@ -11,7 +11,6 @@ const studyLoadAttributes = [
 ];
 
 const searchFields = [
-  'id',
   'fullLeaveWithPay',
   'fellowshipRecipient',
   'degree',

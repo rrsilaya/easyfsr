@@ -9,12 +9,7 @@ const LtdPractAttributes = [
   'date',
 ];
 
-const searchFields = [
-  'id',
-  'limitedPracticeOfProfID',
-  'askedPermission',
-  'date',
-];
+const searchFields = ['askedPermission', 'date'];
 
 export const addLtdPractOfProf = limitedPracticeOfProf => {
   return new Promise((resolve, reject) => {

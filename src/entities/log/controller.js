@@ -2,14 +2,7 @@ import db from '../../database/index';
 import * as Query from './queries';
 import { filtered, escapeSearch } from '../../utils';
 
-const searchFields = [
-  'id',
-  'userID',
-  'affectedID',
-  'timestamp',
-  'action',
-  'changes',
-];
+const searchFields = ['timestamp', 'action', 'changes'];
 
 export const getLog = ({ id }) => {
   return new Promise((resolve, reject) => {

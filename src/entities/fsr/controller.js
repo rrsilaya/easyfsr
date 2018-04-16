@@ -12,7 +12,6 @@ const fsrAttributes = [
 ];
 
 const searchFields = [
-  'userID',
   'acadYear',
   'semester',
   'isChecked',

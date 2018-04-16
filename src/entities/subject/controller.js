@@ -18,7 +18,6 @@ const searchFields = [
   'hoursPerWeek',
   'sectionCode',
   'room',
-  'id',
 ];
 
 export const addSubject = subject => {

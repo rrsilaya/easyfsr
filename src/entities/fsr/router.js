@@ -202,6 +202,7 @@ router.get('/fsr/:id', async (req, res) => {
           await getCworkCoAuthors({ creativeWorkID }),
       ),
     );
+    console.log(cworksWithAuthor);
     const courses = await getCourses(req.params);
     const coursesWithSched = await Promise.all(
       courses.map(
@@ -212,11 +213,12 @@ router.get('/fsr/:id', async (req, res) => {
     const services = await getExtensionAndCommunityServices(req.params);
     const ltdPractices = await getLtdPractOfProfs(req.params);
     const subjects = await getSubjects(req.params);
-    const subjsWithTimeslot = await Promise.all(
+    const subj = await Promise.all(
       subjects.map(
         async ({ subjectID } = subject) => await getTimeslots({ subjectID }),
       ),
     );
+    console.log(subj);
     const studyLoads = await getStudyLoads(req.params);
     const userID = fsr.userID;
     const user = await getUserByUserID({ userID });
@@ -227,12 +229,12 @@ router.get('/fsr/:id', async (req, res) => {
       fsr,
       adminWorks,
       awards,
-      cworksWithAuthor,
-      coursesWithSched,
+      creativeWorks,
+      courses,
       consultationHours,
       services,
       ltdPractices,
-      subjsWithTimeslot,
+      subjects,
       studyLoads,
     };
 

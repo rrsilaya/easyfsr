@@ -4,13 +4,7 @@ import { filtered, escapeSearch } from '../../utils';
 
 const courseAttributes = ['id', 'courseNumber', 'courseID', 'school', 'credit'];
 
-const searchFields = [
-  'courseNumber',
-  'courseID',
-  'school',
-  'credit',
-  'hoursPerWeek',
-];
+const searchFields = ['courseNumber', 'school', 'credit', 'hoursPerWeek'];
 
 export const addCourse = course => {
   return new Promise((resolve, reject) => {

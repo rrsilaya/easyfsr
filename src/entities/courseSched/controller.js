@@ -10,7 +10,7 @@ const courseSchedAttributes = [
   'timeEnd',
 ];
 
-const searchFields = ['courseID', 'day', 'timeStart', 'timeEnd'];
+const searchFields = ['day', 'timeStart', 'timeEnd'];
 
 export const addCourseSched = courseSched => {
   return new Promise((resolve, reject) => {

@@ -4,7 +4,7 @@ import { filtered, escapeSearch } from '../../utils';
 
 const timeslotAttributes = ['subjectID', 'day', 'timeStart', 'timeEnd'];
 
-const searchFields = ['subjectID', 'day', 'timeStart', 'timeEnd'];
+const searchFields = ['day', 'timeStart', 'timeEnd'];
 
 export const addTimeslot = timeslot => {
   return new Promise((resolve, reject) => {

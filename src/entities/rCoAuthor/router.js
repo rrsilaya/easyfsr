@@ -8,13 +8,11 @@ const router = Router();
  * @apiGroup rCoAuthor
  * @apiName addrCoAuthor
  *
- * @apiParam (Body Params) {Number} id of fsr
  * @apiParam (Body Params) {Number} researchID ID of research
  * @apiParam (Body Params) {String} name name of co-author
  *
  * @apiSuccess {Object} data new research created
  * @apiSuccess {Number} data.rCoAuthorID ID of research co-authot
- * @apiSuccess {Number} data.id ID of fsr
  * @apiSuccess {Number} data.researchID ID of research
  * @apiSuccess {String} data.name name of co-author
  *
@@ -26,7 +24,6 @@ const router = Router();
  *     "data":
  *         {
  *           "rCoAuthorID":1,
- *           "id": 1,
  *           "researchID": 92,
  *           "name": "annyeonglol",
  *         }
@@ -70,7 +67,6 @@ router.post('/rCoAuthor/', async (req, res) => {
  *
  * @apiSuccess {Object} data Research fetched
  * @apiSuccess {Number} data.rCoAuthorID ID of research co-authot
- * @apiSuccess {Number} data.id ID of fsr
  * @apiSuccess {Number} data.researchID ID of research
  * @apiSuccess {String} data.name name of co-author
  *
@@ -82,7 +78,6 @@ router.post('/rCoAuthor/', async (req, res) => {
  *     "data":
  *         {
  *           "rCoAuthorID":1,
- *           "id": 1,
  *           "researchID": 92,
  *           "name": "annyeonglol",
  *         }
@@ -132,7 +127,6 @@ router.get('/rCoAuthor/:rCoAuthorID', async (req, res) => {
  * @apiGroup rCoAuthor
  * @apiName getrCoAuthors
  *
- * @apiParam (Query Params) {Number} [id] ID of research
  * @apiParam (Query Params) {Number} [researchID] ID of research
  * @apiParam (Query Params) {String} [name] name of co-author
  * @apiParam (Query Params) {Number} [page] page number
@@ -142,7 +136,6 @@ router.get('/rCoAuthor/:rCoAuthorID', async (req, res) => {
  *
  * @apiSuccess {Object[]} data Researches fetched
  * @apiSuccess {Number} data.rCoAuthorID ID of research co-authot
- * @apiSuccess {Number} data.id ID of fsr
  * @apiSuccess {Number} data.researchID ID of research
  * @apiSuccess {String} data.name name of co-author
  * @apiSuccess {Number} total Total amount of documents.
@@ -158,13 +151,11 @@ router.get('/rCoAuthor/:rCoAuthorID', async (req, res) => {
  *     "data": [
  *         {
  *           "rCoAuthorID":1,
- *           "id": 1,
  *           "researchID": 92,
  *           "name": "annyeonglol",
  *         },
  *         {
  *           "rCoAuthorID":1,
- *           "id": 1,
  *           "researchID": 92,
  *           "name": "annyeonglol",
  *         }
@@ -229,8 +220,7 @@ router.get('/rCoAuthor/', async (req, res) => {
  * @apiParam (Query Params) {Number} rCoAuthorID ID of research co-author
  *
  * @apiSuccess {Object} data Deleted research
- * @apiSuccess {Number} data.rCoAuthorID ID of research co-authot
- * @apiSuccess {Number} data.id ID of fsr
+ * @apiSuccess {Number} data.rCoAuthorID ID of research co-author
  * @apiSuccess {Number} data.researchID ID of research
  * @apiSuccess {String} data.name name of co-author
  *
@@ -242,7 +232,6 @@ router.get('/rCoAuthor/', async (req, res) => {
  *     "data":
  *          {
  *           "rCoAuthorID":1,
- *           "id": 1,
  *           "researchID": 92,
  *           "name": "annyeonglol",
  *         }
@@ -296,13 +285,11 @@ router.delete('/rCoAuthor/:rCoAuthorID', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} rCoAuthorID ID of research co-author
  *
- * @apiParam (Body Params) {Number} [id] of fsr
  * @apiParam (Body Params) {String} [name] name of co-author
- * @apiParam (Query Params) {Number} [researchID ID] of research
+ * @apiParam (Query Params) {Number} [researchID] ID of research
  *
  * @apiSuccess {Object} data Updated research
  * @apiSuccess {Number} data.rCoAuthorID ID of research co-authot
- * @apiSuccess {Number} data.id ID of fsr
  * @apiSuccess {Number} data.researchID ID of research
  * @apiSuccess {String} data.name name of co-author
  *
@@ -314,7 +301,6 @@ router.delete('/rCoAuthor/:rCoAuthorID', async (req, res) => {
  *     "data":
  *         {
  *           "rCoAuthorID":1,
- *           "id": 1,
  *           "researchID": 92,
  *           "name": "annyeonglol",
  *         }

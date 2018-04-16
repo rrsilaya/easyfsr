@@ -4,7 +4,7 @@ import { filtered, escapeSearch } from '../../utils';
 
 const rCoAuthorAttributes = ['researchID', 'rCoAuthorID', 'name'];
 
-const searchFields = ['researchID', 'name'];
+const searchFields = ['name'];
 
 export const addrCoAuthor = rCoAuthor => {
   return new Promise((resolve, reject) => {
