@@ -1,15 +1,22 @@
 import { handle } from 'redux-pack';
 import * as Api from '../../api';
 import { notification } from 'antd';
+
+// Constants
 export const SEND_NOTIFICATION = 'SEND_NOTIFICATION';
 export const CREATE_FSR = 'CREATE_FSR';
 export const CREATE_ANNOUNCEMENT = 'CREATE_ANNOUNCEMENT';
-export const GET_USERS = 'GET_USERS';
-export const GET_ANNOUNCEMENTS = 'GET_ANNOUNCEMENTS';
-export const GET_NOTIFICATIONS = 'GET_NOTIFICATIONS';
+export const SETTINGS = 'SETTINGS';
+
 // Action Types
-export const TOGGLE_MODAL = 'DASHBOARD/TOGGLE_MODAL';
-export const CHANGE_SELECTED_USER = 'DASHBOARD/CHANGE_SELECTED_USER';
+const SEARCH_USER = 'DASHBOARD/SEARCH_USER';
+const GET_USERS = 'DASHBOARD/GET_USERS';
+const CHANGE_SELECTED_USER = 'DASHBOARD/CHANGE_SELECTED_USER';
+const ADD_NOTIFICATION = 'DASHBOARD/ADD_NOTIFICATION';
+const ADD_ANNOUNCEMENT = 'DASHBOARD/ADD_ANNOUNCEMENT';
+const GET_ANNOUNCEMENTS = 'DASHBOARD/GET_ANNOUNCEMENTS';
+const GET_NOTIFICATIONS = 'DASHBOARD/GET_NOTIFICATIONS';
+const TOGGLE_MODAL = 'DASHBOARD/TOGGLE_MODAL';
 
 export const getUsers = query => {
   return dispatch => {
@@ -26,6 +33,11 @@ export const getUsers = query => {
     });
   };
 };
+
+export const searchUser = query => ({
+  type: SEARCH_USER,
+  promise: Api.getUsers(query),
+});
 
 export const getAnnouncements = query => {
   return dispatch => {
@@ -69,10 +81,59 @@ export const toggleModal = modal => ({
   payload: modal,
 });
 
+export const addNotification = body => {
+  return (dispatch, getState) => {
+    return dispatch({
+      type: ADD_NOTIFICATION,
+      promise: Api.addNotification(body),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Notification successfully sent.',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while sending notification.',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const addAnnouncement = body => {
+  return (dispatch, getState) => {
+    return dispatch({
+      type: ADD_ANNOUNCEMENT,
+      promise: Api.addAnnouncement(body),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Announcement successfully sent.',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while sending announcement.',
+          });
+        },
+      },
+    });
+  };
+};
+
 const initialState = {
   isSendNotificationModalOpen: false,
   isCreateNotificationModalOpen: false,
   isCreateAnnouncementModalOpen: false,
+  isSettingsModalOpen: false,
+
+  isSearchingUsers: false,
+  isAddingNotification: false,
+  isAddingAnnouncement: false,
+
+  searchedUsers: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -96,11 +157,59 @@ const reducer = (state = initialState, action) => {
             ...state,
             isCreateAnnouncementModalOpen: !state.isCreateAnnouncementModalOpen,
           };
+        case SETTINGS:
+          return {
+            ...state,
+            isSettingsModalOpen: !state.isSettingsModalOpen,
+          };
 
         default:
           return state;
       }
 
+    case ADD_NOTIFICATION:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isAddingNotification: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          isSendNotificationModalOpen: false,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isAddingNotification: false,
+        }),
+      });
+
+    case SEARCH_USER:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isSearchingUsers: false,
+        }),
+        success: prevState => ({
+          ...prevState,
+          searchedUsers: payload.data.data,
+        }),
+      });
+
+    case ADD_ANNOUNCEMENT:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isAddingAnnouncement: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          isCreateAnnouncementModalOpen: false,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isAddingAnnouncement: false,
+        }),
+      });
     case GET_USERS:
       return handle(state, action, {
         start: prevState => ({

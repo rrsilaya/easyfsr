@@ -1,16 +1,31 @@
 import React, { Component } from 'react';
-import { Modal, Button, Input } from 'antd';
+import { Modal, Button, Input, Form } from 'antd';
 import styles from '../styles';
 
 import { CREATE_ANNOUNCEMENT } from '../duck';
+import { getFieldValues } from '../../../utils';
 
+const FormItem = Form.Item;
 const { TextArea } = Input;
+
 class CreateAnnouncementModal extends Component {
+  handleFormSubmit = e => {
+    e.preventDefault();
+
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        this.props.addAnnouncement(getFieldValues(values));
+      }
+    });
+  };
   render() {
     const {
       isCreateAnnouncementModalOpen,
 
+      isAddingAnnouncement,
       toggleModal,
+
+      form,
     } = this.props;
 
     return (
@@ -24,15 +39,50 @@ class CreateAnnouncementModal extends Component {
           <Button key="back" onClick={() => toggleModal(CREATE_ANNOUNCEMENT)}>
             Cancel
           </Button>,
-          <Button key="submit" type="primary" htmlType="submit">
+          <Button
+            key="submit"
+            type="primary"
+            htmlType="submit"
+            onClick={this.handleFormSubmit}
+            loading={isAddingAnnouncement}
+          >
             Create
           </Button>,
         ]}
       >
-        <TextArea rows={5} placeholder="Enter announcement here..." />
+        <Form>
+          <FormItem label="Announcement Title" required>
+            {form.getFieldDecorator('announcementTitle@@addAnnouncement', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input announcement title',
+                  whitespace: true,
+                },
+              ],
+            })(<Input placeholder="Enter title here.." />)}
+          </FormItem>
+          <FormItem label="Announcement Body" required>
+            {form.getFieldDecorator('announcementBody@@addAnnouncement', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input announcement',
+                  whitespace: true,
+                },
+              ],
+            })(
+              <TextArea
+                rows={5}
+                placeholder="Enter announcement here..."
+                style={styles.messageBox}
+              />,
+            )}
+          </FormItem>
+        </Form>
       </Modal>
     );
   }
 }
 
-export default CreateAnnouncementModal;
+export default Form.create()(CreateAnnouncementModal);
