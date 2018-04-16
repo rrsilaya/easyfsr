@@ -106,7 +106,7 @@ class AddResearchModal extends Component {
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="File">
-            {getFieldDecorator('researchFile', {
+            {getFieldDecorator('filepath', {
               rules: [
                 {
                   required: true,
@@ -122,7 +122,7 @@ class AddResearchModal extends Component {
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="Approved Credit Units">
-            {getFieldDecorator('creditUnit', {
+            {getFieldDecorator('approvedUnits', {
               rules: [
                 {
                   required: true,

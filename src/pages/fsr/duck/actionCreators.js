@@ -152,3 +152,54 @@ export const editTimeslot = (timeslotID, body) => {
     });
   };
 };
+
+export const getResearches = query => {
+  return dispatch => {
+    return dispatch({
+      type: Action.GET_RESEARCHES,
+      promise: Api.getResearches(query),
+      meta: {
+        onFailure: () => {
+          notification.error({ message: 'Failure to fetch researches' });
+        },
+      },
+    });
+  };
+};
+
+export const addResearch = values => (dispatch, getState) => {
+  dispatch({
+    type: Action.ADD_RESEARCH,
+    promise: Api.addResearch(values),
+    meta: {
+      onSuccess: () => {
+        // const { research } = getState().fsr;
+
+        // values.days.forEach(day => {
+        //   dispatch(
+        //     addTimeslot({ ...values, day, subjectID: subject.subjectID }),
+        //   );
+        // });
+
+        notification.success({ message: 'Successfully added research' });
+      },
+      onFailure: () => {
+        notification.error({ message: 'Server error while creating research' });
+      },
+    },
+  });
+};
+
+export const getCreativeWorks = query => {
+  return dispatch => {
+    return dispatch({
+      type: Action.GET_CWORKS,
+      promise: Api.getCreativeWorks(query),
+      meta: {
+        onFailure: () => {
+          notification.error({ message: 'Failure to fetch creative works' });
+        },
+      },
+    });
+  };
+};

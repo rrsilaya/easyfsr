@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Button, Card } from 'antd';
 import { CWORK, RESEARCH } from '../duck';
+import moment from 'moment';
 
 import AddCWorkModal from './AddCWorkModal';
 import AddResearchModal from './AddResearchModal';
@@ -46,14 +47,14 @@ const columns1 = [
   },
   {
     title: 'File',
-    dataIndex: 'file',
-    key: 'file',
+    dataIndex: 'filepath',
+    key: 'filepath',
     align: 'center',
   },
   {
     title: 'Approved Credit Units',
-    dataIndex: 'credUnit',
-    key: 'credUnit',
+    dataIndex: 'approvedUnits',
+    key: 'approvedUnits',
     align: 'center',
   },
 ];
@@ -85,8 +86,8 @@ const columns2 = [
   },
   {
     title: 'File',
-    dataIndex: 'cworkFile',
-    key: 'cworkFile',
+    dataIndex: 'filepath',
+    key: 'filepath',
     align: 'center',
   },
   {
@@ -98,8 +99,18 @@ const columns2 = [
 ];
 
 class ResearchAndCreativeWorkForm extends Component {
+  componentDidMount() {
+    this.props.getResearches({ id: this.props.fsrID });
+    this.props.getCreativeWorks({ id: this.props.fsrID });
+  }
+
   render() {
     const {
+      fsrID,
+      addResearch,
+      isGettingResearches,
+      isAddingResearch,
+      isGettingCWorks,
       isAddCWorkModalOpen,
       isAddResearchModalOpen,
       toggleModal,
@@ -107,12 +118,26 @@ class ResearchAndCreativeWorkForm extends Component {
       prevStep,
     } = this.props;
 
+    const researches = this.props.researches.map(research => {
+      return {
+        ...research,
+        startDate: moment(research.startDate).format('MMMM D, YYYY'),
+      };
+    });
+
+    const cworks = this.props.cworks.map(cwork => {
+      return { ...cwork, date: moment(cwork.date).format('MMMM D, YYYY') };
+    });
+
     return (
       <Card
         title="Research / Textbook Writing / Creative Work"
         style={styles.formFSR}
       >
         <AddResearchModal
+          id={fsrID}
+          addResearch={addResearch}
+          isAddingResearch={isAddingResearch}
           isAddResearchModalOpen={isAddResearchModalOpen}
           toggleModal={toggleModal}
           handleAfterClose={this.handleAfterClose}
@@ -126,7 +151,11 @@ class ResearchAndCreativeWorkForm extends Component {
             Add Research
           </Button>
         </div>
-        <Table columns={columns1} />
+        <Table
+          columns={columns1}
+          dataSource={researches}
+          loading={isGettingResearches}
+        />
         <AddCWorkModal
           isAddCWorkModalOpen={isAddCWorkModalOpen}
           toggleModal={toggleModal}
@@ -141,7 +170,11 @@ class ResearchAndCreativeWorkForm extends Component {
             Add Creative Work
           </Button>
         </div>
-        <Table columns={columns2} />
+        <Table
+          columns={columns2}
+          dataSource={cworks}
+          loading={isGettingCWorks}
+        />
         <div style={styles.button}>
           <Button type="primary" onClick={prevStep} style={{ marginRight: 15 }}>
             Previous

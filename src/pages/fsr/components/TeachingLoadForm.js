@@ -95,11 +95,7 @@ class TeachingLoadForm extends Component {
     const columns = this.columns;
 
     return (
-      <Card
-        loading={isGettingSubjects}
-        title="Teaching Load in the College"
-        style={styles.formFSR}
-      >
+      <Card title="Teaching Load in the College" style={styles.formFSR}>
         <AddSubjectModal
           id={fsrID}
           subject={subject}
@@ -133,7 +129,11 @@ class TeachingLoadForm extends Component {
             Add Subject
           </Button>
         </div>
-        <Table columns={columns} dataSource={subjects} />
+        <Table
+          columns={columns}
+          dataSource={subjects}
+          loading={isGettingSubjects}
+        />
         <div style={styles.button}>
           <Button type="primary" onClick={nextStep}>
             Next

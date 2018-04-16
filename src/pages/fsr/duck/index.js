@@ -6,6 +6,9 @@ const initialState = {
   subjects: [],
   subject: {},
   timeslots: [],
+  researches: [],
+  research: {},
+  cworks: [],
   currentStep: 0,
 
   isGettingFSR: false,
@@ -16,12 +19,17 @@ const initialState = {
   isDeletingSubject: false,
   isEditingSubject: false,
   isEditingTimeslot: false,
+  isGettingResearches: false,
+  isAddingResearch: false,
+  isGettingCWorks: false,
 
   isAddSubjectModalOpen: false,
   isEditSubjectModalOpen: false,
 
   isAddCWorkModalOpen: false,
+
   isAddResearchModalOpen: false,
+
   isAddAdminWorkModalOpen: false,
   isAddExtAndCommServiceModalOpen: false,
   isAddCourseModalOpen: false,
@@ -40,7 +48,7 @@ const reducer = (state = initialState, action) => {
         }),
         success: prevState => ({
           ...prevState,
-          fsr: payload.data.data,
+          fsr: payload.data.data.fsr,
         }),
         finish: prevState => ({
           ...prevState,
@@ -171,6 +179,55 @@ const reducer = (state = initialState, action) => {
         finish: prevState => ({
           ...prevState,
           isGettingTimeslots: false,
+        }),
+      });
+
+    case Action.GET_RESEARCHES:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingResearches: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          researches: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingResearches: false,
+        }),
+      });
+
+    case Action.ADD_RESEARCH:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isAddingResearch: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          research: payload.data.data,
+          researches: [...state.researches, payload.data.data],
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isAddingResearch: false,
+        }),
+      });
+
+    case Action.GET_CWORKS:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingCWorks: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          cworks: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingCWorks: false,
         }),
       });
 

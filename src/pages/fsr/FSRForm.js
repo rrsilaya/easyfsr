@@ -41,6 +41,9 @@ class FSRForm extends Component {
       subjects,
       subject,
       timeslots,
+      researches,
+      research,
+      cworks,
 
       getSubjects,
       addSubject,
@@ -48,12 +51,18 @@ class FSRForm extends Component {
       editSubject,
       changeSelectedSubject,
       getTimeslots,
+      getResearches,
+      addResearch,
+      getCreativeWorks,
 
       isGettingSubjects,
       isAddingSubject,
       isAddingTimeslot,
       isEditingSubject,
       isGettingTimeslots,
+      isGettingResearches,
+      isAddingResearch,
+      isGettingCWorks,
     } = this.props;
 
     const { fsrID } = this.props.match.params;
@@ -101,6 +110,16 @@ class FSRForm extends Component {
                 />
               ) : currentStep === 1 ? (
                 <ResearchAndCreativeWorkForm
+                  fsrID={fsrID}
+                  researches={researches}
+                  research={research}
+                  cworks={cworks}
+                  getResearches={getResearches}
+                  addResearch={addResearch}
+                  getCreativeWorks={getCreativeWorks}
+                  isGettingResearches={isGettingResearches}
+                  isAddingResearch={isAddingResearch}
+                  isGettingCWorks={isGettingCWorks}
                   isAddCWorkModalOpen={isAddCWorkModalOpen}
                   isAddResearchModalOpen={isAddResearchModalOpen}
                   toggleModal={toggleModal}

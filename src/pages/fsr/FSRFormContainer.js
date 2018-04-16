@@ -12,6 +12,9 @@ import {
   editSubject,
   changeSelectedSubject,
   getTimeslots,
+  getResearches,
+  addResearch,
+  getCreativeWorks,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -29,12 +32,18 @@ const mapStateToProps = state => {
     subjects,
     subject,
     timeslots,
+    researches,
+    research,
+    cworks,
     isGettingFSR,
     isGettingSubjects,
     isAddingSubject,
     isAddingTimeslot,
     isEditingSubject,
     isGettingTimeslots,
+    isGettingResearches,
+    isAddingResearch,
+    isGettingCWorks,
   } = state.fsr;
 
   return {
@@ -51,12 +60,18 @@ const mapStateToProps = state => {
     subjects,
     subject,
     timeslots,
+    researches,
+    research,
+    cworks,
     isGettingFSR,
     isGettingSubjects,
     isAddingSubject,
     isAddingTimeslot,
     isEditingSubject,
     isGettingTimeslots,
+    isGettingResearches,
+    isAddingResearch,
+    isGettingCWorks,
   };
 };
 
@@ -91,6 +106,15 @@ const mapDispatchToProps = dispatch => {
     },
     getTimeslots: query => {
       dispatch(getTimeslots(query));
+    },
+    getResearches: query => {
+      dispatch(getResearches(query));
+    },
+    addResearch: research => {
+      dispatch(addResearch(research));
+    },
+    getCreativeWorks: query => {
+      dispatch(getCreativeWorks(query));
     },
   };
 };
