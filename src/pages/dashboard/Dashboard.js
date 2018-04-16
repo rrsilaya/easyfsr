@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Card, Progress, Table, Row, Col, Button, List } from 'antd';
+import { Icon, Card, Table, Row, Col, Button, List } from 'antd';
 import styles from './styles';
 import dataSource from './datasource';
 import columns from './columns';
@@ -7,10 +7,12 @@ import columns from './columns';
 import SendNotificationModal from './components/SendNotificationModal';
 import CreateFSRModal from './components/CreateFSRModal';
 import CreateAnnouncementModal from './components/CreateAnnouncementModal';
+import SettingsModal from './components/SettingsModal';
 
 import { SEND_NOTIFICATION } from './duck';
 import { CREATE_FSR } from './duck';
 import { CREATE_ANNOUNCEMENT } from './duck';
+import { SETTINGS } from './duck';
 
 const { Item: ListItem } = List;
 
@@ -28,8 +30,15 @@ class Dashboard extends Component {
       isSendNotificationModalOpen,
       isCreateFSRModalOpen,
       isCreateAnnouncementModalOpen,
+      isSettingsModalOpen,
+
+      searchedUsers,
+
+      addNotification,
+      addAnnouncement,
 
       toggleModal,
+      searchUser,
     } = this.props;
     return (
       <div>
@@ -40,6 +49,9 @@ class Dashboard extends Component {
                 isSendNotificationModalOpen={isSendNotificationModalOpen}
                 toggleModal={toggleModal}
                 handleAfterClose={this.handleAfterClose}
+                searchedUsers={searchedUsers}
+                searchUser={searchUser}
+                addNotification={addNotification}
               />
               <Button
                 type="default"
@@ -68,6 +80,7 @@ class Dashboard extends Component {
                 isCreateAnnouncementModalOpen={isCreateAnnouncementModalOpen}
                 toggleModal={toggleModal}
                 handleAfterClose={this.handleAfterClose}
+                addAnnouncement={addAnnouncement}
               />
               <Button
                 type="default"
@@ -76,6 +89,19 @@ class Dashboard extends Component {
               >
                 <Icon type="notification" style={styles.icons} />
                 <p style={styles.description}>Create Announcement</p>
+              </Button>
+              <SettingsModal
+                isSettingsModalOpen={isSettingsModalOpen}
+                toggleModal={toggleModal}
+                handleAfterClose={this.handleAfterClose}
+              />
+              <Button
+                type="default"
+                style={styles.menuItems}
+                onClick={() => toggleModal(SETTINGS)}
+              >
+                <Icon type="setting" style={styles.icons} />
+                <p style={styles.description}>Settings</p>
               </Button>
             </Button.Group>
           </Col>
@@ -150,16 +176,6 @@ class Dashboard extends Component {
             </Col>
           </Row>
           <Row gutter={12} type="flex">
-            {/* <Col span={12}>
-              <Card title="Faculty Progress">
-                <Progress
-                  type="dashboard"
-                  percent={30}
-                  style={styles.progressBar}
-                  width={200}
-                />
-              </Card>
-            </Col> */}
             <Col span={24}>
               <Card title="Logs">
                 <Table

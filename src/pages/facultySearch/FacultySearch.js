@@ -5,12 +5,19 @@ import { DataLoader } from '../../global';
 import Search from './components/Search';
 import styles from './styles';
 
+import { SEND_NOTIFICATION_FS } from './duck';
+import SendNotificationFSModal from './components/SendNotificationFSModal';
+
 const { Item: ListItem } = List;
 
 class FacultySearch extends Component {
   componentWillUnmount() {
     this.props.resetPage();
   }
+
+  handleToggleSendNotificationFSModal = () => {
+    this.props.changeSelectedUser(this.props.user);
+  };
 
   render() {
     const gridConfig = { xl: 8, sm: 12, xs: 24 };
@@ -20,7 +27,14 @@ class FacultySearch extends Component {
       isSearching,
       pushLink,
       // Dispatch
+      addNotification,
+      // searchedUsers,
       searchUser,
+      changeSelectedUser,
+
+      isSendNotificationFSModalOpen,
+      toggleModal,
+      user,
     } = this.props;
 
     return (
@@ -40,7 +54,6 @@ class FacultySearch extends Component {
                 <ListItem
                   className="list-item set-cursor pointer"
                   style={styles.listItem}
-                  onClick={() => pushLink(`/profile/${item.employeeID}`)}
                 >
                   <Row type="flex" justify="space-around" style={styles.info}>
                     <Col {...gridConfig} className="text normal">
@@ -54,14 +67,25 @@ class FacultySearch extends Component {
                     </Col>
                   </Row>
                   <div style={styles.icons}>
-                    <Tooltip title="Send Notification" arrowPointAtCenter>
+                    <Tooltip title="View FSR" arrowPointAtCenter>
                       <Icon className="text secondary" type="solution" />
                     </Tooltip>,
-                    <Tooltip title="View FSR" arrowPointAtCenter>
+                    <Tooltip title="Send Notification" arrowPointAtCenter>
+                      <SendNotificationFSModal
+                        user={user}
+                        isSendNotificationFSModalOpen={
+                          isSendNotificationFSModalOpen
+                        }
+                        toggleModal={toggleModal}
+                        handleAfterClose={this.handleAfterClose}
+                        addNotification={addNotification}
+                        changeSelectedUser={changeSelectedUser}
+                      />
                       <Icon
                         className="text secondary"
                         type="message"
                         style={styles.message}
+                        onClick={() => toggleModal(SEND_NOTIFICATION_FS)}
                       />
                     </Tooltip>,
                     <Tooltip title="Profile" arrowPointAtCenter>
