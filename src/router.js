@@ -16,7 +16,7 @@ import serviceRouter from './entities/extensionAndCommunityService/router';
 import notificationRouter from './entities/notification/router';
 import adminWorkRouter from './entities/adminWork/router';
 import creativeWorkRouter from './entities/creativeWork/router';
-import cworkCoAuthorRouter from './entities/coauthor/router';
+import cworkCoAuthorRouter from './entities/coAuthor/router';
 import userViewRouter from './entities/user/views/router';
 import announcementRouter from './entities/announcement/router';
 import consultationHoursRouter from './entities/consultationHours/router';
