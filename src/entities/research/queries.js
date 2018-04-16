@@ -8,6 +8,7 @@ export const addResearch = `
 		role,
 		title,
 		startDate,
+    endDate,
 		funding,
 		approvedUnits,
     filepath
@@ -19,6 +20,7 @@ export const addResearch = `
 		:role,
 		:title,
 		:startDate,
+    :endDate,
 		:funding,
 		:approvedUnits,
     :filepath
