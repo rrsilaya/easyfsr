@@ -9,7 +9,7 @@ import {
   Upload,
   Icon,
 } from 'antd';
-import { ADD_RESEARCH } from '../duck';
+import { RESEARCH } from '../duck';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -39,11 +39,11 @@ class AddResearchModal extends Component {
       <Modal
         title="Add Research"
         visible={isAddResearchModalOpen}
-        onOk={() => toggleModal(ADD_RESEARCH)}
-        onCancel={() => toggleModal(ADD_RESEARCH)}
+        onOk={() => toggleModal(RESEARCH)}
+        onCancel={() => toggleModal(RESEARCH)}
         destroyOnClose
         footer={[
-          <Button key="back" onClick={() => toggleModal(ADD_RESEARCH)}>
+          <Button key="back" onClick={() => toggleModal(RESEARCH)}>
             Cancel
           </Button>,
           <Button key="submit" type="primary" htmlType="submit">

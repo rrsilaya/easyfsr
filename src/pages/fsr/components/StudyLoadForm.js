@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Input, Select, Table, Button, Card } from 'antd';
-import { ADD_COURSE } from '../duck';
+import { COURSE } from '../duck';
 
 import AddCourseModal from './AddCourseModal';
 
@@ -14,26 +14,31 @@ const columns = [
     title: 'Course Number',
     dataIndex: 'courseNumber',
     key: 'courseNumber',
+    align: 'center',
   },
   {
     title: 'Course Credit',
     dataIndex: 'credit',
     key: 'credit',
+    align: 'center',
   },
   {
     title: 'Days',
     dataIndex: 'day',
     key: 'day',
+    align: 'center',
   },
   {
     title: 'Time',
     dataIndex: 'time',
     key: 'time',
+    align: 'center',
   },
   {
     title: 'School',
     dataIndex: 'school',
     key: 'school',
+    align: 'center',
   },
 ];
 
@@ -123,7 +128,7 @@ class StudyLoadForm extends Component {
             <Button
               icon="plus-circle-o"
               type="primary"
-              onClick={() => toggleModal(ADD_COURSE)}
+              onClick={() => toggleModal(COURSE)}
             >
               Add Course
             </Button>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Button, Card } from 'antd';
-import { ADD_CONSULTATIONHOUR } from '../duck';
+import { CONSULTATIONHOUR } from '../duck';
 
 import AddConsultationHourModal from './AddConsultationHourModal';
 
@@ -11,16 +11,19 @@ const columns = [
     title: 'Days',
     dataIndex: 'days',
     key: 'days',
+    align: 'center',
   },
   {
     title: 'Time',
     dataIndex: 'time',
     key: 'time',
+    align: 'center',
   },
   {
     title: 'Place',
     dataIndex: 'place',
     key: 'place',
+    align: 'center',
   },
 ];
 
@@ -44,7 +47,7 @@ class ConsultationHoursForm extends Component {
           <Button
             icon="plus-circle-o"
             type="primary"
-            onClick={() => toggleModal(ADD_CONSULTATIONHOUR)}
+            onClick={() => toggleModal(CONSULTATIONHOUR)}
           >
             Add Consultation Hour
           </Button>

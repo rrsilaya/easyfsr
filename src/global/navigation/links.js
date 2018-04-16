@@ -3,6 +3,7 @@ const links = [
     icon: 'appstore',
     label: 'Dashboard',
     path: '/',
+    restricted: true,
   },
   {
     icon: 'solution',

@@ -1,16 +1,22 @@
 import { handle } from 'redux-pack';
 import * as Api from '../../api';
 import { notification } from 'antd';
-export const SEND_NOTIFICATION = 'DASHBOARD/SEND_NOTIFICATION';
-export const CREATE_FSR = 'DASHBOARD/CREATE_FSR';
-export const CREATE_ANNOUNCEMENT = 'DASHBOARD/CREATE_ANNOUNCEMENT';
-export const SETTINGS = 'DASHBOARD/SETTINGS';
-export const SEARCH_USER = 'DASHBOARD/SEARCH_USER';
-export const GET_USERS = 'DASHBOARD/GET_USERS';
-export const TOGGLE_MODAL = 'DASHBOARD/TOGGLE_MODAL';
-export const CHANGE_SELECTED_USER = 'DASHBOARD/CHANGE_SELECTED_USER';
-export const ADD_NOTIFICATION = 'DASHBOARD/ADD_NOTIFICATION';
-export const ADD_ANNOUNCEMENT = 'DASHBOARD/ADD_ANNOUNCEMENT';
+
+// Constants
+export const SEND_NOTIFICATION = 'SEND_NOTIFICATION';
+export const CREATE_FSR = 'CREATE_FSR';
+export const CREATE_ANNOUNCEMENT = 'CREATE_ANNOUNCEMENT';
+export const SETTINGS = 'SETTINGS';
+
+// Action Types
+const SEARCH_USER = 'DASHBOARD/SEARCH_USER';
+const GET_USERS = 'DASHBOARD/GET_USERS';
+const CHANGE_SELECTED_USER = 'DASHBOARD/CHANGE_SELECTED_USER';
+const ADD_NOTIFICATION = 'DASHBOARD/ADD_NOTIFICATION';
+const ADD_ANNOUNCEMENT = 'DASHBOARD/ADD_ANNOUNCEMENT';
+const GET_ANNOUNCEMENTS = 'DASHBOARD/GET_ANNOUNCEMENTS';
+const GET_NOTIFICATIONS = 'DASHBOARD/GET_NOTIFICATIONS';
+const TOGGLE_MODAL = 'DASHBOARD/TOGGLE_MODAL';
 
 export const getUsers = query => {
   return dispatch => {
@@ -31,6 +37,43 @@ export const getUsers = query => {
 export const searchUser = query => ({
   type: SEARCH_USER,
   promise: Api.getUsers(query),
+});
+
+export const getAnnouncements = query => {
+  return dispatch => {
+    return dispatch({
+      type: GET_ANNOUNCEMENTS,
+      promise: Api.getAnnouncements(query),
+      meta: {
+        onFailure: () => {
+          notification.error({
+            message: 'Error while getting announcements.',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const getNotifications = query => {
+  return dispatch => {
+    return dispatch({
+      type: GET_NOTIFICATIONS,
+      promise: Api.getNotifications(query),
+      meta: {
+        onFailure: () => {
+          notification.error({
+            message: 'Error while getting notifications.',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const changeSelectedUser = user => ({
+  type: CHANGE_SELECTED_USER,
+  payload: user,
 });
 
 export const toggleModal = modal => ({
@@ -165,6 +208,59 @@ const reducer = (state = initialState, action) => {
         finish: prevState => ({
           ...prevState,
           isAddingAnnouncement: false,
+        }),
+      });
+    case GET_USERS:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingUsers: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          users: payload.data.data,
+          pagination: {
+            page: payload.data.page,
+            pages: payload.data.pages,
+            limit: payload.data.limit,
+            total: payload.data.total,
+          },
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingUsers: false,
+        }),
+      });
+
+    case GET_ANNOUNCEMENTS:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingAnnouncements: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          announcements: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingAnnouncements: false,
+        }),
+      });
+
+    case GET_NOTIFICATIONS:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingNotifications: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          notifications: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingNotifications: false,
         }),
       });
 

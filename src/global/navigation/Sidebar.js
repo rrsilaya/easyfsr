@@ -42,6 +42,7 @@ class Sidebar extends Component {
           style={styles.sidebar}
           theme="dark"
           defaultSelectedKeys={[this.getActiveTab()]}
+          selectedKeys={[this.getActiveTab()]}
         >
           {links.map(
             link =>

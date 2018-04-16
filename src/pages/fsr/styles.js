@@ -10,6 +10,13 @@ const styles = {
     marginBottom: 10,
     marginTop: 20,
   },
+  icons: {
+    fontSize: 16,
+    borderLeft: '1px solid #afafaf',
+    paddingLeft: 15,
+    display: 'flex',
+    alignItems: 'center',
+  },
 };
 
 export default styles;
