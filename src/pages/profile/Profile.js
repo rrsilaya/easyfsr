@@ -1,9 +1,12 @@
 import React, { Component, Fragment } from 'react';
-import { Icon } from 'antd';
+import { Icon, Modal, Button } from 'antd';
 
-import { PageLoader, Schedule, DataLoader } from '../../global';
+import { PageLoader, DataLoader } from '../../global';
+import Schedule from './components/Schedule';
 import ProfileIcon from './components/ProfileIcon';
 import ProfileInfo from './components/ProfileInfo';
+
+import { SCHEDULE_MODAL } from './duck';
 import styles from './styles';
 
 class Profile extends Component {
@@ -19,17 +22,26 @@ class Profile extends Component {
     this.props.resetPage();
   }
 
+  toggleScheduleModal = () => {
+    this.props.toggleModal(SCHEDULE_MODAL);
+  };
+
   render() {
     const {
       user,
       adminWork,
       service,
+      schedule,
 
       isGettingUser,
       isUploadingIcon,
       isLoadingCards,
+      isGettingSchedule,
+      isSchedModalOpen,
 
       uploadIcon,
+      toggleModal,
+      getUserSchedule,
     } = this.props;
 
     return (
@@ -38,7 +50,15 @@ class Profile extends Component {
           <PageLoader />
         ) : (
           <Fragment>
-            <div className="center">
+            <Schedule
+              isSchedModalOpen={isSchedModalOpen}
+              toggleScheduleModal={this.toggleScheduleModal}
+              getUserSchedule={getUserSchedule}
+              employeeID={user.employeeID}
+              isGettingSchedule={isGettingSchedule}
+              schedule={schedule}
+            />
+            <div className="center" style={styles.header}>
               <ProfileIcon
                 user={user}
                 isUploadingIcon={isUploadingIcon}
@@ -65,8 +85,16 @@ class Profile extends Component {
                   {user.emailAddress}
                 </div>
               </div>
+              <div style={styles.actions}>
+                <Button ghost onClick={this.toggleScheduleModal}>
+                  View Schedule
+                  <Icon type="right" />
+                </Button>
+              </div>
             </div>
-            {Object.values(isLoadingCards).every(e => e) ? (
+            {Object.keys(isLoadingCards)
+              .map(key => isLoadingCards[key])
+              .every(e => e) ? (
               <DataLoader isLoading opaque />
             ) : (
               <ProfileInfo

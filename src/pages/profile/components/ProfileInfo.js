@@ -18,7 +18,11 @@ const { Item: ListItem } = List;
 
 class ProfileInfo extends Component {
   componentDidUpdate() {
-    if (!Object.values(this.props.isLoadingCards).every(e => e)) {
+    if (
+      !Object.keys(this.props.isLoadingCards)
+        .map(key => this.props.isLoadingCards[key])
+        .every(e => e)
+    ) {
       setTimeout(() => {
         this.grid.updateLayout();
       }, 1000);

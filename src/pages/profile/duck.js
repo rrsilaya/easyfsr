@@ -4,11 +4,16 @@ import { push } from 'react-router-redux';
 import * as Api from '../../api';
 import { updateProfileIcon } from '../../app/duck';
 
+// Constants
+export const SCHEDULE_MODAL = 'SCHEDULE_MODAL';
+
 // Action Types
 const GET_USER = 'PROFILE/GET_USER';
 const GET_ADMIN_WORK = 'PROFILE/GET_ADMIN_WORK';
 const GET_EXT_AND_COMM_SERVICE = 'PROFILE/GET_EXT_AND_COMM_SERVICE';
 const UPLOAD_ICON = 'PROFILE/UPLOAD_ICON';
+const TOGGLE_MODAL = 'PROFILE/TOGGLE_MODAL';
+const GET_USER_SCHEDULE = 'PROFILE/GET_USER_SCHEDULE';
 const RESET_PAGE = 'PROFILE/RESET_PAGE';
 
 // Action Creators
@@ -78,6 +83,21 @@ export const uploadIcon = (user, form) => {
   };
 };
 
+export const getUserSchedule = user => ({
+  type: GET_USER_SCHEDULE,
+  promise: Api.getUserSchedule(user),
+  meta: {
+    onFailure: () => {
+      notification.error({ message: 'Server error while getting schedule' });
+    },
+  },
+});
+
+export const toggleModal = modal => ({
+  type: TOGGLE_MODAL,
+  payload: modal,
+});
+
 export const resetPage = () => ({
   type: RESET_PAGE,
 });
@@ -86,15 +106,19 @@ export const resetPage = () => ({
 const initialState = {
   isGettingUser: true,
   isUploadingIcon: false,
+  isGettingSchedule: true,
 
   user: {},
   adminWork: [],
   service: [],
+  schedule: [],
 
   isLoadingCards: {
     adminWork: true,
     extAndCommService: true,
   },
+
+  isSchedModalOpen: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -171,6 +195,34 @@ const reducer = (state = initialState, action) => {
           isUploadingIcon: false,
         }),
       });
+
+    case GET_USER_SCHEDULE:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingSchedule: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          schedule: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingSchedule: false,
+        }),
+      });
+
+    case TOGGLE_MODAL:
+      switch (payload) {
+        case SCHEDULE_MODAL:
+          return {
+            ...state,
+            isSchedModalOpen: !state.isSchedModalOpen,
+          };
+
+        default:
+          return state;
+      }
 
     case RESET_PAGE:
       return initialState;

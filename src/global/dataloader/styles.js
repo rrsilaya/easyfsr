@@ -16,7 +16,6 @@ const style = {
     alignItems: 'center',
   },
   spinner: {
-    color: '#fff',
     fontSize: '42px',
   },
   loader: {
