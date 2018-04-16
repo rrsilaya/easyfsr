@@ -282,7 +282,7 @@ CREATE TABLE `notification`(
   `dateSent` DATE NOT NULL, --                   DATE format: YYYY-MM-DD
   `timeSent` TIME NOT NULL,
   `isResolved` BOOLEAN,
-  `priority` VARCHAR (10) DEFAULT 'LOW', -- LOW / MEDIUM / HIGH
+  `priority` VARCHAR (10) DEFAULT 'NORMAL', -- LOW / NORMAL / HIGH
   CONSTRAINT `notification_pk`
     PRIMARY KEY(`notificationID`),
   CONSTRAINT `notification_user_fk`

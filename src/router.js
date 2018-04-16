@@ -16,9 +16,12 @@ import serviceRouter from './entities/extensionAndCommunityService/router';
 import notificationRouter from './entities/notification/router';
 import adminWorkRouter from './entities/adminWork/router';
 import creativeWorkRouter from './entities/creativeWork/router';
+import cworkCoAuthorRouter from './entities/coAuthor/router';
 import userViewRouter from './entities/user/views/router';
 import announcementRouter from './entities/announcement/router';
 import consultationHoursRouter from './entities/consultationHours/router';
+import metaRouter from './entities/meta/router';
+import logRouter from './entities/log/router';
 
 const router = Router();
 
@@ -33,7 +36,8 @@ router.use(authRouter);
 //     message: 'You must be logged in',
 //   });
 // });
-
+router.use(logRouter);
+router.use(metaRouter);
 router.use(studyLoadRouter);
 router.use(userViewRouter);
 router.use(awardRouter);
@@ -45,6 +49,7 @@ router.use(serviceRouter);
 router.use(timeslotRouter);
 router.use(subjectRouter);
 router.use(creativeWorkRouter);
+router.use(cworkCoAuthorRouter);
 // router.use( (req,res,next) => {
 //   if(req.session.user.acctType == 'ADMIN'){
 //     return next;
