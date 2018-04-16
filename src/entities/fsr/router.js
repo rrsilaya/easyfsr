@@ -11,7 +11,7 @@ import { getConsultationHours } from './../consultationHours/controller';
 import { getExtensionAndCommunityServices } from './../extensionAndCommunityService/controller';
 import { getLtdPractOfProfs } from './../limitedPracticeOfProf/controller';
 import { getSubjects } from './../subject/controller';
-import { getStudyLoads } from './../studyLoad/controller';
+import { addStudyLoad, getStudyLoads } from './../studyLoad/controller';
 import { getTimeslots } from './../timeslot/controller';
 import { getUserByUserID } from './../user/controller';
 
@@ -21,7 +21,7 @@ const router = Router();
  * @api {post} /fsr addFSR
  * @apiGroup FSR
  * @apiName addFSR
- *
+ * @apiParam (Body Params) {Number[]} users Array of userIDs
  * @apiParam (Body Params) {String} acadYear academic year the fsr is filed
  * @apiParam (Body Params) {String} semester semester the fsr is filed
  *
@@ -38,15 +38,6 @@ const router = Router();
  *   {
  *     "status": 200;
  *     "message": 'Succesfully created fsr'
- *     "data": {
- *         "id": 92,
- *         "userID": 1,
- *         "acadYear": "2018",
- *         "semester": "2",
- *         "teachingLoadCreds": 5,
- *         "isChecked": 0,
- *         "isTurnedIn":0
- *      }
  *   }
  *
  * @apiError (Error 500) {Number} status status code
@@ -205,36 +196,43 @@ router.get('/fsr/:id', async (req, res) => {
     const adminWorks = await getAdminWorks(req.params);
     const awards = await getAwards(req.params);
     const creativeWorks = await getCreativeWorks(req.params);
-    creativeWorks.map(
-      async ({ creativeWorkID } = cwork) =>
-        await getCworkCoAuthors({ creativeWorkID }),
+    const cworksWithAuthor = await Promise.all(
+      creativeWorks.map(
+        async ({ creativeWorkID } = cwork) =>
+          await getCworkCoAuthors({ creativeWorkID }),
+      ),
     );
     const courses = await getCourses(req.params);
-    courses.map(
-      async ({ courseID } = course) => await getCourseScheds({ courseID }),
+    const coursesWithSched = await Promise.all(
+      courses.map(
+        async ({ courseID } = course) => await getCourseScheds({ courseID }),
+      ),
     );
     const consultationHours = await getConsultationHours(req.params);
     const services = await getExtensionAndCommunityServices(req.params);
     const ltdPractices = await getLtdPractOfProfs(req.params);
     const subjects = await getSubjects(req.params);
-    subjects.map(
-      async ({ subjectID } = subject) => await getTimeslots({ subjectID }),
+    const subjsWithTimeslot = await Promise.all(
+      subjects.map(
+        async ({ subjectID } = subject) => await getTimeslots({ subjectID }),
+      ),
     );
     const studyLoads = await getStudyLoads(req.params);
     const userID = fsr.userID;
     const user = await getUserByUserID({ userID });
+    delete user.password;
 
     fsr = {
       user,
       fsr,
       adminWorks,
       awards,
-      creativeWorks,
-      courses,
+      cworksWithAuthor,
+      coursesWithSched,
       consultationHours,
       services,
       ltdPractices,
-      subjects,
+      subjsWithTimeslot,
       studyLoads,
     };
 

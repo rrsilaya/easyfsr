@@ -96,7 +96,8 @@ CREATE TABLE `studyLoad`(
   `fellowshipRecipient` BOOLEAN DEFAULT 0,
   CONSTRAINT `studyLoad_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`),
+    REFERENCES fsr(`id`)
+    ON DELETE CASCADE,
   CONSTRAINT `studyLoad_pk`
     PRIMARY KEY(`id`)
 );
@@ -110,7 +111,8 @@ CREATE TABLE `course`(
   `id` INT NOT NULL,
   CONSTRAINT `course_studyLoad_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`),
+    REFERENCES fsr(`id`)
+    ON DELETE CASCADE,
   CONSTRAINT `course_pk`
     PRIMARY KEY (`courseID`)
 );
@@ -140,7 +142,8 @@ CREATE TABLE `consultationHours`(
   `id` INT NOT NULL,
   CONSTRAINT `consultationHours_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`),
+    REFERENCES fsr(`id`)
+    ON DELETE CASCADE,
   CONSTRAINT `consultationHours_pk`
     PRIMARY KEY (`chID`)   
 );
@@ -160,7 +163,8 @@ CREATE TABLE `award`(
   `filepath` TEXT (50),
   CONSTRAINT `award_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`),
+    REFERENCES fsr(`id`)
+    ON DELETE CASCADE,
   CONSTRAINT `award_pk`
     PRIMARY KEY (`awardID`) 
 );
@@ -173,7 +177,8 @@ CREATE TABLE `limitedPracticeOfProf`(
   `date` DATE,  --                   DATE format: YYYY-MM-DD
   CONSTRAINT `limitedPracticeOfProf_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`),
+    REFERENCES fsr(`id`)
+    ON DELETE CASCADE,
   CONSTRAINT `limitedPracticeOfProf_pk`
     PRIMARY KEY (`limitedPracticeOfProfID`) 
 );
@@ -191,7 +196,8 @@ CREATE TABLE `extensionAndCommunityService`(
   `endDate` DATE NOT NULL, --                     DATE format: YYYY-MM-DD
   CONSTRAINT `extensionAndCommunityService_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`),
+    REFERENCES fsr(`id`)
+    ON DELETE CASCADE,
   CONSTRAINT `extAndCommService_pk` 
     PRIMARY KEY (`extAndCommServiceID`) 
 );
@@ -206,7 +212,8 @@ CREATE TABLE `adminWork`(
   `id` INT NOT NULL,
   CONSTRAINT `adminWork_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`),
+    REFERENCES fsr(`id`)
+    ON DELETE CASCADE,
   CONSTRAINT `adminWork_pk` 
     PRIMARY KEY (`adminWorkID`) 
 );
@@ -223,7 +230,8 @@ CREATE TABLE `creativeWork`(
   `filepath` TEXT (50),
   CONSTRAINT `creativeWork_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`),
+    REFERENCES fsr(`id`)
+    ON DELETE CASCADE,
   CONSTRAINT `creativeWork_pk`
     PRIMARY KEY (`creativeWorkID`)
 );
@@ -256,7 +264,8 @@ CREATE TABLE `research`(
   `filepath` TEXT (50),
   CONSTRAINT `research_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`),
+    REFERENCES fsr(`id`)
+    ON DELETE CASCADE,
   CONSTRAINT `research_pk`
     PRIMARY KEY (`researchID`)
 );
@@ -326,7 +335,6 @@ CREATE TABLE log (
   `changes` TEXT (64), -- may contain other details that are necessary / could be used for UPDATE 
   `affectedID` INT NOT NULL, -- specifies ID affected
   `userID` INT NOT NULL,
-
   CONSTRAINT `log_pk`
     PRIMARY KEY(`id`),
   CONSTRAINT `log_user_fk`
