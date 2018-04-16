@@ -52,17 +52,7 @@ CREATE TABLE fsr(
 
 -- Entities under FSR 
 
-  -- teaching_load, subject, timeslot
-
--- CREATE TABLE `teachingLoad`(
---   `id` INT NOT NULL,
---   `teachingLoadCreds` INT(2) NOT NULL,
---   CONSTRAINT `teachingLoad_user_fk`
---     FOREIGN KEY (`id`)
---     REFERENCES fsr(`id`),  
---   CONSTRAINT `teachingLoad_pk`  
---     PRIMARY KEY(`id`)
--- );
+  -- (teaching_load) subject, timeslot
 
 CREATE TABLE `subject`(
   `id` INT NOT NULL,
@@ -332,7 +322,7 @@ CREATE TABLE meta (
 CREATE TABLE log (
   `id` VARCHAR(17) NOT NULL,
   `timestamp` TIMESTAMP NOT NULL,
-  `action` VARCHAR(40) NOT NULL, -- insert_entity | update_entity | delete_entity 
+  `action` VARCHAR(40) NOT NULL, -- INSERT_ENTITY | UPDATE_ENTITY | DELETE_ENTITY 
   `changes` TEXT (64), -- may contain other details that are necessary / could be used for UPDATE 
   `affectedID` INT NOT NULL, -- specifies ID affected
   `userID` INT NOT NULL,
