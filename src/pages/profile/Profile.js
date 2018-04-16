@@ -92,7 +92,9 @@ class Profile extends Component {
                 </Button>
               </div>
             </div>
-            {Object.values(isLoadingCards).every(e => e) ? (
+            {Object.keys(isLoadingCards)
+              .map(key => isLoadingCards[key])
+              .every(e => e) ? (
               <DataLoader isLoading opaque />
             ) : (
               <ProfileInfo
