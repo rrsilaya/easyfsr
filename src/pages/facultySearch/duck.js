@@ -5,6 +5,7 @@ import { notification } from 'antd';
 // Action Types
 const SEARCH_USER = 'FACULTY/SEARCH_USER';
 const RESET_PAGE = 'FACULTY/RESET_PAGE';
+export const GET_USER = 'FACULTYSEARCH/GET_USERS';
 export const ADD_NOTIFICATION = 'FACULTY/ADD_NOTIFICATION';
 export const TOGGLE_MODAL = 'FACULTYSEARCH/TOGGLE_MODAL';
 export const SEND_NOTIFICATION_FS = 'FACULTYSEARCH/SEND_NOTIFICATION_FS';
@@ -71,9 +72,10 @@ const initialState = {
   isSendNotificationFSModalOpen: false,
   isSearching: false,
   isSearchingUsers: false,
-
+  isGettingUser: false,
   searchedUsers: [],
   users: [],
+  user: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -126,6 +128,27 @@ const reducer = (state = initialState, action) => {
     case RESET_PAGE:
       return initialState;
 
+    case GET_USER:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingUser: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          users: prevState.users.map(
+            user =>
+              user.userID === payload.data.data.userID
+                ? { ...payload.data.data }
+                : user,
+          ),
+          isSendNotificationFSModalOpen: false,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingUser: false,
+        }),
+      });
     default:
       return state;
   }

@@ -7,6 +7,7 @@ const mapStateToProps = state => {
   const {
     users,
     isSearching,
+    isGettingUser,
     isSendNotificationFSModalOpen,
     user,
   } = state.search;
@@ -14,6 +15,7 @@ const mapStateToProps = state => {
   return {
     users,
     isSearching,
+    isGettingUser,
     isSendNotificationFSModalOpen,
     user,
     // searchedUsers,

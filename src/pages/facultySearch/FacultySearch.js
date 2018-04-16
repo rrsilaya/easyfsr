@@ -25,13 +25,12 @@ class FacultySearch extends Component {
       // State
       users,
       isSearching,
+      isGettingUser,
       pushLink,
       // Dispatch
       addNotification,
       // searchedUsers,
       searchUser,
-      changeSelectedUser,
-
       isSendNotificationFSModalOpen,
       toggleModal,
       user,
@@ -79,7 +78,6 @@ class FacultySearch extends Component {
                         toggleModal={toggleModal}
                         handleAfterClose={this.handleAfterClose}
                         addNotification={addNotification}
-                        changeSelectedUser={changeSelectedUser}
                       />
                       <Icon
                         className="text secondary"

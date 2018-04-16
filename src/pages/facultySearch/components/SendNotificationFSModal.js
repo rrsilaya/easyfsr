@@ -20,10 +20,6 @@ class SendNotificationFSModal extends Component {
     });
   };
 
-  handleAfterClose = () => {
-    this.props.form.resetFields();
-  };
-
   render() {
     const {
       isSendNotificationFSModalOpen,
