@@ -400,7 +400,7 @@ BEFORE DELETE ON consultationHours
 FOR EACH ROW
   UPDATE fsr
     SET totalCHours = totalCHours - (SELECT TIMESTAMPDIFF(HOUR, OLD.timeStart, OLD.timeEnd))
-    WHERE id = OLD.id AND chID = OLD.chID;
+    WHERE id = OLD.id;
 
 CREATE TRIGGER update_totalCHours 
 AFTER update ON consultationHours
@@ -408,7 +408,7 @@ FOR EACH ROW
 UPDATE fsr 
   SET totalCHours = totalCHours - (SELECT TIMESTAMPDIFF(HOUR, OLD.timeStart, OLD.timeEnd)) 
   + (SELECT TIMESTAMPDIFF(HOUR, NEW.timeStart, NEW.timeEnd))
-  WHERE chID = NEW.chID; 
+  WHERE id = NEW.id; 
 
 
 -- Triggers for subject and timeslot
@@ -432,7 +432,7 @@ FOR EACH ROW
 UPDATE subject 
   SET hoursPerWeek = hoursPerWeek - (SELECT TIMESTAMPDIFF(HOUR, OLD.timeStart, OLD.timeEnd)) 
   + (SELECT TIMESTAMPDIFF(HOUR, NEW.timeStart, NEW.timeEnd))
-  WHERE subjectID = OLD.subjectID;
+  WHERE subjectID = NEW.subjectID;
 
 -- Triggers for course and courseSched
 CREATE TRIGGER insert_courseSched
