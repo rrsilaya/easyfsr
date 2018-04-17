@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Modal, Button, Input, Select, Form } from 'antd';
-import { SEND_NOTIFICATION } from '../duck';
+import { SEND_NOTIFICATION_FS } from '../duck';
 import styles from '../styles';
 import { getFieldValues } from '../../../utils';
 
-const { Search } = Input;
+// const { Search } = Input;
 const { TextArea } = Input;
 const { Option } = Select;
 const FormItem = Form.Item;
 
-class SendNotificationModal extends Component {
+class SendNotificationFSModal extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -20,35 +20,27 @@ class SendNotificationModal extends Component {
     });
   };
 
-  handleAfterClose = () => {
-    this.props.form.resetFields();
-  };
-
-  handleChange = lastName => {
-    this.props.searchUser({ lastName });
-  };
-
   render() {
     const {
-      isSendNotificationModalOpen,
-      searchedUsers,
+      isSendNotificationFSModalOpen,
+      //   searchedUsers,
 
       isAddingNotification,
 
       toggleModal,
-      // user,
+      user,
       form,
     } = this.props;
 
     return (
       <Modal
         title="Send Notification"
-        visible={isSendNotificationModalOpen}
-        onOk={() => toggleModal(SEND_NOTIFICATION)}
-        onCancel={() => toggleModal(SEND_NOTIFICATION)}
+        visible={isSendNotificationFSModalOpen}
+        onOk={() => toggleModal(SEND_NOTIFICATION_FS)}
+        onCancel={() => toggleModal(SEND_NOTIFICATION_FS)}
         destroyOnClose
         footer={[
-          <Button key="back" onClick={() => toggleModal(SEND_NOTIFICATION)}>
+          <Button key="back" onClick={() => toggleModal(SEND_NOTIFICATION_FS)}>
             Cancel
           </Button>,
           <Button
@@ -72,24 +64,7 @@ class SendNotificationModal extends Component {
                   whitespace: true,
                 },
               ],
-            })(
-              <Select
-                mode="combobox"
-                // value={value}
-                placeholder="Select user"
-                filterOption={false}
-                style={styles.toUserBox}
-                defaultActiveFirstOption={false}
-                showArrow={false}
-                onChange={this.handleChange}
-              >
-                {searchedUsers.map(user => (
-                  <Option key={`${user.firstName} ${user.lastName}`}>
-                    {user.firstName} {user.lastName}
-                  </Option>
-                ))}
-              </Select>,
-            )}
+            })(<Input disabled />)}
           </FormItem>
           <FormItem label="Message" required>
             {form.getFieldDecorator('message@@addNotification', {
@@ -131,4 +106,4 @@ class SendNotificationModal extends Component {
   }
 }
 
-export default Form.create()(SendNotificationModal);
+export default Form.create()(SendNotificationFSModal);
