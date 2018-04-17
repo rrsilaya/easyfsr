@@ -9,6 +9,7 @@ const initialState = {
   researches: [],
   research: {},
   cworks: [],
+  cwork: {},
   currentStep: 0,
 
   isGettingFSR: false,
@@ -21,14 +22,21 @@ const initialState = {
   isEditingTimeslot: false,
   isGettingResearches: false,
   isAddingResearch: false,
+  isDeletingResearch: false,
+  isEditingResearch: false,
   isGettingCWorks: false,
+  isAddingCWork: false,
+  isDeletingCWork: false,
+  isEditingCWork: false,
 
   isAddSubjectModalOpen: false,
   isEditSubjectModalOpen: false,
 
   isAddCWorkModalOpen: false,
+  isEditCWorkModalOpen: false,
 
   isAddResearchModalOpen: false,
+  isEditResearchModalOpen: false,
 
   isAddAdminWorkModalOpen: false,
   isAddExtAndCommServiceModalOpen: false,
@@ -81,7 +89,6 @@ const reducer = (state = initialState, action) => {
         success: prevState => ({
           ...prevState,
           subject: payload.data.data,
-          subjects: [...state.subjects, payload.data.data],
         }),
         finish: prevState => ({
           ...prevState,
@@ -160,12 +167,6 @@ const reducer = (state = initialState, action) => {
         }),
       });
 
-    case Action.CHANGE_SELECTED_SUBJECT:
-      return {
-        ...state,
-        subject: payload,
-      };
-
     case Action.GET_TIMESLOTS:
       return handle(state, action, {
         start: prevState => ({
@@ -206,12 +207,52 @@ const reducer = (state = initialState, action) => {
         }),
         success: prevState => ({
           ...prevState,
-          research: payload.data.data,
           researches: [...state.researches, payload.data.data],
+          isAddResearchModalOpen: false,
         }),
         finish: prevState => ({
           ...prevState,
           isAddingResearch: false,
+        }),
+      });
+
+    case Action.DELETE_RESEARCH:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isDeletingResearch: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          researches: state.researches.filter(
+            research => research.researchID !== payload.data.data.researchID,
+          ),
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isDeletingResearch: false,
+        }),
+      });
+
+    case Action.EDIT_RESEARCH:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isEditingResearch: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          researches: state.researches.map(
+            research =>
+              research.researchID === payload.data.data.researchID
+                ? { ...payload.data.data }
+                : research,
+          ),
+          isEditResearchModalOpen: false,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isEditingResearch: false,
         }),
       });
 
@@ -231,6 +272,63 @@ const reducer = (state = initialState, action) => {
         }),
       });
 
+    case Action.ADD_CWORK:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isAddingCWork: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          cworks: [...state.cworks, payload.data.data],
+          isAddCWorkModalOpen: false,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isAddingCWork: false,
+        }),
+      });
+
+    case Action.DELETE_CWORK:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isDeletingCWork: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          cworks: state.cworks.filter(
+            cwork => cwork.creativeWorkID !== payload.data.data.creativeWorkID,
+          ),
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isDeletingCWork: false,
+        }),
+      });
+
+    case Action.EDIT_CWORK:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isEditingCWork: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          cworks: state.cworks.map(
+            cwork =>
+              cwork.creativeWorkID === payload.data.data.creativeWorkID
+                ? { ...payload.data.data }
+                : cwork,
+          ),
+          isEditCWorkModalOpen: false,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isEditingCWork: false,
+        }),
+      });
+
     case Action.TOGGLE_MODAL:
       switch (payload) {
         case Action.ADD_SUBJECT_MODAL:
@@ -243,12 +341,22 @@ const reducer = (state = initialState, action) => {
             ...state,
             isEditSubjectModalOpen: !state.isEditSubjectModalOpen,
           };
-        case Action.CWORK:
+        case Action.ADD_CWORK_MODAL:
           return { ...state, isAddCWorkModalOpen: !state.isAddCWorkModalOpen };
-        case Action.RESEARCH:
+        case Action.EDIT_CWORK_MODAL:
+          return {
+            ...state,
+            isEditCWorkModalOpen: !state.isEditCWorkModalOpen,
+          };
+        case Action.ADD_RESEARCH_MODAL:
           return {
             ...state,
             isAddResearchModalOpen: !state.isAddResearchModalOpen,
+          };
+        case Action.EDIT_RESEARCH_MODAL:
+          return {
+            ...state,
+            isEditResearchModalOpen: !state.isEditResearchModalOpen,
           };
         case Action.ADMINWORK:
           return {
@@ -270,6 +378,19 @@ const reducer = (state = initialState, action) => {
             ...state,
             isAddConsultationHourModalOpen: !state.isAddConsultationHourModalOpen,
           };
+        default:
+          return state;
+      }
+
+    case Action.CHANGE_SELECTED:
+      switch (payload.entity) {
+        case Action.SUBJECT:
+          return { ...state, subject: payload.data };
+        case Action.RESEARCH:
+          return { ...state, research: payload.data };
+        case Action.CWORK:
+          return { ...state, cwork: payload.data };
+
         default:
           return state;
       }

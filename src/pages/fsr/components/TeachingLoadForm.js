@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Table, Button, Card, Icon, Popconfirm } from 'antd';
-import { ADD_SUBJECT_MODAL, EDIT_SUBJECT_MODAL } from '../duck';
+import { SUBJECT, ADD_SUBJECT_MODAL, EDIT_SUBJECT_MODAL } from '../duck';
 
 import styles from '../styles';
 
@@ -70,7 +70,7 @@ class TeachingLoadForm extends Component {
   ];
 
   handleToggleEditSubject = subject => {
-    this.props.changeSelectedSubject(subject);
+    this.props.changeSelected({ entity: SUBJECT, data: subject });
     this.props.toggleModal(EDIT_SUBJECT_MODAL);
   };
 
@@ -92,7 +92,6 @@ class TeachingLoadForm extends Component {
       toggleModal,
       nextStep,
     } = this.props;
-    const columns = this.columns;
 
     return (
       <Card title="Teaching Load in the College" style={styles.formFSR}>
@@ -130,7 +129,7 @@ class TeachingLoadForm extends Component {
           </Button>
         </div>
         <Table
-          columns={columns}
+          columns={this.columns}
           dataSource={subjects}
           loading={isGettingSubjects}
         />

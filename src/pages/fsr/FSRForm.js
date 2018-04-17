@@ -31,6 +31,8 @@ class FSRForm extends Component {
       isAddConsultationHourModalOpen,
 
       isEditSubjectModalOpen,
+      isEditResearchModalOpen,
+      isEditCWorkModalOpen,
 
       toggleModal,
       nextStep,
@@ -44,16 +46,22 @@ class FSRForm extends Component {
       researches,
       research,
       cworks,
+      cwork,
 
       getSubjects,
       addSubject,
       deleteSubject,
       editSubject,
-      changeSelectedSubject,
+      changeSelected,
       getTimeslots,
       getResearches,
       addResearch,
+      deleteResearch,
+      editResearch,
       getCreativeWorks,
+      addCreativeWork,
+      deleteCreativeWork,
+      editCreativeWork,
 
       isGettingSubjects,
       isAddingSubject,
@@ -62,7 +70,10 @@ class FSRForm extends Component {
       isGettingTimeslots,
       isGettingResearches,
       isAddingResearch,
+      isEditingResearch,
       isGettingCWorks,
+      isAddingCWork,
+      isEditingCWork,
     } = this.props;
 
     const { fsrID } = this.props.match.params;
@@ -96,7 +107,7 @@ class FSRForm extends Component {
                   addSubject={addSubject}
                   deleteSubject={deleteSubject}
                   editSubject={editSubject}
-                  changeSelectedSubject={changeSelectedSubject}
+                  changeSelected={changeSelected}
                   getTimeslots={getTimeslots}
                   isGettingSubjects={isGettingSubjects}
                   isAddingSubject={isAddingSubject}
@@ -114,14 +125,26 @@ class FSRForm extends Component {
                   researches={researches}
                   research={research}
                   cworks={cworks}
+                  cwork={cwork}
                   getResearches={getResearches}
                   addResearch={addResearch}
+                  deleteResearch={deleteResearch}
+                  editResearch={editResearch}
+                  changeSelected={changeSelected}
                   getCreativeWorks={getCreativeWorks}
+                  addCreativeWork={addCreativeWork}
+                  deleteCreativeWork={deleteCreativeWork}
+                  editCreativeWork={editCreativeWork}
                   isGettingResearches={isGettingResearches}
                   isAddingResearch={isAddingResearch}
+                  isEditingResearch={isEditingResearch}
                   isGettingCWorks={isGettingCWorks}
+                  isAddingCWork={isAddingCWork}
+                  isEditingCWork={isEditingCWork}
                   isAddCWorkModalOpen={isAddCWorkModalOpen}
+                  isEditCWorkModalOpen={isEditCWorkModalOpen}
                   isAddResearchModalOpen={isAddResearchModalOpen}
+                  isEditResearchModalOpen={isEditResearchModalOpen}
                   toggleModal={toggleModal}
                   prevStep={prevStep}
                   nextStep={nextStep}

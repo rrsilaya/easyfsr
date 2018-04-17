@@ -7,30 +7,24 @@ import {
   Select,
   DatePicker,
   Upload,
-  InputNumber,
   Icon,
+  InputNumber,
 } from 'antd';
-import { ADD_RESEARCH_MODAL } from '../duck';
+import { EDIT_CWORK_MODAL } from '../duck';
 import { getFieldValues } from '../../../utils';
 import moment from 'moment';
 
 const FormItem = Form.Item;
 const { Option } = Select;
 
-class AddResearchModal extends Component {
+class EditCWorkModal extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
 
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         const fieldValues = getFieldValues(values);
-        fieldValues.startDate = moment(fieldValues.startDate).format(
-          'YYYY-MM-DD',
-        );
-        fieldValues.endDate =
-          fieldValues.endDate !== null
-            ? moment(fieldValues.endDate).format('YYYY-MM-DD')
-            : null;
+        fieldValues.date = moment(fieldValues.date).format('YYYY-MM-DD');
         fieldValues.filepath =
           fieldValues.filepath !== undefined
             ? fieldValues.filepath.file.originFileObj
@@ -43,15 +37,16 @@ class AddResearchModal extends Component {
         });
         data.append('id', this.props.id);
 
-        this.props.addResearch(data);
+        this.props.editCreativeWork(this.props.cwork.creativeWorkID, data);
       }
     });
   };
 
   render() {
     const {
-      isAddResearchModalOpen,
-      isAddingResearch,
+      isEditCWorkModalOpen,
+      isEditingCWork,
+      cwork,
 
       toggleModal,
     } = this.props;
@@ -71,13 +66,13 @@ class AddResearchModal extends Component {
 
     return (
       <Modal
-        title="Add Research"
-        visible={isAddResearchModalOpen}
-        onOk={() => toggleModal(ADD_RESEARCH_MODAL)}
-        onCancel={() => toggleModal(ADD_RESEARCH_MODAL)}
+        title="Edit Creative Work"
+        visible={isEditCWorkModalOpen}
+        onOk={() => toggleModal(EDIT_CWORK_MODAL)}
+        onCancel={() => toggleModal(EDIT_CWORK_MODAL)}
         destroyOnClose
         footer={[
-          <Button key="back" onClick={() => toggleModal(ADD_RESEARCH_MODAL)}>
+          <Button key="back" onClick={() => toggleModal(EDIT_CWORK_MODAL)}>
             Cancel
           </Button>,
           <Button
@@ -85,9 +80,9 @@ class AddResearchModal extends Component {
             type="primary"
             htmlType="submit"
             onClick={this.handleFormSubmit}
-            loading={isAddingResearch}
+            loading={isEditingCWork}
           >
-            Add
+            Edit
           </Button>,
         ]}
       >
@@ -101,7 +96,10 @@ class AddResearchModal extends Component {
                   whitespace: true,
                 },
               ],
-            })(<Input placeholder="Enter complete title of research" />)}
+              initialValue: cwork.title,
+            })(
+              <Input placeholder="Enter complete title, place and publication" />,
+            )}
           </FormItem>
           <FormItem {...formItemLayout} label="Type">
             {getFieldDecorator('type', {
@@ -111,53 +109,54 @@ class AddResearchModal extends Component {
                   message: 'Please input Type',
                 },
               ],
+              initialValue: cwork.type,
             })(
-              <Select placeholder="Select type of research">
-                <Option value="Proposal">Proposal</Option>
-                <Option value="Implementation">Implementation</Option>
+              <Select placeholder="Select type of creative work">
+                <Option value="Oral/Poster">
+                  Oral/Poster Papers Presented in Conferences
+                </Option>
+                <Option value="PublishedPapers">
+                  Papers Published in Proceedings or Conferences
+                </Option>
+                <Option value="Monographs">Monographs</Option>
+                <Option value="Article">Articles in Refereed Journals</Option>
+                <Option value="ChapterInABook">Chapters In A Book</Option>
+                <Option value="Books">Books</Option>
+                <Option value="Others">Others</Option>
               </Select>,
             )}
           </FormItem>
-          <FormItem {...formItemLayout} label="Role">
-            {getFieldDecorator('role', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please input role',
-                  whitespace: true,
-                },
-              ],
-            })(<Input placeholder="Enter your role" />)}
-          </FormItem>
-          <FormItem {...formItemLayout} label="Co-Workers">
+          <FormItem {...formItemLayout} label="Co-Authors">
             {getFieldDecorator('coAuthor', {
               rules: [
                 {
                   whitespace: true,
                 },
               ],
-            })(<Input placeholder="Enter name of co-workers" />)}
+              initialValue: cwork.coAuthor,
+            })(<Input placeholder="Enter name of co-authors" />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="Start Date">
-            {getFieldDecorator('startDate', {
+          <FormItem {...formItemLayout} label="Date of Publication">
+            {getFieldDecorator('date', {
               rules: [
                 {
                   required: true,
-                  message: 'Please input start date',
+                  message: 'Please input date of publication',
                 },
               ],
+              initialValue: moment(cwork.date),
             })(<DatePicker />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="End Date">
-            {getFieldDecorator('endDate')(<DatePicker />)}
-          </FormItem>
-          <FormItem {...formItemLayout} label="Funding">
-            {getFieldDecorator('funding')(
-              <Input placeholder="Enter funding" />,
-            )}
-          </FormItem>
           <FormItem {...formItemLayout} label="File">
-            {getFieldDecorator('filepath')(
+            {getFieldDecorator('filepath', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please attach creative work file',
+                },
+              ],
+              initialValue: cwork.filepath,
+            })(
               <Upload>
                 <Button>
                   <Icon type="upload" /> Upload File
@@ -166,13 +165,14 @@ class AddResearchModal extends Component {
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="Approved Credit Units">
-            {getFieldDecorator('approvedUnits', {
+            {getFieldDecorator('credUnit', {
               rules: [
                 {
                   required: true,
                   message: 'Please input approved credit units',
                 },
               ],
+              initialValue: cwork.credUnit,
             })(<InputNumber min={0} />)}
           </FormItem>
         </Form>
@@ -181,4 +181,4 @@ class AddResearchModal extends Component {
   }
 }
 
-export default Form.create()(AddResearchModal);
+export default Form.create()(EditCWorkModal);

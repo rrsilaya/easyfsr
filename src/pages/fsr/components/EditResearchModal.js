@@ -10,14 +10,14 @@ import {
   InputNumber,
   Icon,
 } from 'antd';
-import { ADD_RESEARCH_MODAL } from '../duck';
+import { EDIT_RESEARCH_MODAL } from '../duck';
 import { getFieldValues } from '../../../utils';
 import moment from 'moment';
 
 const FormItem = Form.Item;
 const { Option } = Select;
 
-class AddResearchModal extends Component {
+class EditResearchModal extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
 
@@ -43,15 +43,16 @@ class AddResearchModal extends Component {
         });
         data.append('id', this.props.id);
 
-        this.props.addResearch(data);
+        this.props.editResearch(this.props.research.researchID, data);
       }
     });
   };
 
   render() {
     const {
-      isAddResearchModalOpen,
-      isAddingResearch,
+      isEditResearchModalOpen,
+      isEditingResearch,
+      research,
 
       toggleModal,
     } = this.props;
@@ -71,13 +72,13 @@ class AddResearchModal extends Component {
 
     return (
       <Modal
-        title="Add Research"
-        visible={isAddResearchModalOpen}
-        onOk={() => toggleModal(ADD_RESEARCH_MODAL)}
-        onCancel={() => toggleModal(ADD_RESEARCH_MODAL)}
+        title="Edit Research"
+        visible={isEditResearchModalOpen}
+        onOk={() => toggleModal(EDIT_RESEARCH_MODAL)}
+        onCancel={() => toggleModal(EDIT_RESEARCH_MODAL)}
         destroyOnClose
         footer={[
-          <Button key="back" onClick={() => toggleModal(ADD_RESEARCH_MODAL)}>
+          <Button key="back" onClick={() => toggleModal(EDIT_RESEARCH_MODAL)}>
             Cancel
           </Button>,
           <Button
@@ -85,9 +86,9 @@ class AddResearchModal extends Component {
             type="primary"
             htmlType="submit"
             onClick={this.handleFormSubmit}
-            loading={isAddingResearch}
+            loading={isEditingResearch}
           >
-            Add
+            Edit
           </Button>,
         ]}
       >
@@ -101,6 +102,7 @@ class AddResearchModal extends Component {
                   whitespace: true,
                 },
               ],
+              initialValue: research.title,
             })(<Input placeholder="Enter complete title of research" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Type">
@@ -111,6 +113,7 @@ class AddResearchModal extends Component {
                   message: 'Please input Type',
                 },
               ],
+              initialValue: research.type,
             })(
               <Select placeholder="Select type of research">
                 <Option value="Proposal">Proposal</Option>
@@ -127,6 +130,7 @@ class AddResearchModal extends Component {
                   whitespace: true,
                 },
               ],
+              initialValue: research.role,
             })(<Input placeholder="Enter your role" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Co-Workers">
@@ -136,6 +140,7 @@ class AddResearchModal extends Component {
                   whitespace: true,
                 },
               ],
+              initialValue: research.coAuthor,
             })(<Input placeholder="Enter name of co-workers" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Start Date">
@@ -146,18 +151,24 @@ class AddResearchModal extends Component {
                   message: 'Please input start date',
                 },
               ],
+              initialValue: moment(research.startDate),
             })(<DatePicker />)}
           </FormItem>
           <FormItem {...formItemLayout} label="End Date">
-            {getFieldDecorator('endDate')(<DatePicker />)}
+            {getFieldDecorator('endDate', {
+              initialValue:
+                research.endDate !== null ? moment(research.endDate) : null,
+            })(<DatePicker />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Funding">
-            {getFieldDecorator('funding')(
-              <Input placeholder="Enter funding" />,
-            )}
+            {getFieldDecorator('funding', {
+              initialValue: research.funding,
+            })(<Input placeholder="Enter funding" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="File">
-            {getFieldDecorator('filepath')(
+            {getFieldDecorator('filepath', {
+              initialValue: research.filepath,
+            })(
               <Upload>
                 <Button>
                   <Icon type="upload" /> Upload File
@@ -173,6 +184,7 @@ class AddResearchModal extends Component {
                   message: 'Please input approved credit units',
                 },
               ],
+              initialValue: research.approvedUnits,
             })(<InputNumber min={0} />)}
           </FormItem>
         </Form>
@@ -181,4 +193,4 @@ class AddResearchModal extends Component {
   }
 }
 
-export default Form.create()(AddResearchModal);
+export default Form.create()(EditResearchModal);

@@ -26,6 +26,8 @@ class EditSubjectModal extends Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         const fieldValues = getFieldValues(values);
+        fieldValues.timeStart = moment(fieldValues.timeStart).format('HH:mm');
+        fieldValues.timeEnd = moment(fieldValues.timeEnd).format('HH:mm');
         this.props.editSubject(this.props.subject.subjectID, {
           ...fieldValues,
           id: this.props.id,

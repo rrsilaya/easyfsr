@@ -10,6 +10,7 @@ import {
 } from 'antd';
 import { ADD_SUBJECT_MODAL } from '../duck';
 import { getFieldValues } from '../../../utils';
+import moment from 'moment';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -21,6 +22,8 @@ class AddSubjectModal extends Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         const fieldValues = getFieldValues(values);
+        fieldValues.timeStart = moment(fieldValues.timeStart).format('HH:mm');
+        fieldValues.timeEnd = moment(fieldValues.timeEnd).format('HH:mm');
         this.props.addSubject({ ...fieldValues, id: this.props.id });
       }
     });

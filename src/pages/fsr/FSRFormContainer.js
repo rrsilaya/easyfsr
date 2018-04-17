@@ -10,11 +10,16 @@ import {
   addSubject,
   deleteSubject,
   editSubject,
-  changeSelectedSubject,
+  changeSelected,
   getTimeslots,
   getResearches,
   addResearch,
+  deleteResearch,
+  editResearch,
   getCreativeWorks,
+  addCreativeWork,
+  deleteCreativeWork,
+  editCreativeWork,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -27,6 +32,8 @@ const mapStateToProps = state => {
     isAddCourseModalOpen,
     isAddConsultationHourModalOpen,
     isEditSubjectModalOpen,
+    isEditResearchModalOpen,
+    isEditCWorkModalOpen,
     currentStep,
     fsr,
     subjects,
@@ -35,6 +42,7 @@ const mapStateToProps = state => {
     researches,
     research,
     cworks,
+    cwork,
     isGettingFSR,
     isGettingSubjects,
     isAddingSubject,
@@ -43,7 +51,10 @@ const mapStateToProps = state => {
     isGettingTimeslots,
     isGettingResearches,
     isAddingResearch,
+    isEditingResearch,
     isGettingCWorks,
+    isAddingCWork,
+    isEditingCWork,
   } = state.fsr;
 
   return {
@@ -55,6 +66,8 @@ const mapStateToProps = state => {
     isAddCourseModalOpen,
     isAddConsultationHourModalOpen,
     isEditSubjectModalOpen,
+    isEditResearchModalOpen,
+    isEditCWorkModalOpen,
     currentStep,
     fsr,
     subjects,
@@ -63,6 +76,7 @@ const mapStateToProps = state => {
     researches,
     research,
     cworks,
+    cwork,
     isGettingFSR,
     isGettingSubjects,
     isAddingSubject,
@@ -71,7 +85,10 @@ const mapStateToProps = state => {
     isGettingTimeslots,
     isGettingResearches,
     isAddingResearch,
+    isEditingResearch,
     isGettingCWorks,
+    isAddingCWork,
+    isEditingCWork,
   };
 };
 
@@ -101,8 +118,8 @@ const mapDispatchToProps = dispatch => {
     editSubject: (subjectID, body) => {
       dispatch(editSubject(subjectID, body));
     },
-    changeSelectedSubject: subject => {
-      dispatch(changeSelectedSubject(subject));
+    changeSelected: data => {
+      dispatch(changeSelected(data));
     },
     getTimeslots: query => {
       dispatch(getTimeslots(query));
@@ -113,8 +130,23 @@ const mapDispatchToProps = dispatch => {
     addResearch: research => {
       dispatch(addResearch(research));
     },
+    deleteResearch: researchID => {
+      dispatch(deleteResearch(researchID));
+    },
+    editResearch: (researchID, body) => {
+      dispatch(editResearch(researchID, body));
+    },
     getCreativeWorks: query => {
       dispatch(getCreativeWorks(query));
+    },
+    addCreativeWork: cwork => {
+      dispatch(addCreativeWork(cwork));
+    },
+    deleteCreativeWork: creativeWorkID => {
+      dispatch(deleteCreativeWork(creativeWorkID));
+    },
+    editCreativeWork: (creativeWorkID, body) => {
+      dispatch(editCreativeWork(creativeWorkID, body));
     },
   };
 };
