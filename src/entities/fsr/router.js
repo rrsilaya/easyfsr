@@ -213,30 +213,35 @@ router.get('/fsr/:id', async (req, res) => {
     const services = await getExtensionAndCommunityServices(req.params);
     const ltdPractices = await getLtdPractOfProfs(req.params);
     const subjects = await getSubjects(req.params);
-    // const subj = await Promise.all(
-    //   subjects.map(
-    //     async ({ subjectID } = subject) => await getTimeslots({ subjectID }),
-    //   ),
-    // );
-    // console.log(subj);
+
+    let subj = await Promise.all(
+      subjects.map(
+        async ({ subjectID } = subject) => await getTimeslots({ subjectID }),
+      ),
+    );
+    console.log(subj);
     const studyLoads = await getStudyLoads(req.params);
     const userID = fsr.userID;
     const user = await getUserByUserID({ userID });
     delete user.password;
 
+    // fsr = {
+    //   user,
+    //   fsr,
+    //   adminWorks,
+    //   awards,
+    //   creativeWorks,
+    //   researches,
+    //   courses,
+    //   consultationHours,
+    //   services,
+    //   ltdPractices,
+    //   subjects,
+    //   studyLoads,
+    // };
     fsr = {
-      user,
-      fsr,
-      adminWorks,
-      awards,
-      creativeWorks,
-      researches,
       courses,
-      consultationHours,
-      services,
-      ltdPractices,
       subjects,
-      studyLoads,
     };
 
     res.status(200).json({
