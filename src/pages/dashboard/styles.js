@@ -3,17 +3,13 @@ const style = {
     marginBottom: '30px',
     marginLeft: 'auto',
     marginRight: 'auto',
+    maxHeight: '500px',
+    overflowY: 'auto',
   },
   addButton: {
     justifyContent: 'center',
     display: 'flex',
     alignItems: 'center',
-  },
-  progressBar: {
-    width: '20%',
-    paddingLeft: 50,
-    // paddingRight: 'auto',
-    // width: 200,
   },
   facultyTable: {
     size: 'large',
@@ -24,7 +20,7 @@ const style = {
     color: '#000000a6',
   },
   menuItems: {
-    width: '33.3%',
+    width: '25%',
     height: '20%',
     color: '#FFF',
     marginBottom: 30,

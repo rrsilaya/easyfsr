@@ -10,3 +10,5 @@ export * from './subject';
 export * from './timeslot';
 export * from './research';
 export * from './creativeWork';
+export * from './announcement';
+export * from './notification';
