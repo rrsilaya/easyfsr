@@ -8,13 +8,12 @@ const router = Router();
  * @apiGroup Notification
  * @apiName addNotification
  *
- * @apiParam (Body Params) {Number} senderID sender ID
  * @apiParam (Body Params) {Number} receiverID receiver ID
  * @apiParam (Body Params) {String} message the message of sender to receiver
  * @apiParam (Body Params) {Date} dateSent date when message is sent
  * @apiParam (Body Params) {Time} timeSent time when message is sent
  * @apiParam (Body Params) {Boolean} [isResolved] verification is message is resolved
- * @apiParam (Body Params) {String} priority priority of the notification
+ * @apiParam (Body Params) {String} priority priority of the notification. 'LOW', 'NORMAL', 'HIGH'. Default: 'NORMAL'
  *
  * @apiSuccess {Object} data New notification added
  * @apiSuccess {Number} data.notificationID notification ID
@@ -56,6 +55,7 @@ const router = Router();
 
 router.post('/notification/', async (req, res) => {
   try {
+    req.body.senderID = req.session.user.userID;
     const notificationID = await Ctrl.addNotification(req.body);
     const notification = await Ctrl.getNotification({ notificationID });
 

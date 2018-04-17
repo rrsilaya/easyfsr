@@ -30,7 +30,7 @@ export const addResearch = research => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.addResearch,
-      { filepath: '', endDate: null, ...research },
+      { filepath: '', funding: '', endDate: null, ...research },
       (err, results) => {
         if (err) return reject(500);
         return resolve(results.insertId);
