@@ -17,23 +17,25 @@ class FacultySearch extends Component {
 
   handleToggleSendNotificationFSModal = () => {
     this.props.changeSelectedUser(this.props.user);
+    this.props.toggleModal(SEND_NOTIFICATION_FS);
   };
 
   render() {
     const gridConfig = { xl: 8, sm: 12, xs: 24 };
     const {
-      // State
-      users,
       isSearching,
       isGettingUser,
+
       pushLink,
-      // Dispatch
       addNotification,
-      // searchedUsers,
       searchUser,
+      changeSelectedUser,
+
       isSendNotificationFSModalOpen,
       toggleModal,
+
       user,
+      users,
     } = this.props;
 
     return (
@@ -78,12 +80,13 @@ class FacultySearch extends Component {
                         toggleModal={toggleModal}
                         handleAfterClose={this.handleAfterClose}
                         addNotification={addNotification}
+                        changeSelectedUser={changeSelectedUser}
                       />
                       <Icon
                         className="text secondary"
                         type="message"
                         style={styles.message}
-                        onClick={() => toggleModal(SEND_NOTIFICATION_FS)}
+                        onClick={this.handleToggleSendNotificationFSModal}
                       />
                     </Tooltip>,
                     <Tooltip title="Profile" arrowPointAtCenter>
