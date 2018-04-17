@@ -16,6 +16,8 @@ class Profile extends Component {
     this.props.getUserProfile(userID);
     this.props.getAdminWork(userID);
     this.props.getUserExtensionAndCommService(userID);
+    this.props.getResearch(userID);
+    this.props.getAward(userID);
   }
 
   componentWillUnmount() {
@@ -32,6 +34,8 @@ class Profile extends Component {
       adminWork,
       service,
       schedule,
+      research,
+      award,
 
       isGettingUser,
       isUploadingIcon,
@@ -100,6 +104,8 @@ class Profile extends Component {
               <ProfileInfo
                 adminWork={adminWork}
                 service={service}
+                research={research}
+                award={award}
                 isLoadingCards={isLoadingCards}
               />
             )}

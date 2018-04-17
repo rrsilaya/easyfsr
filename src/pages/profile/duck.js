@@ -15,6 +15,8 @@ const UPLOAD_ICON = 'PROFILE/UPLOAD_ICON';
 const TOGGLE_MODAL = 'PROFILE/TOGGLE_MODAL';
 const GET_USER_SCHEDULE = 'PROFILE/GET_USER_SCHEDULE';
 const RESET_PAGE = 'PROFILE/RESET_PAGE';
+const GET_RESEARCH = 'PROFILE/GET_RESEARCH';
+const GET_AWARD = 'PROFILE/GET_AWARD';
 
 // Action Creators
 export const getUserProfile = employeeID => dispatch => {
@@ -93,6 +95,38 @@ export const getUserSchedule = user => ({
   },
 });
 
+
+export const getResearch = employeeID => dispatch => {
+  dispatch({
+    type: GET_RESEARCH,
+    promise: Api.getResearch(employeeID),
+    meta: {
+      onFailure: () => {
+        notification.error({
+          message: 'An error occured while getting research',
+        });
+      },
+    },
+  });
+};
+
+export const getAward = employeeID => dispatch => {
+  dispatch({
+    type: GET_AWARD,
+    promise: Api.getAward(employeeID),
+    meta: {
+      onFailure: () => {
+        notification.error({
+          message: 'An error occured while getting award',
+        });
+      },
+    },
+  });
+};
+
+
+
+
 export const toggleModal = modal => ({
   type: TOGGLE_MODAL,
   payload: modal,
@@ -112,10 +146,14 @@ const initialState = {
   adminWork: [],
   service: [],
   schedule: [],
+  award: [],
+  research: [],
 
   isLoadingCards: {
     adminWork: true,
     extAndCommService: true,
+    research: true,
+    award: true,
   },
 
   isSchedModalOpen: false,
@@ -209,6 +247,44 @@ const reducer = (state = initialState, action) => {
         finish: prevState => ({
           ...prevState,
           isGettingSchedule: false,
+        }),
+      });
+
+    case GET_RESEARCH:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingResearch: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          service: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isLoadingCards: {
+            ...prevState.isLoadingCards,
+            research: false,
+          },
+        }),
+      });
+
+    case GET_AWARD:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingAward: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          service: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isLoadingCards: {
+            ...prevState.isLoadingCards,
+            award: false,
+          },
         }),
       });
 

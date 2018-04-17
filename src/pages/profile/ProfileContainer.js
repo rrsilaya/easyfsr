@@ -9,6 +9,8 @@ import {
   resetPage,
   toggleModal,
   getUserSchedule,
+  getResearch,
+  getAward
 } from './duck';
 
 const mapStateToProps = state => {
@@ -22,6 +24,8 @@ const mapStateToProps = state => {
     isSchedModalOpen,
     isGettingSchedule,
     schedule,
+    research,
+    award,
   } = state.profile;
 
   return {
@@ -34,6 +38,8 @@ const mapStateToProps = state => {
     isSchedModalOpen,
     isGettingSchedule,
     schedule,
+    research,
+    award,
   };
 };
 
@@ -53,6 +59,12 @@ const mapDispatchToProps = dispatch => {
     },
     getUserSchedule: user => {
       dispatch(getUserSchedule(user));
+    },
+    getResearch: id => {
+      dispatch(getResearch(id));
+    },
+    getAward: id => {
+      dispatch(getAward(id));
     },
     toggleModal: modal => {
       dispatch(toggleModal(modal));

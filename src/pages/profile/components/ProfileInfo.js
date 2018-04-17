@@ -35,9 +35,13 @@ class ProfileInfo extends Component {
 
       getAdminWork,
       getService,
+      getResearch,
+      getAward,
 
       adminWork,
       service,
+      research,
+      award,
     } = this.props;
 
     return (
@@ -51,8 +55,8 @@ class ProfileInfo extends Component {
         <Card title="Service Records" loading>
           Content
         </Card>
-        <Research />
-        <Awards />
+        <Research research={research} />
+        <Awards award={award} />
         <AdminWork adminWork={adminWork} />
         <CommunityService service={service} />
         <CreativeWorks />
