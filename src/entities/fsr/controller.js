@@ -9,6 +9,7 @@ const fsrAttributes = [
   'isChecked',
   'teachingLoadCreds',
   'isTurnedIn',
+  'metaID',
 ];
 
 const searchFields = [
