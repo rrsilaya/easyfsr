@@ -73,7 +73,8 @@ class TeachingLoad extends Component {
           </tbody>
         </table>
         <div className="bold section-header">
-          Concurrent teaching load outside the college.
+          Concurrent teaching load outside the college. Write NONE whenever
+          applicable. Please do not leave any blank.
         </div>
         <div className="mvertical" style={styles.signatories}>
           <div
