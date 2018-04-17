@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
 import { upload, unlink } from './../../utils';
-import { getrCoAuthors } from './../rCoAuthor/controller';
+
 const router = Router();
 /**
  * @api {post} /research addResearch
@@ -17,6 +17,7 @@ const router = Router();
  * @apiParam (Body Params) {String} funding funding of research
  * @apiParam (Body Params) {String} approvedUnits approved units of research
  * @apiParam (Body Params) {File} [filepath] filepath
+ * @apiParam (Body Params) {String} [coAuthor] co-author/s
  *
  * @apiSuccess {Object} data New research created
  * @apiSuccess {Number} data.researchID ID of research
@@ -29,6 +30,7 @@ const router = Router();
  * @apiSuccess {String} data.funding funding of research
  * @apiSuccess {String} data.approvedUnits approved units of research
  * @apiSuccess {String} data.filepath filepath
+ * @apiSuccess {String} data.coAuthor co-author/s
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -46,7 +48,8 @@ const router = Router();
  *           "endDate": "2015-01-31T16:00:00.000Z",
  *           "funding": "fund",
  *           "approvedUnits": "20",
- *           "filepath": "/uploads/researches/gold-Hk9N-l2sf.png"
+ *           "filepath": "/uploads/researches/gold-Hk9N-l2sf.png",
+ *           "coAuthor": "Jasper Arquilita"
  *         }
  *   }
  *
@@ -102,6 +105,7 @@ router.post('/research/', async (req, res) => {
  * @apiSuccess {String} data.funding funding of research
  * @apiSuccess {String} data.approvedUnits approved units of research
  * @apiSuccess {String} data.filepath filepath
+ * @apiSuccess {String} data.coAuthor co-author/s
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -119,7 +123,8 @@ router.post('/research/', async (req, res) => {
  *           "endDate": null,
  *           "funding": "Sample Funding",
  *           "approvedUnits": "6",
- *           "filepath": "/uploads/researches/gold-Hk9N-l2sf.png"
+ *           "filepath": "/uploads/researches/gold-Hk9N-l2sf.png",
+ *           "coAuthor":""
  *
  *       }
  *   }
@@ -144,7 +149,6 @@ router.post('/research/', async (req, res) => {
 router.get('/research/:researchID', async (req, res) => {
   try {
     const research = await Ctrl.getResearch(req.params);
-    research.coAuthors = await getrCoAuthors(req.params);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched research',
@@ -178,6 +182,7 @@ router.get('/research/:researchID', async (req, res) => {
  * @apiParam (Query Params) {Date} [endDate] end date of research
  * @apiParam (Query Params) {String} [funding] funding of research
  * @apiParam (Query Params) {String} [approvedUnits] approved units of research
+ * @apiParam (Query Params) {String} [coAuthor] co-author/s
  * @apiParam (Query Params) {Number} [limit] count limit of researches to fetch
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'type'
@@ -194,6 +199,7 @@ router.get('/research/:researchID', async (req, res) => {
  * @apiSuccess {String} data.funding funding of research
  * @apiSuccess {String} data.approvedUnits approved units of research
  * @apiSuccess {String} data.filepath filepath
+ * @apiSuccess {String} data.coAuthor co-author/s
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -212,7 +218,8 @@ router.get('/research/:researchID', async (req, res) => {
  *           "endDate": null,
  *           "funding": "Sample Funding",
  *           "approvedUnits": "6",
- *           "filepath": "/uploads/researches/gold-Hk9N-l2sf.png"
+ *           "filepath": "/uploads/researches/gold-Hk9N-l2sf.png",
+ *           "coAuthor":"Jasper Arquilita"
  *       },
  *       {
  *           "id": 27,
@@ -224,7 +231,8 @@ router.get('/research/:researchID', async (req, res) => {
  *           "endDate": null,
  *           "funding": "Sample Funding",
  *           "approvedUnits": "4",
- *           "filepath": "/uploads/researches/gold-Hk9N-l2sf.png"
+ *           "filepath": "/uploads/researches/gold-Hk9N-l2sf.png",
+ *           "coAuthor":""
  *       }
  *       ],
  *     "total": 2,
@@ -245,12 +253,6 @@ router.get('/research/:researchID', async (req, res) => {
 router.get('/research/', async (req, res) => {
   try {
     const researches = await Ctrl.getResearches(req.query);
-    researches.forEach(async research => {
-      research.coAuthors = await getrCoAuthors({
-        researchID: research.researchID,
-      });
-    });
-
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched researches',
@@ -295,6 +297,7 @@ router.get('/research/', async (req, res) => {
  * @apiSuccess {String} data.funding funding of research
  * @apiSuccess {String} data.approvedUnits approved units of research
  * @apiSuccess {String} data.filepath filepath
+ * @apiSuccess {String} data.coAuthor co-author/s
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -312,7 +315,8 @@ router.get('/research/', async (req, res) => {
  *           "endDate": null,
  *           "funding": "Sample Funding",
  *           "approvedUnits": "5",
- *           "filepath": "/uploads/researches/gold-SJ8tMl3sf.png"
+ *           "filepath": "/uploads/researches/gold-SJ8tMl3sf.png",
+ *           "coAuthor": "Jasper Arquilita"
  *       }
  *
  *   }
@@ -373,6 +377,7 @@ router.delete('/research/:researchID', async (req, res) => {
  * @apiParam (Body Params) {String} [funding] funding of research
  * @apiParam (Body Params) {String} [approvedUnits] approved units of research
  * @apiParam (Body Params) {File} [filepath] filepath
+ * @apiParam (Body Params) {String} [coAuthor] co-author/s
  *
  * @apiSuccess {Object} data Research updated
  * @apiSuccess {Number} data.researchID ID of research
@@ -385,6 +390,7 @@ router.delete('/research/:researchID', async (req, res) => {
  * @apiSuccess {String} data.funding funding of research
  * @apiSuccess {String} data.approvedUnits approved units of research
  * @apiSuccess {String} data.filepath filepath
+ * @apiSuccess {String} data.coAuthor co-author/s
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -402,7 +408,8 @@ router.delete('/research/:researchID', async (req, res) => {
  *           "endDate": "2015-01-31T16:00:00.000Z",
  *           "funding": "fund",
  *           "approvedUnits": "20",
- *           "filepath": "/uploads/researches/gold-SJ8tMl3sf.png"
+ *           "filepath": "/uploads/researches/gold-SJ8tMl3sf.png",
+ *           "coAuthor": "Jasper Arquilita"
  *       }
  *   }
  *

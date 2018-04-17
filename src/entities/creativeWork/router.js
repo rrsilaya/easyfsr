@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
 import { upload, unlink } from './../../utils';
-import { getCworkCoAuthors } from './../coAuthor/controller';
 
 const router = Router();
 
@@ -16,6 +15,7 @@ const router = Router();
  * @apiParam (Body Params) {String}  type type of creative work
  * @apiParam (Body Params) {Number} credUnit credit units of creative work
  * @apiParam (Body Params) {File} filepath filepath 
+ * @apiParam (Body Params) {String} [coAuthor] co-author/s
  * 
  * @apiSuccess {Object} data Creative work added
  * @apiSuccess {Number} data.id ID of related FSR
@@ -25,7 +25,8 @@ const router = Router();
  * @apiSuccess {String} data.type type of creative work
  * @apiSuccess {Number} data.credUnit credit units of creative work
  * @apiSuccess {String} data.filepath filepath
- *
+ * @apiSuccess {String} data.coAuthor co-author/s
+ * 
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  * {
@@ -38,7 +39,8 @@ const router = Router();
  *         "title": "test",
  *         "type": "writer",
  *         "credUnit": 1,
- *         "filepath":/uploads/creativeWorls/asdasdalsd-192e02d.png
+ *         "filepath":/uploads/creativeWorls/asdasdalsd-192e02d.png,
+ *         "coAuthor":""
  *     }
  * }
  *
@@ -86,6 +88,7 @@ router.post('/creativeWork/', async (req, res) => {
  * @apiParam (Query Params) {String} [type] type of creative work
  * @apiParam (Query Params) {Number} [credUnit] credit units of creative work
  * @apiParam (Body Params) {File} [filepath] filepath
+ * @apiParam (Body Params) {String} [coAuthor] co-author/s
  * @apiParam (Query Params) {Number} [page] page number
  * @apiParam (Query Params) {Number} [limit] count limit of creative works to fetch
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
@@ -99,6 +102,7 @@ router.post('/creativeWork/', async (req, res) => {
  * @apiSuccess {String} data.type type of creative work
  * @apiSuccess {Number} data.credUnit credit units of creative work
  * @apiSuccess {String} data.filepath filepath
+ * @apiSuccess {String} data.coAuthor co-author/s
  * @apiSuccess {Number} total Total amount of documents.
  * @apiSuccess {Number} limit Max number of documents
  * @apiSuccess {Number} page nth page this query is.
@@ -118,6 +122,7 @@ router.post('/creativeWork/', async (req, res) => {
  *             "type": "1",
  *             "credUnit": 1,
  *             "filepath":'',
+ *             "coAuthor":'',
  *         },
  *         {
  *             "id": 1,
@@ -127,6 +132,7 @@ router.post('/creativeWork/', async (req, res) => {
  *             "type": "1",
  *             "credUnit": 1
  *             "filepath":'',
+ *             "coAuthor":'',
  *         }
  *     ],
  *     "total": 2,
@@ -147,11 +153,6 @@ router.post('/creativeWork/', async (req, res) => {
 router.get('/creativeWork/', async (req, res) => {
   try {
     const creativeWorks = await Ctrl.getCreativeWorks(req.query);
-    creativeWorks.forEach(async cwork => {
-      cwork.coAuthors = await getCworkCoAuthors({
-        creativeWorkID: cwork.creativeWorkID,
-      });
-    });
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched creative works',
@@ -193,6 +194,7 @@ router.get('/creativeWork/', async (req, res) => {
  * @apiSuccess {String} data.type type of creative work
  * @apiSuccess {Number} data.credUnit credit units of creative work
  * @apiSuccess {String} data.filepath filepath
+ * @apiSuccess {String} data.coAuthor co-author/s
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -206,7 +208,8 @@ router.get('/creativeWork/', async (req, res) => {
  *         "title": "1",
  *         "type": "1",
  *         "credUnit": 1,
- *         "filepath":''
+ *         "filepath":'',
+ *         "coAuthor":''
  *     }
  * }
  *
@@ -274,6 +277,7 @@ router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
  * @apiSuccess {String} data.type type of creative work
  * @apiSuccess {Number} data.credUnit credit units of creative work
  * @apiSuccess {String} data.filepath filepath
+ * @apiSuccess {String} data.coAuthor co-author/s
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -287,7 +291,8 @@ router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
  *         "title": "test",
  *         "type": "writer",
  *         "credUnit": 1,
- *         "filepath":''
+ *         "filepath":'',
+ *         "coAuthor":''
  *     }
  * }
  *
@@ -312,7 +317,6 @@ router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
 router.get('/creativeWork/:creativeWorkID', async (req, res) => {
   try {
     const creativeWork = await Ctrl.getCreativeWork(req.params);
-    creativeWork.coAuthors = await getCworkCoAuthors(req.params);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched creative work',
@@ -345,6 +349,7 @@ router.get('/creativeWork/:creativeWorkID', async (req, res) => {
  * @apiParam (Body Params) {String} [type] type of creative work
  * @apiParam (Body Params) {Number} [credUnit] credit units of creative work
  * @apiParam (Body Params) {Number} [userID] user ID of creative work
+ * @apiParam (Body Params) {String} [coAuthor] co-author/s
  *
  * @apiSuccess {Object} data creativeWork updated
  * @apiSuccess {Number} data.id ID of related FSR
@@ -354,6 +359,7 @@ router.get('/creativeWork/:creativeWorkID', async (req, res) => {
  * @apiSuccess {String} data.type type of creative work
  * @apiSuccess {Number} data.credUnit credit units of creative work
  * @apiSuccess {String} data.filepath filepath
+ * @apiSuccess {String} data.coAuthor co-author/s
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -366,8 +372,9 @@ router.get('/creativeWork/:creativeWorkID', async (req, res) => {
  *         "date": "0000-00-00",
  *         "title": "test",
  *         "type": "writer",
- *         "credUnit": 1
- *         "filepath":''
+ *         "credUnit": 1,
+ *         "filepath":'',
+ *         "coAuthor":''
  *     }
  * }
  *

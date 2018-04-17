@@ -13,6 +13,7 @@ const researchAttributes = [
   'funding',
   'approvedUnits',
   'filepath',
+  'coAuthor',
 ];
 
 const searchFields = [
@@ -24,13 +25,14 @@ const searchFields = [
   'funding',
   'approvedUnits',
   'filepath',
+  'coAuthor',
 ];
 
 export const addResearch = research => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.addResearch,
-      { filepath: '', funding: '', endDate: null, ...research },
+      { filepath: '', funding: '', coAuthor: '', endDate: null, ...research },
       (err, results) => {
         if (err) return reject(500);
         return resolve(results.insertId);

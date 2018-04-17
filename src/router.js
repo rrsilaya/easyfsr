@@ -3,7 +3,6 @@ import { Router } from 'express';
 import authRouter from './entities/auth/router';
 import userRouter from './entities/user/router';
 import researchRouter from './entities/research/router';
-import rCoAuthorRouter from './entities/rCoAuthor/router';
 import studyLoadRouter from './entities/studyLoad/router';
 import awardRouter from './entities/award/router';
 import subjectRouter from './entities/subject/router';
@@ -16,7 +15,6 @@ import serviceRouter from './entities/extensionAndCommunityService/router';
 import notificationRouter from './entities/notification/router';
 import adminWorkRouter from './entities/adminWork/router';
 import creativeWorkRouter from './entities/creativeWork/router';
-import cworkCoAuthorRouter from './entities/coAuthor/router';
 import userViewRouter from './entities/user/views/router';
 import announcementRouter from './entities/announcement/router';
 import consultationHoursRouter from './entities/consultationHours/router';
@@ -49,7 +47,6 @@ router.use(serviceRouter);
 router.use(timeslotRouter);
 router.use(subjectRouter);
 router.use(creativeWorkRouter);
-router.use(cworkCoAuthorRouter);
 // router.use( (req,res,next) => {
 //   if(req.session.user.acctType == 'ADMIN'){
 //     return next;
@@ -61,7 +58,6 @@ router.use(cworkCoAuthorRouter);
 // });]
 
 router.use(researchRouter);
-router.use(rCoAuthorRouter);
 router.use(consultationHoursRouter);
 router.use(announcementRouter);
 router.use(userRouter);

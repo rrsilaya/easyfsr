@@ -9,15 +9,16 @@ const creativeWorkAttributes = [
   'type',
   'credUnit',
   'filepath',
+  'coAuthor',
 ];
 
-const searchFields = ['date', 'title', 'type', 'credUnit'];
+const searchFields = ['date', 'title', 'type', 'credUnit', 'coAuthor'];
 
 export const addCreativeWork = creativeWork => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.addCreativeWork,
-      { filepath: '', ...creativeWork },
+      { coAuthor: '', filepath: '', ...creativeWork },
       (err, results) => {
         if (err) return reject(500);
         return resolve(results.insertId);

@@ -90,6 +90,7 @@ router.get('/user/:employeeID/award', async (req, res) => {
  * @apiSuccess {Date} data.endDate end date of user's research
  * @apiSuccess {String} data.funding funding of user's research
  * @apiSuccess {String} data.approvedUnits approved units of user's research
+ * @apiSuccess {String} data.coAuthor co-author/s
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -105,7 +106,8 @@ router.get('/user/:employeeID/award', async (req, res) => {
  *               "startDate": "2017-10-20T16:00:00.000Z",
  *               "endDate": null,
  *               "funding": "Sample Funding",
- *               "approvedUnits": "6"
+ *               "approvedUnits": "6",
+ *               "coAuthor":''
  *           },
  *           {
  *               "employeeID": "1000335121",
@@ -115,7 +117,8 @@ router.get('/user/:employeeID/award', async (req, res) => {
  *               "startDate": "2017-07-05T16:00:00.000Z",
  *               "endDate": null,
  *               "funding": "Sample Funding",
- *               "approvedUnits": "6"
+ *               "approvedUnits": "6",
+ *               "coAuthor":''
  *           }
  *       ]
  *   }
@@ -500,7 +503,7 @@ router.get('/user/:employeeID/limitedPracticeOfProf', async (req, res) => {
  * @apiSuccess {String} data.title title of admin work
  * @apiSuccess {String} data.type type of admin work
  * @apiSuccess {Number} data.credUnit credit units of admin work
- *
+ * @apiSuccess {String} data.coAuthor co-author/s
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
@@ -512,14 +515,16 @@ router.get('/user/:employeeID/limitedPracticeOfProf', async (req, res) => {
  *               "date": "2018-02-18T16:00:00.000Z",
  *               "title": "Sample Title",
  *               "type": "Book",
- *               "credUnit": 2
+ *               "credUnit": 2,
+ *               "coAuthor":'',
  *           },
  *           {
  *               "employeeID": "1000335121",
  *               "date": "2017-10-30T16:00:00.000Z",
  *               "title": "Sample Title",
  *               "type": "ChapterInABook",
- *               "credUnit": 4
+ *               "credUnit": 4,
+ *               "coAuthor":'',
  *           }
  *       ]
  *   }

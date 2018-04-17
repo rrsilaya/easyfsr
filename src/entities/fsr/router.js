@@ -4,7 +4,6 @@ import { getUsers, getTotalUsers } from './../user/controller';
 import { getAdminWorks } from './../adminWork/controller';
 import { getAwards } from './../award/controller';
 import { getCreativeWorks } from './../creativeWork/controller';
-import { getCworkCoAuthors } from './../coAuthor/controller';
 import { getCourses } from './../course/controller';
 import { getCourseScheds } from './../courseSched/controller';
 import { getConsultationHours } from './../consultationHours/controller';
@@ -14,7 +13,7 @@ import { getSubjects } from './../subject/controller';
 import { addStudyLoad, getStudyLoads } from './../studyLoad/controller';
 import { getTimeslots } from './../timeslot/controller';
 import { getUserByUserID } from './../user/controller';
-
+import { getResearches } from './../research/controller';
 const router = Router();
 
 /**
@@ -196,29 +195,23 @@ router.get('/fsr/:id', async (req, res) => {
     const adminWorks = await getAdminWorks(req.params);
     const awards = await getAwards(req.params);
     const creativeWorks = await getCreativeWorks(req.params);
-    const cworksWithAuthor = await Promise.all(
-      creativeWorks.map(
-        async ({ creativeWorkID } = cwork) =>
-          await getCworkCoAuthors({ creativeWorkID }),
-      ),
-    );
-    console.log(cworksWithAuthor);
+    const researches = await getResearches(req.params);
     const courses = await getCourses(req.params);
-    const coursesWithSched = await Promise.all(
-      courses.map(
-        async ({ courseID } = course) => await getCourseScheds({ courseID }),
-      ),
-    );
+    //const coursesWithSched = await Promise.all(
+    // courses.map(
+    //     async ({ courseID } = course) => await getCourseScheds({ courseID }),
+    //   ),
+    // );
     const consultationHours = await getConsultationHours(req.params);
     const services = await getExtensionAndCommunityServices(req.params);
     const ltdPractices = await getLtdPractOfProfs(req.params);
     const subjects = await getSubjects(req.params);
-    const subj = await Promise.all(
-      subjects.map(
-        async ({ subjectID } = subject) => await getTimeslots({ subjectID }),
-      ),
-    );
-    console.log(subj);
+    // const subj = await Promise.all(
+    //   subjects.map(
+    //     async ({ subjectID } = subject) => await getTimeslots({ subjectID }),
+    //   ),
+    // );
+    // console.log(subj);
     const studyLoads = await getStudyLoads(req.params);
     const userID = fsr.userID;
     const user = await getUserByUserID({ userID });
@@ -230,6 +223,7 @@ router.get('/fsr/:id', async (req, res) => {
       adminWorks,
       awards,
       creativeWorks,
+      researches,
       courses,
       consultationHours,
       services,

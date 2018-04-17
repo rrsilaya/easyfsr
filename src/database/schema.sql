@@ -466,11 +466,11 @@ JOIN user u on f.userID = u.userID;
 
 -- viewCreativeWork
 -- shows userID, employeeID, fsrID, creativeWork fields
-CREATE OR REPLACE VIEW viewCreativeWork AS SELECT u.employeeID, c.date, c.title, c.type, c.credUnit FROM creativeWork c JOIN fsr f 
+CREATE OR REPLACE VIEW viewCreativeWork AS SELECT u.employeeID, c.date, c.title, c.type, c.credUnit c.coAuthor FROM creativeWork c JOIN fsr f 
 ON c.id = f.id JOIN user u on f.userID = u.userID;
 
 -- viewResearch
-CREATE OR REPLACE VIEW viewResearch AS SELECT  u.employeeID, r.type, r.role, r.title, r.startDate, r.endDate, r.funding, r.approvedUnits 
+CREATE OR REPLACE VIEW viewResearch AS SELECT  u.employeeID, r.type, r.role, r.title, r.startDate, r.endDate, r.funding, r.approvedUnits , r.coAuthor
 FROM research r JOIN fsr f ON r.id = f.id JOIN user u on f.userID = u.userID;
 
  -- viewConsultationHours
