@@ -10,6 +10,19 @@ USE easyfsr;
 
 -- Tables
 
+CREATE TABLE meta (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `acadYear` VARCHAR (20) NOT NULL,
+  `semester` VARCHAR (10) NOT NULL,
+  `universityRegistrar` VARCHAR(50),
+  `homeDepartment` VARCHAR(50),
+  `formRevision` DATE,
+  `homeCollege` VARCHAR(50),
+
+  CONSTRAINT `meta_pk`
+    PRIMARY KEY(`id`)
+);
+
 CREATE TABLE user(
   userID INT NOT NULL AUTO_INCREMENT, 
   employeeID VARCHAR (30) NOT NULL,
@@ -42,12 +55,16 @@ CREATE TABLE fsr(
   `isChecked` boolean DEFAULT 0,
   `isTurnedIn` boolean DEFAULT 0,
   `teachingLoadCreds` INT(2) DEFAULT 0,
-  `totalCHours` INT(2) DEFAULT 0, 
+  `totalCHours` INT(2) DEFAULT 0,
+  `metaID` INT NOT NULL,
   CONSTRAINT `fsr_pk` 
     PRIMARY KEY (`id`),
   CONSTRAINT `user_fsr_fk`
   FOREIGN KEY (`userID`)
-    REFERENCES user(`userID`)
+    REFERENCES user(`userID`),
+  CONSTRAINT `meta_fsr_fk`
+  FOREIGN KEY (`metaID`)
+    REFERENCES meta(`id`)
 );
 
 -- Entities under FSR 
@@ -289,19 +306,6 @@ CREATE TABLE announcement(
    CONSTRAINT `announcement_user_fk`
     FOREIGN KEY (`userID`)
     REFERENCES user(`userID`)
-);
-
-CREATE TABLE meta (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `acadYear` VARCHAR (20) NOT NULL,
-  `semester` VARCHAR (10) NOT NULL,
-  `universityRegistrar` VARCHAR(50),
-  `homeDepartment` VARCHAR(50),
-  `formRevision` DATE,
-  `homeCollege` VARCHAR(50),
-
-  CONSTRAINT `meta_pk`
-    PRIMARY KEY(`id`)
 );
 
 CREATE TABLE log (
