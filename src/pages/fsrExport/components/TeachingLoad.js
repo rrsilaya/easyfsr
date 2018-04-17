@@ -117,6 +117,12 @@ class TeachingLoad extends Component {
           completed. Permission from the Chancellor should be sought before
           teaching outside the University.
         </div>
+        <div className="right">
+          <div className="signatory" data-label="Certified Correct:">
+            <div className="bold">MYRNA G. CARANDANG</div>
+            <div>University Registrar</div>
+          </div>
+        </div>
       </div>
     );
   }

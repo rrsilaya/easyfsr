@@ -13,6 +13,7 @@ class ExtCommServe extends Component {
           Department Chairs and Deans should affix their initials beside the
           credit units which they approved or endorsed).
         </div>
+        <br />
         <ExtTable section="IV. A." title="TRAININGS" />
         <ExtTable section="IV. B." title="INFORMATION DISSEMINATION" />
         <ExtTable section="IV. C." title="WORKSHOPS" />
