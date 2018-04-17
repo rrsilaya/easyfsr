@@ -6,6 +6,11 @@ import {
   getAdminWork,
   getUserExtensionAndCommService,
   uploadIcon,
+  resetPage,
+  toggleModal,
+  getUserSchedule,
+  getResearch,
+  getAward
 } from './duck';
 
 const mapStateToProps = state => {
@@ -15,6 +20,12 @@ const mapStateToProps = state => {
     isUploadingIcon,
     adminWork,
     service,
+    isLoadingCards,
+    isSchedModalOpen,
+    isGettingSchedule,
+    schedule,
+    research,
+    award,
   } = state.profile;
 
   return {
@@ -23,6 +34,12 @@ const mapStateToProps = state => {
     service,
     isGettingUser,
     isUploadingIcon,
+    isLoadingCards,
+    isSchedModalOpen,
+    isGettingSchedule,
+    schedule,
+    research,
+    award,
   };
 };
 
@@ -39,6 +56,21 @@ const mapDispatchToProps = dispatch => {
     },
     uploadIcon: (user, form) => {
       dispatch(uploadIcon(user, form));
+    },
+    getUserSchedule: user => {
+      dispatch(getUserSchedule(user));
+    },
+    getResearch: id => {
+      dispatch(getResearch(id));
+    },
+    getAward: id => {
+      dispatch(getAward(id));
+    },
+    toggleModal: modal => {
+      dispatch(toggleModal(modal));
+    },
+    resetPage: () => {
+      dispatch(resetPage());
     },
   };
 };
