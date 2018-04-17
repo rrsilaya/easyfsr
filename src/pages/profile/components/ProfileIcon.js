@@ -19,11 +19,13 @@ class ProfileIcon extends Component {
     return (
       <div className="profileIcon">
         <Upload {...props} className="overlay" onChange={this.handleUpload}>
-          <Icon
-            type="upload"
-            className="set-cursor pointer"
-            style={{ fontSize: 24 }}
-          />
+          {this.props.showUploadIcon ? (
+            <Icon
+              type="upload"
+              className="set-cursor pointer"
+              style={{ fontSize: 24 }}
+            />
+          ) : null}
         </Upload>
         <img src={user.profileIcon} alt="" />
       </div>

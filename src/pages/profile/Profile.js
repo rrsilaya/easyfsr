@@ -63,6 +63,12 @@ class Profile extends Component {
                 user={user}
                 isUploadingIcon={isUploadingIcon}
                 uploadIcon={uploadIcon}
+                showUploadIcon={
+                  this.props.user.employeeID ===
+                  this.props.userLoggedIn.employeeID
+                    ? true
+                    : false
+                }
               />
               <h1 className="center text white" style={styles.profileName}>
                 {user.firstName} {user.middleName} {user.lastName}
