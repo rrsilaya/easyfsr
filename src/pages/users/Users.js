@@ -86,20 +86,24 @@ class Users extends Component {
         <DataLoader
           isLoading={isGettingUsers}
           content={
-            <Row type="flex" gutter={16}>
-              {users.map((user, i) => (
-                <Col key={i} {...gridConfig}>
-                  <User
-                    user={user}
-                    title={`${user.lastName}, ${user.firstName}`}
-                    description={user.acctType}
-                    toggleEditModal={toggleEditModal}
-                    toggleDeleteModal={toggleDeleteModal}
-                    changeSelectedUser={changeSelectedUser}
-                  />
-                </Col>
-              ))}
-            </Row>
+            this.props.users.length ? (
+              <Row type="flex" gutter={16}>
+                {users.map((user, i) => (
+                  <Col key={i} {...gridConfig}>
+                    <User
+                      user={user}
+                      title={`${user.lastName}, ${user.firstName}`}
+                      description={user.acctType}
+                      toggleEditModal={toggleEditModal}
+                      toggleDeleteModal={toggleDeleteModal}
+                      changeSelectedUser={changeSelectedUser}
+                    />
+                  </Col>
+                ))}
+              </Row>
+            ) : (
+              <p style={styles.placeholder}>No users found</p>
+            )
           }
         />
         <EditModal
@@ -124,15 +128,19 @@ class Users extends Component {
           isDeletingUser={isDeletingUser}
         />
         <div className="pagination">
-          <Pagination
-            current={pagination.page}
-            pageSize={pagination.limit}
-            total={pagination.total}
-            showSizeChanger
-            pageSizeOptions={['12', '24', '36', '48']}
-            onChange={this.handlePageSizeChange}
-            onShowSizeChange={this.handlePageSizeChange}
-          />
+          {this.props.users.length ? (
+            <Pagination
+              current={pagination.page}
+              pageSize={pagination.limit}
+              total={pagination.total}
+              showSizeChanger
+              pageSizeOptions={['12', '24', '36', '48']}
+              onChange={this.handlePageSizeChange}
+              onShowSizeChange={this.handlePageSizeChange}
+            />
+          ) : (
+            ''
+          )}
         </div>
       </div>
     );

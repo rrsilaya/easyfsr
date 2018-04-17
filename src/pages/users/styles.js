@@ -6,8 +6,6 @@ const style = {
     marginRight: 'auto',
   },
   search: {
-    marginTop: '20px',
-    marginBottom: '20px',
     marginLeft: 'auto',
     marginRight: 'auto',
     display: 'flex',
@@ -22,7 +20,7 @@ const style = {
     alignItems: 'center',
   },
   addButton: {
-    margin: '1em 0',
+    margin: '0 0',
   },
   searchForm: {
     marginRight: '1em',
@@ -40,6 +38,10 @@ const style = {
   confirmation: {
     fontWeight: 'bold',
     color: 'red',
+  },
+  placeholder: {
+    marginTop: '2.5em',
+    textAlign: 'center',
   },
 };
 
