@@ -43,3 +43,8 @@ export const getTotalCourses = query => `
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }
 `;
+
+export const getCoursesWithSched = `
+  SELECT * from course c LEFT JOIN courseSched cs 
+  ON c.courseID = cs.courseID WHERE c.id = :id
+`;

@@ -80,3 +80,12 @@ export const getTotalCourses = course => {
     );
   });
 };
+
+export const getCoursesWithSched = ({ id }) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getCoursesWithSched, { id }, (err, results) => {
+      if (err) return reject(500);
+      return resolve(results);
+    });
+  });
+};
