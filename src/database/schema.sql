@@ -247,7 +247,7 @@ CREATE TABLE `research`(
   `title` VARCHAR (50) NOT NULL,
   `startDate` DATE NOT NULL, --                   DATE format: YYYY-MM-DD
   `endDate` DATE DEFAULT NULL, --                 DATE format: YYYY-MM-DD
-  `funding` VARCHAR (30) NOT NULL,
+  `funding` VARCHAR (30),
   `approvedUnits` VARCHAR (30) NOT NULL,
   `filepath` TEXT (50),
   `coAuthor` VARCHAR (255),
