@@ -85,6 +85,7 @@ class Users extends Component {
         </div>
         <DataLoader
           isLoading={isGettingUsers}
+          opaque={!this.props.user.length}
           content={
             this.props.users.length ? (
               <Row type="flex" gutter={16}>
