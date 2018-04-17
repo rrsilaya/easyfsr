@@ -21,11 +21,6 @@ class CreateFSRModal extends Component {
     this.props.form.resetFields();
   };
 
-  handleCancel = () => {
-    this.props.toggleDeleteModal();
-    this.handleAfterClose();
-  };
-
   validateMessage = async (rule, value, callback) => {
     if (!value.match(/^Yes, I want to create a new FSR\.$/))
       return callback('Please enter the correct message');
