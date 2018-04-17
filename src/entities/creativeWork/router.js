@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
 import { upload, unlink } from './../../utils';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -61,6 +62,12 @@ router.post('/creativeWork/', async (req, res) => {
     }
     const creativeWorkID = await Ctrl.addCreativeWork(req.body);
     const creativeWork = await Ctrl.getCreativeWork({ creativeWorkID });
+    await addLog({
+      action: 'INSERT CREATIVE WORK',
+      changes: '',
+      affectedID: creativeWorkID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully created creative work',
@@ -236,6 +243,12 @@ router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
   try {
     const creativeWork = await Ctrl.getCreativeWork(req.params);
     await Ctrl.deleteCreativeWork(req.params);
+    await addLog({
+      action: 'DELETE CREATIVE WORK',
+      changes: '',
+      affectedID: creativeWork.creativeWorkID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted creative work',
@@ -407,6 +420,12 @@ router.put('/creativeWork/:creativeWorkID', async (req, res) => {
 
     await Ctrl.updateCreativeWork(req.params, req.body);
     const creativeWork = await Ctrl.getCreativeWork(req.params);
+    await addLog({
+      action: 'UPDATE CREATIVE WORK',
+      changes: '',
+      affectedID: creativeWork.creativeWorkID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated creative work',

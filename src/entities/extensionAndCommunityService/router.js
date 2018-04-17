@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -68,6 +68,12 @@ router.post('/service/', async (req, res) => {
     );
     const service = await Ctrl.getExtensionAndCommunityService({
       extAndCommServiceID,
+    });
+    await addLog({
+      action: 'INSERT SERVICE',
+      changes: '',
+      affectedID: extAndCommServiceID,
+      userID: req.session.user.userID,
     });
     res.status(200).json({
       status: 200,
@@ -157,6 +163,12 @@ router.put('/service/:extAndCommServiceID/', async (req, res) => {
   try {
     await Ctrl.updateExtensionAndCommunityService(req.params, req.body);
     const service = await Ctrl.getExtensionAndCommunityService(req.params);
+    await addLog({
+      action: 'UPDATE SERVICE',
+      changes: '',
+      affectedID: service.extAndCommServiceID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated service',
@@ -352,6 +364,12 @@ router.delete('/service/:extAndCommServiceID/', async (req, res) => {
   try {
     const service = await Ctrl.getExtensionAndCommunityService(req.params);
     await Ctrl.deleteExtensionAndCommunityService(req.params);
+    await addLog({
+      action: 'DELETE SERVICE',
+      changes: '',
+      affectedID: service.extAndCommServiceID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted service',

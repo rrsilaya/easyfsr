@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -55,6 +55,12 @@ router.post('/studyLoad/', async (req, res) => {
   try {
     const id = await Ctrl.addStudyLoad(req.body);
     const studyLoad = await Ctrl.getStudyLoad({ id });
+    await addLog({
+      action: 'INSERT STUDY LOAD',
+      changes: '',
+      affectedID: id,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully created studyLoad',
@@ -129,6 +135,12 @@ router.put('/studyLoad/:id', async (req, res) => {
   try {
     await Ctrl.updateStudyLoad(req.params, req.body);
     const studyLoad = await Ctrl.getStudyLoad(req.params);
+    await addLog({
+      action: 'UPDATE STUDY LOAD',
+      changes: '',
+      affectedID: studyLoad.id,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated studyLoad',
@@ -202,6 +214,12 @@ router.delete('/studyLoad/:id', async (req, res) => {
   try {
     const studyLoad = await Ctrl.getStudyLoad(req.params);
     await Ctrl.deleteStudyLoad(req.params);
+    await addLog({
+      action: 'DELETE STUDY LOAD',
+      changes: '',
+      affectedID: studyLoad.id,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted studyLoad',

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -49,6 +50,12 @@ router.post('/adminWork/', async (req, res) => {
   try {
     const adminWorkID = await Ctrl.addAdminWork(req.body);
     const adminWork = await Ctrl.getAdminWork({ adminWorkID });
+    await addLog({
+      action: 'INSERT ADMIN WORK',
+      changes: '',
+      affectedID: adminWorkID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully created adminWork',
@@ -122,6 +129,12 @@ router.put('/adminWork/:adminWorkID', async (req, res) => {
   try {
     await Ctrl.updateAdminWork(req.params, req.body);
     const adminWork = await Ctrl.getAdminWork(req.params);
+    await addLog({
+      action: 'UPDATE ADMIN WORK',
+      changes: '',
+      affectedID: adminWork.adminWorkID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated admin work',
@@ -192,6 +205,14 @@ router.delete('/adminWork/:adminWorkID', async (req, res) => {
   try {
     const adminWork = await Ctrl.getAdminWork(req.params);
     await Ctrl.deleteAdminWork(req.params);
+
+    await addLog({
+      action: 'DELETE ADMIN WORK',
+      changes: '',
+      affectedID: adminWork.adminWorkID,
+      userID: req.session.user.userID,
+    });
+
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted adminWork',

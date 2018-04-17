@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
 import { upload, unlink } from './../../utils';
+import { addLog } from './../log/controller';
 
 const router = Router();
 /**
@@ -70,7 +71,12 @@ router.post('/research/', async (req, res) => {
 
     const researchID = await Ctrl.addResearch(req.body);
     const research = await Ctrl.getResearch({ researchID });
-
+    await addLog({
+      action: 'INSERT RESEARCH',
+      changes: '',
+      affectedID: researchID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully created research',
@@ -342,6 +348,12 @@ router.delete('/research/:researchID', async (req, res) => {
   try {
     const research = await Ctrl.getResearch(req.params);
     await Ctrl.deleteResearch(req.params);
+    await addLog({
+      action: 'DELETE RESEARCH',
+      changes: '',
+      affectedID: research.researchID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted research',
@@ -440,6 +452,12 @@ router.put('/research/:researchID', async (req, res) => {
     }
     await Ctrl.updateResearch(req.params, req.body);
     const research = await Ctrl.getResearch(req.params);
+    await addLog({
+      action: 'UPDATE RESEARCH',
+      changes: '',
+      affectedID: research.researchID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated research',

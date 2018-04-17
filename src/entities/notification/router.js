@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -58,7 +59,12 @@ router.post('/notification/', async (req, res) => {
     req.body.senderID = req.session.user.userID;
     const notificationID = await Ctrl.addNotification(req.body);
     const notification = await Ctrl.getNotification({ notificationID });
-
+    await addLog({
+      action: 'INSERT NOTIFICATION',
+      changes: '',
+      affectedID: notificationID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully added notification',
@@ -133,7 +139,12 @@ router.delete('/notification/:notificationID', async (req, res) => {
   try {
     const notification = await Ctrl.getNotification(req.params);
     await Ctrl.deleteNotification(req.params);
-
+    await addLog({
+      action: 'DELETE NOTIFICATION',
+      changes: '',
+      affectedID: notification.notificationID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted notification',
@@ -400,7 +411,12 @@ router.put('/notification/:notificationID', async (req, res) => {
   try {
     await Ctrl.updateNotification(req.params, req.body);
     const notification = await Ctrl.getNotification(req.params);
-
+    await addLog({
+      action: 'UPDATE NOTIFICATION',
+      changes: '',
+      affectedID: notification.notificationID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated notification',

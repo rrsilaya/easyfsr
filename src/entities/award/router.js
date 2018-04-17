@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
 import { upload, unlink } from './../../utils';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -66,6 +67,12 @@ router.post('/award/', async (req, res) => {
       req.body.filepath = await upload(req.files.filepath, 'awards');
     const awardID = await Ctrl.addAward(req.body);
     const award = await Ctrl.getAward({ awardID });
+    await addLog({
+      action: 'INSERT AWARD',
+      changes: '',
+      affectedID: awardID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully created award',
@@ -157,7 +164,12 @@ router.put('/award/:awardID', async (req, res) => {
 
     await Ctrl.updateAward(req.params, req.body);
     const award = await Ctrl.getAward(req.params);
-
+    await addLog({
+      action: 'UPDATE AWARD',
+      changes: '',
+      affectedID: award.awardID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated award',
@@ -238,6 +250,12 @@ router.delete('/award/:awardID', async (req, res) => {
   try {
     const award = await Ctrl.getAward(req.params);
     await Ctrl.deleteAward(req.params);
+    await addLog({
+      action: 'DELETE AWARD',
+      changes: '',
+      affectedID: award.awardID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted award',

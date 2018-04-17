@@ -4,17 +4,16 @@ import { getUsers, getTotalUsers } from './../user/controller';
 import { getAdminWorks } from './../adminWork/controller';
 import { getAwards } from './../award/controller';
 import { getCreativeWorks } from './../creativeWork/controller';
-import { getCourses } from './../course/controller';
-import { getCourseScheds } from './../courseSched/controller';
+import { getCoursesWithSched } from './../course/controller';
 import { getConsultationHours } from './../consultationHours/controller';
 import { getExtensionAndCommunityServices } from './../extensionAndCommunityService/controller';
 import { getLtdPractOfProfs } from './../limitedPracticeOfProf/controller';
-import { getSubjects } from './../subject/controller';
-import { addStudyLoad, getStudyLoads } from './../studyLoad/controller';
-import { getTimeslots } from './../timeslot/controller';
+import { getSubjectsWithTimeslot } from './../subject/controller';
+import { getStudyLoads } from './../studyLoad/controller';
 import { getUserByUserID } from './../user/controller';
 import { getResearches } from './../research/controller';
 import { getLastMetaDataID } from './../meta/controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -60,6 +59,16 @@ router.post('/fsr/', async (req, res) => {
     users.map(
       async userID => await Ctrl.addFSR({ userID, ...req.body, metaID }),
     );
+    users.forEach(
+      async user =>
+        await addLog({
+          action: 'INSERT FSR',
+          changes: '',
+          affectedID: user,
+          userID: req.session.user.userID,
+        }),
+    );
+
     res.status(200).json({
       status: 200,
       message: 'Successfully created fsr for users',
@@ -128,6 +137,12 @@ router.delete('/fsr/:id', async (req, res) => {
   try {
     const fsr = await Ctrl.getFSR(req.params);
     await Ctrl.deleteFSR(req.params);
+    await addLog({
+      action: 'DELETE FSR',
+      changes: '',
+      affectedID: fsr.id,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted fsr',
@@ -203,45 +218,29 @@ router.get('/fsr/:id', async (req, res) => {
     const awards = await getAwards(req.params);
     const creativeWorks = await getCreativeWorks(req.params);
     const researches = await getResearches(req.params);
-    const courses = await getCourses(req.params);
-    //const coursesWithSched = await Promise.all(
-    // courses.map(
-    //     async ({ courseID } = course) => await getCourseScheds({ courseID }),
-    //   ),
-    // );
+    const courses = await getCoursesWithSched(req.params);
     const consultationHours = await getConsultationHours(req.params);
     const services = await getExtensionAndCommunityServices(req.params);
     const ltdPractices = await getLtdPractOfProfs(req.params);
-    const subjects = await getSubjects(req.params);
-
-    let subj = await Promise.all(
-      subjects.map(
-        async ({ subjectID } = subject) => await getTimeslots({ subjectID }),
-      ),
-    );
-    console.log(subj);
+    const subjects = await getSubjectsWithTimeslot(req.params);
     const studyLoads = await getStudyLoads(req.params);
     const userID = fsr.userID;
     const user = await getUserByUserID({ userID });
     delete user.password;
 
-    // fsr = {
-    //   user,
-    //   fsr,
-    //   adminWorks,
-    //   awards,
-    //   creativeWorks,
-    //   researches,
-    //   courses,
-    //   consultationHours,
-    //   services,
-    //   ltdPractices,
-    //   subjects,
-    //   studyLoads,
-    // };
     fsr = {
+      user,
+      fsr,
+      adminWorks,
+      awards,
+      creativeWorks,
+      researches,
       courses,
+      consultationHours,
+      services,
+      ltdPractices,
       subjects,
+      studyLoads,
     };
 
     res.status(200).json({
@@ -443,7 +442,12 @@ router.put('/fsr/:id', async (req, res) => {
   try {
     await Ctrl.updateFSR(req.params, req.body);
     const fsr = await Ctrl.getFSR(req.params);
-
+    await addLog({
+      action: 'UPDATE FSR',
+      changes: '',
+      affectedID: fsr.id,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated fsr',

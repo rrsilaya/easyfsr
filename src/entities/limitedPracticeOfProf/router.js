@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -47,6 +48,12 @@ router.post('/ltdPractOfProf/', async (req, res) => {
     const limitedPracticeOfProfID = await Ctrl.addLtdPractOfProf(req.body);
     const ltdPractOfProf = await Ctrl.getLtdPractOfProf({
       limitedPracticeOfProfID,
+    });
+    await addLog({
+      action: 'INSERT LTD PRACTICE',
+      changes: '',
+      affectedID: limitedPracticeOfProfID,
+      userID: req.session.user.userID,
     });
     res.status(200).json({
       status: 200,
@@ -117,6 +124,12 @@ router.put('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
   try {
     await Ctrl.updateLtdPractOfProf(req.params, req.body);
     const ltdPractOfProf = await Ctrl.getLtdPractOfProf(req.params);
+    await addLog({
+      action: 'UPDATE LTD PRACTICE',
+      changes: '',
+      affectedID: ltdPractOfProf.limitedPracticeOfProfID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated LtdPractOfProf',
@@ -186,6 +199,12 @@ router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
   try {
     const ltdPractOfProf = await Ctrl.getLtdPractOfProf(req.params);
     await Ctrl.deleteLtdPractOfProf(req.params);
+    await addLog({
+      action: 'DELETE LTD PRACTICE',
+      changes: '',
+      affectedID: ltdPractOfProf.limitedPracticeOfProfID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted LtdPractOfProf',

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -58,6 +59,12 @@ router.post('/subject/', async (req, res) => {
   try {
     const subjectID = await Ctrl.addSubject(req.body);
     const subject = await Ctrl.getSubject({ subjectID });
+    await addLog({
+      action: 'INSERT SUBJECT',
+      changes: '',
+      affectedID: subjectID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully added subject',
@@ -135,6 +142,12 @@ router.put('/subject/:subjectID', async (req, res) => {
   try {
     await Ctrl.updateSubject(req.params, req.body);
     const subject = await Ctrl.getSubject(req.params);
+    await addLog({
+      action: 'UPDATE SUBJECT',
+      changes: '',
+      affectedID: subject.subjectID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated subject',
@@ -211,6 +224,12 @@ router.delete('/subject/:subjectID', async (req, res) => {
   try {
     const subject = await Ctrl.getSubject(req.params);
     await Ctrl.deleteSubject(req.params);
+    await addLog({
+      action: 'DELETE SUBJECT',
+      changes: '',
+      affectedID: subject.subjectID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted subject',

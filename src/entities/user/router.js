@@ -2,6 +2,7 @@ import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
 import { upload, unlink } from './../../utils';
+import { addLog } from './../log/controller';
 
 const router = Router();
 /**
@@ -82,6 +83,12 @@ router.post('/user/', async (req, res) => {
     const userID = await Ctrl.addUser(req.body);
     const user = await Ctrl.getUserByUserID({ userID });
     delete user.password;
+    await addLog({
+      action: 'INSERT USER',
+      changes: '',
+      affectedID: userID,
+      userID: req.session.user.userID,
+    });
 
     res.status(200).json({
       status: 200,
@@ -298,6 +305,12 @@ router.delete('/user/:userID', async (req, res) => {
     const user = await Ctrl.getUserByUserID(req.params);
     delete user.password;
     await Ctrl.deleteUser(req.params);
+    await addLog({
+      action: 'DELETE USER',
+      changes: '',
+      affectedID: user.userID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted user',
@@ -510,8 +523,15 @@ router.put('/user/:userID', async (req, res) => {
     await Ctrl.updateUser(req.params, req.body);
     const user = await Ctrl.getUserByUserID(req.params);
     delete user.password;
+    const sess = req.session.user;
     await Ctrl.deleteSession(user.employeeID);
-    if (req.session.user.userID == user.userID) req.session.user = user;
+    if (sess.userID == user.userID) req.session.user = user;
+    await addLog({
+      action: 'UPDATE USER',
+      changes: '',
+      affectedID: user.userID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated user',
