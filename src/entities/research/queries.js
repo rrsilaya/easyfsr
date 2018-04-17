@@ -11,7 +11,8 @@ export const addResearch = `
     endDate,
 		funding,
 		approvedUnits,
-    filepath
+    filepath,
+    coAuthor
 	)
 	VALUES (
 		:id,
@@ -23,7 +24,8 @@ export const addResearch = `
     :endDate,
 		:funding,
 		:approvedUnits,
-    :filepath
+    :filepath,
+    :coAuthor
 	)
 `;
 
