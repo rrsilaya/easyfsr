@@ -228,6 +228,7 @@ CREATE TABLE `creativeWork`(
   `type` VARCHAR(50) NOT NULL,
   `credUnit` INT (10) NOT NULL,
   `filepath` TEXT (50),
+  `coAuthor` VARCHAR (255), 
   CONSTRAINT `creativeWork_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`)
@@ -235,19 +236,6 @@ CREATE TABLE `creativeWork`(
   CONSTRAINT `creativeWork_pk`
     PRIMARY KEY (`creativeWorkID`)
 );
-
-CREATE TABLE `cworkCoAuthor`(
-  `cworkCoAuthorID` INT NOT NULL AUTO_INCREMENT,
-  `creativeWorkID` INT NOT NULL,
-  `name` VARCHAR(50) NOT NULL,
-  CONSTRAINT `cworkCoAuthor_creativeWork_fk`
-    FOREIGN KEY (`creativeWorkID`)
-    REFERENCES creativeWork(`creativeWorkID`)
-  ON DELETE CASCADE,
-  CONSTRAINT `cworkCoAuthor_pk`
-    PRIMARY KEY (`cworkCoAuthorID`)
-);
-
 
 -- research
 
@@ -259,28 +247,16 @@ CREATE TABLE `research`(
   `title` VARCHAR (50) NOT NULL,
   `startDate` DATE NOT NULL, --                   DATE format: YYYY-MM-DD
   `endDate` DATE DEFAULT NULL, --                 DATE format: YYYY-MM-DD
-  `funding` VARCHAR (30) NOT NULL,
+  `funding` VARCHAR (30),
   `approvedUnits` VARCHAR (30) NOT NULL,
   `filepath` TEXT (50),
+  `coAuthor` VARCHAR (255),
   CONSTRAINT `research_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`)
     ON DELETE CASCADE,
   CONSTRAINT `research_pk`
     PRIMARY KEY (`researchID`)
-);
-
-
-CREATE TABLE rCoAuthor(
-  `rCoAuthorID` INT NOT NULL AUTO_INCREMENT,
-  `researchID` INT NOT NULL,
-  `name` VARCHAR(50) NOT NULL,
-  CONSTRAINT `rCoAuthor_research_fk`
-    FOREIGN KEY (`researchID`)
-    REFERENCES research(`researchID`)
-  ON DELETE CASCADE,
-  CONSTRAINT `rCoAuthor_pk`
-    PRIMARY KEY (`rCoAuthorID`)
 );
 
 CREATE TABLE `notification`(
