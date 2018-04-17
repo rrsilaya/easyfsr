@@ -19,3 +19,7 @@ export const getTotalLogs = query => `
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   } 
 `;
+
+export const addLog = ` 
+  CALL log(:action,:changes,:affectedID,:userID);
+`;

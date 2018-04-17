@@ -13,6 +13,7 @@ import { getStudyLoads } from './../studyLoad/controller';
 import { getUserByUserID } from './../user/controller';
 import { getResearches } from './../research/controller';
 import { getLastMetaDataID } from './../meta/controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -58,6 +59,16 @@ router.post('/fsr/', async (req, res) => {
     users.map(
       async userID => await Ctrl.addFSR({ userID, ...req.body, metaID }),
     );
+    users.forEach(
+      async user =>
+        await addLog({
+          action: 'INSERT FSR',
+          changes: '',
+          affectedID: user,
+          userID: req.session.user.userID,
+        }),
+    );
+
     res.status(200).json({
       status: 200,
       message: 'Successfully created fsr for users',
@@ -126,6 +137,12 @@ router.delete('/fsr/:id', async (req, res) => {
   try {
     const fsr = await Ctrl.getFSR(req.params);
     await Ctrl.deleteFSR(req.params);
+    await addLog({
+      action: 'DELETE FSR',
+      changes: '',
+      affectedID: fsr.id,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted fsr',
@@ -425,7 +442,12 @@ router.put('/fsr/:id', async (req, res) => {
   try {
     await Ctrl.updateFSR(req.params, req.body);
     const fsr = await Ctrl.getFSR(req.params);
-
+    await addLog({
+      action: 'UPDATE FSR',
+      changes: '',
+      affectedID: fsr.id,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated fsr',

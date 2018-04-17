@@ -45,3 +45,12 @@ export const getTotalLogs = log => {
     );
   });
 };
+
+export const addLog = log => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.addLog, log, (err, results) => {
+      if (err) return reject(500);
+      return resolve();
+    });
+  });
+};

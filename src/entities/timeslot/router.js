@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 /**
@@ -48,6 +49,12 @@ router.post('/timeslot/', async (req, res) => {
   try {
     const timeslotID = await Ctrl.addTimeslot(req.body);
     const timeslot = await Ctrl.getTimeslot({ timeslotID });
+    await addLog({
+      action: 'INSERT TIMESLOT',
+      changes: '',
+      affectedID: timeslotID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully created timeslot',
@@ -276,6 +283,12 @@ router.put('/timeslot/:timeslotID/', async (req, res) => {
   try {
     await Ctrl.updateTimeslot(req.params, req.body);
     const timeslot = await Ctrl.getTimeslot(req.params);
+    await addLog({
+      action: 'UPDATE TIMESLOT',
+      changes: '',
+      affectedID: timeslot.timeslotID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated timeslot',
@@ -346,6 +359,12 @@ router.delete('/timeslot/:timeslotID/', async (req, res) => {
   try {
     const timeslot = await Ctrl.getTimeslot(req.params);
     await Ctrl.deleteTimeslot(req.params);
+    await addLog({
+      action: 'DELETE TIMESLOT',
+      changes: '',
+      affectedID: timeslot.timeslotID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted timeslot',

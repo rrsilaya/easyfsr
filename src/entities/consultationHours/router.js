@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
-
+import { addLog } from './../log/controller';
 const router = Router();
 
 /**
@@ -52,6 +52,12 @@ router.post('/consultationHours/', async (req, res) => {
   try {
     const chID = await Ctrl.addConsultationHour(req.body);
     const consultationHour = await Ctrl.getConsultationHour({ chID });
+    await addLog({
+      action: 'INSERT CONSULTATION HOURS',
+      changes: '',
+      affectedID: chID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully created consultation hours',
@@ -126,7 +132,12 @@ router.put('/consultationHours/:chID', async (req, res) => {
   try {
     await Ctrl.updateConsultationHour(req.params, req.body);
     const consultationHour = await Ctrl.getConsultationHour(req.params);
-
+    await addLog({
+      action: 'UPDATE CONSULTATION HOURS',
+      changes: '',
+      affectedID: consultationHour.chID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated consultation hours',
@@ -198,7 +209,12 @@ router.delete('/consultationHours/:chID', async (req, res) => {
   try {
     const consultationHour = await Ctrl.getConsultationHour(req.params);
     await Ctrl.deleteConsultationHour(req.params);
-
+    await addLog({
+      action: 'DELETE CONSULTATION HOURS',
+      changes: '',
+      affectedID: consultationHour.chID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted consultation hours',

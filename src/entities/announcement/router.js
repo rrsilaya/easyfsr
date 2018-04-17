@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -49,6 +49,12 @@ router.post('/announcement', async (req, res) => {
   try {
     const announcementID = await Ctrl.addAnnouncement(req.body);
     const announcement = await Ctrl.getAnnouncement({ announcementID });
+    await addLog({
+      action: 'ADD ANNOUNCEMENT',
+      changes: '',
+      affectedID: announcementID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully created announcement',
@@ -113,6 +119,12 @@ router.delete('/announcement/:announcementID', async (req, res) => {
   try {
     const announcement = await Ctrl.getAnnouncement(req.params);
     await Ctrl.deleteAnnouncement(req.params);
+    await addLog({
+      action: 'DELETE ANNOUNCEMENT',
+      changes: '',
+      affectedID: announcement.announcementID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted announcement',
@@ -341,7 +353,12 @@ router.put('/announcement/:announcementID', async (req, res) => {
   try {
     await Ctrl.updateAnnouncement(req.params, req.body);
     const announcement = await Ctrl.getAnnouncement(req.params);
-
+    await addLog({
+      action: 'UPDATE ANNOUNCEMENT',
+      changes: '',
+      affectedID: announcement.announcementID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated announcement',

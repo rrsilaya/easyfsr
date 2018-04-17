@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -53,6 +54,12 @@ router.post('/course', async (req, res) => {
     const courseID = await Ctrl.addCourse(req.body);
     const course = await Ctrl.getCourse({ courseID });
 
+    await addLog({
+      action: 'INSERT COURSE',
+      changes: '',
+      affectedID: courseID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully created course',
@@ -129,7 +136,12 @@ router.put('/course/:courseID', async (req, res) => {
   try {
     await Ctrl.updateCourse(req.params, req.body);
     const course = await Ctrl.getCourse(req.params);
-
+    await addLog({
+      action: 'UPDATE COURSE',
+      changes: '',
+      affectedID: course.courseID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated course',
@@ -204,7 +216,12 @@ router.delete('/course/:courseID', async (req, res) => {
   try {
     const course = await Ctrl.getCourse(req.params);
     await Ctrl.deleteCourse(req.params);
-
+    await addLog({
+      action: 'DELETE COURSE',
+      changes: '',
+      affectedID: course.courseID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted course',
