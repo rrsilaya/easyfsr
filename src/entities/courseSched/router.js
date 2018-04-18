@@ -1,5 +1,10 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import {
+  getIDofFSRfromCourse,
+  getUserIDofFSR,
+  getIDofFSRfromCourseSched,
+} from '../../middlewares/controller';
 import { addLog } from './../log/controller';
 
 const router = Router();
@@ -50,6 +55,14 @@ const router = Router();
 
 router.post('/courseSched/', async (req, res) => {
   try {
+    const idOfCourse = await getIDofFSRfromCourse(
+      req.body.courseID,
+      req.session.user.userID,
+    );
+    const userIDofFSR = await getUserIDofFSR(
+      idOfCourse,
+      req.session.user.userID,
+    );
     const courseSchedID = await Ctrl.addCourseSched(req.body);
     const courseSched = await Ctrl.getCourseSched({ courseSchedID });
     await addLog({
@@ -66,6 +79,12 @@ router.post('/courseSched/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
+      case 404:
+        message = 'FSR not found';
+        break;
       case 500:
         message = 'Internal server error';
         break;
@@ -122,7 +141,7 @@ router.post('/courseSched/', async (req, res) => {
  * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 Course Sched not found
+ * HTTP/1.1 404 Course Schedule not found
  * {
  *   "status": 404,
  *   "message": "Course schedule not found"
@@ -131,6 +150,14 @@ router.post('/courseSched/', async (req, res) => {
 
 router.put('/courseSched/:courseSchedID', async (req, res) => {
   try {
+    const idOfCourse = await getIDofFSRfromCourseSched(
+      req.params.courseSchedID,
+      req.session.user.userID,
+    );
+    const userIDofFSR = await getUserIDofFSR(
+      idOfCourse,
+      req.session.user.userID,
+    );
     await Ctrl.updateCourseSched(req.params, req.body);
     const courseSched = await Ctrl.getCourseSched(req.params);
     await addLog({
@@ -147,8 +174,11 @@ router.put('/courseSched/:courseSchedID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
-        message = 'Course not found';
+        message = 'Course schedule not found';
         break;
       case 500:
         message = 'Internal server error';
@@ -210,6 +240,14 @@ router.put('/courseSched/:courseSchedID', async (req, res) => {
 
 router.delete('/courseSched/:courseSchedID', async (req, res) => {
   try {
+    const idOfCourse = await getIDofFSRfromCourseSched(
+      req.params.courseSchedID,
+      req.session.user.userID,
+    );
+    const userIDofFSR = await getUserIDofFSR(
+      idOfCourse,
+      req.session.user.userID,
+    );
     const courseSched = await Ctrl.getCourseSched(req.params);
     await Ctrl.deleteCourseSched(req.params);
     await addLog({
@@ -226,8 +264,11 @@ router.delete('/courseSched/:courseSchedID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
-        message = 'Course not found';
+        message = 'Course schedule not found';
         break;
       case 500:
         message = 'Internal server error';
@@ -288,6 +329,14 @@ router.delete('/courseSched/:courseSchedID', async (req, res) => {
 
 router.get('/courseSched/:courseSchedID', async (req, res) => {
   try {
+    const idOfCourse = await getIDofFSRfromCourseSched(
+      req.params.courseSchedID,
+      req.session.user.userID,
+    );
+    const userIDofFSR = await getUserIDofFSR(
+      idOfCourse,
+      req.session.user.userID,
+    );
     const courseSched = await Ctrl.getCourseSched(req.params);
     res.status(200).json({
       status: 200,
@@ -297,8 +346,11 @@ router.get('/courseSched/:courseSchedID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
-        message = 'Course not found';
+        message = 'Course schedule not found';
         break;
       case 500:
         message = 'Internal server error';
@@ -373,7 +425,7 @@ router.get('/courseSched/:courseSchedID', async (req, res) => {
  * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 Course Schedule not found
+ * HTTP/1.1 404 Course schedule not found
  * {
  *   "status": 404,
  *   "message": "Course Schedule not found"
@@ -382,16 +434,23 @@ router.get('/courseSched/:courseSchedID', async (req, res) => {
 
 router.get('/courseSched/', async (req, res) => {
   try {
-    const courseScheds = await Ctrl.getCourseScheds(req.query);
+    req.session.user.acctType === 'USER'
+      ? (req.query.userID = req.session.user.userID)
+      : '';
+    const courseScheds = await Ctrl.getCourseScheds(
+      req.query,
+      req.query.userID,
+    );
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched course schedules',
       data: courseScheds,
-      total: (await Ctrl.getTotalCourseScheds(req.query)).total,
+      total: (await Ctrl.getTotalCourseScheds(req.query, req.query.userID))
+        .total,
       limit: parseInt(req.query.limit) || 12,
       page: parseInt(req.query.page) || 1,
       pages: Math.ceil(
-        (await Ctrl.getTotalCourseScheds(req.query)).total /
+        (await Ctrl.getTotalCourseScheds(req.query, req.query.userID)).total /
           (parseInt(req.query.limit) || 12),
       ),
     });
@@ -399,7 +458,7 @@ router.get('/courseSched/', async (req, res) => {
     let message = '';
     switch (status) {
       case 404:
-        message = 'Course not found';
+        message = 'Course schedule not found';
         break;
       case 500:
         message = 'Internal server error';

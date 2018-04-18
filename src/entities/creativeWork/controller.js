@@ -27,12 +27,13 @@ export const addCreativeWork = creativeWork => {
   });
 };
 
-export const getCreativeWorks = creativeWork => {
+export const getCreativeWorks = (creativeWork, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getCreativeWorks(
         filtered(creativeWork, creativeWorkAttributes),
         creativeWork.sortBy,
+        userID,
       ),
       {
         field: 'date',
@@ -84,11 +85,12 @@ export const getCreativeWork = ({ creativeWorkID }) => {
   });
 };
 
-export const getTotalCreativeWorks = creativeWork => {
+export const getTotalCreativeWorks = (creativeWork, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getTotalCreativeWorks(
         filtered(creativeWork, creativeWorkAttributes),
+        userID,
       ),
       {
         field: 'date',

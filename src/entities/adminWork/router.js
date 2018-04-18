@@ -1,4 +1,9 @@
 import { Router } from 'express';
+import bcrypt from 'bcrypt';
+import {
+  getUserIDofFSR,
+  getIDofFSRfromAdminWork,
+} from '../../middlewares/controller';
 import * as Ctrl from './controller';
 import { addLog } from './../log/controller';
 
@@ -48,6 +53,10 @@ const router = Router();
 
 router.post('/adminWork/', async (req, res) => {
   try {
+    const userIDofFSR = await getUserIDofFSR(
+      req.body.id,
+      req.session.user.userID,
+    );
     const adminWorkID = await Ctrl.addAdminWork(req.body);
     const adminWork = await Ctrl.getAdminWork({ adminWorkID });
     await addLog({
@@ -64,6 +73,12 @@ router.post('/adminWork/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
+      case 404:
+        message = 'FSR not found';
+        break;
       case 500:
         message = 'Internal server error';
         break;
@@ -127,6 +142,11 @@ router.post('/adminWork/', async (req, res) => {
 
 router.put('/adminWork/:adminWorkID', async (req, res) => {
   try {
+    const idOfAdminWork = await getIDofFSRfromAdminWork(req.params.adminWorkID);
+    const userIDofFSR = await getUserIDofFSR(
+      idOfAdminWork,
+      req.session.user.userID,
+    );
     await Ctrl.updateAdminWork(req.params, req.body);
     const adminWork = await Ctrl.getAdminWork(req.params);
     await addLog({
@@ -143,6 +163,9 @@ router.put('/adminWork/:adminWorkID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'adminWork not found';
         break;
@@ -203,6 +226,11 @@ router.put('/adminWork/:adminWorkID', async (req, res) => {
 
 router.delete('/adminWork/:adminWorkID', async (req, res) => {
   try {
+    const idOfAdminWork = await getIDofFSRfromAdminWork(req.params.adminWorkID);
+    const userIDofFSR = await getUserIDofFSR(
+      idOfAdminWork,
+      req.session.user.userID,
+    );
     const adminWork = await Ctrl.getAdminWork(req.params);
     await Ctrl.deleteAdminWork(req.params);
 
@@ -221,6 +249,9 @@ router.delete('/adminWork/:adminWorkID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'adminWork not found';
         break;
@@ -279,6 +310,11 @@ router.delete('/adminWork/:adminWorkID', async (req, res) => {
 
 router.get('/adminWork/:adminWorkID', async (req, res) => {
   try {
+    const idOfAdminWork = await getIDofFSRfromAdminWork(req.params.adminWorkID);
+    const userIDofFSR = await getUserIDofFSR(
+      idOfAdminWork,
+      req.session.user.userID,
+    );
     const adminWork = await Ctrl.getAdminWork(req.params);
     res.status(200).json({
       status: 200,
@@ -288,6 +324,9 @@ router.get('/adminWork/:adminWorkID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'adminWork not found';
         break;
@@ -364,16 +403,19 @@ router.get('/adminWork/:adminWorkID', async (req, res) => {
 
 router.get('/adminWork/', async (req, res) => {
   try {
-    const adminWorks = await Ctrl.getAdminWorks(req.query);
+    req.session.user.acctType === 'USER'
+      ? (req.query.userID = req.session.user.userID)
+      : '';
+    const adminWorks = await Ctrl.getAdminWorks(req.query, req.query.userID);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched admin works',
       data: adminWorks,
-      total: (await Ctrl.getTotalAdminWorks(req.query)).total,
+      total: (await Ctrl.getTotalAdminWorks(req.query, req.query.userID)).total,
       limit: parseInt(req.query.limit) || 12,
       page: parseInt(req.query.page) || 1,
       pages: Math.ceil(
-        (await Ctrl.getTotalAdminWorks(req.query)).total /
+        (await Ctrl.getTotalAdminWorks(req.query, req.query.userID)).total /
           (parseInt(req.query.limit) || 12),
       ),
     });
