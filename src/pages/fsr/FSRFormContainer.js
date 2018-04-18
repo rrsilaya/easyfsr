@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import FSRForm from './FSRForm';
-
+import { push } from 'react-router-redux';
 import {
   toggleModal,
   nextStep,
@@ -39,6 +39,8 @@ import {
   editLtdPractOfProf,
   getAwards,
   editAward,
+  toggleTurningIn,
+  toggleFinalizing,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -104,7 +106,11 @@ const mapStateToProps = state => {
     isEditingLtdPractOfProf,
     isGettingAward,
     isEditingAward,
+    isTurningIn,
+    isFinalizing,
   } = state.fsr;
+
+  const { user } = state.app;
 
   return {
     isAddSubjectModalOpen,
@@ -168,6 +174,9 @@ const mapStateToProps = state => {
     isEditingLtdPractOfProf,
     isGettingAward,
     isEditingAward,
+    isTurningIn,
+    isFinalizing,
+    user,
   };
 };
 
@@ -283,6 +292,15 @@ const mapDispatchToProps = dispatch => {
     },
     editAward: (awardID, body) => {
       dispatch(editAward(awardID, body));
+    },
+    toggleTurningIn: (id, body) => {
+      dispatch(toggleTurningIn(id, body));
+    },
+    toggleFinalizing: (id, body) => {
+      dispatch(toggleFinalizing(id, body));
+    },
+    pushLink: route => {
+      dispatch(push(route));
     },
   };
 };

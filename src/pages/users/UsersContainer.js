@@ -30,6 +30,8 @@ const mapStateToProps = state => {
     user,
   } = state.users;
 
+  const userLoggedIn = state.app.user;
+
   return {
     isEditModalOpen,
     isAddModalOpen,
@@ -43,6 +45,7 @@ const mapStateToProps = state => {
     pagination,
     users,
     user,
+    userLoggedIn,
   };
 };
 

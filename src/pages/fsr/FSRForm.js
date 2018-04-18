@@ -1,4 +1,4 @@
-import { Steps, Row, Col } from 'antd';
+import { Steps, Row, Col, Button, Modal, notification } from 'antd';
 import React, { Component } from 'react';
 
 import TeachingLoadForm from './components/TeachingLoadForm';
@@ -12,13 +12,49 @@ import ConsultationHoursForm from './components/ConsultationHoursForm';
 import CertificationForm from './components/CertificationForm';
 
 import steps from './steps';
-
+import styles from './styles';
+import { Link } from 'react-router-dom';
 const { Step } = Steps;
+const ButtonGroup = Button.Group;
+const confirm = Modal.confirm;
 
 class FSRForm extends Component {
   componentDidMount() {
     this.props.getFSR(this.props.match.params.fsrID);
   }
+
+  handleTurningInFSR = () => {
+    console.log(this.props.fsr.fsr);
+    this.props.toggleTurningIn(this.props.fsr.fsr.id, {
+      isTurnedIn: !this.props.fsr.isTurnedIn,
+    });
+  };
+
+  handleFinalizingFSR = () => {
+    if (this.props.fsr.fsr.isTurnedIn) {
+      this.props.toggleFinalizing(this.props.fsr.fsr.id, {
+        isChecked: !this.props.fsr.isChecked,
+      });
+    } else {
+      notification.error({ message: 'FSR is not turned in.' });
+    }
+  };
+
+  showDeleteConfirm = () => {
+    confirm({
+      title: 'Are you sure you want to finalize this FSR?',
+      content: 'Some descriptions',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: () => {
+        this.handleFinalizingFSR();
+      },
+      onCancel: () => {
+        console.log('Cancelled Finalizing FSR');
+      },
+    });
+  };
 
   render() {
     const {
@@ -123,12 +159,50 @@ class FSRForm extends Component {
       isEditingLtdPractOfProf,
       isGettingAward,
       isEditingAward,
+      isTurningIn,
+      isFinalizing,
+      pushLink,
+
+      user,
     } = this.props;
 
     const { fsrID } = this.props.match.params;
+    const { acctType } = this.props.user;
 
     return (
       <div>
+        <ButtonGroup style={{ float: 'right', display: 'flex' }}>
+          <Button
+            style={styles.icons}
+            size="large"
+            icon="file"
+            onClick={() => pushLink(`/records/${fsrID}/preview`)}
+            ghost
+          >
+            View Preview
+          </Button>
+          {acctType == 'USER' ? (
+            <Button
+              style={styles.icons}
+              size="large"
+              icon="up-square-o"
+              onClick={this.handleTurningInFSR}
+              ghost
+            >
+              Turn In FSR
+            </Button>
+          ) : (
+            <Button
+              style={styles.icons}
+              size="large"
+              icon="check-circle-o"
+              onClick={this.showDeleteConfirm}
+              ghost
+            >
+              Finalize FSR
+            </Button>
+          )}
+        </ButtonGroup>
         <h1>
           Academic Year {fsr.acadYear} {fsr.semester} Term
         </h1>

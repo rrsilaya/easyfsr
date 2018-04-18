@@ -11,7 +11,7 @@ import {
   CreativeWorks,
   LimitedPractices,
   StudyLoad,
-} from './profileInfo';
+} from './profileInfo/';
 import style from '../styles';
 
 const { Item: ListItem } = List;
