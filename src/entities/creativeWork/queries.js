@@ -32,13 +32,26 @@ export const deleteCreativeWork = `
 	WHERE creativeWorkID = :creativeWorkID
 `;
 
-export const getCreativeWorks = (query, sortBy) => `
-	SELECT * FROM creativeWork ${
-    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
-  }
-	ORDER BY [field] ${
-    sortBy === 'DESC' ? 'DESC' : 'ASC'
-  } LIMIT :limit OFFSET :offset
+export const getCreativeWorks = (query, sortBy, userID) => `
+	SELECT ${
+    userID
+      ? `
+	x.id,
+  date,
+  title,
+  type,
+  credUnit,
+  x.filepath`
+      : `*`
+  } FROM creativeWork x ${
+  userID
+    ? `LEFT JOIN fsr f ON x.id = f.id WHERE f.userID = :userID ${
+        query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
+      }`
+    : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+}
+	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+  LIMIT :limit OFFSET :offset
 `;
 
 export const getCreativeWork = `
@@ -46,8 +59,12 @@ export const getCreativeWork = `
 	WHERE creativeWorkID = :creativeWorkID
 `;
 
-export const getTotalCreativeWorks = query => `
-	SELECT count(*) as total FROM creativeWork ${
-    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+export const getTotalCreativeWorks = (query, userID) => `
+	SELECT count(*) as total FROM creativeWork x ${
+    userID
+      ? `WHERE id IN (SELECT id FROM fsr WHERE userID=:userID) ${
+          query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
+        }`
+      : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }
 `;

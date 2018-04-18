@@ -261,11 +261,11 @@ CREATE TABLE `research`(
   `researchID` INT NOT NULL AUTO_INCREMENT,
   `type` VARCHAR (30) NOT NULL, -- PROPOSAL / IMPLEMENTATION
   `role` VARCHAR (30) NOT NULL,
-  `title` VARCHAR (50) NOT NULL,
+  `title` TEXT (50) NOT NULL,
   `startDate` DATE NOT NULL, --                   DATE format: YYYY-MM-DD
   `endDate` DATE DEFAULT NULL, --                 DATE format: YYYY-MM-DD
-  `funding` VARCHAR (30),
-  `approvedUnits` VARCHAR (30) NOT NULL,
+  `funding` TEXT (30),
+  `approvedUnits` VARCHAR (30) NOT  NULL,
   `filepath` TEXT (50),
   `coAuthor` VARCHAR (255),
   CONSTRAINT `research_fsr_fk`
@@ -282,7 +282,7 @@ CREATE TABLE `notification`(
   `receiverID` INT NOT NULL,
   `message` varchar(1000) NOT NULL,
   `timestamp` TIMESTAMP NOT NULL,
-  `isResolved` BOOLEAN,
+  `isResolved` BOOLEAN DEFAULT 0,
   `priority` VARCHAR (10) DEFAULT 'NORMAL', -- LOW / NORMAL / HIGH
   CONSTRAINT `notification_pk`
     PRIMARY KEY(`notificationID`),

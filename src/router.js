@@ -1,5 +1,7 @@
 import { Router } from 'express';
 
+import * as Middleware from './middlewares/middlewares';
+
 import authRouter from './entities/auth/router';
 import userRouter from './entities/user/router';
 import researchRouter from './entities/research/router';
@@ -24,6 +26,7 @@ import logRouter from './entities/log/router';
 const router = Router();
 
 router.use(authRouter);
+router.use(Middleware.isLoggedIn);
 
 // router.use( (req,res,next) => {
 //   if(req.session.user){

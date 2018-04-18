@@ -65,7 +65,7 @@ export const getSubject = ({ subjectID }) => {
 
 export const computeSubject = subject => {
   return new Promise((resolve, reject) => {
-    const {
+    let {
       subjectCode,
       teachingLoadCreds,
       noOfStudents,
@@ -100,18 +100,22 @@ export const computeSubject = subject => {
 
     it.test(subjectCode) ? (TLCM = TLCM * 1.33) : TLCM;
 
-    subject.courseCred = courseCred;
-    subject.studCredUnits = studCredUnits;
-    subject.TLC = TLC;
-    subject.TLCM = TLCM;
+    subject.courseCred = courseCred.toFixed(2);
+    subject.studCredUnits = studCredUnits.toFixed(2);
+    subject.TLC = TLC.toFixed(2);
+    subject.TLCM = TLCM.toFixed(2);
     return resolve(subject);
   });
 };
 
-export const getSubjects = subject => {
+export const getSubjects = (subject, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getSubjects(filtered(subject, subjectAttributes), subject.sortBy),
+      Query.getSubjects(
+        filtered(subject, subjectAttributes),
+        subject.sortBy,
+        userID,
+      ),
       {
         field: 'subjectCode',
         ...escapeSearch(subject, searchFields, subject.limit),
@@ -124,10 +128,10 @@ export const getSubjects = subject => {
   });
 };
 
-export const getTotalSubjects = subject => {
+export const getTotalSubjects = (subject, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getTotalSubjects(filtered(subject, subjectAttributes)),
+      Query.getTotalSubjects(filtered(subject, subjectAttributes), userID),
       {
         field: 'subjectCode',
         ...escapeSearch(subject, searchFields, subject.limit),

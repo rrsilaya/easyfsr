@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { isAdmin, isHead } from '../../middlewares/middlewares';
 import * as Ctrl from './controller';
 import { getUsers, getTotalUsers } from './../user/controller';
 import { getAdminWorks } from './../adminWork/controller';
@@ -51,8 +52,7 @@ const router = Router();
  *     "message": "Internal server error"
  *   }
  */
-
-router.post('/fsr/', async (req, res) => {
+router.post('/fsr', isAdmin, async (req, res) => {
   try {
     const users = req.body.users;
     const { metaID } = await getLatestMetaData();
@@ -569,8 +569,7 @@ router.delete('/fsr/:id', async (req, res) => {
  *   "message": "FSR not found"
  * }
  */
-
-router.get('/fsr/:id', async (req, res) => {
+router.get('/fsr/:id', isHead, async (req, res) => {
   try {
     let fsr = await Ctrl.getFSR(req.params);
     const adminWorks = await getAdminWorks(req.params);
@@ -611,6 +610,7 @@ router.get('/fsr/:id', async (req, res) => {
     });
   } catch (status) {
     let message = '';
+
     switch (status) {
       case 404:
         message = 'FSR not found';
@@ -619,6 +619,7 @@ router.get('/fsr/:id', async (req, res) => {
         message = 'Internal server error';
         break;
     }
+
     res.status(status).json({ status, message });
   }
 });
@@ -709,8 +710,7 @@ router.get('/fsr/:id', async (req, res) => {
  *   "message": "FSR/s not found"
  * }
  */
-
-router.get('/fsr', async (req, res) => {
+router.get('/fsr', isHead, async (req, res) => {
   try {
     const FSRs = await Ctrl.getFSRs(req.query);
     res.status(200).json({
@@ -739,16 +739,6 @@ router.get('/fsr', async (req, res) => {
   }
 });
 
-router.use('/fsr/:userID', (req, res, next) => {
-  const { user } = req.session;
-  if (user && (user.acctType === 'ADMIN' || user.userID == req.params.userID)) {
-    return next();
-  }
-  res.status(403).json({
-    status: 403,
-    message: 'Unauthorized access',
-  });
-});
 /**
  * @api {put} /fsr/:id updateFSR
  * @apiGroup FSR
@@ -807,7 +797,7 @@ router.use('/fsr/:userID', (req, res, next) => {
  * }
  */
 
-router.put('/fsr/:id', async (req, res) => {
+router.put('/fsr/:id', isEmployeeAuthorized, async (req, res) => {
   try {
     await Ctrl.updateFSR(req.params, req.body);
     const fsr = await Ctrl.getFSR(req.params);

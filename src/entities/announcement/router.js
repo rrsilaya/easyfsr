@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { isAdmin } from '../../middlewares/middlewares';
 import * as Ctrl from './controller';
 import { addLog } from './../log/controller';
 
@@ -44,7 +45,7 @@ const router = Router();
  *     "message": "Internal server error"
  *   }
  */
-router.post('/announcement', async (req, res) => {
+router.post('/announcement', isAdmin, async (req, res) => {
   try {
     req.body.userID = req.session.user.userID;
     const announcementID = await Ctrl.addAnnouncement(req.body);
@@ -71,6 +72,7 @@ router.post('/announcement', async (req, res) => {
     res.status(status).json({ status, message });
   }
 });
+
 /**
  * @api {delete} /announcement/:announcementID deleteAnnouncement
  * @apiGroup Announcement
@@ -116,7 +118,7 @@ router.post('/announcement', async (req, res) => {
  *   "message": "Announcement not found"
  * }
  */
-router.delete('/announcement/:announcementID', async (req, res) => {
+router.delete('/announcement/:announcementID', isAdmin, async (req, res) => {
   try {
     const announcement = await Ctrl.getAnnouncement(req.params);
     delete announcement.isResolved;
@@ -134,6 +136,7 @@ router.delete('/announcement/:announcementID', async (req, res) => {
     });
   } catch (status) {
     let message = '';
+
     switch (status) {
       case 404:
         message = 'Announcement not found';
@@ -142,9 +145,11 @@ router.delete('/announcement/:announcementID', async (req, res) => {
         message = 'Internal server error';
         break;
     }
+
     res.status(status).json({ status, message });
   }
 });
+
 /**
  * @api {get} /announcement getAnnouncements
  * @apiGroup Announcement
@@ -231,6 +236,7 @@ router.get('/announcement', async (req, res) => {
     res.status(status).json({ status, message });
   }
 });
+
 /**
  * @api {get} /announcement/:announcementID getAnnouncement
  * @apiGroup Announcement
@@ -303,6 +309,7 @@ router.get('/announcement/:announcementID', async (req, res) => {
     res.status(status).json({ status, message });
   }
 });
+
 /**
  * @api {put} /announcement/:announcementID updateAnnouncement
  * @apiGroup Announcement
@@ -353,7 +360,7 @@ router.get('/announcement/:announcementID', async (req, res) => {
  *   "message": "Announcement not found"
  * }
  */
-router.put('/announcement/:announcementID', async (req, res) => {
+router.put('/announcement/:announcementID', isAdmin, async (req, res) => {
   try {
     req.body.userID = req.session.user.userID;
     await Ctrl.updateAnnouncement(req.params, req.body);
@@ -380,7 +387,6 @@ router.put('/announcement/:announcementID', async (req, res) => {
         message = 'Internal server error';
         break;
     }
-    res.status(status).json({ status, message });
   }
 });
 

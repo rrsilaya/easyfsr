@@ -40,12 +40,30 @@ export const deleteResearch = `
   where researchID = :researchID
 `;
 
-export const getResearches = (query, sortBy) => `
-	SELECT * FROM research ${
-    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
-  } 
-  	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
-  	LIMIT :limit OFFSET :offset
+export const getResearches = (query, sortBy, userID) => `
+	SELECT ${
+    userID
+      ? `
+  x.id,
+  researchID,
+  type,
+  role,
+  title,
+  startDate,
+  endDate,
+  funding,
+  approvedUnits,
+  x.filepath`
+      : `*`
+  } FROM research x ${
+  userID
+    ? `LEFT JOIN fsr f ON x.id = f.id WHERE f.userID = :userID ${
+        query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
+      }`
+    : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+}
+  ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
+  LIMIT :limit OFFSET :offset
 `;
 
 export const getResearch = `
@@ -53,8 +71,12 @@ export const getResearch = `
 	WHERE researchID = :researchID
 `;
 
-export const getTotalResearches = query => `
-	SELECT count(*) as total FROM research ${
-    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
-  } 
+export const getTotalResearches = (query, userID) => `
+	SELECT count(*) as total FROM research x ${
+    userID
+      ? `WHERE id IN (SELECT id FROM fsr WHERE userID=:userID) ${
+          query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
+        }`
+      : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
 `;

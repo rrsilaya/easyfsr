@@ -1,5 +1,10 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import {
+  getUserIDofFSR,
+  getIDofFSRfromSubject,
+  getIDofFSRfromTimeslot,
+} from '../../middlewares/controller';
 import { addLog } from './../log/controller';
 
 const router = Router();
@@ -47,6 +52,14 @@ const router = Router();
 
 router.post('/timeslot/', async (req, res) => {
   try {
+    const idOfSubject = await getIDofFSRfromSubject(
+      req.body.subjectID,
+      req.session.user.userID,
+    );
+    const userIDofFSR = await getUserIDofFSR(
+      idOfSubject,
+      req.session.user.userID,
+    );
     const timeslotID = await Ctrl.addTimeslot(req.body);
     const timeslot = await Ctrl.getTimeslot({ timeslotID });
     await addLog({
@@ -63,6 +76,12 @@ router.post('/timeslot/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
+      case 404:
+        message = 'FSR not found';
+        break;
       case 500:
         message = 'Internal server error';
         break;
@@ -130,16 +149,19 @@ router.post('/timeslot/', async (req, res) => {
 
 router.get('/timeslot/', async (req, res) => {
   try {
-    const timeslots = await Ctrl.getTimeslots(req.query);
+    req.session.user.acctType === 'USER'
+      ? (req.query.userID = req.session.user.userID)
+      : '';
+    const timeslots = await Ctrl.getTimeslots(req.query, req.query.userID);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched timeslots',
       data: timeslots,
-      total: (await Ctrl.getTotalTimeslots(req.query)).total,
+      total: (await Ctrl.getTotalTimeslots(req.query, req.query.userID)).total,
       limit: parseInt(req.query.limit) || 12,
       page: parseInt(req.query.page) || 1,
       pages: Math.ceil(
-        (await Ctrl.getTotalTimeslots(req.query)).total /
+        (await Ctrl.getTotalTimeslots(req.query, req.query.userID)).total /
           (parseInt(req.query.limit) || 12),
       ),
     });
@@ -206,6 +228,14 @@ router.get('/timeslot/', async (req, res) => {
 
 router.get('/timeslot/:timeslotID/', async (req, res) => {
   try {
+    const idOfSubject = await getIDofFSRfromTimeslot(
+      req.params.timeslotID,
+      req.session.user.userID,
+    );
+    const userIDofFSR = await getUserIDofFSR(
+      idOfSubject,
+      req.session.user.userID,
+    );
     const timeslot = await Ctrl.getTimeslot(req.params);
     res.status(200).json({
       status: 200,
@@ -215,6 +245,9 @@ router.get('/timeslot/:timeslotID/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Timeslot not found';
         break;
@@ -281,6 +314,14 @@ router.get('/timeslot/:timeslotID/', async (req, res) => {
 
 router.put('/timeslot/:timeslotID/', async (req, res) => {
   try {
+    const idOfSubject = await getIDofFSRfromTimeslot(
+      req.params.timeslotID,
+      req.session.user.userID,
+    );
+    const userIDofFSR = await getUserIDofFSR(
+      idOfSubject,
+      req.session.user.userID,
+    );
     await Ctrl.updateTimeslot(req.params, req.body);
     const timeslot = await Ctrl.getTimeslot(req.params);
     await addLog({
@@ -297,6 +338,9 @@ router.put('/timeslot/:timeslotID/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Timeslot not found';
         break;
@@ -357,6 +401,14 @@ router.put('/timeslot/:timeslotID/', async (req, res) => {
 
 router.delete('/timeslot/:timeslotID/', async (req, res) => {
   try {
+    const idOfSubject = await getIDofFSRfromTimeslot(
+      req.params.timeslotID,
+      req.session.user.userID,
+    );
+    const userIDofFSR = await getUserIDofFSR(
+      idOfSubject,
+      req.session.user.userID,
+    );
     const timeslot = await Ctrl.getTimeslot(req.params);
     await Ctrl.deleteTimeslot(req.params);
     await addLog({

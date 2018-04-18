@@ -1,5 +1,9 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import {
+  getUserIDofFSR,
+  getIDofFSRfromSubject,
+} from '../../middlewares/controller';
 import { addLog } from './../log/controller';
 
 const router = Router();
@@ -57,6 +61,10 @@ const router = Router();
 
 router.post('/subject/', async (req, res) => {
   try {
+    const userIDofFSR = await getUserIDofFSR(
+      req.body.id,
+      req.session.user.userID,
+    );
     const subjectID = await Ctrl.addSubject(req.body);
     let subject = await Ctrl.getSubject({ subjectID });
     subject = await Ctrl.computeSubject(subject);
@@ -74,6 +82,12 @@ router.post('/subject/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
+      case 404:
+        message = 'FSR not found';
+        break;
       case 500:
         message = 'Internal server error';
         break;
@@ -141,6 +155,14 @@ router.post('/subject/', async (req, res) => {
  */
 router.put('/subject/:subjectID', async (req, res) => {
   try {
+    const idOfSubject = await getIDofFSRfromSubject(
+      req.params.subjectID,
+      req.session.user.userID,
+    );
+    const userIDofFSR = await getUserIDofFSR(
+      idOfSubject,
+      req.session.user.userID,
+    );
     await Ctrl.updateSubject(req.params, req.body);
     let subject = await Ctrl.getSubject(req.params);
     subject = await Ctrl.computeSubject(subject);
@@ -158,6 +180,9 @@ router.put('/subject/:subjectID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Subject not found';
         break;
@@ -224,9 +249,16 @@ router.put('/subject/:subjectID', async (req, res) => {
 
 router.delete('/subject/:subjectID', async (req, res) => {
   try {
+    const idOfSubject = await getIDofFSRfromSubject(
+      req.params.subjectID,
+      req.session.user.userID,
+    );
+    const userIDofFSR = await getUserIDofFSR(
+      idOfSubject,
+      req.session.user.userID,
+    );
     let subject = await Ctrl.getSubject(req.params);
     subject = await Ctrl.computeSubject(subject);
-
     await Ctrl.deleteSubject(req.params);
     await addLog({
       action: 'DELETE_SUBJECT',
@@ -242,6 +274,9 @@ router.delete('/subject/:subjectID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Subject not found';
         break;
@@ -312,6 +347,14 @@ router.delete('/subject/:subjectID', async (req, res) => {
 
 router.get('/subject/:subjectID', async (req, res) => {
   try {
+    const idOfSubject = await getIDofFSRfromSubject(
+      req.params.subjectID,
+      req.session.user.userID,
+    );
+    const userIDofFSR = await getUserIDofFSR(
+      idOfSubject,
+      req.session.user.userID,
+    );
     let subject = await Ctrl.getSubject(req.params);
     subject = await Ctrl.computeSubject(subject);
     res.status(200).json({
@@ -322,6 +365,9 @@ router.get('/subject/:subjectID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Subject not found';
         break;
@@ -421,9 +467,12 @@ router.get('/subject/:subjectID', async (req, res) => {
  *   "message": "Subjects not found"
  * }
  */
-router.get('/subject/', async (req, res) => {
+router.get('/subject', async (req, res) => {
   try {
-    const subjects = await Ctrl.getSubjects(req.query);
+    req.session.user.acctType === 'USER'
+      ? (req.query.userID = req.session.user.userID)
+      : '';
+    const subjects = await Ctrl.getSubjects(req.query, req.query.userID);
     let computedSubjects = [];
     subjects.map(async subject => {
       computedSubjects.push(await Ctrl.computeSubject(subject));
@@ -432,11 +481,11 @@ router.get('/subject/', async (req, res) => {
       status: 200,
       message: 'Successfully fetched subjects',
       data: computedSubjects,
-      total: (await Ctrl.getTotalSubjects(req.query)).total,
+      total: (await Ctrl.getTotalSubjects(req.query, req.query.userID)).total,
       limit: req.query.limit || 12,
       page: req.query.page || 1,
       pages: Math.ceil(
-        (await Ctrl.getTotalSubjects(req.query)).total /
+        (await Ctrl.getTotalSubjects(req.query, req.query.userID)).total /
           (req.query.limit || 12),
       ),
     });
@@ -453,4 +502,5 @@ router.get('/subject/', async (req, res) => {
     res.status(status).json({ status, message });
   }
 });
+
 export default router;
