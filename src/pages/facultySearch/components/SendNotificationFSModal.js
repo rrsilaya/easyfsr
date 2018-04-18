@@ -23,7 +23,6 @@ class SendNotificationFSModal extends Component {
   render() {
     const {
       isSendNotificationFSModalOpen,
-      //   searchedUsers,
 
       isAddingNotification,
 
@@ -55,16 +54,8 @@ class SendNotificationFSModal extends Component {
         ]}
       >
         <Form onSubmit={this.handleFormSubmit}>
-          <FormItem required>
-            {form.getFieldDecorator('user@@addNotification', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please input user',
-                  whitespace: true,
-                },
-              ],
-            })(<Input disabled />)}
+          <FormItem required label="To:">
+            <Input value={user.emailAddress} disabled />
           </FormItem>
           <FormItem label="Message" required>
             {form.getFieldDecorator('message@@addNotification', {

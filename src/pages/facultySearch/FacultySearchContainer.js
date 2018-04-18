@@ -1,22 +1,27 @@
 import { connect } from 'react-redux';
 import FacultySearch from './FacultySearch';
 import { push } from 'react-router-redux';
-import { searchUser, resetPage, toggleModal, addNotification } from './duck';
+
+import {
+  searchUser,
+  resetPage,
+  toggleModal,
+  addNotification,
+  changeSelectedUser,
+} from './duck';
 
 const mapStateToProps = state => {
   const {
-    users,
     isSearching,
-    isGettingUser,
     isSendNotificationFSModalOpen,
+    users,
     user,
   } = state.search;
 
   return {
-    users,
     isSearching,
-    isGettingUser,
     isSendNotificationFSModalOpen,
+    users,
     user,
     // searchedUsers,
   };
@@ -38,6 +43,9 @@ const mapDispatchToProps = dispatch => {
     },
     addNotification: values => {
       dispatch(addNotification(values));
+    },
+    changeSelectedUser: user => {
+      dispatch(changeSelectedUser(user));
     },
   };
 };
