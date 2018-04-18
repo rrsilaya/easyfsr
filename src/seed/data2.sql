@@ -93,3 +93,213 @@ INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (29, '2017-2018', 'F
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (29, '2016-2017', 'Second', 1);
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (30, '2017-2018', 'Second', 1);
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (30, '2017-2018', 'First', 1);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-118','10:00:00','11:00:00',1);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-118','01:00:00','02:00:00',1);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-118','01:00:00','02:00:00',1);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-118','01:00:00','02:00:00',1);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-118','01:00:00','02:00:00',1);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-118','01:00:00','02:00:00',1);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-119','10:00:00','11:00:00',2);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-119','01:00:00','02:00:00',2);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-119','01:00:00','02:00:00',2);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-119','01:00:00','02:00:00',2);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-119','01:00:00','02:00:00',2);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-119','01:00:00','02:00:00',2);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-117','10:00:00','11:00:00',3);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-117','01:00:00','02:00:00',3);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-117','01:00:00','02:00:00',3);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-117','01:00:00','02:00:00',3);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-117','01:00:00','02:00:00',3);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-117','01:00:00','02:00:00',3);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-116','10:00:00','11:00:00',4);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-116','01:00:00','02:00:00',4);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-116','01:00:00','02:00:00',4);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-116','01:00:00','02:00:00',4);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-116','01:00:00','02:00:00',4);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-116','01:00:00','02:00:00',4);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-114','10:00:00','11:00:00',5);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-114','01:00:00','02:00:00',5);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-114','01:00:00','02:00:00',5);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-114','01:00:00','02:00:00',5);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-114','01:00:00','02:00:00',5);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-114','01:00:00','02:00:00',5);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-115','10:00:00','11:00:00',6);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-115','01:00:00','02:00:00',6);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-115','01:00:00','02:00:00',6);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-115','01:00:00','02:00:00',6);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-115','01:00:00','02:00:00',6);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-115','01:00:00','02:00:00',6);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-113','10:00:00','11:00:00',7);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-113','01:00:00','02:00:00',7);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-113','01:00:00','02:00:00',7);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-113','01:00:00','02:00:00',7);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-113','01:00:00','02:00:00',7);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-113','01:00:00','02:00:00',7);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-112','10:00:00','11:00:00',8);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-112','01:00:00','02:00:00',8);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-112','01:00:00','02:00:00',8);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-112','01:00:00','02:00:00',8);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-112','01:00:00','02:00:00',8);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-112','01:00:00','02:00:00',8);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-111','10:00:00','11:00:00',9);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-111','01:00:00','02:00:00',9);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-111','01:00:00','02:00:00',9);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-111','01:00:00','02:00:00',9);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-111','01:00:00','02:00:00',9);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-111','01:00:00','02:00:00',9);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-110','10:00:00','11:00:00',10);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-110','01:00:00','02:00:00',10);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-110','01:00:00','02:00:00',10);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-110','01:00:00','02:00:00',10);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-110','01:00:00','02:00:00',10);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-110','01:00:00','02:00:00',10);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-118','10:00:00','11:00:00',11);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-118','01:00:00','02:00:00',11);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-118','01:00:00','02:00:00',11);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-118','01:00:00','02:00:00',11);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-118','01:00:00','02:00:00',11);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-118','01:00:00','02:00:00',11);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-119','10:00:00','11:00:00',12);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-119','01:00:00','02:00:00',12);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-119','01:00:00','02:00:00',12);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-119','01:00:00','02:00:00',12);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-119','01:00:00','02:00:00',12);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-119','01:00:00','02:00:00',12);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-117','10:00:00','11:00:00',13);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-117','01:00:00','02:00:00',13);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-117','01:00:00','02:00:00',13);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-117','01:00:00','02:00:00',13);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-117','01:00:00','02:00:00',13);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-117','01:00:00','02:00:00',13);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-116','10:00:00','11:00:00',14);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-116','01:00:00','02:00:00',14);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-116','01:00:00','02:00:00',14);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-116','01:00:00','02:00:00',14);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-116','01:00:00','02:00:00',14);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-116','01:00:00','02:00:00',14);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-114','10:00:00','11:00:00',15);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-114','01:00:00','02:00:00',15);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-114','01:00:00','02:00:00',15);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-114','01:00:00','02:00:00',15);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-114','01:00:00','02:00:00',15);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-114','01:00:00','02:00:00',15);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-115','10:00:00','11:00:00',16);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-115','01:00:00','02:00:00',16);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-115','01:00:00','02:00:00',16);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-115','01:00:00','02:00:00',16);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-115','01:00:00','02:00:00',16);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-115','01:00:00','02:00:00',16);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-113','10:00:00','11:00:00',17);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-113','01:00:00','02:00:00',17);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-113','01:00:00','02:00:00',17);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-113','01:00:00','02:00:00',17);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-113','01:00:00','02:00:00',17);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-113','01:00:00','02:00:00',17);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-112','10:00:00','11:00:00',18);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-112','01:00:00','02:00:00',18);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-112','01:00:00','02:00:00',18);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-112','01:00:00','02:00:00',18);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-112','01:00:00','02:00:00',18);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-112','01:00:00','02:00:00',18);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-111','10:00:00','11:00:00',19);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-111','01:00:00','02:00:00',19);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-111','01:00:00','02:00:00',19);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-111','01:00:00','02:00:00',19);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-111','01:00:00','02:00:00',19);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-111','01:00:00','02:00:00',19);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-110','10:00:00','11:00:00',20);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-110','01:00:00','02:00:00',20);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-110','01:00:00','02:00:00',20);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-110','01:00:00','02:00:00',20);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-110','01:00:00','02:00:00',20);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-110','01:00:00','02:00:00',20);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-118','10:00:00','11:00:00',21);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-118','01:00:00','02:00:00',21);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-118','01:00:00','02:00:00',21);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-118','01:00:00','02:00:00',21);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-118','01:00:00','02:00:00',21);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-118','01:00:00','02:00:00',21);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-119','10:00:00','11:00:00',22);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-119','01:00:00','02:00:00',22);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-119','01:00:00','02:00:00',22);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-119','01:00:00','02:00:00',22);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-119','01:00:00','02:00:00',22);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-119','01:00:00','02:00:00',22);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-117','10:00:00','11:00:00',23);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-117','01:00:00','02:00:00',23);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-117','01:00:00','02:00:00',23);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-117','01:00:00','02:00:00',23);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-117','01:00:00','02:00:00',23);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-117','01:00:00','02:00:00',23);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-116','10:00:00','11:00:00',24);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-116','01:00:00','02:00:00',24);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-116','01:00:00','02:00:00',24);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-116','01:00:00','02:00:00',24);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-116','01:00:00','02:00:00',24);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-116','01:00:00','02:00:00',24);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-114','10:00:00','11:00:00',25);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-114','01:00:00','02:00:00',25);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-114','01:00:00','02:00:00',25);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-114','01:00:00','02:00:00',25);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-114','01:00:00','02:00:00',25);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-114','01:00:00','02:00:00',25);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-115','10:00:00','11:00:00',26);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-115','01:00:00','02:00:00',26);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-115','01:00:00','02:00:00',26);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-115','01:00:00','02:00:00',26);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-115','01:00:00','02:00:00',26);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-115','01:00:00','02:00:00',26);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-113','10:00:00','11:00:00',27);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-113','01:00:00','02:00:00',27);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-113','01:00:00','02:00:00',27);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-113','01:00:00','02:00:00',27);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-113','01:00:00','02:00:00',27);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-113','01:00:00','02:00:00',27);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-112','10:00:00','11:00:00',28);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-112','01:00:00','02:00:00',28);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-112','01:00:00','02:00:00',28);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-112','01:00:00','02:00:00',28);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-112','01:00:00','02:00:00',28);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-112','01:00:00','02:00:00',28);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-111','10:00:00','11:00:00',29);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-111','01:00:00','02:00:00',29);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-111','01:00:00','02:00:00',29);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-111','01:00:00','02:00:00',29);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-111','01:00:00','02:00:00',29);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-111','01:00:00','02:00:00',29);
+
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-110','10:00:00','11:00:00',30);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Monday','C-110','01:00:00','02:00:00',30);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Tuesday','C-110','01:00:00','02:00:00',30);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Wednesday','C-110','01:00:00','02:00:00',30);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Thursday','C-110','01:00:00','02:00:00',30);
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ('Friday','C-110','01:00:00','02:00:00',30);
