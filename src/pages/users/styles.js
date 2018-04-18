@@ -15,6 +15,7 @@ const style = {
     marginRight: '10px',
   },
   add: {
+    marginBottom: '3em',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
