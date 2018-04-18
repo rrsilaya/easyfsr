@@ -209,13 +209,7 @@ router.delete('/announcement/:announcementID', isAdmin, async (req, res) => {
  */
 router.get('/announcement', async (req, res) => {
   try {
-    req.session.user.acctType === 'USER'
-      ? (req.query.receiverID = req.session.user.userID)
-      : '';
-    const announcements = await Ctrl.getAnnouncements(
-      req.query,
-      req.query.receiverID,
-    );
+    const announcements = await Ctrl.getAnnouncements(req.query);
     announcements.map(announcement => delete announcement.isResolved);
     res.status(200).json({
       status: 200,
