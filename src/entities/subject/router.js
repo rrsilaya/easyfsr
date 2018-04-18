@@ -273,14 +273,18 @@ router.delete('/subject/:subjectID', async (req, res) => {
  *    "message": "Successfully fetched subject",
  *    "data":
  *       {
- *           "id": 1,
- *           "subjectCode": "Hi",
- *           "subjectID": 1,
- *           "teachingLoadCreds": 1,
- *           "noOfStudents": 5,
- *           "hoursPerWeek": 1,
- *           "sectionCode": "Hello",
- *           "room": 1
+ *         "id": 38,
+ *         "subjectCode": "CMSC123",
+ *         "subjectID": 128,
+ *         "teachingLoadCreds": 6,
+ *         "noOfStudents": 68,
+ *         "hoursPerWeek": 3,
+ *         "sectionCode": "U",
+ *         "room": "PCLAB7",
+ *         "courseCred": 3,
+ *         "studCredUnits": 204,
+ *         "TLC": 3,
+ *         "TLCM": 3.7
  *       }
  *
  *  }
@@ -363,24 +367,32 @@ router.get('/subject/:subjectID', async (req, res) => {
  *    "message": "Successfully fetched subjects",
  *    "data": [
  *       {
- *           "id": 1,
- *           "subjectCode": "Hi",
- *           "subjectID": 1,
- *           "teachingLoadCreds": 1,
- *           "noOfStudents": 5,
- *           "hoursPerWeek": 1,
- *           "sectionCode": "Hello",
- *           "room": 1
+ *         "id": 38,
+ *         "subjectCode": "CMSC123",
+ *         "subjectID": 128,
+ *         "teachingLoadCreds": 6,
+ *         "noOfStudents": 68,
+ *         "hoursPerWeek": 3,
+ *         "sectionCode": "U",
+ *         "room": "PCLAB7",
+ *         "courseCred": 3,
+ *         "studCredUnits": 204,
+ *         "TLC": 3,
+ *         "TLCM": 3.7
  *       },
  *       {
- *           "id": 2,
- *           "subjectCode": "Hi",
- *           "subjectID": 2,
- *           "teachingLoadCreds": 1,
- *           "noOfStudents": 5,
- *           "hoursPerWeek": 1,
- *           "sectionCode": "Hello",
- *           "room": 2
+ *         "id": 38,
+ *         "subjectCode": "CMSC127",
+ *         "subjectID": 218,
+ *         "teachingLoadCreds": 6,
+ *         "noOfStudents": 34,
+ *         "hoursPerWeek": 1,
+ *         "sectionCode": "C",
+ *         "room": "PCLAB1",
+ *         "courseCred": 1,
+ *         "studCredUnits": 34,
+ *         "TLC": 1,
+ *         "TLCM": 1
  *       }
  *    ],
  *     "total": 2,
@@ -408,11 +420,14 @@ router.get('/subject/:subjectID', async (req, res) => {
 router.get('/subject/', async (req, res) => {
   try {
     const subjects = await Ctrl.getSubjects(req.query);
-
+    let computedSubjects = [];
+    subjects.map(async subject => {
+      computedSubjects.push(await Ctrl.computeSubject(subject));
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched subjects',
-      data: subjects,
+      data: computedSubjects,
       total: (await Ctrl.getTotalSubjects(req.query)).total,
       limit: req.query.limit || 12,
       page: req.query.page || 1,
