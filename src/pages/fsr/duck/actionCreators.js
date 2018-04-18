@@ -376,3 +376,85 @@ export const editAdminWork = (adminWorkID, body) => {
     });
   };
 };
+
+export const getExtAndCommServices = query => {
+  return dispatch => {
+    return dispatch({
+      type: Action.GET_EXTANDCOMMSERVICES,
+      promise: Api.getExtAndCommServices(query),
+      meta: {
+        onFailure: () => {
+          notification.error({
+            message: 'Failure to fetch extension and community services',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const addExtAndCommService = values => {
+  return dispatch => {
+    return dispatch({
+      type: Action.ADD_EXTANDCOMMSERVICE,
+      promise: Api.addExtAndCommService(values),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully added extension and community service',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message:
+              'Server error while creating extension and community service',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const deleteExtAndCommService = extAndCommServiceID => {
+  return dispatch => {
+    return dispatch({
+      type: Action.DELETE_EXTANDCOMMSERVICE,
+      promise: Api.deleteExtAndCommService(extAndCommServiceID),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully deleted extension and community service',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message:
+              'Server error while deleting extension and community service',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const editExtAndCommService = (extAndCommServiceID, body) => {
+  return dispatch => {
+    return dispatch({
+      type: Action.EDIT_EXTANDCOMMSERVICE,
+      promise: Api.editExtAndCommService(extAndCommServiceID, body),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully edited extension and community service',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message:
+              'Server error while updating extension and community service',
+          });
+        },
+      },
+    });
+  };
+};

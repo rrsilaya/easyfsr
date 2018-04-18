@@ -24,6 +24,10 @@ import {
   addAdminWork,
   deleteAdminWork,
   editAdminWork,
+  getExtAndCommServices,
+  addExtAndCommService,
+  deleteExtAndCommService,
+  editExtAndCommService,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -39,6 +43,7 @@ const mapStateToProps = state => {
     isEditResearchModalOpen,
     isEditCWorkModalOpen,
     isEditAdminWorkModalOpen,
+    isEditExtAndCommServiceModalOpen,
     currentStep,
     fsr,
     subjects,
@@ -50,6 +55,8 @@ const mapStateToProps = state => {
     cwork,
     adminWorks,
     adminWork,
+    extAndCommServices,
+    extAndCommService,
     isGettingFSR,
     isGettingSubjects,
     isAddingSubject,
@@ -65,6 +72,9 @@ const mapStateToProps = state => {
     isGettingAdminWorks,
     isAddingAdminWork,
     isEditingAdminWork,
+    isGettingExtAndCommServices,
+    isAddingExtAndCommService,
+    isEditingExtAndCommService,
   } = state.fsr;
 
   return {
@@ -79,6 +89,7 @@ const mapStateToProps = state => {
     isEditResearchModalOpen,
     isEditCWorkModalOpen,
     isEditAdminWorkModalOpen,
+    isEditExtAndCommServiceModalOpen,
     currentStep,
     fsr,
     subjects,
@@ -90,6 +101,8 @@ const mapStateToProps = state => {
     cwork,
     adminWorks,
     adminWork,
+    extAndCommServices,
+    extAndCommService,
     isGettingFSR,
     isGettingSubjects,
     isAddingSubject,
@@ -105,6 +118,9 @@ const mapStateToProps = state => {
     isGettingAdminWorks,
     isAddingAdminWork,
     isEditingAdminWork,
+    isGettingExtAndCommServices,
+    isAddingExtAndCommService,
+    isEditingExtAndCommService,
   };
 };
 
@@ -175,6 +191,18 @@ const mapDispatchToProps = dispatch => {
     },
     editAdminWork: (adminWorkID, body) => {
       dispatch(editAdminWork(adminWorkID, body));
+    },
+    getExtAndCommServices: query => {
+      dispatch(getExtAndCommServices(query));
+    },
+    addExtAndCommService: extAndCommService => {
+      dispatch(addExtAndCommService(extAndCommService));
+    },
+    deleteExtAndCommService: extAndCommServiceID => {
+      dispatch(deleteExtAndCommService(extAndCommServiceID));
+    },
+    editExtAndCommService: (extAndCommServiceID, body) => {
+      dispatch(editExtAndCommService(extAndCommServiceID, body));
     },
   };
 };

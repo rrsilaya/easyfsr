@@ -12,6 +12,8 @@ const initialState = {
   cwork: {},
   adminWorks: [],
   adminWork: {},
+  extAndCommServices: [],
+  extAndCommService: {},
   currentStep: 0,
 
   isGettingFSR: false,
@@ -34,6 +36,10 @@ const initialState = {
   isAddingAdminWork: false,
   isDeletingAdminWork: false,
   isEditingAdminWork: false,
+  isGettingExtAndCommServices: false,
+  isAddingExtAndCommService: false,
+  isDeletingExtAndCommService: false,
+  isEditingExtAndCommService: false,
 
   isAddSubjectModalOpen: false,
   isEditSubjectModalOpen: false,
@@ -43,8 +49,8 @@ const initialState = {
   isEditResearchModalOpen: false,
   isAddAdminWorkModalOpen: false,
   isEditAdminWorkModalOpen: false,
-
   isAddExtAndCommServiceModalOpen: false,
+  isEditExtAndCommServiceModalOpen: false,
   isAddCourseModalOpen: false,
   isAddConsultationHourModalOpen: false,
 };
@@ -408,6 +414,82 @@ const reducer = (state = initialState, action) => {
         }),
       });
 
+    case Action.GET_EXTANDCOMMSERVICES:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingExtAndCommServices: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          extAndCommServices: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingExtAndCommServices: false,
+        }),
+      });
+
+    case Action.ADD_EXTANDCOMMSERVICE:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isAddingExtAndCommService: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          extAndCommServices: [...state.extAndCommServices, payload.data.data],
+          isAddExtAndCommServiceModalOpen: false,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isAddingExtAndCommService: false,
+        }),
+      });
+
+    case Action.DELETE_EXTANDCOMMSERVICE:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isDeletingExtAndCommService: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          extAndCommServices: state.extAndCommServices.filter(
+            extAndCommService =>
+              extAndCommService.extAndCommServiceID !==
+              payload.data.data.extAndCommServiceID,
+          ),
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isDeletingExtAndCommService: false,
+        }),
+      });
+
+    case Action.EDIT_EXTANDCOMMSERVICE:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isEditingExtAndCommService: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          extAndCommServices: state.extAndCommServices.map(
+            extAndCommService =>
+              extAndCommService.extAndCommServiceID ===
+              payload.data.data.extAndCommServiceID
+                ? { ...payload.data.data }
+                : extAndCommService,
+          ),
+          isEditExtAndCommServiceModalOpen: false,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isEditingExtAndCommService: false,
+        }),
+      });
+
     case Action.TOGGLE_MODAL:
       switch (payload) {
         case Action.ADD_SUBJECT_MODAL:
@@ -447,10 +529,15 @@ const reducer = (state = initialState, action) => {
             ...state,
             isEditAdminWorkModalOpen: !state.isEditAdminWorkModalOpen,
           };
-        case Action.EXTANDCOMMSERVICE:
+        case Action.ADD_EXTANDCOMMSERVICE_MODAL:
           return {
             ...state,
             isAddExtAndCommServiceModalOpen: !state.isAddExtAndCommServiceModalOpen,
+          };
+        case Action.EDIT_EXTANDCOMMSERVICE_MODAL:
+          return {
+            ...state,
+            isEditExtAndCommServiceModalOpen: !state.isEditExtAndCommServiceModalOpen,
           };
         case Action.COURSE:
           return {
@@ -476,6 +563,8 @@ const reducer = (state = initialState, action) => {
           return { ...state, cwork: payload.data };
         case Action.ADMINWORK:
           return { ...state, adminWork: payload.data };
+        case Action.EXTANDCOMMSERVICE:
+          return { ...state, extAndCommService: payload.data };
 
         default:
           return state;

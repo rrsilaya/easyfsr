@@ -13,3 +13,4 @@ export * from './creativeWork';
 export * from './announcement';
 export * from './notification';
 export * from './adminWork';
+export * from './service';

@@ -34,6 +34,7 @@ class FSRForm extends Component {
       isEditResearchModalOpen,
       isEditCWorkModalOpen,
       isEditAdminWorkModalOpen,
+      isEditExtAndCommServiceModalOpen,
 
       toggleModal,
       nextStep,
@@ -50,6 +51,8 @@ class FSRForm extends Component {
       cwork,
       adminWorks,
       adminWork,
+      extAndCommServices,
+      extAndCommService,
 
       getSubjects,
       addSubject,
@@ -69,6 +72,10 @@ class FSRForm extends Component {
       addAdminWork,
       deleteAdminWork,
       editAdminWork,
+      getExtAndCommServices,
+      addExtAndCommService,
+      deleteExtAndCommService,
+      editExtAndCommService,
 
       isGettingSubjects,
       isAddingSubject,
@@ -84,6 +91,9 @@ class FSRForm extends Component {
       isGettingAdminWorks,
       isAddingAdminWork,
       isEditingAdminWork,
+      isGettingExtAndCommServices,
+      isAddingExtAndCommService,
+      isEditingExtAndCommService,
     } = this.props;
 
     const { fsrID } = this.props.match.params;
@@ -180,8 +190,22 @@ class FSRForm extends Component {
                 />
               ) : currentStep === 3 ? (
                 <ExtAndCommServiceForm
+                  fsrID={fsrID}
+                  extAndCommServices={extAndCommServices}
+                  extAndCommService={extAndCommService}
+                  getExtAndCommServices={getExtAndCommServices}
+                  addExtAndCommService={addExtAndCommService}
+                  deleteExtAndCommService={deleteExtAndCommService}
+                  editExtAndCommService={editExtAndCommService}
+                  changeSelected={changeSelected}
+                  isGettingExtAndCommServices={isGettingExtAndCommServices}
+                  isAddingExtAndCommService={isAddingExtAndCommService}
+                  isEditingExtAndCommService={isEditingExtAndCommService}
                   isAddExtAndCommServiceModalOpen={
                     isAddExtAndCommServiceModalOpen
+                  }
+                  isEditExtAndCommServiceModalOpen={
+                    isEditExtAndCommServiceModalOpen
                   }
                   toggleModal={toggleModal}
                   prevStep={prevStep}
