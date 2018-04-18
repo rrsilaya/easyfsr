@@ -1065,6 +1065,38 @@ INSERT INTO announcement (userID, title, body) VALUES (1, 'FSR Submission','Plea
 INSERT INTO announcement (userID, title, body) VALUES (1, 'FSR Submission', 'Please secure three printed copies of the faculty service record.');
 INSERT INTO announcement (userID, title, body) VALUES (1, 'FORM 67 Request for Changes ', 'Faculty members who received notifications regarding request for changes on his/her form 67 must report to the admin on or before February 25 5PM');
 
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,2,'Please attach a file','2008-01-12 12:12:07','HIGH');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,3,'Please change the course Number','2018-04-19 03:14:07','LOW');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,4,'Please attach a file','1998-01-19 11:14:07','HIGH');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,5,'Please change the schedule','1991-01-19 04:18:07','NORMAL');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,6,'Please change the schedule','2001-01-19 05:14:07','NORMAL');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,7,'Please attach a file','2018-01-19 05:14:09','HIGH');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,8,'Please attach a file','2017-01-19 08:14:07','HIGH');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,9,'Please change the schedule','2000-01-19 13:14:07','LOW');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,10,'Please change the schedule','2001-01-19 13:14:07','HIGH');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,11,'Please attach a file','2002-01-19 14:14:07','HIGH');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,12,'Please change the course Number','2001-11-01 15:14:07','HIGH');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,13,'Please attach a file','2000-01-19 03:6:07','LOW');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,14,'Please attach a file','2001-01-19 05:12:07','HIGH');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,15,'Please change the schedule','2002-01-19 01:14:07','NORMAL');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,16,'Please attach a file','2009-01-19 02:34:07','HIGH');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,17,'Please attach a file','1991-02-19 03:24:07','HIGH');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,18,'Please change the course Number','2013-01-19 03:14:07','LOW');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,19,'Please attach a file','2014-03-19 05:14:07','HIGH');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,20,'Please change the schedule','2015-01-19 13:30:07','HIGH');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,21,'Please attach a file','2017-08-19 03:23:07','LOW');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,22,'Please change the course Number','2016-07-19 17:14:07','HIGH');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,23,'Please attach a file','2001-01-19 03:14:07','NORMAL');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,24,'Please change the schedule','2009-04-19 18:14:07','HIGH');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,25,'Please attach a file','2008-03-19 19:14:07','NORMAL');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,26,'Please change the course Number','2007-12-19 20:14:07','HIGH');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,27,'Please attach a file','2005-05-19 23:14:07','LOW');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,28,'Please change the schedule','2004-04-19 20:14:07','HIGH');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,29,'Please attach a file','2003-03-19 03:14:07','NORMAL');
+INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,30,'Please change the schedule','1999-02-19 13:14:07','LOW');
+
+
+
 -- EXTENSION AND COMMUNITY SERVICE
 INSERT INTO extensionAndCommunityService (id, participant, role, hours, title, creditUnit, type, startDate, endDate) VALUES (1, 22, 'Supervisor', 13, 'Information/Dissemination/Communication Campaign on health-related issues and “Be Healthy Be Happy” (BHBH) program', 6, 'Forum', '2017-07-23', '2017-07-23');
 INSERT INTO extensionAndCommunityService (id, participant, role, hours, title, creditUnit, type, startDate, endDate) VALUES (2, 111, 'Volunteer', 45, 'Tug of War: Caring for Our Elders While Remaining Productive at Work', 5, 'Symposium', '2017-05-03', '2017-05-03');
