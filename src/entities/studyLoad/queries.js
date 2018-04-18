@@ -1,29 +1,51 @@
 import { formatQueryParams } from '../../utils';
 
 export const addStudyLoad = `
-	INSERT INTO studyLoad ( degree, university, totalSLcredits, id )
-	VALUES ( :degree, :university, :totalSLcredits, :id )`;
+	INSERT INTO studyLoad ( 
+		id,
+		fullLeaveWithPay,
+		fellowshipRecipient, 
+		degree, 
+		university, 
+		totalSLcredits 
+	)
+	VALUES ( 
+		:id,
+		:fullLeaveWithPay,
+		:fellowshipRecipient, 
+		:degree, 
+		:university, 
+		:totalSLcredits 
+	)
+`;
 
 export const updateStudyLoad = studyLoad => `
-	UPDATE studyLoad 
-  ${formatQueryParams(studyLoad, 'update')}
-	WHERE id=:id
+	UPDATE studyLoad SET 
+		${formatQueryParams(studyLoad, 'update')}
+		WHERE id = :id
 `;
-
-// Supports single or multiple rows delete of studyLoad
-/*
-export const deleteStudyLoads = query = `
-	DELETE FROM studyLoad 
-	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
-`;
-*/
 
 export const deleteStudyLoad = `
 	DELETE FROM studyLoad 
-	where id = :id
+		WHERE id = :id
 `;
 
 export const getStudyLoad = `
-	SELECT * FROM studyLoad 
-  WHERE id = :id
+	SELECT * FROM studyLoad
+		WHERE id = :id
+`;
+
+export const getStudyLoads = (query, sortBy) => `
+	SELECT * FROM studyLoad ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
+ 	ORDER BY [field] ${
+    sortBy === 'DESC' ? 'DESC' : 'ASC'
+  } LIMIT :limit OFFSET :offset
+`;
+
+export const getTotalStudyLoad = query => `
+	SELECT count(*) as total FROM studyLoad ${
+    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }
 `;

@@ -4,14 +4,12 @@ export const addCourse = `
 	INSERT INTO course (
 		id,
 		courseNumber,
-		hoursPerWeek,
 		school,
 		credit
 	)
 	VALUES (
 		:id,
 		:courseNumber,
-		:hoursPerWeek,
 		:school,
 		:credit
 	)
@@ -20,7 +18,7 @@ export const addCourse = `
 export const updateCourse = course => ` 
   UPDATE course SET  
     ${formatQueryParams(course, 'update')} 
-  WHERE courseID =: courseID
+  WHERE courseID = :courseID
 `;
 
 export const deleteCourse = `
@@ -44,4 +42,9 @@ export const getTotalCourses = query => `
   SELECT count(*) as total FROM course ${
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }
+`;
+
+export const getCoursesWithSched = `
+  SELECT * from course c LEFT JOIN courseSched cs 
+  ON c.courseID = cs.courseID WHERE c.id = :id
 `;

@@ -15,6 +15,7 @@ const userAttributes = [
   'emailAddress',
   'rank',
   'acctType',
+  'profileIcon',
 ];
 
 const searchFields = [
@@ -23,18 +24,24 @@ const searchFields = [
   'lastName',
   'committee',
   'officeNumber',
+  'rank',
+  'contractType',
+  'acctType',
+  'emailAddress',
 ];
 
+const defaultAttr = {
+  middleName: '',
+  officeNumber: '',
+  profileIcon: '/uploads/users/default.png',
+  committee: '',
+};
 export const addUser = user => {
   return new Promise((resolve, reject) => {
-    db.query(
-      Query.addUser,
-      { middleName: '', officeNumber: '', ...user },
-      (err, results) => {
-        if (err) return reject(500);
-        return resolve(results.insertId);
-      },
-    );
+    db.query(Query.addUser, { ...defaultAttr, ...user }, (err, results) => {
+      if (err) return reject(500);
+      return resolve(results.insertId);
+    });
   });
 };
 
@@ -82,12 +89,13 @@ export const getUserByEmpID = ({ employeeID }) => {
   });
 };
 
-export const getUsers = user => {
+export const getUsers = (user = {}) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getUsers(filtered(user, userAttributes), user.sortBy),
       { field: 'lastName', ...escapeSearch(user, searchFields, user.limit) },
       (err, results) => {
+        console.log(err);
         if (err) return reject(500);
         return resolve(results);
       },
@@ -105,5 +113,14 @@ export const getTotalUsers = user => {
         return resolve(results[0]);
       },
     );
+  });
+};
+
+export const deleteSession = ({ employeeID }) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.deleteSession, { employeeID }, (err, results) => {
+      if (err) return reject(500);
+      return resolve();
+    });
   });
 };

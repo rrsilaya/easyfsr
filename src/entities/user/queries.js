@@ -8,7 +8,10 @@ export const addUser = `
     middleName, 
     lastName, 
     contractType, 
-    emailAddress
+    emailAddress,
+    committee,
+    rank,
+    profileIcon
   )
   VALUES (
     :employeeID, 
@@ -17,7 +20,10 @@ export const addUser = `
     :middleName, 
     :lastName, 
     :contractType, 
-    :emailAddress
+    :emailAddress,
+    :committee,
+    :rank,
+    :profileIcon
   )
 `;
 
@@ -56,4 +62,9 @@ export const getTotalUsers = query => `
   SELECT count(*) as total FROM user WHERE isArchived = 0 ${
     query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
   }
+`;
+
+export const deleteSession = `
+  DELETE FROM sessions 
+  WHERE data LIKE "%<employeeID>%"
 `;

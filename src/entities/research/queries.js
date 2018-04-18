@@ -1,6 +1,6 @@
 import { formatQueryParams } from '../../utils';
 
-export const addReseach = `
+export const addResearch = `
 	INSERT INTO research (
 		id,
 		researchID,
@@ -8,19 +8,36 @@ export const addReseach = `
 		role,
 		title,
 		startDate,
+    endDate,
 		funding,
-		approvedUnits
+		approvedUnits,
+    filepath,
+    coAuthor
 	)
-  	VALUES (
-  		:id,
-  		DEFAULT,
-  		:type,
-  		:role,
-  		:title,
-  		:startDate,
-  		:funding,
-  		:approvedUnits
-  	)
+	VALUES (
+		:id,
+		DEFAULT,
+		:type,
+		:role,
+		:title,
+		:startDate,
+    :endDate,
+		:funding,
+		:approvedUnits,
+    :filepath,
+    :coAuthor
+	)
+`;
+
+export const updateResearch = research => `
+  UPDATE research SET
+    ${formatQueryParams(research, 'update')}
+  WHERE researchID = :researchID
+`;
+
+export const deleteResearch = `
+  DELETE from research
+  where researchID = :researchID
 `;
 
 export const getResearches = (query, sortBy) => `
@@ -28,76 +45,16 @@ export const getResearches = (query, sortBy) => `
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   } 
   	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
-  	LIMIT :limit
+  	LIMIT :limit OFFSET :offset
 `;
 
 export const getResearch = `
 	SELECT * FROM research
-	WHERE id=:id AND researchID = :researchID
+	WHERE researchID = :researchID
 `;
 
-export const updateResearch = research => `
-	UPDATE research SET
-		${formatQueryParams(research, 'update')}
-	WHERE id=:id and researchID=:researchID
-`;
-
-export const deleteResearch = `
-	delete from research
-	where id=:id AND researchID = :researchID
-`;
-
-export const getTotalResearches = `
-	SELECT count(*) as total FROM research
-`;
-
-export const getTotalResearchesByFSR = `
-	SELECT count(*) as total FROM research WHERE id = :id 
-`;
-
-/*
-
-// Supports deleting single or multiple rows at the same time 
-
-export const deleteResearches = query =>`
-	DELETE FROM research
-	${query.length ? `WHERE ${formatQueryParams(query)}` : ''}
-`
-*/
-
-export const getResearchesWithCoAuthor = query => `
-	SELECT * FROM research NATURAL JOIN rCoAuthor ${
+export const getTotalResearches = query => `
+	SELECT count(*) as total FROM research ${
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   } 
-  	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
-  	LIMIT :limit
-`;
-
-export const getResearchWithCoAuthor = `
-	SELECT * FROM research NATURAL JOIN rCoAuthor
-	where id = :id AND researchID = :researchID
-`;
-
-export const addrCoAuthor = `
-	INSERT INTO rCoAuthor (
-		researchID,
-		userID,
-		rCoAuthorID
-	)
-	VALUES (
-		:researchID,
-		:userID,
-		DEFAULT
-	)
-`;
-
-export const updaterCoAuthor = `
-	UPDATE rCoAuthor SET
-		userID=:userID
-  	WHERE researchID=:researchID AND userID = :userID
-`;
-
-export const deleterCoAuthor = `
-	delete from rCoAuthor
-	where userID = :userID AND researchID=:researchID
 `;

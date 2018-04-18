@@ -6,7 +6,6 @@ export const addSubject = `
 		subjectCode,
 		teachingLoadCreds,
 		noOfStudents,
-		hoursPerWeek,
 		sectionCode,
 		room
 	)
@@ -15,7 +14,6 @@ export const addSubject = `
 		:subjectCode,
 		:teachingLoadCreds,
 		:noOfStudents,
-		:hoursPerWeek,
 		:sectionCode,
 		:room
 	)
@@ -35,7 +33,7 @@ export const deleteSubject = `
 export const getSubject = `
 	SELECT *
 	FROM subject
-	WHERE subjectID =:subjectID
+	WHERE subjectID = :subjectID
 `;
 
 export const getSubjects = (query, sortBy) => `
@@ -50,4 +48,10 @@ export const getTotalSubjects = query => `
 	SELECT COUNT(*) as total FROM subject ${
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   } 
+`;
+
+export const getSubjectsWithTimeslot = `
+	SELECT * from subject s LEFT JOIN timeslot t 
+	ON s.subjectID = t.subjectID WHERE s.id = :id
+
 `;

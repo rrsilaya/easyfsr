@@ -2,16 +2,9 @@ import db from '../../database/index';
 import * as Query from './queries';
 import { filtered, escapeSearch } from '../../utils';
 
-const courseAttributes = [
-  'id',
-  'courseNumber',
-  'courseID',
-  'hoursPerWeek',
-  'school',
-  'credit',
-];
+const courseAttributes = ['id', 'courseNumber', 'courseID', 'school', 'credit'];
 
-const searchFields = ['courseNumber', 'courseID', 'school', 'credit'];
+const searchFields = ['courseNumber', 'school', 'credit', 'hoursPerWeek'];
 
 export const addCourse = course => {
   return new Promise((resolve, reject) => {
@@ -85,5 +78,14 @@ export const getTotalCourses = course => {
         return resolve(results[0]);
       },
     );
+  });
+};
+
+export const getCoursesWithSched = ({ id }) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getCoursesWithSched, { id }, (err, results) => {
+      if (err) return reject(500);
+      return resolve(results);
+    });
   });
 };
