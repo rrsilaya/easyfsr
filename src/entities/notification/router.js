@@ -11,19 +11,13 @@ const router = Router();
  *
  * @apiParam (Body Params) {Number} receiverID receiver ID
  * @apiParam (Body Params) {String} message the message of sender to receiver
- * @apiParam (Body Params) {Date} dateSent date when message is sent
- * @apiParam (Body Params) {Time} timeSent time when message is sent
- * @apiParam (Body Params) {Boolean} [isResolved] verification is message is resolved
  * @apiParam (Body Params) {String} priority priority of the notification. 'LOW', 'NORMAL', 'HIGH'. Default: 'NORMAL'
  *
  * @apiSuccess {Object} data New notification added
  * @apiSuccess {Number} data.notificationID notification ID
- * @apiSuccess {Number} data.senderID sender ID
  * @apiSuccess {Number} data.receiverID receiver ID
  * @apiSuccess {String} data.message the message of sender to receiver
- * @apiSuccess {Date} data.dateSent date when message is sent
- * @apiSuccess {Time} data.timeSent time when message is sent
- * @apiSuccess {Boolean} data.isResolved verification is message is resolved
+ * @apiSuccess {Datetime} data.timestamp timestamp when message is sent
  * @apiSuccess {String} data.priority priority of the notification
  *
  * @apiSuccessExample {json} Success-Response:
@@ -34,13 +28,10 @@ const router = Router();
  *      "data":
  *       {
  *          "notificationID": 1,
- *          "senderID": "3",
  *          "receiverID": "5",
  *          "message": "HIIIIIIIIIIIIIIIIIIIIII",
- *          "dateSent": "2018-01-01",
- *          "timeSent": "01:01:01",
- *          "isResolved": 1,
- *          "priority": "LOW"
+ *          "timestamp": "2018-04-18T15:45:37.000Z",
+ *          "priority": "NORMAL"
  *       }
  *   }
  *
