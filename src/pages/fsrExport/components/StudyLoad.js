@@ -49,12 +49,42 @@ class StudyLoad extends Component {
           </div>
         </div>
         <br />
-        <div style={{ marginLeft: 40 }}>
+        <div style={{ marginLeft: 40, marginRight: 100 }}>
           FOR FACULTY MEMBERS WITH SOME TEACHING LOAD BUT ALSO HAVE STUDY LOADS:{' '}
           <br />
           Study Load CREDITS (i.e. study load counted as part of normal 12-unit
           faculty load) <br />
-          Study Load Units (i.e. study load done above a full teaching load)
+          Study Load Units (i.e. study load done above a full teaching load){' '}
+          <br />
+          <table>
+            <tbody>
+              <tr>
+                <th>Course Number</th>
+                <th>Course Credit</th>
+                <th>Day/s</th>
+                <th>Time</th>
+                <th>School</th>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="right">
+          <label className="bold">Total Study Load Credits (SLC)</label>
+          <div className="blank-field" style={{ width: 130 }}>
+            &nbsp;
+          </div>
+          <br />
+          <label className="bold">TOTAL FACULTY LOAD IN CREDIT UNITS</label>
+          <div className="blank-field" style={{ width: 130 }}>
+            0
+          </div>
         </div>
       </section>
     );

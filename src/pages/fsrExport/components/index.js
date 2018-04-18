@@ -4,3 +4,7 @@ export { default as ResearchCreativeWork } from './ResearchCreativeWork';
 export { default as AdminWork } from './AdminWork';
 export { default as ExtCommServe } from './ExtCommServe';
 export { default as StudyLoad } from './StudyLoad';
+export { default as LtdPracticeOfProfession } from './LtdPracticeOfProfession';
+export { default as Awards } from './Awards';
+export { default as ConsultationHours } from './ConsultationHours';
+export { default as Certification } from './Certification';

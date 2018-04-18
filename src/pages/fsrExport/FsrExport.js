@@ -9,6 +9,10 @@ import {
   AdminWork,
   ExtCommServe,
   StudyLoad,
+  LtdPracticeOfProfession,
+  Awards,
+  ConsultationHours,
+  Certification,
 } from './components';
 
 class FsrExport extends Component {
@@ -43,6 +47,10 @@ class FsrExport extends Component {
                 <AdminWork adminWorks={fsr.adminWorks} />
                 <ExtCommServe />
                 <StudyLoad />
+                <LtdPracticeOfProfession />
+                <Awards />
+                <ConsultationHours />
+                <Certification />
               </div>
             </div>
           </Fragment>
