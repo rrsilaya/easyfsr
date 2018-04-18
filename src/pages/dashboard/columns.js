@@ -1,11 +1,28 @@
 const columns = [
   {
-    title: 'Name',
-    dataIndex: 'name',
+    title: 'Timestamp',
+    dataIndex: 'timestamp',
+    key: 'timestamp',
   },
   {
-    title: 'Date',
-    dataIndex: 'date',
+    title: 'Action',
+    dataIndex: 'action',
+    key: 'action',
+  },
+  {
+    title: 'Changes',
+    dataIndex: 'changes',
+    key: 'changes',
+  },
+  {
+    title: 'AffectedID',
+    dataIndex: 'affectedID',
+    key: 'affectedID',
+  },
+  {
+    title: 'userID',
+    dataIndex: 'userID',
+    key: 'userID',
   },
 ];
 

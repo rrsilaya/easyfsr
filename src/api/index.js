@@ -10,3 +10,5 @@ export * from './subject';
 export * from './timeslot';
 export * from './announcement';
 export * from './notification';
+export * from './logs';
+export * from './meta';
