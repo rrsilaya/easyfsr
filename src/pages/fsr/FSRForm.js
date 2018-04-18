@@ -25,9 +25,9 @@ class FSRForm extends Component {
   }
 
   handleTurningInFSR = () => {
-    console.log(this.props.fsr.fsr);
+    // console.log(this.props.fsr);
     this.props.toggleTurningIn(this.props.fsr.fsr.id, {
-      isTurnedIn: !this.props.fsr.isTurnedIn,
+      isTurnedIn: !this.props.fsr.fsr.isTurnedIn,
     });
   };
 
@@ -114,7 +114,7 @@ class FSRForm extends Component {
             View Preview
           </Button>
           {acctType == 'USER' ? (
-            !!this.props.fsr.isTurnedIn ? (
+            fsr.fsr.isTurnedIn ? (
               <Button
                 style={styles.icons}
                 size="large"
@@ -135,7 +135,7 @@ class FSRForm extends Component {
                 Turn In FSR
               </Button>
             )
-          ) : this.props.fsr.isChecked && this.props.fsr.isTurnedIn ? (
+          ) : fsr.fsr.isChecked && fsr.fsr.isTurnedIn ? (
             <Button
               style={styles.icons}
               size="large"
@@ -158,7 +158,7 @@ class FSRForm extends Component {
           )}
         </ButtonGroup>
         <h1>
-          Academic Year {fsr.acadYear} {fsr.semester} Term
+          Academic Year {fsr.fsr.acadYear} {fsr.fsr.semester} Term
         </h1>
         <Row>
           <Col span={5}>
