@@ -1,4 +1,4 @@
-
+USE easyfsr;
 
 -- USER
 INSERT INTO user (employeeID, password, firstName, middleName, lastName, committee, officeNumber, contractType, emailAddress, acctType, rank) VALUES ('1000335121', '$2a$10$JQL/6dENt1TQofx49huAmu1e/K/m8UPn4SGXixRU5NYDK/QzpudbW', 'Zenaida', 'M', 'Lustria', 'ADMIN', 'C-113', 'FULL-TIME', 'zlustria@up.edu.ph', 'ADMIN', 'Administrative Assistant III');
@@ -35,11 +35,8 @@ INSERT INTO user (employeeID, password, firstName, middleName, lastName, committ
 -- META
 INSERT INTO meta (acadYear, semester, universityRegistrar, homeDepartment, formRevision, homeCollege) VALUES ('2017-2018', 'Second', 'Myrna G. Carandang', 'Institute of Computer Science', '2013-10-25', 'CAS');
 
-<<<<<<< HEAD
 
-=======
 -- FSR
->>>>>>> 9b587a17bb14f6ec78a8a955119e0883bd6271d0
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (1, '2016-2017', 'Second', 1);
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (1, '2017-2018', 'First', 1);
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (2, '2016-2018', 'First', 1);
@@ -98,8 +95,8 @@ INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (28, '2017-2018', 'F
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (28, '2016-2017', 'Second', 1);
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (29, '2017-2018', 'First', 1);
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (29, '2016-2017', 'Second', 1);
-INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (29, '2017-2018', 'Second', 1);
-INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (29, '2017-2018', 'First', 1);
+INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (30, '2017-2018', 'Second', 1);
+INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (30, '2017-2018', 'First', 1);
 
 INSERT INTO creativeWork (id, date, title, type, credUnit, filepath, coAuthor) VALUES (1, '2014-06-24', 'Google Apps', 'Sales', 5, '/uploads/creativeWorks/googleApps.pdf', 'Jehu Sander');
 INSERT INTO creativeWork (id, date, title, type, credUnit, filepath, coAuthor) VALUES (2, '2015-07-17', 'Visual Identity', 'Human Resources', 1, '/uploads/creativeWorks/visualEntity.pdf', 'Sebastien Kedwell');
