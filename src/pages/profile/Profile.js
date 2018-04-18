@@ -87,6 +87,14 @@ class Profile extends Component {
                   {user.contractType} Employee
                 </div>
                 <div>
+                  <Icon type="idcard" style={styles.iconPad} />
+                  {user.rank}
+                </div>
+                <div>
+                  <Icon type="idcard" style={styles.iconPad} />
+                  {user.committee} Committee
+                </div>
+                <div>
                   <Icon type="mail" style={styles.iconPad} />
                   {user.emailAddress}
                 </div>
