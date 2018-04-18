@@ -206,7 +206,7 @@ CREATE TABLE `extensionAndCommunityService`(
   `participant` INT (3) NOT NULL,
   `role` VARCHAR (50) NOT NULL,
   `hours` INT (3) NOT NULL,
-  `title` VARCHAR (50) NOT NULL,
+  `title` TEXT (50) NOT NULL,
   `creditUnit` INT (2) NOT NULL,
   `type` VARCHAR (50) NOT NULL,
   `startDate` DATE NOT NULL, --                   DATE format: YYYY-MM-DD
