@@ -1,4 +1,4 @@
-
+USE easyfsr;
 
 INSERT INTO user (employeeID, password, firstName, middleName, lastName, committee, officeNumber, contractType, emailAddress, acctType, rank) VALUES ('1000335121', '$2a$10$JQL/6dENt1TQofx49huAmu1e/K/m8UPn4SGXixRU5NYDK/QzpudbW', 'Zenaida', 'M', 'Lustria', 'ADMIN', 'C-113', 'FULL-TIME', 'zlustria@up.edu.ph', 'ADMIN', 'Administrative Assistant III');
 INSERT INTO user (employeeID, password, firstName, middleName, lastName, committee, officeNumber, contractType, emailAddress, rank) VALUES ('1000335120', '$2a$10$JQL/6dENt1TQofx49huAmu1e/K/m8UPn4SGXixRU5NYDK/QzpudbW', 'Ivy', 'U', 'Aguila', 'Sports', 'C-113', 'FULL-TIME', 'iuaguila@up.edu.ph', 'Instructor 1');

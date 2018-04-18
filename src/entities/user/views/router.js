@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import { computeSubject } from './../../subject/controller';
 
 const router = Router();
 
@@ -337,7 +338,7 @@ router.get('/user/:employeeID/schedule', async (req, res) => {
     let subjects = await Ctrl.getUserSubjects(req.params);
     let computedSubjects = [];
     subjects.map(async subject => {
-      computedSubjects.push(await Ctrl.computeSubject(subject));
+      computedSubjects.push(await computeSubject(subject));
     });
     const consultationHours = await Ctrl.getUserConsultationHours(req.params);
     const courses = await Ctrl.getUserSLCourses(req.params);
