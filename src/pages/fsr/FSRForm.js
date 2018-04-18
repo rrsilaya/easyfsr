@@ -1,4 +1,4 @@
-import { Steps, Row, Col } from 'antd';
+import { Steps, Row, Col, Button } from 'antd';
 import React, { Component } from 'react';
 
 import TeachingLoadForm from './components/TeachingLoadForm';
@@ -12,8 +12,10 @@ import ConsultationHoursForm from './components/ConsultationHoursForm';
 import CertificationForm from './components/CertificationForm';
 
 import steps from './steps';
-
+import styles from './styles';
+import { Link } from 'react-router-dom';
 const { Step } = Steps;
+const ButtonGroup = Button.Group;
 
 class FSRForm extends Component {
   componentDidMount() {
@@ -54,12 +56,49 @@ class FSRForm extends Component {
       isAddingTimeslot,
       isEditingSubject,
       isGettingTimeslots,
+      isTurningIn,
+      turnIn,
+      pushLink,
+
+      user,
     } = this.props;
 
     const { fsrID } = this.props.match.params;
+    const { acctType } = this.props.user;
 
     return (
       <div>
+        <ButtonGroup style={{ float: 'right', display: 'flex' }}>
+          <Button
+            style={styles.icons}
+            size="large"
+            icon="file"
+            onClick={() => pushLink(`/records/${fsrID}/preview`)}
+            ghost
+          >
+            View Preview
+          </Button>
+          {acctType == 'USER' ? (
+            <Button
+              style={styles.icons}
+              size="large"
+              icon="up-square-o"
+              onClick={() => turnIn(fsrID)}
+              ghost
+            >
+              Turn In FSR
+            </Button>
+          ) : (
+            <Button
+              style={styles.icons}
+              size="large"
+              icon="check-circle-o"
+              ghost
+            >
+              Finalize FSR
+            </Button>
+          )}
+        </ButtonGroup>
         <h1>
           Academic Year {fsr.acadYear} {fsr.semester} Term
         </h1>

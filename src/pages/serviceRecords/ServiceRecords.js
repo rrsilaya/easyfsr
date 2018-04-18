@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Row, Col } from 'antd';
+import { List, Row, Col, Icon, Tooltip } from 'antd';
 import { DataLoader } from '../../global';
 
 import styles from './styles';
@@ -13,12 +13,8 @@ class ServiceRecords extends Component {
 
   render() {
     const gridConfig = { xl: 8, sm: 12, xs: 24 };
-    const {
-      fsr,
-      isGettingFSR,
 
-      pushLink,
-    } = this.props;
+    const { fsr, isGettingFSR, pushLink } = this.props;
 
     return (
       <div>
@@ -53,6 +49,31 @@ class ServiceRecords extends Component {
                       {fsr.teachingLoadCreds}
                     </Col>
                   </Row>
+                  <div style={styles.icons}>
+                    {fsr.isTurnedIn ? (
+                      fsr.isChecked ? (
+                        <Tooltip title="Finalized" arrowPointAtCenter>
+                          <Icon
+                            style={{ color: 'green' }}
+                            type="check-circle-o"
+                            className="text secondary"
+                          />
+                        </Tooltip>
+                      ) : (
+                        <Tooltip title="Turned In" arrowPointAtCenter>
+                          <Icon type="check" className="text secondary" />
+                        </Tooltip>
+                      )
+                    ) : (
+                      <Tooltip title="Not Turned In" arrowPointAtCenter>
+                        <Icon
+                          style={{ color: 'red' }}
+                          type="close-circle-o"
+                          className="text secondary"
+                        />
+                      </Tooltip>
+                    )}
+                  </div>
                 </ListItem>
               )}
             />
