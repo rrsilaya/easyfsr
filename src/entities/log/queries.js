@@ -6,7 +6,7 @@ export const getLog = `
 `;
 
 export const getLogs = (query, sortBy) => `
-  SELECT * FROM log ${
+  SELECT l.*, concat(u.firstName,' ',u.lastName) name FROM log l JOIN user u ON l.userID=u.userID ${
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }
   ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} 
