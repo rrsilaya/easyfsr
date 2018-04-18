@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Button, Card } from 'antd';
-import { ADD_ADMINWORK } from '../duck';
+import { ADMINWORK } from '../duck';
 
 import AddAdminWorkModal from './AddAdminWorkModal';
 
@@ -11,16 +11,19 @@ const columns = [
     title: 'Position/Nature of Administrative Work',
     dataIndex: 'position',
     key: 'position',
+    align: 'center',
   },
   {
     title: 'Office/Unit',
     dataIndex: 'officeUnit',
     key: 'officeUnit',
+    align: 'center',
   },
   {
     title: 'Approved Credit Units',
     dataIndex: 'approvedUnits',
     key: 'approvedUnits',
+    align: 'center',
   },
 ];
 
@@ -44,7 +47,7 @@ class AdminWorkForm extends Component {
           <Button
             icon="plus-circle-o"
             type="primary"
-            onClick={() => toggleModal(ADD_ADMINWORK)}
+            onClick={() => toggleModal(ADMINWORK)}
           >
             Add Administrative Work
           </Button>

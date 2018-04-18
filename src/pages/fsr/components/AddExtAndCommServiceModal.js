@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Input, Select, DatePicker } from 'antd';
-import { ADD_EXTANDCOMMSERVICE } from '../duck';
+import { EXTANDCOMMSERVICE } from '../duck';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -30,11 +30,11 @@ class AddExtAndCommServiceModal extends Component {
       <Modal
         title="Add Extension and Community Service"
         visible={isAddExtAndCommServiceModalOpen}
-        onOk={() => toggleModal(ADD_EXTANDCOMMSERVICE)}
-        onCancel={() => toggleModal(ADD_EXTANDCOMMSERVICE)}
+        onOk={() => toggleModal(EXTANDCOMMSERVICE)}
+        onCancel={() => toggleModal(EXTANDCOMMSERVICE)}
         destroyOnClose
         footer={[
-          <Button key="back" onClick={() => toggleModal(ADD_EXTANDCOMMSERVICE)}>
+          <Button key="back" onClick={() => toggleModal(EXTANDCOMMSERVICE)}>
             Cancel
           </Button>,
           <Button key="submit" type="primary" htmlType="submit">

@@ -1,0 +1,106 @@
+.fsrExport {
+  $documentSize = 9pt;
+  $headerSize = 11pt;
+  $tableCell = (8in / 11);
+
+  display: inline-block;
+  max-width: 100%;
+  font-family: "Arial", sans-serif;
+
+  .document {
+    background-color: white;
+    font-size: $documentSize;
+    line-height: 1.25;
+
+    width: 8.5in;
+    padding: 0.7in 0.5in;
+    position: relative;
+    overflow: visible;
+    
+    * {
+      color: black !important;
+    }
+    
+    .bold { font-weight: bold; }
+    .center {
+      text-align: center;
+      
+      & > * { margin: auto; }
+    }
+    .right { text-align: right; }
+    .justify { text-align: justify; }
+    header { font-size: $headerSize; }
+    label { margin-right: 0.5em; }
+    
+    table {
+      font-size: $documentSize;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+    section { margin: 1em 0; }
+    tr, td, th {
+      border-collapse: collapse;
+      border: 1px solid black;
+      text-align: center;
+    }
+    
+    td, th { padding: 5px; }
+
+    th {
+      line-height: 1;
+    }
+    
+    table.equal {
+      th, td {
+        width: $tableCell;
+      }
+    }
+
+    .mvertical {
+      margin: 0.8em 0;
+    }
+
+    .section-header {
+      margin-top: 0.5em;
+    }
+
+    .highlight {
+      &.orange { background: #FF9900; }
+      &.blue { background: #99CCCC; }
+    }
+  }
+  
+  .form-float {
+    position: absolute;
+    top: 0.7in;
+    left: 0.5in;
+    font-size: $documentSize;
+  }
+  
+  .grid {
+    display: flex;
+    width: 100%;
+  }
+  
+  .flex-mid {
+    display: flex;
+  }
+  
+  .field-line {
+    text-align: center;
+    flex: 1;
+    
+    &:after {
+      display: block;
+      border-top: 1px solid black;
+      padding: 0 1em;
+      
+      content: attr(data-label);
+    }
+  }
+  
+  .margin1 {
+    &.left { margin-left: 0.5em; }
+    &.right { margin-right: 0.5em; }
+  }
+}

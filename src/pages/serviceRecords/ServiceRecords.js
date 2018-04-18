@@ -24,6 +24,7 @@ class ServiceRecords extends Component {
       <div>
         <DataLoader
           isLoading={isGettingFSR}
+          opaque={!!fsr}
           content={
             <List
               bordered

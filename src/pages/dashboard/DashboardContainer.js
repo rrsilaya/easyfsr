@@ -6,6 +6,8 @@ import {
   searchUser,
   addNotification,
   addAnnouncement,
+  getAnnouncements,
+  getNotifications,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -20,6 +22,8 @@ const mapStateToProps = state => {
 
     user,
     searchedUsers,
+    announcements,
+    notifications,
   } = state.dashboard;
 
   return {
@@ -33,6 +37,8 @@ const mapStateToProps = state => {
 
     user,
     searchedUsers,
+    announcements,
+    notifications,
   };
 };
 
@@ -49,6 +55,12 @@ const mapDispatchToProps = dispatch => {
     },
     addAnnouncement: values => {
       dispatch(addAnnouncement(values));
+    },
+    getAnnouncements: () => {
+      dispatch(getAnnouncements());
+    },
+    getNotifications: () => {
+      dispatch(getNotifications());
     },
   };
 };

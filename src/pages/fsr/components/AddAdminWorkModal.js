@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Input } from 'antd';
-import { ADD_ADMINWORK } from '../duck';
+import { ADMINWORK } from '../duck';
 
 const FormItem = Form.Item;
 
@@ -29,11 +29,11 @@ class AddAdminWorkModal extends Component {
       <Modal
         title="Add Administrative Work"
         visible={isAddAdminWorkModalOpen}
-        onOk={() => toggleModal(ADD_ADMINWORK)}
-        onCancel={() => toggleModal(ADD_ADMINWORK)}
+        onOk={() => toggleModal(ADMINWORK)}
+        onCancel={() => toggleModal(ADMINWORK)}
         destroyOnClose
         footer={[
-          <Button key="back" onClick={() => toggleModal(ADD_ADMINWORK)}>
+          <Button key="back" onClick={() => toggleModal(ADMINWORK)}>
             Cancel
           </Button>,
           <Button key="submit" type="primary" htmlType="submit">

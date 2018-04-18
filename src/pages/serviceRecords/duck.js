@@ -3,7 +3,7 @@ import { notification } from 'antd';
 import * as Api from '../../api';
 
 // Action Types
-const GET_FSR = 'FSR/GET_FSR';
+const GET_FSR = 'SERVICE_RECORDS/GET_FSR';
 
 // Action Creators
 export const getFSRs = () => ({
