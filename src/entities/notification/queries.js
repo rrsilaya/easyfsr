@@ -20,23 +20,17 @@ export const updateNotification = notification => `
 
 export const addNotification = `
 	INSERT INTO notification (
-		notificationID,
 		senderID,
 		receiverID,
 		message,
-		dateSent,
-		timeSent,
-		isResolved,
+		timestamp,
 		priority
 	)
 	VALUES (
-		:notificationID,
 		:senderID,
 		:receiverID,
 		:message,
-		:dateSent,
-		:timeSent,
-		:isResolved,
+		NOW(),
 		:priority
 	)
 `;

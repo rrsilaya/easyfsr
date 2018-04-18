@@ -281,8 +281,7 @@ CREATE TABLE `notification`(
   `senderID` INT NOT NULL,
   `receiverID` INT NOT NULL,
   `message` varchar(1000) NOT NULL,
-  `dateSent` DATE NOT NULL, --                   DATE format: YYYY-MM-DD
-  `timeSent` TIME NOT NULL,
+  `timestamp` TIMESTAMP NOT NULL,
   `isResolved` BOOLEAN,
   `priority` VARCHAR (10) DEFAULT 'NORMAL', -- LOW / NORMAL / HIGH
   CONSTRAINT `notification_pk`

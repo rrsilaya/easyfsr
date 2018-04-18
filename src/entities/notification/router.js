@@ -59,6 +59,8 @@ router.post('/notification/', async (req, res) => {
     req.body.senderID = req.session.user.userID;
     const notificationID = await Ctrl.addNotification(req.body);
     const notification = await Ctrl.getNotification({ notificationID });
+    delete notification.senderID;
+    delete notification.isResolved;
     await addLog({
       action: 'INSERT_NOTIFICATION',
       changes: '',
