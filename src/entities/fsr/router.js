@@ -12,7 +12,7 @@ import { getSubjectsWithTimeslot } from './../subject/controller';
 import { getStudyLoads } from './../studyLoad/controller';
 import { getUserByUserID } from './../user/controller';
 import { getResearches } from './../research/controller';
-import { getLastMetaDataID } from './../meta/controller';
+import { getMetaData, getLastMetaDataID } from './../meta/controller';
 import { addLog } from './../log/controller';
 
 const router = Router();
@@ -226,6 +226,7 @@ router.get('/fsr/:id', async (req, res) => {
     const studyLoads = await getStudyLoads(req.params);
     const userID = fsr.userID;
     const user = await getUserByUserID({ userID });
+    const meta = await getMetaData(req.params);
     delete user.password;
 
     fsr = {
@@ -241,6 +242,7 @@ router.get('/fsr/:id', async (req, res) => {
       ltdPractices,
       subjects,
       studyLoads,
+      meta,
     };
 
     res.status(200).json({
