@@ -187,7 +187,10 @@ const reducer = (state = initialState, action) => {
         }),
         success: prevState => ({
           ...prevState,
-          fsr: payload.data.data,
+          fsr: {
+            ...prevState.fsr,
+            fsr: payload.data.data,
+          },
         }),
         finish: prevState => ({
           ...prevState,
