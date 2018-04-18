@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
-import { Card } from 'antd';
+import { Card, List, Row } from 'antd';
+import moment from 'moment';
 
 import style from '../../styles';
 
+const { Item: ListItem } = List;
+
 class Research extends Component {
   render() {
+    const { research } = this.props;
+
     return (
-      <Card title="Research" loading>
+      <Card title="Research">
         <List
           size="small"
           style={style.list}

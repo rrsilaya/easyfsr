@@ -41,7 +41,7 @@ export const getUserSchedule = user => {
   return axios.get(`/api/user/${user}/schedule`);
 };
 
-export const getReseach = id => {
+export const getResearch = id => {
   return axios.get(`/api/user/${id}/research`);
 };
 
