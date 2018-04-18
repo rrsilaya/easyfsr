@@ -15,6 +15,7 @@ import steps from './steps';
 import styles from './styles';
 import { Link } from 'react-router-dom';
 const { Step } = Steps;
+
 const ButtonGroup = Button.Group;
 const confirm = Modal.confirm;
 
@@ -113,14 +114,36 @@ class FSRForm extends Component {
             View Preview
           </Button>
           {acctType == 'USER' ? (
+            !!this.props.fsr.isTurnedIn ? (
+              <Button
+                style={styles.icons}
+                size="large"
+                icon="check"
+                ghost
+                disabled
+              >
+                Turned In
+              </Button>
+            ) : (
+              <Button
+                style={styles.icons}
+                size="large"
+                icon="up-square-o"
+                onClick={this.handleTurningInFSR}
+                ghost
+              >
+                Turn In FSR
+              </Button>
+            )
+          ) : this.props.fsr.isChecked && this.props.fsr.isTurnedIn ? (
             <Button
               style={styles.icons}
               size="large"
-              icon="up-square-o"
-              onClick={this.handleTurningInFSR}
+              icon="check-circle-o"
+              disabled
               ghost
             >
-              Turn In FSR
+              Finalized
             </Button>
           ) : (
             <Button
