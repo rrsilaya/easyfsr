@@ -261,11 +261,11 @@ CREATE TABLE `research`(
   `researchID` INT NOT NULL AUTO_INCREMENT,
   `type` VARCHAR (30) NOT NULL, -- PROPOSAL / IMPLEMENTATION
   `role` VARCHAR (30) NOT NULL,
-  `title` VARCHAR (50) NOT NULL,
+  `title` TEXT (50) NOT NULL,
   `startDate` DATE NOT NULL, --                   DATE format: YYYY-MM-DD
   `endDate` DATE DEFAULT NULL, --                 DATE format: YYYY-MM-DD
-  `funding` VARCHAR (30),
-  `approvedUnits` VARCHAR (30) NOT NULL,
+  `funding` TEXT (30),
+  `approvedUnits` VARCHAR (30) NOT  NULL,
   `filepath` TEXT (50),
   `coAuthor` VARCHAR (255),
   CONSTRAINT `research_fsr_fk`
