@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { isAdmin } from '../../middlewares/middlewares';
 import * as Ctrl from './controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -10,7 +11,6 @@ const router = Router();
  * @apiName addAnnouncement
  *
  *
- * @apiParam (Body Params) {Number} userID ID of user who posted announcement
  * @apiParam (Body Params) {String} title title of the announcement
  * @apiParam (Body Params) {String} body body of the announcement
  * @apiParam (Body Params) {Boolean} [isResolved] indicates if announcement entry is resolved
@@ -47,8 +47,16 @@ const router = Router();
  */
 router.post('/announcement', isAdmin, async (req, res) => {
   try {
+    req.body.userID = req.session.user.userID;
     const announcementID = await Ctrl.addAnnouncement(req.body);
     const announcement = await Ctrl.getAnnouncement({ announcementID });
+    delete announcement.isResolved;
+    await addLog({
+      action: 'ADD_ANNOUNCEMENT',
+      changes: '',
+      affectedID: announcementID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully created announcement',
@@ -113,8 +121,14 @@ router.post('/announcement', isAdmin, async (req, res) => {
 router.delete('/announcement/:announcementID', isAdmin, async (req, res) => {
   try {
     const announcement = await Ctrl.getAnnouncement(req.params);
+    delete announcement.isResolved;
     await Ctrl.deleteAnnouncement(req.params);
-
+    await addLog({
+      action: 'DELETE_ANNOUNCEMENT',
+      changes: '',
+      affectedID: announcement.announcementID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted announcement',
@@ -141,7 +155,7 @@ router.delete('/announcement/:announcementID', isAdmin, async (req, res) => {
  * @apiGroup Announcement
  * @apiName getAnnouncements
  *
- *
+ * @apiParam (Query Params) {Number} [announcementID] ID of announcement
  * @apiParam (Query Params) {Number} [userID] ID of user who posted announcement
  * @apiParam (Query Params) {String} [title] title of the announcement
  * @apiParam (Query Params) {String} [body] body of the announcement
@@ -196,7 +210,7 @@ router.delete('/announcement/:announcementID', isAdmin, async (req, res) => {
 router.get('/announcement', async (req, res) => {
   try {
     const announcements = await Ctrl.getAnnouncements(req.query);
-
+    announcements.map(announcement => delete announcement.isResolved);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched announcements',
@@ -275,6 +289,7 @@ router.get('/announcement', async (req, res) => {
 router.get('/announcement/:announcementID', async (req, res) => {
   try {
     const announcement = await Ctrl.getAnnouncement(req.params);
+    delete announcement.isResolved;
 
     res.status(200).json({
       status: 200,
@@ -347,8 +362,16 @@ router.get('/announcement/:announcementID', async (req, res) => {
  */
 router.put('/announcement/:announcementID', isAdmin, async (req, res) => {
   try {
+    req.body.userID = req.session.user.userID;
     await Ctrl.updateAnnouncement(req.params, req.body);
     const announcement = await Ctrl.getAnnouncement(req.params);
+    delete announcement.isResolved;
+    await addLog({
+      action: 'UPDATE_ANNOUNCEMENT',
+      changes: '',
+      affectedID: announcement.announcementID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated announcement',

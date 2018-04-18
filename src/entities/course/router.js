@@ -4,6 +4,7 @@ import {
   getUserIDofFSR,
   getIDofFSRfromCourse,
 } from '../../middlewares/controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -60,6 +61,12 @@ router.post('/course', async (req, res) => {
     );
     const courseID = await Ctrl.addCourse(req.body);
     const course = await Ctrl.getCourse({ courseID });
+    await addLog({
+      action: 'INSERT_COURSE',
+      changes: '',
+      affectedID: courseID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully created course',
@@ -150,7 +157,12 @@ router.put('/course/:courseID', async (req, res) => {
     );
     await Ctrl.updateCourse(req.params, req.body);
     const course = await Ctrl.getCourse(req.params);
-
+    await addLog({
+      action: 'UPDATE_COURSE',
+      changes: '',
+      affectedID: course.courseID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated course',
@@ -236,7 +248,12 @@ router.delete('/course/:courseID', async (req, res) => {
     );
     const course = await Ctrl.getCourse(req.params);
     await Ctrl.deleteCourse(req.params);
-
+    await addLog({
+      action: 'DELETE_COURSE',
+      changes: '',
+      affectedID: course.courseID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted course',
@@ -349,6 +366,7 @@ router.get('/course/:courseID', async (req, res) => {
  * @apiGroup Course
  * @apiName getCourses
  *
+ * @apiParam (Query Params) {Number} [courseID] id of course
  * @apiParam (Query Params) {Number} [id] id of fsr
  * @apiParam (Query Params) {Number} [hoursPerWeek] number of hours of course per week
  * @apiParam (Query Params) {String} [school] school course is being taken

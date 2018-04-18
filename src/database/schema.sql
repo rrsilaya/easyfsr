@@ -10,6 +10,19 @@ USE easyfsr;
 
 -- Tables
 
+CREATE TABLE meta (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `acadYear` VARCHAR (20) NOT NULL,
+  `semester` VARCHAR (10) NOT NULL,
+  `universityRegistrar` VARCHAR(50),
+  `homeDepartment` VARCHAR(50),
+  `formRevision` DATE,
+  `homeCollege` VARCHAR(50),
+
+  CONSTRAINT `meta_pk`
+    PRIMARY KEY(`id`)
+);
+
 CREATE TABLE user(
   userID INT NOT NULL AUTO_INCREMENT, 
   employeeID VARCHAR (30) NOT NULL,
@@ -42,12 +55,16 @@ CREATE TABLE fsr(
   `isChecked` boolean DEFAULT 0,
   `isTurnedIn` boolean DEFAULT 0,
   `teachingLoadCreds` INT(2) DEFAULT 0,
-  `totalCHours` INT(2) DEFAULT 0, 
+  `totalCHours` INT(2) DEFAULT 0,
+  `metaID` INT NOT NULL,
   CONSTRAINT `fsr_pk` 
     PRIMARY KEY (`id`),
   CONSTRAINT `user_fsr_fk`
   FOREIGN KEY (`userID`)
-    REFERENCES user(`userID`)
+    REFERENCES user(`userID`),
+  CONSTRAINT `meta_fsr_fk`
+  FOREIGN KEY (`metaID`)
+    REFERENCES meta(`id`)
 );
 
 -- Entities under FSR 
@@ -96,7 +113,8 @@ CREATE TABLE `studyLoad`(
   `fellowshipRecipient` BOOLEAN DEFAULT 0,
   CONSTRAINT `studyLoad_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`),
+    REFERENCES fsr(`id`)
+    ON DELETE CASCADE,
   CONSTRAINT `studyLoad_pk`
     PRIMARY KEY(`id`)
 );
@@ -110,7 +128,8 @@ CREATE TABLE `course`(
   `id` INT NOT NULL,
   CONSTRAINT `course_studyLoad_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`),
+    REFERENCES fsr(`id`)
+    ON DELETE CASCADE,
   CONSTRAINT `course_pk`
     PRIMARY KEY (`courseID`)
 );
@@ -140,7 +159,8 @@ CREATE TABLE `consultationHours`(
   `id` INT NOT NULL,
   CONSTRAINT `consultationHours_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`),
+    REFERENCES fsr(`id`)
+    ON DELETE CASCADE,
   CONSTRAINT `consultationHours_pk`
     PRIMARY KEY (`chID`)   
 );
@@ -160,7 +180,8 @@ CREATE TABLE `award`(
   `filepath` TEXT (50),
   CONSTRAINT `award_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`),
+    REFERENCES fsr(`id`)
+    ON DELETE CASCADE,
   CONSTRAINT `award_pk`
     PRIMARY KEY (`awardID`) 
 );
@@ -173,7 +194,8 @@ CREATE TABLE `limitedPracticeOfProf`(
   `date` DATE,  --                   DATE format: YYYY-MM-DD
   CONSTRAINT `limitedPracticeOfProf_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`),
+    REFERENCES fsr(`id`)
+    ON DELETE CASCADE,
   CONSTRAINT `limitedPracticeOfProf_pk`
     PRIMARY KEY (`limitedPracticeOfProfID`) 
 );
@@ -191,7 +213,8 @@ CREATE TABLE `extensionAndCommunityService`(
   `endDate` DATE NOT NULL, --                     DATE format: YYYY-MM-DD
   CONSTRAINT `extensionAndCommunityService_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`),
+    REFERENCES fsr(`id`)
+    ON DELETE CASCADE,
   CONSTRAINT `extAndCommService_pk` 
     PRIMARY KEY (`extAndCommServiceID`) 
 );
@@ -206,7 +229,8 @@ CREATE TABLE `adminWork`(
   `id` INT NOT NULL,
   CONSTRAINT `adminWork_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`),
+    REFERENCES fsr(`id`)
+    ON DELETE CASCADE,
   CONSTRAINT `adminWork_pk` 
     PRIMARY KEY (`adminWorkID`) 
 );
@@ -221,25 +245,14 @@ CREATE TABLE `creativeWork`(
   `type` VARCHAR(50) NOT NULL,
   `credUnit` INT (10) NOT NULL,
   `filepath` TEXT (50),
+  `coAuthor` VARCHAR (255), 
   CONSTRAINT `creativeWork_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`),
+    REFERENCES fsr(`id`)
+    ON DELETE CASCADE,
   CONSTRAINT `creativeWork_pk`
     PRIMARY KEY (`creativeWorkID`)
 );
-
-CREATE TABLE `cworkCoAuthor`(
-  `cworkCoAuthorID` INT NOT NULL AUTO_INCREMENT,
-  `creativeWorkID` INT NOT NULL,
-  `name` VARCHAR(50) NOT NULL,
-  CONSTRAINT `cworkCoAuthor_creativeWork_fk`
-    FOREIGN KEY (`creativeWorkID`)
-    REFERENCES creativeWork(`creativeWorkID`)
-  ON DELETE CASCADE,
-  CONSTRAINT `cworkCoAuthor_pk`
-    PRIMARY KEY (`cworkCoAuthorID`)
-);
-
 
 -- research
 
@@ -251,27 +264,16 @@ CREATE TABLE `research`(
   `title` VARCHAR (50) NOT NULL,
   `startDate` DATE NOT NULL, --                   DATE format: YYYY-MM-DD
   `endDate` DATE DEFAULT NULL, --                 DATE format: YYYY-MM-DD
-  `funding` VARCHAR (30) NOT NULL,
+  `funding` VARCHAR (30),
   `approvedUnits` VARCHAR (30) NOT NULL,
   `filepath` TEXT (50),
+  `coAuthor` VARCHAR (255),
   CONSTRAINT `research_fsr_fk`
     FOREIGN KEY (`id`)
-    REFERENCES fsr(`id`),
+    REFERENCES fsr(`id`)
+    ON DELETE CASCADE,
   CONSTRAINT `research_pk`
     PRIMARY KEY (`researchID`)
-);
-
-
-CREATE TABLE rCoAuthor(
-  `rCoAuthorID` INT NOT NULL AUTO_INCREMENT,
-  `researchID` INT NOT NULL,
-  `name` VARCHAR(50) NOT NULL,
-  CONSTRAINT `rCoAuthor_research_fk`
-    FOREIGN KEY (`researchID`)
-    REFERENCES research(`researchID`)
-  ON DELETE CASCADE,
-  CONSTRAINT `rCoAuthor_pk`
-    PRIMARY KEY (`rCoAuthorID`)
 );
 
 CREATE TABLE `notification`(
@@ -279,9 +281,8 @@ CREATE TABLE `notification`(
   `senderID` INT NOT NULL,
   `receiverID` INT NOT NULL,
   `message` varchar(1000) NOT NULL,
-  `dateSent` DATE NOT NULL, --                   DATE format: YYYY-MM-DD
-  `timeSent` TIME NOT NULL,
-  `isResolved` BOOLEAN,
+  `timestamp` TIMESTAMP NOT NULL,
+  `isResolved` BOOLEAN DEFAULT 0,
   `priority` VARCHAR (10) DEFAULT 'NORMAL', -- LOW / NORMAL / HIGH
   CONSTRAINT `notification_pk`
     PRIMARY KEY(`notificationID`),
@@ -306,19 +307,6 @@ CREATE TABLE announcement(
     REFERENCES user(`userID`)
 );
 
-CREATE TABLE meta (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `acadYear` VARCHAR (20) NOT NULL,
-  `semester` VARCHAR (10) NOT NULL,
-  `universityRegistrar` VARCHAR(50),
-  `homeDepartment` VARCHAR(50),
-  `formRevision` DATE,
-  `homeCollege` VARCHAR(50),
-
-  CONSTRAINT `meta_pk`
-    PRIMARY KEY(`id`)
-);
-
 CREATE TABLE log (
   `id` VARCHAR(17) NOT NULL,
   `timestamp` TIMESTAMP NOT NULL,
@@ -326,7 +314,6 @@ CREATE TABLE log (
   `changes` TEXT (64), -- may contain other details that are necessary / could be used for UPDATE 
   `affectedID` INT NOT NULL, -- specifies ID affected
   `userID` INT NOT NULL,
-
   CONSTRAINT `log_pk`
     PRIMARY KEY(`id`),
   CONSTRAINT `log_user_fk`
@@ -482,11 +469,11 @@ JOIN user u on f.userID = u.userID;
 
 -- viewCreativeWork
 -- shows userID, employeeID, fsrID, creativeWork fields
-CREATE OR REPLACE VIEW viewCreativeWork AS SELECT u.employeeID, c.date, c.title, c.type, c.credUnit FROM creativeWork c JOIN fsr f 
+CREATE OR REPLACE VIEW viewCreativeWork AS SELECT u.employeeID, c.date, c.title, c.type, c.credUnit, c.coAuthor FROM creativeWork c JOIN fsr f 
 ON c.id = f.id JOIN user u on f.userID = u.userID;
 
 -- viewResearch
-CREATE OR REPLACE VIEW viewResearch AS SELECT  u.employeeID, r.type, r.role, r.title, r.startDate, r.endDate, r.funding, r.approvedUnits 
+CREATE OR REPLACE VIEW viewResearch AS SELECT  u.employeeID, r.type, r.role, r.title, r.startDate, r.endDate, r.funding, r.approvedUnits, r.coAuthor
 FROM research r JOIN fsr f ON r.id = f.id JOIN user u on f.userID = u.userID;
 
  -- viewConsultationHours
@@ -499,7 +486,7 @@ JOIN consultationHours c ON f.id = c.id;
 CREATE OR REPLACE VIEW viewSubjectTimeslot AS SELECT  u.employeeID
 ,s.subjectCode, s.teachingLoadCreds, s.noOfStudents, s.hoursPerWeek, s.room, 
 t.day, t.timeStart, t.timeEnd FROM user u JOIN fsr f ON u.userID = f.userID 
-JOIN subject s ON f.id = s.id JOIN timeslot t ON s.subjectID = t.subjectID;
+JOIN subject s ON f.id = s.id LEFT JOIN timeslot t ON s.subjectID = t.subjectID;
 
 
 -- viewStudyLoad
@@ -513,7 +500,7 @@ FROM user u JOIN fsr f ON u.userID = f.userID JOIN studyLoad s ON f.id = s.id;
 CREATE OR REPLACE VIEW viewSLCourses AS SELECT u.employeeID,
 s.university, s.degree, c.courseID, c.courseNumber, c.school, c.credit, c.hoursPerWeek, 
 cs.day, cs.timeStart, cs.timeEnd FROM user u JOIN fsr f ON u.userID = f.userID JOIN 
-studyLoad s ON f.id = s.id JOIN course c ON f.id = c.id JOIN courseSched cs ON c.courseID = cs.courseID;
+studyLoad s ON f.id = s.id JOIN course c ON f.id = c.id LEFT JOIN courseSched cs ON c.courseID = cs.courseID;
 
 
 -- Privileges

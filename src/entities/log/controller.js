@@ -2,14 +2,7 @@ import db from '../../database/index';
 import * as Query from './queries';
 import { filtered, escapeSearch } from '../../utils';
 
-const searchFields = [
-  'id',
-  'userID',
-  'affectedID',
-  'timestamp',
-  'action',
-  'changes',
-];
+const searchFields = ['timestamp', 'action', 'changes'];
 
 export const getLog = ({ id }) => {
   return new Promise((resolve, reject) => {
@@ -50,5 +43,14 @@ export const getTotalLogs = log => {
         return resolve(results[0]);
       },
     );
+  });
+};
+
+export const addLog = log => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.addLog, log, (err, results) => {
+      if (err) return reject(500);
+      return resolve();
+    });
   });
 };

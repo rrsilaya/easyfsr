@@ -5,6 +5,7 @@ import {
   getIDofFSRfromCreativeWork,
 } from '../../middlewares/controller';
 import { upload, unlink } from './../../utils';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -19,15 +20,18 @@ const router = Router();
  * @apiParam (Body Params) {String}  type type of creative work
  * @apiParam (Body Params) {Number} credUnit credit units of creative work
  * @apiParam (Body Params) {File} filepath filepath 
+ * @apiParam (Body Params) {String} [coAuthor] co-author/s
  * 
- * @apiSuccess {Object} data creativeWork added
+ * @apiSuccess {Object} data Creative work added
  * @apiSuccess {Number} data.id ID of related FSR
+ * @apiSuccess {Number} data.creativeWorkID ID of creative work
  * @apiSuccess {Date} data.date date of creative work
  * @apiSuccess {String} data.title title of creative work
  * @apiSuccess {String} data.type type of creative work
  * @apiSuccess {Number} data.credUnit credit units of creative work
  * @apiSuccess {String} data.filepath filepath
- *
+ * @apiSuccess {String} data.coAuthor co-author/s
+ * 
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  * {
@@ -40,7 +44,8 @@ const router = Router();
  *         "title": "test",
  *         "type": "writer",
  *         "credUnit": 1,
- *         "filepath":/uploads/creativeWorls/asdasdalsd-192e02d.png
+ *         "filepath":/uploads/creativeWorls/asdasdalsd-192e02d.png,
+ *         "coAuthor":""
  *     }
  * }
  *
@@ -65,6 +70,12 @@ router.post('/creativeWork/', async (req, res) => {
     }
     const creativeWorkID = await Ctrl.addCreativeWork(req.body);
     const creativeWork = await Ctrl.getCreativeWork({ creativeWorkID });
+    await addLog({
+      action: 'INSERT_CREATIVE_WORK',
+      changes: '',
+      affectedID: creativeWorkID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully created creative work',
@@ -91,24 +102,28 @@ router.post('/creativeWork/', async (req, res) => {
  * @apiGroup Creative Work
  * @apiName getCreativeWorks
  *
+ * @apiParam (Query Params) {Number} [creativeWorkID] ID of creative work
  * @apiParam (Query Params) {Number} [id] ID of related FSR
  * @apiParam (Query Params) {Date} [date] date of creative work
  * @apiParam (Query Params) {String} [title] title of creative work
  * @apiParam (Query Params) {String} [type] type of creative work
  * @apiParam (Query Params) {Number} [credUnit] credit units of creative work
  * @apiParam (Body Params) {File} [filepath] filepath
+ * @apiParam (Body Params) {String} [coAuthor] co-author/s
  * @apiParam (Query Params) {Number} [page] page number
  * @apiParam (Query Params) {Number} [limit] count limit of creative works to fetch
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'date'
  *
- * @apiSuccess {Object[]} data createWorks fetched
+ * @apiSuccess {Object[]} data creative works fetched
  * @apiSuccess {Number} data.id ID of related FSR
+ * @apiSuccess {Number} data.creativeWorkID ID of creative work
  * @apiSuccess {Date} data.date date of creative work
  * @apiSuccess {String} data.title title of creative work
  * @apiSuccess {String} data.type type of creative work
  * @apiSuccess {Number} data.credUnit credit units of creative work
  * @apiSuccess {String} data.filepath filepath
+ * @apiSuccess {String} data.coAuthor co-author/s
  * @apiSuccess {Number} total Total amount of documents.
  * @apiSuccess {Number} limit Max number of documents
  * @apiSuccess {Number} page nth page this query is.
@@ -128,6 +143,7 @@ router.post('/creativeWork/', async (req, res) => {
  *             "type": "1",
  *             "credUnit": 1,
  *             "filepath":'',
+ *             "coAuthor":'',
  *         },
  *         {
  *             "id": 1,
@@ -137,6 +153,7 @@ router.post('/creativeWork/', async (req, res) => {
  *             "type": "1",
  *             "credUnit": 1
  *             "filepath":'',
+ *             "coAuthor":'',
  *         }
  *     ],
  *     "total": 2,
@@ -197,13 +214,15 @@ router.get('/creativeWork/', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} creativeWorkID ID of creativeWork
  *
- * @apiSuccess {Object} data createWork deleted
+ * @apiSuccess {Object} data Creative work deleted
  * @apiSuccess {Number} data.id ID of related FSR
+ * @apiSuccess {Number} data.creativeWorkID ID of creative work
  * @apiSuccess {Date} data.date date of creative work
  * @apiSuccess {String} data.title title of creative work
  * @apiSuccess {String} data.type type of creative work
  * @apiSuccess {Number} data.credUnit credit units of creative work
  * @apiSuccess {String} data.filepath filepath
+ * @apiSuccess {String} data.coAuthor co-author/s
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -217,7 +236,8 @@ router.get('/creativeWork/', async (req, res) => {
  *         "title": "1",
  *         "type": "1",
  *         "credUnit": 1,
- *         "filepath":''
+ *         "filepath":'',
+ *         "coAuthor":''
  *     }
  * }
  *
@@ -251,6 +271,12 @@ router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
     );
     const creativeWork = await Ctrl.getCreativeWork(req.params);
     await Ctrl.deleteCreativeWork(req.params);
+    await addLog({
+      action: 'DELETE_CREATIVE_WORK',
+      changes: '',
+      affectedID: creativeWork.creativeWorkID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted creative work',
@@ -287,13 +313,15 @@ router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
  * @apiParam (Body Params) {Number} creativeWork.credUnit credit units of creative work
  * @apiParam (Body Params) {Number} creativeWork.userID user ID of creative work
  *
- * @apiSuccess {Object} data createWork fetched
+ * @apiSuccess {Object} data Creative work fetched
  * @apiSuccess {Number} data.id ID of related FSR
+ * @apiSuccess {Number} data.creativeWorkID ID of creative work
  * @apiSuccess {Date} data.date date of creative work
  * @apiSuccess {String} data.title title of creative work
  * @apiSuccess {String} data.type type of creative work
  * @apiSuccess {Number} data.credUnit credit units of creative work
  * @apiSuccess {String} data.filepath filepath
+ * @apiSuccess {String} data.coAuthor co-author/s
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -307,7 +335,8 @@ router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
  *         "title": "test",
  *         "type": "writer",
  *         "credUnit": 1,
- *         "filepath":''
+ *         "filepath":'',
+ *         "coAuthor":''
  *     }
  * }
  *
@@ -374,14 +403,17 @@ router.get('/creativeWork/:creativeWorkID', async (req, res) => {
  * @apiParam (Body Params) {String} [type] type of creative work
  * @apiParam (Body Params) {Number} [credUnit] credit units of creative work
  * @apiParam (Body Params) {Number} [userID] user ID of creative work
+ * @apiParam (Body Params) {String} [coAuthor] co-author/s
  *
- * @apiSuccess {Object} data createWork updated
+ * @apiSuccess {Object} data creativeWork updated
  * @apiSuccess {Number} data.id ID of related FSR
+ * @apiSuccess {Number} data.creativeWorkID ID of creative work
  * @apiSuccess {Date} data.date date of creative work
  * @apiSuccess {String} data.title title of creative work
  * @apiSuccess {String} data.type type of creative work
  * @apiSuccess {Number} data.credUnit credit units of creative work
  * @apiSuccess {String} data.filepath filepath
+ * @apiSuccess {String} data.coAuthor co-author/s
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -394,8 +426,9 @@ router.get('/creativeWork/:creativeWorkID', async (req, res) => {
  *         "date": "0000-00-00",
  *         "title": "test",
  *         "type": "writer",
- *         "credUnit": 1
- *         "filepath":''
+ *         "credUnit": 1,
+ *         "filepath":'',
+ *         "coAuthor":''
  *     }
  * }
  *
@@ -435,6 +468,12 @@ router.put('/creativeWork/:creativeWorkID', async (req, res) => {
 
     await Ctrl.updateCreativeWork(req.params, req.body);
     const creativeWork = await Ctrl.getCreativeWork(req.params);
+    await addLog({
+      action: 'UPDATE_CREATIVE_WORK',
+      changes: '',
+      affectedID: creativeWork.creativeWorkID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated creative work',

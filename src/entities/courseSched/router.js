@@ -5,6 +5,7 @@ import {
   getUserIDofFSR,
   getIDofFSRfromCourseSched,
 } from '../../middlewares/controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -64,6 +65,12 @@ router.post('/courseSched/', async (req, res) => {
     );
     const courseSchedID = await Ctrl.addCourseSched(req.body);
     const courseSched = await Ctrl.getCourseSched({ courseSchedID });
+    await addLog({
+      action: 'INSERT_COURSE_SCHED',
+      changes: '',
+      affectedID: courseSchedID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully created course schedule',
@@ -153,6 +160,12 @@ router.put('/courseSched/:courseSchedID', async (req, res) => {
     );
     await Ctrl.updateCourseSched(req.params, req.body);
     const courseSched = await Ctrl.getCourseSched(req.params);
+    await addLog({
+      action: 'UPDATE_COURSE_SCHED',
+      changes: '',
+      affectedID: courseSched.courseSchedID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated course schedule',
@@ -237,6 +250,12 @@ router.delete('/courseSched/:courseSchedID', async (req, res) => {
     );
     const courseSched = await Ctrl.getCourseSched(req.params);
     await Ctrl.deleteCourseSched(req.params);
+    await addLog({
+      action: 'DELETE_COURSE_SCHED',
+      changes: '',
+      affectedID: courseSched.courseSchedID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted course schedule',

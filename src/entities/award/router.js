@@ -2,6 +2,7 @@ import { Router } from 'express';
 import * as Ctrl from './controller';
 import { getUserIDofFSR } from '../../middlewares/controller';
 import { upload, unlink } from './../../utils';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -11,7 +12,6 @@ const router = Router();
  * @apiName addAward
  *
  * @apiParam (Body Params) {Number} id ID of fsr
- * @apiParam (Body Params) {Number} awardID awardID of award
  * @apiParam (Body Params) {String} grantF grantF of award
  * @apiParam (Body Params) {String} chairGrantTitle chair grant title of award
  * @apiParam (Body Params) {String} collegeHasNominated which college has nominated the award
@@ -72,6 +72,12 @@ router.post('/award/', async (req, res) => {
       req.body.filepath = await upload(req.files.filepath, 'awards');
     const awardID = await Ctrl.addAward(req.body);
     const award = await Ctrl.getAward({ awardID });
+    await addLog({
+      action: 'INSERT_AWARD',
+      changes: '',
+      affectedID: awardID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully created award',
@@ -173,7 +179,12 @@ router.put('/award/:awardID', async (req, res) => {
 
     await Ctrl.updateAward(req.params, req.body);
     const award = await Ctrl.getAward(req.params);
-
+    await addLog({
+      action: 'UPDATE_AWARD',
+      changes: '',
+      affectedID: award.awardID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated award',
@@ -261,6 +272,12 @@ router.delete('/award/:awardID', async (req, res) => {
     );
     const award = await Ctrl.getAward(req.params);
     await Ctrl.deleteAward(req.params);
+    await addLog({
+      action: 'DELETE_AWARD',
+      changes: '',
+      affectedID: award.awardID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted award',
@@ -374,6 +391,7 @@ router.get('/award/:awardID', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} [awardID] awardID of award
  * @apiParam (Query Params) {Number} [id] ID of fsr
+ * @apiParam (Query Params) {String} [grantF]  grantF of award
  * @apiParam (Query Params) {String} [chairGrantTitle] chair grant title of award
  * @apiParam (Query Params) {String} [collegeHasNominated] which college nominated the award
  * @apiParam (Query Params) {String} [recipientOrNominee] recipient or nominee of award

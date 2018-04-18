@@ -2,6 +2,7 @@ import { Router } from 'express';
 import * as Ctrl from './controller';
 import { isAdmin } from '../../middlewares/middlewares';
 import { getReceiverIDofNotification } from '../../middlewares/controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -10,22 +11,15 @@ const router = Router();
  * @apiGroup Notification
  * @apiName addNotification
  *
- * @apiParam (Body Params) {Number} senderID sender ID
  * @apiParam (Body Params) {Number} receiverID receiver ID
  * @apiParam (Body Params) {String} message the message of sender to receiver
- * @apiParam (Body Params) {Date} dateSent date when message is sent
- * @apiParam (Body Params) {Time} timeSent time when message is sent
- * @apiParam (Body Params) {Boolean} [isResolved] verification is message is resolved
- * @apiParam (Body Params) {String} priority priority of the notification
+ * @apiParam (Body Params) {String} priority priority of the notification. 'LOW', 'NORMAL', 'HIGH'. Default: 'NORMAL'
  *
  * @apiSuccess {Object} data New notification added
  * @apiSuccess {Number} data.notificationID notification ID
- * @apiSuccess {Number} data.senderID sender ID
  * @apiSuccess {Number} data.receiverID receiver ID
  * @apiSuccess {String} data.message the message of sender to receiver
- * @apiSuccess {Date} data.dateSent date when message is sent
- * @apiSuccess {Time} data.timeSent time when message is sent
- * @apiSuccess {Boolean} data.isResolved verification is message is resolved
+ * @apiSuccess {Datetime} data.timestamp timestamp when message is sent
  * @apiSuccess {String} data.priority priority of the notification
  *
  * @apiSuccessExample {json} Success-Response:
@@ -36,13 +30,10 @@ const router = Router();
  *      "data":
  *       {
  *          "notificationID": 1,
- *          "senderID": "3",
  *          "receiverID": "5",
  *          "message": "HIIIIIIIIIIIIIIIIIIIIII",
- *          "dateSent": "2018-01-01",
- *          "timeSent": "01:01:01",
- *          "isResolved": 1,
- *          "priority": "LOW"
+ *          "timestamp": "2018-04-18T15:45:37.000Z",
+ *          "priority": "NORMAL"
  *       }
  *   }
  *
@@ -58,9 +49,17 @@ const router = Router();
 
 router.post('/notification/', isAdmin, async (req, res) => {
   try {
+    req.body.senderID = req.session.user.userID;
     const notificationID = await Ctrl.addNotification(req.body);
     const notification = await Ctrl.getNotification({ notificationID });
-
+    delete notification.senderID;
+    delete notification.isResolved;
+    await addLog({
+      action: 'INSERT_NOTIFICATION',
+      changes: '',
+      affectedID: notificationID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully added notification',
@@ -86,7 +85,6 @@ router.post('/notification/', isAdmin, async (req, res) => {
  *
  * @apiSuccess {Object} data Notification deleted
  * @apiSuccess {Number} data.notificationID notification ID
- * @apiSuccess {Number} data.senderID sender ID
  * @apiSuccess {Number} data.receiverID receiver ID
  * @apiSuccess {String} data.message the message of sender to receiver
  * @apiSuccess {Date} data.dateSent date when message is sent
@@ -102,13 +100,10 @@ router.post('/notification/', isAdmin, async (req, res) => {
  *       "data":
  *        {
  *          "notificationID": 1,
- *          "senderID": "3",
  *          "receiverID": "5",
  *          "message": "HIIIIIIIIIIIIIIIIIIIIII",
- *          "dateSent": "2018-01-01",
- *          "timeSent": "01:01:01",
- *          "isResolved": 1,
- *          "priority": "LOW"
+ *          "timestamp": "2018-04-18T14:36:56.000Z",
+ *          "priority": "NORMAL"
  *        }
  *
  *   }
@@ -135,7 +130,12 @@ router.delete('/notification/:notificationID', isAdmin, async (req, res) => {
   try {
     const notification = await Ctrl.getNotification(req.params);
     await Ctrl.deleteNotification(req.params);
-
+    await addLog({
+      action: 'DELETE_NOTIFICATION',
+      changes: '',
+      affectedID: notification.notificationID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted notification',
@@ -246,6 +246,7 @@ router.get('/notification/:notificationID', async (req, res) => {
  * @apiGroup Notification
  * @apiName getNotifications
  *
+ * @apiParam (Query Params) {Number} [notificationID] id of notification
  * @apiParam (Query Params) {Number} [senderID] id of user who sent the notification
  * @apiParam (Query Params) {Number} [receiverID] id of user who received the notification
  * @apiParam (Query Params) {String} [message] content of the notification
@@ -317,16 +318,22 @@ router.get('/notification/:notificationID', async (req, res) => {
 
 router.get('/notification/', async (req, res) => {
   try {
-    const notifications = await Ctrl.getNotifications(req.query);
+    req.session.user.acctType === 'USER'
+      ? (req.query.receiverID = req.session.user.userID)
+      : '';
+    const notifications = await Ctrl.getNotifications(
+      req.query,
+      req.query.receiverID,
+    );
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched notifications',
       data: notifications,
-      total: (await Ctrl.getTotalNotifs(req.query)).total,
+      total: (await Ctrl.getTotalNotifs(req.query, req.query.receiverID)).total,
       limit: parseInt(req.query.limit) || 12,
       page: parseInt(req.query.page) || 1,
       pages: Math.ceil(
-        (await Ctrl.getTotalNotifs(req.query)).total /
+        (await Ctrl.getTotalNotifs(req.query, req.query.receiverID)).total /
           (parseInt(req.query.limit) || 12),
       ),
     });
@@ -410,7 +417,12 @@ router.put('/notification/:notificationID', isAdmin, async (req, res) => {
   try {
     await Ctrl.updateNotification(req.params, req.body);
     const notification = await Ctrl.getNotification(req.params);
-
+    await addLog({
+      action: 'UPDATE_NOTIFICATION',
+      changes: '',
+      affectedID: notification.notificationID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated notification',

@@ -8,9 +8,11 @@ export const addResearch = `
 		role,
 		title,
 		startDate,
+    endDate,
 		funding,
 		approvedUnits,
-    filepath
+    filepath,
+    coAuthor
 	)
 	VALUES (
 		:id,
@@ -19,9 +21,11 @@ export const addResearch = `
 		:role,
 		:title,
 		:startDate,
+    :endDate,
 		:funding,
 		:approvedUnits,
-    :filepath
+    :filepath,
+    :coAuthor
 	)
 `;
 

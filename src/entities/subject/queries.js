@@ -66,3 +66,9 @@ export const getTotalSubjects = (query, userID) => `
       : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }
 `;
+
+export const getSubjectsWithTimeslot = `
+	SELECT * from subject s LEFT JOIN timeslot t 
+	ON s.subjectID = t.subjectID WHERE s.id = :id
+
+`;

@@ -4,6 +4,7 @@ import {
   getIDofFSRfromConsultationHours,
   getUserIDofFSR,
 } from '../../middlewares/controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -60,6 +61,12 @@ router.post('/consultationHours/', async (req, res) => {
     );
     const chID = await Ctrl.addConsultationHour(req.body);
     const consultationHour = await Ctrl.getConsultationHour({ chID });
+    await addLog({
+      action: 'INSERT_CONSULTATION_HOURS',
+      changes: '',
+      affectedID: chID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully created consultation hours',
@@ -145,7 +152,12 @@ router.put('/consultationHours/:chID', async (req, res) => {
     );
     await Ctrl.updateConsultationHour(req.params, req.body);
     const consultationHour = await Ctrl.getConsultationHour(req.params);
-
+    await addLog({
+      action: 'UPDATE_CONSULTATION_HOURS',
+      changes: '',
+      affectedID: consultationHour.chID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated consultation hours',
@@ -225,7 +237,12 @@ router.delete('/consultationHours/:chID', async (req, res) => {
     );
     const consultationHour = await Ctrl.getConsultationHour(req.params);
     await Ctrl.deleteConsultationHour(req.params);
-
+    await addLog({
+      action: 'DELETE_CONSULTATION_HOURS',
+      changes: '',
+      affectedID: consultationHour.chID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted consultation hours',
@@ -332,6 +349,7 @@ router.get('/consultationHours/:chID', async (req, res) => {
  * @apiGroup ConsultationHours
  * @apiName getConsultationHours
  *
+ * @apiParam (Query Params) {Number} [chID] id of consultation hours
  * @apiParam (Query Params) {Number} [id] id of fsr
  * @apiParam (Query Params) {String} [place] chair grant title of award
  * @apiParam (Query Params) {String} [day] professional chair of award

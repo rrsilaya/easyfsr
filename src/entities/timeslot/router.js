@@ -4,6 +4,7 @@ import {
   getUserIDofFSR,
   getIDofFSRfromSubject,
 } from '../../middlewares/controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 /**
@@ -60,6 +61,12 @@ router.post('/timeslot/', async (req, res) => {
     );
     const timeslotID = await Ctrl.addTimeslot(req.body);
     const timeslot = await Ctrl.getTimeslot({ timeslotID });
+    await addLog({
+      action: 'INSERT_TIMESLOT',
+      changes: '',
+      affectedID: timeslotID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully created timeslot',
@@ -85,7 +92,8 @@ router.post('/timeslot/', async (req, res) => {
  * @api {get} /timeslot/ getTimeslots
  * @apiGroup Timeslot
  * @apiName getTimeslots
- 
+ * 
+ * @apiParam (Query Params) {Number} [timeslotID] ID of timeslot
  * @apiParam (Query Params) {Number} [subjectID] ID of subject
  * @apiParam (Query Params) {String} [day] day assigned to timeslot
  * @apiParam (Query Params) {Time} [timeStart] starting time of timeslot
@@ -315,6 +323,12 @@ router.put('/timeslot/:timeslotID/', async (req, res) => {
     );
     await Ctrl.updateTimeslot(req.params, req.body);
     const timeslot = await Ctrl.getTimeslot(req.params);
+    await addLog({
+      action: 'UPDATE_TIMESLOT',
+      changes: '',
+      affectedID: timeslot.timeslotID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated timeslot',
@@ -396,6 +410,12 @@ router.delete('/timeslot/:timeslotID/', async (req, res) => {
     );
     const timeslot = await Ctrl.getTimeslot(req.params);
     await Ctrl.deleteTimeslot(req.params);
+    await addLog({
+      action: 'DELETE_TIMESLOT',
+      changes: '',
+      affectedID: timeslot.timeslotID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted timeslot',

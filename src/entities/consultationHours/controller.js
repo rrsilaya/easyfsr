@@ -10,7 +10,7 @@ const consultationHoursAttributes = [
   'timeStart',
   'timeEnd',
 ];
-const fields = ['id', 'place', 'day', 'timeStart', 'timeEnd'];
+const fields = ['place', 'day', 'timeStart', 'timeEnd'];
 
 export const addConsultationHour = consultationHours => {
   return new Promise((resolve, reject) => {

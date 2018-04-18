@@ -4,6 +4,7 @@ import {
   getUserIDofFSR,
   getIDofFSRfromLtd,
 } from '../../middlewares/controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -13,7 +14,6 @@ const router = Router();
  * @apiName addLtdPractOfProf
  *
  * @apiParam (Body Params) {Number} id ID of fsr
- * @apiParam (Body Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
  * @apiParam (Body Params) {String} askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
  * @apiParam (Body Params) {Date} [date] Date of limitedPracticeOfProf
  *
@@ -56,6 +56,12 @@ router.post('/ltdPractOfProf/', async (req, res) => {
     const limitedPracticeOfProfID = await Ctrl.addLtdPractOfProf(req.body);
     const ltdPractOfProf = await Ctrl.getLtdPractOfProf({
       limitedPracticeOfProfID,
+    });
+    await addLog({
+      action: 'INSERT_LTD_PRACTICE',
+      changes: '',
+      affectedID: limitedPracticeOfProfID,
+      userID: req.session.user.userID,
     });
     res.status(200).json({
       status: 200,
@@ -139,6 +145,12 @@ router.put('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
     );
     await Ctrl.updateLtdPractOfProf(req.params, req.body);
     const ltdPractOfProf = await Ctrl.getLtdPractOfProf(req.params);
+    await addLog({
+      action: 'UPDATE_LTD_PRACTICE',
+      changes: '',
+      affectedID: ltdPractOfProf.limitedPracticeOfProfID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated LtdPractOfProf',
@@ -218,6 +230,12 @@ router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
     );
     const ltdPractOfProf = await Ctrl.getLtdPractOfProf(req.params);
     await Ctrl.deleteLtdPractOfProf(req.params);
+    await addLog({
+      action: 'DELETE_LTD_PRACTICE',
+      changes: '',
+      affectedID: ltdPractOfProf.limitedPracticeOfProfID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted LtdPractOfProf',

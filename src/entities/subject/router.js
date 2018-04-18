@@ -4,6 +4,7 @@ import {
   getUserIDofFSR,
   getIDofFSRfromSubject,
 } from '../../middlewares/controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -65,7 +66,14 @@ router.post('/subject/', async (req, res) => {
       req.session.user.userID,
     );
     const subjectID = await Ctrl.addSubject(req.body);
-    const subject = await Ctrl.getSubject({ subjectID });
+    let subject = await Ctrl.getSubject({ subjectID });
+    subject = await Ctrl.computeSubject(subject);
+    await addLog({
+      action: 'INSERT_SUBJECT',
+      changes: '',
+      affectedID: subjectID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully added subject',
@@ -156,7 +164,14 @@ router.put('/subject/:subjectID', async (req, res) => {
       req.session.user.userID,
     );
     await Ctrl.updateSubject(req.params, req.body);
-    const subject = await Ctrl.getSubject(req.params);
+    let subject = await Ctrl.getSubject(req.params);
+    subject = await Ctrl.computeSubject(subject);
+    await addLog({
+      action: 'UPDATE_SUBJECT',
+      changes: '',
+      affectedID: subject.subjectID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated subject',
@@ -242,8 +257,15 @@ router.delete('/subject/:subjectID', async (req, res) => {
       idOfSubject,
       req.session.user.userID,
     );
-    const subject = await Ctrl.getSubject(req.params);
+    let subject = await Ctrl.getSubject(req.params);
+    subject = await Ctrl.computeSubject(subject);
     await Ctrl.deleteSubject(req.params);
+    await addLog({
+      action: 'DELETE_SUBJECT',
+      changes: '',
+      affectedID: subject.subjectID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted subject',
@@ -290,14 +312,18 @@ router.delete('/subject/:subjectID', async (req, res) => {
  *    "message": "Successfully fetched subject",
  *    "data":
  *       {
- *           "id": 1,
- *           "subjectCode": "Hi",
- *           "subjectID": 1,
- *           "teachingLoadCreds": 1,
- *           "noOfStudents": 5,
- *           "hoursPerWeek": 1,
- *           "sectionCode": "Hello",
- *           "room": 1
+ *         "id": 38,
+ *         "subjectCode": "CMSC123",
+ *         "subjectID": 128,
+ *         "teachingLoadCreds": 6,
+ *         "noOfStudents": 68,
+ *         "hoursPerWeek": 3,
+ *         "sectionCode": "U",
+ *         "room": "PCLAB7",
+ *         "courseCred": 3,
+ *         "studCredUnits": 204,
+ *         "TLC": 3,
+ *         "TLCM": 3.7
  *       }
  *
  *  }
@@ -329,7 +355,8 @@ router.get('/subject/:subjectID', async (req, res) => {
       idOfSubject,
       req.session.user.userID,
     );
-    const subject = await Ctrl.getSubject(req.params);
+    let subject = await Ctrl.getSubject(req.params);
+    subject = await Ctrl.computeSubject(subject);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched subject',
@@ -356,6 +383,7 @@ router.get('/subject/:subjectID', async (req, res) => {
  * @apiGroup Subject
  * @apiName getSubjects
  *
+ * @apiParam (Query Params) {Number} [subjectID] id of subject 
  * @apiParam (Query Params) {Number} [id]  fsr id 
  * @apiParam (Query Params) {String} [subjectCode] subject code of subject
  * @apiParam (Query Params) {Number} [teachingLoadCreds] teaching load credits of subject
@@ -389,24 +417,32 @@ router.get('/subject/:subjectID', async (req, res) => {
  *    "message": "Successfully fetched subjects",
  *    "data": [
  *       {
- *           "id": 1,
- *           "subjectCode": "Hi",
- *           "subjectID": 1,
- *           "teachingLoadCreds": 1,
- *           "noOfStudents": 5,
- *           "hoursPerWeek": 1,
- *           "sectionCode": "Hello",
- *           "room": 1
+ *         "id": 38,
+ *         "subjectCode": "CMSC123",
+ *         "subjectID": 128,
+ *         "teachingLoadCreds": 6,
+ *         "noOfStudents": 68,
+ *         "hoursPerWeek": 3,
+ *         "sectionCode": "U",
+ *         "room": "PCLAB7",
+ *         "courseCred": 3,
+ *         "studCredUnits": 204,
+ *         "TLC": 3,
+ *         "TLCM": 3.7
  *       },
  *       {
- *           "id": 2,
- *           "subjectCode": "Hi",
- *           "subjectID": 2,
- *           "teachingLoadCreds": 1,
- *           "noOfStudents": 5,
- *           "hoursPerWeek": 1,
- *           "sectionCode": "Hello",
- *           "room": 2
+ *         "id": 38,
+ *         "subjectCode": "CMSC127",
+ *         "subjectID": 218,
+ *         "teachingLoadCreds": 6,
+ *         "noOfStudents": 34,
+ *         "hoursPerWeek": 1,
+ *         "sectionCode": "C",
+ *         "room": "PCLAB1",
+ *         "courseCred": 1,
+ *         "studCredUnits": 34,
+ *         "TLC": 1,
+ *         "TLCM": 1
  *       }
  *    ],
  *     "total": 2,
@@ -436,13 +472,16 @@ router.get('/subject/', async (req, res) => {
     req.session.user.acctType === 'USER'
       ? (req.query.userID = req.session.user.userID)
       : '';
-    const subjects = await Ctrl.getSubjects(req.query, req.query.userID);
-
+    const subjects = await Ctrl.getSubjects(req.query);
+    let computedSubjects = [];
+    subjects.map(async subject => {
+      computedSubjects.push(await Ctrl.computeSubject(subject));
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched subjects',
-      data: subjects,
-      total: (await Ctrl.getTotalSubjects(req.query, req.query.userID)).total,
+      data: computedSubjects,
+      total: (await Ctrl.getTotalSubjects(req.query)).total,
       limit: req.query.limit || 12,
       page: req.query.page || 1,
       pages: Math.ceil(

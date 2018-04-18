@@ -5,6 +5,7 @@ import {
   getIDofFSRfromAdminWork,
 } from '../../middlewares/controller';
 import * as Ctrl from './controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -13,7 +14,6 @@ const router = Router();
  * @apiGroup AdminWork
  * @apiName addAdminWork
  *
- * @apiParam (Body Params) {Number} adminWorkID ID of admin work
  * @apiParam (Body Params) {Number} id ID of fsr
  * @apiParam (Body Params) {String} position position of admin work
  * @apiParam (Body Params) {String} officeUnit office unit of admin work
@@ -59,6 +59,12 @@ router.post('/adminWork/', async (req, res) => {
     );
     const adminWorkID = await Ctrl.addAdminWork(req.body);
     const adminWork = await Ctrl.getAdminWork({ adminWorkID });
+    await addLog({
+      action: 'INSERT_ADMIN_WORK',
+      changes: '',
+      affectedID: adminWorkID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully created adminWork',
@@ -143,6 +149,12 @@ router.put('/adminWork/:adminWorkID', async (req, res) => {
     );
     await Ctrl.updateAdminWork(req.params, req.body);
     const adminWork = await Ctrl.getAdminWork(req.params);
+    await addLog({
+      action: 'UPDATE_ADMIN_WORK',
+      changes: '',
+      affectedID: adminWork.adminWorkID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated admin work',
@@ -221,6 +233,14 @@ router.delete('/adminWork/:adminWorkID', async (req, res) => {
     );
     const adminWork = await Ctrl.getAdminWork(req.params);
     await Ctrl.deleteAdminWork(req.params);
+
+    await addLog({
+      action: 'DELETE_ADMIN_WORK',
+      changes: '',
+      affectedID: adminWork.adminWorkID,
+      userID: req.session.user.userID,
+    });
+
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted adminWork',
@@ -323,6 +343,7 @@ router.get('/adminWork/:adminWorkID', async (req, res) => {
  * @apiGroup AdminWork
  * @apiName getAdminWorks
  *
+ * @apiParam (Query Params) {Number} [adminWorkID] ID of admin work
  * @apiParam (Query Params) {Number} [id] ID of FSR
  * @apiParam (Query Params) {String} [position] position of admin work
  * @apiParam (Query Params) {String} [officeUnit] office unit of admin work

@@ -5,8 +5,6 @@ import * as Middleware from './middlewares/middlewares';
 import authRouter from './entities/auth/router';
 import userRouter from './entities/user/router';
 import researchRouter from './entities/research/router';
-import rCoAuthorRouter from './entities/rCoAuthor/router';
-import cworkCoAuthorRouter from './entities/coAuthor/router';
 import studyLoadRouter from './entities/studyLoad/router';
 import awardRouter from './entities/award/router';
 import subjectRouter from './entities/subject/router';
@@ -52,7 +50,6 @@ router.use(serviceRouter);
 router.use(timeslotRouter);
 router.use(subjectRouter);
 router.use(creativeWorkRouter);
-router.use(cworkCoAuthorRouter);
 // router.use( (req,res,next) => {
 //   if(req.session.user.acctType == 'ADMIN'){
 //     return next;
@@ -64,8 +61,6 @@ router.use(cworkCoAuthorRouter);
 // });]
 
 router.use(researchRouter);
-router.use(cworkCoAuthorRouter);
-router.use(rCoAuthorRouter);
 router.use(consultationHoursRouter);
 router.use(announcementRouter);
 router.use(userRouter);

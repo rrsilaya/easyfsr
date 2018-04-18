@@ -5,16 +5,16 @@ import { getUsers, getTotalUsers } from './../user/controller';
 import { getAdminWorks } from './../adminWork/controller';
 import { getAwards } from './../award/controller';
 import { getCreativeWorks } from './../creativeWork/controller';
-import { getCworkCoAuthors } from './../coAuthor/controller';
-import { getCourses } from './../course/controller';
-import { getCourseScheds } from './../courseSched/controller';
+import { getCoursesWithSched } from './../course/controller';
 import { getConsultationHours } from './../consultationHours/controller';
 import { getExtensionAndCommunityServices } from './../extensionAndCommunityService/controller';
 import { getLtdPractOfProfs } from './../limitedPracticeOfProf/controller';
-import { getSubjects } from './../subject/controller';
+import { getSubjectsWithTimeslot } from './../subject/controller';
 import { getStudyLoads } from './../studyLoad/controller';
-import { getTimeslots } from './../timeslot/controller';
 import { getUserByUserID } from './../user/controller';
+import { getResearches } from './../research/controller';
+import { getLastMetaDataID } from './../meta/controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -22,9 +22,10 @@ const router = Router();
  * @api {post} /fsr addFSR
  * @apiGroup FSR
  * @apiName addFSR
- *
+ * @apiParam (Body Params) {Number[]} users Array of userIDs
  * @apiParam (Body Params) {String} acadYear academic year the fsr is filed
  * @apiParam (Body Params) {String} semester semester the fsr is filed
+ * @apiParam (Body Params) {Number} metaID  meta data id
  *
  * @apiSuccess {Object} data new FSR created
  * @apiSuccess {Number} data.id ID of FSR
@@ -33,21 +34,13 @@ const router = Router();
  * @apiSuccess {String} data.semester semester the fsr is filed
  * @apiSuccess {Boolean} data.isChecked indicates if fsr is approved or not
  * @apiSuccess {Boolean} data.isTurnedIn indicates if fsr is turned in or not
+ * @apiSuccess {Number} data.metaID meta data id
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *     "status": 200;
  *     "message": 'Succesfully created fsr'
- *     "data": {
- *         "id": 92,
- *         "userID": 1,
- *         "acadYear": "2018",
- *         "semester": "2",
- *         "teachingLoadCreds": 5,
- *         "isChecked": 0,
- *         "isTurnedIn":0
- *      }
  *   }
  *
  * @apiError (Error 500) {Number} status status code
@@ -62,7 +55,20 @@ const router = Router();
 router.post('/fsr', isAdmin, async (req, res) => {
   try {
     const users = req.body.users;
-    users.map(async userID => await Ctrl.addFSR({ userID, ...req.body }));
+    const metaID = await getLastMetaDataID();
+    users.map(
+      async userID => await Ctrl.addFSR({ userID, ...req.body, metaID }),
+    );
+    users.forEach(
+      async user =>
+        await addLog({
+          action: 'INSERT_FSR',
+          changes: '',
+          affectedID: user,
+          userID: req.session.user.userID,
+        }),
+    );
+
     res.status(200).json({
       status: 200,
       message: 'Successfully created fsr for users',
@@ -131,6 +137,12 @@ router.delete('/fsr/:id', async (req, res) => {
   try {
     const fsr = await Ctrl.getFSR(req.params);
     await Ctrl.deleteFSR(req.params);
+    await addLog({
+      action: 'DELETE_FSR',
+      changes: '',
+      affectedID: fsr.id,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted fsr',
@@ -205,24 +217,16 @@ router.get('/fsr/:id', isHead, async (req, res) => {
     const adminWorks = await getAdminWorks(req.params);
     const awards = await getAwards(req.params);
     const creativeWorks = await getCreativeWorks(req.params);
-    creativeWorks.map(
-      async ({ creativeWorkID } = cwork) =>
-        await getCworkCoAuthors({ creativeWorkID }),
-    );
-    const courses = await getCourses(req.params);
-    courses.map(
-      async ({ courseID } = course) => await getCourseScheds({ courseID }),
-    );
+    const researches = await getResearches(req.params);
+    const courses = await getCoursesWithSched(req.params);
     const consultationHours = await getConsultationHours(req.params);
     const services = await getExtensionAndCommunityServices(req.params);
     const ltdPractices = await getLtdPractOfProfs(req.params);
-    const subjects = await getSubjects(req.params);
-    subjects.map(
-      async ({ subjectID } = subject) => await getTimeslots({ subjectID }),
-    );
+    const subjects = await getSubjectsWithTimeslot(req.params);
     const studyLoads = await getStudyLoads(req.params);
     const userID = fsr.userID;
     const user = await getUserByUserID({ userID });
+    delete user.password;
 
     fsr = {
       user,
@@ -230,6 +234,7 @@ router.get('/fsr/:id', isHead, async (req, res) => {
       adminWorks,
       awards,
       creativeWorks,
+      researches,
       courses,
       consultationHours,
       services,
@@ -264,6 +269,7 @@ router.get('/fsr/:id', isHead, async (req, res) => {
  * @apiGroup FSR
  * @apiName getFSRs
  *
+ * @apiParam (Query Params) {Number} [id] ID of fsr
  * @apiParam (Query Params) {Number} [userID] ID of user
  * @apiParam (Query Params) {String} [acadYear] academic year the fsr is filed
  * @apiParam (Query Params) {String} [semester] semester the fsr is filed
@@ -274,6 +280,7 @@ router.get('/fsr/:id', isHead, async (req, res) => {
  * @apiParam (Query Params) {Number} [limit] count limit of fsrs to fetch
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'isChecked'
+ * @apiParam (Query Params) {Number} [metaID]  meta data id
  *
  * @apiSuccess {Object[]} data  FSRs fetched
  * @apiSuccess {Number} data.id ID of FSR
@@ -283,6 +290,7 @@ router.get('/fsr/:id', isHead, async (req, res) => {
  * @apiSuccess {Number} data.teachingLoadCreds teaching load credits
  * @apiSuccess {Boolean} data.isChecked indicates if fsr is approved or not
  * @apiSuccess {Boolean} data.isTurnedIn indicates if fsr is turned in or not
+ * @apiSuccess {Number} data.metaID meta data id
  * @apiSuccess {Number} total Total amount of documents.
  * @apiSuccess {Number} limit Max number of documents
  * @apiSuccess {Number} page nth page this query is.
@@ -386,6 +394,7 @@ router.use('/fsr/:userID', (req, res, next) => {
  * @apiParam (Body Params) {String} [semester] semester the fsr is filed
  * @apiParam (Body Params) {Boolean} [isChecked] indicates if fsr is approved or not
  * @apiParam (Query Params) {Boolean} [isTurnedIn] indicates if fsr is turned in or not
+ * @apiParam (Query Params) {Number} [metaID]  meta data id
  *
  * @apiSuccess {Object} data  FSR updated
  * @apiSuccess {Number} data.id ID of FSR
@@ -395,6 +404,7 @@ router.use('/fsr/:userID', (req, res, next) => {
  * @apiSuccess {Number} data.teachingLoadCreds  teaching load credits
  * @apiSuccess {Boolean} data.isChecked indicates if fsr is approved or not
  * @apiSuccess {Boolean} data.isTurnedIn indicates if fsr is turned in or not
+ * @apiSuccess {Number} data.metaID meta data id
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -434,7 +444,12 @@ router.put('/fsr/:id', async (req, res) => {
   try {
     await Ctrl.updateFSR(req.params, req.body);
     const fsr = await Ctrl.getFSR(req.params);
-
+    await addLog({
+      action: 'UPDATE_FSR',
+      changes: '',
+      affectedID: fsr.id,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated fsr',

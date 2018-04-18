@@ -1,11 +1,27 @@
-export const getMetadata = `
-  SELECT
+export const getMetaData = `
+  SELECT *
+  FROM meta
+  WHERE id = :id
+`;
+
+export const addMetaData = ` 
+  INSERT INTO meta (
     acadYear,
     semester,
     formRevision,
     homeDepartment,
-    homeCollege
+    homeCollege,
     universityRegistrar
-  FROM meta
-  WHERE id = 1
+  ) VALUES (
+    :acadYear,
+    :semester,
+    :formRevision,
+    :homeDepartment,
+    :homeCollege,
+    :universityRegistrar
+  )
+`;
+
+export const getLastInsertedID = `
+  SELECT id FROM meta ORDER BY id DESC LIMIT 1;
 `;

@@ -9,10 +9,10 @@ const fsrAttributes = [
   'isChecked',
   'teachingLoadCreds',
   'isTurnedIn',
+  'metaID',
 ];
 
 const searchFields = [
-  'userID',
   'acadYear',
   'semester',
   'isChecked',

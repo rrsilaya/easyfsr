@@ -7,6 +7,7 @@ import {
 } from '../../middlewares/middlewares';
 import * as Ctrl from './controller';
 import { upload, unlink } from './../../utils';
+import { addLog } from './../log/controller';
 
 const router = Router();
 /**
@@ -88,6 +89,12 @@ router.post('/user', isAdmin, async (req, res) => {
     const user = await Ctrl.getUserByUserID({ userID });
 
     delete user.password;
+    await addLog({
+      action: 'INSERT_USER',
+      changes: '',
+      affectedID: userID,
+      userID: req.session.user.userID,
+    });
 
     res.status(200).json({
       status: 200,
@@ -111,7 +118,10 @@ router.post('/user', isAdmin, async (req, res) => {
  * @api {get} /user getUsers
  * @apiGroup User
  * @apiName getUsers
- *
+ * @apiParam (Query Params) {Number}  [userID] ID of employee
+ * @apiParam (Query Params) {String}  [employeeID] employee ID
+ * @apiParam (Query Params) {String}  [acctType] account type of employee
+ * @apiParam (Query Params) {Boolean} [isArchived] indicates if employee entry is archived
  * @apiParam (Query Params) {String} [firstName] first name of employee
  * @apiParam (Query Params) {String} [lastName] last name of employee
  * @apiParam (Query Params) {String} [middleName] middle name of employee
@@ -303,7 +313,6 @@ router.get('/user', async (req, res) => {
  *   "message": "User not found"
  * }
  */
-
 router.delete(
   '/user/:userID',
   isEmployeeAuthorized('userID'),
@@ -314,7 +323,12 @@ router.delete(
 
       delete user.password;
       await Ctrl.deleteUser(req.params);
-
+      await addLog({
+        action: 'DELETE_USER',
+        changes: '',
+        affectedID: user.userID,
+        userID: req.session.user.userID,
+      });
       res.status(200).json({
         status: 200,
         message: 'Successfully deleted user',
@@ -331,7 +345,6 @@ router.delete(
           message = 'Internal server error';
           break;
       }
-
       res.status(status).json({ status, message });
     }
   },
@@ -528,11 +541,14 @@ router.put(
       const user = await Ctrl.getUserByUserID(req.params);
       delete user.password;
       await Ctrl.deleteSession(user.employeeID);
-      if (req.session.user.userID == user.userID) req.session.user = user;
-      res.status(200).json({
-        status: 200,
-        message: 'Successfully updated user',
-        data: user,
+      const sess = req.session.user;
+      await Ctrl.deleteSession(user.employeeID);
+      if (sess.userID == user.userID) req.session.user = user;
+      await addLog({
+        action: 'UPDATE_USER',
+        changes: '',
+        affectedID: user.userID,
+        userID: req.session.user.userID,
       });
     } catch (status) {
       let message = '';

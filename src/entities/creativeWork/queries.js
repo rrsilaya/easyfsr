@@ -8,7 +8,8 @@ export const addCreativeWork = `
 		title,
 		type,
 		credUnit,
-		filepath
+		filepath,
+		coAuthor
 	)
 	VALUES (
 		:id,
@@ -17,7 +18,8 @@ export const addCreativeWork = `
 		:title,
 		:type,
 		:credUnit,
-		:filepath
+		:filepath,
+		:coAuthor
 	)
 `;
 

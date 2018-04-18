@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
 import { getUserIDofFSR } from '../../middlewares/controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -10,7 +10,7 @@ const router = Router();
  * @apiGroup Study Load
  * @apiName addStudyLoad
  *
- * @apiParam (Body Params) {Number} id ID of study load
+ * @apiParam (Body Params) {Number} id ID of fsr
  * @apiParam (Body Params) {Boolean} [fullLeaveWithPay] full leave with pay of study load
  * @apiParam (Body Params) {Boolean} [fellowshipRecipient] fellowship recipient of study load
  * @apiParam (Body Params) {String} degree degree of study load
@@ -60,6 +60,12 @@ router.post('/studyLoad/', async (req, res) => {
     );
     const id = await Ctrl.addStudyLoad(req.body);
     const studyLoad = await Ctrl.getStudyLoad({ id });
+    await addLog({
+      action: 'INSERT_STUDY_LOAD',
+      changes: '',
+      affectedID: id,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully created studyLoad',
@@ -144,6 +150,12 @@ router.put('/studyLoad/:id', async (req, res) => {
     );
     await Ctrl.updateStudyLoad(req.params, req.body);
     const studyLoad = await Ctrl.getStudyLoad(req.params);
+    await addLog({
+      action: 'UPDATE_STUDY_LOAD',
+      changes: '',
+      affectedID: studyLoad.id,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated studyLoad',
@@ -224,6 +236,12 @@ router.delete('/studyLoad/:id', async (req, res) => {
     );
     const studyLoad = await Ctrl.getStudyLoad(req.params);
     await Ctrl.deleteStudyLoad(req.params);
+    await addLog({
+      action: 'DELETE_STUDY_LOAD',
+      changes: '',
+      affectedID: studyLoad.id,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted studyLoad',
