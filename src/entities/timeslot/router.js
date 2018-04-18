@@ -3,6 +3,7 @@ import * as Ctrl from './controller';
 import {
   getUserIDofFSR,
   getIDofFSRfromSubject,
+  getIDofFSRfromTimeslot,
 } from '../../middlewares/controller';
 import { addLog } from './../log/controller';
 
