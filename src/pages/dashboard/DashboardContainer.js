@@ -9,6 +9,7 @@ import {
   getNotifications,
   createAnnouncement,
   createNotification,
+  deleteDashboard,
 } from './duck';
 
 const mapStateToProps = state => {

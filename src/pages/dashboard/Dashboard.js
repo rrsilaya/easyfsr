@@ -1,5 +1,15 @@
 import React, { Component } from 'react';
-import { Icon, Card, Progress, Table, Row, Col, Button, List } from 'antd';
+import {
+  Icon,
+  Card,
+  Progress,
+  Table,
+  Row,
+  Col,
+  Button,
+  List,
+  Modal,
+} from 'antd';
 import styles from './styles';
 import dataSource from './datasource';
 import columns from './columns';
@@ -9,6 +19,7 @@ import CreateFSRModal from './components/CreateFSRModal';
 import CreateAnnouncementModal from './components/CreateAnnouncementModal';
 import ConfirmAnnouncementModal from './components/ConfirmAnnouncementModal';
 import ConfirmNotificationModal from './components/ConfirmNotificationModal';
+import DeleteModal from './components/DeleteModal';
 
 import { SEND_NOTIFICATION } from './duck';
 import { CREATE_FSR } from './duck';
@@ -17,6 +28,7 @@ import { CREATE_ANNOUNCEMENT } from './duck';
 import { GET_ANNOUCEMENTS, GET_NOTIFICATIONS } from './duck';
 
 const { Item: ListItem } = List;
+const { confirm } = Modal;
 
 const data = [
   'Racing car sprays burning fuel into crowd.',
@@ -32,12 +44,42 @@ class Dashboard extends Component {
     this.props.getNotifications();
   }
 
+  showDeleteConfirmAnnouncement = () => {
+    confirm({
+      title: 'Are you sure you want to resolve this announcement?',
+      okText: 'Yes',
+      cancelText: 'No',
+      okType: 'primary',
+      onOk: () => {},
+      onCancel: () => {},
+    });
+  };
+
+  showDeleteConfirmNotification = () => {
+    confirm({
+      title: 'Are you sure you want to resolve this notification?',
+      okText: 'Yes',
+      cancelText: 'No',
+      okType: 'primary',
+      onOk: () => {},
+      onCancel: () => {},
+    });
+  };
+
+  handleToggleDeleteModal = () => {
+    this.props.toggleDeleteModal();
+  };
+
   render() {
     const {
       isSendNotificationModalOpen,
 
       isCreateFSRModalOpen,
       isCreateAnnouncementModalOpen,
+      isDeletingUser,
+      isDeleteModalOpen,
+      toggleDeleteModal,
+      deleteUser,
 
       isConfirmAnnouncementModalOpen,
       isConfirmNotificationModalOpen,
@@ -106,6 +148,13 @@ class Dashboard extends Component {
                 createAnnouncement={createAnnouncement}
                 isConfirmingAnnouncement={isConfirmingAnnouncement}
               />
+              <DeleteModal
+                isDeleteModalOpen={isDeleteModalOpen}
+                toggleDeleteModal={toggleDeleteModal}
+                changeSelectedUser={changeSelectedUser}
+                deleteUser={deleteUser}
+                isDeletingUser={isDeletingUser}
+              />
 
               <CreateAnnouncementModal
                 toggleConfirmAnnouncementModal={toggleConfirmAnnouncementModal}
@@ -148,7 +197,11 @@ class Dashboard extends Component {
                     <ListItem
                       style={styles.listItems}
                       actions={[
-                        <Icon style={styles.listItems} type="close-circle" />,
+                        <Icon
+                          style={styles.listItems}
+                          type="close-circle"
+                          onClick={this.showDeleteConfirmAnnouncement}
+                        />,
                       ]}
                     >
                       <Row type="flex" style={styles.listItems}>
@@ -181,7 +234,11 @@ class Dashboard extends Component {
                     <ListItem
                       style={styles.listItems}
                       actions={[
-                        <Icon style={styles.listItems} type="close-circle" />,
+                        <Icon
+                          style={styles.listItems}
+                          type="close-circle"
+                          onClick={this.showDeleteConfirmNotification}
+                        />,
                       ]}
                     >
                       <Row type="flex" style={styles.listItems}>

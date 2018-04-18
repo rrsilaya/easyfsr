@@ -9,7 +9,7 @@ class DeleteModal extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        this.props.deleteUser(this.props.user);
+        this.props.deleteDashboard(this.props.user);
         this.handleAfterClose();
       }
     });
