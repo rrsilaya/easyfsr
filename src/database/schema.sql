@@ -282,7 +282,7 @@ CREATE TABLE `notification`(
   `receiverID` INT NOT NULL,
   `message` varchar(1000) NOT NULL,
   `timestamp` TIMESTAMP NOT NULL,
-  `isResolved` BOOLEAN,
+  `isResolved` BOOLEAN DEFAULT 0,
   `priority` VARCHAR (10) DEFAULT 'NORMAL', -- LOW / NORMAL / HIGH
   CONSTRAINT `notification_pk`
     PRIMARY KEY(`notificationID`),

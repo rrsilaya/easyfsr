@@ -47,12 +47,14 @@ export const getNotification = ({ notificationID }) => {
   });
 };
 
-export const getNotifications = notification => {
+export const getNotifications = (notification, receiverID) => {
+  console.log(receiverID);
   return new Promise((resolve, reject) => {
     db.query(
       Query.getNotifications(
         filtered(notification, notificationAttributes),
         notification.sortBy,
+        receiverID,
       ),
       {
         field: 'message',
@@ -66,11 +68,12 @@ export const getNotifications = notification => {
   });
 };
 
-export const getTotalNotifs = notification => {
+export const getTotalNotifs = (notification, receiverID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getTotalNotifications(
         filtered(notification, notificationAttributes),
+        receiverID,
       ),
       {
         field: 'message',

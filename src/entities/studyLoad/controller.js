@@ -20,10 +20,19 @@ const searchFields = [
 
 export const addStudyLoad = studyLoad => {
   return new Promise((resolve, reject) => {
-    db.query(Query.addStudyLoad, studyLoad, (err, results) => {
-      if (err) return reject(500);
-      return resolve(studyLoad.id);
-    });
+    db.query(
+      Query.addStudyLoad,
+      {
+        fullLeaveWithPay: '0',
+        fellowshipRecipient: '0',
+        totalSLcredits: 0,
+        ...studyLoad,
+      },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(studyLoad.id);
+      },
+    );
   });
 };
 
@@ -61,12 +70,13 @@ export const getStudyLoad = ({ id }) => {
   });
 };
 
-export const getStudyLoads = studyLoad => {
+export const getStudyLoads = (studyLoad, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
       Query.getStudyLoads(
         filtered(studyLoad, studyLoadAttributes),
         studyLoad.sortBy,
+        userID,
       ),
       {
         field: 'fullLeaveWithPay',
@@ -80,10 +90,10 @@ export const getStudyLoads = studyLoad => {
   });
 };
 
-export const getTotalStudyLoad = studyLoad => {
+export const getTotalStudyLoad = (studyLoad, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getTotalStudyLoad(filtered(studyLoad, studyLoadAttributes)),
+      Query.getTotalStudyLoad(filtered(studyLoad, studyLoadAttributes), userID),
       {
         field: 'fullLeaveWithPay',
         ...escapeSearch(studyLoad, searchFields, studyLoad.limit),

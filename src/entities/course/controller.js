@@ -49,10 +49,14 @@ export const getCourse = ({ courseID }) => {
   });
 };
 
-export const getCourses = course => {
+export const getCourses = (course, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getCourses(filtered(course, courseAttributes), course.sortBy),
+      Query.getCourses(
+        filtered(course, courseAttributes),
+        course.sortBy,
+        userID,
+      ),
       {
         field: 'courseNumber',
         ...escapeSearch(course, searchFields, course.limit),
@@ -65,10 +69,10 @@ export const getCourses = course => {
   });
 };
 
-export const getTotalCourses = course => {
+export const getTotalCourses = (course, userID) => {
   return new Promise((resolve, reject) => {
     db.query(
-      Query.getTotalCourses(filtered(course, courseAttributes)),
+      Query.getTotalCourses(filtered(course, courseAttributes), userID),
       {
         field: 'courseNumber',
         ...escapeSearch(course, searchFields, course.limit),

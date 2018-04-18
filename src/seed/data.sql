@@ -1503,6 +1503,8 @@ INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) 
 -- NOTIFICATION
 
 
+INSERT INTO consultationHours (day, place, timeStart, timeEnd, id) VALUES ("Tuesday", "C-100", '10:00', '12:00', 1);
+
 -- ANNOUNCEMENT
 INSERT INTO announcement (userID, title, body, isResolved) VALUES (2, 'Flipper', 'Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.
 

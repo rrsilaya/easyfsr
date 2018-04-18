@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import { isAdmin } from '../../middlewares/middlewares';
+import { getReceiverIDofNotification } from '../../middlewares/controller';
 import { addLog } from './../log/controller';
 
 const router = Router();
@@ -45,7 +47,7 @@ const router = Router();
  *   }
  */
 
-router.post('/notification/', async (req, res) => {
+router.post('/notification/', isAdmin, async (req, res) => {
   try {
     req.body.senderID = req.session.user.userID;
     const notificationID = await Ctrl.addNotification(req.body);
@@ -124,7 +126,7 @@ router.post('/notification/', async (req, res) => {
  * }
  */
 
-router.delete('/notification/:notificationID', async (req, res) => {
+router.delete('/notification/:notificationID', isAdmin, async (req, res) => {
   try {
     const notification = await Ctrl.getNotification(req.params);
     await Ctrl.deleteNotification(req.params);
@@ -209,6 +211,12 @@ router.delete('/notification/:notificationID', async (req, res) => {
 
 router.get('/notification/:notificationID', async (req, res) => {
   try {
+    let receiverIDofNotification = '';
+    if (req.session.user.acctType === 'USER')
+      receiverIDofNotification = await getReceiverIDofNotification(
+        req.params.notificationID,
+        req.session.user.userID,
+      );
     const notification = await Ctrl.getNotification(req.params);
 
     res.status(200).json({
@@ -219,6 +227,9 @@ router.get('/notification/:notificationID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Notification not found';
         break;
@@ -307,16 +318,22 @@ router.get('/notification/:notificationID', async (req, res) => {
 
 router.get('/notification/', async (req, res) => {
   try {
-    const notifications = await Ctrl.getNotifications(req.query);
+    req.session.user.acctType === 'USER'
+      ? (req.query.receiverID = req.session.user.userID)
+      : '';
+    const notifications = await Ctrl.getNotifications(
+      req.query,
+      req.query.receiverID,
+    );
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched notifications',
       data: notifications,
-      total: (await Ctrl.getTotalNotifs(req.query)).total,
+      total: (await Ctrl.getTotalNotifs(req.query, req.query.receiverID)).total,
       limit: parseInt(req.query.limit) || 12,
       page: parseInt(req.query.page) || 1,
       pages: Math.ceil(
-        (await Ctrl.getTotalNotifs(req.query)).total /
+        (await Ctrl.getTotalNotifs(req.query, req.query.receiverID)).total /
           (parseInt(req.query.limit) || 12),
       ),
     });
@@ -396,7 +413,7 @@ router.get('/notification/', async (req, res) => {
  * }
  */
 
-router.put('/notification/:notificationID', async (req, res) => {
+router.put('/notification/:notificationID', isAdmin, async (req, res) => {
   try {
     await Ctrl.updateNotification(req.params, req.body);
     const notification = await Ctrl.getNotification(req.params);

@@ -1,5 +1,9 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import {
+  getUserIDofFSR,
+  getIDofFSRfromService,
+} from '../../middlewares/controller';
 import { addLog } from './../log/controller';
 
 const router = Router();
@@ -63,6 +67,10 @@ const router = Router();
 
 router.post('/service/', async (req, res) => {
   try {
+    const userIDofFSR = await getUserIDofFSR(
+      req.body.id,
+      req.session.user.userID,
+    );
     const extAndCommServiceID = await Ctrl.addExtensionAndCommunityService(
       req.body,
     );
@@ -83,6 +91,12 @@ router.post('/service/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
+      case 404:
+        message = 'FSR not found';
+        break;
       case 500:
         message = 'Internal server error';
         break;
@@ -161,6 +175,13 @@ router.post('/service/', async (req, res) => {
 
 router.put('/service/:extAndCommServiceID/', async (req, res) => {
   try {
+    const idOfService = await getIDofFSRfromService(
+      req.params.extAndCommServiceID,
+    );
+    const userIDofFSR = await getUserIDofFSR(
+      idOfService,
+      req.session.user.userID,
+    );
     await Ctrl.updateExtensionAndCommunityService(req.params, req.body);
     const service = await Ctrl.getExtensionAndCommunityService(req.params);
     await addLog({
@@ -177,6 +198,9 @@ router.put('/service/:extAndCommServiceID/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Service not found';
         break;
@@ -272,18 +296,28 @@ router.put('/service/:extAndCommServiceID/', async (req, res) => {
 
 router.get('/service/', async (req, res) => {
   try {
-    const services = await Ctrl.getExtensionAndCommunityServices(req.query);
+    req.session.user.acctType === 'USER'
+      ? (req.query.userID = req.session.user.userID)
+      : '';
+    const services = await Ctrl.getExtensionAndCommunityServices(
+      req.query,
+      req.query.userID,
+    );
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched services',
       data: services,
-      total: (await Ctrl.getTotalExtensionAndCommunityServices(req.query))
-        .total,
+      total: (await Ctrl.getTotalExtensionAndCommunityServices(
+        req.query,
+        req.query.userID,
+      )).total,
       limit: parseInt(req.query.limit) || 12,
       page: parseInt(req.query.page) || 1,
       pages: Math.ceil(
-        (await Ctrl.getTotalExtensionAndCommunityServices(req.query)).total /
-          (parseInt(req.query.limit) || 12),
+        (await Ctrl.getTotalExtensionAndCommunityServices(
+          req.query,
+          req.query.userID,
+        )).total / (parseInt(req.query.limit) || 12),
       ),
     });
   } catch (status) {
@@ -362,6 +396,13 @@ router.get('/service/', async (req, res) => {
 
 router.delete('/service/:extAndCommServiceID/', async (req, res) => {
   try {
+    const idOfService = await getIDofFSRfromService(
+      req.params.extAndCommServiceID,
+    );
+    const userIDofFSR = await getUserIDofFSR(
+      idOfService,
+      req.session.user.userID,
+    );
     const service = await Ctrl.getExtensionAndCommunityService(req.params);
     await Ctrl.deleteExtensionAndCommunityService(req.params);
     await addLog({
@@ -378,6 +419,9 @@ router.delete('/service/:extAndCommServiceID/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'ExtensionAndCommunityService not found';
         break;
@@ -450,6 +494,13 @@ router.delete('/service/:extAndCommServiceID/', async (req, res) => {
 
 router.get('/service/:extAndCommServiceID/', async (req, res) => {
   try {
+    const idOfService = await getIDofFSRfromService(
+      req.params.extAndCommServiceID,
+    );
+    const userIDofFSR = await getUserIDofFSR(
+      idOfService,
+      req.session.user.userID,
+    );
     const service = await Ctrl.getExtensionAndCommunityService(req.params);
     res.status(200).json({
       status: 200,
@@ -459,6 +510,9 @@ router.get('/service/:extAndCommServiceID/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Service not found';
         break;

@@ -1,5 +1,9 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import {
+  getUserIDofFSR,
+  getIDofFSRfromCreativeWork,
+} from '../../middlewares/controller';
 import { upload, unlink } from './../../utils';
 import { addLog } from './../log/controller';
 
@@ -57,6 +61,10 @@ const router = Router();
 
 router.post('/creativeWork/', async (req, res) => {
   try {
+    const userIDofFSR = await getUserIDofFSR(
+      req.body.id,
+      req.session.user.userID,
+    );
     if (req.files && req.files.filepath) {
       req.body.filepath = await upload(req.files.filepath, 'creativeWorks');
     }
@@ -76,6 +84,12 @@ router.post('/creativeWork/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
+      case 404:
+        message = 'FSR not found';
+        break;
       case 500:
         message = 'Internal server error';
         break;
@@ -159,16 +173,23 @@ router.post('/creativeWork/', async (req, res) => {
  */
 router.get('/creativeWork/', async (req, res) => {
   try {
-    const creativeWorks = await Ctrl.getCreativeWorks(req.query);
+    req.session.user.acctType === 'USER'
+      ? (req.query.userID = req.session.user.userID)
+      : '';
+    const creativeWorks = await Ctrl.getCreativeWorks(
+      req.query,
+      req.query.userID,
+    );
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched creative works',
       data: creativeWorks,
-      total: (await Ctrl.getTotalCreativeWorks(req.query)).total,
+      total: (await Ctrl.getTotalCreativeWorks(req.query, req.query.userID))
+        .total,
       limit: req.query.limit || 12,
       page: req.query.page || 1,
       pages: Math.ceil(
-        (await Ctrl.getTotalCreativeWorks(req.query)).total /
+        (await Ctrl.getTotalCreativeWorks(req.query, req.query.userID)).total /
           (req.query.limit || 12),
       ),
     });
@@ -241,6 +262,13 @@ router.get('/creativeWork/', async (req, res) => {
 
 router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
   try {
+    const idOfCreativeWork = await getIDofFSRfromCreativeWork(
+      req.params.creativeWorkID,
+    );
+    const userIDofFSR = await getUserIDofFSR(
+      idOfCreativeWork,
+      req.session.user.userID,
+    );
     const creativeWork = await Ctrl.getCreativeWork(req.params);
     await Ctrl.deleteCreativeWork(req.params);
     await addLog({
@@ -257,6 +285,9 @@ router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Creative work not found';
         break;
@@ -329,6 +360,13 @@ router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
 
 router.get('/creativeWork/:creativeWorkID', async (req, res) => {
   try {
+    const idOfCreativeWork = await getIDofFSRfromCreativeWork(
+      req.params.creativeWorkID,
+    );
+    const userIDofFSR = await getUserIDofFSR(
+      idOfCreativeWork,
+      req.session.user.userID,
+    );
     const creativeWork = await Ctrl.getCreativeWork(req.params);
     res.status(200).json({
       status: 200,
@@ -338,6 +376,9 @@ router.get('/creativeWork/:creativeWorkID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Creative work not found';
         break;
@@ -411,6 +452,13 @@ router.get('/creativeWork/:creativeWorkID', async (req, res) => {
  */
 router.put('/creativeWork/:creativeWorkID', async (req, res) => {
   try {
+    const idOfCreativeWork = await getIDofFSRfromCreativeWork(
+      req.params.creativeWorkID,
+    );
+    const userIDofFSR = await getUserIDofFSR(
+      idOfCreativeWork,
+      req.session.user.userID,
+    );
     if (req.files && req.files.filepath) {
       const creativeWork = await Ctrl.getCreativeWork(req.params);
 
@@ -438,6 +486,9 @@ router.put('/creativeWork/:creativeWorkID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Creative work not found';
         break;

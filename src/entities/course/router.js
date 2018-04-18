@@ -1,5 +1,9 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import {
+  getUserIDofFSR,
+  getIDofFSRfromCourse,
+} from '../../middlewares/controller';
 import { addLog } from './../log/controller';
 
 const router = Router();
@@ -51,9 +55,12 @@ const router = Router();
 
 router.post('/course', async (req, res) => {
   try {
+    const userIDofFSR = await getUserIDofFSR(
+      req.body.id,
+      req.session.user.userID,
+    );
     const courseID = await Ctrl.addCourse(req.body);
     const course = await Ctrl.getCourse({ courseID });
-
     await addLog({
       action: 'INSERT_COURSE',
       changes: '',
@@ -68,6 +75,12 @@ router.post('/course', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
+      case 404:
+        message = 'FSR not found';
+        break;
       case 500:
         message = 'Internal server error';
         break;
@@ -134,6 +147,14 @@ router.post('/course', async (req, res) => {
 
 router.put('/course/:courseID', async (req, res) => {
   try {
+    const idOfCourse = await getIDofFSRfromCourse(
+      req.params.courseID,
+      req.session.user.userID,
+    );
+    const userIDofFSR = await getUserIDofFSR(
+      idOfCourse,
+      req.session.user.userID,
+    );
     await Ctrl.updateCourse(req.params, req.body);
     const course = await Ctrl.getCourse(req.params);
     await addLog({
@@ -150,6 +171,9 @@ router.put('/course/:courseID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Course not found';
         break;
@@ -214,6 +238,14 @@ router.put('/course/:courseID', async (req, res) => {
 
 router.delete('/course/:courseID', async (req, res) => {
   try {
+    const idOfCourse = await getIDofFSRfromCourse(
+      req.params.courseID,
+      req.session.user.userID,
+    );
+    const userIDofFSR = await getUserIDofFSR(
+      idOfCourse,
+      req.session.user.userID,
+    );
     const course = await Ctrl.getCourse(req.params);
     await Ctrl.deleteCourse(req.params);
     await addLog({
@@ -230,6 +262,9 @@ router.delete('/course/:courseID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Course not found';
         break;
@@ -294,6 +329,14 @@ router.delete('/course/:courseID', async (req, res) => {
 
 router.get('/course/:courseID', async (req, res) => {
   try {
+    const idOfCourse = await getIDofFSRfromCourse(
+      req.params.courseID,
+      req.session.user.userID,
+    );
+    const userIDofFSR = await getUserIDofFSR(
+      idOfCourse,
+      req.session.user.userID,
+    );
     const course = await Ctrl.getCourse(req.params);
 
     res.status(200).json({
@@ -304,6 +347,9 @@ router.get('/course/:courseID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Course not found';
         break;
@@ -392,16 +438,19 @@ router.get('/course/:courseID', async (req, res) => {
 
 router.get('/course', async (req, res) => {
   try {
-    const courses = await Ctrl.getCourses(req.query);
+    req.session.user.acctType === 'USER'
+      ? (req.query.userID = req.session.user.userID)
+      : '';
+    const courses = await Ctrl.getCourses(req.query, req.query.userID);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched courses',
       data: courses,
-      total: (await Ctrl.getTotalCourses(req.query)).total,
+      total: (await Ctrl.getTotalCourses(req.query, req.query.userID)).total,
       limit: parseInt(req.query.limit) || 12,
       page: parseInt(req.query.page) || 1,
       pages: Math.ceil(
-        (await Ctrl.getTotalCourses(req.query)).total /
+        (await Ctrl.getTotalCourses(req.query, req.query.userID)).total /
           (parseInt(req.query.limit) || 12),
       ),
     });

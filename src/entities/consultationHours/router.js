@@ -1,6 +1,11 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import {
+  getIDofFSRfromConsultationHours,
+  getUserIDofFSR,
+} from '../../middlewares/controller';
 import { addLog } from './../log/controller';
+
 const router = Router();
 
 /**
@@ -50,6 +55,10 @@ const router = Router();
 
 router.post('/consultationHours/', async (req, res) => {
   try {
+    const userIDofFSR = await getUserIDofFSR(
+      req.body.id,
+      req.session.user.userID,
+    );
     const chID = await Ctrl.addConsultationHour(req.body);
     const consultationHour = await Ctrl.getConsultationHour({ chID });
     await addLog({
@@ -66,6 +75,12 @@ router.post('/consultationHours/', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
+      case 404:
+        message = 'FSR not found';
+        break;
       case 500:
         message = 'Internal server error';
         break;
@@ -130,6 +145,11 @@ router.post('/consultationHours/', async (req, res) => {
 
 router.put('/consultationHours/:chID', async (req, res) => {
   try {
+    const idOfCHours = await getIDofFSRfromConsultationHours(req.params.chID);
+    const userIDofFSR = await getUserIDofFSR(
+      idOfCHours,
+      req.session.user.userID,
+    );
     await Ctrl.updateConsultationHour(req.params, req.body);
     const consultationHour = await Ctrl.getConsultationHour(req.params);
     await addLog({
@@ -146,6 +166,9 @@ router.put('/consultationHours/:chID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Consultation hours not found';
         break;
@@ -207,6 +230,11 @@ router.put('/consultationHours/:chID', async (req, res) => {
 
 router.delete('/consultationHours/:chID', async (req, res) => {
   try {
+    const idOfCHours = await getIDofFSRfromConsultationHours(req.params.chID);
+    const userIDofFSR = await getUserIDofFSR(
+      idOfCHours,
+      req.session.user.userID,
+    );
     const consultationHour = await Ctrl.getConsultationHour(req.params);
     await Ctrl.deleteConsultationHour(req.params);
     await addLog({
@@ -223,6 +251,9 @@ router.delete('/consultationHours/:chID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Consultation hours not found';
         break;
@@ -284,6 +315,11 @@ router.delete('/consultationHours/:chID', async (req, res) => {
 
 router.get('/consultationHours/:chID', async (req, res) => {
   try {
+    const idOfCHours = await getIDofFSRfromConsultationHours(req.params.chID);
+    const userIDofFSR = await getUserIDofFSR(
+      idOfCHours,
+      req.session.user.userID,
+    );
     const consultationHour = await Ctrl.getConsultationHour(req.params);
 
     res.status(200).json({
@@ -294,6 +330,9 @@ router.get('/consultationHours/:chID', async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'Consultation hours not found';
         break;
@@ -373,17 +412,24 @@ router.get('/consultationHours/:chID', async (req, res) => {
 
 router.get('/consultationHours/', async (req, res) => {
   try {
-    const consultationHours = await Ctrl.getConsultationHours(req.query);
+    req.session.user.acctType === 'USER'
+      ? (req.query.userID = req.session.user.userID)
+      : '';
+    const consultationHours = await Ctrl.getConsultationHours(
+      req.query,
+      req.query.userID,
+    );
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched consultation hours',
       data: consultationHours,
-      total: (await Ctrl.getTotalConsultationHours(req.query)).total,
+      total: (await Ctrl.getTotalConsultationHours(req.query, req.query.userID))
+        .total,
       limit: parseInt(req.query.limit) || 12,
       page: parseInt(req.query.page) || 1,
       pages: Math.ceil(
-        (await Ctrl.getTotalConsultationHours(req.query)).total /
-          (parseInt(req.query.limit) || 12),
+        (await Ctrl.getTotalConsultationHours(req.query, req.query.userID))
+          .total / (parseInt(req.query.limit) || 12),
       ),
     });
   } catch (status) {

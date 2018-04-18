@@ -5,11 +5,15 @@ export const getNotification = `
 	WHERE notificationID = :notificationID
 `;
 
-export const getNotifications = (query, sortBy) => `
-	SELECT * FROM notification ${
-    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
-  } 
-  	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} LIMIT :limit
+export const getNotifications = (query, sortBy, receiverID) => `
+	SELECT ${receiverID ? `message, timestamp, priority` : `*`} FROM notification ${
+  receiverID
+    ? `WHERE receiverID = :receiverID AND isResolved = 0 ${
+        query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
+      }`
+    : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+}
+	ORDER BY [field] ${sortBy === 'DESC' ? 'DESC' : 'ASC'} LIMIT :limit
 `;
 
 export const updateNotification = notification => `
@@ -41,8 +45,11 @@ export const deleteNotification = `
 	WHERE notificationID = :notificationID
 `;
 
-export const getTotalNotifications = query => `
+export const getTotalNotifications = (query, receiverID) => `
   SELECT count(*) as total FROM notification ${
-    query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
-  }
-`;
+    receiverID
+      ? `WHERE receiverID = :receiverID AND isResolved = 0 ${
+          query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
+        }`
+      : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
+  }`;
