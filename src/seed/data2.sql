@@ -1,5 +1,6 @@
 
 
+-- USER
 INSERT INTO user (employeeID, password, firstName, middleName, lastName, committee, officeNumber, contractType, emailAddress, acctType, rank) VALUES ('1000335121', '$2a$10$JQL/6dENt1TQofx49huAmu1e/K/m8UPn4SGXixRU5NYDK/QzpudbW', 'Zenaida', 'M', 'Lustria', 'ADMIN', 'C-113', 'FULL-TIME', 'zlustria@up.edu.ph', 'ADMIN', 'Administrative Assistant III');
 INSERT INTO user (employeeID, password, firstName, middleName, lastName, committee, officeNumber, contractType, emailAddress, rank) VALUES ('1000335120', '$2a$10$JQL/6dENt1TQofx49huAmu1e/K/m8UPn4SGXixRU5NYDK/QzpudbW', 'Ivy', 'U', 'Aguila', 'Sports', 'C-113', 'FULL-TIME', 'iuaguila@up.edu.ph', 'Instructor 1');
 INSERT INTO user (employeeID, password, firstName, middleName, lastName, committee, officeNumber, contractType, emailAddress, rank) VALUES ('1000466663', '$2a$10$JQL/6dENt1TQofx49huAmu1e/K/m8UPn4SGXixRU5NYDK/QzpudbW', 'Mary Grace Angelue', 'G', 'Aguirre', 'Practicum', 'C-112', 'FULL-TIME', 'mgaguirre1@up.edu.ph', 'Instructor 1');
@@ -28,11 +29,17 @@ INSERT INTO user (employeeID, password, firstName, middleName, lastName, committ
 INSERT INTO user (employeeID, password, firstName, middleName, lastName, committee, officeNumber, contractType, emailAddress, rank) VALUES ('1000167276', '$2a$10$JQL/6dENt1TQofx49huAmu1e/K/m8UPn4SGXixRU5NYDK/QzpudbW', 'Toni-Jan Keith', 'P', 'Monserrat', 'Alumni Relations', 'C-113', 'FULL-TIME', 'tjkpmonserrat@up.edu.ph', 'Assistant Professor 1');
 INSERT INTO user (employeeID, password, firstName, middleName, lastName, committee, officeNumber, contractType, emailAddress, rank) VALUES ('1000342420', '$2a$10$JQL/6dENt1TQofx49huAmu1e/K/m8UPn4SGXixRU5NYDK/QzpudbW', 'Jaderick', 'P', 'Pabico', 'Sports', 'C-118', 'FULL-TIME', 'jppabico@up.edu.ph ', 'Professor 2');
 INSERT INTO user (employeeID, password, firstName, middleName, lastName, committee, officeNumber, contractType, emailAddress, rank) VALUES ('1000277695', '$2a$10$JQL/6dENt1TQofx49huAmu1e/K/m8UPn4SGXixRU5NYDK/QzpudbW', 'Reginald Neil', 'C', 'Recario', 'Practicum', 'C-110', 'FULL-TIME', 'rcrecario@up.edu.ph', 'Assistant Professor 1');
+INSERT INTO user (employeeID, password, firstName, middleName, lastName, committee, officeNumber, contractType, emailAddress, rank) VALUES ('1000277696', '$2a$10$JQL/6dENt1TQofx49huAmu1e/K/m8UPn4SGXixRU5NYDK/QzpudbW', 'Margarita Carmen', 'S', 'Paterno', 'Practicum', 'C-110', 'FULL-TIME', 'mspaterno@up.edu.ph', 'Assistant Professor 6');
 INSERT INTO user (employeeID, password, firstName, middleName, lastName, committee, officeNumber, contractType, emailAddress, rank, acctType) VALUES ('1000597752', '$2a$10$JQL/6dENt1TQofx49huAmu1e/K/m8UPn4SGXixRU5NYDK/QzpudbW', 'Jaime', 'M', 'Samaniego', 'Curriculum & Instruction', 'C-113', 'FULL-TIME', 'jmsamaniego2@up.edu.ph', 'ICS Director', 'ADMIN');
 
+-- META
 INSERT INTO meta (acadYear, semester, universityRegistrar, homeDepartment, formRevision, homeCollege) VALUES ('2017-2018', 'Second', 'Myrna G. Carandang', 'Institute of Computer Science', '2013-10-25', 'CAS');
 
+<<<<<<< HEAD
 
+=======
+-- FSR
+>>>>>>> 9b587a17bb14f6ec78a8a955119e0883bd6271d0
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (1, '2016-2017', 'Second', 1);
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (1, '2017-2018', 'First', 1);
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (2, '2016-2018', 'First', 1);
