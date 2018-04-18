@@ -27,10 +27,9 @@ class EditResearchModal extends Component {
         fieldValues.startDate = moment(fieldValues.startDate).format(
           'YYYY-MM-DD',
         );
-        fieldValues.endDate =
-          fieldValues.endDate !== null
-            ? moment(fieldValues.endDate).format('YYYY-MM-DD')
-            : null;
+        fieldValues.endDate = fieldValues.endDate
+          ? moment(fieldValues.endDate).format('YYYY-MM-DD')
+          : fieldValues.endDate;
         fieldValues.filepath =
           fieldValues.filepath !== undefined
             ? fieldValues.filepath.file.originFileObj
@@ -156,8 +155,9 @@ class EditResearchModal extends Component {
           </FormItem>
           <FormItem {...formItemLayout} label="End Date">
             {getFieldDecorator('endDate', {
-              initialValue:
-                research.endDate !== null ? moment(research.endDate) : null,
+              initialValue: research.endDate
+                ? moment(research.endDate)
+                : research.endDate,
             })(<DatePicker />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Funding">
@@ -166,9 +166,7 @@ class EditResearchModal extends Component {
             })(<Input placeholder="Enter funding" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="File">
-            {getFieldDecorator('filepath', {
-              initialValue: research.filepath,
-            })(
+            {getFieldDecorator('filepath')(
               <Upload>
                 <Button>
                   <Icon type="upload" /> Upload File

@@ -56,7 +56,7 @@ class ResearchAndCreativeWorkForm extends Component {
       key: 'endDate',
       align: 'center',
       render: endDate =>
-        endDate !== null ? moment(endDate).format('MMMM D, YYYY') : null,
+        endDate ? moment(endDate).format('MMMM D, YYYY') : endDate,
     },
     {
       title: 'Funding',
@@ -70,7 +70,7 @@ class ResearchAndCreativeWorkForm extends Component {
       key: 'filepath',
       align: 'center',
       render: text =>
-        text !== null ? (
+        text ? (
           <Link to={text} className="text secondary">
             {text.split('/')[3]}
           </Link>
@@ -145,7 +145,7 @@ class ResearchAndCreativeWorkForm extends Component {
       key: 'filepath',
       align: 'center',
       render: text =>
-        text !== null ? (
+        text ? (
           <Link to={text} className="text secondary">
             {text.split('/')[3]}
           </Link>

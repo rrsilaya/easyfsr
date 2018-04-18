@@ -30,6 +30,8 @@ import {
   editExtAndCommService,
   getLtdPractOfProfs,
   editLtdPractOfProf,
+  getAwards,
+  editAward,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -60,6 +62,7 @@ const mapStateToProps = state => {
     extAndCommServices,
     extAndCommService,
     ltdPractOfProf,
+    award,
     isGettingFSR,
     isGettingSubjects,
     isAddingSubject,
@@ -80,6 +83,8 @@ const mapStateToProps = state => {
     isEditingExtAndCommService,
     isGettingLtdPractOfProf,
     isEditingLtdPractOfProf,
+    isGettingAward,
+    isEditingAward,
   } = state.fsr;
 
   return {
@@ -106,9 +111,10 @@ const mapStateToProps = state => {
     cwork,
     adminWorks,
     adminWork,
-    ltdPractOfProf,
     extAndCommServices,
     extAndCommService,
+    ltdPractOfProf,
+    award,
     isGettingFSR,
     isGettingSubjects,
     isAddingSubject,
@@ -129,6 +135,8 @@ const mapStateToProps = state => {
     isEditingExtAndCommService,
     isGettingLtdPractOfProf,
     isEditingLtdPractOfProf,
+    isGettingAward,
+    isEditingAward,
   };
 };
 
@@ -212,11 +220,17 @@ const mapDispatchToProps = dispatch => {
     editExtAndCommService: (extAndCommServiceID, body) => {
       dispatch(editExtAndCommService(extAndCommServiceID, body));
     },
-    getLtdPractOfProfs: ltdPractOfProf => {
-      dispatch(getLtdPractOfProfs(ltdPractOfProf));
+    getLtdPractOfProfs: query => {
+      dispatch(getLtdPractOfProfs(query));
     },
     editLtdPractOfProf: (limitedPracticeOfProfID, body) => {
       dispatch(editLtdPractOfProf(limitedPracticeOfProfID, body));
+    },
+    getAwards: query => {
+      dispatch(getAwards(query));
+    },
+    editAward: (awardID, body) => {
+      dispatch(editAward(awardID, body));
     },
   };
 };

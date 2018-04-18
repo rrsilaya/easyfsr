@@ -482,15 +482,47 @@ export const editLtdPractOfProf = (limitedPracticeOfProfID, body) => {
       promise: Api.editLtdPractOfProf(limitedPracticeOfProfID, body),
       meta: {
         onSuccess: () => {
-          notification.success({
-            message: 'Successfully edited limited practice of profession',
-          });
           dispatch(nextStep());
         },
         onFailure: () => {
           notification.error({
             message:
               'Server error while updating limited practice of profession',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const getAwards = query => {
+  return dispatch => {
+    return dispatch({
+      type: Action.GET_AWARDS,
+      promise: Api.getAwards(query),
+      meta: {
+        onFailure: () => {
+          notification.error({
+            message: 'Failure to fetch awards',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const editAward = (awardID, body) => {
+  return dispatch => {
+    return dispatch({
+      type: Action.EDIT_AWARD,
+      promise: Api.editAward(awardID, body),
+      meta: {
+        onSuccess: () => {
+          dispatch(nextStep());
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while updating award',
           });
         },
       },

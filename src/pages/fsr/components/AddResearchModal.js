@@ -22,20 +22,19 @@ class AddResearchModal extends Component {
     e.preventDefault();
 
     this.props.form.validateFieldsAndScroll((err, values) => {
+      console.log(values);
       if (!err) {
         const fieldValues = getFieldValues(values);
         fieldValues.startDate = moment(fieldValues.startDate).format(
           'YYYY-MM-DD',
         );
-        fieldValues.endDate =
-          fieldValues.endDate !== null
-            ? moment(fieldValues.endDate).format('YYYY-MM-DD')
-            : null;
+        fieldValues.endDate = fieldValues.endDate
+          ? moment(fieldValues.endDate).format('YYYY-MM-DD')
+          : fieldValues.endDate;
         fieldValues.filepath =
           fieldValues.filepath !== undefined
             ? fieldValues.filepath.file.originFileObj
             : undefined;
-
         const data = new FormData();
         Object.keys(fieldValues).forEach(key => {
           if (fieldValues[key] !== undefined)

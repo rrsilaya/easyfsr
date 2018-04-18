@@ -54,6 +54,7 @@ class FSRForm extends Component {
       extAndCommServices,
       extAndCommService,
       ltdPractOfProf,
+      award,
 
       getSubjects,
       addSubject,
@@ -79,6 +80,8 @@ class FSRForm extends Component {
       editExtAndCommService,
       getLtdPractOfProfs,
       editLtdPractOfProf,
+      getAwards,
+      editAward,
 
       isGettingSubjects,
       isAddingSubject,
@@ -99,6 +102,8 @@ class FSRForm extends Component {
       isEditingExtAndCommService,
       isGettingLtdPractOfProf,
       isEditingLtdPractOfProf,
+      isGettingAward,
+      isEditingAward,
     } = this.props;
 
     const { fsrID } = this.props.match.params;
@@ -234,7 +239,15 @@ class FSRForm extends Component {
                   prevStep={prevStep}
                 />
               ) : currentStep === 6 ? (
-                <AwardForm prevStep={prevStep} nextStep={nextStep} />
+                <AwardForm
+                  fsrID={fsrID}
+                  award={award}
+                  getAwards={getAwards}
+                  editAward={editAward}
+                  isGettingAward={isGettingAward}
+                  isEditingAward={isEditingAward}
+                  prevStep={prevStep}
+                />
               ) : currentStep === 7 ? (
                 <ConsultationHoursForm
                   isAddConsultationHourModalOpen={

@@ -15,6 +15,7 @@ const initialState = {
   extAndCommServices: [],
   extAndCommService: {},
   ltdPractOfProf: {},
+  award: {},
   currentStep: 0,
 
   isGettingFSR: false,
@@ -43,6 +44,8 @@ const initialState = {
   isEditingExtAndCommService: false,
   isGettingLtdPractOfProf: false,
   isEditingLtdPractOfProf: false,
+  isGettingAward: false,
+  isEditingAward: false,
 
   isAddSubjectModalOpen: false,
   isEditSubjectModalOpen: false,
@@ -71,6 +74,7 @@ const reducer = (state = initialState, action) => {
         success: prevState => ({
           ...prevState,
           fsr: payload.data.data.fsr,
+          currentStep: 0,
         }),
         finish: prevState => ({
           ...prevState,
@@ -522,6 +526,38 @@ const reducer = (state = initialState, action) => {
         finish: prevState => ({
           ...prevState,
           isEditingLtdPractOfProf: false,
+        }),
+      });
+
+    case Action.GET_AWARDS:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingAward: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          award: payload.data.data[0],
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingAward: false,
+        }),
+      });
+
+    case Action.EDIT_AWARD:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isEditingAward: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          award: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isEditingAward: false,
         }),
       });
 

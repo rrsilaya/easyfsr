@@ -148,15 +148,7 @@ class EditCWorkModal extends Component {
             })(<DatePicker />)}
           </FormItem>
           <FormItem {...formItemLayout} label="File">
-            {getFieldDecorator('filepath', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please attach creative work file',
-                },
-              ],
-              initialValue: cwork.filepath,
-            })(
+            {getFieldDecorator('filepath')(
               <Upload>
                 <Button>
                   <Icon type="upload" /> Upload File
