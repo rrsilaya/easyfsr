@@ -22,6 +22,7 @@ class Dashboard extends Component {
   componentDidMount() {
     this.props.getAnnouncements();
     this.props.getNotifications();
+    this.props.getUsers({ limit: 99999 });
   }
 
   render() {
@@ -32,6 +33,7 @@ class Dashboard extends Component {
       isSettingsModalOpen,
 
       searchedUsers,
+      users,
 
       addNotification,
       addAnnouncement,
@@ -67,6 +69,7 @@ class Dashboard extends Component {
                 isCreateFSRModalOpen={isCreateFSRModalOpen}
                 toggleModal={toggleModal}
                 handleAfterClose={this.handleAfterClose}
+                users={users}
               />
               <Button
                 type="default"

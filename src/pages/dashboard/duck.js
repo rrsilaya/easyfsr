@@ -132,8 +132,10 @@ const initialState = {
   isSearchingUsers: false,
   isAddingNotification: false,
   isAddingAnnouncement: false,
+  isGettingUsers: false,
 
   searchedUsers: [],
+  users: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -219,12 +221,6 @@ const reducer = (state = initialState, action) => {
         success: prevState => ({
           ...prevState,
           users: payload.data.data,
-          pagination: {
-            page: payload.data.page,
-            pages: payload.data.pages,
-            limit: payload.data.limit,
-            total: payload.data.total,
-          },
         }),
         finish: prevState => ({
           ...prevState,

@@ -54,6 +54,10 @@ const style = {
   listItems: {
     color: '#000000a6',
   },
+  transfer: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
 };
 
 export default style;

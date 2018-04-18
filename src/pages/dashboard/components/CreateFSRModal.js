@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form, Input } from 'antd';
+import { Modal, Button, Form, Input, Transfer } from 'antd';
 import { CREATE_FSR } from '../duck';
 import styles from '../styles';
 
@@ -26,16 +26,13 @@ class CreateFSRModal extends Component {
     this.handleAfterClose();
   };
 
-  validateMessage = async (rule, value, callback) => {
-    if (!value.match(/^Yes, I want to create a new FSR\.$/))
-      return callback('Please enter the correct message');
-  };
-
   render() {
     const {
       isCreateFSRModalOpen,
 
       toggleModal,
+
+      users,
 
       form,
     } = this.props;
@@ -62,24 +59,11 @@ class CreateFSRModal extends Component {
             Cancel
           </Button>,
           <Button key="submit" type="primary" htmlType="submit">
-            Yes
+            Create
           </Button>,
         ]}
       >
-        <p>Are you sure you want to create a new FSR?</p>
-        <p> Please type in the message below confirm. </p>
-        <p style={styles.confirmation}> Yes, I want to create a new FSR. </p>
-        <Form onSubmit={this.handleFormSubmit}>
-          <FormItem {...formItemLayout} required hasFeedback>
-            {form.getFieldDecorator('confirmation@@deleteUser', {
-              rules: [
-                {
-                  validator: this.validateMessage,
-                },
-              ],
-            })(<Input type="text" />)}
-          </FormItem>
-        </Form>
+        <Transfer showSearch dataSource={users} />
       </Modal>
     );
   }

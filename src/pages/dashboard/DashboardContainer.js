@@ -4,6 +4,7 @@ import Dashboard from './Dashboard';
 import {
   toggleModal,
   searchUser,
+  getUsers,
   addNotification,
   addAnnouncement,
   getAnnouncements,
@@ -21,6 +22,7 @@ const mapStateToProps = state => {
     isAddingAnnouncement,
 
     user,
+    users,
     searchedUsers,
     announcements,
     notifications,
@@ -36,6 +38,7 @@ const mapStateToProps = state => {
     isAddingAnnouncement,
 
     user,
+    users,
     searchedUsers,
     announcements,
     notifications,
@@ -61,6 +64,9 @@ const mapDispatchToProps = dispatch => {
     },
     getNotifications: () => {
       dispatch(getNotifications());
+    },
+    getUsers: query => {
+      dispatch(getUsers(query));
     },
   };
 };
