@@ -119,9 +119,34 @@ export const changeSelectedSubject = subject => ({
   payload: subject,
 });
 
-export const turnIn = fsr => ({
+export const toggleTurningIn = (id, body) => ({
   type: Action.TURN_IN,
-  payload: fsr,
+  promise: Api.editFSR(id, body),
+  meta: {
+    onSuccess: () => {
+      notification.success({ message: 'Successfully turned in FSR' });
+    },
+    onFailure: () => {
+      notification.error({
+        message: 'Error turning in FSR.',
+      });
+    },
+  },
+});
+
+export const toggleFinalizing = (id, body) => ({
+  type: Action.FINALIZE,
+  promise: Api.editFSR(id, body),
+  meta: {
+    onSuccess: () => {
+      notification.success({ message: 'Successfully finalized FSR' });
+    },
+    onFailure: () => {
+      notification.error({
+        message: 'Error finalizing FSR.',
+      });
+    },
+  },
 });
 
 export const getTimeslots = query => {

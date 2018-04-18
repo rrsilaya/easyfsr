@@ -12,7 +12,8 @@ import {
   editSubject,
   changeSelectedSubject,
   getTimeslots,
-  turnIn,
+  toggleTurningIn,
+  toggleFinalizing,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -37,6 +38,7 @@ const mapStateToProps = state => {
     isEditingSubject,
     isGettingTimeslots,
     isTurningIn,
+    isFinalizing,
   } = state.fsr;
 
   const { user } = state.app;
@@ -62,6 +64,7 @@ const mapStateToProps = state => {
     isEditingSubject,
     isGettingTimeslots,
     isTurningIn,
+    isFinalizing,
     user,
   };
 };
@@ -98,8 +101,11 @@ const mapDispatchToProps = dispatch => {
     getTimeslots: query => {
       dispatch(getTimeslots(query));
     },
-    turnIn: id => {
-      dispatch(turnIn(id));
+    toggleTurningIn: (id, body) => {
+      dispatch(toggleTurningIn(id, body));
+    },
+    toggleFinalizing: (id, body) => {
+      dispatch(toggleFinalizing(id, body));
     },
     pushLink: route => {
       dispatch(push(route));

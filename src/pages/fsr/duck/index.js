@@ -161,10 +161,36 @@ const reducer = (state = initialState, action) => {
       });
 
     case Action.TURN_IN:
-      return {
-        ...state,
-        fsr: payload,
-      };
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isTurningIn: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          fsr: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isTurningIn: false,
+        }),
+      });
+
+    case Action.FINALIZE:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isFinalizing: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          fsr: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isFinalizing: false,
+        }),
+      });
 
     case Action.TOGGLE_MODAL:
       switch (payload) {
