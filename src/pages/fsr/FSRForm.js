@@ -33,6 +33,7 @@ class FSRForm extends Component {
       isEditSubjectModalOpen,
       isEditResearchModalOpen,
       isEditCWorkModalOpen,
+      isEditAdminWorkModalOpen,
 
       toggleModal,
       nextStep,
@@ -47,6 +48,8 @@ class FSRForm extends Component {
       research,
       cworks,
       cwork,
+      adminWorks,
+      adminWork,
 
       getSubjects,
       addSubject,
@@ -62,6 +65,10 @@ class FSRForm extends Component {
       addCreativeWork,
       deleteCreativeWork,
       editCreativeWork,
+      getAdminWorks,
+      addAdminWork,
+      deleteAdminWork,
+      editAdminWork,
 
       isGettingSubjects,
       isAddingSubject,
@@ -74,6 +81,9 @@ class FSRForm extends Component {
       isGettingCWorks,
       isAddingCWork,
       isEditingCWork,
+      isGettingAdminWorks,
+      isAddingAdminWork,
+      isEditingAdminWork,
     } = this.props;
 
     const { fsrID } = this.props.match.params;
@@ -151,7 +161,19 @@ class FSRForm extends Component {
                 />
               ) : currentStep === 2 ? (
                 <AdminWorkForm
+                  fsrID={fsrID}
+                  adminWorks={adminWorks}
+                  adminWork={adminWork}
+                  getAdminWorks={getAdminWorks}
+                  addAdminWork={addAdminWork}
+                  deleteAdminWork={deleteAdminWork}
+                  editAdminWork={editAdminWork}
+                  changeSelected={changeSelected}
+                  isGettingAdminWorks={isGettingAdminWorks}
+                  isAddingAdminWork={isAddingAdminWork}
+                  isEditingAdminWork={isEditingAdminWork}
                   isAddAdminWorkModalOpen={isAddAdminWorkModalOpen}
+                  isEditAdminWorkModalOpen={isEditAdminWorkModalOpen}
                   toggleModal={toggleModal}
                   prevStep={prevStep}
                   nextStep={nextStep}

@@ -297,3 +297,82 @@ export const editCreativeWork = (creativeWorkID, body) => {
     });
   };
 };
+
+export const getAdminWorks = query => {
+  return dispatch => {
+    return dispatch({
+      type: Action.GET_ADMINWORKS,
+      promise: Api.getAdminWorks(query),
+      meta: {
+        onFailure: () => {
+          notification.error({
+            message: 'Failure to fetch administrative works',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const addAdminWork = values => {
+  return dispatch => {
+    return dispatch({
+      type: Action.ADD_ADMINWORK,
+      promise: Api.addAdminWork(values),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully added administrative work',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while creating administrative work',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const deleteAdminWork = adminWorkID => {
+  return dispatch => {
+    return dispatch({
+      type: Action.DELETE_ADMINWORK,
+      promise: Api.deleteAdminWork(adminWorkID),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully deleted administrative work',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while deleting administrative work',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const editAdminWork = (adminWorkID, body) => {
+  return dispatch => {
+    return dispatch({
+      type: Action.EDIT_ADMINWORK,
+      promise: Api.editAdminWork(adminWorkID, body),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully edited administrative work',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while updating administrative work',
+          });
+        },
+      },
+    });
+  };
+};

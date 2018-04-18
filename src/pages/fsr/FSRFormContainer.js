@@ -20,6 +20,10 @@ import {
   addCreativeWork,
   deleteCreativeWork,
   editCreativeWork,
+  getAdminWorks,
+  addAdminWork,
+  deleteAdminWork,
+  editAdminWork,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -34,6 +38,7 @@ const mapStateToProps = state => {
     isEditSubjectModalOpen,
     isEditResearchModalOpen,
     isEditCWorkModalOpen,
+    isEditAdminWorkModalOpen,
     currentStep,
     fsr,
     subjects,
@@ -43,6 +48,8 @@ const mapStateToProps = state => {
     research,
     cworks,
     cwork,
+    adminWorks,
+    adminWork,
     isGettingFSR,
     isGettingSubjects,
     isAddingSubject,
@@ -55,6 +62,9 @@ const mapStateToProps = state => {
     isGettingCWorks,
     isAddingCWork,
     isEditingCWork,
+    isGettingAdminWorks,
+    isAddingAdminWork,
+    isEditingAdminWork,
   } = state.fsr;
 
   return {
@@ -68,6 +78,7 @@ const mapStateToProps = state => {
     isEditSubjectModalOpen,
     isEditResearchModalOpen,
     isEditCWorkModalOpen,
+    isEditAdminWorkModalOpen,
     currentStep,
     fsr,
     subjects,
@@ -77,6 +88,8 @@ const mapStateToProps = state => {
     research,
     cworks,
     cwork,
+    adminWorks,
+    adminWork,
     isGettingFSR,
     isGettingSubjects,
     isAddingSubject,
@@ -89,6 +102,9 @@ const mapStateToProps = state => {
     isGettingCWorks,
     isAddingCWork,
     isEditingCWork,
+    isGettingAdminWorks,
+    isAddingAdminWork,
+    isEditingAdminWork,
   };
 };
 
@@ -147,6 +163,18 @@ const mapDispatchToProps = dispatch => {
     },
     editCreativeWork: (creativeWorkID, body) => {
       dispatch(editCreativeWork(creativeWorkID, body));
+    },
+    getAdminWorks: query => {
+      dispatch(getAdminWorks(query));
+    },
+    addAdminWork: adminWork => {
+      dispatch(addAdminWork(adminWork));
+    },
+    deleteAdminWork: adminWorkID => {
+      dispatch(deleteAdminWork(adminWorkID));
+    },
+    editAdminWork: (adminWorkID, body) => {
+      dispatch(editAdminWork(adminWorkID, body));
     },
   };
 };

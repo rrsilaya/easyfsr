@@ -227,7 +227,6 @@ class ResearchAndCreativeWorkForm extends Component {
           isAddingResearch={isAddingResearch}
           isAddResearchModalOpen={isAddResearchModalOpen}
           toggleModal={toggleModal}
-          handleAfterClose={this.handleAfterClose}
         />
         {isEditResearchModalOpen ? (
           <EditResearchModal
@@ -261,7 +260,6 @@ class ResearchAndCreativeWorkForm extends Component {
           isAddingCWork={isAddingCWork}
           isAddCWorkModalOpen={isAddCWorkModalOpen}
           toggleModal={toggleModal}
-          handleAfterClose={this.handleAfterClose}
         />
         {isEditCWorkModalOpen ? (
           <EditCWorkModal

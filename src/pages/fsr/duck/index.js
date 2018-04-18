@@ -10,6 +10,8 @@ const initialState = {
   research: {},
   cworks: [],
   cwork: {},
+  adminWorks: [],
+  adminWork: {},
   currentStep: 0,
 
   isGettingFSR: false,
@@ -28,17 +30,20 @@ const initialState = {
   isAddingCWork: false,
   isDeletingCWork: false,
   isEditingCWork: false,
+  isGettingAdminWorks: false,
+  isAddingAdminWork: false,
+  isDeletingAdminWork: false,
+  isEditingAdminWork: false,
 
   isAddSubjectModalOpen: false,
   isEditSubjectModalOpen: false,
-
   isAddCWorkModalOpen: false,
   isEditCWorkModalOpen: false,
-
   isAddResearchModalOpen: false,
   isEditResearchModalOpen: false,
-
   isAddAdminWorkModalOpen: false,
+  isEditAdminWorkModalOpen: false,
+
   isAddExtAndCommServiceModalOpen: false,
   isAddCourseModalOpen: false,
   isAddConsultationHourModalOpen: false,
@@ -329,6 +334,80 @@ const reducer = (state = initialState, action) => {
         }),
       });
 
+    case Action.GET_ADMINWORKS:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingAdminWorks: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          adminWorks: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingAdminWorks: false,
+        }),
+      });
+
+    case Action.ADD_ADMINWORK:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isAddingAdminWork: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          adminWorks: [...state.adminWorks, payload.data.data],
+          isAddAdminWorkModalOpen: false,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isAddingAdminWork: false,
+        }),
+      });
+
+    case Action.DELETE_ADMINWORK:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isDeletingAdminWork: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          adminWorks: state.adminWorks.filter(
+            adminWork =>
+              adminWork.adminWorkID !== payload.data.data.adminWorkID,
+          ),
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isDeletingAdminWork: false,
+        }),
+      });
+
+    case Action.EDIT_ADMINWORK:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isEditingAdminWork: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          adminWorks: state.adminWorks.map(
+            adminWork =>
+              adminWork.adminWorkID === payload.data.data.adminWorkID
+                ? { ...payload.data.data }
+                : adminWork,
+          ),
+          isEditAdminWorkModalOpen: false,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isEditingAdminWork: false,
+        }),
+      });
+
     case Action.TOGGLE_MODAL:
       switch (payload) {
         case Action.ADD_SUBJECT_MODAL:
@@ -358,10 +437,15 @@ const reducer = (state = initialState, action) => {
             ...state,
             isEditResearchModalOpen: !state.isEditResearchModalOpen,
           };
-        case Action.ADMINWORK:
+        case Action.ADD_ADMINWORK_MODAL:
           return {
             ...state,
             isAddAdminWorkModalOpen: !state.isAddAdminWorkModalOpen,
+          };
+        case Action.EDIT_ADMINWORK_MODAL:
+          return {
+            ...state,
+            isEditAdminWorkModalOpen: !state.isEditAdminWorkModalOpen,
           };
         case Action.EXTANDCOMMSERVICE:
           return {
@@ -390,6 +474,8 @@ const reducer = (state = initialState, action) => {
           return { ...state, research: payload.data };
         case Action.CWORK:
           return { ...state, cwork: payload.data };
+        case Action.ADMINWORK:
+          return { ...state, adminWork: payload.data };
 
         default:
           return state;
