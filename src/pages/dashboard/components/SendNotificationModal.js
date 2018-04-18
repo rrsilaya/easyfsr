@@ -8,6 +8,7 @@ const CHANGE_SELECTED_USER = 'USER/CHANGE_SELECTED_USER';
 const { Search } = Input;
 const { TextArea } = Input;
 const { Option } = Select;
+const { confirm } = Modal;
 
 class SendNotificationModal extends Component {
   handleFormSubmit = e => {
@@ -17,6 +18,10 @@ class SendNotificationModal extends Component {
         this.props.getUsers(getFieldValues(values));
       }
     });
+  };
+
+  handleToggleConfirmNotificationModal = () => {
+    this.props.toggleConfirmNotificationModal();
   };
 
   handleSearchUser = async value => {
@@ -61,7 +66,12 @@ class SendNotificationModal extends Component {
           <Button key="back" onClick={() => toggleModal(SEND_NOTIFICATION)}>
             Cancel
           </Button>,
-          <Button key="submit" type="primary" htmlType="submit">
+          <Button
+            key="submit"
+            type="primary"
+            htmlType="submit"
+            onClick={this.props.toggleConfirmNotificationModal}
+          >
             Send
           </Button>,
         ]}

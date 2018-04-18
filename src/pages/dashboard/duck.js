@@ -2,14 +2,37 @@ import { handle } from 'redux-pack';
 import * as Api from '../../api';
 import { notification } from 'antd';
 export const SEND_NOTIFICATION = 'SEND_NOTIFICATION';
+
 export const CREATE_FSR = 'CREATE_FSR';
 export const CREATE_ANNOUNCEMENT = 'CREATE_ANNOUNCEMENT';
+export const CREATE_NOTIFICATION = 'CREATE_NOTIFICATION';
+
+export const CONFIRM_ANNOUNCEMENT = 'CONFIRM_ANNOUNCEMENT';
+export const CONFIRM_NOTIFICATION = 'CONFIRM_NOTIFICATION';
+
 export const GET_USERS = 'GET_USERS';
 export const GET_ANNOUNCEMENTS = 'GET_ANNOUNCEMENTS';
 export const GET_NOTIFICATIONS = 'GET_NOTIFICATIONS';
 // Action Types
 export const TOGGLE_MODAL = 'DASHBOARD/TOGGLE_MODAL';
 export const CHANGE_SELECTED_USER = 'DASHBOARD/CHANGE_SELECTED_USER';
+export const TOGGLE_CONFIRM_ANNOUNCEMENT_MODAL =
+  'DASHBOARD/TOGGLE_CONFIRM_ANNOUNCEMENT_MODAL';
+export const TOGGLE_CONFIRM_NOTIFICATION_MODAL =
+  'DASHBOARD/TOGGLE_CONFIRM_NOTIFICATION_MODAL';
+
+export const toggleConfirmAnnouncementModal = () => ({
+  type: TOGGLE_CONFIRM_ANNOUNCEMENT_MODAL,
+});
+export const toggleConfirmNotificationModal = () => ({
+  type: TOGGLE_CONFIRM_NOTIFICATION_MODAL,
+});
+export const createAnnouncement = () => ({
+  type: CREATE_ANNOUNCEMENT,
+});
+export const createNotification = () => ({
+  type: CREATE_NOTIFICATION,
+});
 
 export const getUsers = query => {
   return dispatch => {
@@ -71,8 +94,14 @@ export const toggleModal = modal => ({
 
 const initialState = {
   isSendNotificationModalOpen: false,
+
   isCreateNotificationModalOpen: false,
   isCreateAnnouncementModalOpen: false,
+
+  isConfirmAnnouncementModalOpen: false,
+  isConfirmNotificationModalOpen: false,
+  createAnnouncement: false,
+  createNotification: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -154,6 +183,30 @@ const reducer = (state = initialState, action) => {
           isGettingNotifications: false,
         }),
       });
+
+    case CREATE_ANNOUNCEMENT:
+      return {
+        ...state,
+        createAnnouncement: !createAnnouncement,
+      };
+
+    case CREATE_NOTIFICATION:
+      return {
+        ...state,
+        createNotification: !createNotification,
+      };
+
+    case TOGGLE_CONFIRM_ANNOUNCEMENT_MODAL:
+      return {
+        ...state,
+        isConfirmAnnouncementModalOpen: !state.isConfirmAnnouncementModalOpen,
+      };
+
+    case TOGGLE_CONFIRM_NOTIFICATION_MODAL:
+      return {
+        ...state,
+        isConfirmNotificationModalOpen: !state.isConfirmNotificationModalOpen,
+      };
 
     default:
       return state;

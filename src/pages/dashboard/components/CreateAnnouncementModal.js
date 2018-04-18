@@ -5,7 +5,13 @@ import styles from '../styles';
 import { CREATE_ANNOUNCEMENT } from '../duck';
 
 const { TextArea } = Input;
+const { confirm } = Modal;
+
 class CreateAnnouncementModal extends Component {
+  handleToggleConfirmAnnouncementModal = () => {
+    this.props.toggleConfirmAnnouncementModal();
+  };
+
   render() {
     const {
       isCreateAnnouncementModalOpen,
@@ -24,7 +30,12 @@ class CreateAnnouncementModal extends Component {
           <Button key="back" onClick={() => toggleModal(CREATE_ANNOUNCEMENT)}>
             Cancel
           </Button>,
-          <Button key="submit" type="primary" htmlType="submit">
+          <Button
+            key="submit"
+            type="primary"
+            htmlType="submit"
+            onClick={this.props.toggleConfirmAnnouncementModal}
+          >
             Create
           </Button>,
         ]}

@@ -7,6 +7,8 @@ import columns from './columns';
 import SendNotificationModal from './components/SendNotificationModal';
 import CreateFSRModal from './components/CreateFSRModal';
 import CreateAnnouncementModal from './components/CreateAnnouncementModal';
+import ConfirmAnnouncementModal from './components/ConfirmAnnouncementModal';
+import ConfirmNotificationModal from './components/ConfirmNotificationModal';
 
 import { SEND_NOTIFICATION } from './duck';
 import { CREATE_FSR } from './duck';
@@ -33,8 +35,24 @@ class Dashboard extends Component {
   render() {
     const {
       isSendNotificationModalOpen,
+
       isCreateFSRModalOpen,
       isCreateAnnouncementModalOpen,
+
+      isConfirmAnnouncementModalOpen,
+      isConfirmNotificationModalOpen,
+
+      isConfirmingAnnouncement,
+      isConfirmingNotification,
+
+      toggleConfirmAnnouncementModal,
+      toggleConfirmNotificationModal,
+
+      changeSelectedUser,
+
+      createAnnouncement,
+      createNotification,
+
       announcements,
       notifications,
 
@@ -45,7 +63,15 @@ class Dashboard extends Component {
         <Row type="flex">
           <Col span={24}>
             <Button.Group style={styles.menu}>
+              <ConfirmNotificationModal
+                isConfirmNotificationModalOpen={isConfirmNotificationModalOpen}
+                toggleConfirmNotificationModal={toggleConfirmNotificationModal}
+                changeSelectedUser={changeSelectedUser}
+                createNotification={createNotification}
+                isConfirmingNotification={isConfirmingNotification}
+              />
               <SendNotificationModal
+                toggleConfirmNotificationModal={toggleConfirmNotificationModal}
                 isSendNotificationModalOpen={isSendNotificationModalOpen}
                 toggleModal={toggleModal}
                 handleAfterClose={this.handleAfterClose}
@@ -73,7 +99,16 @@ class Dashboard extends Component {
                 <p style={styles.description}>Create FSR</p>
               </Button>
 
+              <ConfirmAnnouncementModal
+                isConfirmAnnouncementModalOpen={isConfirmAnnouncementModalOpen}
+                toggleConfirmAnnouncementModal={toggleConfirmAnnouncementModal}
+                changeSelectedUser={changeSelectedUser}
+                createAnnouncement={createAnnouncement}
+                isConfirmingAnnouncement={isConfirmingAnnouncement}
+              />
+
               <CreateAnnouncementModal
+                toggleConfirmAnnouncementModal={toggleConfirmAnnouncementModal}
                 isCreateAnnouncementModalOpen={isCreateAnnouncementModalOpen}
                 toggleModal={toggleModal}
                 handleAfterClose={this.handleAfterClose}
