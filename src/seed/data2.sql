@@ -1176,6 +1176,36 @@ INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUE
 INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,29,'Please attach a file','2003-03-19 03:14:07','NORMAL');
 INSERT INTO notification (senderID, receiverID,message,timestamp,priority) VALUES(1,30,'Please change the schedule','1999-02-19 13:14:07','LOW');
 
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (1,'Monday','7:00:00','8:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (2,'Tuesday','10:00:00','13:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (3,'Wednesday','9:00:00','10:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (4,'Thursday','12:00:00','13:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (5,'Friday','13:00:00','14:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (6,'Monday','8:00:00','9:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (7,'Tuesday','13:00:00','16:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (8,'Wednesday','16:00:00','19:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (9,'Thursday','18:00:00','19:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (10,'Friday','13:00:00','14:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (11,'Monday','8:00:00','9:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (12,'Tuesday','13:00:00','16:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (13,'Wednesday','18:00:00','19:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (14,'Thursday','13:00:00','14:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (15,'Friday','13:00:00','14:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (16,'Monday','11:00:00','12:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (17,'Tuesday','9:00:00','10:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (18,'Wednesday','7:00:00','10:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (19,'Thursday','15:00:00','16:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (20,'Friday','13:00:00','16:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (21,'Monday','7:00:00','8:30:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (22,'Tuesday','9:00:00','12:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (23,'Wednesday','9:00:00','11:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (24,'Thursday','12:00:00','15:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (25,'Friday','12:00:00','14:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (26,'Monday','8:00:00','10:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (27,'Tuesday','7:00:00','8:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (28,'Wednesday','15:00:00','16:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (29,'Thursday','16:00:00','19:00:00');
+INSERT INTO courseSched (courseID,day,timeStart,timeEnd) VALUES (30,'Friday','11:00:00','12:00:00');
 
 
 -- EXTENSION AND COMMUNITY SERVICE
