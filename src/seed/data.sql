@@ -1501,6 +1501,7 @@ INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) 
 INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (90, 'Implementation', 'Sample Role', 'Sample Title', '2017-10-13', 'Sample Funding', 6);
 
 -- NOTIFICATION
+
 -- ANNOUNCEMENT
 INSERT INTO announcement (userID, title, body, isResolved) VALUES (2, 'Flipper', 'Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.
 
