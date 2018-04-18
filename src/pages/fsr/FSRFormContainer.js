@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import FSRForm from './FSRForm';
-
+import { push } from 'react-router-redux';
 import {
   toggleModal,
   nextStep,
@@ -12,6 +12,7 @@ import {
   editSubject,
   changeSelectedSubject,
   getTimeslots,
+  turnIn,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -35,7 +36,10 @@ const mapStateToProps = state => {
     isAddingTimeslot,
     isEditingSubject,
     isGettingTimeslots,
+    isTurningIn,
   } = state.fsr;
+
+  const { user } = state.app;
 
   return {
     isAddSubjectModalOpen,
@@ -57,6 +61,8 @@ const mapStateToProps = state => {
     isAddingTimeslot,
     isEditingSubject,
     isGettingTimeslots,
+    isTurningIn,
+    user,
   };
 };
 
@@ -91,6 +97,12 @@ const mapDispatchToProps = dispatch => {
     },
     getTimeslots: query => {
       dispatch(getTimeslots(query));
+    },
+    turnIn: id => {
+      dispatch(turnIn(id));
+    },
+    pushLink: route => {
+      dispatch(push(route));
     },
   };
 };

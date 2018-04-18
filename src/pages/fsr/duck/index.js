@@ -25,6 +25,9 @@ const initialState = {
   isAddExtAndCommServiceModalOpen: false,
   isAddCourseModalOpen: false,
   isAddConsultationHourModalOpen: false,
+
+  isTurningIn: false,
+  isFinalizing: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -156,6 +159,12 @@ const reducer = (state = initialState, action) => {
           isGettingTimeslots: false,
         }),
       });
+
+    case Action.TURN_IN:
+      return {
+        ...state,
+        fsr: payload,
+      };
 
     case Action.TOGGLE_MODAL:
       switch (payload) {

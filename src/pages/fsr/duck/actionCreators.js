@@ -119,6 +119,11 @@ export const changeSelectedSubject = subject => ({
   payload: subject,
 });
 
+export const turnIn = fsr => ({
+  type: Action.TURN_IN,
+  payload: fsr,
+});
+
 export const getTimeslots = query => {
   return dispatch => {
     return dispatch({
