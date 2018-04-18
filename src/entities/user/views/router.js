@@ -334,10 +334,14 @@ router.get('/user/:employeeID/studyLoad', async (req, res) => {
 
 router.get('/user/:employeeID/schedule', async (req, res) => {
   try {
-    const subjects = await Ctrl.getUserSubjects(req.params);
+    let subjects = await Ctrl.getUserSubjects(req.params);
+    let computedSubjects = [];
+    subjects.map(async subject => {
+      computedSubjects.push(await Ctrl.computeSubject(subject));
+    });
     const consultationHours = await Ctrl.getUserConsultationHours(req.params);
     const courses = await Ctrl.getUserSLCourses(req.params);
-    const schedule = [...subjects, ...consultationHours, ...courses];
+    const schedule = [...computedSubjects, ...consultationHours, ...courses];
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched schedule',

@@ -58,7 +58,8 @@ const router = Router();
 router.post('/subject/', async (req, res) => {
   try {
     const subjectID = await Ctrl.addSubject(req.body);
-    const subject = await Ctrl.getSubject({ subjectID });
+    let subject = await Ctrl.getSubject({ subjectID });
+    subject = await Ctrl.computeSubject(subject);
     await addLog({
       action: 'INSERT_SUBJECT',
       changes: '',
@@ -141,7 +142,8 @@ router.post('/subject/', async (req, res) => {
 router.put('/subject/:subjectID', async (req, res) => {
   try {
     await Ctrl.updateSubject(req.params, req.body);
-    const subject = await Ctrl.getSubject(req.params);
+    let subject = await Ctrl.getSubject(req.params);
+    subject = await Ctrl.computeSubject(subject);
     await addLog({
       action: 'UPDATE_SUBJECT',
       changes: '',
@@ -222,7 +224,9 @@ router.put('/subject/:subjectID', async (req, res) => {
 
 router.delete('/subject/:subjectID', async (req, res) => {
   try {
-    const subject = await Ctrl.getSubject(req.params);
+    let subject = await Ctrl.getSubject(req.params);
+    subject = await Ctrl.computeSubject(subject);
+
     await Ctrl.deleteSubject(req.params);
     await addLog({
       action: 'DELETE_SUBJECT',
