@@ -45,9 +45,6 @@ class ServiceRecords extends Component {
                     <Col {...gridConfig} className="text meta-2">
                       {fsr.acadYear}
                     </Col>
-                    <Col {...gridConfig} className="text meta-2">
-                      {fsr.teachingLoadCreds}
-                    </Col>
                   </Row>
                   <div style={styles.icons}>
                     {fsr.isTurnedIn ? (
