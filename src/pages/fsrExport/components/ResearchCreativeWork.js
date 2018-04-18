@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import moment from 'moment';
+
 import CreativeTable from './CreativeTable';
 
 class ResearchCreativeWork extends Component {
   render() {
-    const { creativeWorks } = this.props;
+    const { creativeWorks, researches } = this.props;
 
     return (
       <section>
@@ -23,13 +25,17 @@ class ResearchCreativeWork extends Component {
               <th colSpan={2}>FUNDING AGENCY</th>
               <th colSpan={2}>APPROVED CREDIT UNITS</th>
             </tr>
-            <tr>
-              <td colSpan={3}>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td colSpan={3}>&nbsp;</td>
-              <td colSpan={2}>&nbsp;</td>
-              <td colSpan={2}>&nbsp;</td>
-            </tr>
+            {researches
+              .filter(({ type }) => type !== 'PROPOSAL')
+              .map(research => (
+                <tr key={research.id}>
+                  <td colSpan={3}>{research.title}</td>
+                  <td>{research.role}</td>
+                  <td colSpan={3}>&nbsp;</td>
+                  <td colSpan={2}>{research.funding}</td>
+                  <td colSpan={2}>{research.approvedUnits}</td>
+                </tr>
+              ))}
             <tr>
               <td colSpan={9} className="right">
                 Total Research Work Load Credits (RLC)
@@ -56,6 +62,19 @@ class ResearchCreativeWork extends Component {
               <th>FUNDING AGENCY</th>
               <th colSpan={2}>APPROVED CREDIT UNITS</th>
             </tr>
+            {researches
+              .filter(({ type }) => type !== 'IMPLEMENTATION')
+              .map(research => (
+                <tr key={research.id}>
+                  <td colSpan={3}>{research.title}</td>
+                  <td>{research.role}</td>
+                  <td colSpan={2}>&nbsp;</td>
+                  <td>{moment(research.startDate).format('MM/DD/YY')}</td>
+                  <td>{moment(research.endDate).format('MM/DD/YY')}</td>
+                  <td>{research.funding}</td>
+                  <td colSpan={2}>{research.approvedUnits}</td>
+                </tr>
+              ))}
             <tr>
               <td colSpan={9} className="right">
                 Total Research Work Load Credits (RLC)

@@ -43,7 +43,10 @@ class FsrExport extends Component {
               <div className="document">
                 <Header meta={fsr.fsr} user={fsr.user} />
                 <TeachingLoad teachingLoad={fsr.subjects} />
-                <ResearchCreativeWork creativeWorks={fsr.creativeWorks} />
+                <ResearchCreativeWork
+                  researches={fsr.researches}
+                  creativeWorks={fsr.creativeWorks}
+                />
                 <AdminWork adminWorks={fsr.adminWorks} />
                 <ExtCommServe />
                 <StudyLoad />
