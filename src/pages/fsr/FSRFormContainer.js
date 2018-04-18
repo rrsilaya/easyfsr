@@ -12,6 +12,8 @@ import {
   editSubject,
   changeSelectedSubject,
   getTimeslots,
+  getNotifications,
+  getAnnouncements,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -29,12 +31,16 @@ const mapStateToProps = state => {
     subjects,
     subject,
     timeslots,
+    announcements,
+    notifications,
     isGettingFSR,
     isGettingSubjects,
     isAddingSubject,
     isAddingTimeslot,
     isEditingSubject,
     isGettingTimeslots,
+    isGettingAnnouncements,
+    isGettingNotifications,
   } = state.fsr;
 
   return {
@@ -51,12 +57,16 @@ const mapStateToProps = state => {
     subjects,
     subject,
     timeslots,
+    announcements,
+    notifications,
     isGettingFSR,
     isGettingSubjects,
     isAddingSubject,
     isAddingTimeslot,
     isEditingSubject,
     isGettingTimeslots,
+    isGettingNotifications,,
+    isGettingAnnouncements,
   };
 };
 
@@ -91,6 +101,12 @@ const mapDispatchToProps = dispatch => {
     },
     getTimeslots: query => {
       dispatch(getTimeslots(query));
+    },
+    getNotifications: query => {
+      dispatch(getNotifications(query));
+    },
+    getAnnouncements: query => {
+      dispatch(getAnnouncements(query));
     },
   };
 };
