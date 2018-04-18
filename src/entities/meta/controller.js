@@ -30,7 +30,7 @@ export const addMetaData = metaData => {
   });
 };
 
-export const getLastMetaDataID = () => {
+export const getLatestMetaData = () => {
   return new Promise((resolve, reject) => {
     db.query(Query.getLastInsertedID, (err, results) => {
       if (err) return reject(500);

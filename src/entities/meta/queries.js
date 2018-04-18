@@ -23,5 +23,5 @@ export const addMetaData = `
 `;
 
 export const getLastInsertedID = `
-  SELECT id FROM meta ORDER BY id DESC LIMIT 1;
+  SELECT * FROM meta ORDER BY id DESC LIMIT 1;
 `;

@@ -21,9 +21,9 @@ router.post('/meta', async (req, res) => {
   }
 });
 
-router.get('/meta/:id', async (req, res) => {
+router.get('/meta', async (req, res) => {
   try {
-    const metaData = await Ctrl.getMetaData(req.params);
+    const metaData = await Ctrl.getLatestMetaData();
 
     res.status(200).json({
       status: 200,
