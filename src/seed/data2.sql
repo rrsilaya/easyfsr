@@ -814,7 +814,7 @@ INSERT INTO course (hoursPerWeek, school, credit, courseNumber, id) VALUES (6, '
 INSERT INTO course (hoursPerWeek, school, credit, courseNumber, id) VALUES (6, 'CAS', 1, 'CMSC 341', 30);
 
 
---limitedPracticeOfProf
+-- limitedPracticeOfProf
 INSERT INTO limitedPracticeOfProf (id,askedPermission, date) VALUES (1,'YES', '1998-12-30');
 INSERT INTO limitedPracticeOfProf (id,askedPermission, date) VALUES (2,'NO', '2011-10-10');
 INSERT INTO limitedPracticeOfProf (id,askedPermission, date) VALUES (3,'YES', '1890-1-1');
