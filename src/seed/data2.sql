@@ -834,7 +834,7 @@ INSERT INTO limitedPracticeOfProf (id,askedPermission, date) VALUES (16,'NO', '2
 INSERT INTO limitedPracticeOfProf (id,askedPermission, date) VALUES (17,'YES', '2005-9-3');
 INSERT INTO limitedPracticeOfProf (id,askedPermission, date) VALUES (18,'NO', '1994-12-7');
 INSERT INTO limitedPracticeOfProf (id,askedPermission, date) VALUES (19,'YES', '1998-1-1');
-INSERT INTO limitedPracticeOfProf (id,askedPermission, date) VALUES (20,'NO', '1992-10-25');
+INSERT INTO limitedPracticeOfProf (id,askedPermission, date) VALUES (20,'YES', '1992-10-25');
 INSERT INTO limitedPracticeOfProf (id,askedPermission, date) VALUES (21,'YES', '2010-7-2');
 INSERT INTO limitedPracticeOfProf (id,askedPermission, date) VALUES (22,'NO', '2003-8-21');
 INSERT INTO limitedPracticeOfProf (id,askedPermission, date) VALUES (23,'YES', '2008-1-4');
@@ -855,7 +855,7 @@ INSERT INTO limitedPracticeOfProf (id,askedPermission, date) VALUES (37,'YES', '
 INSERT INTO limitedPracticeOfProf (id,askedPermission, date) VALUES (38,'NO', '2000-1-1');
 INSERT INTO limitedPracticeOfProf (id,askedPermission, date) VALUES (39,'YES', '2001-9-26');
 INSERT INTO limitedPracticeOfProf (id,askedPermission, date) VALUES (40,'NO', '2000-9-7');
-INSERT INTO limitedPracticeOfProf (id,askedPermission, date) VALUES (41,'YES', '2010-7-2');
+INSERT INTO limitedPracticeOfProf (id,askedPermission, date) VALUES (41,'NO', '2010-7-2');
 INSERT INTO limitedPracticeOfProf (id,askedPermission, date) VALUES (42,'NO', '2001-9-26');
 INSERT INTO limitedPracticeOfProf (id,askedPermission, date) VALUES (43,'YES', '2010-9-26');
 INSERT INTO limitedPracticeOfProf (id,askedPermission, date) VALUES (44,'NO', '2015-10-15');
