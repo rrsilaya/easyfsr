@@ -61,10 +61,12 @@ CREATE TABLE fsr(
     PRIMARY KEY (`id`),
   CONSTRAINT `user_fsr_fk`
   FOREIGN KEY (`userID`)
-    REFERENCES user(`userID`),
+    REFERENCES user(`userID`)
+    ON DELETE CASCADE,
   CONSTRAINT `meta_fsr_fk`
   FOREIGN KEY (`metaID`)
     REFERENCES meta(`id`)
+    ON DELETE CASCADE
 );
 
 -- Entities under FSR 
