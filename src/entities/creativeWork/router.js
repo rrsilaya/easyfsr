@@ -414,7 +414,11 @@ router.put('/creativeWork/:creativeWorkID', async (req, res) => {
     if (req.files && req.files.filepath) {
       const creativeWork = await Ctrl.getCreativeWork(req.params);
 
-      if (creativeWork.filepath) await unlink(creativeWork.filepath);
+      if (
+        creativeWork.filepath &&
+        creativeWork.filepath !== '/uploads/creativeWorks/dummy.jpg'
+      )
+        await unlink(creativeWork.filepath);
       req.body.filepath = await upload(req.files.filepath, 'creativeWorks');
     }
 
