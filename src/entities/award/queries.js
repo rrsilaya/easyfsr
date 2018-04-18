@@ -47,6 +47,7 @@ export const getAwards = (query, sortBy, userID) => `
  SELECT ${
    userID
      ? `
+  awardID,
   x.id,
   grantF,
   chairGrantTitle,

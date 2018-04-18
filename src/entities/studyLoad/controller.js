@@ -20,10 +20,19 @@ const searchFields = [
 
 export const addStudyLoad = studyLoad => {
   return new Promise((resolve, reject) => {
-    db.query(Query.addStudyLoad, studyLoad, (err, results) => {
-      if (err) return reject(500);
-      return resolve(studyLoad.id);
-    });
+    db.query(
+      Query.addStudyLoad,
+      {
+        fullLeaveWithPay: '0',
+        fellowshipRecipient: '0',
+        totalSLcredits: 0,
+        ...studyLoad,
+      },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(studyLoad.id);
+      },
+    );
   });
 };
 

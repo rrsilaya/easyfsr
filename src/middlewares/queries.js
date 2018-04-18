@@ -3,6 +3,11 @@ export const getUserIDofFSR = `
   WHERE id = :id
 `;
 
+export const getIDofFSRfromAward = `
+	SELECT id FROM award a
+	WHERE a.awardID = :awardID
+`;
+
 export const getIDofFSRfromCourse = `
 	SELECT id FROM course c
 	WHERE c.courseID = :courseID

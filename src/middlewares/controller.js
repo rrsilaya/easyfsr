@@ -22,6 +22,16 @@ export const getIDofFSRfromAdminWork = adminWorkID => {
   });
 };
 
+export const getIDofFSRfromAward = awardID => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getIDofFSRfromAward, { awardID }, (err, results) => {
+      if (err) return reject(500);
+      if (results.length != 0) return resolve(results[0].id);
+      return reject(404);
+    });
+  });
+};
+
 export const getIDofFSRfromConsultationHours = chID => {
   return new Promise((resolve, reject) => {
     db.query(

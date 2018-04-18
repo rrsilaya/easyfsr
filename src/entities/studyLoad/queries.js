@@ -39,6 +39,7 @@ export const getStudyLoads = (query, sortBy, userID) => `
 	SELECT ${
     userID
       ? `
+    x.id,
 		fullLeaveWithPay,
 	  fellowshipRecipient,
 	  degree,
