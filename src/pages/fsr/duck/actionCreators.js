@@ -107,13 +107,14 @@ export const editSubject = (subjectID, body) => (dispatch, getState) => {
     promise: Api.editSubject(subjectID, body),
     meta: {
       onSuccess: () => {
-        const { timeslots } = getState().fsr;
+        const { timeslots, fsr } = getState().fsr;
 
         timeslots.forEach(timeslot => {
           dispatch(editTimeslot(timeslot.timeslotID, { ...body }));
         });
 
         notification.success({ message: 'Successfully edited subject' });
+        dispatch(getSubjects({ id: fsr.id }));
       },
       onFailure: () => {
         notification.error({ message: 'Server error while updating subject' });
@@ -523,6 +524,178 @@ export const editAward = (awardID, body) => {
         onFailure: () => {
           notification.error({
             message: 'Server error while updating award',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const getStudyLoad = id => {
+  return dispatch => {
+    return dispatch({
+      type: Action.GET_STUDYLOAD,
+      promise: Api.getStudyLoad(id),
+      meta: {
+        onFailure: () => {
+          notification.error({
+            message: 'Failure to fetch study load',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const editStudyLoad = (id, body) => {
+  return dispatch => {
+    return dispatch({
+      type: Action.EDIT_STUDYLOAD,
+      promise: Api.editStudyLoad(id, body),
+      meta: {
+        onSuccess: () => {
+          dispatch(nextStep());
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while updating study load',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const getCourses = query => {
+  return dispatch => {
+    return dispatch({
+      type: Action.GET_COURSES,
+      promise: Api.getCourses(query),
+      meta: {
+        onFailure: () => {
+          notification.error({
+            message: 'Failure to fetch courses',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const addCourse = values => (dispatch, getState) => {
+  dispatch({
+    type: Action.ADD_COURSE,
+    promise: Api.addCourse(values),
+    meta: {
+      onSuccess: () => {
+        const { course, fsr } = getState().fsr;
+
+        values.days.forEach(day => {
+          dispatch(
+            addCourseSched({ ...values, day, courseID: course.courseID }),
+          );
+        });
+
+        notification.success({
+          message: 'Successfully added course',
+        });
+        dispatch(getCourses({ id: fsr.id }));
+      },
+      onFailure: () => {
+        notification.error({
+          message: 'Server error while creating course',
+        });
+      },
+    },
+  });
+};
+
+export const deleteCourse = courseID => {
+  return dispatch => {
+    return dispatch({
+      type: Action.DELETE_COURSE,
+      promise: Api.deleteCourse(courseID),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully deleted course',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while deleting course',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const editCourse = (courseID, body) => (dispatch, getState) => {
+  dispatch({
+    type: Action.EDIT_COURSE,
+    promise: Api.editCourse(courseID, body),
+    meta: {
+      onSuccess: () => {
+        const { courseScheds, fsr } = getState().fsr;
+
+        courseScheds.forEach(courseSched => {
+          dispatch(editCourseSched(courseSched.courseSchedID, { ...body }));
+        });
+
+        notification.success({
+          message: 'Successfully edited course',
+        });
+        dispatch(getCourses({ id: fsr.id }));
+      },
+      onFailure: () => {
+        notification.error({
+          message: 'Server error while updating course',
+        });
+      },
+    },
+  });
+};
+
+export const addCourseSched = courseSched => {
+  return dispatch => {
+    return dispatch({
+      type: Action.ADD_COURSESCHED,
+      promise: Api.addCourseSched(courseSched),
+      meta: {
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while adding course schedule',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const getCourseScheds = query => {
+  return dispatch => {
+    return dispatch({
+      type: Action.GET_COURSESCHEDS,
+      promise: Api.getCourseScheds(query),
+      meta: {
+        onFailure: () => {
+          notification.error({ message: 'Failure to fetch course schedules' });
+        },
+      },
+    });
+  };
+};
+
+export const editCourseSched = (courseSchedID, body) => {
+  return dispatch => {
+    return dispatch({
+      type: Action.EDIT_COURSESCHED,
+      promise: Api.editCourseSched(courseSchedID, body),
+      meta: {
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while editing course schedule',
           });
         },
       },

@@ -35,6 +35,7 @@ class FSRForm extends Component {
       isEditCWorkModalOpen,
       isEditAdminWorkModalOpen,
       isEditExtAndCommServiceModalOpen,
+      isEditCourseModalOpen,
 
       toggleModal,
       nextStep,
@@ -53,6 +54,10 @@ class FSRForm extends Component {
       adminWork,
       extAndCommServices,
       extAndCommService,
+      studyLoad,
+      courses,
+      course,
+      courseScheds,
       ltdPractOfProf,
       award,
 
@@ -78,6 +83,13 @@ class FSRForm extends Component {
       addExtAndCommService,
       deleteExtAndCommService,
       editExtAndCommService,
+      getStudyLoad,
+      editStudyLoad,
+      getCourses,
+      addCourse,
+      deleteCourse,
+      editCourse,
+      getCourseScheds,
       getLtdPractOfProfs,
       editLtdPractOfProf,
       getAwards,
@@ -100,6 +112,13 @@ class FSRForm extends Component {
       isGettingExtAndCommServices,
       isAddingExtAndCommService,
       isEditingExtAndCommService,
+      isGettingStudyLoad,
+      isEditingStudyLoad,
+      isGettingCourses,
+      isAddingCourse,
+      isEditingCourse,
+      isGettingCourseScheds,
+      isAddingCourseSched,
       isGettingLtdPractOfProf,
       isEditingLtdPractOfProf,
       isGettingAward,
@@ -223,10 +242,30 @@ class FSRForm extends Component {
                 />
               ) : currentStep === 4 ? (
                 <StudyLoadForm
+                  fsrID={fsrID}
+                  studyLoad={studyLoad}
+                  courses={courses}
+                  course={course}
+                  courseScheds={courseScheds}
+                  getStudyLoad={getStudyLoad}
+                  editStudyLoad={editStudyLoad}
+                  getCourses={getCourses}
+                  addCourse={addCourse}
+                  deleteCourse={deleteCourse}
+                  editCourse={editCourse}
+                  getCourseScheds={getCourseScheds}
+                  changeSelected={changeSelected}
+                  isGettingStudyLoad={isGettingStudyLoad}
+                  isEditingStudyLoad={isEditingStudyLoad}
+                  isGettingCourses={isGettingCourses}
+                  isAddingCourse={isAddingCourse}
+                  isEditingCourse={isEditingCourse}
+                  isGettingCourseScheds={isGettingCourseScheds}
+                  isAddingCourseSched={isAddingCourseSched}
                   isAddCourseModalOpen={isAddCourseModalOpen}
+                  isEditCourseModalOpen={isEditCourseModalOpen}
                   toggleModal={toggleModal}
                   prevStep={prevStep}
-                  nextStep={nextStep}
                 />
               ) : currentStep === 5 ? (
                 <LimitedPracticeForm

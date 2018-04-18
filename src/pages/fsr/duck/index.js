@@ -14,6 +14,10 @@ const initialState = {
   adminWork: {},
   extAndCommServices: [],
   extAndCommService: {},
+  studyLoad: {},
+  courses: [],
+  course: {},
+  courseScheds: [],
   ltdPractOfProf: {},
   award: {},
   currentStep: 0,
@@ -42,6 +46,15 @@ const initialState = {
   isAddingExtAndCommService: false,
   isDeletingExtAndCommService: false,
   isEditingExtAndCommService: false,
+  isGettingStudyLoad: false,
+  isEditingStudyLoad: false,
+  isGettingCourses: false,
+  isAddingCourse: false,
+  isDeletingCourse: false,
+  isEditingCourse: false,
+  isGettingCourseScheds: false,
+  isAddingCourseSched: false,
+  isEditingCourseSched: false,
   isGettingLtdPractOfProf: false,
   isEditingLtdPractOfProf: false,
   isGettingAward: false,
@@ -58,6 +71,7 @@ const initialState = {
   isAddExtAndCommServiceModalOpen: false,
   isEditExtAndCommServiceModalOpen: false,
   isAddCourseModalOpen: false,
+  isEditCourseModalOpen: false,
   isAddConsultationHourModalOpen: false,
 };
 
@@ -497,6 +511,157 @@ const reducer = (state = initialState, action) => {
         }),
       });
 
+    case Action.GET_STUDYLOAD:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingStudyLoad: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          studyLoad: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingStudyLoad: false,
+        }),
+      });
+
+    case Action.EDIT_STUDYLOAD:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isEditingStudyLoad: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          studyLoad: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isEditingStudyLoad: false,
+        }),
+      });
+
+    case Action.GET_COURSES:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingCourses: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          courses: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingCourses: false,
+        }),
+      });
+
+    case Action.ADD_COURSE:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isAddingCourse: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          course: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isAddingCourse: false,
+        }),
+      });
+
+    case Action.DELETE_COURSE:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isDeletingCourse: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          courses: state.courses.filter(
+            course => course.courseID !== payload.data.data.courseID,
+          ),
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isDeletingCourse: false,
+        }),
+      });
+
+    case Action.EDIT_COURSE:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isEditingCourse: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          courses: state.courses.map(
+            course =>
+              course.courseID === payload.data.data.courseID
+                ? { ...payload.data.data }
+                : course,
+          ),
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isEditingCourse: false,
+        }),
+      });
+
+    case Action.ADD_COURSESCHED:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isAddingCourseSched: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          isAddCourseModalOpen: false,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isAddingCourseSched: false,
+        }),
+      });
+
+    case Action.EDIT_COURSESCHED:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isEditingCourseSched: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          isEditCourseModalOpen: false,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isEditingCourseSched: false,
+        }),
+      });
+
+    case Action.GET_COURSESCHEDS:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingCourseScheds: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          courseScheds: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingCourseScheds: false,
+        }),
+      });
+
     case Action.GET_LTDPRACTOFPROFS:
       return handle(state, action, {
         start: prevState => ({
@@ -610,10 +775,15 @@ const reducer = (state = initialState, action) => {
             ...state,
             isEditExtAndCommServiceModalOpen: !state.isEditExtAndCommServiceModalOpen,
           };
-        case Action.COURSE:
+        case Action.ADD_COURSE_MODAL:
           return {
             ...state,
             isAddCourseModalOpen: !state.isAddCourseModalOpen,
+          };
+        case Action.EDIT_COURSE_MODAL:
+          return {
+            ...state,
+            isEditCourseModalOpen: !state.isEditCourseModalOpen,
           };
         case Action.CONSULTATIONHOUR:
           return {
@@ -636,6 +806,8 @@ const reducer = (state = initialState, action) => {
           return { ...state, adminWork: payload.data };
         case Action.EXTANDCOMMSERVICE:
           return { ...state, extAndCommService: payload.data };
+        case Action.COURSE:
+          return { ...state, course: payload.data };
 
         default:
           return state;

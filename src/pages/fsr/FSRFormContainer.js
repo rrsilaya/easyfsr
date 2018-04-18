@@ -28,6 +28,13 @@ import {
   addExtAndCommService,
   deleteExtAndCommService,
   editExtAndCommService,
+  getStudyLoad,
+  editStudyLoad,
+  getCourses,
+  addCourse,
+  deleteCourse,
+  editCourse,
+  getCourseScheds,
   getLtdPractOfProfs,
   editLtdPractOfProf,
   getAwards,
@@ -48,6 +55,7 @@ const mapStateToProps = state => {
     isEditCWorkModalOpen,
     isEditAdminWorkModalOpen,
     isEditExtAndCommServiceModalOpen,
+    isEditCourseModalOpen,
     currentStep,
     fsr,
     subjects,
@@ -61,6 +69,10 @@ const mapStateToProps = state => {
     adminWork,
     extAndCommServices,
     extAndCommService,
+    studyLoad,
+    courses,
+    course,
+    courseScheds,
     ltdPractOfProf,
     award,
     isGettingFSR,
@@ -81,6 +93,13 @@ const mapStateToProps = state => {
     isGettingExtAndCommServices,
     isAddingExtAndCommService,
     isEditingExtAndCommService,
+    isGettingStudyLoad,
+    isEditingStudyLoad,
+    isGettingCourses,
+    isAddingCourse,
+    isEditingCourse,
+    isGettingCourseScheds,
+    isAddingCourseSched,
     isGettingLtdPractOfProf,
     isEditingLtdPractOfProf,
     isGettingAward,
@@ -100,6 +119,7 @@ const mapStateToProps = state => {
     isEditCWorkModalOpen,
     isEditAdminWorkModalOpen,
     isEditExtAndCommServiceModalOpen,
+    isEditCourseModalOpen,
     currentStep,
     fsr,
     subjects,
@@ -113,6 +133,10 @@ const mapStateToProps = state => {
     adminWork,
     extAndCommServices,
     extAndCommService,
+    studyLoad,
+    courses,
+    course,
+    courseScheds,
     ltdPractOfProf,
     award,
     isGettingFSR,
@@ -133,6 +157,13 @@ const mapStateToProps = state => {
     isGettingExtAndCommServices,
     isAddingExtAndCommService,
     isEditingExtAndCommService,
+    isGettingStudyLoad,
+    isEditingStudyLoad,
+    isGettingCourses,
+    isAddingCourse,
+    isEditingCourse,
+    isGettingCourseScheds,
+    isAddingCourseSched,
     isGettingLtdPractOfProf,
     isEditingLtdPractOfProf,
     isGettingAward,
@@ -219,6 +250,27 @@ const mapDispatchToProps = dispatch => {
     },
     editExtAndCommService: (extAndCommServiceID, body) => {
       dispatch(editExtAndCommService(extAndCommServiceID, body));
+    },
+    getStudyLoad: id => {
+      dispatch(getStudyLoad(id));
+    },
+    editStudyLoad: (id, body) => {
+      dispatch(editStudyLoad(id, body));
+    },
+    getCourses: query => {
+      dispatch(getCourses(query));
+    },
+    addCourse: course => {
+      dispatch(addCourse(course));
+    },
+    deleteCourse: courseID => {
+      dispatch(deleteCourse(courseID));
+    },
+    editCourse: (courseID, body) => {
+      dispatch(editCourse(courseID, body));
+    },
+    getCourseScheds: query => {
+      dispatch(getCourseScheds(query));
     },
     getLtdPractOfProfs: query => {
       dispatch(getLtdPractOfProfs(query));

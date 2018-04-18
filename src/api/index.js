@@ -16,3 +16,6 @@ export * from './adminWork';
 export * from './service';
 export * from './ltdPractOfProf';
 export * from './award';
+export * from './studyLoad';
+export * from './course';
+export * from './courseSched';
