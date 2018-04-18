@@ -8,7 +8,7 @@ const { Item: ListItem } = List;
 
 class ServiceRecords extends Component {
   componentDidMount() {
-    this.props.getFSRs();
+    this.props.getFSRs({ userID: this.props.user.userID });
   }
 
   render() {
