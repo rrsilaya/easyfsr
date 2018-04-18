@@ -63,6 +63,7 @@ class Users extends Component {
       pagination,
       users,
       user,
+      userLoggedIn,
     } = this.props;
 
     return (
@@ -98,6 +99,7 @@ class Users extends Component {
                       toggleEditModal={toggleEditModal}
                       toggleDeleteModal={toggleDeleteModal}
                       changeSelectedUser={changeSelectedUser}
+                      userLoggedIn={userLoggedIn}
                     />
                   </Col>
                 ))}

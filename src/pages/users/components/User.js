@@ -31,7 +31,7 @@ class User extends Component {
   };
 
   render() {
-    const { user } = this.props;
+    const { user, userLoggedIn } = this.props;
 
     return (
       <div>
@@ -50,7 +50,16 @@ class User extends Component {
               <Icon
                 type="delete"
                 className="text normal"
-                onClick={this.showDeleteConfirm}
+                onClick={
+                  user.userID !== userLoggedIn.userID
+                    ? this.showDeleteConfirm
+                    : null
+                }
+                style={
+                  user.userID !== userLoggedIn.userID
+                    ? null
+                    : { color: '#cccccc' }
+                }
               />
             </Tooltip>,
             <Link to={`/profile/${user.employeeID}`}>
