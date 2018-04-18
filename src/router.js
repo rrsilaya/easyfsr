@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import authRouter from './entities/auth/router';
 import userRouter from './entities/user/router';
+import researchRouter from './entities/research/router';
 import studyLoadRouter from './entities/studyLoad/router';
 import awardRouter from './entities/award/router';
 import subjectRouter from './entities/subject/router';
@@ -17,6 +18,8 @@ import creativeWorkRouter from './entities/creativeWork/router';
 import userViewRouter from './entities/user/views/router';
 import announcementRouter from './entities/announcement/router';
 import consultationHoursRouter from './entities/consultationHours/router';
+import metaRouter from './entities/meta/router';
+import logRouter from './entities/log/router';
 
 const router = Router();
 
@@ -31,7 +34,8 @@ router.use(authRouter);
 //     message: 'You must be logged in',
 //   });
 // });
-
+router.use(logRouter);
+router.use(metaRouter);
 router.use(studyLoadRouter);
 router.use(userViewRouter);
 router.use(awardRouter);
@@ -51,8 +55,9 @@ router.use(creativeWorkRouter);
 //     status:403,
 //     message: 'Forbidden access',
 //   });
-// });
+// });]
 
+router.use(researchRouter);
 router.use(consultationHoursRouter);
 router.use(announcementRouter);
 router.use(userRouter);

@@ -7,27 +7,23 @@ const notificationAttributes = [
   'senderID',
   'receiverID',
   'message',
-  'dateSent',
-  'timeSent',
+  'timestamp',
   'isResolved',
   'priority',
 ];
 
-const searchFields = [
-  'notificationID',
-  'senderID',
-  'receiverID',
-  'dateSent',
-  'isResolved',
-  'priority',
-];
+const searchFields = ['dateSent', 'isResolved', 'priority'];
 
 export const addNotification = notification => {
   return new Promise((resolve, reject) => {
-    db.query(Query.addNotification, notification, (err, results) => {
-      if (err) return reject(500);
-      return resolve(results.insertId);
-    });
+    db.query(
+      Query.addNotification,
+      { priority: 'NORMAL', ...notification },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(results.insertId);
+      },
+    );
   });
 };
 
@@ -91,6 +87,7 @@ export const getTotalNotifs = notification => {
 export const updateNotification = ({ notificationID }, notification) => {
   return new Promise((resolve, reject) => {
     if (!notification) return reject(500);
+    notification.timestamp = Date.now();
     db.query(
       Query.updateNotification(filtered(notification, notificationAttributes)),
       { notificationID, ...notification },

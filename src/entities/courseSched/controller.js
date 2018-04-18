@@ -1,6 +1,7 @@
 import db from '../../database/index';
 import * as Query from './queries';
 import { filtered, escapeSearch } from '../../utils';
+import moment from 'moment';
 
 const courseSchedAttributes = [
   'courseSchedID',
@@ -10,19 +11,27 @@ const courseSchedAttributes = [
   'timeEnd',
 ];
 
-const searchFields = ['courseID', 'day', 'timeStart', 'timeEnd'];
+const searchFields = ['day', 'timeStart', 'timeEnd'];
 
 export const addCourseSched = courseSched => {
   return new Promise((resolve, reject) => {
+    const timeStart = moment(courseSched.timeStart, 'HH:mm:ss');
+    const timeEnd = moment(courseSched.timeEnd, 'HH:mm:ss');
+
+    if (!moment(timeStart).isBefore(timeEnd)) return reject(400);
     db.query(Query.addCourseSched, courseSched, (err, results) => {
       if (err) return reject(500);
       return resolve(results.insertId);
     });
   });
 };
-
+//
 export const updateCourseSched = ({ courseSchedID }, courseSched) => {
   return new Promise((resolve, reject) => {
+    const timeStart = moment(courseSched.timeStart, 'HH:mm:ss');
+    const timeEnd = moment(courseSched.timeEnd, 'HH:mm:ss');
+
+    if (!moment(timeStart).isBefore(timeEnd)) return reject(400);
     if (!courseSched) return reject(500);
     db.query(
       Query.updateCourseSched(filtered(courseSched, courseSchedAttributes)),
@@ -62,7 +71,7 @@ export const getCourseScheds = courseSched => {
         courseSched.sortBy,
       ),
       {
-        field: 'courseSchedID',
+        field: 'day',
         ...escapeSearch(courseSched, searchFields, courseSched.limit),
       },
       (err, results) => {
@@ -81,7 +90,7 @@ export const getTotalCourseScheds = courseSched => {
         courseSched.sortBy,
       ),
       {
-        field: 'courseSchedID',
+        field: 'day',
         ...escapeSearch(courseSched, searchFields, courseSched.limit),
       },
       (err, results) => {

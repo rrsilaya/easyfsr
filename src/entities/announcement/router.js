@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import bcrypt from 'bcrypt';
 import * as Ctrl from './controller';
+import { addLog } from './../log/controller';
 
 const router = Router();
 
@@ -10,17 +10,16 @@ const router = Router();
  * @apiName addAnnouncement
  *
  *
- * @apiParam (Body Params) {Number} userID ID of user who posted announcement
  * @apiParam (Body Params) {String} title title of the announcement
  * @apiParam (Body Params) {String} body body of the announcement
- * @apiParam (Body Params) {String} [isResolved] indicates if announcement entry is resolved
+ * @apiParam (Body Params) {Boolean} [isResolved] indicates if announcement entry is resolved
  *
- * @apiSuccess {Object} announcement new Announcement created
- * @apiSuccess {Number} announcement.announcementID ID of announcement
- * @apiSuccess {Number} announcement.userID ID of user who posted announcement
- * @apiSuccess {String} announcement.title title of announcement
- * @apiSuccess {String} announcement.body body of announcement
- * @apiSuccess {Boolean} announcement.isResolved isResolved indicates if announcement is resolved
+ * @apiSuccess {Object} data new Announcement created
+ * @apiSuccess {Number} data.announcementID ID of announcement
+ * @apiSuccess {Number} data.userID ID of user who posted announcement
+ * @apiSuccess {String} data.title title of announcement
+ * @apiSuccess {String} data.body body of announcement
+ * @apiSuccess {Boolean} data.isResolved isResolved indicates if announcement is resolved
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -36,7 +35,7 @@ const router = Router();
  *    }
  *}
  *
- * @apiError (Error 500) {String} status List of errors
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -47,8 +46,16 @@ const router = Router();
  */
 router.post('/announcement', async (req, res) => {
   try {
+    req.body.userID = req.session.user.userID;
     const announcementID = await Ctrl.addAnnouncement(req.body);
     const announcement = await Ctrl.getAnnouncement({ announcementID });
+    delete announcement.isResolved;
+    await addLog({
+      action: 'ADD_ANNOUNCEMENT',
+      changes: '',
+      affectedID: announcementID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully created announcement',
@@ -71,13 +78,14 @@ router.post('/announcement', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} announcementID ID of announcement
  *
- * @apiSuccess {Object} announcement Announcement announcement deleted
- * @apiSuccess {Number} announcement.announcementID ID of announcement
- * @apiSuccess {Number} announcement.userID ID of user who posted announcement
- * @apiSuccess {String} announcement.title title of announcement
- * @apiSuccess {String} announcement.body body of announcement
- * @apiSuccess {Boolean} announcement.isResolved isResolved indicates if announcement is resolved
+ * @apiSuccess {Object} data  Announcement deleted
+ * @apiSuccess {Number} data.announcementID ID of announcement
+ * @apiSuccess {Number} data.userID ID of user who posted announcement
+ * @apiSuccess {String} data.title title of announcement
+ * @apiSuccess {String} data.body body of announcement
+ * @apiSuccess {Boolean} data.isResolved isResolved indicates if announcement is resolved
  *
+ * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
  *   {
  *   "status": 200,
@@ -91,7 +99,7 @@ router.post('/announcement', async (req, res) => {
  *   }
  * }
  *
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -99,7 +107,7 @@ router.post('/announcement', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Announcement not found
@@ -111,7 +119,14 @@ router.post('/announcement', async (req, res) => {
 router.delete('/announcement/:announcementID', async (req, res) => {
   try {
     const announcement = await Ctrl.getAnnouncement(req.params);
+    delete announcement.isResolved;
     await Ctrl.deleteAnnouncement(req.params);
+    await addLog({
+      action: 'DELETE_ANNOUNCEMENT',
+      changes: '',
+      affectedID: announcement.announcementID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully deleted announcement',
@@ -135,7 +150,7 @@ router.delete('/announcement/:announcementID', async (req, res) => {
  * @apiGroup Announcement
  * @apiName getAnnouncements
  *
- *
+ * @apiParam (Query Params) {Number} [announcementID] ID of announcement
  * @apiParam (Query Params) {Number} [userID] ID of user who posted announcement
  * @apiParam (Query Params) {String} [title] title of the announcement
  * @apiParam (Query Params) {String} [body] body of the announcement
@@ -145,12 +160,12 @@ router.delete('/announcement/:announcementID', async (req, res) => {
  * @apiParam (Query Params) {String} [sortBy] sort data by 'ASC' or 'DESC'
  * @apiParam (Query Params) {String} [field] order data depending on this field. Default value is 'title'
  *
- * @apiSuccess {Object} announcement Announcement details
- * @apiSuccess {Number} announcement.announcementID ID of announcement
- * @apiSuccess {Number} announcement.userID ID of user who posted announcement
- * @apiSuccess {String} announcement.title title of announcement
- * @apiSuccess {String} announcement.body body of announcement
- * @apiSuccess {Boolean} announcement.isResolved isResolved indicates if announcement is resolved
+ * @apiSuccess {Object[]}  data Announcement fetched
+ * @apiSuccess {Number} data.announcementID ID of announcement
+ * @apiSuccess {Number} data.userID ID of user who posted announcement
+ * @apiSuccess {String} data.title title of announcement
+ * @apiSuccess {String} data.body body of announcement
+ * @apiSuccess {Boolean} data.isResolved isResolved indicates if announcement is resolved
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -178,7 +193,7 @@ router.delete('/announcement/:announcementID', async (req, res) => {
  *    "page": 1,
  *    "pages": 1
  *		}
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -186,18 +201,11 @@ router.delete('/announcement/:announcementID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
- * @apiError (Error 404) {String} message Error message
- * @apiErrorExample {json} Error-Response:
- * HTTP/1.1 404 Announcement not found
- * {
- *   "status": 404,
- *   "message": "Announcements not found"
- * }
  */
 router.get('/announcement', async (req, res) => {
   try {
     const announcements = await Ctrl.getAnnouncements(req.query);
+    announcements.map(announcement => delete announcement.isResolved);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched announcements',
@@ -230,12 +238,16 @@ router.get('/announcement', async (req, res) => {
  *
  * @apiParam (Query Params) {Number} announcementID ID of announcement
  *
- * @apiSuccess {Object} announcement Announcement details
- * @apiSuccess {Number} announcement.announcementID ID of announcement
- * @apiSuccess {Number} announcement.userID ID of user who posted announcement
- * @apiSuccess {String} announcement.title title of announcement
- * @apiSuccess {String} announcement.body body of announcement
- * @apiSuccess {Boolean} announcement.isResolved isResolved indicates if announcement is resolved
+ * @apiSuccess {Object} data Announcement details
+ * @apiSuccess {Number} data.announcementID ID of announcement
+ * @apiSuccess {Number} data.userID ID of user who posted announcement
+ * @apiSuccess {String} data.title title of announcement
+ * @apiSuccess {String} data.body body of announcement
+ * @apiSuccess {Boolean} data.isResolved isResolved indicates if announcement is resolved
+ * @apiSuccess {Number} total Total amount of documents.
+ * @apiSuccess {Number} limit Max number of documents
+ * @apiSuccess {Number} page nth page this query is.
+ * @apiSuccess {Number} pages Number of total pages.
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -251,7 +263,7 @@ router.get('/announcement', async (req, res) => {
  *             "isResolved": 0
  *         }
  * }
- * @apiError (Error 500) {String} status error status code
+ * @apiError (Error 500) {Number} status  status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -259,7 +271,7 @@ router.get('/announcement', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Announcement not found
@@ -271,6 +283,7 @@ router.get('/announcement', async (req, res) => {
 router.get('/announcement/:announcementID', async (req, res) => {
   try {
     const announcement = await Ctrl.getAnnouncement(req.params);
+    delete announcement.isResolved;
 
     res.status(200).json({
       status: 200,
@@ -296,16 +309,18 @@ router.get('/announcement/:announcementID', async (req, res) => {
  * @apiName updateAnnouncement
  *
  * @apiParam (Query Params) {Number} announcementID ID of announcement
+ *
  * @apiParam (Body Params) {Number} [userID] ID of user who posted announcement
  * @apiParam (Body Params) {String} [title] title of the announcement
  * @apiParam (Body Params) {String} [body] body of the announcement
  * @apiParam (Body Params) {Boolean} [isResolved] isResolved indicates if announcement entry is resolved
- * @apiSuccess {Object} announcement Announcement announcement updated
- * @apiSuccess {Number} announcement.announcementID ID of announcement
- * @apiSuccess {Number} announcement.userID ID of user who posted announcement
- * @apiSuccess {String} announcement.title title of announcement
- * @apiSuccess {String} announcement.body body of announcement
- * @apiSuccess {Boolean} announcement.isResolved isResolved indicates if announcement is resolved
+ *
+ * @apiSuccess {Object} data  Announcement updated
+ * @apiSuccess {Number} data.announcementID ID of announcement
+ * @apiSuccess {Number} data.userID ID of user who posted announcement
+ * @apiSuccess {String} data.title title of announcement
+ * @apiSuccess {String} data.body body of announcement
+ * @apiSuccess {Boolean} data.isResolved isResolved indicates if announcement is resolved
  *
  * @apiSuccessExample {json} Success-Response:
  *   HTTP/1.1 200 OK
@@ -321,7 +336,7 @@ router.get('/announcement/:announcementID', async (req, res) => {
  *    }
  *}
  *
- * @apiError (Error 500) {String} status List of errors
+ * @apiError (Error 500) {Number} status status code
  * @apiError (Error 500) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  *   HTTP/1.1 500 Internal Server Error
@@ -329,7 +344,7 @@ router.get('/announcement/:announcementID', async (req, res) => {
  *     "status": 500,
  *     "message": "Internal server error"
  *   }
- * @apiError (Error 404) {String} status status code
+ * @apiError (Error 404) {Number} status status code
  * @apiError (Error 404) {String} message Error message
  * @apiErrorExample {json} Error-Response:
  * HTTP/1.1 404 Announcement not found
@@ -340,9 +355,16 @@ router.get('/announcement/:announcementID', async (req, res) => {
  */
 router.put('/announcement/:announcementID', async (req, res) => {
   try {
+    req.body.userID = req.session.user.userID;
     await Ctrl.updateAnnouncement(req.params, req.body);
     const announcement = await Ctrl.getAnnouncement(req.params);
-
+    delete announcement.isResolved;
+    await addLog({
+      action: 'UPDATE_ANNOUNCEMENT',
+      changes: '',
+      affectedID: announcement.announcementID,
+      userID: req.session.user.userID,
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully updated announcement',
@@ -352,7 +374,7 @@ router.put('/announcement/:announcementID', async (req, res) => {
     let message = '';
     switch (status) {
       case 404:
-        message = 'User not found';
+        message = 'Announcement not found';
         break;
       case 500:
         message = 'Internal server error';

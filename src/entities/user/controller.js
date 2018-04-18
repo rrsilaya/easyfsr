@@ -25,12 +25,16 @@ const searchFields = [
   'committee',
   'officeNumber',
   'rank',
+  'contractType',
+  'acctType',
+  'emailAddress',
 ];
 
 const defaultAttr = {
   middleName: '',
   officeNumber: '',
   profileIcon: '/uploads/users/default.png',
+  committee: '',
 };
 export const addUser = user => {
   return new Promise((resolve, reject) => {
@@ -109,5 +113,14 @@ export const getTotalUsers = user => {
         return resolve(results[0]);
       },
     );
+  });
+};
+
+export const deleteSession = ({ employeeID }) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.deleteSession, { employeeID }, (err, results) => {
+      if (err) return reject(500);
+      return resolve();
+    });
   });
 };
