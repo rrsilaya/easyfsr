@@ -32,7 +32,6 @@ INSERT INTO user (employeeID, password, firstName, middleName, lastName, committ
 
 INSERT INTO meta (acadYear, semester, universityRegistrar, homeDepartment, formRevision, homeCollege) VALUES ('2017-2018', 'Second', 'Myrna G. Carandang', 'Institute of Computer Science', '2013-10-25', 'CAS');
 
-
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (1, '2016-2017', 'Second', 1);
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (1, '2017-2018', 'First', 1);
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (2, '2016-2018', 'First', 1);
