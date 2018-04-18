@@ -467,12 +467,12 @@ router.get('/subject/:subjectID', async (req, res) => {
  *   "message": "Subjects not found"
  * }
  */
-router.get('/subject/', async (req, res) => {
+router.get('/subject', async (req, res) => {
   try {
     req.session.user.acctType === 'USER'
       ? (req.query.userID = req.session.user.userID)
       : '';
-    const subjects = await Ctrl.getSubjects(req.query);
+    const subjects = await Ctrl.getSubjects(req.query, req.query.userID);
     let computedSubjects = [];
     subjects.map(async subject => {
       computedSubjects.push(await Ctrl.computeSubject(subject));
@@ -481,7 +481,7 @@ router.get('/subject/', async (req, res) => {
       status: 200,
       message: 'Successfully fetched subjects',
       data: computedSubjects,
-      total: (await Ctrl.getTotalSubjects(req.query)).total,
+      total: (await Ctrl.getTotalSubjects(req.query, req.query.userID)).total,
       limit: req.query.limit || 12,
       page: req.query.page || 1,
       pages: Math.ceil(

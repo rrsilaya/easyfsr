@@ -44,7 +44,8 @@ export const getSubjects = (query, sortBy, userID) => `
   x.teachingLoadCreds,
   noOfStudents,
   sectionCode,
-  room`
+  room,
+  hoursPerWeek`
       : `*`
   } FROM subject x ${
   userID
