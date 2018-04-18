@@ -50,7 +50,7 @@ router.post('/ltdPractOfProf/', async (req, res) => {
       limitedPracticeOfProfID,
     });
     await addLog({
-      action: 'INSERT LTD PRACTICE',
+      action: 'INSERT_LTD_PRACTICE',
       changes: '',
       affectedID: limitedPracticeOfProfID,
       userID: req.session.user.userID,
@@ -125,7 +125,7 @@ router.put('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
     await Ctrl.updateLtdPractOfProf(req.params, req.body);
     const ltdPractOfProf = await Ctrl.getLtdPractOfProf(req.params);
     await addLog({
-      action: 'UPDATE LTD PRACTICE',
+      action: 'UPDATE_LTD_PRACTICE',
       changes: '',
       affectedID: ltdPractOfProf.limitedPracticeOfProfID,
       userID: req.session.user.userID,
@@ -200,7 +200,7 @@ router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
     const ltdPractOfProf = await Ctrl.getLtdPractOfProf(req.params);
     await Ctrl.deleteLtdPractOfProf(req.params);
     await addLog({
-      action: 'DELETE LTD PRACTICE',
+      action: 'DELETE_LTD_PRACTICE',
       changes: '',
       affectedID: ltdPractOfProf.limitedPracticeOfProfID,
       userID: req.session.user.userID,

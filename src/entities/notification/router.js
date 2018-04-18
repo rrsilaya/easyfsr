@@ -60,7 +60,7 @@ router.post('/notification/', async (req, res) => {
     const notificationID = await Ctrl.addNotification(req.body);
     const notification = await Ctrl.getNotification({ notificationID });
     await addLog({
-      action: 'INSERT NOTIFICATION',
+      action: 'INSERT_NOTIFICATION',
       changes: '',
       affectedID: notificationID,
       userID: req.session.user.userID,
@@ -140,7 +140,7 @@ router.delete('/notification/:notificationID', async (req, res) => {
     const notification = await Ctrl.getNotification(req.params);
     await Ctrl.deleteNotification(req.params);
     await addLog({
-      action: 'DELETE NOTIFICATION',
+      action: 'DELETE_NOTIFICATION',
       changes: '',
       affectedID: notification.notificationID,
       userID: req.session.user.userID,
@@ -412,7 +412,7 @@ router.put('/notification/:notificationID', async (req, res) => {
     await Ctrl.updateNotification(req.params, req.body);
     const notification = await Ctrl.getNotification(req.params);
     await addLog({
-      action: 'UPDATE NOTIFICATION',
+      action: 'UPDATE_NOTIFICATION',
       changes: '',
       affectedID: notification.notificationID,
       userID: req.session.user.userID,

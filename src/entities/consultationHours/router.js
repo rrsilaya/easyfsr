@@ -53,7 +53,7 @@ router.post('/consultationHours/', async (req, res) => {
     const chID = await Ctrl.addConsultationHour(req.body);
     const consultationHour = await Ctrl.getConsultationHour({ chID });
     await addLog({
-      action: 'INSERT CONSULTATION HOURS',
+      action: 'INSERT_CONSULTATION_HOURS',
       changes: '',
       affectedID: chID,
       userID: req.session.user.userID,
@@ -133,7 +133,7 @@ router.put('/consultationHours/:chID', async (req, res) => {
     await Ctrl.updateConsultationHour(req.params, req.body);
     const consultationHour = await Ctrl.getConsultationHour(req.params);
     await addLog({
-      action: 'UPDATE CONSULTATION HOURS',
+      action: 'UPDATE_CONSULTATION_HOURS',
       changes: '',
       affectedID: consultationHour.chID,
       userID: req.session.user.userID,
@@ -210,7 +210,7 @@ router.delete('/consultationHours/:chID', async (req, res) => {
     const consultationHour = await Ctrl.getConsultationHour(req.params);
     await Ctrl.deleteConsultationHour(req.params);
     await addLog({
-      action: 'DELETE CONSULTATION HOURS',
+      action: 'DELETE_CONSULTATION_HOURS',
       changes: '',
       affectedID: consultationHour.chID,
       userID: req.session.user.userID,

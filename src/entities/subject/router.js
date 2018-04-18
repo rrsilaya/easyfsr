@@ -60,7 +60,7 @@ router.post('/subject/', async (req, res) => {
     const subjectID = await Ctrl.addSubject(req.body);
     const subject = await Ctrl.getSubject({ subjectID });
     await addLog({
-      action: 'INSERT SUBJECT',
+      action: 'INSERT_SUBJECT',
       changes: '',
       affectedID: subjectID,
       userID: req.session.user.userID,
@@ -143,7 +143,7 @@ router.put('/subject/:subjectID', async (req, res) => {
     await Ctrl.updateSubject(req.params, req.body);
     const subject = await Ctrl.getSubject(req.params);
     await addLog({
-      action: 'UPDATE SUBJECT',
+      action: 'UPDATE_SUBJECT',
       changes: '',
       affectedID: subject.subjectID,
       userID: req.session.user.userID,
@@ -225,7 +225,7 @@ router.delete('/subject/:subjectID', async (req, res) => {
     const subject = await Ctrl.getSubject(req.params);
     await Ctrl.deleteSubject(req.params);
     await addLog({
-      action: 'DELETE SUBJECT',
+      action: 'DELETE_SUBJECT',
       changes: '',
       affectedID: subject.subjectID,
       userID: req.session.user.userID,

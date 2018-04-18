@@ -56,7 +56,7 @@ router.post('/studyLoad/', async (req, res) => {
     const id = await Ctrl.addStudyLoad(req.body);
     const studyLoad = await Ctrl.getStudyLoad({ id });
     await addLog({
-      action: 'INSERT STUDY LOAD',
+      action: 'INSERT_STUDY_LOAD',
       changes: '',
       affectedID: id,
       userID: req.session.user.userID,
@@ -136,7 +136,7 @@ router.put('/studyLoad/:id', async (req, res) => {
     await Ctrl.updateStudyLoad(req.params, req.body);
     const studyLoad = await Ctrl.getStudyLoad(req.params);
     await addLog({
-      action: 'UPDATE STUDY LOAD',
+      action: 'UPDATE_STUDY_LOAD',
       changes: '',
       affectedID: studyLoad.id,
       userID: req.session.user.userID,
@@ -215,7 +215,7 @@ router.delete('/studyLoad/:id', async (req, res) => {
     const studyLoad = await Ctrl.getStudyLoad(req.params);
     await Ctrl.deleteStudyLoad(req.params);
     await addLog({
-      action: 'DELETE STUDY LOAD',
+      action: 'DELETE_STUDY_LOAD',
       changes: '',
       affectedID: studyLoad.id,
       userID: req.session.user.userID,

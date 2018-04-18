@@ -63,7 +63,7 @@ router.post('/creativeWork/', async (req, res) => {
     const creativeWorkID = await Ctrl.addCreativeWork(req.body);
     const creativeWork = await Ctrl.getCreativeWork({ creativeWorkID });
     await addLog({
-      action: 'INSERT CREATIVE WORK',
+      action: 'INSERT_CREATIVE_WORK',
       changes: '',
       affectedID: creativeWorkID,
       userID: req.session.user.userID,
@@ -244,7 +244,7 @@ router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
     const creativeWork = await Ctrl.getCreativeWork(req.params);
     await Ctrl.deleteCreativeWork(req.params);
     await addLog({
-      action: 'DELETE CREATIVE WORK',
+      action: 'DELETE_CREATIVE_WORK',
       changes: '',
       affectedID: creativeWork.creativeWorkID,
       userID: req.session.user.userID,
@@ -421,7 +421,7 @@ router.put('/creativeWork/:creativeWorkID', async (req, res) => {
     await Ctrl.updateCreativeWork(req.params, req.body);
     const creativeWork = await Ctrl.getCreativeWork(req.params);
     await addLog({
-      action: 'UPDATE CREATIVE WORK',
+      action: 'UPDATE_CREATIVE_WORK',
       changes: '',
       affectedID: creativeWork.creativeWorkID,
       userID: req.session.user.userID,

@@ -62,7 +62,7 @@ router.post('/fsr/', async (req, res) => {
     users.forEach(
       async user =>
         await addLog({
-          action: 'INSERT FSR',
+          action: 'INSERT_FSR',
           changes: '',
           affectedID: user,
           userID: req.session.user.userID,
@@ -138,7 +138,7 @@ router.delete('/fsr/:id', async (req, res) => {
     const fsr = await Ctrl.getFSR(req.params);
     await Ctrl.deleteFSR(req.params);
     await addLog({
-      action: 'DELETE FSR',
+      action: 'DELETE_FSR',
       changes: '',
       affectedID: fsr.id,
       userID: req.session.user.userID,
@@ -443,7 +443,7 @@ router.put('/fsr/:id', async (req, res) => {
     await Ctrl.updateFSR(req.params, req.body);
     const fsr = await Ctrl.getFSR(req.params);
     await addLog({
-      action: 'UPDATE FSR',
+      action: 'UPDATE_FSR',
       changes: '',
       affectedID: fsr.id,
       userID: req.session.user.userID,

@@ -55,7 +55,7 @@ router.post('/course', async (req, res) => {
     const course = await Ctrl.getCourse({ courseID });
 
     await addLog({
-      action: 'INSERT COURSE',
+      action: 'INSERT_COURSE',
       changes: '',
       affectedID: courseID,
       userID: req.session.user.userID,
@@ -137,7 +137,7 @@ router.put('/course/:courseID', async (req, res) => {
     await Ctrl.updateCourse(req.params, req.body);
     const course = await Ctrl.getCourse(req.params);
     await addLog({
-      action: 'UPDATE COURSE',
+      action: 'UPDATE_COURSE',
       changes: '',
       affectedID: course.courseID,
       userID: req.session.user.userID,
@@ -217,7 +217,7 @@ router.delete('/course/:courseID', async (req, res) => {
     const course = await Ctrl.getCourse(req.params);
     await Ctrl.deleteCourse(req.params);
     await addLog({
-      action: 'DELETE COURSE',
+      action: 'DELETE_COURSE',
       changes: '',
       affectedID: course.courseID,
       userID: req.session.user.userID,

@@ -50,7 +50,7 @@ router.post('/timeslot/', async (req, res) => {
     const timeslotID = await Ctrl.addTimeslot(req.body);
     const timeslot = await Ctrl.getTimeslot({ timeslotID });
     await addLog({
-      action: 'INSERT TIMESLOT',
+      action: 'INSERT_TIMESLOT',
       changes: '',
       affectedID: timeslotID,
       userID: req.session.user.userID,
@@ -284,7 +284,7 @@ router.put('/timeslot/:timeslotID/', async (req, res) => {
     await Ctrl.updateTimeslot(req.params, req.body);
     const timeslot = await Ctrl.getTimeslot(req.params);
     await addLog({
-      action: 'UPDATE TIMESLOT',
+      action: 'UPDATE_TIMESLOT',
       changes: '',
       affectedID: timeslot.timeslotID,
       userID: req.session.user.userID,
@@ -360,7 +360,7 @@ router.delete('/timeslot/:timeslotID/', async (req, res) => {
     const timeslot = await Ctrl.getTimeslot(req.params);
     await Ctrl.deleteTimeslot(req.params);
     await addLog({
-      action: 'DELETE TIMESLOT',
+      action: 'DELETE_TIMESLOT',
       changes: '',
       affectedID: timeslot.timeslotID,
       userID: req.session.user.userID,

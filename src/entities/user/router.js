@@ -84,7 +84,7 @@ router.post('/user/', async (req, res) => {
     const user = await Ctrl.getUserByUserID({ userID });
     delete user.password;
     await addLog({
-      action: 'INSERT USER',
+      action: 'INSERT_USER',
       changes: '',
       affectedID: userID,
       userID: req.session.user.userID,
@@ -306,7 +306,7 @@ router.delete('/user/:userID', async (req, res) => {
     delete user.password;
     await Ctrl.deleteUser(req.params);
     await addLog({
-      action: 'DELETE USER',
+      action: 'DELETE_USER',
       changes: '',
       affectedID: user.userID,
       userID: req.session.user.userID,
@@ -527,7 +527,7 @@ router.put('/user/:userID', async (req, res) => {
     await Ctrl.deleteSession(user.employeeID);
     if (sess.userID == user.userID) req.session.user = user;
     await addLog({
-      action: 'UPDATE USER',
+      action: 'UPDATE_USER',
       changes: '',
       affectedID: user.userID,
       userID: req.session.user.userID,

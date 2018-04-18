@@ -68,7 +68,7 @@ router.post('/award/', async (req, res) => {
     const awardID = await Ctrl.addAward(req.body);
     const award = await Ctrl.getAward({ awardID });
     await addLog({
-      action: 'INSERT AWARD',
+      action: 'INSERT_AWARD',
       changes: '',
       affectedID: awardID,
       userID: req.session.user.userID,
@@ -165,7 +165,7 @@ router.put('/award/:awardID', async (req, res) => {
     await Ctrl.updateAward(req.params, req.body);
     const award = await Ctrl.getAward(req.params);
     await addLog({
-      action: 'UPDATE AWARD',
+      action: 'UPDATE_AWARD',
       changes: '',
       affectedID: award.awardID,
       userID: req.session.user.userID,
@@ -251,7 +251,7 @@ router.delete('/award/:awardID', async (req, res) => {
     const award = await Ctrl.getAward(req.params);
     await Ctrl.deleteAward(req.params);
     await addLog({
-      action: 'DELETE AWARD',
+      action: 'DELETE_AWARD',
       changes: '',
       affectedID: award.awardID,
       userID: req.session.user.userID,

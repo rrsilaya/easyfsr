@@ -72,7 +72,7 @@ router.post('/research/', async (req, res) => {
     const researchID = await Ctrl.addResearch(req.body);
     const research = await Ctrl.getResearch({ researchID });
     await addLog({
-      action: 'INSERT RESEARCH',
+      action: 'INSERT_RESEARCH',
       changes: '',
       affectedID: researchID,
       userID: req.session.user.userID,
@@ -349,7 +349,7 @@ router.delete('/research/:researchID', async (req, res) => {
     const research = await Ctrl.getResearch(req.params);
     await Ctrl.deleteResearch(req.params);
     await addLog({
-      action: 'DELETE RESEARCH',
+      action: 'DELETE_RESEARCH',
       changes: '',
       affectedID: research.researchID,
       userID: req.session.user.userID,
@@ -453,7 +453,7 @@ router.put('/research/:researchID', async (req, res) => {
     await Ctrl.updateResearch(req.params, req.body);
     const research = await Ctrl.getResearch(req.params);
     await addLog({
-      action: 'UPDATE RESEARCH',
+      action: 'UPDATE_RESEARCH',
       changes: '',
       affectedID: research.researchID,
       userID: req.session.user.userID,

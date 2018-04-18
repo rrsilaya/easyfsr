@@ -51,7 +51,7 @@ router.post('/adminWork/', async (req, res) => {
     const adminWorkID = await Ctrl.addAdminWork(req.body);
     const adminWork = await Ctrl.getAdminWork({ adminWorkID });
     await addLog({
-      action: 'INSERT ADMIN WORK',
+      action: 'INSERT_ADMIN_WORK',
       changes: '',
       affectedID: adminWorkID,
       userID: req.session.user.userID,
@@ -130,7 +130,7 @@ router.put('/adminWork/:adminWorkID', async (req, res) => {
     await Ctrl.updateAdminWork(req.params, req.body);
     const adminWork = await Ctrl.getAdminWork(req.params);
     await addLog({
-      action: 'UPDATE ADMIN WORK',
+      action: 'UPDATE_ADMIN_WORK',
       changes: '',
       affectedID: adminWork.adminWorkID,
       userID: req.session.user.userID,
@@ -207,7 +207,7 @@ router.delete('/adminWork/:adminWorkID', async (req, res) => {
     await Ctrl.deleteAdminWork(req.params);
 
     await addLog({
-      action: 'DELETE ADMIN WORK',
+      action: 'DELETE_ADMIN_WORK',
       changes: '',
       affectedID: adminWork.adminWorkID,
       userID: req.session.user.userID,

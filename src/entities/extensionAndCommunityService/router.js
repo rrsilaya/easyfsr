@@ -70,7 +70,7 @@ router.post('/service/', async (req, res) => {
       extAndCommServiceID,
     });
     await addLog({
-      action: 'INSERT SERVICE',
+      action: 'INSERT_SERVICE',
       changes: '',
       affectedID: extAndCommServiceID,
       userID: req.session.user.userID,
@@ -164,7 +164,7 @@ router.put('/service/:extAndCommServiceID/', async (req, res) => {
     await Ctrl.updateExtensionAndCommunityService(req.params, req.body);
     const service = await Ctrl.getExtensionAndCommunityService(req.params);
     await addLog({
-      action: 'UPDATE SERVICE',
+      action: 'UPDATE_SERVICE',
       changes: '',
       affectedID: service.extAndCommServiceID,
       userID: req.session.user.userID,
@@ -365,7 +365,7 @@ router.delete('/service/:extAndCommServiceID/', async (req, res) => {
     const service = await Ctrl.getExtensionAndCommunityService(req.params);
     await Ctrl.deleteExtensionAndCommunityService(req.params);
     await addLog({
-      action: 'DELETE SERVICE',
+      action: 'DELETE_SERVICE',
       changes: '',
       affectedID: service.extAndCommServiceID,
       userID: req.session.user.userID,

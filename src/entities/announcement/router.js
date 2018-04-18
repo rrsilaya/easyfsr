@@ -50,7 +50,7 @@ router.post('/announcement', async (req, res) => {
     const announcementID = await Ctrl.addAnnouncement(req.body);
     const announcement = await Ctrl.getAnnouncement({ announcementID });
     await addLog({
-      action: 'ADD ANNOUNCEMENT',
+      action: 'ADD_ANNOUNCEMENT',
       changes: '',
       affectedID: announcementID,
       userID: req.session.user.userID,
@@ -120,7 +120,7 @@ router.delete('/announcement/:announcementID', async (req, res) => {
     const announcement = await Ctrl.getAnnouncement(req.params);
     await Ctrl.deleteAnnouncement(req.params);
     await addLog({
-      action: 'DELETE ANNOUNCEMENT',
+      action: 'DELETE_ANNOUNCEMENT',
       changes: '',
       affectedID: announcement.announcementID,
       userID: req.session.user.userID,
@@ -354,7 +354,7 @@ router.put('/announcement/:announcementID', async (req, res) => {
     await Ctrl.updateAnnouncement(req.params, req.body);
     const announcement = await Ctrl.getAnnouncement(req.params);
     await addLog({
-      action: 'UPDATE ANNOUNCEMENT',
+      action: 'UPDATE_ANNOUNCEMENT',
       changes: '',
       affectedID: announcement.announcementID,
       userID: req.session.user.userID,
