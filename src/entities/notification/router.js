@@ -92,7 +92,6 @@ router.post('/notification/', async (req, res) => {
  *
  * @apiSuccess {Object} data Notification deleted
  * @apiSuccess {Number} data.notificationID notification ID
- * @apiSuccess {Number} data.senderID sender ID
  * @apiSuccess {Number} data.receiverID receiver ID
  * @apiSuccess {String} data.message the message of sender to receiver
  * @apiSuccess {Date} data.dateSent date when message is sent
@@ -108,13 +107,10 @@ router.post('/notification/', async (req, res) => {
  *       "data":
  *        {
  *          "notificationID": 1,
- *          "senderID": "3",
  *          "receiverID": "5",
  *          "message": "HIIIIIIIIIIIIIIIIIIIIII",
- *          "dateSent": "2018-01-01",
- *          "timeSent": "01:01:01",
- *          "isResolved": 1,
- *          "priority": "LOW"
+ *          "timestamp": "2018-04-18T14:36:56.000Z",
+ *          "priority": "NORMAL"
  *        }
  *
  *   }
