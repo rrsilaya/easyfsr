@@ -3,7 +3,6 @@ import { formatQueryParams } from '../../utils';
 export const addCreativeWork = `
 	INSERT INTO creativeWork (
 		id,
-		creativeWorkID,
 		date,
 		title,
 		type,
@@ -13,7 +12,6 @@ export const addCreativeWork = `
 	)
 	VALUES (
 		:id,
-		DEFAULT,
 		:date,
 		:title,
 		:type,

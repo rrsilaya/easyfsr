@@ -15,7 +15,7 @@ const router = Router();
  * @apiParam (Body Params) {String} title title of creative work
  * @apiParam (Body Params) {String}  type type of creative work
  * @apiParam (Body Params) {Number} credUnit credit units of creative work
- * @apiParam (Body Params) {File} filepath filepath 
+ * @apiParam (Body Params) {File} [filepath] filepath 
  * @apiParam (Body Params) {String} [coAuthor] co-author/s
  * 
  * @apiSuccess {Object} data Creative work added
