@@ -739,16 +739,6 @@ router.get('/fsr', async (req, res) => {
   }
 });
 
-router.use('/fsr/:userID', (req, res, next) => {
-  const { user } = req.session;
-  if (user && (user.acctType === 'ADMIN' || user.userID == req.params.userID)) {
-    return next();
-  }
-  res.status(403).json({
-    status: 403,
-    message: 'Unauthorized access',
-  });
-});
 /**
  * @api {put} /fsr/:id updateFSR
  * @apiGroup FSR
