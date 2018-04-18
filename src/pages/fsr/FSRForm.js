@@ -119,8 +119,8 @@ class FSRForm extends Component {
                 style={styles.icons}
                 size="large"
                 icon="check"
+                onClick={this.handleTurningInFSR}
                 ghost
-                disabled
               >
                 Turned In
               </Button>
