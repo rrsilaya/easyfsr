@@ -39,7 +39,7 @@ INSERT INTO meta (acadYear, semester, universityRegistrar, homeDepartment, formR
 -- FSR
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (1, '2016-2017', 'Second', 1);
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (1, '2017-2018', 'First', 1);
-INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (2, '2016-2018', 'First', 1);
+INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (2, '2016-2017', 'First', 1);
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (2, '2017-2018', 'First', 1);
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (3, '2017-2018', 'First', 1);
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (3, '2016-2017', 'Second', 1);
@@ -69,7 +69,7 @@ INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (15, '2017-2018', 'S
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (15, '2017-2018', 'First', 1);
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (16, '2016-2017', 'Second', 1);
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (16, '2017-2018', 'First', 1);
-INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (17, '2016-2018', 'First', 1);
+INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (17, '2016-2017', 'First', 1);
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (17, '2017-2018', 'First', 1);
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (18, '2017-2018', 'First', 1);
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (18, '2016-2017', 'Second', 1);
