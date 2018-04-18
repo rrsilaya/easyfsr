@@ -58,12 +58,16 @@ class App extends Component {
                     <Switch>
                       {routes.map(
                         route =>
-                          !route.restricted ? (
-                            <Route key={route.path} {...route} />
-                          ) : user.acctType === 'ADMIN' ? (
-                            <Route key={route.path} {...route} />
+                          route.type === 'route' ? (
+                            !route.restricted ? (
+                              <Route key={route.path} {...route} />
+                            ) : user.acctType === 'ADMIN' ? (
+                              <Route key={route.path} {...route} />
+                            ) : (
+                              ''
+                            )
                           ) : (
-                            ''
+                            <Redirect key={route.to} {...route} />
                           ),
                       )}
                       <Redirect

@@ -60,10 +60,8 @@ const TimeSlot = ({ day, start, end, content, color = '#000' }) => {
       <Line points={shape} fill={color} closed />
       <Text
         x={canvas.timeWidth + canvas.col * dayOffset}
-        y={canvas.row * (timeStart + 1)}
+        y={canvas.row * (timeStart + 1) + duration * canvas.row / 2 - 12}
         width={canvas.col}
-        height={canvas.row * 3}
-        offset={{ y: -4 - canvas.row / 2 * duration }}
         text={content}
         {...text}
       />

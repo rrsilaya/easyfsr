@@ -1,21 +1,47 @@
 import React, { Component, Fragment } from 'react';
-import { Icon } from 'antd';
+import { Icon, Modal, Button } from 'antd';
 
-import { PageLoader, Schedule } from '../../global';
+import { PageLoader, DataLoader } from '../../global';
+import Schedule from './components/Schedule';
 import ProfileIcon from './components/ProfileIcon';
 import ProfileInfo from './components/ProfileInfo';
+
+import { SCHEDULE_MODAL } from './duck';
 import styles from './styles';
 
 class Profile extends Component {
   componentDidMount() {
-    this.props.getUserProfile(this.props.match.params.userID);
+    const { userID } = this.props.match.params;
+
+    this.props.getUserProfile(userID);
+    this.props.getAdminWork(userID);
+    this.props.getUserExtensionAndCommService(userID);
   }
+
+  componentWillUnmount() {
+    this.props.resetPage();
+  }
+
+  toggleScheduleModal = () => {
+    this.props.toggleModal(SCHEDULE_MODAL);
+  };
 
   render() {
     const {
       user,
+      adminWork,
+      service,
+      schedule,
 
       isGettingUser,
+      isUploadingIcon,
+      isLoadingCards,
+      isGettingSchedule,
+      isSchedModalOpen,
+
+      uploadIcon,
+      toggleModal,
+      getUserSchedule,
     } = this.props;
 
     return (
@@ -24,8 +50,20 @@ class Profile extends Component {
           <PageLoader />
         ) : (
           <Fragment>
-            <div className="center">
-              <ProfileIcon />
+            <Schedule
+              isSchedModalOpen={isSchedModalOpen}
+              toggleScheduleModal={this.toggleScheduleModal}
+              getUserSchedule={getUserSchedule}
+              employeeID={user.employeeID}
+              isGettingSchedule={isGettingSchedule}
+              schedule={schedule}
+            />
+            <div className="center" style={styles.header}>
+              <ProfileIcon
+                user={user}
+                isUploadingIcon={isUploadingIcon}
+                uploadIcon={uploadIcon}
+              />
               <h1 className="center text white" style={styles.profileName}>
                 {user.firstName} {user.middleName} {user.lastName}
               </h1>
@@ -47,8 +85,24 @@ class Profile extends Component {
                   {user.emailAddress}
                 </div>
               </div>
+              <div style={styles.actions}>
+                <Button ghost onClick={this.toggleScheduleModal}>
+                  View Schedule
+                  <Icon type="right" />
+                </Button>
+              </div>
             </div>
-            <ProfileInfo />
+            {Object.keys(isLoadingCards)
+              .map(key => isLoadingCards[key])
+              .every(e => e) ? (
+              <DataLoader isLoading opaque />
+            ) : (
+              <ProfileInfo
+                adminWork={adminWork}
+                service={service}
+                isLoadingCards={isLoadingCards}
+              />
+            )}
           </Fragment>
         )}
       </div>

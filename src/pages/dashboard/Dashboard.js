@@ -14,17 +14,16 @@ import { CREATE_FSR } from './duck';
 import { CREATE_ANNOUNCEMENT } from './duck';
 import { SETTINGS } from './duck';
 
+import { GET_ANNOUCEMENTS, GET_NOTIFICATIONS } from './duck';
+
 const { Item: ListItem } = List;
 
-const data = [
-  'Racing car sprays burning fuel into crowd.',
-  'Japanese princess to wed commoner.',
-  'Australian walks 100km after outback crash.',
-  'Man charged over missing wedding girl.',
-  'Los Angeles battles huge wildfires.',
-];
-
 class Dashboard extends Component {
+  componentDidMount() {
+    this.props.getAnnouncements();
+    this.props.getNotifications();
+  }
+
   render() {
     const {
       isSendNotificationModalOpen,
@@ -36,6 +35,8 @@ class Dashboard extends Component {
 
       addNotification,
       addAnnouncement,
+      announcements,
+      notifications,
 
       toggleModal,
       searchUser,
@@ -123,8 +124,8 @@ class Dashboard extends Component {
                 <List
                   bordered
                   size="large"
-                  locale={{ emptyText: 'No service records found' }}
-                  dataSource={data}
+                  locale={{ emptyText: 'No announcements found' }}
+                  dataSource={announcements}
                   itemLayout="horizontal"
                   renderItem={item => (
                     <ListItem
@@ -134,7 +135,7 @@ class Dashboard extends Component {
                       ]}
                     >
                       <Row type="flex" style={styles.listItems}>
-                        {item}
+                        {item.body}
                       </Row>
                     </ListItem>
                   )}
@@ -156,8 +157,8 @@ class Dashboard extends Component {
                 <List
                   bordered
                   size="large"
-                  locale={{ emptyText: 'No service records found' }}
-                  dataSource={data}
+                  locale={{ emptyText: 'No notifications found' }}
+                  dataSource={notifications}
                   itemLayout="horizontal"
                   renderItem={item => (
                     <ListItem
@@ -167,7 +168,7 @@ class Dashboard extends Component {
                       ]}
                     >
                       <Row type="flex" style={styles.listItems}>
-                        {item}
+                        {item.message}
                       </Row>
                     </ListItem>
                   )}

@@ -16,6 +16,10 @@ import steps from './steps';
 const { Step } = Steps;
 
 class FSRForm extends Component {
+  componentDidMount() {
+    this.props.getFSR(this.props.match.params.fsrID);
+  }
+
   render() {
     const {
       isAddSubjectModalOpen,
@@ -26,16 +30,39 @@ class FSRForm extends Component {
       isAddCourseModalOpen,
       isAddConsultationHourModalOpen,
 
+      isEditSubjectModalOpen,
+
       toggleModal,
       nextStep,
       prevStep,
 
       currentStep,
+      fsr,
+      subjects,
+      subject,
+      timeslots,
+
+      getSubjects,
+      addSubject,
+      deleteSubject,
+      editSubject,
+      changeSelectedSubject,
+      getTimeslots,
+
+      isGettingSubjects,
+      isAddingSubject,
+      isAddingTimeslot,
+      isEditingSubject,
+      isGettingTimeslots,
     } = this.props;
+
+    const { fsrID } = this.props.match.params;
 
     return (
       <div>
-        <h1>Academic Year 2017-2018 Second Semester</h1>
+        <h1>
+          Academic Year {fsr.acadYear} {fsr.semester} Term
+        </h1>
         <Row>
           <Col span={5}>
             <Steps direction="vertical" size="small" current={currentStep}>
@@ -52,7 +79,23 @@ class FSRForm extends Component {
             <Col span={19}>
               {currentStep === 0 ? (
                 <TeachingLoadForm
+                  fsrID={fsrID}
+                  subjects={subjects}
+                  subject={subject}
+                  timeslots={timeslots}
+                  getSubjects={getSubjects}
+                  addSubject={addSubject}
+                  deleteSubject={deleteSubject}
+                  editSubject={editSubject}
+                  changeSelectedSubject={changeSelectedSubject}
+                  getTimeslots={getTimeslots}
+                  isGettingSubjects={isGettingSubjects}
+                  isAddingSubject={isAddingSubject}
+                  isAddingTimeslot={isAddingTimeslot}
+                  isEditingSubject={isEditingSubject}
+                  isGettingTimeslots={isGettingTimeslots}
                   isAddSubjectModalOpen={isAddSubjectModalOpen}
+                  isEditSubjectModalOpen={isEditSubjectModalOpen}
                   toggleModal={toggleModal}
                   nextStep={nextStep}
                 />
