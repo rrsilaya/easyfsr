@@ -304,7 +304,8 @@ router.delete('/subject/:subjectID', async (req, res) => {
 
 router.get('/subject/:subjectID', async (req, res) => {
   try {
-    const subject = await Ctrl.getSubject(req.params);
+    let subject = await Ctrl.getSubject(req.params);
+    subject = await Ctrl.computeSubject(subject);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched subject',
