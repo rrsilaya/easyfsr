@@ -252,6 +252,7 @@ CREATE TABLE `creativeWork`(
     ON DELETE CASCADE,
   CONSTRAINT `creativeWork_pk`
     PRIMARY KEY (`creativeWorkID`)
+    
 );
 
 -- research
