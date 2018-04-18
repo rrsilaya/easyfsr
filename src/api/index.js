@@ -14,3 +14,4 @@ export * from './announcement';
 export * from './notification';
 export * from './adminWork';
 export * from './service';
+export * from './ltdPractOfProf';

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Select, DatePicker, Button, Card } from 'antd';
+import { getFieldValues } from '../../../utils';
+import moment from 'moment';
 
 import styles from '../styles';
 
@@ -7,8 +9,36 @@ const FormItem = Form.Item;
 const { Option } = Select;
 
 class LimitedPracticeForm extends Component {
+  componentDidMount() {
+    this.props.getLtdPractOfProfs({ id: this.props.fsrID });
+  }
+
+  handleFormSubmit = e => {
+    e.preventDefault();
+
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        const fieldValues = getFieldValues(values);
+        fieldValues.date =
+          fieldValues.date !== null
+            ? moment(fieldValues.date).format('YYYY-MM-DD')
+            : null;
+
+        this.props.editLtdPractOfProf(
+          this.props.ltdPractOfProf.limitedPracticeOfProfID,
+          { ...fieldValues, id: this.props.fsrID },
+        );
+      }
+    });
+  };
+
   render() {
-    const { nextStep, prevStep } = this.props;
+    const {
+      ltdPractOfProf,
+      isGettingLtdPractOfProf,
+      isEditingLtdPractOfProf,
+      prevStep,
+    } = this.props;
 
     const { getFieldDecorator } = this.props.form;
 
@@ -24,8 +54,12 @@ class LimitedPracticeForm extends Component {
     };
 
     return (
-      <Card title="Limited Practice of Profession" style={styles.formFSR}>
-        <Form onSubmit={this.handleSubmit}>
+      <Card
+        title="Limited Practice of Profession"
+        style={styles.formFSR}
+        loading={isGettingLtdPractOfProf}
+      >
+        <Form onSubmit={this.handleFormSubmit}>
           <FormItem {...formItemLayout} label="Applied for official permission">
             {getFieldDecorator('askedPermission', {
               rules: [
@@ -35,6 +69,7 @@ class LimitedPracticeForm extends Component {
                     'Please select if you have applied for official permission',
                 },
               ],
+              initialValue: ltdPractOfProf.askedPermission,
             })(
               <Select placeholder="Select if Yes or No">
                 <Option value="YES">Yes</Option>
@@ -43,7 +78,12 @@ class LimitedPracticeForm extends Component {
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="Date">
-            {getFieldDecorator('date')(<DatePicker />)}
+            {getFieldDecorator('date', {
+              initialValue:
+                ltdPractOfProf.date !== null
+                  ? moment(ltdPractOfProf.date)
+                  : null,
+            })(<DatePicker />)}
           </FormItem>
           <div style={styles.button}>
             <Button
@@ -53,7 +93,11 @@ class LimitedPracticeForm extends Component {
             >
               Previous
             </Button>
-            <Button type="primary" onClick={nextStep}>
+            <Button
+              type="primary"
+              onClick={this.handleFormSubmit}
+              loading={isEditingLtdPractOfProf}
+            >
               Next
             </Button>
           </div>

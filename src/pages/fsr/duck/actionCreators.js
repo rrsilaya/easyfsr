@@ -458,3 +458,42 @@ export const editExtAndCommService = (extAndCommServiceID, body) => {
     });
   };
 };
+
+export const getLtdPractOfProfs = query => {
+  return dispatch => {
+    return dispatch({
+      type: Action.GET_LTDPRACTOFPROFS,
+      promise: Api.getLtdPractOfProfs(query),
+      meta: {
+        onFailure: () => {
+          notification.error({
+            message: 'Failure to fetch limited practice of professions',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const editLtdPractOfProf = (limitedPracticeOfProfID, body) => {
+  return dispatch => {
+    return dispatch({
+      type: Action.EDIT_LTDPRACTOFPROF,
+      promise: Api.editLtdPractOfProf(limitedPracticeOfProfID, body),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully edited limited practice of profession',
+          });
+          dispatch(nextStep());
+        },
+        onFailure: () => {
+          notification.error({
+            message:
+              'Server error while updating limited practice of profession',
+          });
+        },
+      },
+    });
+  };
+};

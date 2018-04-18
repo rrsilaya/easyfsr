@@ -53,6 +53,7 @@ class FSRForm extends Component {
       adminWork,
       extAndCommServices,
       extAndCommService,
+      ltdPractOfProf,
 
       getSubjects,
       addSubject,
@@ -76,6 +77,8 @@ class FSRForm extends Component {
       addExtAndCommService,
       deleteExtAndCommService,
       editExtAndCommService,
+      getLtdPractOfProfs,
+      editLtdPractOfProf,
 
       isGettingSubjects,
       isAddingSubject,
@@ -94,6 +97,8 @@ class FSRForm extends Component {
       isGettingExtAndCommServices,
       isAddingExtAndCommService,
       isEditingExtAndCommService,
+      isGettingLtdPractOfProf,
+      isEditingLtdPractOfProf,
     } = this.props;
 
     const { fsrID } = this.props.match.params;
@@ -219,7 +224,15 @@ class FSRForm extends Component {
                   nextStep={nextStep}
                 />
               ) : currentStep === 5 ? (
-                <LimitedPracticeForm prevStep={prevStep} nextStep={nextStep} />
+                <LimitedPracticeForm
+                  fsrID={fsrID}
+                  ltdPractOfProf={ltdPractOfProf}
+                  getLtdPractOfProfs={getLtdPractOfProfs}
+                  editLtdPractOfProf={editLtdPractOfProf}
+                  isGettingLtdPractOfProf={isGettingLtdPractOfProf}
+                  isEditingLtdPractOfProf={isEditingLtdPractOfProf}
+                  prevStep={prevStep}
+                />
               ) : currentStep === 6 ? (
                 <AwardForm prevStep={prevStep} nextStep={nextStep} />
               ) : currentStep === 7 ? (

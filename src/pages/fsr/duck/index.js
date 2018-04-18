@@ -14,6 +14,7 @@ const initialState = {
   adminWork: {},
   extAndCommServices: [],
   extAndCommService: {},
+  ltdPractOfProf: {},
   currentStep: 0,
 
   isGettingFSR: false,
@@ -40,6 +41,8 @@ const initialState = {
   isAddingExtAndCommService: false,
   isDeletingExtAndCommService: false,
   isEditingExtAndCommService: false,
+  isGettingLtdPractOfProf: false,
+  isEditingLtdPractOfProf: false,
 
   isAddSubjectModalOpen: false,
   isEditSubjectModalOpen: false,
@@ -487,6 +490,38 @@ const reducer = (state = initialState, action) => {
         finish: prevState => ({
           ...prevState,
           isEditingExtAndCommService: false,
+        }),
+      });
+
+    case Action.GET_LTDPRACTOFPROFS:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingLtdPractOfProf: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          ltdPractOfProf: payload.data.data[0],
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingLtdPractOfProf: false,
+        }),
+      });
+
+    case Action.EDIT_LTDPRACTOFPROF:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isEditingLtdPractOfProf: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          ltdPractOfProf: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isEditingLtdPractOfProf: false,
         }),
       });
 

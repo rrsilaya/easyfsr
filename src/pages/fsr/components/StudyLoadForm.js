@@ -142,7 +142,7 @@ class StudyLoadForm extends Component {
             >
               Previous
             </Button>
-            <Button type="primary" onClick={nextStep}>
+            <Button type="primary" htmlType="submit" onClick={nextStep}>
               Next
             </Button>
           </div>
