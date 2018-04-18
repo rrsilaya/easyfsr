@@ -5,7 +5,7 @@ class Certification extends Component {
     return (
       <section>
         <div className="header bold">
-          IX. CETIFICATION: The faculty member certifies that all the
+          IX. CERTIFICATION: The faculty member certifies that all the
           information provided above are correct as of the date of signing. By
           signing below, the Department Chair certifies to the correctness of
           the reported data on teaching, administrative and study load inside
