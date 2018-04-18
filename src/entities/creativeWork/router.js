@@ -19,7 +19,7 @@ const router = Router();
  * @apiParam (Body Params) {String} title title of creative work
  * @apiParam (Body Params) {String}  type type of creative work
  * @apiParam (Body Params) {Number} credUnit credit units of creative work
- * @apiParam (Body Params) {File} filepath filepath 
+ * @apiParam (Body Params) {File} [filepath] filepath 
  * @apiParam (Body Params) {String} [coAuthor] co-author/s
  * 
  * @apiSuccess {Object} data Creative work added
@@ -462,7 +462,11 @@ router.put('/creativeWork/:creativeWorkID', async (req, res) => {
     if (req.files && req.files.filepath) {
       const creativeWork = await Ctrl.getCreativeWork(req.params);
 
-      if (creativeWork.filepath) await unlink(creativeWork.filepath);
+      if (
+        creativeWork.filepath &&
+        creativeWork.filepath !== '/uploads/creativeWorks/dummy.jpg'
+      )
+        await unlink(creativeWork.filepath);
       req.body.filepath = await upload(req.files.filepath, 'creativeWorks');
     }
 

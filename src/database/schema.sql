@@ -31,7 +31,7 @@ CREATE TABLE user(
   middleName VARCHAR (50),
   lastName VARCHAR (50) NOT NULL,
   committee VARCHAR (30),
-  isHead BOOLEAN,      
+  isHead BOOLEAN DEFAULT 0,      
   officeNumber VARCHAR (30), 
   contractType VARCHAR (40) NOT NULL, -- FULL-TIME / PART-TIME
   emailAddress VARCHAR (40) NOT NULL,
@@ -206,7 +206,7 @@ CREATE TABLE `extensionAndCommunityService`(
   `participant` INT (3) NOT NULL,
   `role` VARCHAR (50) NOT NULL,
   `hours` INT (3) NOT NULL,
-  `title` VARCHAR (50) NOT NULL,
+  `title` TEXT (50) NOT NULL,
   `creditUnit` INT (2) NOT NULL,
   `type` VARCHAR (50) NOT NULL,
   `startDate` DATE NOT NULL, --                   DATE format: YYYY-MM-DD

@@ -177,7 +177,8 @@ router.put('/award/:awardID', async (req, res) => {
     if (req.files && req.files.filepath) {
       const award = await Ctrl.getAward(req.params);
 
-      if (award.filepath) await unlink(award.filepath);
+      if (award.filepath && award.filepath !== '/uploads/awards/dummy.jpg')
+        await unlink(award.filepath);
       req.body.filepath = await upload(req.files.filepath, 'awards');
     }
 

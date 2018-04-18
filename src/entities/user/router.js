@@ -272,6 +272,7 @@ router.get('/user', async (req, res) => {
  * @apiSuccess {String} data.rank rank of employee
  * @apiSuccess {Boolean} data.isArchived indicates if employee entry is archived
  * @apiSuccess {String} data.acctType account type of employee
+ * @apiSuccess {String} data.profileIcon profileIcon type of employee
  *
  * @apiSuccessExample {json} Success-Response:
  *    HTTP/1.1 200 OK
@@ -293,6 +294,7 @@ router.get('/user', async (req, res) => {
  *          "rank": null,
  *          "isArchived": 0,
  *          "acctType": "USER"
+ *          "profileIcon":  "/uploads/users/default.png"
  *         }
  *  }
  *
@@ -373,6 +375,7 @@ router.delete(
  * @apiSuccess {String} data.rank rank of employee
  * @apiSuccess {Boolean} data.isArchived indicates if employee entry is archived
  * @apiSuccess {String} data.acctType account type of employee
+ * @apiSuccess {String} data.profileIcon profileIcon type of employee
  *
  * @apiSuccessExample {json} Success-Response:
  *    HTTP/1.1 200 OK
@@ -394,6 +397,7 @@ router.delete(
  *          "rank": null,
  *          "isArchived": 0,
  *          "acctType": "USER"
+ *          "profileIcon":  "/uploads/users/default.png"
  *         }
  *  }
  *

@@ -32,10 +32,9 @@ const router = Router();
  *     "message": "Successfully created studyLoad"
  *     "data":
  *       {
- *           "fullLeaveWithPay: "NO",
- *           "fellowshipRecipient: "NO",
+ *           "fullLeaveWithPay: "0",
+ *           "fellowshipRecipient: "0",
  *           "degree": "BSCS",
- *           "courseNumber": "128",
  *           "university": "UPLB",
  *           "totalSLcredits": 3,
  *           "id": 1
@@ -93,6 +92,8 @@ router.post('/studyLoad/', async (req, res) => {
  * @apiGroup Study Load
  * @apiName updateStudyLoad
  *
+ * @apiParam (Query Params) {Number} [id] fsr and study load id
+ *
  * @apiParam (Body Params) {Boolean} [fullLeaveWithPay] full leave with pay of study load
  * @apiParam (Body Params) {Boolean} [fellowshipRecipient] fellowship recipient of study load
  * @apiParam (Body Params) {String} [degree] degree of study load
@@ -114,10 +115,9 @@ router.post('/studyLoad/', async (req, res) => {
  *     "message": "Successfully updated studyLoad"
  *     "data":
  *       {
- *           "fullLeaveWithPay: "NO",
- *           "fellowshipRecipient: "NO",
+ *           "fullLeaveWithPay: "0",
+ *           "fellowshipRecipient: "0",
  *           "degree": "BSCS",
- *           "courseNumber": "128",
  *           "university": "UPLB",
  *           "totalSLcredits": 3,
  *           "id": 1
@@ -200,10 +200,9 @@ router.put('/studyLoad/:id', async (req, res) => {
  *     "message": "Successfully deleted studyLoad"
  *     "data":
  *       {
- *           "fullLeaveWithPay: "NO",
- *           "fellowshipRecipient: "NO",
+ *           "fullLeaveWithPay: "0",
+ *           "fellowshipRecipient: "0",
  *           "degree": "BSCS",
- *           "courseNumber": "128",
  *           "university": "UPLB",
  *           "totalSLcredits": 3,
  *           "id": 1
@@ -286,10 +285,9 @@ router.delete('/studyLoad/:id', async (req, res) => {
  *     "message": "Successfully fetched studyLoad",
  *     "data":
  *       {
- *           "fullLeaveWithPay: "NO",
- *           "fellowshipRecipient: "NO",
+ *           "fullLeaveWithPay: "0",
+ *           "fellowshipRecipient: "0",
  *           "degree": "BSCS",
- *           "courseNumber": "128",
  *           "university": "UPLB",
  *           "totalSLcredits": 3,
  *           "id": 1
@@ -378,19 +376,17 @@ router.get('/studyLoad/:id', async (req, res) => {
  *     "message": "Successfully fetched studyLoads",
  *     "data":[
  *       {
- *           "fullLeaveWithPay: "NO",
- *           "fellowshipRecipient: "NO",
+ *           "fullLeaveWithPay: "0",
+ *           "fellowshipRecipient: "0",
  *           "degree": "BSCS",
- *           "courseNumber": "128",
  *           "university": "UPLB",
  *           "totalSLcredits": 3,
  *           "id": 1
  *       },
  *       {
- *           "fullLeaveWithPay: "NO",
- *           "fellowshipRecipient: "NO",
+ *           "fullLeaveWithPay: "0",
+ *           "fellowshipRecipient: "0",
  *           "degree": "BSCS",
- *           "courseNumber": "128",
  *           "university": "UPLB",
  *           "totalSLcredits": 9,
  *           "id": 2

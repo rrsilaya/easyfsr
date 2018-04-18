@@ -147,7 +147,6 @@ export const getTotalSubjects = (subject, userID) => {
 export const getSubjectsWithTimeslot = ({ id }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getSubjectsWithTimeslot, { id }, (err, results) => {
-      console.log(err);
       if (err) return reject(500);
       return resolve(results);
     });

@@ -1,6 +1,7 @@
 import db from '../../database/index';
 import * as Query from './queries';
 import { filtered, escapeSearch } from '../../utils';
+import moment from 'moment';
 
 const consultationHoursAttributes = [
   'chID',
@@ -14,6 +15,10 @@ const fields = ['place', 'day', 'timeStart', 'timeEnd'];
 
 export const addConsultationHour = consultationHours => {
   return new Promise((resolve, reject) => {
+    const timeStart = moment(consultationHours.timeStart, 'HH:mm:ss');
+    const timeEnd = moment(consultationHours.timeEnd, 'HH:mm:ss');
+
+    if (!moment(timeStart).isBefore(timeEnd)) return reject(400);
     db.query(Query.addConsultationHour, consultationHours, (err, results) => {
       if (err) return reject(500);
       return resolve(results.insertId);
@@ -23,6 +28,10 @@ export const addConsultationHour = consultationHours => {
 
 export const updateConsultationHour = ({ chID }, consultationHour) => {
   return new Promise((resolve, reject) => {
+    const timeStart = moment(consultationHour.timeStart, 'HH:mm:ss');
+    const timeEnd = moment(consultationHour.timeEnd, 'HH:mm:ss');
+
+    if (!moment(timeStart).isBefore(timeEnd)) return reject(400);
     if (!consultationHour) return reject(500);
     db.query(
       Query.updateConsultationHour(
