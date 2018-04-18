@@ -31,7 +31,7 @@ CREATE TABLE user(
   middleName VARCHAR (50),
   lastName VARCHAR (50) NOT NULL,
   committee VARCHAR (30),
-  isHead BOOLEAN,      
+  isHead BOOLEAN DEFAULT 0,      
   officeNumber VARCHAR (30), 
   contractType VARCHAR (40) NOT NULL, -- FULL-TIME / PART-TIME
   emailAddress VARCHAR (40) NOT NULL,
