@@ -16,6 +16,7 @@ class Profile extends Component {
     this.props.getUserProfile(userID);
     this.props.getAdminWork(userID);
     this.props.getUserExtensionAndCommService(userID);
+
     this.props.getResearch(userID);
     this.props.getAward(userID);
   }
@@ -67,6 +68,12 @@ class Profile extends Component {
                 user={user}
                 isUploadingIcon={isUploadingIcon}
                 uploadIcon={uploadIcon}
+                showUploadIcon={
+                  this.props.user.employeeID ===
+                  this.props.userLoggedIn.employeeID
+                    ? true
+                    : false
+                }
               />
               <h1 className="center text white" style={styles.profileName}>
                 {user.firstName} {user.middleName} {user.lastName}

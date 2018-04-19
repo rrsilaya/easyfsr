@@ -42,6 +42,8 @@ class ProfileInfo extends Component {
       service,
       research,
       award,
+      adminWork,
+      service,
     } = this.props;
 
     return (
@@ -57,6 +59,8 @@ class ProfileInfo extends Component {
         </Card>
         <Research research={research} />
         <Awards award={award} />
+        <Research />
+        <Awards />
         <AdminWork adminWork={adminWork} />
         <CommunityService service={service} />
         <CreativeWorks />

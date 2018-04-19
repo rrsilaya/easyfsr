@@ -95,7 +95,6 @@ export const getUserSchedule = user => ({
   },
 });
 
-
 export const getResearch = employeeID => dispatch => {
   dispatch({
     type: GET_RESEARCH,
@@ -123,9 +122,6 @@ export const getAward = employeeID => dispatch => {
     },
   });
 };
-
-
-
 
 export const toggleModal = modal => ({
   type: TOGGLE_MODAL,

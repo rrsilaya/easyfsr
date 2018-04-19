@@ -44,11 +44,15 @@ class ResearchCreativeWork extends Component {
         <table className="equal">
           <tbody>
             <tr>
-              <th colSpan={3}>TITLE</th>
+              <th colSpan={3}>TITLE (SPECIFY COMPLETE TITLE)</th>
               <th>ROLE</th>
               <th colSpan={2}>CO-WORKERS INVOLVED</th>
-              <th>START DATE</th>
-              <th>END DATE</th>
+              <th>
+                START DATE<br />MM/DD/YY
+              </th>
+              <th>
+                END DATE<br />MM/DD/YY
+              </th>
               <th>FUNDING AGENCY</th>
               <th colSpan={2}>APPROVED CREDIT UNITS</th>
             </tr>
