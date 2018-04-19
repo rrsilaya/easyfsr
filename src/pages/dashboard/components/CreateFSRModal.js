@@ -6,11 +6,20 @@ import styles from '../styles';
 const FormItem = Form.Item;
 
 class CreateFSRModal extends Component {
+  state = {
+    dataSource: [],
+  };
+
+  // async componentDidMount() {
+  //   await this.props.getUsers({ limit: 99999 });
+  //   const dataSource = this.props.users.map(user => ({ ...user, key: user.userID }));
+  //   this.setState({ dataSource });
+  // }
+
   handleFormSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        // this.props.deleteUser(this.props.user);
         this.handleAfterClose();
       }
     });
@@ -22,8 +31,14 @@ class CreateFSRModal extends Component {
   };
 
   handleCancel = () => {
-    this.props.toggleDeleteModal();
     this.handleAfterClose();
+  };
+
+  handleFilter = (inputValue, option) =>
+    option.lastName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1;
+
+  handleChange = targetKeys => {
+    this.props.changeSelectedUsers(targetKeys);
   };
 
   render() {
@@ -32,38 +47,57 @@ class CreateFSRModal extends Component {
 
       toggleModal,
 
-      users,
-
       form,
     } = this.props;
 
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 8 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 },
-      },
-    };
     return (
       <Modal
         title="Create FSR"
         visible={isCreateFSRModalOpen}
         onOk={() => toggleModal(CREATE_FSR)}
-        onCancel={() => toggleModal(CREATE_FSR)}
+        onCancel={() => {
+          this.handleAfterClose();
+          toggleModal(CREATE_FSR);
+        }}
         destroyOnClose
         footer={[
-          <Button key="back" onClick={() => toggleModal(CREATE_FSR)}>
+          <Button
+            key="back"
+            onClick={() => {
+              this.handleAfterClose();
+              toggleModal(CREATE_FSR);
+            }}
+          >
             Cancel
           </Button>,
-          <Button key="submit" type="primary" htmlType="submit">
+          <Button
+            key="submit"
+            type="primary"
+            htmlType="submit"
+            onClick={this.handleFormSubmit}
+          >
             Create
           </Button>,
         ]}
       >
-        <Transfer showSearch dataSource={users} />
+        <Form onSubmit={this.handleFormSubmit}>
+          <FormItem>
+            {form.getFieldDecorator('fsr@@createFSR')(
+              <Transfer
+                showSearch
+                listStyle={{ height: 500, width: '45%' }}
+                dataSource={this.props.users.map(user => ({
+                  ...user,
+                  key: user.userID,
+                }))}
+                render={user => `${user.lastName}, ${user.firstName}`}
+                onChange={this.handleChange}
+                filterOption={this.handleFilter}
+                targetKeys={this.props.selectedUsers}
+              />,
+            )}
+          </FormItem>
+        </Form>
       </Modal>
     );
   }

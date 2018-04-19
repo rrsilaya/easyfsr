@@ -33,6 +33,7 @@ class Dashboard extends Component {
       isSettingsModalOpen,
 
       searchedUsers,
+      selectedUsers,
       users,
 
       addNotification,
@@ -42,6 +43,8 @@ class Dashboard extends Component {
 
       toggleModal,
       searchUser,
+      changeSelectedUsers,
+      getUsers,
     } = this.props;
     return (
       <div>
@@ -69,7 +72,10 @@ class Dashboard extends Component {
                 isCreateFSRModalOpen={isCreateFSRModalOpen}
                 toggleModal={toggleModal}
                 handleAfterClose={this.handleAfterClose}
+                getUsers={getUsers}
                 users={users}
+                selectedUsers={selectedUsers}
+                changeSelectedUsers={changeSelectedUsers}
               />
               <Button
                 type="default"

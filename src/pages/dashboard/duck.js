@@ -12,6 +12,7 @@ export const SETTINGS = 'SETTINGS';
 const SEARCH_USER = 'DASHBOARD/SEARCH_USER';
 const GET_USERS = 'DASHBOARD/GET_USERS';
 const CHANGE_SELECTED_USER = 'DASHBOARD/CHANGE_SELECTED_USER';
+const CHANGE_SELECTED_USERS = 'DASHBOARD/CHANGE_SELECTED_USERS';
 const ADD_NOTIFICATION = 'DASHBOARD/ADD_NOTIFICATION';
 const ADD_ANNOUNCEMENT = 'DASHBOARD/ADD_ANNOUNCEMENT';
 const GET_ANNOUNCEMENTS = 'DASHBOARD/GET_ANNOUNCEMENTS';
@@ -76,6 +77,11 @@ export const changeSelectedUser = user => ({
   payload: user,
 });
 
+export const changeSelectedUsers = user => ({
+  type: CHANGE_SELECTED_USERS,
+  payload: user,
+});
+
 export const toggleModal = modal => ({
   type: TOGGLE_MODAL,
   payload: modal,
@@ -135,6 +141,7 @@ const initialState = {
   isGettingUsers: false,
 
   searchedUsers: [],
+  selectedUsers: [],
   users: [],
 };
 
@@ -259,6 +266,12 @@ const reducer = (state = initialState, action) => {
           isGettingNotifications: false,
         }),
       });
+
+    case CHANGE_SELECTED_USERS:
+      return {
+        ...state,
+        selectedUsers: payload,
+      };
 
     default:
       return state;
