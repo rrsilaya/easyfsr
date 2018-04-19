@@ -94,8 +94,6 @@ class FSRForm extends Component {
                   isAddingTimeslot={isAddingTimeslot}
                   isEditingSubject={isEditingSubject}
                   isGettingTimeslots={isGettingTimeslots}
-                  isGettingAnnouncements={isGettingAnnouncements}
-                  isGettingNotifications={isGettingNotifications}
                   isAddSubjectModalOpen={isAddSubjectModalOpen}
                   isEditSubjectModalOpen={isEditSubjectModalOpen}
                   toggleModal={toggleModal}
