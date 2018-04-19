@@ -5,11 +5,22 @@ import { push } from 'react-router-redux';
 import { getFSRs } from './duck';
 
 const mapStateToProps = state => {
-  const { fsr, isGettingFSR } = state.serviceRecords;
+  const {
+    fsr,
+    isGettingFSR,
+    notifications,
+    isGettingNotifications,
+    announcements,
+    isGettingAnnouncements,
+  } = state.serviceRecords;
 
   return {
     fsr,
     isGettingFSR,
+    announcements,
+    isGettingAnnouncements,
+    notifications,
+    isGettingNotifications,
   };
 };
 
@@ -17,6 +28,12 @@ const mapDispatchToProps = dispatch => {
   return {
     getFSRs: () => {
       dispatch(getFSRs());
+    },
+    getNotifications: query => {
+      dispatch(getNotificaitons(query));
+    },
+    getAnnouncements: query => {
+      dispatch(getAnnouncements(query));
     },
     pushLink: route => {
       dispatch(push(route));

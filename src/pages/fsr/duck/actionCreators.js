@@ -132,36 +132,3 @@ export const getTimeslots = query => {
     });
   };
 };
-
-
-export const getNotifications = query => {
-  return dispatch => {
-    return dispatch({
-      type: GET_NOTIFICATIONS,
-      promise: Api.getNotifications(query),
-      meta: {
-        onFailure: () => {
-          notification.error({
-            message: 'Error while getting notifications.',
-          });
-        },
-      },
-    });
-  };
-};
-
-export const getAnnouncements = query => {
-  return dispatch => {
-    return dispatch({
-      type: GET_ANNOUNCEMENTS,
-      promise: Api.getAnnouncements(query),
-      meta: {
-        onFailure: () => {
-          notification.error({
-            message: 'Error while getting announcements.',
-          });
-        },
-      },
-    });
-  };
-};

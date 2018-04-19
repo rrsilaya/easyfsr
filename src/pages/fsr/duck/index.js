@@ -7,8 +7,6 @@ const initialState = {
   subject: {},
   timeslots: [],
   currentStep: 0,
-  announcements: [],
-  notifications: [],
 
   isGettingFSR: false,
   isGettingSubjects: false,
@@ -17,8 +15,6 @@ const initialState = {
   isAddingTimeslot: false,
   isDeletingSubject: false,
   isEditingSubject: false,
-  isGettingNotifications: false,
-  isGettingAnnouncements: false,
 
   isAddSubjectModalOpen: false,
   isEditSubjectModalOpen: false,
@@ -160,40 +156,6 @@ const reducer = (state = initialState, action) => {
           isGettingTimeslots: false,
         }),
       });
-
-
-    case GET_ANNOUNCEMENTS:
-      return handle(state, action, {
-        start: prevState => ({
-          ...prevState,
-          isGettingAnnouncements: true,
-        }),
-        success: prevState => ({
-          ...prevState,
-          announcements: payload.data.data,
-        }),
-        finish: prevState => ({
-          ...prevState,
-          isGettingAnnouncements: false,
-        }),
-      });
-
-    case GET_NOTIFICATIONS:
-      return handle(state, action, {
-        start: prevState => ({
-          ...prevState,
-          isGettingNotifications: true,
-        }),
-        success: prevState => ({
-          ...prevState,
-          notifications: payload.data.data,
-        }),
-        finish: prevState => ({
-          ...prevState,
-          isGettingNotifications: false,
-        }),
-      });
-
 
     case Action.TOGGLE_MODAL:
       switch (payload) {

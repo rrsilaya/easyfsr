@@ -10,8 +10,6 @@ import LimitedPracticeForm from './components/LimitedPracticeForm';
 import AwardForm from './components/AwardForm';
 import ConsultationHoursForm from './components/ConsultationHoursForm';
 import CertificationForm from './components/CertificationForm';
-import Announcements from './components/Announcements';
-import Notifications from './components/Notifications';
 
 import steps from './steps';
 
@@ -20,9 +18,6 @@ const { Step } = Steps;
 class FSRForm extends Component {
   componentDidMount() {
     this.props.getFSR(this.props.match.params.fsrID);
-
-    this.props.getAnnouncements(this.props.match.params.announcementID);
-    this.props.getNotifications(this.props.match.params.notificationID);
   }
 
   render() {
@@ -46,8 +41,6 @@ class FSRForm extends Component {
       subjects,
       subject,
       timeslots,
-      notifications,
-      announcements,
 
       getSubjects,
       addSubject,
@@ -55,16 +48,12 @@ class FSRForm extends Component {
       editSubject,
       changeSelectedSubject,
       getTimeslots,
-      getNotifications,
-      getAnnouncements,
 
       isGettingSubjects,
       isAddingSubject,
       isAddingTimeslot,
       isEditingSubject,
       isGettingTimeslots,
-      isGettingAnnouncements,
-      isGettingNotifications,
     } = this.props;
 
     const { fsrID } = this.props.match.params;
@@ -99,10 +88,6 @@ class FSRForm extends Component {
                   deleteSubject={deleteSubject}
                   editSubject={editSubject}
                   changeSelectedSubject={changeSelectedSubject}
-                  notifications=={notifications}
-                  announcements={announcements}
-                  getAnnouncements={getAnnouncements}
-                  getNotifications={getNotifications}
                   getTimeslots={getTimeslots}
                   isGettingSubjects={isGettingSubjects}
                   isAddingSubject={isAddingSubject}
