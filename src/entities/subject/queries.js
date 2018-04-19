@@ -73,3 +73,11 @@ export const getSubjectsWithTimeslot = `
 	ON s.subjectID = t.subjectID WHERE s.id = :id
 
 `;
+
+export const addTLC = `
+  CALL addTLC(:subjectCreds, :id)
+`;
+
+export const subTLC = `
+  CALL subTLC(:subjectCreds, :id)
+`;

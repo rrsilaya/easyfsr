@@ -152,3 +152,21 @@ export const getSubjectsWithTimeslot = ({ id }) => {
     });
   });
 };
+
+export const addTLC = tlc => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.addTLC, tlc, (err, results) => {
+      if (err) return reject(500);
+      return resolve(results);
+    });
+  });
+};
+
+export const subTLC = tlc => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.subTLC, tlc, (err, results) => {
+      if (err) return reject(500);
+      return resolve(results);
+    });
+  });
+};
