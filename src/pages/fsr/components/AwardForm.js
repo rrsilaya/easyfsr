@@ -51,6 +51,26 @@ class AwardForm extends Component {
     });
   };
 
+  disabledStartDate = approvedStartDate => {
+    const endDate = this.props.form.getFieldValue('endDate');
+    if (!approvedStartDate || !endDate) {
+      return false;
+    }
+
+    return approvedStartDate.valueOf() > endDate.valueOf();
+  };
+
+  disabledEndDate = endDate => {
+    const approvedStartDate = this.props.form.getFieldValue(
+      'approvedStartDate',
+    );
+    if (!endDate || !approvedStartDate) {
+      return false;
+    }
+
+    return endDate.valueOf() <= approvedStartDate.valueOf();
+  };
+
   render() {
     const { award, isGettingAward, isEditingAward, prevStep } = this.props;
 
@@ -148,12 +168,12 @@ class AwardForm extends Component {
               initialValue: award.approvedStartDate
                 ? moment(award.approvedStartDate)
                 : null,
-            })(<DatePicker />)}
+            })(<DatePicker disabledDate={this.disabledStartDate} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="End Date">
             {getFieldDecorator('endDate', {
               initialValue: award.endDate ? moment(award.endDate) : null,
-            })(<DatePicker />)}
+            })(<DatePicker disabledDate={this.disabledEndDate} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="File">
             {getFieldDecorator('filepath')(

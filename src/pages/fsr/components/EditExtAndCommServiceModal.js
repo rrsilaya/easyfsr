@@ -35,6 +35,24 @@ class EditExtAndCommServiceModal extends Component {
     });
   };
 
+  disabledStartDate = startDate => {
+    const endDate = this.props.form.getFieldValue('endDate');
+    if (!startDate || !endDate) {
+      return false;
+    }
+
+    return startDate.valueOf() > endDate.valueOf();
+  };
+
+  disabledEndDate = endDate => {
+    const startDate = this.props.form.getFieldValue('startDate');
+    if (!endDate || !startDate) {
+      return false;
+    }
+
+    return endDate.valueOf() <= startDate.valueOf();
+  };
+
   render() {
     const {
       isEditExtAndCommServiceModalOpen,
@@ -147,7 +165,7 @@ class EditExtAndCommServiceModal extends Component {
                 },
               ],
               initialValue: moment(extAndCommService.startDate),
-            })(<DatePicker />)}
+            })(<DatePicker disabledDate={this.disabledStartDate} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="End Date">
             {getFieldDecorator('endDate', {
@@ -158,7 +176,7 @@ class EditExtAndCommServiceModal extends Component {
                 },
               ],
               initialValue: moment(extAndCommService.endDate),
-            })(<DatePicker />)}
+            })(<DatePicker disabledDate={this.disabledEndDate} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Role">
             {getFieldDecorator('role', {

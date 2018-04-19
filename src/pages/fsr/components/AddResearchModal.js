@@ -22,7 +22,6 @@ class AddResearchModal extends Component {
     e.preventDefault();
 
     this.props.form.validateFieldsAndScroll((err, values) => {
-      console.log(values);
       if (!err) {
         const fieldValues = getFieldValues(values);
         fieldValues.startDate = moment(fieldValues.startDate).format(
@@ -45,6 +44,24 @@ class AddResearchModal extends Component {
         this.props.addResearch(data);
       }
     });
+  };
+
+  disabledStartDate = startDate => {
+    const endDate = this.props.form.getFieldValue('endDate');
+    if (!startDate || !endDate) {
+      return false;
+    }
+
+    return startDate.valueOf() > endDate.valueOf();
+  };
+
+  disabledEndDate = endDate => {
+    const startDate = this.props.form.getFieldValue('startDate');
+    if (!endDate || !startDate) {
+      return false;
+    }
+
+    return endDate.valueOf() <= startDate.valueOf();
   };
 
   render() {
@@ -145,10 +162,12 @@ class AddResearchModal extends Component {
                   message: 'Please input start date',
                 },
               ],
-            })(<DatePicker />)}
+            })(<DatePicker disabledDate={this.disabledStartDate} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="End Date">
-            {getFieldDecorator('endDate')(<DatePicker />)}
+            {getFieldDecorator('endDate')(
+              <DatePicker disabledDate={this.disabledEndDate} />,
+            )}
           </FormItem>
           <FormItem {...formItemLayout} label="Funding">
             {getFieldDecorator('funding')(

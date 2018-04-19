@@ -111,10 +111,10 @@ export const editSubject = (subjectID, body) => (dispatch, getState) => {
 
         timeslots.forEach(timeslot => {
           dispatch(editTimeslot(timeslot.timeslotID, { ...body }));
+          dispatch(getSubjects({ id: fsr.id }));
         });
 
         notification.success({ message: 'Successfully edited subject' });
-        dispatch(getSubjects({ id: fsr.id }));
       },
       onFailure: () => {
         notification.error({ message: 'Server error while updating subject' });
@@ -506,11 +506,11 @@ export const getLtdPractOfProfs = query => {
   };
 };
 
-export const editLtdPractOfProf = (id, body) => {
+export const editLtdPractOfProf = (limitedPracticeOfProfID, body) => {
   return dispatch => {
     return dispatch({
       type: Action.EDIT_LTDPRACTOFPROF,
-      promise: Api.editLtdPractOfProf(id, body),
+      promise: Api.editLtdPractOfProf(limitedPracticeOfProfID, body),
       meta: {
         onSuccess: () => {
           dispatch(nextStep());

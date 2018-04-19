@@ -47,6 +47,24 @@ class EditResearchModal extends Component {
     });
   };
 
+  disabledStartDate = startDate => {
+    const endDate = this.props.form.getFieldValue('endDate');
+    if (!startDate || !endDate) {
+      return false;
+    }
+
+    return startDate.valueOf() > endDate.valueOf();
+  };
+
+  disabledEndDate = endDate => {
+    const startDate = this.props.form.getFieldValue('startDate');
+    if (!endDate || !startDate) {
+      return false;
+    }
+
+    return endDate.valueOf() <= startDate.valueOf();
+  };
+
   render() {
     const {
       isEditResearchModalOpen,
@@ -151,14 +169,14 @@ class EditResearchModal extends Component {
                 },
               ],
               initialValue: moment(research.startDate),
-            })(<DatePicker />)}
+            })(<DatePicker disabledDate={this.disabledStartDate} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="End Date">
             {getFieldDecorator('endDate', {
               initialValue: research.endDate
                 ? moment(research.endDate)
                 : research.endDate,
-            })(<DatePicker />)}
+            })(<DatePicker disabledDate={this.disabledEndDate} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Funding">
             {getFieldDecorator('funding', {

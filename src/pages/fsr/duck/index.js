@@ -180,12 +180,6 @@ const reducer = (state = initialState, action) => {
         }),
         success: prevState => ({
           ...prevState,
-          subjects: state.subjects.map(
-            subject =>
-              subject.subjectID === payload.data.data.subjectID
-                ? { ...payload.data.data }
-                : subject,
-          ),
         }),
         finish: prevState => ({
           ...prevState,

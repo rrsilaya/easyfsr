@@ -13,7 +13,6 @@ import CertificationForm from './components/CertificationForm';
 
 import steps from './steps';
 import styles from './styles';
-import { Link } from 'react-router-dom';
 const { Step } = Steps;
 const ButtonGroup = Button.Group;
 const confirm = Modal.confirm;
@@ -191,13 +190,14 @@ class FSRForm extends Component {
           >
             View Preview
           </Button>
-          {acctType == 'USER' ? (
+          {acctType === 'USER' ? (
             <Button
               style={styles.icons}
               size="large"
               icon="up-square-o"
               onClick={this.handleTurningInFSR}
               ghost
+              loading={isTurningIn}
             >
               Turn In FSR
             </Button>
@@ -208,6 +208,7 @@ class FSRForm extends Component {
               icon="check-circle-o"
               onClick={this.showDeleteConfirm}
               ghost
+              loading={isFinalizing}
             >
               Finalize FSR
             </Button>
@@ -395,7 +396,11 @@ class FSRForm extends Component {
                   nextStep={nextStep}
                 />
               ) : (
-                <CertificationForm prevStep={prevStep} nextStep={nextStep} />
+                <CertificationForm
+                  fsr={fsr}
+                  pushLink={pushLink}
+                  prevStep={prevStep}
+                />
               )}
             </Col>
           </div>
