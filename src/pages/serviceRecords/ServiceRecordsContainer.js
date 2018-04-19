@@ -30,7 +30,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(getFSRs());
     },
     getNotifications: query => {
-      dispatch(getNotificaitons(query));
+      dispatch(getNotifications(query));
     },
     getAnnouncements: query => {
       dispatch(getAnnouncements(query));
