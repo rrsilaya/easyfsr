@@ -39,6 +39,10 @@ import {
   editLtdPractOfProf,
   getAwards,
   editAward,
+  getConsultationHours,
+  addConsultationHour,
+  deleteConsultationHour,
+  editConsultationHour,
   toggleTurningIn,
   toggleFinalizing,
 } from './duck';
@@ -58,6 +62,7 @@ const mapStateToProps = state => {
     isEditAdminWorkModalOpen,
     isEditExtAndCommServiceModalOpen,
     isEditCourseModalOpen,
+    isEditConsultationHourModalOpen,
     currentStep,
     fsr,
     subjects,
@@ -77,6 +82,8 @@ const mapStateToProps = state => {
     courseScheds,
     ltdPractOfProf,
     award,
+    consultationHours,
+    consultationHour,
     isGettingFSR,
     isGettingSubjects,
     isAddingSubject,
@@ -106,6 +113,9 @@ const mapStateToProps = state => {
     isEditingLtdPractOfProf,
     isGettingAward,
     isEditingAward,
+    isGettingConsultationHours,
+    isAddingConsultationHour,
+    isEditingConsultationHour,
     isTurningIn,
     isFinalizing,
   } = state.fsr;
@@ -126,6 +136,7 @@ const mapStateToProps = state => {
     isEditAdminWorkModalOpen,
     isEditExtAndCommServiceModalOpen,
     isEditCourseModalOpen,
+    isEditConsultationHourModalOpen,
     currentStep,
     fsr,
     subjects,
@@ -145,6 +156,8 @@ const mapStateToProps = state => {
     courseScheds,
     ltdPractOfProf,
     award,
+    consultationHours,
+    consultationHour,
     isGettingFSR,
     isGettingSubjects,
     isAddingSubject,
@@ -174,6 +187,9 @@ const mapStateToProps = state => {
     isEditingLtdPractOfProf,
     isGettingAward,
     isEditingAward,
+    isGettingConsultationHours,
+    isAddingConsultationHour,
+    isEditingConsultationHour,
     isTurningIn,
     isFinalizing,
     user,
@@ -284,14 +300,26 @@ const mapDispatchToProps = dispatch => {
     getLtdPractOfProfs: query => {
       dispatch(getLtdPractOfProfs(query));
     },
-    editLtdPractOfProf: (limitedPracticeOfProfID, body) => {
-      dispatch(editLtdPractOfProf(limitedPracticeOfProfID, body));
+    editLtdPractOfProf: (id, body) => {
+      dispatch(editLtdPractOfProf(id, body));
     },
     getAwards: query => {
       dispatch(getAwards(query));
     },
     editAward: (awardID, body) => {
       dispatch(editAward(awardID, body));
+    },
+    getConsultationHours: query => {
+      dispatch(getConsultationHours(query));
+    },
+    addConsultationHour: consultationHour => {
+      dispatch(addConsultationHour(consultationHour));
+    },
+    deleteConsultationHour: chID => {
+      dispatch(deleteConsultationHour(chID));
+    },
+    editConsultationHour: (chID, body) => {
+      dispatch(editConsultationHour(chID, body));
     },
     toggleTurningIn: (id, body) => {
       dispatch(toggleTurningIn(id, body));

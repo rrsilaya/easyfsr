@@ -72,6 +72,7 @@ class FSRForm extends Component {
       isEditAdminWorkModalOpen,
       isEditExtAndCommServiceModalOpen,
       isEditCourseModalOpen,
+      isEditConsultationHourModalOpen,
 
       toggleModal,
       nextStep,
@@ -96,6 +97,8 @@ class FSRForm extends Component {
       courseScheds,
       ltdPractOfProf,
       award,
+      consultationHours,
+      consultationHour,
 
       getSubjects,
       addSubject,
@@ -130,6 +133,10 @@ class FSRForm extends Component {
       editLtdPractOfProf,
       getAwards,
       editAward,
+      getConsultationHours,
+      addConsultationHour,
+      deleteConsultationHour,
+      editConsultationHour,
 
       isGettingSubjects,
       isAddingSubject,
@@ -159,6 +166,9 @@ class FSRForm extends Component {
       isEditingLtdPractOfProf,
       isGettingAward,
       isEditingAward,
+      isGettingConsultationHours,
+      isAddingConsultationHour,
+      isEditingConsultationHour,
       isTurningIn,
       isFinalizing,
       pushLink,
@@ -363,8 +373,22 @@ class FSRForm extends Component {
                 />
               ) : currentStep === 7 ? (
                 <ConsultationHoursForm
+                  fsrID={fsrID}
+                  consultationHours={consultationHours}
+                  consultationHour={consultationHour}
+                  getConsultationHours={getConsultationHours}
+                  addConsultationHour={addConsultationHour}
+                  deleteConsultationHour={deleteConsultationHour}
+                  editConsultationHour={editConsultationHour}
+                  changeSelected={changeSelected}
+                  isGettingConsultationHours={isGettingConsultationHours}
+                  isAddingConsultationHour={isAddingConsultationHour}
+                  isEditingConsultationHour={isEditingConsultationHour}
                   isAddConsultationHourModalOpen={
                     isAddConsultationHourModalOpen
+                  }
+                  isEditConsultationHourModalOpen={
+                    isEditConsultationHourModalOpen
                   }
                   toggleModal={toggleModal}
                   prevStep={prevStep}

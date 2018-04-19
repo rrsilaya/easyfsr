@@ -506,11 +506,11 @@ export const getLtdPractOfProfs = query => {
   };
 };
 
-export const editLtdPractOfProf = (limitedPracticeOfProfID, body) => {
+export const editLtdPractOfProf = (id, body) => {
   return dispatch => {
     return dispatch({
       type: Action.EDIT_LTDPRACTOFPROF,
-      promise: Api.editLtdPractOfProf(limitedPracticeOfProfID, body),
+      promise: Api.editLtdPractOfProf(id, body),
       meta: {
         onSuccess: () => {
           dispatch(nextStep());
@@ -726,6 +726,85 @@ export const editCourseSched = (courseSchedID, body) => {
         onFailure: () => {
           notification.error({
             message: 'Server error while editing course schedule',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const getConsultationHours = query => {
+  return dispatch => {
+    return dispatch({
+      type: Action.GET_CONSULTATIONHOURS,
+      promise: Api.getConsultationHours(query),
+      meta: {
+        onFailure: () => {
+          notification.error({
+            message: 'Failure to fetch consultation hours',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const addConsultationHour = values => {
+  return dispatch => {
+    return dispatch({
+      type: Action.ADD_CONSULTATIONHOUR,
+      promise: Api.addConsultationHour(values),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully added consultation hour',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while creating consultation hour',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const deleteConsultationHour = chID => {
+  return dispatch => {
+    return dispatch({
+      type: Action.DELETE_CONSULTATIONHOUR,
+      promise: Api.deleteConsultationHour(chID),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully deleted consultation hour',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while deleting consultation hour',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const editConsultationHour = (chID, body) => {
+  return dispatch => {
+    return dispatch({
+      type: Action.EDIT_CONSULTATIONHOUR,
+      promise: Api.editConsultationHour(chID, body),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully edited consultation hour',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while updating consultation hour',
           });
         },
       },

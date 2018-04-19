@@ -20,6 +20,8 @@ const initialState = {
   courseScheds: [],
   ltdPractOfProf: {},
   award: {},
+  consultationHours: [],
+  consultationHour: {},
   currentStep: 0,
 
   isGettingFSR: false,
@@ -59,6 +61,10 @@ const initialState = {
   isEditingLtdPractOfProf: false,
   isGettingAward: false,
   isEditingAward: false,
+  isGettingConsultationHours: false,
+  isAddingConsultationHour: false,
+  isDeletingConsultationHour: false,
+  isEditingConsultationHour: false,
 
   isAddSubjectModalOpen: false,
   isEditSubjectModalOpen: false,
@@ -73,6 +79,7 @@ const initialState = {
   isAddCourseModalOpen: false,
   isEditCourseModalOpen: false,
   isAddConsultationHourModalOpen: false,
+  isEditConsultationHourModalOpen: false,
 
   isTurningIn: false,
   isFinalizing: false,
@@ -729,6 +736,80 @@ const reducer = (state = initialState, action) => {
         }),
       });
 
+    case Action.GET_CONSULTATIONHOURS:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingConsultationHours: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          consultationHours: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingConsultationHours: false,
+        }),
+      });
+
+    case Action.ADD_CONSULTATIONHOUR:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isAddingConsultationHour: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          consultationHours: [...state.consultationHours, payload.data.data],
+          isAddConsultationHourModalOpen: false,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isAddingCourse: false,
+        }),
+      });
+
+    case Action.DELETE_CONSULTATIONHOUR:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isDeletingConsultationHour: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          consultationHours: state.consultationHours.filter(
+            consultationHour =>
+              consultationHour.chID !== payload.data.data.chID,
+          ),
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isDeletingConsultationHour: false,
+        }),
+      });
+
+    case Action.EDIT_CONSULTATIONHOUR:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isEditingConsultationHour: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          consultationHours: state.consultationHours.map(
+            consultationHour =>
+              consultationHour.chID === payload.data.data.chID
+                ? { ...payload.data.data }
+                : consultationHour,
+          ),
+          isEditConsultationHourModalOpen: false,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isEditingConsultationHour: false,
+        }),
+      });
+
     case Action.TURN_IN:
       return handle(state, action, {
         start: prevState => ({
@@ -820,10 +901,15 @@ const reducer = (state = initialState, action) => {
             ...state,
             isEditCourseModalOpen: !state.isEditCourseModalOpen,
           };
-        case Action.CONSULTATIONHOUR:
+        case Action.ADD_CONSULTATIONHOUR_MODAL:
           return {
             ...state,
             isAddConsultationHourModalOpen: !state.isAddConsultationHourModalOpen,
+          };
+        case Action.EDIT_CONSULTATIONHOUR_MODAL:
+          return {
+            ...state,
+            isEditConsultationHourModalOpen: !state.isEditConsultationHourModalOpen,
           };
         default:
           return state;
@@ -843,6 +929,8 @@ const reducer = (state = initialState, action) => {
           return { ...state, extAndCommService: payload.data };
         case Action.COURSE:
           return { ...state, course: payload.data };
+        case Action.CONSULTATIONHOUR:
+          return { ...state, consultationHour: payload.data };
 
         default:
           return state;

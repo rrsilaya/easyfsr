@@ -24,10 +24,10 @@ class LimitedPracticeForm extends Component {
             ? moment(fieldValues.date).format('YYYY-MM-DD')
             : null;
 
-        this.props.editLtdPractOfProf(
-          this.props.ltdPractOfProf.limitedPracticeOfProfID,
-          { ...fieldValues, id: this.props.fsrID },
-        );
+        this.props.editLtdPractOfProf(this.props.fsrID, {
+          ...fieldValues,
+          id: this.props.fsrID,
+        });
       }
     });
   };

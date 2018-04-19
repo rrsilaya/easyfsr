@@ -19,3 +19,4 @@ export * from './award';
 export * from './studyLoad';
 export * from './course';
 export * from './courseSched';
+export * from './consultationHours';
