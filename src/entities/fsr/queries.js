@@ -43,3 +43,11 @@ export const getTotalFSRs = query => `
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   } 
 `;
+
+export const addTLC = `
+  CALL subTLC(:subjectCreds, :id);
+`;
+
+export const subTLC = `
+  CALL subTLC(:subjectCreds, :id);
+`;

@@ -125,16 +125,20 @@ router.post('/subject/', async (req, res) => {
  *     "status": 200,
  *     "message": "Successfully updated subject",
  *     "data":
- *         {
- *             "id": 1,
- *             "subjectCode": "NEW CODE",
- *             "subjectID": 1,
- *             "teachingLoadCreds": 2,
- *             "noOfStudents": 2,
- *             "hoursPerWeek": 2,
- *             "sectionCode": "sd",
- *             "room": "12"
- *         }
+ *       {
+ *         "id": 38,
+ *         "subjectCode": "CMSC123",
+ *         "subjectID": 128,
+ *         "teachingLoadCreds": 6,
+ *         "noOfStudents": 68,
+ *         "hoursPerWeek": 3,
+ *         "sectionCode": "U",
+ *         "room": "PCLAB7",
+ *         "courseCred": 3,
+ *         "studCredUnits": 204,
+ *         "TLC": 3,
+ *         "TLCM": 3.7
+ *       }
  *   }
  * @apiError (Error 500) {Number} status error status code
  * @apiError (Error 500) {String} message Error message
@@ -217,16 +221,20 @@ router.put('/subject/:subjectID', async (req, res) => {
  *        "status": 200;
  *        "message": 'Succesfully deleted subject'
  *         "data":
- *         {
- *           "id": 1,
- *           "subjectCode": "NEW CODE",
- *           "subjectID": 1,
- *           "teachingLoadCreds": 2,
- *           "noOfStudents": 2,
- *           "hoursPerWeek": 2,
- *           "sectionCode": "sd",
- *           "room": "12"
- *         }
+ *          {
+ *           "id": 38,
+ *           "subjectCode": "CMSC123",
+ *           "subjectID": 128,
+ *           "teachingLoadCreds": 6,
+ *           "noOfStudents": 68,
+ *           "hoursPerWeek": 3,
+ *           "sectionCode": "U",
+ *           "room": "PCLAB7",
+ *           "courseCred": 3,
+ *           "studCredUnits": 204,
+ *           "TLC": 3,
+ *           "TLCM": 3.7
+ *       }
  *   }
  *
  * @apiError (Error 500) {Number} status error status code

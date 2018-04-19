@@ -525,3 +525,30 @@ BEGIN
 END;
 $$
 DELIMITER ;
+
+-- Procedures for FSR teaching Load
+DROP PROCEDURE IF EXISTS addTLC;
+DELIMITER $$
+CREATE PROCEDURE addTLC (
+  IN subjectCreds INT (2),
+  IN id INT)
+BEGIN
+  UPDATE fsr SET
+    fsr.teachingLoadCreds = teachingLoadCreds + subjectCreds
+    WHERE fsr.id = id;
+END;
+$$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS subTLC;
+DELIMITER $$
+CREATE PROCEDURE subTLC (
+  IN subjectCreds INT (2),
+  IN id INT)
+BEGIN
+  UPDATE fsr SET
+    fsr.teachingLoadCreds = teachingLoadCreds - subjectCreds
+    WHERE fsr.id = id;
+END;
+$$
+DELIMITER ;
