@@ -6,6 +6,7 @@ const styles = {
   listItem: {
     width: '100%',
     borderBottomWidth: 0,
+    color: '#000000',
   },
   icons: {
     fontSize: 16,
