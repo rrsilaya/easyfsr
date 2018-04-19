@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import ServiceRecords from './ServiceRecords';
 
 import { push } from 'react-router-redux';
-import { getFSRs } from './duck';
+import { getFSRs, getAnnouncements, getNotifications } from './duck';
 
 const mapStateToProps = state => {
   const {
