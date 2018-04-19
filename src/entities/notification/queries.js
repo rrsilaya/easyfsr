@@ -6,7 +6,9 @@ export const getNotification = `
 `;
 
 export const getNotifications = (query, sortBy, receiverID) => `
-	SELECT ${receiverID ? `message, timestamp, priority` : `*`} FROM notification ${
+	SELECT ${
+    receiverID ? `notificationID, senderID, message, timestamp, priority` : `*`
+  } FROM notification x ${
   receiverID
     ? `WHERE receiverID = :receiverID AND isResolved = 0 ${
         query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
@@ -46,7 +48,7 @@ export const deleteNotification = `
 `;
 
 export const getTotalNotifications = (query, receiverID) => `
-  SELECT count(*) as total FROM notification ${
+  SELECT count(*) as total FROM notification x ${
     receiverID
       ? `WHERE receiverID = :receiverID AND isResolved = 0 ${
           query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
