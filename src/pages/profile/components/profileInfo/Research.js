@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Card } from 'antd';
 
+import style from '../../styles';
+
 class Research extends Component {
   render() {
     return (

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Card } from 'antd';
 
+import style from '../../styles';
+
 class Awards extends Component {
   render() {
     return (
