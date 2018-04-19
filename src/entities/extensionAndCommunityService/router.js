@@ -492,7 +492,7 @@ router.delete('/service/:extAndCommServiceID/', async (req, res) => {
  *   }
  */
 
-router.get('/service/:extAndCommServiceID/', async (req, res) => {
+router.get('/service/:extAndCommServiceID', async (req, res) => {
   try {
     const idOfService = await getIDofFSRfromService(
       req.params.extAndCommServiceID,
