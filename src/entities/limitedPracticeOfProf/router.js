@@ -11,12 +11,12 @@ const router = Router();
  * @apiName addLtdPractOfProf
  *
  * @apiParam (Body Params) {Number} id ID of fsr
- * @apiParam (Body Params) {String} askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
+ * @apiParam (Body Params) {String} askedPermission Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
  * @apiParam (Body Params) {Date} [date] Date of limitedPracticeOfProf
  *
  * @apiSuccess {Object} data new LtdPractOfProf created
  * @apiSuccess {Number} data.id ID of fsr
- * @apiSuccess {String} data.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
+ * @apiSuccess {String} data.askedPermission Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
  * @apiSuccess {Date} data.date Date of limitedPracticeOfProf
  *
  * @apiSuccessExample {json} Success-Response:
@@ -88,12 +88,12 @@ router.post('/ltdPractOfProf/', async (req, res) => {
  * @apiParam (Query Params) {Number} id ID of fsr
  *
  * @apiParam (Body Params) {Number} [id] ID of fsr
- * @apiParam (Body Params) {String} [askedPermssion] Asked permission of limitedPracticeOfProf.Can be 'YES' OR 'NO'
+ * @apiParam (Body Params) {String} [askedPermission] Asked permission of limitedPracticeOfProf.Can be 'YES' OR 'NO'
  * @apiParam (Body Params) {Date} [date] Date of limitedPracticeOfProf
  *
  * @apiSuccess {Object} data LtdPractOfProf updated
  * @apiSuccess {Number} data.id ID of fsr
- * @apiSuccess {String} data.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
+ * @apiSuccess {String} data.askedPermission Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
  * @apiSuccess {Date} data.date Date of limitedPracticeOfProf
  *
  * @apiSuccessExample {json} Success-Response:
@@ -173,7 +173,7 @@ router.put('/ltdPractOfProf/:id', async (req, res) => {
  *
  * @apiSuccess {Object} data LtdPractOfProf deleted
  * @apiSuccess {Number} data.id ID of fsr
- * @apiSuccess {String} data.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
+ * @apiSuccess {String} data.askedPermission Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
  * @apiSuccess {Date} data.date Date of limitedPracticeOfProf
  *
  * @apiSuccessExample {json} Success-Response:
@@ -253,7 +253,7 @@ router.delete('/ltdPractOfProf/:id', async (req, res) => {
  *
  * @apiSuccess {Object} data LtdPractOfProf fetchedNumber
  * @apiSuccess {Number} data.id ID of fsr
- * @apiSuccess {String} data.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
+ * @apiSuccess {String} data.askedPermission Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
  * @apiSuccess {Date} data.date Date of limitedPracticeOfProf
  *
  * @apiSuccessExample {json} Success-Response:
@@ -323,7 +323,7 @@ router.get('/ltdPractOfProf/:id', async (req, res) => {
  * @apiName getLtdPractOfProfs
  *
  * @apiParam (Query Params) {Number} [id] ID of fsr
- * @apiParam (Query Params) {String} [askedPermssion] Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
+ * @apiParam (Query Params) {String} [askedPermission] Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
  * @apiParam (Query Params) {Date} [date] Date of limitedPracticeOfProf
  * @apiParam (Query Params) {Number} [page] page number
  * @apiParam (Query Params) {Number} [limit] count limit to fetch
@@ -332,7 +332,7 @@ router.get('/ltdPractOfProf/:id', async (req, res) => {
  *
  * @apiSuccess {Object[]} data All LtdPractOfProf fecthed
  * @apiSuccess {Number} data.id ID of fsr
- * @apiSuccess {String} data.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
+ * @apiSuccess {String} data.askedPermission Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
  * @apiSuccess {Date} data.date Date of limitedPracticeOfProf
  * @apiSuccess {Number} total Total amount of documents.
  * @apiSuccess {Number} limit Max number of documents
