@@ -13,8 +13,8 @@ class ServiceRecords extends Component {
     this.props.getAnnouncements(this.props.match.params.announcementID);
   }
 
-  notificationPriority(priority) {
-    switch (priority) {
+  notificationPriority(notifications) {
+    switch (notifications.priority) {
       case 'LOW':
         return <Alert message={notifications.message} type="success" />;
       case 'MEDIUM':
@@ -64,9 +64,7 @@ class ServiceRecords extends Component {
             locale={{ emptyText: 'No notifications' }}
             dataSource={notifications}
             renderItem={notifications => (
-              <ListItem>
-                {notificationPriority(notifications.priority)}
-              </ListItem>
+              <ListItem>{notificationPriority(notifications)}</ListItem>
             )}
           />
         </div>
