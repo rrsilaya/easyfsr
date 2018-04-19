@@ -40,3 +40,11 @@ export const getUserExtensionAndCommService = id => {
 export const getUserSchedule = user => {
   return axios.get(`/api/user/${user}/schedule`);
 };
+
+export const getResearch = id => {
+  return axios.get(`/api/user/${id}/research`);
+};
+
+export const getAward = id => {
+  return axios.get(`/api/user/${id}/award`);
+};
