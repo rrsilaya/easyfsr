@@ -2,6 +2,7 @@ import { getUserIDofFSR } from './controller';
 
 // Constants
 const ADMIN = 'ADMIN';
+const USER = 'USER';
 
 export const isLoggedIn = (req, res, next) => {
   if (req.session.user) {
@@ -112,4 +113,10 @@ export const canViewFSR = async (req, res, next) => {
     }
     res.status(status).json({ status, message });
   }
+};
+
+export const userGetAll = (req, res, next) => {
+  const { userID, acctType } = req.session.user;
+  if (acctType === USER) req.query.userID = userID;
+  return next();
 };

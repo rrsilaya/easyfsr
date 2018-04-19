@@ -5,6 +5,7 @@ import {
   isEmployeeAuthorized,
   canModifyFSR,
   canViewFSR,
+  userGetAll,
 } from '../../middlewares/middlewares';
 import * as Ctrl from './controller';
 import { getUsers, getTotalUsers } from './../user/controller';
@@ -716,7 +717,7 @@ router.get('/fsr/:id', canViewFSR, async (req, res) => {
  *   "message": "FSR/s not found"
  * }
  */
-router.get('/fsr', async (req, res) => {
+router.get('/fsr', userGetAll, async (req, res) => {
   try {
     const FSRs = await Ctrl.getFSRs(req.query);
     res.status(200).json({
