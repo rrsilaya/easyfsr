@@ -55,7 +55,7 @@ export const getAdminWork = `
 `;
 
 export const getTotalAdminWorks = (query, userID) => `
-	SELECT COUNT(*) as total FROM adminWork ${
+	SELECT COUNT(*) as total FROM adminWork x ${
     userID
       ? `WHERE id IN (SELECT id FROM fsr WHERE userID=:userID) ${
           query.length ? `AND ${formatQueryParams(query, 'get')}` : ''

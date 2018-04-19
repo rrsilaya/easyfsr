@@ -6,7 +6,7 @@ export const getAnnouncement = `
 `;
 
 export const getAnnouncements = (query, sortBy) => `
-  SELECT * FROM announcement 
+  SELECT * FROM announcement x
   WHERE isResolved = 0 ${
     query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
   } 
@@ -42,7 +42,7 @@ export const deleteAnnouncement = `
 `;
 
 export const getTotalAnnouncements = query => `
-  SELECT count(*) as total FROM announcement ${
+  SELECT count(*) as total FROM announcement x ${
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   }
 `;
