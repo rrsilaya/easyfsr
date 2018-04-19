@@ -10,10 +10,12 @@ import {
   toggleModal,
   getUserSchedule,
   getResearch,
-  getAward
+  getAward,
 } from './duck';
 
 const mapStateToProps = state => {
+  const userLoggedIn = state.app.user;
+
   const {
     user,
     isGettingUser,
@@ -31,6 +33,7 @@ const mapStateToProps = state => {
   return {
     adminWork,
     user,
+    userLoggedIn,
     service,
     isGettingUser,
     isUploadingIcon,

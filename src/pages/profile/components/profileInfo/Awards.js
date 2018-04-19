@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import { Card } from 'antd';
+import { Card, List, Row } from 'antd';
+import moment from 'moment';
+
+import style from '../../styles';
+
+const { Item: ListItem } = List;
 
 class Awards extends Component {
   render() {
+    const { award } = this.props;
+
     return (
       <Card title="Awards">
         <List
@@ -12,19 +19,18 @@ class Awards extends Component {
           renderItem={award => (
             <ListItem>
               <Row style={style.listItem} justify="center">
-                <h3 className="text primary">{award.title}</h3>
                 <div>
                   <dl>
                     <dt>Recipient or Nominee</dt>
                     <dd>{award.recipientOrNominee}</dd>
                   </dl>
                   <dl>
-                    <dt>College Has Already Nominated</dt>
+                    <dt>College Has Nominated</dt>
                     <dd>{award.collegeHasNominated}</dd>
                   </dl>
                   <dl>
                     <dt>Professional Chair</dt>
-                    <dd>{award.professionChair}</dd>
+                    <dd>{award.professionalChair}</dd>
                   </dl>
                   <dl>
                     <dt>Grant</dt>
@@ -37,8 +43,8 @@ class Awards extends Component {
                   <dl>
                     <dt>Date</dt>
                     <dd>
-                      {moment(award.approvedStartDate).format('MMMM D, YYYY')} to{' '}
-                      {moment(award.endDate).format('MMMM D, YYYY')}
+                      {moment(award.approvedStartDate).format('MMMM D, YYYY')}{' '}
+                      to {moment(award.endDate).format('MMMM D, YYYY')}
                     </dd>
                   </dl>
                 </div>
