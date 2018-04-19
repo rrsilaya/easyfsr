@@ -22,7 +22,7 @@ class CreativeTable extends Component {
               <tr key={row.id}>
                 <td colSpan={4}>{row.title}</td>
                 <td colSpan={2}>&nbsp;</td>
-                <td colSpan={3}>{moment(row.date).format('MMMM DD, YYYY')}</td>
+                <td colSpan={3}>{moment(row.date).format('MM/DD/YY')}</td>
                 <td colSpan={2}>{row.credUnit}</td>
               </tr>
             ))}

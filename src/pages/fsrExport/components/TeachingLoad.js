@@ -73,7 +73,8 @@ class TeachingLoad extends Component {
           </tbody>
         </table>
         <div className="bold section-header">
-          Concurrent teaching load outside the college.
+          Concurrent teaching load outside the college. Write NONE whenever
+          applicable. Please do not leave any blank.
         </div>
         <div className="mvertical" style={styles.signatories}>
           <div
@@ -115,6 +116,12 @@ class TeachingLoad extends Component {
           prepared, only the teaching load and consultation hour should be
           completed. Permission from the Chancellor should be sought before
           teaching outside the University.
+        </div>
+        <div className="right">
+          <div className="signatory" data-label="Certified Correct:">
+            <div className="bold">MYRNA G. CARANDANG</div>
+            <div>University Registrar</div>
+          </div>
         </div>
       </div>
     );

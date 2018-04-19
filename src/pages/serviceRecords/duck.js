@@ -6,9 +6,9 @@ import * as Api from '../../api';
 const GET_FSR = 'SERVICE_RECORDS/GET_FSR';
 
 // Action Creators
-export const getFSRs = () => ({
+export const getFSRs = id => ({
   type: GET_FSR,
-  promise: Api.getFSRs(),
+  promise: Api.getFSRs(id),
   meta: {
     onFailure: () => {
       notification.error({ message: 'Failure to fetch service records' });

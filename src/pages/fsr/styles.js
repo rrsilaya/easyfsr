@@ -11,7 +11,7 @@ const styles = {
     marginTop: 20,
   },
   icons: {
-    fontSize: 16,
+    fontSize: 13,
     borderLeft: '1px solid #afafaf',
     paddingLeft: 15,
     display: 'flex',
