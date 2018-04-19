@@ -321,28 +321,6 @@ CREATE TABLE log (
     ON DELETE CASCADE
 );
 
--- Trigger for Teaching Load of FSR
-
-CREATE TRIGGER insert_teachingLoadCreds 
-AFTER INSERT ON subject
-FOR EACH ROW 
-  UPDATE fsr 
-    SET teachingLoadCreds = teachingLoadCreds + NEW.teachingLoadCreds
-    WHERE id = NEW.id AND NEW.subjectID = NEW.subjectID;
-
-CREATE TRIGGER delete_teachingLoadCreds 
-BEFORE DELETE ON subject
-FOR EACH ROW 
-UPDATE fsr 
-  SET teachingLoadCreds = teachingLoadCreds - OLD.teachingLoadCreds;
-
-CREATE TRIGGER update_teachingLoadCreds 
-AFTER update ON subject
-FOR EACH ROW 
-UPDATE fsr 
-  SET teachingLoadCreds = teachingLoadCreds - OLD.teachingLoadCreds + NEW.teachingLoadCreds
-  WHERE id = NEW.id;
-
 -- Trigger for Study Load of FSR 
 
 CREATE TRIGGER insert_totalSLcredits 

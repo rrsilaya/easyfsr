@@ -48,7 +48,6 @@ export const getNotification = ({ notificationID }) => {
 };
 
 export const getNotifications = (notification, receiverID) => {
-  console.log(receiverID);
   return new Promise((resolve, reject) => {
     db.query(
       Query.getNotifications(

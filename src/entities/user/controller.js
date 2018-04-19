@@ -95,7 +95,6 @@ export const getUsers = (user = {}) => {
       Query.getUsers(filtered(user, userAttributes), user.sortBy),
       { field: 'lastName', ...escapeSearch(user, searchFields, user.limit) },
       (err, results) => {
-        console.log(err);
         if (err) return reject(500);
         return resolve(results);
       },
