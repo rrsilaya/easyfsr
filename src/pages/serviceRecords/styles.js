@@ -5,6 +5,7 @@ const styles = {
   },
   listItem: {
     width: '100%',
+    borderBottomWidth: 0,
   },
   icons: {
     fontSize: 16,
