@@ -1,6 +1,7 @@
 const styles = {
   list: {
     border: 'none',
+    borderBottomWidth: 0,
   },
   listItem: {
     width: '100%',
