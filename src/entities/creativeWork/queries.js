@@ -37,6 +37,7 @@ export const getCreativeWorks = (query, sortBy, userID) => `
     userID
       ? `
 	x.id,
+  creativeWorkID,
   date,
   title,
   type,

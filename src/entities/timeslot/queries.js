@@ -18,7 +18,7 @@ export const addTimeslot = `
 `;
 
 export const getTimeslots = (query, sortBy, userID) => `
-	SELECT x.subjectID, day, timeStart, timeEnd FROM timeslot x ${
+	SELECT x.subjectID,timeslotID, day, timeStart, timeEnd FROM timeslot x ${
     userID
       ? `JOIN subject s ON x.subjectID = s.subjectID LEFT JOIN fsr f ON s.id = f.id WHERE f.userID = :userID ${
           query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
