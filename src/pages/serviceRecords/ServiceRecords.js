@@ -49,7 +49,7 @@ class ServiceRecords extends Component {
             locale={{ emptyText: 'No Announcements' }}
             dataSource={announcements}
             renderItem={announcements => (
-              <ListItem>
+              <ListItem style={styles.listItem}>
                 <Alert message={announcements.body} />
               </ListItem>
             )}
@@ -64,7 +64,9 @@ class ServiceRecords extends Component {
             locale={{ emptyText: 'No notifications' }}
             dataSource={notifications}
             renderItem={notifications => (
-              <ListItem>{this.notificationPriority(notifications)}</ListItem>
+              <ListItem style={styles.listItem}>
+                {this.notificationPriority(notifications)}
+              </ListItem>
             )}
           />
         </div>
