@@ -2,12 +2,7 @@ import db from '../../database/index';
 import * as Query from './queries';
 import { filtered, escapeSearch } from '../../utils';
 
-const LtdPractAttributes = [
-  'id',
-  'limitedPracticeOfProfID',
-  'askedPermission',
-  'date',
-];
+const LtdPractAttributes = ['id', 'askedPermission', 'date'];
 
 const searchFields = ['askedPermission', 'date'];
 
@@ -20,50 +15,39 @@ export const addLtdPractOfProf = limitedPracticeOfProf => {
   });
 };
 
-export const updateLtdPractOfProf = (
-  { limitedPracticeOfProfID },
-  limitedPracticeOfProf,
-) => {
+export const updateLtdPractOfProf = ({ id }, limitedPracticeOfProf) => {
   return new Promise((resolve, reject) => {
     if (!limitedPracticeOfProf) return reject(500);
     db.query(
       Query.updateLtdPractOfProf(
         filtered(limitedPracticeOfProf, LtdPractAttributes),
       ),
-      { limitedPracticeOfProfID, ...limitedPracticeOfProf },
+      { id, ...limitedPracticeOfProf },
       (err, results) => {
         if (err) return reject(500);
-        return resolve(results.insertId);
+        return resolve(id);
       },
     );
   });
 };
 
-export const getLtdPractOfProf = ({ limitedPracticeOfProfID }) => {
+export const getLtdPractOfProf = ({ id }) => {
   return new Promise((resolve, reject) => {
-    db.query(
-      Query.getLtdPractOfProf,
-      { limitedPracticeOfProfID },
-      (err, results) => {
-        if (err) return reject(500);
-        else if (!results.length) return reject(404);
-        return resolve(results[0]);
-      },
-    );
+    db.query(Query.getLtdPractOfProf, { id }, (err, results) => {
+      if (err) return reject(500);
+      else if (!results.length) return reject(404);
+      return resolve(results[0]);
+    });
   });
 };
 
-export const deleteLtdPractOfProf = ({ limitedPracticeOfProfID }) => {
+export const deleteLtdPractOfProf = ({ id }) => {
   return new Promise((resolve, reject) => {
-    db.query(
-      Query.deleteLtdPractOfProf,
-      { limitedPracticeOfProfID },
-      (err, results) => {
-        if (err) return reject(500);
-        else if (!results.affectedRows) return reject(404);
-        return resolve();
-      },
-    );
+    db.query(Query.deleteLtdPractOfProf, { id }, (err, results) => {
+      if (err) return reject(500);
+      else if (!results.affectedRows) return reject(404);
+      return resolve();
+    });
   });
 };
 

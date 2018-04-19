@@ -3,13 +3,11 @@ import { formatQueryParams } from '../../utils';
 export const addLtdPractOfProf = `
   INSERT INTO limitedPracticeOfProf (
     id,
-    limitedPracticeOfProfID,
     askedPermission,
     date
   )
   VALUES (
     :id,
-    DEFAULT,
     :askedPermission,
     :date
   )
@@ -18,7 +16,7 @@ export const addLtdPractOfProf = `
 export const updateLtdPractOfProf = limitedPracticeOfProf => `
   UPDATE limitedPracticeOfProf SET
   ${formatQueryParams(limitedPracticeOfProf, 'update')}
-  WHERE limitedPracticeOfProfID=:limitedPracticeOfProfID
+  WHERE id=:id
 `;
 
 export const getLtdPractOfProfs = (query, sortBy, userID) => `
@@ -26,7 +24,6 @@ export const getLtdPractOfProfs = (query, sortBy, userID) => `
     userID
       ? `
     x.id,
-    limitedPracticeOfProfID,
     askedPermission,
     date
     `
@@ -44,12 +41,11 @@ export const getLtdPractOfProfs = (query, sortBy, userID) => `
 
 export const getLtdPractOfProf = `
   SELECT * FROM limitedPracticeOfProf
-
-  WHERE limitedPracticeOfProfID = :limitedPracticeOfProfID
+    WHERE id = :id
 `;
 
 export const deleteLtdPractOfProf = `
-  DELETE FROM limitedPracticeOfProf WHERE limitedPracticeOfProfID = :limitedPracticeOfProfID
+  DELETE FROM limitedPracticeOfProf WHERE id = :id
 `;
 
 export const getTotalLtdPractOfProfs = (query, userID) => `

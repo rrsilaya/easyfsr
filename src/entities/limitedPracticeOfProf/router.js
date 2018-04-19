@@ -1,9 +1,6 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
-import {
-  getUserIDofFSR,
-  getIDofFSRfromLtd,
-} from '../../middlewares/controller';
+import { getUserIDofFSR } from '../../middlewares/controller';
 import { addLog } from './../log/controller';
 
 const router = Router();
@@ -19,7 +16,6 @@ const router = Router();
  *
  * @apiSuccess {Object} data new LtdPractOfProf created
  * @apiSuccess {Number} data.id ID of fsr
- * @apiSuccess {Number} data.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
  * @apiSuccess {String} data.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
  * @apiSuccess {Date} data.date Date of limitedPracticeOfProf
  *
@@ -30,7 +26,6 @@ const router = Router();
  *	    "message": "Successfully created ltdPractOfProf",
  *	    "data":
  *	        {
- *	            "limitedPracticeOfProfID": 97,
  *	            "id": 5,
  *	            "askedPermission": "no",
  *	            "date": "2000-12-31T16:00:00.000Z"
@@ -53,14 +48,14 @@ router.post('/ltdPractOfProf/', async (req, res) => {
       req.body.id,
       req.session.user.userID,
     );
-    const limitedPracticeOfProfID = await Ctrl.addLtdPractOfProf(req.body);
+    const id = await Ctrl.addLtdPractOfProf(req.body);
     const ltdPractOfProf = await Ctrl.getLtdPractOfProf({
-      limitedPracticeOfProfID,
+      id,
     });
     await addLog({
       action: 'INSERT_LTD_PRACTICE',
       changes: '',
-      affectedID: limitedPracticeOfProfID,
+      affectedID: id,
       userID: req.session.user.userID,
     });
     res.status(200).json({
@@ -86,11 +81,11 @@ router.post('/ltdPractOfProf/', async (req, res) => {
 });
 
 /**
- * @api {put} /ltdPractOfProf/:limitedPracticeOfProfID updateLtdPractOfProf
+ * @api {put} /ltdPractOfProf/:id updateLtdPractOfProf
  * @apiGroup LtdPractOfProf
  * @apiName updateLtdPractOfProf
 
- * @apiParam (Query Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
+ * @apiParam (Query Params) {Number} id ID of fsr
  *
  * @apiParam (Body Params) {Number} [id] ID of fsr
  * @apiParam (Body Params) {String} [askedPermssion] Asked permission of limitedPracticeOfProf.Can be 'YES' OR 'NO'
@@ -98,7 +93,6 @@ router.post('/ltdPractOfProf/', async (req, res) => {
  *
  * @apiSuccess {Object} data LtdPractOfProf updated
  * @apiSuccess {Number} data.id ID of fsr
- * @apiSuccess {Number} data.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
  * @apiSuccess {String} data.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
  * @apiSuccess {Date} data.date Date of limitedPracticeOfProf
  *
@@ -109,7 +103,6 @@ router.post('/ltdPractOfProf/', async (req, res) => {
  *	    "message": "Successfully updated LtdPractOfProf",
  *	    "data": 
  *	        {
- *	            "limitedPracticeOfProfID": 97,
  *	            "id": 5,
  *	            "askedPermission": "YES",
  *	            "date": "2002-12-31T16:00:00.000Z"
@@ -134,13 +127,10 @@ router.post('/ltdPractOfProf/', async (req, res) => {
  * 	 }
  */
 
-router.put('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
+router.put('/ltdPractOfProf/:id', async (req, res) => {
   try {
-    const idOfLtdPractOfProf = await getIDofFSRfromLtd(
-      req.params.limitedPracticeOfProfID,
-    );
     const userIDofFSR = await getUserIDofFSR(
-      idOfLtdPractOfProf,
+      req.params.id,
       req.session.user.userID,
     );
     await Ctrl.updateLtdPractOfProf(req.params, req.body);
@@ -148,7 +138,7 @@ router.put('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
     await addLog({
       action: 'UPDATE_LTD_PRACTICE',
       changes: '',
-      affectedID: ltdPractOfProf.limitedPracticeOfProfID,
+      affectedID: ltdPractOfProf.id,
       userID: req.session.user.userID,
     });
     res.status(200).json({
@@ -174,16 +164,15 @@ router.put('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
 });
 
 /**
- * @api {delete} /ltdPractOfProf/:limitedPracticeOfProfID deleteLtdPractOfProf
+ * @api {delete} /ltdPractOfProf/:id deleteLtdPractOfProf
  * @apiGroup LtdPractOfProf
  * @apiName deleteLtdPractOfProf
  *
  *
- * @apiParam (Query Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
+ * @apiParam (Query Params) {Number} id ID of fsr
  *
  * @apiSuccess {Object} data LtdPractOfProf deleted
  * @apiSuccess {Number} data.id ID of fsr
- * @apiSuccess {Number} data.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
  * @apiSuccess {String} data.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
  * @apiSuccess {Date} data.date Date of limitedPracticeOfProf
  *
@@ -194,7 +183,6 @@ router.put('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  *	    "message": "Successfully deleted LtdPractOfProf",
  *	    "data":
  *	        {
- *	            "limitedPracticeOfProfID": 97,
  *	            "id": 5,
  *	            "askedPermission": "YES",
  *	            "date": "2002-12-31T16:00:00.000Z"
@@ -219,13 +207,10 @@ router.put('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  * 	 }
  */
 
-router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
+router.delete('/ltdPractOfProf/:id', async (req, res) => {
   try {
-    const idOfLtdPractOfProf = await getIDofFSRfromLtd(
-      req.params.limitedPracticeOfProfID,
-    );
     const userIDofFSR = await getUserIDofFSR(
-      idOfLtdPractOfProf,
+      req.params.id,
       req.session.user.userID,
     );
     const ltdPractOfProf = await Ctrl.getLtdPractOfProf(req.params);
@@ -233,7 +218,7 @@ router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
     await addLog({
       action: 'DELETE_LTD_PRACTICE',
       changes: '',
-      affectedID: ltdPractOfProf.limitedPracticeOfProfID,
+      affectedID: ltdPractOfProf.id,
       userID: req.session.user.userID,
     });
     res.status(200).json({
@@ -259,16 +244,15 @@ router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
 });
 
 /**
- * @api {get} /ltdPractOfProf/:limitedPracticeOfProfID getLtdPractOfProf
+ * @api {get} /ltdPractOfProf/:id getLtdPractOfProf
  * @apiGroup LtdPractOfProf
  * @apiName getLtdPractOfProf
  *
  *
- * @apiParam (Query Params) {Number} limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
+ * @apiParam (Query Params) {Number} id ID of FSR
  *
  * @apiSuccess {Object} data LtdPractOfProf fetchedNumber
  * @apiSuccess {Number} data.id ID of fsr
- * @apiSuccess {Number} data.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
  * @apiSuccess {String} data.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
  * @apiSuccess {Date} data.date Date of limitedPracticeOfProf
  *
@@ -279,7 +263,6 @@ router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  *	    "message": "Successfully fetched LtdPractOfProf",
  *	    "data": [
  *	        {
- *	            "limitedPracticeOfProfID": 97,
  *	            "id": 5,
  *	            "askedPermission": "YES",
  *	            "date": "2002-12-31T16:00:00.000Z"
@@ -305,13 +288,10 @@ router.delete('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  * 	 }
  */
 
-router.get('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
+router.get('/ltdPractOfProf/:id', async (req, res) => {
   try {
-    const idOfLtdPractOfProf = await getIDofFSRfromLtd(
-      req.params.limitedPracticeOfProfID,
-    );
     const userIDofFSR = await getUserIDofFSR(
-      idOfLtdPractOfProf,
+      req.params.id,
       req.session.user.userID,
     );
     const ltdPractOfProf = await Ctrl.getLtdPractOfProf(req.params);
@@ -343,7 +323,6 @@ router.get('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  * @apiName getLtdPractOfProfs
  *
  * @apiParam (Query Params) {Number} [id] ID of fsr
- * @apiParam (Query Params) {Number} [limitedPracticeOfProfID] limitedPracticeOfProfID of limitedPracticeOfProf
  * @apiParam (Query Params) {String} [askedPermssion] Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
  * @apiParam (Query Params) {Date} [date] Date of limitedPracticeOfProf
  * @apiParam (Query Params) {Number} [page] page number
@@ -353,7 +332,6 @@ router.get('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  *
  * @apiSuccess {Object[]} data All LtdPractOfProf fecthed
  * @apiSuccess {Number} data.id ID of fsr
- * @apiSuccess {Number} data.limitedPracticeOfProfID limitedPracticeOfProfID of limitedPracticeOfProf
  * @apiSuccess {String} data.askedPermssion Asked permission of limitedPracticeOfProf. Can be 'YES' OR 'NO'
  * @apiSuccess {Date} data.date Date of limitedPracticeOfProf
  * @apiSuccess {Number} total Total amount of documents.
@@ -368,13 +346,10 @@ router.get('/ltdPractOfProf/:limitedPracticeOfProfID', async (req, res) => {
  *	    "message": "Successfully fetched ltdPractOfProfs",
  *	    "data": [
  *	        {
- *	            "limitedPracticeOfProfID": 97,
- *	            "id": 5,
  *	            "askedPermission": "YES",
  *	            "date": "2002-12-31T16:00:00.000Z"
  *	        },
  *			{
- *	            "limitedPracticeOfProfID": 96,
  *	            "id": 4,
  *	            "askedPermission": "NO",
  *	            "date": "2000-12-31T16:00:00.000Z"

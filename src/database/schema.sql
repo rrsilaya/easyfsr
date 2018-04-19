@@ -188,16 +188,15 @@ CREATE TABLE `award`(
 -- Limited Practice of Profession
 
 CREATE TABLE `limitedPracticeOfProf`(
-  `limitedPracticeOfProfID` INT NOT NULL AUTO_INCREMENT, 
   `id` INT NOT NULL,
-  `askedPermission` VARCHAR (10) NOT NULL,  -- YES / NO
-  `date` DATE,  --                   DATE format: YYYY-MM-DD
+  `askedPermission` VARCHAR (10) NOT NULL DEFAULT 'NO',  -- YES / NO
+  `date` DATE DEFAULT NULL,  --                   DATE format: YYYY-MM-DD
   CONSTRAINT `limitedPracticeOfProf_fsr_fk`
     FOREIGN KEY (`id`)
     REFERENCES fsr(`id`)
     ON DELETE CASCADE,
   CONSTRAINT `limitedPracticeOfProf_pk`
-    PRIMARY KEY (`limitedPracticeOfProfID`) 
+    PRIMARY KEY(`id`)
 );
 
 CREATE TABLE `extensionAndCommunityService`(
