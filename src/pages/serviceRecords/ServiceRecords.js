@@ -20,7 +20,7 @@ class ServiceRecords extends Component {
       case 'MEDIUM':
         return <Alert message={notifications.message} type="info" />;
       case 'HIGH':
-        return <Alert message={notifications.message} type="success" />;
+        return <Alert message={notifications.message} type="warning" />;
       default:
         return <Alert message={notifications.message} type="success" />;
     }
@@ -64,7 +64,7 @@ class ServiceRecords extends Component {
             locale={{ emptyText: 'No notifications' }}
             dataSource={notifications}
             renderItem={notifications => (
-              <ListItem>{notificationPriority(notifications)}</ListItem>
+              <ListItem>{this.notificationPriority(notifications)}</ListItem>
             )}
           />
         </div>
