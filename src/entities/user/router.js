@@ -554,6 +554,11 @@ router.put(
         affectedID: user.userID,
         userID: req.session.user.userID,
       });
+      res.status(200).json({
+        status: 200,
+        message: 'Successfully updated user',
+        data: user,
+      });
     } catch (status) {
       let message = '';
 

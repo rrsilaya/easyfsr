@@ -59,6 +59,7 @@ export const deleteConsultationHour = ({ chID }) => {
 export const getConsultationHour = ({ chID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getConsultationHour, { chID }, (err, results) => {
+      console.log(err);
       if (err) return reject(500);
       else if (!results.length) return reject(404);
       return resolve(results[0]);

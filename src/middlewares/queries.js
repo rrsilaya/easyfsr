@@ -65,7 +65,7 @@ export const getIDofFSRfromAdminWork = `
 
 export const getIDofFSRfromConsultationHours = `
 	SELECT id FROM consultationHours ch
-	WHERE ch.consultationHoursID = :consultationHoursID
+	WHERE ch.chID = :chID
 `;
 
 export const getIDofFSRfromService = `

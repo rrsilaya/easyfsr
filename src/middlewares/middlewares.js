@@ -1,3 +1,5 @@
+import { getUserIDofFSR } from './controller';
+
 // Constants
 const ADMIN = 'ADMIN';
 
@@ -60,4 +62,54 @@ export const isNotSameUser = attribute => (req, res, next) => {
     status: 400,
     message: 'You must not perform that action with user',
   });
+};
+
+export const canModifyFSR = async (req, res, next) => {
+  const { userID, acctType } = req.session.user;
+
+  if (acctType === ADMIN) return next();
+
+  try {
+    await getUserIDofFSR(req.params.id, userID);
+    return next();
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 403:
+        message = 'You must have an elevated access to perform that action';
+        break;
+      case 404:
+        message = 'FSR not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
+    }
+    res.status(status).json({ status, message });
+  }
+};
+
+export const canViewFSR = async (req, res, next) => {
+  const { userID, acctType, isHead } = req.session.user;
+
+  if (isHead || acctType === ADMIN) return next();
+
+  try {
+    await getUserIDofFSR(req.params.id, userID);
+    return next();
+  } catch (status) {
+    let message = '';
+    switch (status) {
+      case 403:
+        message = 'You must have an elevated access to perform that action';
+        break;
+      case 404:
+        message = 'FSR not found';
+        break;
+      case 500:
+        message = 'Internal server error';
+        break;
+    }
+    res.status(status).json({ status, message });
+  }
 };

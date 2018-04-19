@@ -3,6 +3,8 @@ import {
   isAdmin,
   isHead,
   isEmployeeAuthorized,
+  canModifyFSR,
+  canViewFSR,
 } from '../../middlewares/middlewares';
 import * as Ctrl from './controller';
 import { getUsers, getTotalUsers } from './../user/controller';
@@ -137,7 +139,7 @@ router.post('/fsr', isAdmin, async (req, res) => {
  *   "message": "FSR not found"
  * }
  */
-router.delete('/fsr/:id', async (req, res) => {
+router.delete('/fsr/:id', isAdmin, async (req, res) => {
   try {
     const fsr = await Ctrl.getFSR(req.params);
     await Ctrl.deleteFSR(req.params);
@@ -573,7 +575,7 @@ router.delete('/fsr/:id', async (req, res) => {
  *   "message": "FSR not found"
  * }
  */
-router.get('/fsr/:id', isHead, async (req, res) => {
+router.get('/fsr/:id', canViewFSR, async (req, res) => {
   try {
     let fsr = await Ctrl.getFSR(req.params);
     const adminWorks = await getAdminWorks(req.params);
@@ -714,7 +716,7 @@ router.get('/fsr/:id', isHead, async (req, res) => {
  *   "message": "FSR/s not found"
  * }
  */
-router.get('/fsr', isHead, async (req, res) => {
+router.get('/fsr', async (req, res) => {
   try {
     const FSRs = await Ctrl.getFSRs(req.query);
     res.status(200).json({
@@ -801,7 +803,7 @@ router.get('/fsr', isHead, async (req, res) => {
  * }
  */
 
-router.put('/fsr/:id', isEmployeeAuthorized, async (req, res) => {
+router.put('/fsr/:id', canModifyFSR, async (req, res) => {
   try {
     await Ctrl.updateFSR(req.params, req.body);
     const fsr = await Ctrl.getFSR(req.params);
@@ -819,6 +821,9 @@ router.put('/fsr/:id', isEmployeeAuthorized, async (req, res) => {
   } catch (status) {
     let message = '';
     switch (status) {
+      case 403:
+        message = 'Unauthorized access';
+        break;
       case 404:
         message = 'FSR not found';
         break;
