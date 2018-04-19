@@ -171,7 +171,7 @@ CREATE TABLE `award`(
   `awardID` INT NOT NULL AUTO_INCREMENT, 
   `id` INT NOT NULL,
   `grantF` VARCHAR (50) NOT NULL,
-  `chairGrantTitle` VARCHAR (50) NOT NULL,
+  `chairGrantTitle` TEXT (50) NOT NULL,
   `collegeHasNominated` VARCHAR (50) NOT NULL,
   `recipientOrNominee` VARCHAR (50) NOT NULL,
   `professionalChair` VARCHAR (50) NOT NULL,

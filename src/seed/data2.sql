@@ -98,7 +98,7 @@ INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (29, '2016-2017', 'S
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (30, '2017-2018', 'Second', 1);
 INSERT INTO fsr (userID, acadYear, semester, metaID) VALUES (30, '2017-2018', 'First', 1);
 
---CREATIVE WORK
+-- CREATIVE WORK
 INSERT INTO creativeWork (id, date, title, type, credUnit, filepath, coAuthor) VALUES (1, '2014-06-24', 'Google Apps', 'Sales', 5, '/uploads/creativeWorks/dummy.jpg', 'Jehu Sander');
 INSERT INTO creativeWork (id, date, title, type, credUnit, filepath, coAuthor) VALUES (2, '2015-07-17', 'Visual Identity', 'Human Resources', 1, '/uploads/creativeWorks/dummy.jpg', 'Sebastien Kedwell');
 INSERT INTO creativeWork (id, date, title, type, credUnit, filepath, coAuthor) VALUES (3, '2015-08-09', 'IBM Utilities', 'Marketing', 2, '/uploads/creativeWorks/dummy.jpg', 'Ellette Kasparski');
@@ -1271,7 +1271,7 @@ INSERT INTO extensionAndCommunityService (id, participant, role, hours, title, c
 INSERT INTO extensionAndCommunityService (id, participant, role, hours, title, creditUnit, type, startDate, endDate) VALUES (59, 97, 'Speaker', 34, 'Institutions, Economic Freedom, and Entrepreneurship: The Contribution of Management Scholarship', 6, 'Symposium', '2017-07-19', '2017-07-19');
 INSERT INTO extensionAndCommunityService (id, participant, role, hours, title, creditUnit, type, startDate, endDate) VALUES (60, 97, 'Supervisor', 12, 'Authentication for the Future Internet of Things (AuthFIoT),', 2, 'Training', '2017-04-14', '2017-04-14');
 
---AWARD
+-- AWARD
 INSERT INTO award (id, grantF, chairGrantTitle, collegeHasNominated, recipientOrNominee, professionalChair, approvedStartDate, endDate, filepath) VALUES (10, 'Outstanding Teaching & Research', 'Chair Award in Biology (Invertebrate Zoology) ', 'CAS', 'Tomlin Dadswell', 'Nick Donn', '2015-09-24', '2016-06-14', '/uploads/awards/dummy.pdf');
 INSERT INTO award (id, grantF, chairGrantTitle, collegeHasNominated, recipientOrNominee, professionalChair, approvedStartDate, endDate, filepath) VALUES (23, 'Outstanding Teaching & Creative Work', 'Chair Award in English Literature (Poetry)', 'CDC', 'Mollee Worsam', 'Ag Hanrott', '2015-05-30', '2016-04-25', '/uploads/awards/dummy.pdf');
 INSERT INTO award (id, grantF, chairGrantTitle, collegeHasNominated, recipientOrNominee, professionalChair, approvedStartDate, endDate, filepath) VALUES (15, 'Outstanding Teaching & Research', 'Chair Award in Computer Science (Virtual Memory)', 'CAS', 'Joseph Anthony Hermocilla', 'Beilul Sysland', '2015-08-31', '2016-10-29', '/uploads/awards/dummy.pdf');
@@ -1293,7 +1293,7 @@ INSERT INTO award (id, grantF, chairGrantTitle, collegeHasNominated, recipientOr
 INSERT INTO award (id, grantF, chairGrantTitle, collegeHasNominated, recipientOrNominee, professionalChair, approvedStartDate, endDate, filepath) VALUES (20, 'Outstanding Teaching & Research', 'Chair Award in Biology (Invertebrate Zoology) ', 'CAS', 'Tonnie Woodyer', 'Georgia Rubinovitch', '2015-10-05', '2017-04-02', '/uploads/awards/dummy.pdf');
 INSERT INTO award (id, grantF, chairGrantTitle, collegeHasNominated, recipientOrNominee, professionalChair, approvedStartDate, endDate, filepath) VALUES (7, 'Outstanding Teaching & Research', 'Chair Award in Biology (Invertebrate Zoology) ', 'CAS', 'Kesley Goozee', 'Dave Kaas', '2015-12-26', '2016-10-31', '/uploads/awards/dummy.pdf');
 
---RESEARCH
+-- RESEARCH
 INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (3, 'IMPLEMENTATION', 'Project Leader', 'Design, Implementation and Evaluation of Several Predator-Prey Mechanics for Co-Evolving Solutions in Genetic Algorithms', '2016-10-13', 'UP System Creative and Research Scholarship Program', 6);
 INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (33, 'PROPOSAL', 'Project Staff', 'Development of a Predictive Model for the Occurrence of a Fish Kill in Volcanic Taal Lake', '2016-10-25', 'PCAARRD-DOST', 6);
 INSERT INTO research (id, type, role, title, startDate, funding, approvedUnits) VALUES (33, 'IMPLEMENTATION', 'Project Leader', 'Requirements Specification and Pilot Implementation for an Open Web-based Integrated LGU MIS', '2016-11-25','UPLB Basic Research Program', 6);

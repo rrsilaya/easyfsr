@@ -1,5 +1,9 @@
 import { Router } from 'express';
-import { isAdmin, isHead } from '../../middlewares/middlewares';
+import {
+  isAdmin,
+  isHead,
+  isEmployeeAuthorized,
+} from '../../middlewares/middlewares';
 import * as Ctrl from './controller';
 import { getUsers, getTotalUsers } from './../user/controller';
 import { getAdminWorks } from './../adminWork/controller';
