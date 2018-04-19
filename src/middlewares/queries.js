@@ -70,7 +70,7 @@ export const getIDofFSRfromConsultationHours = `
 
 export const getIDofFSRfromService = `
 	SELECT id FROM extensionAndCommunityService e
-	WHERE e.extensionAndCommunityServiceID = :extensionAndCommunityServiceID
+	WHERE e.extAndCommServiceID = :extAndCommServiceID
 `;
 
 export const getIDofFSRfromLtd = `

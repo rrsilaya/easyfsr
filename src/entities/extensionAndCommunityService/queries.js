@@ -45,6 +45,7 @@ export const getExtensionAndCommunityServices = (query, sortBy, userID) => `
   SELECT ${
     userID
       ? ` x.id,
+      extAndCommServiceID,
       participant,
     role,
     hours,
