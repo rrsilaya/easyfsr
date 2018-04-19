@@ -69,6 +69,7 @@ export const getFSRs = fsr => {
       Query.getFSRs(filtered(fsr, fsrAttributes), fsr.sortBy),
       { field: 'isChecked', ...escapeSearch(fsr, searchFields, fsr.limit) },
       (err, results) => {
+        console.log(err);
         if (err) return reject(500);
         return resolve(results);
       },
