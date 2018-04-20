@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Table, Button, Card, Icon, Popconfirm } from 'antd';
-import { ADD_SUBJECT_MODAL, EDIT_SUBJECT_MODAL } from '../duck';
+import { SUBJECT, ADD_SUBJECT_MODAL, EDIT_SUBJECT_MODAL } from '../duck';
 
 import styles from '../styles';
 
@@ -70,7 +70,7 @@ class TeachingLoadForm extends Component {
   ];
 
   handleToggleEditSubject = subject => {
-    this.props.changeSelectedSubject(subject);
+    this.props.changeSelected({ entity: SUBJECT, data: subject });
     this.props.toggleModal(EDIT_SUBJECT_MODAL);
   };
 
@@ -92,14 +92,9 @@ class TeachingLoadForm extends Component {
       toggleModal,
       nextStep,
     } = this.props;
-    const columns = this.columns;
 
     return (
-      <Card
-        loading={isGettingSubjects}
-        title="Teaching Load in the College"
-        style={styles.formFSR}
-      >
+      <Card title="Teaching Load in the College" style={styles.formFSR}>
         <AddSubjectModal
           id={fsrID}
           subject={subject}
@@ -109,16 +104,20 @@ class TeachingLoadForm extends Component {
           isAddSubjectModalOpen={isAddSubjectModalOpen}
           toggleModal={toggleModal}
         />
-        <EditSubjectModal
-          id={fsrID}
-          subject={subject}
-          timeslots={timeslots}
-          editSubject={editSubject}
-          getTimeslots={getTimeslots}
-          isEditingSubject={isEditingSubject}
-          isEditSubjectModalOpen={isEditSubjectModalOpen}
-          toggleModal={toggleModal}
-        />
+        {isEditSubjectModalOpen ? (
+          <EditSubjectModal
+            id={fsrID}
+            subject={subject}
+            timeslots={timeslots}
+            editSubject={editSubject}
+            getTimeslots={getTimeslots}
+            isEditingSubject={isEditingSubject}
+            isEditSubjectModalOpen={isEditSubjectModalOpen}
+            toggleModal={toggleModal}
+          />
+        ) : (
+          ''
+        )}
         <Schedule data={[]} />
         <div style={styles.button}>
           <Button
@@ -129,7 +128,11 @@ class TeachingLoadForm extends Component {
             Add Subject
           </Button>
         </div>
-        <Table columns={columns} dataSource={subjects} />
+        <Table
+          columns={this.columns}
+          dataSource={subjects}
+          loading={isGettingSubjects}
+        />
         <div style={styles.button}>
           <Button type="primary" onClick={nextStep}>
             Next

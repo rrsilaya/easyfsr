@@ -6,8 +6,18 @@ import styles from '../styles';
 const FormItem = Form.Item;
 
 class CertificationForm extends Component {
+  handleFormSubmit = e => {
+    e.preventDefault();
+
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        this.props.pushLink(`/records`);
+      }
+    });
+  };
+
   render() {
-    const { nextStep, prevStep } = this.props;
+    const { prevStep } = this.props;
 
     const { getFieldDecorator } = this.props.form;
 
@@ -26,9 +36,16 @@ class CertificationForm extends Component {
 
     return (
       <Card title="Certification" style={styles.formFSR}>
-        <Form>
+        <Form onSubmit={this.handleFormSubmit}>
           <FormItem {...tailFormItemLayout}>
             {getFieldDecorator('certification', {
+              rules: [
+                {
+                  required: true,
+                  message:
+                    'Please mark the checkbox to certify all information',
+                },
+              ],
               valuePropName: 'checked',
             })(
               <Checkbox>
@@ -45,7 +62,7 @@ class CertificationForm extends Component {
             >
               Previous
             </Button>
-            <Button type="primary" onClick={nextStep}>
+            <Button type="primary" onClick={this.handleFormSubmit}>
               Finish
             </Button>
           </div>
