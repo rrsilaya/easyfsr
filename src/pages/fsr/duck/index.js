@@ -2,7 +2,7 @@ import { handle } from 'redux-pack';
 import * as Action from './actionTypes';
 
 const initialState = {
-  fsr: {},
+  fsr: { fsr: {} },
   subjects: [],
   subject: {},
   timeslots: [],
@@ -24,7 +24,7 @@ const initialState = {
   consultationHour: {},
   currentStep: 0,
 
-  isGettingFSR: false,
+  isGettingFSR: true,
   isGettingSubjects: false,
   isGettingTimeslots: false,
   isAddingSubject: false,
@@ -97,7 +97,7 @@ const reducer = (state = initialState, action) => {
         }),
         success: prevState => ({
           ...prevState,
-          fsr: payload.data.data.fsr,
+          fsr: payload.data.data,
           currentStep: 0,
         }),
         finish: prevState => ({
@@ -812,7 +812,10 @@ const reducer = (state = initialState, action) => {
         }),
         success: prevState => ({
           ...prevState,
-          fsr: payload.data.data,
+          fsr: {
+            ...prevState.fsr,
+            fsr: payload.data.data,
+          },
         }),
         finish: prevState => ({
           ...prevState,
@@ -828,7 +831,10 @@ const reducer = (state = initialState, action) => {
         }),
         success: prevState => ({
           ...prevState,
-          fsr: payload.data.data,
+          fsr: {
+            ...prevState.fsr,
+            fsr: payload.data.data,
+          },
         }),
         finish: prevState => ({
           ...prevState,

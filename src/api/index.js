@@ -20,3 +20,5 @@ export * from './studyLoad';
 export * from './course';
 export * from './courseSched';
 export * from './consultationHours';
+export * from './logs';
+export * from './meta';
