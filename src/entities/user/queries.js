@@ -50,7 +50,7 @@ export const getUserByEmpID = `
 `;
 
 export const getUsers = (query, sortBy) => `
-  SELECT * FROM user WHERE isArchived = 0 ${
+  SELECT * FROM user x WHERE isArchived = 0 ${
     query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
   } 
   ORDER BY [field] ${
@@ -59,7 +59,7 @@ export const getUsers = (query, sortBy) => `
 `;
 
 export const getTotalUsers = query => `
-  SELECT count(*) as total FROM user WHERE isArchived = 0 ${
+  SELECT count(*) as total FROM user x WHERE isArchived = 0 ${
     query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
   }
 `;
