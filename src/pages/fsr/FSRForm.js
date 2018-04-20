@@ -122,6 +122,7 @@ class FSRForm extends Component {
                 style={styles.icons}
                 size="large"
                 icon="check"
+                loading={isTurningIn}
                 onClick={this.handleTurningInFSR}
                 ghost
               >
@@ -132,6 +133,7 @@ class FSRForm extends Component {
                 style={styles.icons}
                 size="large"
                 icon="up-square-o"
+                loading={isTurningIn}
                 onClick={this.handleTurningInFSR}
                 ghost
               >
