@@ -8,7 +8,7 @@ const initialState = {
   timeslots: [],
   currentStep: 0,
 
-  isGettingFSR: false,
+  isGettingFSR: true,
   isGettingSubjects: false,
   isGettingTimeslots: false,
   isAddingSubject: false,

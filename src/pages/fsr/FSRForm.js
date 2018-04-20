@@ -11,6 +11,7 @@ import AwardForm from './components/AwardForm';
 import ConsultationHoursForm from './components/ConsultationHoursForm';
 import CertificationForm from './components/CertificationForm';
 
+import { PageLoader } from '../../global';
 import steps from './steps';
 import styles from './styles';
 import { Link } from 'react-router-dom';
@@ -25,7 +26,6 @@ class FSRForm extends Component {
   }
 
   handleTurningInFSR = () => {
-    // console.log(this.props.fsr);
     this.props.toggleTurningIn(this.props.fsr.fsr.id, {
       isTurnedIn: !this.props.fsr.fsr.isTurnedIn,
     });
@@ -93,6 +93,7 @@ class FSRForm extends Component {
       isGettingTimeslots,
       isTurningIn,
       isFinalizing,
+      isGettingFSR,
       pushLink,
 
       user,
@@ -101,7 +102,9 @@ class FSRForm extends Component {
     const { fsrID } = this.props.match.params;
     const { acctType } = this.props.user;
 
-    return (
+    return isGettingFSR ? (
+      <PageLoader />
+    ) : (
       <div>
         <ButtonGroup style={{ float: 'right', display: 'flex' }}>
           <Button
