@@ -54,6 +54,9 @@ const style = {
   listItems: {
     color: '#000000a6',
   },
+  datePicker: {
+    width: '100%',
+  },
 };
 
 export default style;

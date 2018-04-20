@@ -3,6 +3,7 @@ import { Modal, Button, Input, Select, Form } from 'antd';
 import { SEND_NOTIFICATION } from '../duck';
 import styles from '../styles';
 import { getFieldValues } from '../../../utils';
+import { getUsers } from '../../../api';
 
 const { Search } = Input;
 const { TextArea } = Input;
@@ -12,10 +13,15 @@ const FormItem = Form.Item;
 class SendNotificationModal extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
+    this.props.form.validateFieldsAndScroll(async (err, values) => {
       if (!err) {
-        console.log(values);
-        this.props.addNotification(getFieldValues(values));
+        const formData = getFieldValues(values);
+
+        const [firstName, lastName] = formData.receiverID.split(' ');
+
+        const { data } = await getUsers({ lastName, firstName, limit: 1 });
+        formData.receiverID = data.data[0].userID;
+        this.props.addNotification(formData);
       }
     });
   };
@@ -64,7 +70,7 @@ class SendNotificationModal extends Component {
       >
         <Form onSubmit={this.handleFormSubmit}>
           <FormItem required>
-            {form.getFieldDecorator('user@@addNotification', {
+            {form.getFieldDecorator('receiverID@@addNotification', {
               rules: [
                 {
                   required: true,
@@ -84,7 +90,10 @@ class SendNotificationModal extends Component {
                 onChange={this.handleChange}
               >
                 {searchedUsers.map(user => (
-                  <Option key={`${user.firstName} ${user.lastName}`}>
+                  <Option
+                    value={`${user.firstName} ${user.lastName}`}
+                    key={`${user.userID}`}
+                  >
                     {user.firstName} {user.lastName}
                   </Option>
                 ))}

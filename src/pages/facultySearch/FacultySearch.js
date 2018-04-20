@@ -15,8 +15,9 @@ class FacultySearch extends Component {
     this.props.resetPage();
   }
 
-  handleToggleSendNotificationFSModal = () => {
-    this.props.changeSelectedUser(this.props.user);
+  handleToggleSendNotificationFSModal = user => {
+    this.props.changeSelectedUser(user);
+    this.props.toggleModal(SEND_NOTIFICATION_FS);
   };
 
   render() {
@@ -25,8 +26,6 @@ class FacultySearch extends Component {
       // State
       users,
       isSearching,
-      isGettingUser,
-      pushLink,
       // Dispatch
       addNotification,
       // searchedUsers,
@@ -70,20 +69,13 @@ class FacultySearch extends Component {
                       <Icon className="text secondary" type="solution" />
                     </Tooltip>,
                     <Tooltip title="Send Notification" arrowPointAtCenter>
-                      <SendNotificationFSModal
-                        user={user}
-                        isSendNotificationFSModalOpen={
-                          isSendNotificationFSModalOpen
-                        }
-                        toggleModal={toggleModal}
-                        handleAfterClose={this.handleAfterClose}
-                        addNotification={addNotification}
-                      />
                       <Icon
                         className="text secondary"
                         type="message"
                         style={styles.message}
-                        onClick={() => toggleModal(SEND_NOTIFICATION_FS)}
+                        onClick={() =>
+                          this.handleToggleSendNotificationFSModal(item)
+                        }
                       />
                     </Tooltip>,
                     <Tooltip title="Profile" arrowPointAtCenter>
@@ -96,6 +88,13 @@ class FacultySearch extends Component {
               )}
             />
           }
+        />
+        <SendNotificationFSModal
+          user={user}
+          isSendNotificationFSModalOpen={isSendNotificationFSModalOpen}
+          toggleModal={toggleModal}
+          handleAfterClose={this.handleAfterClose}
+          addNotification={addNotification}
         />
       </div>
     );

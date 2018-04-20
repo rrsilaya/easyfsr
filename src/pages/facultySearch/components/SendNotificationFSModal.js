@@ -14,8 +14,10 @@ class SendNotificationFSModal extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log(values);
-        this.props.addNotification(getFieldValues(values));
+        const formData = getFieldValues(values);
+        formData.receiverID = this.props.user.userID;
+        this.props.addNotification(formData);
+        this.props.toggleModal(SEND_NOTIFICATION_FS);
       }
     });
   };
@@ -40,9 +42,7 @@ class SendNotificationFSModal extends Component {
         onCancel={() => toggleModal(SEND_NOTIFICATION_FS)}
         destroyOnClose
         footer={[
-          <Button key="back" onClick={() => toggleModal(SEND_NOTIFICATION_FS)}>
-            Cancel
-          </Button>,
+          <Button key="back">Cancel</Button>,
           <Button
             key="submit"
             type="primary"
@@ -56,15 +56,7 @@ class SendNotificationFSModal extends Component {
       >
         <Form onSubmit={this.handleFormSubmit}>
           <FormItem required>
-            {form.getFieldDecorator('user@@addNotification', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please input user',
-                  whitespace: true,
-                },
-              ],
-            })(<Input disabled />)}
+            <Input value={`${user.firstName} ${user.lastName}`} disabled />
           </FormItem>
           <FormItem label="Message" required>
             {form.getFieldDecorator('message@@addNotification', {

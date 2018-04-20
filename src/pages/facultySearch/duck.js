@@ -5,11 +5,13 @@ import { notification } from 'antd';
 // Action Types
 const SEARCH_USER = 'FACULTY/SEARCH_USER';
 const RESET_PAGE = 'FACULTY/RESET_PAGE';
-export const GET_USER = 'FACULTYSEARCH/GET_USERS';
+export const GET_USER = 'FACULTY/GET_USERS';
 export const ADD_NOTIFICATION = 'FACULTY/ADD_NOTIFICATION';
-export const TOGGLE_MODAL = 'FACULTYSEARCH/TOGGLE_MODAL';
-export const SEND_NOTIFICATION_FS = 'FACULTYSEARCH/SEND_NOTIFICATION_FS';
-export const GET_USERS = 'FACULTYSEARCH/GET_USERS';
+export const TOGGLE_MODAL = 'FACULTY/TOGGLE_MODAL';
+export const SEND_NOTIFICATION_FS = 'FACULTY/SEND_NOTIFICATION_FS';
+export const GET_USERS = 'FACULTY/GET_USERS';
+export const CHANGE_SELECTED_USER = 'FACULTY/CHANGE_SELECTED_USER';
+
 // Action Creators
 export const getUsers = query => {
   return dispatch => {
@@ -63,6 +65,11 @@ export const searchUser = query => ({
   },
 });
 
+export const changeSelectedUser = user => ({
+  type: CHANGE_SELECTED_USER,
+  payload: user,
+});
+
 export const resetPage = () => ({
   type: RESET_PAGE,
 });
@@ -113,6 +120,13 @@ const reducer = (state = initialState, action) => {
           isSearching: false,
         }),
       });
+
+    case CHANGE_SELECTED_USER:
+      return {
+        ...state,
+        user: payload,
+      };
+
     case TOGGLE_MODAL:
       switch (payload) {
         case SEND_NOTIFICATION_FS:
