@@ -29,6 +29,8 @@ class Dashboard extends Component {
       isCreateFSRModalOpen,
       isCreateAnnouncementModalOpen,
       isSettingsModalOpen,
+      isGettingNotifications,
+      isGettingAnnouncements,
 
       searchedUsers,
 
@@ -117,6 +119,7 @@ class Dashboard extends Component {
               <Card
                 style={styles.announcement}
                 title="Announcements"
+                loading={isGettingAnnouncements}
                 actions={[
                   <Icon
                     type="plus-circle-o"
@@ -138,9 +141,9 @@ class Dashboard extends Component {
                         <Icon style={styles.listItems} type="close-circle" />,
                       ]}
                     >
-                      <Row type="flex" style={styles.listItems}>
+                      <Row style={styles.listItems}>
                         <h3 className="text primary">{item.title}</h3>
-                        {item.body}
+                        <p className="text normal">{item.body}</p>
                       </Row>
                     </ListItem>
                   )}
@@ -151,6 +154,7 @@ class Dashboard extends Component {
               <Card
                 style={styles.announcement}
                 title="Notifications"
+                loading={isGettingNotifications}
                 actions={[
                   <Icon
                     type="plus-circle-o"

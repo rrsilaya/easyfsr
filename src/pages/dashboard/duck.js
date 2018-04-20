@@ -176,6 +176,8 @@ const initialState = {
   isAddingMeta: false,
 
   isGettingsLogs: false,
+  isGettingAnnouncements: true,
+  isGettingNotifications: true,
   searchedUsers: [],
   log: [],
 };

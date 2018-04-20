@@ -21,6 +21,8 @@ const mapStateToProps = state => {
 
     isAddingNotification,
     isAddingAnnouncement,
+    isGettingAnnouncements,
+    isGettingNotifications,
 
     isGettingLogs,
 
@@ -39,6 +41,8 @@ const mapStateToProps = state => {
 
     isAddingNotification,
     isAddingAnnouncement,
+    isGettingAnnouncements,
+    isGettingNotifications,
 
     isGettingLogs,
 
