@@ -139,6 +139,7 @@ class Dashboard extends Component {
                       ]}
                     >
                       <Row type="flex" style={styles.listItems}>
+                        <h3 className="text primary">{item.title}</h3>
                         {item.body}
                       </Row>
                     </ListItem>
@@ -172,7 +173,26 @@ class Dashboard extends Component {
                       ]}
                     >
                       <Row type="flex" style={styles.listItems}>
-                        {item.message}
+                        <dl>
+                          <dt>Sender</dt>
+                          <dd>{item.senderID}</dd>
+                        </dl>
+                        <dl>
+                          <dt>Receiver</dt>
+                          <dd>{item.receiverID}</dd>
+                        </dl>
+                        <dl>
+                          <dt>Message</dt>
+                          <dd>{item.message}</dd>
+                        </dl>
+                        <dl>
+                          <dt>Time</dt>
+                          <dd>
+                            {moment(item.timestamp).format(
+                              'MMMM DD, YYYY hh:MM',
+                            )}
+                          </dd>
+                        </dl>
                       </Row>
                     </ListItem>
                   )}
