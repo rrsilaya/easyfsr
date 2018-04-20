@@ -25,6 +25,9 @@ const initialState = {
   isAddExtAndCommServiceModalOpen: false,
   isAddCourseModalOpen: false,
   isAddConsultationHourModalOpen: false,
+
+  isTurningIn: false,
+  isFinalizing: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -154,6 +157,38 @@ const reducer = (state = initialState, action) => {
         finish: prevState => ({
           ...prevState,
           isGettingTimeslots: false,
+        }),
+      });
+
+    case Action.TURN_IN:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isTurningIn: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          fsr: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isTurningIn: false,
+        }),
+      });
+
+    case Action.FINALIZE:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isFinalizing: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          fsr: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isFinalizing: false,
         }),
       });
 

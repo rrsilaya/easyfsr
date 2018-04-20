@@ -6,17 +6,19 @@ import { getFSRs } from './duck';
 
 const mapStateToProps = state => {
   const { fsr, isGettingFSR } = state.serviceRecords;
+  const { user } = state.app;
 
   return {
     fsr,
     isGettingFSR,
+    user,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getFSRs: () => {
-      dispatch(getFSRs());
+    getFSRs: id => {
+      dispatch(getFSRs(id));
     },
     pushLink: route => {
       dispatch(push(route));
