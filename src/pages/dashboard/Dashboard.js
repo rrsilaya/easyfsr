@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Icon, Card, Table, Row, Col, Button, List } from 'antd';
+import { Icon, Card, Table, Row, Col, Button, List, Switch } from 'antd';
 import styles from './styles';
-import dataSource from './datasource';
 import columns from './columns';
+import moment from 'moment';
 
 import SendNotificationModal from './components/SendNotificationModal';
 import CreateFSRModal from './components/CreateFSRModal';
@@ -14,8 +14,6 @@ import { CREATE_FSR } from './duck';
 import { CREATE_ANNOUNCEMENT } from './duck';
 import { SETTINGS } from './duck';
 
-import { GET_ANNOUCEMENTS, GET_NOTIFICATIONS } from './duck';
-
 const { Item: ListItem } = List;
 
 class Dashboard extends Component {
@@ -23,6 +21,7 @@ class Dashboard extends Component {
     this.props.getAnnouncements();
     this.props.getNotifications();
     this.props.getUsers({ limit: 99999 });
+    this.props.getLog();
   }
 
   render() {
@@ -31,6 +30,8 @@ class Dashboard extends Component {
       isCreateFSRModalOpen,
       isCreateAnnouncementModalOpen,
       isSettingsModalOpen,
+      isGettingNotifications,
+      isGettingAnnouncements,
 
       searchedUsers,
       selectedUsers,
@@ -38,8 +39,11 @@ class Dashboard extends Component {
 
       addNotification,
       addAnnouncement,
+      addMetaData,
+
       announcements,
       notifications,
+      log,
 
       toggleModal,
       searchUser,
@@ -58,6 +62,7 @@ class Dashboard extends Component {
                 searchedUsers={searchedUsers}
                 searchUser={searchUser}
                 addNotification={addNotification}
+                notifications={notifications}
               />
               <Button
                 type="default"
@@ -104,6 +109,7 @@ class Dashboard extends Component {
                 isSettingsModalOpen={isSettingsModalOpen}
                 toggleModal={toggleModal}
                 handleAfterClose={this.handleAfterClose}
+                addMetaData={addMetaData}
               />
               <Button
                 type="default"
@@ -122,6 +128,7 @@ class Dashboard extends Component {
               <Card
                 style={styles.announcement}
                 title="Announcements"
+                loading={isGettingAnnouncements}
                 actions={[
                   <Icon
                     type="plus-circle-o"
@@ -143,8 +150,9 @@ class Dashboard extends Component {
                         <Icon style={styles.listItems} type="close-circle" />,
                       ]}
                     >
-                      <Row type="flex" style={styles.listItems}>
-                        {item.body}
+                      <Row style={styles.listItems}>
+                        <h3 className="text primary">{item.title}</h3>
+                        <p className="text normal">{item.body}</p>
                       </Row>
                     </ListItem>
                   )}
@@ -155,6 +163,7 @@ class Dashboard extends Component {
               <Card
                 style={styles.announcement}
                 title="Notifications"
+                loading={isGettingNotifications}
                 actions={[
                   <Icon
                     type="plus-circle-o"
@@ -177,7 +186,26 @@ class Dashboard extends Component {
                       ]}
                     >
                       <Row type="flex" style={styles.listItems}>
-                        {item.message}
+                        <dl>
+                          <dt>Sender</dt>
+                          <dd>{item.senderID}</dd>
+                        </dl>
+                        <dl>
+                          <dt>Receiver</dt>
+                          <dd>{item.receiverID}</dd>
+                        </dl>
+                        <dl>
+                          <dt>Message</dt>
+                          <dd>{item.message}</dd>
+                        </dl>
+                        <dl>
+                          <dt>Time</dt>
+                          <dd>
+                            {moment(item.timestamp).format(
+                              'MMMM DD, YYYY hh:MM',
+                            )}
+                          </dd>
+                        </dl>
                       </Row>
                     </ListItem>
                   )}
@@ -188,11 +216,35 @@ class Dashboard extends Component {
           <Row gutter={12} type="flex">
             <Col span={24}>
               <Card title="Logs">
+                {/* <Switch /> */}
                 <Table
+                  //put slider which changes it to fsr submissions
                   columns={columns}
-                  dataSource={dataSource}
+                  dataSource={log.map(row => ({
+                    ...row,
+                    timestamp: moment(row.timestamp).format(
+                      'MMM DD YYYY hh:mm:ss A',
+                    ),
+                  }))}
+                  // dataSource={[]}
                   style={styles.facultyTable}
                 />
+                {/* <List
+                  bordered
+                  size="large"
+                  locale={{ emptyText: 'No logs found' }}
+                  dataSource={log}
+                  itemLayout="horizontal"
+                  renderItem={item => (
+                    <ListItem
+                      style={styles.listItems}
+                    >
+                      <Row type="flex" style={styles.listItems}>
+                        {item.timestamp}
+                      </Row>
+                    </ListItem>
+                  )}
+                /> */}
               </Card>
             </Col>
           </Row>

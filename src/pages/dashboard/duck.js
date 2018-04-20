@@ -14,9 +14,11 @@ const GET_USERS = 'DASHBOARD/GET_USERS';
 const CHANGE_SELECTED_USER = 'DASHBOARD/CHANGE_SELECTED_USER';
 const CHANGE_SELECTED_USERS = 'DASHBOARD/CHANGE_SELECTED_USERS';
 const ADD_NOTIFICATION = 'DASHBOARD/ADD_NOTIFICATION';
-const ADD_ANNOUNCEMENT = 'DASHBOARD/ADD_ANNOUNCEMENT';
+export const ADD_ANNOUNCEMENT = 'DASHBOARD/ADD_ANNOUNCEMENT';
 const GET_ANNOUNCEMENTS = 'DASHBOARD/GET_ANNOUNCEMENTS';
 const GET_NOTIFICATIONS = 'DASHBOARD/GET_NOTIFICATIONS';
+export const GET_LOG = 'DASHBOARD/GET_LOGS';
+export const ADD_META = 'DASHBOARD/ADD_META';
 const TOGGLE_MODAL = 'DASHBOARD/TOGGLE_MODAL';
 
 export const getUsers = query => {
@@ -72,6 +74,22 @@ export const getNotifications = query => {
   };
 };
 
+export const getLog = query => {
+  return dispatch => {
+    return dispatch({
+      type: GET_LOG,
+      promise: Api.getLog(query),
+      meta: {
+        onFailure: () => {
+          notification.error({
+            message: 'Error while getting logs.',
+          });
+        },
+      },
+    });
+  };
+};
+
 export const changeSelectedUser = user => ({
   type: CHANGE_SELECTED_USER,
   payload: user,
@@ -97,6 +115,7 @@ export const addNotification = body => {
           notification.success({
             message: 'Notification successfully sent.',
           });
+          dispatch(getNotifications());
         },
         onFailure: () => {
           notification.error({
@@ -118,10 +137,32 @@ export const addAnnouncement = body => {
           notification.success({
             message: 'Announcement successfully sent.',
           });
+          dispatch(getAnnouncements());
         },
         onFailure: () => {
           notification.error({
             message: 'Server error while sending announcement.',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const addMetaData = body => {
+  return (dispatch, getState) => {
+    return dispatch({
+      type: ADD_META,
+      promise: Api.addMetaData(body),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Settings successfully changed.',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while changing settings.',
           });
         },
       },
@@ -139,10 +180,15 @@ const initialState = {
   isAddingNotification: false,
   isAddingAnnouncement: false,
   isGettingUsers: false,
+  isAddingMeta: false,
 
+  isGettingsLogs: false,
+  isGettingAnnouncements: true,
+  isGettingNotifications: true,
   searchedUsers: [],
   selectedUsers: [],
   users: [],
+  log: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -189,6 +235,22 @@ const reducer = (state = initialState, action) => {
         finish: prevState => ({
           ...prevState,
           isAddingNotification: false,
+        }),
+      });
+
+    case ADD_META:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isAddingMeta: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          isSettingsModalOpen: false,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isAddingMeta: false,
         }),
       });
 
@@ -272,6 +334,21 @@ const reducer = (state = initialState, action) => {
         ...state,
         selectedUsers: payload,
       };
+    case GET_LOG:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingLogs: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          log: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingLogs: false,
+        }),
+      });
 
     default:
       return state;

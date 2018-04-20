@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form, Input, Select, Switch } from 'antd';
+import { Modal, Button, Form, Input, Select } from 'antd';
 
 import { getFieldValues } from '../../../utils';
 import { getUsers } from '../../../api';

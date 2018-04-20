@@ -8,14 +8,14 @@ import {
   DatePicker,
   InputNumber,
 } from 'antd';
-import { ADD_EXTANDCOMMSERVICE_MODAL } from '../duck';
+import { EDIT_EXTANDCOMMSERVICE_MODAL } from '../duck';
 import { getFieldValues } from '../../../utils';
 import moment from 'moment';
 
 const FormItem = Form.Item;
 const { Option } = Select;
 
-class AddExtAndCommServiceModal extends Component {
+class EditExtAndCommServiceModal extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
 
@@ -27,7 +27,10 @@ class AddExtAndCommServiceModal extends Component {
         );
         fieldValues.endDate = moment(fieldValues.endDate).format('YYYY-MM-DD');
 
-        this.props.addExtAndCommService({ ...fieldValues, id: this.props.id });
+        this.props.editExtAndCommService(
+          this.props.extAndCommService.extAndCommServiceID,
+          { ...fieldValues, id: this.props.id },
+        );
       }
     });
   };
@@ -52,8 +55,9 @@ class AddExtAndCommServiceModal extends Component {
 
   render() {
     const {
-      isAddExtAndCommServiceModalOpen,
-      isAddingExtAndCommService,
+      isEditExtAndCommServiceModalOpen,
+      isEditingExtAndCommService,
+      extAndCommService,
 
       toggleModal,
     } = this.props;
@@ -73,15 +77,15 @@ class AddExtAndCommServiceModal extends Component {
 
     return (
       <Modal
-        title="Add Extension and Community Service"
-        visible={isAddExtAndCommServiceModalOpen}
-        onOk={() => toggleModal(ADD_EXTANDCOMMSERVICE_MODAL)}
-        onCancel={() => toggleModal(ADD_EXTANDCOMMSERVICE_MODAL)}
+        title="Edit Extension and Community Service"
+        visible={isEditExtAndCommServiceModalOpen}
+        onOk={() => toggleModal(EDIT_EXTANDCOMMSERVICE_MODAL)}
+        onCancel={() => toggleModal(EDIT_EXTANDCOMMSERVICE_MODAL)}
         destroyOnClose
         footer={[
           <Button
             key="back"
-            onClick={() => toggleModal(ADD_EXTANDCOMMSERVICE_MODAL)}
+            onClick={() => toggleModal(EDIT_EXTANDCOMMSERVICE_MODAL)}
           >
             Cancel
           </Button>,
@@ -90,9 +94,9 @@ class AddExtAndCommServiceModal extends Component {
             type="primary"
             htmlType="submit"
             onClick={this.handleFormSubmit}
-            loading={isAddingExtAndCommService}
+            loading={isEditingExtAndCommService}
           >
-            Add
+            Edit
           </Button>,
         ]}
       >
@@ -106,6 +110,7 @@ class AddExtAndCommServiceModal extends Component {
                   whitespace: true,
                 },
               ],
+              initialValue: extAndCommService.title,
             })(<Input placeholder="Enter title of activity or program" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Type">
@@ -116,6 +121,7 @@ class AddExtAndCommServiceModal extends Component {
                   message: 'Please input type',
                 },
               ],
+              initialValue: extAndCommService.type,
             })(
               <Select placeholder="Select type of extension and community service">
                 <Option value="Training">Training</Option>
@@ -136,6 +142,7 @@ class AddExtAndCommServiceModal extends Component {
                   message: 'Please input number of hours',
                 },
               ],
+              initialValue: extAndCommService.hours,
             })(<InputNumber min={0} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="No. of Participants">
@@ -146,6 +153,7 @@ class AddExtAndCommServiceModal extends Component {
                   message: 'Please input number of participants',
                 },
               ],
+              initialValue: extAndCommService.participant,
             })(<InputNumber min={0} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Start Date">
@@ -156,6 +164,7 @@ class AddExtAndCommServiceModal extends Component {
                   message: 'Please input start date',
                 },
               ],
+              initialValue: moment(extAndCommService.startDate),
             })(<DatePicker disabledDate={this.disabledStartDate} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="End Date">
@@ -166,6 +175,7 @@ class AddExtAndCommServiceModal extends Component {
                   message: 'Please input end date',
                 },
               ],
+              initialValue: moment(extAndCommService.endDate),
             })(<DatePicker disabledDate={this.disabledEndDate} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Role">
@@ -177,6 +187,7 @@ class AddExtAndCommServiceModal extends Component {
                   whitespace: true,
                 },
               ],
+              initialValue: extAndCommService.role,
             })(
               <Input placeholder="Enter your role in the activity or program" />,
             )}
@@ -189,6 +200,7 @@ class AddExtAndCommServiceModal extends Component {
                   message: 'Please input approved credit units',
                 },
               ],
+              initialValue: extAndCommService.creditUnit,
             })(<InputNumber min={0} />)}
           </FormItem>
         </Form>
@@ -197,4 +209,4 @@ class AddExtAndCommServiceModal extends Component {
   }
 }
 
-export default Form.create()(AddExtAndCommServiceModal);
+export default Form.create()(EditExtAndCommServiceModal);

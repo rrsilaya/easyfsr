@@ -20,6 +20,7 @@ class CreateFSRModal extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
+        console.log(values);
         this.handleAfterClose();
       }
     });
@@ -85,11 +86,13 @@ class CreateFSRModal extends Component {
             {form.getFieldDecorator('fsr@@createFSR')(
               <Transfer
                 showSearch
-                listStyle={{ height: 500, width: '45%' }}
+                searchPlaceholder="Enter name"
+                listStyle={{ height: 500, width: '39%' }}
                 dataSource={this.props.users.map(user => ({
                   ...user,
                   key: user.userID,
                 }))}
+                operations={['Apply', 'Return']}
                 render={user => `${user.lastName}, ${user.firstName}`}
                 onChange={this.handleChange}
                 filterOption={this.handleFilter}

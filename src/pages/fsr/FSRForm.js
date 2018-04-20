@@ -11,10 +11,11 @@ import AwardForm from './components/AwardForm';
 import ConsultationHoursForm from './components/ConsultationHoursForm';
 import CertificationForm from './components/CertificationForm';
 
+import { PageLoader } from '../../global';
 import steps from './steps';
 import styles from './styles';
-import { Link } from 'react-router-dom';
 const { Step } = Steps;
+
 const ButtonGroup = Button.Group;
 const confirm = Modal.confirm;
 
@@ -24,9 +25,8 @@ class FSRForm extends Component {
   }
 
   handleTurningInFSR = () => {
-    console.log(this.props.fsr.fsr);
     this.props.toggleTurningIn(this.props.fsr.fsr.id, {
-      isTurnedIn: !this.props.fsr.isTurnedIn,
+      isTurnedIn: !this.props.fsr.fsr.isTurnedIn,
     });
   };
 
@@ -67,6 +67,12 @@ class FSRForm extends Component {
       isAddConsultationHourModalOpen,
 
       isEditSubjectModalOpen,
+      isEditResearchModalOpen,
+      isEditCWorkModalOpen,
+      isEditAdminWorkModalOpen,
+      isEditExtAndCommServiceModalOpen,
+      isEditCourseModalOpen,
+      isEditConsultationHourModalOpen,
 
       toggleModal,
       nextStep,
@@ -77,21 +83,95 @@ class FSRForm extends Component {
       subjects,
       subject,
       timeslots,
+      researches,
+      research,
+      cworks,
+      cwork,
+      adminWorks,
+      adminWork,
+      extAndCommServices,
+      extAndCommService,
+      studyLoad,
+      courses,
+      course,
+      courseScheds,
+      ltdPractOfProf,
+      award,
+      consultationHours,
+      consultationHour,
 
       getSubjects,
       addSubject,
       deleteSubject,
       editSubject,
-      changeSelectedSubject,
+      changeSelected,
       getTimeslots,
+      getResearches,
+      addResearch,
+      deleteResearch,
+      editResearch,
+      getCreativeWorks,
+      addCreativeWork,
+      deleteCreativeWork,
+      editCreativeWork,
+      getAdminWorks,
+      addAdminWork,
+      deleteAdminWork,
+      editAdminWork,
+      getExtAndCommServices,
+      addExtAndCommService,
+      deleteExtAndCommService,
+      editExtAndCommService,
+      getStudyLoad,
+      editStudyLoad,
+      getCourses,
+      addCourse,
+      deleteCourse,
+      editCourse,
+      getCourseScheds,
+      getLtdPractOfProfs,
+      editLtdPractOfProf,
+      getAwards,
+      editAward,
+      getConsultationHours,
+      addConsultationHour,
+      deleteConsultationHour,
+      editConsultationHour,
 
       isGettingSubjects,
       isAddingSubject,
       isAddingTimeslot,
       isEditingSubject,
       isGettingTimeslots,
+      isGettingResearches,
+      isAddingResearch,
+      isEditingResearch,
+      isGettingCWorks,
+      isAddingCWork,
+      isEditingCWork,
+      isGettingAdminWorks,
+      isAddingAdminWork,
+      isEditingAdminWork,
+      isGettingExtAndCommServices,
+      isAddingExtAndCommService,
+      isEditingExtAndCommService,
+      isGettingStudyLoad,
+      isEditingStudyLoad,
+      isGettingCourses,
+      isAddingCourse,
+      isEditingCourse,
+      isGettingCourseScheds,
+      isAddingCourseSched,
+      isGettingLtdPractOfProf,
+      isEditingLtdPractOfProf,
+      isGettingAward,
+      isEditingAward,
+      isGettingConsultationHours,
+      isAddingConsultationHour,
+      isEditingConsultationHour,
       isTurningIn,
       isFinalizing,
+      isGettingFSR,
       pushLink,
 
       user,
@@ -100,7 +180,9 @@ class FSRForm extends Component {
     const { fsrID } = this.props.match.params;
     const { acctType } = this.props.user;
 
-    return (
+    return isGettingFSR ? (
+      <PageLoader />
+    ) : (
       <div>
         <ButtonGroup style={{ float: 'right', display: 'flex' }}>
           <Button
@@ -113,14 +195,39 @@ class FSRForm extends Component {
             View Preview
           </Button>
           {acctType == 'USER' ? (
+            fsr.fsr.isTurnedIn ? (
+              <Button
+                style={styles.icons}
+                size="large"
+                icon="check"
+                loading={isTurningIn}
+                onClick={this.handleTurningInFSR}
+                ghost
+              >
+                Turned In
+              </Button>
+            ) : (
+              <Button
+                style={styles.icons}
+                size="large"
+                icon="up-square-o"
+                loading={isTurningIn}
+                onClick={this.handleTurningInFSR}
+                ghost
+              >
+                Turn In FSR
+              </Button>
+            )
+          ) : fsr.fsr.isChecked && fsr.fsr.isTurnedIn ? (
             <Button
               style={styles.icons}
               size="large"
-              icon="up-square-o"
-              onClick={this.handleTurningInFSR}
+              icon="check-circle-o"
+              disabled
               ghost
+              loading={isTurningIn}
             >
-              Turn In FSR
+              Finalized
             </Button>
           ) : (
             <Button
@@ -129,13 +236,14 @@ class FSRForm extends Component {
               icon="check-circle-o"
               onClick={this.showDeleteConfirm}
               ghost
+              loading={isFinalizing}
             >
               Finalize FSR
             </Button>
           )}
         </ButtonGroup>
         <h1>
-          Academic Year {fsr.acadYear} {fsr.semester} Term
+          Academic Year {fsr.fsr.acadYear} {fsr.fsr.semester} Term
         </h1>
         <Row>
           <Col span={5}>
@@ -161,7 +269,7 @@ class FSRForm extends Component {
                   addSubject={addSubject}
                   deleteSubject={deleteSubject}
                   editSubject={editSubject}
-                  changeSelectedSubject={changeSelectedSubject}
+                  changeSelected={changeSelected}
                   getTimeslots={getTimeslots}
                   isGettingSubjects={isGettingSubjects}
                   isAddingSubject={isAddingSubject}
@@ -175,23 +283,71 @@ class FSRForm extends Component {
                 />
               ) : currentStep === 1 ? (
                 <ResearchAndCreativeWorkForm
+                  fsrID={fsrID}
+                  researches={researches}
+                  research={research}
+                  cworks={cworks}
+                  cwork={cwork}
+                  getResearches={getResearches}
+                  addResearch={addResearch}
+                  deleteResearch={deleteResearch}
+                  editResearch={editResearch}
+                  changeSelected={changeSelected}
+                  getCreativeWorks={getCreativeWorks}
+                  addCreativeWork={addCreativeWork}
+                  deleteCreativeWork={deleteCreativeWork}
+                  editCreativeWork={editCreativeWork}
+                  isGettingResearches={isGettingResearches}
+                  isAddingResearch={isAddingResearch}
+                  isEditingResearch={isEditingResearch}
+                  isGettingCWorks={isGettingCWorks}
+                  isAddingCWork={isAddingCWork}
+                  isEditingCWork={isEditingCWork}
                   isAddCWorkModalOpen={isAddCWorkModalOpen}
+                  isEditCWorkModalOpen={isEditCWorkModalOpen}
                   isAddResearchModalOpen={isAddResearchModalOpen}
+                  isEditResearchModalOpen={isEditResearchModalOpen}
                   toggleModal={toggleModal}
                   prevStep={prevStep}
                   nextStep={nextStep}
                 />
               ) : currentStep === 2 ? (
                 <AdminWorkForm
+                  fsrID={fsrID}
+                  adminWorks={adminWorks}
+                  adminWork={adminWork}
+                  getAdminWorks={getAdminWorks}
+                  addAdminWork={addAdminWork}
+                  deleteAdminWork={deleteAdminWork}
+                  editAdminWork={editAdminWork}
+                  changeSelected={changeSelected}
+                  isGettingAdminWorks={isGettingAdminWorks}
+                  isAddingAdminWork={isAddingAdminWork}
+                  isEditingAdminWork={isEditingAdminWork}
                   isAddAdminWorkModalOpen={isAddAdminWorkModalOpen}
+                  isEditAdminWorkModalOpen={isEditAdminWorkModalOpen}
                   toggleModal={toggleModal}
                   prevStep={prevStep}
                   nextStep={nextStep}
                 />
               ) : currentStep === 3 ? (
                 <ExtAndCommServiceForm
+                  fsrID={fsrID}
+                  extAndCommServices={extAndCommServices}
+                  extAndCommService={extAndCommService}
+                  getExtAndCommServices={getExtAndCommServices}
+                  addExtAndCommService={addExtAndCommService}
+                  deleteExtAndCommService={deleteExtAndCommService}
+                  editExtAndCommService={editExtAndCommService}
+                  changeSelected={changeSelected}
+                  isGettingExtAndCommServices={isGettingExtAndCommServices}
+                  isAddingExtAndCommService={isAddingExtAndCommService}
+                  isEditingExtAndCommService={isEditingExtAndCommService}
                   isAddExtAndCommServiceModalOpen={
                     isAddExtAndCommServiceModalOpen
+                  }
+                  isEditExtAndCommServiceModalOpen={
+                    isEditExtAndCommServiceModalOpen
                   }
                   toggleModal={toggleModal}
                   prevStep={prevStep}
@@ -199,26 +355,80 @@ class FSRForm extends Component {
                 />
               ) : currentStep === 4 ? (
                 <StudyLoadForm
+                  fsrID={fsrID}
+                  studyLoad={studyLoad}
+                  courses={courses}
+                  course={course}
+                  courseScheds={courseScheds}
+                  getStudyLoad={getStudyLoad}
+                  editStudyLoad={editStudyLoad}
+                  getCourses={getCourses}
+                  addCourse={addCourse}
+                  deleteCourse={deleteCourse}
+                  editCourse={editCourse}
+                  getCourseScheds={getCourseScheds}
+                  changeSelected={changeSelected}
+                  isGettingStudyLoad={isGettingStudyLoad}
+                  isEditingStudyLoad={isEditingStudyLoad}
+                  isGettingCourses={isGettingCourses}
+                  isAddingCourse={isAddingCourse}
+                  isEditingCourse={isEditingCourse}
+                  isGettingCourseScheds={isGettingCourseScheds}
+                  isAddingCourseSched={isAddingCourseSched}
                   isAddCourseModalOpen={isAddCourseModalOpen}
+                  isEditCourseModalOpen={isEditCourseModalOpen}
                   toggleModal={toggleModal}
                   prevStep={prevStep}
-                  nextStep={nextStep}
                 />
               ) : currentStep === 5 ? (
-                <LimitedPracticeForm prevStep={prevStep} nextStep={nextStep} />
+                <LimitedPracticeForm
+                  fsrID={fsrID}
+                  ltdPractOfProf={ltdPractOfProf}
+                  getLtdPractOfProfs={getLtdPractOfProfs}
+                  editLtdPractOfProf={editLtdPractOfProf}
+                  isGettingLtdPractOfProf={isGettingLtdPractOfProf}
+                  isEditingLtdPractOfProf={isEditingLtdPractOfProf}
+                  prevStep={prevStep}
+                />
               ) : currentStep === 6 ? (
-                <AwardForm prevStep={prevStep} nextStep={nextStep} />
+                <AwardForm
+                  fsrID={fsrID}
+                  award={award}
+                  getAwards={getAwards}
+                  editAward={editAward}
+                  isGettingAward={isGettingAward}
+                  isEditingAward={isEditingAward}
+                  prevStep={prevStep}
+                />
               ) : currentStep === 7 ? (
                 <ConsultationHoursForm
+                  fsrID={fsrID}
+                  consultationHours={consultationHours}
+                  consultationHour={consultationHour}
+                  getConsultationHours={getConsultationHours}
+                  addConsultationHour={addConsultationHour}
+                  deleteConsultationHour={deleteConsultationHour}
+                  editConsultationHour={editConsultationHour}
+                  changeSelected={changeSelected}
+                  isGettingConsultationHours={isGettingConsultationHours}
+                  isAddingConsultationHour={isAddingConsultationHour}
+                  isEditingConsultationHour={isEditingConsultationHour}
                   isAddConsultationHourModalOpen={
                     isAddConsultationHourModalOpen
+                  }
+                  isEditConsultationHourModalOpen={
+                    isEditConsultationHourModalOpen
                   }
                   toggleModal={toggleModal}
                   prevStep={prevStep}
                   nextStep={nextStep}
                 />
               ) : (
-                <CertificationForm prevStep={prevStep} nextStep={nextStep} />
+                <CertificationForm
+                  fsr={fsr}
+                  pushLink={pushLink}
+                  prevStep={prevStep}
+                />
               )}
             </Col>
           </div>

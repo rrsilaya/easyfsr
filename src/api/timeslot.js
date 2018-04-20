@@ -8,3 +8,7 @@ export const addTimeslot = timeslot => {
 export const getTimeslots = query => {
   return axios.get(`/api/timeslot?${qs.stringify(query)}`);
 };
+
+export const editTimeslot = (timeslotID, body) => {
+  return axios.put(`/api/timeslot/${timeslotID}`, body);
+};

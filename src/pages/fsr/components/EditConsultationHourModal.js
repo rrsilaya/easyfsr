@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Select, Input, TimePicker } from 'antd';
-import { ADD_CONSULTATIONHOUR_MODAL } from '../duck';
+import { EDIT_CONSULTATIONHOUR_MODAL } from '../duck';
 import { getFieldValues } from '../../../utils';
 import moment from 'moment';
 
 const FormItem = Form.Item;
 const { Option } = Select;
 
-class AddConsultationHourModal extends Component {
+class EditConsultationHourModal extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
 
@@ -17,15 +17,19 @@ class AddConsultationHourModal extends Component {
         fieldValues.timeStart = moment(fieldValues.timeStart).format('HH:mm');
         fieldValues.timeEnd = moment(fieldValues.timeEnd).format('HH:mm');
 
-        this.props.addConsultationHour({ ...fieldValues, id: this.props.id });
+        this.props.editConsultationHour(this.props.consultationHour.chID, {
+          ...fieldValues,
+          id: this.props.id,
+        });
       }
     });
   };
 
   render() {
     const {
-      isAddConsultationHourModalOpen,
-      isAddingConsultationHour,
+      isEditConsultationHourModalOpen,
+      isEditingConsultationHour,
+      consultationHour,
 
       toggleModal,
     } = this.props;
@@ -45,15 +49,15 @@ class AddConsultationHourModal extends Component {
 
     return (
       <Modal
-        title="Add Consultation Hour"
-        visible={isAddConsultationHourModalOpen}
-        onOk={() => toggleModal(ADD_CONSULTATIONHOUR_MODAL)}
-        onCancel={() => toggleModal(ADD_CONSULTATIONHOUR_MODAL)}
+        title="Edit Consultation Hour"
+        visible={isEditConsultationHourModalOpen}
+        onOk={() => toggleModal(EDIT_CONSULTATIONHOUR_MODAL)}
+        onCancel={() => toggleModal(EDIT_CONSULTATIONHOUR_MODAL)}
         destroyOnClose
         footer={[
           <Button
             key="back"
-            onClick={() => toggleModal(ADD_CONSULTATIONHOUR_MODAL)}
+            onClick={() => toggleModal(EDIT_CONSULTATIONHOUR_MODAL)}
           >
             Cancel
           </Button>,
@@ -62,9 +66,9 @@ class AddConsultationHourModal extends Component {
             type="primary"
             htmlType="submit"
             onClick={this.handleFormSubmit}
-            loading={isAddingConsultationHour}
+            loading={isEditingConsultationHour}
           >
-            Add
+            Edit
           </Button>,
         ]}
       >
@@ -77,6 +81,7 @@ class AddConsultationHourModal extends Component {
                   message: 'Please input day of consultation hour',
                 },
               ],
+              initialValue: consultationHour.day,
             })(
               <Select placeholder="Select day of consultation hour">
                 <Option value="Monday">Monday</Option>
@@ -95,6 +100,7 @@ class AddConsultationHourModal extends Component {
                   message: 'Please input time start',
                 },
               ],
+              initialValue: moment(consultationHour.timeStart, 'HH:mm'),
             })(<TimePicker format="HH:mm" minuteStep={30} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Time End">
@@ -105,6 +111,7 @@ class AddConsultationHourModal extends Component {
                   message: 'Please input time end',
                 },
               ],
+              initialValue: moment(consultationHour.timeEnd, 'HH:mm'),
             })(<TimePicker format="HH:mm" minuteStep={30} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Place">
@@ -116,6 +123,7 @@ class AddConsultationHourModal extends Component {
                   whitespace: true,
                 },
               ],
+              initialValue: consultationHour.place,
             })(<Input placeholder="Enter place for consultation hour" />)}
           </FormItem>
         </Form>
@@ -124,4 +132,4 @@ class AddConsultationHourModal extends Component {
   }
 }
 
-export default Form.create()(AddConsultationHourModal);
+export default Form.create()(EditConsultationHourModal);

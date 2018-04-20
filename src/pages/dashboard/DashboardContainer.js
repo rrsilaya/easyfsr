@@ -10,6 +10,8 @@ import {
   getAnnouncements,
   getNotifications,
   changeSelectedUsers,
+  getLog,
+  addMetaData,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -21,6 +23,10 @@ const mapStateToProps = state => {
 
     isAddingNotification,
     isAddingAnnouncement,
+    isGettingAnnouncements,
+    isGettingNotifications,
+
+    isGettingLogs,
 
     user,
     users,
@@ -28,6 +34,7 @@ const mapStateToProps = state => {
     selectedUsers,
     announcements,
     notifications,
+    log,
   } = state.dashboard;
 
   return {
@@ -38,6 +45,10 @@ const mapStateToProps = state => {
 
     isAddingNotification,
     isAddingAnnouncement,
+    isGettingAnnouncements,
+    isGettingNotifications,
+
+    isGettingLogs,
 
     user,
     users,
@@ -45,6 +56,7 @@ const mapStateToProps = state => {
     selectedUsers,
     announcements,
     notifications,
+    log,
   };
 };
 
@@ -73,6 +85,12 @@ const mapDispatchToProps = dispatch => {
     },
     changeSelectedUsers: user => {
       dispatch(changeSelectedUsers(user));
+    },
+    getLog: () => {
+      dispatch(getLog());
+    },
+    addMetaData: values => {
+      dispatch(addMetaData(values));
     },
   };
 };

@@ -6,16 +6,18 @@ import {
   Input,
   Select,
   DatePicker,
+  Upload,
   InputNumber,
+  Icon,
 } from 'antd';
-import { ADD_EXTANDCOMMSERVICE_MODAL } from '../duck';
+import { EDIT_RESEARCH_MODAL } from '../duck';
 import { getFieldValues } from '../../../utils';
 import moment from 'moment';
 
 const FormItem = Form.Item;
 const { Option } = Select;
 
-class AddExtAndCommServiceModal extends Component {
+class EditResearchModal extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
 
@@ -25,9 +27,22 @@ class AddExtAndCommServiceModal extends Component {
         fieldValues.startDate = moment(fieldValues.startDate).format(
           'YYYY-MM-DD',
         );
-        fieldValues.endDate = moment(fieldValues.endDate).format('YYYY-MM-DD');
+        fieldValues.endDate = fieldValues.endDate
+          ? moment(fieldValues.endDate).format('YYYY-MM-DD')
+          : fieldValues.endDate;
+        fieldValues.filepath =
+          fieldValues.filepath !== undefined
+            ? fieldValues.filepath.file.originFileObj
+            : undefined;
 
-        this.props.addExtAndCommService({ ...fieldValues, id: this.props.id });
+        const data = new FormData();
+        Object.keys(fieldValues).forEach(key => {
+          if (fieldValues[key] !== undefined)
+            data.append(key, fieldValues[key]);
+        });
+        data.append('id', this.props.id);
+
+        this.props.editResearch(this.props.research.researchID, data);
       }
     });
   };
@@ -52,8 +67,9 @@ class AddExtAndCommServiceModal extends Component {
 
   render() {
     const {
-      isAddExtAndCommServiceModalOpen,
-      isAddingExtAndCommService,
+      isEditResearchModalOpen,
+      isEditingResearch,
+      research,
 
       toggleModal,
     } = this.props;
@@ -73,16 +89,13 @@ class AddExtAndCommServiceModal extends Component {
 
     return (
       <Modal
-        title="Add Extension and Community Service"
-        visible={isAddExtAndCommServiceModalOpen}
-        onOk={() => toggleModal(ADD_EXTANDCOMMSERVICE_MODAL)}
-        onCancel={() => toggleModal(ADD_EXTANDCOMMSERVICE_MODAL)}
+        title="Edit Research"
+        visible={isEditResearchModalOpen}
+        onOk={() => toggleModal(EDIT_RESEARCH_MODAL)}
+        onCancel={() => toggleModal(EDIT_RESEARCH_MODAL)}
         destroyOnClose
         footer={[
-          <Button
-            key="back"
-            onClick={() => toggleModal(ADD_EXTANDCOMMSERVICE_MODAL)}
-          >
+          <Button key="back" onClick={() => toggleModal(EDIT_RESEARCH_MODAL)}>
             Cancel
           </Button>,
           <Button
@@ -90,83 +103,40 @@ class AddExtAndCommServiceModal extends Component {
             type="primary"
             htmlType="submit"
             onClick={this.handleFormSubmit}
-            loading={isAddingExtAndCommService}
+            loading={isEditingResearch}
           >
-            Add
+            Edit
           </Button>,
         ]}
       >
         <Form onSubmit={this.handleFormSubmit}>
-          <FormItem {...formItemLayout} label="Title of Activity">
+          <FormItem {...formItemLayout} label="Title">
             {getFieldDecorator('title', {
               rules: [
                 {
                   required: true,
-                  message: 'Please input title',
+                  message: 'Please input Title',
                   whitespace: true,
                 },
               ],
-            })(<Input placeholder="Enter title of activity or program" />)}
+              initialValue: research.title,
+            })(<Input placeholder="Enter complete title of research" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Type">
             {getFieldDecorator('type', {
               rules: [
                 {
                   required: true,
-                  message: 'Please input type',
+                  message: 'Please input Type',
                 },
               ],
+              initialValue: research.type,
             })(
-              <Select placeholder="Select type of extension and community service">
-                <Option value="Training">Training</Option>
-                <Option value="Information Dissemination">
-                  Information Dissemination
-                </Option>
-                <Option value="Workshop">Workshop</Option>
-                <Option value="Symposium">Symposium</Option>
-                <Option value="Others">Others</Option>
+              <Select placeholder="Select type of research">
+                <Option value="Proposal">Proposal</Option>
+                <Option value="Implementation">Implementation</Option>
               </Select>,
             )}
-          </FormItem>
-          <FormItem {...formItemLayout} label="No. of Hours">
-            {getFieldDecorator('hours', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please input number of hours',
-                },
-              ],
-            })(<InputNumber min={0} />)}
-          </FormItem>
-          <FormItem {...formItemLayout} label="No. of Participants">
-            {getFieldDecorator('participant', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please input number of participants',
-                },
-              ],
-            })(<InputNumber min={0} />)}
-          </FormItem>
-          <FormItem {...formItemLayout} label="Start Date">
-            {getFieldDecorator('startDate', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please input start date',
-                },
-              ],
-            })(<DatePicker disabledDate={this.disabledStartDate} />)}
-          </FormItem>
-          <FormItem {...formItemLayout} label="End Date">
-            {getFieldDecorator('endDate', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please input end date',
-                },
-              ],
-            })(<DatePicker disabledDate={this.disabledEndDate} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Role">
             {getFieldDecorator('role', {
@@ -177,18 +147,60 @@ class AddExtAndCommServiceModal extends Component {
                   whitespace: true,
                 },
               ],
-            })(
-              <Input placeholder="Enter your role in the activity or program" />,
+              initialValue: research.role,
+            })(<Input placeholder="Enter your role" />)}
+          </FormItem>
+          <FormItem {...formItemLayout} label="Co-Workers">
+            {getFieldDecorator('coAuthor', {
+              rules: [
+                {
+                  whitespace: true,
+                },
+              ],
+              initialValue: research.coAuthor,
+            })(<Input placeholder="Enter name of co-workers" />)}
+          </FormItem>
+          <FormItem {...formItemLayout} label="Start Date">
+            {getFieldDecorator('startDate', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input start date',
+                },
+              ],
+              initialValue: moment(research.startDate),
+            })(<DatePicker disabledDate={this.disabledStartDate} />)}
+          </FormItem>
+          <FormItem {...formItemLayout} label="End Date">
+            {getFieldDecorator('endDate', {
+              initialValue: research.endDate
+                ? moment(research.endDate)
+                : research.endDate,
+            })(<DatePicker disabledDate={this.disabledEndDate} />)}
+          </FormItem>
+          <FormItem {...formItemLayout} label="Funding">
+            {getFieldDecorator('funding', {
+              initialValue: research.funding,
+            })(<Input placeholder="Enter funding" />)}
+          </FormItem>
+          <FormItem {...formItemLayout} label="File">
+            {getFieldDecorator('filepath')(
+              <Upload>
+                <Button>
+                  <Icon type="upload" /> Upload File
+                </Button>
+              </Upload>,
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="Approved Credit Units">
-            {getFieldDecorator('creditUnit', {
+            {getFieldDecorator('approvedUnits', {
               rules: [
                 {
                   required: true,
                   message: 'Please input approved credit units',
                 },
               ],
+              initialValue: research.approvedUnits,
             })(<InputNumber min={0} />)}
           </FormItem>
         </Form>
@@ -197,4 +209,4 @@ class AddExtAndCommServiceModal extends Component {
   }
 }
 
-export default Form.create()(AddExtAndCommServiceModal);
+export default Form.create()(EditResearchModal);

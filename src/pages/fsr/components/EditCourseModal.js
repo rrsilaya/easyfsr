@@ -8,14 +8,18 @@ import {
   TimePicker,
   InputNumber,
 } from 'antd';
-import { ADD_COURSE_MODAL } from '../duck';
+import { EDIT_COURSE_MODAL } from '../duck';
 import { getFieldValues } from '../../../utils';
 import moment from 'moment';
 
 const FormItem = Form.Item;
 const { Option } = Select;
 
-class AddCourseModal extends Component {
+class EditCourseModal extends Component {
+  componentDidMount() {
+    this.props.getCourseScheds({ courseID: this.props.course.courseID });
+  }
+
   handleFormSubmit = e => {
     e.preventDefault();
 
@@ -24,16 +28,20 @@ class AddCourseModal extends Component {
         const fieldValues = getFieldValues(values);
         fieldValues.timeStart = moment(fieldValues.timeStart).format('HH:mm');
         fieldValues.timeEnd = moment(fieldValues.timeEnd).format('HH:mm');
-        this.props.addCourse({ ...fieldValues, id: this.props.id });
+        this.props.editCourse(this.props.course.courseID, {
+          ...fieldValues,
+          id: this.props.id,
+        });
       }
     });
   };
 
   render() {
     const {
-      isAddCourseModalOpen,
-      isAddingCourse,
-      isAddingCourseSched,
+      course,
+      courseScheds,
+      isEditCourseModalOpen,
+      isEditingCourse,
 
       toggleModal,
     } = this.props;
@@ -51,15 +59,18 @@ class AddCourseModal extends Component {
       },
     };
 
+    const tStart = courseScheds.map(courseSched => courseSched.timeStart);
+    const tEnd = courseScheds.map(courseSched => courseSched.timeEnd);
+
     return (
       <Modal
-        title="Add Course"
-        visible={isAddCourseModalOpen}
-        onOk={() => toggleModal(ADD_COURSE_MODAL)}
-        onCancel={() => toggleModal(ADD_COURSE_MODAL)}
+        title="Edit Course"
+        visible={isEditCourseModalOpen}
+        onOk={() => toggleModal(EDIT_COURSE_MODAL)}
+        onCancel={() => toggleModal(EDIT_COURSE_MODAL)}
         destroyOnClose
         footer={[
-          <Button key="back" onClick={() => toggleModal(ADD_COURSE_MODAL)}>
+          <Button key="back" onClick={() => toggleModal(EDIT_COURSE_MODAL)}>
             Cancel
           </Button>,
           <Button
@@ -67,9 +78,9 @@ class AddCourseModal extends Component {
             type="primary"
             htmlType="submit"
             onClick={this.handleFormSubmit}
-            loading={isAddingCourse || isAddingCourseSched}
+            loading={isEditingCourse}
           >
-            Add
+            Edit
           </Button>,
         ]}
       >
@@ -83,6 +94,7 @@ class AddCourseModal extends Component {
                   whitespace: true,
                 },
               ],
+              initialValue: course.courseNumber,
             })(<Input placeholder="Enter course number" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Days">
@@ -93,6 +105,7 @@ class AddCourseModal extends Component {
                   message: 'Please select the days of classes',
                 },
               ],
+              initialValue: courseScheds.map(courseSched => courseSched.day),
             })(
               <Select mode="multiple" placeholder="Select days of classes">
                 <Option value="MONDAY">Monday</Option>
@@ -111,6 +124,7 @@ class AddCourseModal extends Component {
                   message: 'Please input time start',
                 },
               ],
+              initialValue: moment(tStart[0], 'HH:mm'),
             })(<TimePicker format="HH:mm" minuteStep={30} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Time End">
@@ -121,6 +135,7 @@ class AddCourseModal extends Component {
                   message: 'Please input time end',
                 },
               ],
+              initialValue: moment(tEnd[0], 'HH:mm'),
             })(<TimePicker format="HH:mm" minuteStep={30} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="School">
@@ -132,6 +147,7 @@ class AddCourseModal extends Component {
                   whitespace: true,
                 },
               ],
+              initialValue: course.school,
             })(<Input placeholder="Enter name of school" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Course Credits">
@@ -142,6 +158,7 @@ class AddCourseModal extends Component {
                   message: 'Please input course credits',
                 },
               ],
+              initialValue: course.credit,
             })(<InputNumber min={0} />)}
           </FormItem>
         </Form>
@@ -150,4 +167,4 @@ class AddCourseModal extends Component {
   }
 }
 
-export default Form.create()(AddCourseModal);
+export default Form.create()(EditCourseModal);

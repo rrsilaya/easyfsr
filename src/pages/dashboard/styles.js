@@ -54,7 +54,7 @@ const style = {
   listItems: {
     color: '#000000a6',
   },
-  createFSR: {
+  datePicker: {
     width: '100%',
   },
 };

@@ -1,26 +1,30 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Input, InputNumber } from 'antd';
-import { ADD_ADMINWORK_MODAL } from '../duck';
+import { EDIT_ADMINWORK_MODAL } from '../duck';
 import { getFieldValues } from '../../../utils';
 
 const FormItem = Form.Item;
 
-class AddAdminWorkModal extends Component {
+class EditAdminWorkModal extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
 
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         const fieldValues = getFieldValues(values);
-        this.props.addAdminWork({ ...fieldValues, id: this.props.id });
+        this.props.editAdminWork(this.props.adminWork.adminWorkID, {
+          ...fieldValues,
+          id: this.props.id,
+        });
       }
     });
   };
 
   render() {
     const {
-      isAddAdminWorkModalOpen,
-      isAddingAdminWork,
+      isEditAdminWorkModalOpen,
+      isEditingAdminWork,
+      adminWork,
 
       toggleModal,
     } = this.props;
@@ -40,13 +44,13 @@ class AddAdminWorkModal extends Component {
 
     return (
       <Modal
-        title="Add Administrative Work"
-        visible={isAddAdminWorkModalOpen}
-        onOk={() => toggleModal(ADD_ADMINWORK_MODAL)}
-        onCancel={() => toggleModal(ADD_ADMINWORK_MODAL)}
+        title="Edit Administrative Work"
+        visible={isEditAdminWorkModalOpen}
+        onOk={() => toggleModal(EDIT_ADMINWORK_MODAL)}
+        onCancel={() => toggleModal(EDIT_ADMINWORK_MODAL)}
         destroyOnClose
         footer={[
-          <Button key="back" onClick={() => toggleModal(ADD_ADMINWORK_MODAL)}>
+          <Button key="back" onClick={() => toggleModal(EDIT_ADMINWORK_MODAL)}>
             Cancel
           </Button>,
           <Button
@@ -54,9 +58,9 @@ class AddAdminWorkModal extends Component {
             type="primary"
             htmlType="submit"
             onClick={this.handleFormSubmit}
-            loading={isAddingAdminWork}
+            loading={isEditingAdminWork}
           >
-            Add
+            Edit
           </Button>,
         ]}
       >
@@ -70,6 +74,7 @@ class AddAdminWorkModal extends Component {
                   whitespace: true,
                 },
               ],
+              initialValue: adminWork.position,
             })(
               <Input placeholder="Enter position or nature of administrative work" />,
             )}
@@ -83,6 +88,7 @@ class AddAdminWorkModal extends Component {
                   whitespace: true,
                 },
               ],
+              initialValue: adminWork.officeUnit,
             })(<Input placeholder="Enter office or unit" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Approved Credit Units">
@@ -93,6 +99,7 @@ class AddAdminWorkModal extends Component {
                   message: 'Please input approved credit units',
                 },
               ],
+              initialValue: adminWork.approvedUnits,
             })(<InputNumber min={0} />)}
           </FormItem>
         </Form>
@@ -101,4 +108,4 @@ class AddAdminWorkModal extends Component {
   }
 }
 
-export default Form.create()(AddAdminWorkModal);
+export default Form.create()(EditAdminWorkModal);
