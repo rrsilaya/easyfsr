@@ -15,6 +15,7 @@ import steps from './steps';
 import styles from './styles';
 import { Link } from 'react-router-dom';
 const { Step } = Steps;
+
 const ButtonGroup = Button.Group;
 const confirm = Modal.confirm;
 
@@ -24,9 +25,9 @@ class FSRForm extends Component {
   }
 
   handleTurningInFSR = () => {
-    console.log(this.props.fsr.fsr);
+    // console.log(this.props.fsr);
     this.props.toggleTurningIn(this.props.fsr.fsr.id, {
-      isTurnedIn: !this.props.fsr.isTurnedIn,
+      isTurnedIn: !this.props.fsr.fsr.isTurnedIn,
     });
   };
 
@@ -113,14 +114,36 @@ class FSRForm extends Component {
             View Preview
           </Button>
           {acctType == 'USER' ? (
+            fsr.fsr.isTurnedIn ? (
+              <Button
+                style={styles.icons}
+                size="large"
+                icon="check"
+                onClick={this.handleTurningInFSR}
+                ghost
+              >
+                Turned In
+              </Button>
+            ) : (
+              <Button
+                style={styles.icons}
+                size="large"
+                icon="up-square-o"
+                onClick={this.handleTurningInFSR}
+                ghost
+              >
+                Turn In FSR
+              </Button>
+            )
+          ) : fsr.fsr.isChecked && fsr.fsr.isTurnedIn ? (
             <Button
               style={styles.icons}
               size="large"
-              icon="up-square-o"
-              onClick={this.handleTurningInFSR}
+              icon="check-circle-o"
+              disabled
               ghost
             >
-              Turn In FSR
+              Finalized
             </Button>
           ) : (
             <Button
@@ -135,7 +158,7 @@ class FSRForm extends Component {
           )}
         </ButtonGroup>
         <h1>
-          Academic Year {fsr.acadYear} {fsr.semester} Term
+          Academic Year {fsr.fsr.acadYear} {fsr.fsr.semester} Term
         </h1>
         <Row>
           <Col span={5}>

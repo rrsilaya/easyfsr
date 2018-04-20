@@ -119,20 +119,28 @@ export const changeSelectedSubject = subject => ({
   payload: subject,
 });
 
-export const toggleTurningIn = (id, body) => ({
-  type: Action.TURN_IN,
-  promise: Api.editFSR(id, body),
-  meta: {
-    onSuccess: () => {
-      notification.success({ message: 'Successfully turned in FSR' });
+export const toggleTurningIn = (id, body) => (dispatch, getState) => {
+  const { isTurnedIn } = getState().fsr.fsr.fsr;
+
+  dispatch({
+    type: Action.TURN_IN,
+    promise: Api.editFSR(id, body),
+    meta: {
+      onSuccess: () => {
+        notification.success({
+          message: `Successfully ${
+            isTurnedIn ? 'unsubmitted' : 'turned in'
+          } FSR`,
+        });
+      },
+      onFailure: () => {
+        notification.error({
+          message: `Error ${isTurnedIn ? 'unsubmitting' : 'turning in'} FSR.`,
+        });
+      },
     },
-    onFailure: () => {
-      notification.error({
-        message: 'Error turning in FSR.',
-      });
-    },
-  },
-});
+  });
+};
 
 export const toggleFinalizing = (id, body) => ({
   type: Action.FINALIZE,
