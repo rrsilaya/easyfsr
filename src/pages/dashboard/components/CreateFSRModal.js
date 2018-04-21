@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { Modal, Button, Form, Input, Transfer } from 'antd';
 import { CREATE_FSR } from '../duck';
 import styles from '../styles';
+import { getFieldValues } from '../../../utils';
 
 const FormItem = Form.Item;
 
 class CreateFSRModal extends Component {
-  state = {
-    dataSource: [],
-  };
+  componentDidMount() {
+    console.log(this.props.getMetaData());
+  }
 
   // async componentDidMount() {
   //   await this.props.getUsers({ limit: 99999 });
@@ -20,7 +21,12 @@ class CreateFSRModal extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log(values);
+        const users = Object.keys(getFieldValues(values)).map(
+          key => getFieldValues(values)[key],
+        );
+        const { acadYear, semester } = this.props.meta;
+        console.log(users[0], acadYear, semester);
+        this.props.addFSR(users, acadYear, semester);
         this.handleAfterClose();
       }
     });
@@ -45,6 +51,7 @@ class CreateFSRModal extends Component {
   render() {
     const {
       isCreateFSRModalOpen,
+      isAddingFSR,
 
       toggleModal,
 
@@ -76,6 +83,7 @@ class CreateFSRModal extends Component {
             type="primary"
             htmlType="submit"
             onClick={this.handleFormSubmit}
+            loading={isAddingFSR}
           >
             Create
           </Button>,

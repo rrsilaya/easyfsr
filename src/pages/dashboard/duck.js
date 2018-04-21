@@ -19,7 +19,9 @@ const GET_ANNOUNCEMENTS = 'DASHBOARD/GET_ANNOUNCEMENTS';
 const GET_NOTIFICATIONS = 'DASHBOARD/GET_NOTIFICATIONS';
 export const GET_LOG = 'DASHBOARD/GET_LOGS';
 export const ADD_META = 'DASHBOARD/ADD_META';
+export const GET_META = 'DASHBOARD/GET_META';
 const TOGGLE_MODAL = 'DASHBOARD/TOGGLE_MODAL';
+const ADD_FSR = 'DASHBOARD/ADD_FSR';
 
 export const getUsers = query => {
   return dispatch => {
@@ -170,6 +172,43 @@ export const addMetaData = body => {
   };
 };
 
+export const getMetaData = query => {
+  return dispatch => {
+    return dispatch({
+      type: GET_META,
+      promise: Api.getMeta(query),
+      meta: {
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while fetching meta data.',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const addFSR = users => {
+  return dispatch => {
+    return dispatch({
+      type: ADD_FSR,
+      promise: Api.addFSR(users),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully added FSR/s.',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while adding FSR/s.',
+          });
+        },
+      },
+    });
+  };
+};
+
 const initialState = {
   isSendNotificationModalOpen: false,
   isCreateNotificationModalOpen: false,
@@ -181,6 +220,8 @@ const initialState = {
   isAddingAnnouncement: false,
   isGettingUsers: false,
   isAddingMeta: false,
+  isGettingMeta: false,
+  isAddingFSR: false,
 
   isGettingsLogs: false,
   isGettingAnnouncements: true,
@@ -189,6 +230,7 @@ const initialState = {
   selectedUsers: [],
   users: [],
   log: [],
+  meta: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -251,6 +293,22 @@ const reducer = (state = initialState, action) => {
         finish: prevState => ({
           ...prevState,
           isAddingMeta: false,
+        }),
+      });
+
+    case GET_META:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingMeta: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          meta: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingMeta: false,
         }),
       });
 
@@ -347,6 +405,18 @@ const reducer = (state = initialState, action) => {
         finish: prevState => ({
           ...prevState,
           isGettingLogs: false,
+        }),
+      });
+
+    case ADD_FSR:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isAddingFSR: true,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isAddingFSR: false,
         }),
       });
 

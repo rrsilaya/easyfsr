@@ -12,6 +12,8 @@ import {
   changeSelectedUsers,
   getLog,
   addMetaData,
+  addFSR,
+  getMetaData,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -25,6 +27,8 @@ const mapStateToProps = state => {
     isAddingAnnouncement,
     isGettingAnnouncements,
     isGettingNotifications,
+    isAddingFSR,
+    isGettingMeta,
 
     isGettingLogs,
 
@@ -35,6 +39,7 @@ const mapStateToProps = state => {
     announcements,
     notifications,
     log,
+    meta,
   } = state.dashboard;
 
   return {
@@ -47,6 +52,8 @@ const mapStateToProps = state => {
     isAddingAnnouncement,
     isGettingAnnouncements,
     isGettingNotifications,
+    isAddingFSR,
+    isGettingMeta,
 
     isGettingLogs,
 
@@ -57,6 +64,7 @@ const mapStateToProps = state => {
     announcements,
     notifications,
     log,
+    meta,
   };
 };
 
@@ -91,6 +99,12 @@ const mapDispatchToProps = dispatch => {
     },
     addMetaData: values => {
       dispatch(addMetaData(values));
+    },
+    addFSR: users => {
+      dispatch(addFSR(users));
+    },
+    getMetaData: query => {
+      dispatch(getMetaData(query));
     },
   };
 };

@@ -11,3 +11,7 @@ export const getFSR = id => {
 export const editFSR = (id, body) => {
   return axios.put(`/api/fsr/${id}`, body);
 };
+
+export const addFSR = (users, acadYear, semester) => {
+  return axios.post('/api/fsr', users, acadYear, semester);
+};

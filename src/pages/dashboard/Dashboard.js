@@ -32,6 +32,8 @@ class Dashboard extends Component {
       isSettingsModalOpen,
       isGettingNotifications,
       isGettingAnnouncements,
+      isAddingFSR,
+      isGettingMeta,
 
       searchedUsers,
       selectedUsers,
@@ -40,15 +42,18 @@ class Dashboard extends Component {
       addNotification,
       addAnnouncement,
       addMetaData,
+      addFSR,
 
       announcements,
       notifications,
       log,
+      meta,
 
       toggleModal,
       searchUser,
       changeSelectedUsers,
       getUsers,
+      getMetaData,
     } = this.props;
     return (
       <div>
@@ -81,6 +86,11 @@ class Dashboard extends Component {
                 users={users}
                 selectedUsers={selectedUsers}
                 changeSelectedUsers={changeSelectedUsers}
+                isAddingFSR={isAddingFSR}
+                isGettingMeta={isGettingMeta}
+                addFSR={addFSR}
+                getMetaData={getMetaData}
+                meta={meta}
               />
               <Button
                 type="default"
