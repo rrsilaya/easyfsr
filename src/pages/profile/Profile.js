@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Icon, Modal, Button } from 'antd';
+import { Icon, Button } from 'antd';
 
 import { PageLoader, DataLoader } from '../../global';
 import Schedule from './components/Schedule';
@@ -40,7 +40,6 @@ class Profile extends Component {
       isSchedModalOpen,
 
       uploadIcon,
-      toggleModal,
       getUserSchedule,
     } = this.props;
 

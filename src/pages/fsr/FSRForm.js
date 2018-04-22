@@ -173,8 +173,6 @@ class FSRForm extends Component {
       isFinalizing,
       isGettingFSR,
       pushLink,
-
-      user,
     } = this.props;
 
     const { fsrID } = this.props.match.params;
@@ -194,7 +192,7 @@ class FSRForm extends Component {
           >
             View Preview
           </Button>
-          {acctType == 'USER' ? (
+          {acctType === 'USER' ? (
             fsr.fsr.isTurnedIn ? (
               <Button
                 style={styles.icons}

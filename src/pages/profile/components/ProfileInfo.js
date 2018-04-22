@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Row, List } from 'antd';
-import moment from 'moment';
+import { Card } from 'antd';
 import StackGrid from 'react-stack-grid';
 
 import {
@@ -12,9 +11,6 @@ import {
   LimitedPractices,
   StudyLoad,
 } from './profileInfo/';
-import style from '../styles';
-
-const { Item: ListItem } = List;
 
 class ProfileInfo extends Component {
   componentDidUpdate() {
@@ -30,15 +26,7 @@ class ProfileInfo extends Component {
   }
 
   render() {
-    const {
-      userID,
-
-      getAdminWork,
-      getService,
-
-      adminWork,
-      service,
-    } = this.props;
+    const { adminWork, service } = this.props;
 
     return (
       <StackGrid
