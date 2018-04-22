@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Card, Table, Row, Col, Button, List, Switch } from 'antd';
+import { Icon, Card, Table, Row, Col, Button, List } from 'antd';
 import styles from './styles';
 import columns from './columns';
 import moment from 'moment';
