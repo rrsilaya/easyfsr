@@ -100,8 +100,8 @@ const mapDispatchToProps = dispatch => {
     addMetaData: values => {
       dispatch(addMetaData(values));
     },
-    addFSR: users => {
-      dispatch(addFSR(users));
+    addFSR: body => {
+      dispatch(addFSR(body));
     },
     getMetaData: query => {
       dispatch(getMetaData(query));

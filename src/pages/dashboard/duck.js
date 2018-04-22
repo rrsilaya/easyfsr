@@ -188,11 +188,11 @@ export const getMetaData = query => {
   };
 };
 
-export const addFSR = users => {
+export const addFSR = body => {
   return dispatch => {
     return dispatch({
       type: ADD_FSR,
-      promise: Api.addFSR(users),
+      promise: Api.addFSR(body),
       meta: {
         onSuccess: () => {
           notification.success({
@@ -413,6 +413,9 @@ const reducer = (state = initialState, action) => {
         start: prevState => ({
           ...prevState,
           isAddingFSR: true,
+        }),
+        success: prevState => ({
+          ...prevState,
         }),
         finish: prevState => ({
           ...prevState,

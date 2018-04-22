@@ -21,12 +21,10 @@ class CreateFSRModal extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        const users = Object.keys(getFieldValues(values)).map(
-          key => getFieldValues(values)[key],
-        );
+        const users = this.props.selectedUsers;
         const { acadYear, semester } = this.props.meta;
-        console.log(users[0], acadYear, semester);
-        this.props.addFSR(users, acadYear, semester);
+        console.log(users, acadYear, semester);
+        this.props.addFSR({ users, acadYear, semester });
         this.handleAfterClose();
       }
     });
