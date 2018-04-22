@@ -31,7 +31,7 @@ export const getLtdPractOfProfs = (query, sortBy, userID) => `
   } FROM limitedPracticeOfProf x ${
   userID
     ? `LEFT JOIN fsr f ON x.id = f.id WHERE f.userID = :userID ${
-        query.length ? `AND ${formatQueryParams(query, 'getUser')}` : ''
+        query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
       }`
     : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
 }
@@ -51,7 +51,7 @@ export const deleteLtdPractOfProf = `
 export const getTotalLtdPractOfProfs = (query, userID) => `
   SELECT count(*) as total FROM limitedPracticeOfProf x ${
     userID
-      ? `WHERE id IN (SELECT id FROM fsr WHERE userID=:userID) ${
+      ? `WHERE x.id IN (SELECT id FROM fsr WHERE userID=:userID) ${
           query.length ? `AND ${formatQueryParams(query, 'get')}` : ''
         }`
       : query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
