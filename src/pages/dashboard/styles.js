@@ -3,8 +3,6 @@ const style = {
     marginBottom: '30px',
     marginLeft: 'auto',
     marginRight: 'auto',
-    maxHeight: '500px',
-    overflowY: 'auto',
   },
   addButton: {
     justifyContent: 'center',
