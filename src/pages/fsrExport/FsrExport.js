@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import Printer from 'react-to-print';
+import Printer from './Printer';
 import { Button } from 'antd';
 import { PageLoader } from '../../global';
 import {
@@ -14,11 +14,16 @@ import {
   ConsultationHours,
   Certification,
 } from './components';
+import { handleDOMPrint } from './printScript';
 
 class FsrExport extends Component {
   componentDidMount() {
     this.props.getFSR(this.props.match.params.fsrID);
   }
+
+  handlePrint = () => {
+    handleDOMPrint(this.document);
+  };
 
   render() {
     const { fsr, isGettingFSR } = this.props;

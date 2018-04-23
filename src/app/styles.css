@@ -174,7 +174,7 @@ img.crop {
   display: none;
 }
 .fsrExport {
-  display: inline-block;
+  display: inline;
   max-width: 100%;
   font-family: "Arial", sans-serif;
 }
@@ -183,7 +183,6 @@ img.crop {
   font-size: 9pt;
   line-height: 1.25;
   width: 8.5in;
-  padding: 0.7in 0.5in;
   position: relative;
   overflow: visible;
 }
@@ -226,6 +225,9 @@ img.crop {
   border: 1px solid #000;
   text-align: center;
 }
+.fsrExport .document tr {
+  page-break-inside: avoid !important;
+}
 .fsrExport .document td,
 .fsrExport .document th {
   padding: 5px;
@@ -251,8 +253,8 @@ img.crop {
 }
 .fsrExport .form-float {
   position: absolute;
-  top: 0.7in;
-  left: 0.5in;
+  top: 0;
+  left: 0;
   font-size: 9pt;
 }
 .fsrExport .grid {
