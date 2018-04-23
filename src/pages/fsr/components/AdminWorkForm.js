@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Button, Card, Popconfirm, Icon } from 'antd';
+import { Table, Button, Card, Popconfirm, Tooltip, Icon } from 'antd';
 import { ADMINWORK, ADD_ADMINWORK_MODAL, EDIT_ADMINWORK_MODAL } from '../duck';
 
 import AddAdminWorkModal from './AddAdminWorkModal';
@@ -45,7 +45,9 @@ class AdminWorkForm extends Component {
                 this.props.userID === this.props.fsr.fsr.userID ? false : true
               }
             >
-              <Icon type="delete" className="text secondary" />
+              <Tooltip title="Delete Admin Work" arrowPointAtCenter>
+                <Icon type="delete" className="text secondary" />
+              </Tooltip>
             </Link>
           </Popconfirm>
           <Link
@@ -54,12 +56,14 @@ class AdminWorkForm extends Component {
               this.props.userID === this.props.fsr.fsr.userID ? false : true
             }
           >
-            <Icon
-              type="edit"
-              className="text secondary"
-              style={{ marginLeft: 10 }}
-              onClick={() => this.handleToggleEditAdminWork(record)}
-            />
+            <Tooltip title="Edit Admin Work" arrowPointAtCenter>
+              <Icon
+                type="edit"
+                className="text secondary"
+                style={{ marginLeft: 10 }}
+                onClick={() => this.handleToggleEditAdminWork(record)}
+              />
+            </Tooltip>
           </Link>
         </div>
       ),

@@ -8,6 +8,7 @@ import {
   Button,
   Card,
   Popconfirm,
+  Tooltip,
   Icon,
 } from 'antd';
 import { COURSE, ADD_COURSE_MODAL, EDIT_COURSE_MODAL } from '../duck';
@@ -81,7 +82,9 @@ class StudyLoadForm extends Component {
                 this.props.userID === this.props.fsr.fsr.userID ? false : true
               }
             >
-              <Icon type="delete" className="text secondary" />
+              <Tooltip title="Delete Course" arrowPointAtCenter>
+                <Icon type="delete" className="text secondary" />
+              </Tooltip>
             </Link>
           </Popconfirm>
           <Link
@@ -90,12 +93,14 @@ class StudyLoadForm extends Component {
               this.props.userID === this.props.fsr.fsr.userID ? false : true
             }
           >
-            <Icon
-              type="edit"
-              className="text secondary"
-              style={{ marginLeft: 10 }}
-              onClick={() => this.handleToggleEditCourse(record)}
-            />
+            <Tooltip title="Edit Course" arrowPointAtCenter>
+              <Icon
+                type="edit"
+                className="text secondary"
+                style={{ marginLeft: 10 }}
+                onClick={() => this.handleToggleEditCourse(record)}
+              />
+            </Tooltip>
           </Link>
         </div>
       ),

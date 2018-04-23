@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Button, Card, Icon, Popconfirm } from 'antd';
+import { Table, Button, Card, Icon, Popconfirm, Tooltip } from 'antd';
 import { SUBJECT, ADD_SUBJECT_MODAL, EDIT_SUBJECT_MODAL } from '../duck';
 
 import styles from '../styles';
@@ -58,7 +58,9 @@ class TeachingLoadForm extends Component {
                 this.props.userID === this.props.fsr.fsr.userID ? false : true
               }
             >
-              <Icon type="delete" className="text secondary" />
+              <Tooltip title="Delete Subject" arrowPointAtCenter>
+                <Icon type="delete" className="text secondary" />
+              </Tooltip>
             </Link>
           </Popconfirm>
           <Link
@@ -67,12 +69,14 @@ class TeachingLoadForm extends Component {
               this.props.userID === this.props.fsr.fsr.userID ? false : true
             }
           >
-            <Icon
-              type="edit"
-              className="text secondary"
-              style={{ marginLeft: 10 }}
-              onClick={() => this.handleToggleEditSubject(record)}
-            />
+            <Tooltip title="Edit Subject" arrowPointAtCenter>
+              <Icon
+                type="edit"
+                className="text secondary"
+                style={{ marginLeft: 10 }}
+                onClick={() => this.handleToggleEditSubject(record)}
+              />
+            </Tooltip>
           </Link>
         </div>
       ),

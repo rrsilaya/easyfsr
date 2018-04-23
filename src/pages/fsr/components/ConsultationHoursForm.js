@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Button, Card, Popconfirm, Icon } from 'antd';
+import { Table, Button, Card, Popconfirm, Tooltip, Icon } from 'antd';
 import {
   CONSULTATIONHOUR,
   ADD_CONSULTATIONHOUR_MODAL,
@@ -56,7 +56,9 @@ class ConsultationHoursForm extends Component {
                 this.props.userID === this.props.fsr.fsr.userID ? false : true
               }
             >
-              <Icon type="delete" className="text secondary" />
+              <Tooltip title="Delete Consultation Hour" arrowPointAtCenter>
+                <Icon type="delete" className="text secondary" />
+              </Tooltip>
             </Link>
           </Popconfirm>
           <Link
@@ -65,12 +67,14 @@ class ConsultationHoursForm extends Component {
               this.props.userID === this.props.fsr.fsr.userID ? false : true
             }
           >
-            <Icon
-              type="edit"
-              className="text secondary"
-              style={{ marginLeft: 10 }}
-              onClick={() => this.handleToggleEditConsultationHour(record)}
-            />
+            <Tooltip title="Edit Consultation Hour" arrowPointAtCenter>
+              <Icon
+                type="edit"
+                className="text secondary"
+                style={{ marginLeft: 10 }}
+                onClick={() => this.handleToggleEditConsultationHour(record)}
+              />
+            </Tooltip>
           </Link>
         </div>
       ),
