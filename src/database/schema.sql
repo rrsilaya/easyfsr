@@ -421,63 +421,63 @@ UPDATE course
 
 CREATE OR REPLACE VIEW viewProfile AS SELECT u.employeeID, u.middleName, u.lastName, 
 u.committee, u.isHead, u.officeNumber, u.contractType, u.emailAddress, u.rank, u.acctType, f.id, f.isChecked, f.acadYear, 
-f.semester FROM user u, fsr f WHERE u.userID = f.userID;
+f.semester FROM user u, fsr f WHERE u.userID = f.userID AND f.isChecked = 1;
 
 -- viewAdminWork
 -- shows userID, employeeID, fsrID, adminWork fields
 CREATE OR REPLACE VIEW viewAdminWork AS SELECT  u.employeeID, a.position, 
-a.officeUnit, a.approvedUnits FROM adminWork a JOIN fsr f ON a.id = f.id JOIN user u on f.userID = u.userID;
+a.officeUnit, a.approvedUnits FROM adminWork a JOIN fsr f ON a.id = f.id JOIN user u on f.userID = u.userID WHERE f.isChecked = 1;
 
 -- viewAward
 -- shows userID, employeeID, fsrID, award fields
 CREATE OR REPLACE VIEW viewAward AS SELECT  u.employeeID, a.grantF, 
 a.chairGrantTitle, a.collegeHasNominated, a.recipientOrNominee, a.professionalChair, a.approvedStartDate, 
-a.endDate FROM award a JOIN fsr f ON a.id = f.id JOIN user u on f.userID = u.userID;
+a.endDate FROM award a JOIN fsr f ON a.id = f.id JOIN user u on f.userID = u.userID WHERE f.isChecked = 1;
 
 -- viewExtensionAndCommunityService
 -- shows userID, employeeID, fsrID, limitedPracticeOfProf fields
 CREATE OR REPLACE VIEW viewExtensionAndCommunityService AS SELECT  u.employeeID, e.participant, e.role, e.hours, e.title, e.creditUnit, e.type, e.startDate, e.endDate 
-FROM extensionAndCommunityService e JOIN fsr f ON e.id = f.id JOIN user u on f.userID = u.userID;
+FROM extensionAndCommunityService e JOIN fsr f ON e.id = f.id JOIN user u on f.userID = u.userID WHERE f.isChecked = 1;
 
 -- viewLimitedPracticeOfProf
 -- shows userID, employeeID, fsrID, limitedPracticeOfProf fields
 CREATE OR REPLACE VIEW viewLimitedPracticeOfProf AS SELECT u.employeeID, l.askedPermission, l.date FROM limitedPracticeOfProf l JOIN fsr f ON l.id = f.id 
-JOIN user u on f.userID = u.userID;
+JOIN user u on f.userID = u.userID WHERE f.isChecked = 1;
 
 -- viewCreativeWork
 -- shows userID, employeeID, fsrID, creativeWork fields
 CREATE OR REPLACE VIEW viewCreativeWork AS SELECT u.employeeID, c.date, c.title, c.type, c.credUnit, c.coAuthor FROM creativeWork c JOIN fsr f 
-ON c.id = f.id JOIN user u on f.userID = u.userID;
+ON c.id = f.id JOIN user u on f.userID = u.userID WHERE f.isChecked = 1;
 
 -- viewResearch
 CREATE OR REPLACE VIEW viewResearch AS SELECT  u.employeeID, r.type, r.role, r.title, r.startDate, r.endDate, r.funding, r.approvedUnits, r.coAuthor
-FROM research r JOIN fsr f ON r.id = f.id JOIN user u on f.userID = u.userID;
+FROM research r JOIN fsr f ON r.id = f.id JOIN user u on f.userID = u.userID WHERE f.isChecked = 1;
 
  -- viewConsultationHours
 -- userID, employeeID, fsrID, consultationHours fields, chTimeslot fields
 CREATE OR REPLACE VIEW viewConsultationHours AS SELECT u.employeeID, c.place, c.day, c.timeStart, c.timeEnd FROM user u JOIN fsr f ON u.userID = f.userID 
-JOIN consultationHours c ON f.id = c.id;
+JOIN consultationHours c ON f.id = c.id WHERE f.isChecked = 1;
 
 -- viewSubjectTimeslot
 -- userID, employeeID, fsrID, subject fields, timeslot fields
 CREATE OR REPLACE VIEW viewSubjectTimeslot AS SELECT  u.employeeID
 ,s.subjectCode, s.teachingLoadCreds, s.noOfStudents, s.hoursPerWeek, s.room, 
 t.day, t.timeStart, t.timeEnd FROM user u JOIN fsr f ON u.userID = f.userID 
-JOIN subject s ON f.id = s.id LEFT JOIN timeslot t ON s.subjectID = t.subjectID;
+JOIN subject s ON f.id = s.id LEFT JOIN timeslot t ON s.subjectID = t.subjectID WHERE f.isChecked = 1;
 
 
 -- viewStudyLoad
 -- shows userID, employeeID, fsrID, studyLoad fields
 CREATE OR REPLACE VIEW viewStudyLoad AS SELECT  u.employeeID, 
 s.degree, s.university, s.fullLeaveWithPay, s.fellowshipRecipient, s.totalSLcredits 
-FROM user u JOIN fsr f ON u.userID = f.userID JOIN studyLoad s ON f.id = s.id;
+FROM user u JOIN fsr f ON u.userID = f.userID JOIN studyLoad s ON f.id = s.id WHERE f.isChecked = 1;
 
 -- view entities tied with studyLoad
 -- viewSLCourse
 CREATE OR REPLACE VIEW viewSLCourses AS SELECT u.employeeID,
 s.university, s.degree, c.courseID, c.courseNumber, c.school, c.credit, c.hoursPerWeek, 
 cs.day, cs.timeStart, cs.timeEnd FROM user u JOIN fsr f ON u.userID = f.userID JOIN 
-studyLoad s ON f.id = s.id JOIN course c ON f.id = c.id LEFT JOIN courseSched cs ON c.courseID = cs.courseID;
+studyLoad s ON f.id = s.id JOIN course c ON f.id = c.id LEFT JOIN courseSched cs ON c.courseID = cs.courseID WHERE f.isChecked = 1;
 
 
 -- Privileges
