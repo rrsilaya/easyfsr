@@ -39,11 +39,21 @@ class AdminWorkForm extends Component {
             title="Are you sure you want to delete this administrative work?"
             onConfirm={() => this.props.deleteAdminWork(record.adminWorkID)}
           >
-            <Link to="#">
+            <Link
+              to="#"
+              disabled={
+                this.props.userID === this.props.fsr.fsr.userID ? false : true
+              }
+            >
               <Icon type="delete" className="text secondary" />
             </Link>
           </Popconfirm>
-          <Link to="#">
+          <Link
+            to="#"
+            disabled={
+              this.props.userID === this.props.fsr.fsr.userID ? false : true
+            }
+          >
             <Icon
               type="edit"
               className="text secondary"
@@ -63,6 +73,8 @@ class AdminWorkForm extends Component {
 
   render() {
     const {
+      userID,
+      fsr,
       fsrID,
       adminWorks,
       adminWork,
@@ -100,6 +112,7 @@ class AdminWorkForm extends Component {
             icon="plus-circle-o"
             type="primary"
             onClick={() => toggleModal(ADD_ADMINWORK_MODAL)}
+            disabled={userID === fsr.fsr.userID ? false : true}
           >
             Add Administrative Work
           </Button>

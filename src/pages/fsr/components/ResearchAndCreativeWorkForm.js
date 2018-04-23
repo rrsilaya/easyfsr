@@ -88,11 +88,21 @@ class ResearchAndCreativeWorkForm extends Component {
               this.props.deleteCreativeWork(record.creativeWorkID)
             }
           >
-            <Link to="#">
+            <Link
+              to="#"
+              disabled={
+                this.props.userID === this.props.fsr.fsr.userID ? false : true
+              }
+            >
               <Icon type="delete" className="text secondary" />
             </Link>
           </Popconfirm>
-          <Link to="#">
+          <Link
+            to="#"
+            disabled={
+              this.props.userID === this.props.fsr.fsr.userID ? false : true
+            }
+          >
             <Icon
               type="edit"
               className="text secondary"
@@ -123,6 +133,8 @@ class ResearchAndCreativeWorkForm extends Component {
 
   render() {
     const {
+      userID,
+      fsr,
       fsrID,
       researches,
       research,
@@ -172,6 +184,7 @@ class ResearchAndCreativeWorkForm extends Component {
             icon="plus-circle-o"
             type="primary"
             onClick={() => toggleModal(ADD_RESEARCH_MODAL)}
+            disabled={userID === fsr.fsr.userID ? false : true}
           >
             Add Research
           </Button>
@@ -194,20 +207,30 @@ class ResearchAndCreativeWorkForm extends Component {
                   style={{ borderColor: '#483440' }}
                   actions={[
                     <Tooltip title="Edit Research" arrowPointAtCenter>
-                      <Icon
-                        type="edit"
-                        className="text normal"
-                        onClick={() => this.handleToggleEditResearch(research)}
-                      />
+                      {userID === fsr.fsr.userID ? (
+                        <Icon
+                          type="edit"
+                          className="text normal"
+                          onClick={() =>
+                            this.handleToggleEditResearch(research)
+                          }
+                        />
+                      ) : (
+                        <Icon type="edit" className="text meta-2" />
+                      )}
                     </Tooltip>,
                     <Tooltip title="Delete Research" arrowPointAtCenter>
-                      <Icon
-                        type="delete"
-                        className="text normal"
-                        onClick={() =>
-                          this.handleDeleteResearchConfirmation(research)
-                        }
-                      />
+                      {userID === fsr.fsr.userID ? (
+                        <Icon
+                          type="delete"
+                          className="text normal"
+                          onClick={() =>
+                            this.handleDeleteResearchConfirmation(research)
+                          }
+                        />
+                      ) : (
+                        <Icon type="delete" className="text meta-2" />
+                      )}
                     </Tooltip>,
                   ]}
                 >
@@ -284,6 +307,7 @@ class ResearchAndCreativeWorkForm extends Component {
             icon="plus-circle-o"
             type="primary"
             onClick={() => toggleModal(ADD_CWORK_MODAL)}
+            disabled={userID === fsr.fsr.userID ? false : true}
           >
             Add Creative Work
           </Button>
