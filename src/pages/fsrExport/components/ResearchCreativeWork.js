@@ -31,7 +31,7 @@ class ResearchCreativeWork extends Component {
                 <tr key={research.id}>
                   <td colSpan={3}>{research.title}</td>
                   <td>{research.role}</td>
-                  <td colSpan={3}>&nbsp;</td>
+                  <td colSpan={3}>{research.coAuthor}</td>
                   <td colSpan={2}>{research.funding}</td>
                   <td colSpan={2}>{research.approvedUnits}</td>
                 </tr>
