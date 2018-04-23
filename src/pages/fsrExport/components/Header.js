@@ -44,7 +44,7 @@ class Header extends Component {
             </div>
           </div>
           <div className="grid">
-            <div className="flex-mid" style={{ width: '75%' }}>
+            <div className="flex-mid" style={{ width: '72%' }}>
               <label>PRINTED NAME:</label>
               <div className="field-line" data-label="(Family)">
                 {user.lastName}
@@ -59,7 +59,7 @@ class Header extends Component {
                   .join('.') + '.'}
               </div>
             </div>
-            <div className="flex-mid margin1 left" style={{ width: '25%' }}>
+            <div className="flex-mid margin1 left" style={{ width: '28%' }}>
               <label>RANK:</label>
               <div className="field-line">{user.rank}</div>
             </div>

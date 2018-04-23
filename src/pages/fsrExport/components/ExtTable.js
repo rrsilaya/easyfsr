@@ -16,7 +16,7 @@ class ExtTable extends Component {
               <th colSpan={4}>TITLE OF ACTIVITY/PROGRAM</th>
               <th>NO. OF HOURS INCLUDING PREPARATION</th>
               <th>NO. OF PARTICIPANTS</th>
-              <th>DURATION</th>
+              <th>DURATION MM/DD/YY</th>
               <th>ROLE</th>
               <th>FUNDING AGENCY</th>
               <th colSpan={2}>APPROVED CREDIT UNITS</th>
