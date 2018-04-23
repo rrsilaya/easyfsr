@@ -33,6 +33,7 @@ class FacultySearch extends Component {
       isSendNotificationFSModalOpen,
       toggleModal,
       user,
+      session,
     } = this.props;
 
     return (
@@ -65,19 +66,18 @@ class FacultySearch extends Component {
                     </Col>
                   </Row>
                   <div style={styles.icons}>
-                    <Tooltip title="View FSR" arrowPointAtCenter>
-                      <Icon className="text secondary" type="solution" />
-                    </Tooltip>,
-                    <Tooltip title="Send Notification" arrowPointAtCenter>
-                      <Icon
-                        className="text secondary"
-                        type="message"
-                        style={styles.message}
-                        onClick={() =>
-                          this.handleToggleSendNotificationFSModal(item)
-                        }
-                      />
-                    </Tooltip>,
+                    {session.acctType === 'ADMIN' && (
+                      <Tooltip title="Send Notification" arrowPointAtCenter>
+                        <Icon
+                          className="text secondary"
+                          type="message"
+                          style={styles.message}
+                          onClick={() =>
+                            this.handleToggleSendNotificationFSModal(item)
+                          }
+                        />
+                      </Tooltip>
+                    )}
                     <Tooltip title="Profile" arrowPointAtCenter>
                       <Link to={`/profile/${item.employeeID}`}>
                         <Icon type="profile" className="text secondary" />
