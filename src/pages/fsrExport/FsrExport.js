@@ -79,6 +79,16 @@ class FsrExport extends Component {
                       studyLoad={fsr.studyLoad}
                       courses={fsr.courses}
                     />
+
+                    <div className="right">
+                      <label className="bold">
+                        TOTAL FACULTY LOAD IN CREDIT UNITS
+                      </label>
+                      <div className="blank-field" style={{ width: 130 }}>
+                        0
+                      </div>
+                    </div>
+
                     <LtdPracticeOfProfession
                       ltdPractices={fsr.ltdPractices[0]}
                     />

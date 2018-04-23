@@ -28,7 +28,7 @@ class ResearchCreativeWork extends Component {
             {researches
               .filter(({ type }) => type === 'PROPOSAL')
               .map(research => (
-                <tr key={research.id}>
+                <tr key={research.researchID}>
                   <td colSpan={3}>{research.title}</td>
                   <td>{research.role}</td>
                   <td colSpan={3}>{research.coAuthor}</td>
@@ -71,7 +71,7 @@ class ResearchCreativeWork extends Component {
             {researches
               .filter(({ type }) => type === 'IMPLEMENTATION')
               .map(research => (
-                <tr key={research.id}>
+                <tr key={research.researchID}>
                   <td colSpan={3}>{research.title}</td>
                   <td>{research.role}</td>
                   <td colSpan={2}>&nbsp;</td>

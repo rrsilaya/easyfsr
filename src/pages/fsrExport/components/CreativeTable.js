@@ -19,7 +19,7 @@ class CreativeTable extends Component {
               <th colSpan={2}>APPROVED CREDIT UNITS</th>
             </tr>
             {data.map(row => (
-              <tr key={row.id}>
+              <tr key={row.creativeWorkID}>
                 <td colSpan={4}>{row.title}</td>
                 <td colSpan={2}>{row.coAuthor}</td>
                 <td colSpan={3}>{moment(row.date).format('MM/DD/YY')}</td>

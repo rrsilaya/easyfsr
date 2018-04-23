@@ -48,7 +48,7 @@ class TeachingLoad extends Component {
               ))}
             </tr>
             {teachingLoad.map(subject => (
-              <tr key={subject.id}>
+              <tr key={subject.subjectID}>
                 <td>{subject.subjectCode}</td>
                 <td>{subject.sectionCode}</td>
                 <td>{subject.room}</td>

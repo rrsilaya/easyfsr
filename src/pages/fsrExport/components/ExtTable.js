@@ -22,7 +22,7 @@ class ExtTable extends Component {
               <th colSpan={2}>APPROVED CREDIT UNITS</th>
             </tr>
             {data.map(service => (
-              <tr key={service.id}>
+              <tr key={service.extAndCommServiceID}>
                 <td colSpan={4}>{service.title}</td>
                 <td>{service.hours}</td>
                 <td>{service.participant}</td>
