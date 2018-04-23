@@ -304,6 +304,7 @@ img.crop {
 .fsrExport .inline-flex {
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
 }
 .fsrExport .blank-field {
   border-bottom: 1px solid #000;

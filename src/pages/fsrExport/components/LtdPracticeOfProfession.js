@@ -19,11 +19,11 @@ class LtdPracticeOfProfession extends Component {
               className="blank-field"
               style={{ width: 70, marginRight: '2em' }}
             >
-              {!!ltdPractices[0].askedPermission ? 'X' : <span>&nbsp;</span>}
+              {!!ltdPractices.askedPermission ? 'X' : <span>&nbsp;</span>}
             </div>
             <label>No</label>
             <div className="blank-field" style={{ width: 70 }}>
-              {!ltdPractices[0].askedPermission ? 'X' : <span>&nbsp;</span>}
+              {!ltdPractices.askedPermission ? 'X' : <span>&nbsp;</span>}
             </div>
           </div>
         </div>
@@ -34,8 +34,8 @@ class LtdPracticeOfProfession extends Component {
               className="blank-field"
               style={{ width: 100, marginRight: '2em' }}
             >
-              {!!ltdPractices[0].askedPermission ? (
-                moment(ltdPractices[0].date).format('MM/DD/YY')
+              {!!ltdPractices.askedPermission ? (
+                moment(ltdPractices.date).format('MM/DD/YY')
               ) : (
                 <span>&nbsp;</span>
               )}

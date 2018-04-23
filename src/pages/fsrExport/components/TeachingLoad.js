@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 const styles = {
   signatories: {
@@ -53,15 +54,8 @@ class TeachingLoad extends Component {
                 <td>{subject.room}</td>
                 <td>{subject.day}</td>
                 <td>
-                  {subject.timeStart
-                    .split(':')
-                    .slice(0, -1)
-                    .join(':')}{' '}
-                  -{' '}
-                  {subject.timeEnd
-                    .split(':')
-                    .slice(0, -1)
-                    .join(':')}
+                  {moment(subject.timeStart, 'HH:mm:ss').format('hh:mm')} -{' '}
+                  {moment(subject.timeEnd, 'HH:mm:ss').format('hh:mm')}
                 </td>
                 <td>{subject.hoursPerWeek}</td>
                 <td>{subject.noOfStudents}</td>
