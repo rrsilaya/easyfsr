@@ -290,10 +290,12 @@ router.delete('/ltdPractOfProf/:id', async (req, res) => {
 
 router.get('/ltdPractOfProf/:id', async (req, res) => {
   try {
-    const userIDofFSR = await getUserIDofFSR(
-      req.params.id,
-      req.session.user.userID,
-    );
+    if (req.session.user.acctType === 'USER' && !req.session.user.isHead) {
+      const userIDofFSR = await getUserIDofFSR(
+        req.params.id,
+        req.session.user.userID,
+      );
+    }
     const ltdPractOfProf = await Ctrl.getLtdPractOfProf(req.params);
     res.status(200).json({
       status: 200,

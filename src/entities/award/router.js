@@ -363,11 +363,13 @@ router.delete('/award/:awardID', async (req, res) => {
 
 router.get('/award/:awardID', async (req, res) => {
   try {
-    const idOfAward = await getIDofFSRfromAward(req.params.awardID);
-    const userIDofFSR = await getUserIDofFSR(
-      idOfAward,
-      req.session.user.userID,
-    );
+    if (req.session.user.acctType === 'USER' && !req.session.user.isHead) {
+      const idOfAward = await getIDofFSRfromAward(req.params.awardID);
+      const userIDofFSR = await getUserIDofFSR(
+        idOfAward,
+        req.session.user.userID,
+      );
+    }
     const award = await Ctrl.getAward(req.params);
     res.status(200).json({
       status: 200,

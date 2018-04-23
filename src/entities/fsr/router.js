@@ -17,7 +17,7 @@ import { getConsultationHours } from './../consultationHours/controller';
 import { getExtensionAndCommunityServices } from './../extensionAndCommunityService/controller';
 import { getLtdPractOfProfs } from './../limitedPracticeOfProf/controller';
 import { getSubjectsWithTimeslot } from './../subject/controller';
-import { getStudyLoads } from './../studyLoad/controller';
+import { getStudyLoad } from './../studyLoad/controller';
 import { getUserByUserID } from './../user/controller';
 import { getResearches } from './../research/controller';
 import { getMetaData, getLatestMetaData } from './../meta/controller';
@@ -270,12 +270,12 @@ router.delete('/fsr/:id', isAdmin, async (req, res) => {
  * @apiSuccess {Time} data.subjects.timeStart starting time of timeslot
  * @apiSuccess {Time} data.subjects.timeEnd dismissal time of timeslot
  *
- * @apiSuccess {String} data.studyLoads.degree degree of study load
- * @apiSuccess {String} data.studyLoads.university university of study load
- * @apiSuccess {Number} data.studyLoads.totalSLcredits total credits of study load
- * @apiSuccess {Number} data.studyLoads.id FSR ID and ID of Study Load
- * @apiSuccess {Boolean} data.studyLoads.fullLeaveWithPay full leave with pay of study load
- * @apiSuccess {Boolean} data.studyLoads.fellowshipRecipient fellowship recipient of study load
+ * @apiSuccess {String} data.studyLoad.degree degree of study load
+ * @apiSuccess {String} data.studyLoad.university university of study load
+ * @apiSuccess {Number} data.studyLoad.totalSLcredits total credits of study load
+ * @apiSuccess {Number} data.studyLoad.id FSR ID and ID of Study Load
+ * @apiSuccess {Boolean} data.studyLoad.fullLeaveWithPay full leave with pay of study load
+ * @apiSuccess {Boolean} data.studyLoad.fellowshipRecipient fellowship recipient of study load
  *
  * @apiSuccess {Number} data.meta.id id of meta
  * @apiSuccess {String} data.meta.acadYear acad year of meta
@@ -449,7 +449,7 @@ router.delete('/fsr/:id', isAdmin, async (req, res) => {
  *                 "timeEnd": "09:00:00"
  *             }
  *         ],
- *         "studyLoads": [
+ *         "studyLoad": [
  *             {
  *                 "degree": "MIT",
  *                 "university": "UPD",
@@ -588,7 +588,7 @@ router.get('/fsr/:id', canViewFSR, async (req, res) => {
     const services = await getExtensionAndCommunityServices(req.params);
     const ltdPractices = await getLtdPractOfProfs(req.params);
     const subjects = await getSubjectsWithTimeslot(req.params);
-    const studyLoads = await getStudyLoads(req.params);
+    const studyLoad = await getStudyLoad(req.params);
     const userID = fsr.userID;
     const user = await getUserByUserID({ userID });
     const meta = await getMetaData({ id: fsr.metaID });
@@ -606,7 +606,7 @@ router.get('/fsr/:id', canViewFSR, async (req, res) => {
       services,
       ltdPractices,
       subjects,
-      studyLoads,
+      studyLoad,
       meta,
     };
 

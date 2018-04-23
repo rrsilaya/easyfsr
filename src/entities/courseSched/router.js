@@ -329,14 +329,16 @@ router.delete('/courseSched/:courseSchedID', async (req, res) => {
 
 router.get('/courseSched/:courseSchedID', async (req, res) => {
   try {
-    const idOfCourse = await getIDofFSRfromCourseSched(
-      req.params.courseSchedID,
-      req.session.user.userID,
-    );
-    const userIDofFSR = await getUserIDofFSR(
-      idOfCourse,
-      req.session.user.userID,
-    );
+    if (req.session.user.acctType === 'USER' && !req.session.user.isHead) {
+      const idOfCourse = await getIDofFSRfromCourseSched(
+        req.params.courseSchedID,
+        req.session.user.userID,
+      );
+      const userIDofFSR = await getUserIDofFSR(
+        idOfCourse,
+        req.session.user.userID,
+      );
+    }
     const courseSched = await Ctrl.getCourseSched(req.params);
     res.status(200).json({
       status: 200,

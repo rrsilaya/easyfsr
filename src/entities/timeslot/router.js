@@ -228,14 +228,16 @@ router.get('/timeslot/', async (req, res) => {
 
 router.get('/timeslot/:timeslotID/', async (req, res) => {
   try {
-    const idOfSubject = await getIDofFSRfromTimeslot(
-      req.params.timeslotID,
-      req.session.user.userID,
-    );
-    const userIDofFSR = await getUserIDofFSR(
-      idOfSubject,
-      req.session.user.userID,
-    );
+    if (req.session.user.acctType === 'USER' && !req.session.user.isHead) {
+      const idOfSubject = await getIDofFSRfromTimeslot(
+        req.params.timeslotID,
+        req.session.user.userID,
+      );
+      const userIDofFSR = await getUserIDofFSR(
+        idOfSubject,
+        req.session.user.userID,
+      );
+    }
     const timeslot = await Ctrl.getTimeslot(req.params);
     res.status(200).json({
       status: 200,

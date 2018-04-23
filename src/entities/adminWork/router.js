@@ -310,11 +310,15 @@ router.delete('/adminWork/:adminWorkID', async (req, res) => {
 
 router.get('/adminWork/:adminWorkID', async (req, res) => {
   try {
-    const idOfAdminWork = await getIDofFSRfromAdminWork(req.params.adminWorkID);
-    const userIDofFSR = await getUserIDofFSR(
-      idOfAdminWork,
-      req.session.user.userID,
-    );
+    if (req.session.user.acctType === 'USER' && !req.session.user.isHead) {
+      const idOfAdminWork = await getIDofFSRfromAdminWork(
+        req.params.adminWorkID,
+      );
+      const userIDofFSR = await getUserIDofFSR(
+        idOfAdminWork,
+        req.session.user.userID,
+      );
+    }
     const adminWork = await Ctrl.getAdminWork(req.params);
     res.status(200).json({
       status: 200,

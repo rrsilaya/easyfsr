@@ -360,13 +360,15 @@ router.delete('/creativeWork/:creativeWorkID', async (req, res) => {
 
 router.get('/creativeWork/:creativeWorkID', async (req, res) => {
   try {
-    const idOfCreativeWork = await getIDofFSRfromCreativeWork(
-      req.params.creativeWorkID,
-    );
-    const userIDofFSR = await getUserIDofFSR(
-      idOfCreativeWork,
-      req.session.user.userID,
-    );
+    if (req.session.user.acctType === 'USER' && !req.session.user.isHead) {
+      const idOfCreativeWork = await getIDofFSRfromCreativeWork(
+        req.params.creativeWorkID,
+      );
+      const userIDofFSR = await getUserIDofFSR(
+        idOfCreativeWork,
+        req.session.user.userID,
+      );
+    }
     const creativeWork = await Ctrl.getCreativeWork(req.params);
     res.status(200).json({
       status: 200,

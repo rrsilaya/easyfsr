@@ -329,14 +329,16 @@ router.delete('/course/:courseID', async (req, res) => {
 
 router.get('/course/:courseID', async (req, res) => {
   try {
-    const idOfCourse = await getIDofFSRfromCourse(
-      req.params.courseID,
-      req.session.user.userID,
-    );
-    const userIDofFSR = await getUserIDofFSR(
-      idOfCourse,
-      req.session.user.userID,
-    );
+    if (req.session.user.acctType === 'USER' && !req.session.user.isHead) {
+      const idOfCourse = await getIDofFSRfromCourse(
+        req.params.courseID,
+        req.session.user.userID,
+      );
+      const userIDofFSR = await getUserIDofFSR(
+        idOfCourse,
+        req.session.user.userID,
+      );
+    }
     const course = await Ctrl.getCourse(req.params);
 
     res.status(200).json({

@@ -192,11 +192,13 @@ router.post('/research/', async (req, res) => {
  */
 router.get('/research/:researchID', async (req, res) => {
   try {
-    const idOfResearch = await getIDofFSRfromResearch(req.params.researchID);
-    const userIDofFSR = await getUserIDofFSR(
-      idOfResearch,
-      req.session.user.userID,
-    );
+    if (req.session.user.acctType === 'USER' && !req.session.user.isHead) {
+      const idOfResearch = await getIDofFSRfromResearch(req.params.researchID);
+      const userIDofFSR = await getUserIDofFSR(
+        idOfResearch,
+        req.session.user.userID,
+      );
+    }
     const research = await Ctrl.getResearch(req.params);
     res.status(200).json({
       status: 200,

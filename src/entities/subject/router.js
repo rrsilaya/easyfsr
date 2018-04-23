@@ -355,14 +355,13 @@ router.delete('/subject/:subjectID', async (req, res) => {
 
 router.get('/subject/:subjectID', async (req, res) => {
   try {
-    const idOfSubject = await getIDofFSRfromSubject(
-      req.params.subjectID,
-      req.session.user.userID,
-    );
-    const userIDofFSR = await getUserIDofFSR(
-      idOfSubject,
-      req.session.user.userID,
-    );
+    if (req.session.user.acctType === 'USER' && !req.session.user.isHead) {
+      const idOfSubject = await getIDofFSRfromSubject(
+        req.params.subjectID,
+        req.session.user.userID,
+      );
+      const userIDofFSR = await getUserIDofFSR(idOfSubject, req.session.user);
+    }
     let subject = await Ctrl.getSubject(req.params);
     subject = await Ctrl.computeSubject(subject);
     res.status(200).json({

@@ -494,13 +494,15 @@ router.delete('/service/:extAndCommServiceID/', async (req, res) => {
 
 router.get('/service/:extAndCommServiceID', async (req, res) => {
   try {
-    const idOfService = await getIDofFSRfromService(
-      req.params.extAndCommServiceID,
-    );
-    const userIDofFSR = await getUserIDofFSR(
-      idOfService,
-      req.session.user.userID,
-    );
+    if (req.session.user.acctType === 'USER' && !req.session.user.isHead) {
+      const idOfService = await getIDofFSRfromService(
+        req.params.extAndCommServiceID,
+      );
+      const userIDofFSR = await getUserIDofFSR(
+        idOfService,
+        req.session.user.userID,
+      );
+    }
     const service = await Ctrl.getExtensionAndCommunityService(req.params);
     res.status(200).json({
       status: 200,

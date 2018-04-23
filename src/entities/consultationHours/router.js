@@ -315,11 +315,13 @@ router.delete('/consultationHours/:chID', async (req, res) => {
 
 router.get('/consultationHours/:chID', async (req, res) => {
   try {
-    const idOfCHours = await getIDofFSRfromConsultationHours(req.params.chID);
-    const userIDofFSR = await getUserIDofFSR(
-      idOfCHours,
-      req.session.user.userID,
-    );
+    if (req.session.user.acctType === 'USER' && !req.session.user.isHead) {
+      const idOfCHours = await getIDofFSRfromConsultationHours(req.params.chID);
+      const userIDofFSR = await getUserIDofFSR(
+        idOfCHours,
+        req.session.user.userID,
+      );
+    }
     const consultationHour = await Ctrl.getConsultationHour(req.params);
 
     res.status(200).json({
