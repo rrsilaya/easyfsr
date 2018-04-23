@@ -3,21 +3,32 @@ import { List, Row, Col, Icon, Tooltip } from 'antd';
 import { DataLoader } from '../../global';
 
 import styles from './styles';
+import Alerts from './components/Alerts';
 
 const { Item: ListItem } = List;
 
 class ServiceRecords extends Component {
   componentDidMount() {
     this.props.getFSRs({ userID: this.props.user.userID });
+    this.props.getAnnouncements();
+    this.props.getNotifications();
   }
 
   render() {
     const gridConfig = { xl: 8, sm: 12, xs: 24 };
 
-    const { fsr, isGettingFSR, pushLink } = this.props;
+    const {
+      fsr,
+      isGettingFSR,
+      pushLink,
+      announcements,
+      notifications,
+    } = this.props;
 
     return (
       <div>
+        <Alerts announcements={announcements} notifications={notifications} />
+        <h4>My Service Records</h4>
         <DataLoader
           isLoading={isGettingFSR}
           opaque={!!fsr}

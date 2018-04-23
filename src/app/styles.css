@@ -141,6 +141,12 @@ p.subtitle {
   font-size: 20px;
   width: 85%;
 }
+h4 {
+  font-weight: bold !important;
+  text-transform: uppercase;
+  margin-left: 1em;
+  color: #d6cad8 !important;
+}
 img.crop {
   object-fit: cover;
 }
@@ -332,4 +338,17 @@ img.crop {
 }
 .ant-table-body td {
   color: #483440 !important;
+}
+.ant-alert-description {
+  color: rgba(0,0,0,0.6) !important;
+}
+.ant-alert-message {
+  font-weight: bold;
+}
+.ant-alert-info {
+  background-color: #e7dde3 !important;
+  border-color: #bea5b4 !important;
+}
+.ant-alert-info .anticon-info-circle-o {
+  color: #755468 !important;
 }
