@@ -114,7 +114,12 @@ class TeachingLoadForm extends Component {
           isEditSubjectModalOpen={isEditSubjectModalOpen}
           toggleModal={toggleModal}
         />
-        <Schedule data={[]} />
+        <div
+          className="scale-down"
+          style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+        >
+          <Schedule data={[]} />
+        </div>
         <div style={styles.button}>
           <Button
             icon="plus-circle-o"
