@@ -823,3 +823,7 @@ export const editConsultationHour = (chID, body) => {
     });
   };
 };
+
+export const resetPage = () => ({
+  type: Action.RESET_PAGE,
+});

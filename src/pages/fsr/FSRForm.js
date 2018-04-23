@@ -24,6 +24,10 @@ class FSRForm extends Component {
     this.props.getFSR(this.props.match.params.fsrID);
   }
 
+  componentWillUnmount() {
+    this.props.resetPage();
+  }
+
   handleTurningInFSR = () => {
     this.props.toggleTurningIn(this.props.fsr.fsr.id, {
       isTurnedIn: !this.props.fsr.fsr.isTurnedIn,

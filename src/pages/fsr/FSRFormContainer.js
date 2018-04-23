@@ -45,6 +45,7 @@ import {
   editConsultationHour,
   toggleTurningIn,
   toggleFinalizing,
+  resetPage,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -331,6 +332,9 @@ const mapDispatchToProps = dispatch => {
     },
     pushLink: route => {
       dispatch(push(route));
+    },
+    resetPage: () => {
+      dispatch(resetPage());
     },
   };
 };
