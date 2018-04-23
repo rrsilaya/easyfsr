@@ -245,7 +245,7 @@ class FSRForm extends Component {
           Academic Year {fsr.fsr.acadYear} {fsr.fsr.semester} Term
         </h1>
         <Row>
-          <Col span={5}>
+          <Col span={4}>
             <Steps direction="vertical" size="small" current={currentStep}>
               {steps.map((item, index) => (
                 <Step
@@ -257,7 +257,7 @@ class FSRForm extends Component {
             </Steps>
           </Col>
           <div>
-            <Col span={19}>
+            <Col span={20}>
               {currentStep === 0 ? (
                 <TeachingLoadForm
                   fsrID={fsrID}
