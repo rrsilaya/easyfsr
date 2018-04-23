@@ -87,18 +87,14 @@ class AdminWorkForm extends Component {
           isAddAdminWorkModalOpen={isAddAdminWorkModalOpen}
           toggleModal={toggleModal}
         />
-        {isEditAdminWorkModalOpen ? (
-          <EditAdminWorkModal
-            id={fsrID}
-            adminWork={adminWork}
-            editAdminWork={editAdminWork}
-            isEditingAdminWork={isEditingAdminWork}
-            isEditAdminWorkModalOpen={isEditAdminWorkModalOpen}
-            toggleModal={toggleModal}
-          />
-        ) : (
-          ''
-        )}
+        <EditAdminWorkModal
+          id={fsrID}
+          adminWork={adminWork}
+          editAdminWork={editAdminWork}
+          isEditingAdminWork={isEditingAdminWork}
+          isEditAdminWorkModalOpen={isEditAdminWorkModalOpen}
+          toggleModal={toggleModal}
+        />
         <div style={styles.button}>
           <Button
             icon="plus-circle-o"

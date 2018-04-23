@@ -199,20 +199,16 @@ class StudyLoadForm extends Component {
             isAddCourseModalOpen={isAddCourseModalOpen}
             toggleModal={toggleModal}
           />
-          {isEditCourseModalOpen ? (
-            <EditCourseModal
-              id={fsrID}
-              course={course}
-              courseScheds={courseScheds}
-              editCourse={editCourse}
-              getCourseScheds={getCourseScheds}
-              isEditingCourse={isEditingCourse}
-              isEditCourseModalOpen={isEditCourseModalOpen}
-              toggleModal={toggleModal}
-            />
-          ) : (
-            ''
-          )}
+          <EditCourseModal
+            id={fsrID}
+            course={course}
+            courseScheds={courseScheds}
+            editCourse={editCourse}
+            getCourseScheds={getCourseScheds}
+            isEditingCourse={isEditingCourse}
+            isEditCourseModalOpen={isEditCourseModalOpen}
+            toggleModal={toggleModal}
+          />
           <div style={styles.button}>
             <Button
               icon="plus-circle-o"

@@ -22,7 +22,7 @@ const initialState = {
   award: {},
   consultationHours: [],
   consultationHour: {},
-  currentStep: 0,
+  currentStep: 1,
 
   isGettingFSR: true,
   isGettingSubjects: false,
