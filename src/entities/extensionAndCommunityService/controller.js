@@ -6,6 +6,7 @@ const serviceAttributes = [
   'id',
   'participant',
   'role',
+  'fundingAgency',
   'hours',
   'title',
   'creditUnit',
@@ -17,6 +18,7 @@ const serviceAttributes = [
 const searchFields = [
   'participant',
   'role',
+  'fundingAgency',
   'title',
   'type',
   'startDate',
@@ -25,10 +27,14 @@ const searchFields = [
 
 export const addExtensionAndCommunityService = service => {
   return new Promise((resolve, reject) => {
-    db.query(Query.addExtensionAndCommunityService, service, (err, results) => {
-      if (err) return reject(500);
-      return resolve(results.insertId);
-    });
+    db.query(
+      Query.addExtensionAndCommunityService,
+      { fundingAgency: 'NONE', ...service },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(results.insertId);
+      },
+    );
   });
 };
 

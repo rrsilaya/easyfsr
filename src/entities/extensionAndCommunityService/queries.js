@@ -5,6 +5,7 @@ export const addExtensionAndCommunityService = `
     id,
     participant,
     role,
+    fundingAgency
     hours,
     title,
     creditUnit,
@@ -16,6 +17,7 @@ export const addExtensionAndCommunityService = `
     :id,
     :participant,
     :role,
+    :fundingAgency
     :hours,
     :title,
     :creditUnit,
@@ -47,13 +49,14 @@ export const getExtensionAndCommunityServices = (query, sortBy, userID) => `
       ? ` x.id,
       extAndCommServiceID,
       participant,
-    role,
-    hours,
-    title,
-    creditUnit,
-    type,
-    startDate,
-    endDate
+      role,
+      fundingAgency,
+      hours,
+      title,
+      creditUnit,
+      type,
+      startDate,
+      endDate
     `
       : `*`
   } FROM extensionAndCommunityService x ${

@@ -204,6 +204,7 @@ CREATE TABLE `extensionAndCommunityService`(
   `extAndCommServiceID` INT NOT NULL AUTO_INCREMENT,
   `participant` INT (3) NOT NULL,
   `role` VARCHAR (50) NOT NULL,
+  `fundingAgency` VARCHAR (50) NOT NULL DEFAULT 'NONE',
   `hours` INT (3) NOT NULL,
   `title` TEXT (50) NOT NULL,
   `creditUnit` INT (2) NOT NULL,
