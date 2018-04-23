@@ -42,7 +42,7 @@ class FsrExport extends Component {
             <div className="fsrExport" ref={el => (this.document = el)}>
               <div className="document">
                 <Header meta={fsr.fsr} user={fsr.user} metadata={fsr.meta} />
-                <TeachingLoad teachingLoad={fsr.subjects} />
+                <TeachingLoad teachingLoad={fsr.subjects} meta={fsr.meta} />
                 <ResearchCreativeWork
                   researches={fsr.researches}
                   creativeWorks={fsr.creativeWorks}

@@ -14,7 +14,7 @@ const styles = {
 
 class TeachingLoad extends Component {
   render() {
-    const { teachingLoad } = this.props;
+    const { teachingLoad, meta } = this.props;
     const headers = [
       'SUBJECT',
       'SECTION CODE',
@@ -51,8 +51,18 @@ class TeachingLoad extends Component {
                 <td>{subject.subjectCode}</td>
                 <td>{subject.sectionCode}</td>
                 <td>{subject.room}</td>
-                <td />
-                <td />
+                <td>{subject.day}</td>
+                <td>
+                  {subject.timeStart
+                    .split(':')
+                    .slice(0, -1)
+                    .join(':')}{' '}
+                  -{' '}
+                  {subject.timeEnd
+                    .split(':')
+                    .slice(0, -1)
+                    .join(':')}
+                </td>
                 <td>{subject.hoursPerWeek}</td>
                 <td>{subject.noOfStudents}</td>
                 <td className="highlight blue" />
@@ -119,7 +129,7 @@ class TeachingLoad extends Component {
         </div>
         <div className="right">
           <div className="signatory" data-label="Certified Correct:">
-            <div className="bold">MYRNA G. CARANDANG</div>
+            <div className="bold">{meta.universityRegistrar.toUpperCase()}</div>
             <div>University Registrar</div>
           </div>
         </div>
