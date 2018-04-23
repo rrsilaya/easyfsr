@@ -270,18 +270,14 @@ class ResearchAndCreativeWorkForm extends Component {
           isAddCWorkModalOpen={isAddCWorkModalOpen}
           toggleModal={toggleModal}
         />
-        {isEditCWorkModalOpen ? (
-          <EditCWorkModal
-            id={fsrID}
-            cwork={cwork}
-            editCreativeWork={editCreativeWork}
-            isEditingCWork={isEditingCWork}
-            isEditCWorkModalOpen={isEditCWorkModalOpen}
-            toggleModal={toggleModal}
-          />
-        ) : (
-          ''
-        )}
+        <EditCWorkModal
+          id={fsrID}
+          cwork={cwork}
+          editCreativeWork={editCreativeWork}
+          isEditingCWork={isEditingCWork}
+          isEditCWorkModalOpen={isEditCWorkModalOpen}
+          toggleModal={toggleModal}
+        />
         <div style={styles.button}>
           <Button
             icon="plus-circle-o"
