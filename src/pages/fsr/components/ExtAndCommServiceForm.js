@@ -68,18 +68,14 @@ class ExtAndCommServiceForm extends Component {
           isAddExtAndCommServiceModalOpen={isAddExtAndCommServiceModalOpen}
           toggleModal={toggleModal}
         />
-        {isEditExtAndCommServiceModalOpen ? (
-          <EditExtAndCommServiceModal
-            id={fsrID}
-            extAndCommService={extAndCommService}
-            editExtAndCommService={editExtAndCommService}
-            isEditingExtAndCommService={isEditingExtAndCommService}
-            isEditExtAndCommServiceModalOpen={isEditExtAndCommServiceModalOpen}
-            toggleModal={toggleModal}
-          />
-        ) : (
-          ''
-        )}
+        <EditExtAndCommServiceModal
+          id={fsrID}
+          extAndCommService={extAndCommService}
+          editExtAndCommService={editExtAndCommService}
+          isEditingExtAndCommService={isEditingExtAndCommService}
+          isEditExtAndCommServiceModalOpen={isEditExtAndCommServiceModalOpen}
+          toggleModal={toggleModal}
+        />
         <div style={styles.button}>
           <Button
             icon="plus-circle-o"

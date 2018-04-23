@@ -101,18 +101,14 @@ class ConsultationHoursForm extends Component {
           isAddConsultationHourModalOpen={isAddConsultationHourModalOpen}
           toggleModal={toggleModal}
         />
-        {isEditConsultationHourModalOpen ? (
-          <EditConsultationHourModal
-            id={fsrID}
-            consultationHour={consultationHour}
-            editConsultationHour={editConsultationHour}
-            isEditingConsultationHour={isEditingConsultationHour}
-            isEditConsultationHourModalOpen={isEditConsultationHourModalOpen}
-            toggleModal={toggleModal}
-          />
-        ) : (
-          ''
-        )}
+        <EditConsultationHourModal
+          id={fsrID}
+          consultationHour={consultationHour}
+          editConsultationHour={editConsultationHour}
+          isEditingConsultationHour={isEditingConsultationHour}
+          isEditConsultationHourModalOpen={isEditConsultationHourModalOpen}
+          toggleModal={toggleModal}
+        />
         <div style={styles.button}>
           <Button
             icon="plus-circle-o"
