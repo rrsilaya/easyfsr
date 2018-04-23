@@ -10,6 +10,7 @@ import {
   CreativeWorks,
   LimitedPractices,
   StudyLoad,
+  ServiceRecords,
 } from './profileInfo/';
 
 class ProfileInfo extends Component {
@@ -26,7 +27,16 @@ class ProfileInfo extends Component {
   }
 
   render() {
-    const { adminWork, service } = this.props;
+    const {
+      adminWork,
+      service,
+      creativeWork,
+      limitedPractice,
+      studyLoad,
+      award,
+      research,
+      fsr,
+    } = this.props;
 
     return (
       <StackGrid
@@ -36,16 +46,14 @@ class ProfileInfo extends Component {
         duration={0}
         gridRef={grid => (this.grid = grid)}
       >
-        <Card title="Service Records" loading>
-          Content
-        </Card>
-        <Research />
-        <Awards />
+        <ServiceRecords fsr={fsr} />
+        <Research research={research} />
+        <Awards award={award} />
         <AdminWork adminWork={adminWork} />
         <CommunityService service={service} />
-        <CreativeWorks />
-        <LimitedPractices />
-        <StudyLoad />
+        <CreativeWorks creativeWork={creativeWork} />
+        <LimitedPractices limitedPractice={limitedPractice} />
+        <StudyLoad studyLoad={studyLoad} />
       </StackGrid>
     );
   }

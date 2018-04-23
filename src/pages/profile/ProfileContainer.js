@@ -9,6 +9,11 @@ import {
   resetPage,
   toggleModal,
   getUserSchedule,
+  getUserCreativeWorks,
+  getUserLimitedPractices,
+  getUserStudyLoads,
+  getUserAwards,
+  getUserResearches,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -24,6 +29,12 @@ const mapStateToProps = state => {
     isSchedModalOpen,
     isGettingSchedule,
     schedule,
+    creativeWork,
+    limitedPractice,
+    studyLoad,
+    award,
+    research,
+    fsr,
   } = state.profile;
 
   return {
@@ -37,6 +48,12 @@ const mapStateToProps = state => {
     isSchedModalOpen,
     isGettingSchedule,
     schedule,
+    creativeWork,
+    limitedPractice,
+    studyLoad,
+    award,
+    research,
+    fsr,
   };
 };
 
@@ -62,6 +79,21 @@ const mapDispatchToProps = dispatch => {
     },
     resetPage: () => {
       dispatch(resetPage());
+    },
+    getUserCreativeWorks: id => {
+      dispatch(getUserCreativeWorks(id));
+    },
+    getUserLimitedPractices: id => {
+      dispatch(getUserLimitedPractices(id));
+    },
+    getUserStudyLoads: id => {
+      dispatch(getUserStudyLoads(id));
+    },
+    getUserAwards: id => {
+      dispatch(getUserAwards(id));
+    },
+    getUserResearches: id => {
+      dispatch(getUserResearches(id));
     },
   };
 };

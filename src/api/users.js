@@ -40,3 +40,23 @@ export const getUserExtensionAndCommService = id => {
 export const getUserSchedule = user => {
   return axios.get(`/api/user/${user}/schedule`);
 };
+
+export const getUserCreativeWorks = id => {
+  return axios.get(`/api/user/${id}/creativeWork`);
+};
+
+export const getUserLimitedPractices = id => {
+  return axios.get(`/api/user/${id}/limitedPracticeOfProf`);
+};
+
+export const getUserStudyLoads = id => {
+  return axios.get(`/api/user/${id}/studyLoad`);
+};
+
+export const getUserAwards = id => {
+  return axios.get(`/api/user/${id}/award`);
+};
+
+export const getUserResearches = id => {
+  return axios.get(`/api/user/${id}/research`);
+};

@@ -44,8 +44,10 @@ class Schedule extends Component {
               start={timeslot.timeStart}
               end={timeslot.timeEnd}
               content={`${timeslot.subjectCode ||
-                timeslot.courseNumber}\n${timeslot.room ||
-                timeslot.university}`}
+                timeslot.courseNumber ||
+                'Consultation Hours'}\n${timeslot.room ||
+                timeslot.university ||
+                timeslot.place}`}
               color={theme[i % 10]}
             />
           ))}

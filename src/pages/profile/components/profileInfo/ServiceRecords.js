@@ -1,30 +1,32 @@
 import React, { Component } from 'react';
 import { Card, List, Row } from 'antd';
-import moment from 'moment';
 
 import style from '../../styles';
 
 const { Item: ListItem } = List;
 
-class LimitedPractices extends Component {
+class ServiceRecords extends Component {
   render() {
-    const { limitedPractice } = this.props;
+    const { fsr } = this.props;
 
     return (
-      <Card title="Limited Practices">
+      <Card title="Service Records">
         <List
           size="small"
           style={style.list}
-          dataSource={limitedPractice}
-          renderItem={limitedPractice => (
+          dataSource={fsr}
+          renderItem={fsr => (
             <ListItem>
               <Row style={style.listItem} justify="center">
+                <h3 className="text primary">{fsr.semester} Term</h3>
                 <div>
                   <dl>
-                    <dt>Date</dt>
-                    <dd>
-                      {moment(limitedPractice.date).format('MMMM D, YYYY')}
-                    </dd>
+                    <dt>Academic Year</dt>
+                    <dd>{fsr.acadYear}</dd>
+                  </dl>
+                  <dl>
+                    <dt>Teaching Load</dt>
+                    <dd>{fsr.teachingLoadCreds}</dd>
                   </dl>
                 </div>
               </Row>
@@ -36,4 +38,4 @@ class LimitedPractices extends Component {
   }
 }
 
-export default LimitedPractices;
+export default ServiceRecords;
