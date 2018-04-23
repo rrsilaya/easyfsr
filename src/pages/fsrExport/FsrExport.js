@@ -50,9 +50,11 @@ class FsrExport extends Component {
                   <AdminWork adminWorks={fsr.adminWorks} />
                   <ExtCommServe />
                   <StudyLoad />
-                  <LtdPracticeOfProfession />
+                  <LtdPracticeOfProfession ltdPractices={fsr.ltdPractices} />
                   <Awards />
-                  <ConsultationHours />
+                  <ConsultationHours
+                    consultationHours={fsr.consultationHours}
+                  />
                   <Certification />
                 </div>
               </div>

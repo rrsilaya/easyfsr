@@ -70,7 +70,10 @@ class ResearchCreativeWork extends Component {
                   <td>{research.role}</td>
                   <td colSpan={2}>&nbsp;</td>
                   <td>{moment(research.startDate).format('MM/DD/YY')}</td>
-                  <td>{moment(research.endDate).format('MM/DD/YY')}</td>
+                  <td>
+                    {!!research.endDate &&
+                      moment(research.endDate).format('MM/DD/YY')}
+                  </td>
                   <td>{research.funding}</td>
                   <td colSpan={2}>{research.approvedUnits}</td>
                 </tr>
