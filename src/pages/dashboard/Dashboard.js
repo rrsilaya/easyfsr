@@ -64,8 +64,14 @@ class Dashboard extends Component {
                 style={styles.menuItems}
                 onClick={() => toggleModal(SEND_NOTIFICATION)}
               >
-                <Icon type="bell" style={styles.icons} />
-                <p style={styles.description}>Send Notification</p>
+                <Icon
+                  type="bell"
+                  className="text normal"
+                  style={styles.icons}
+                />
+                <p className="text normal" style={styles.description}>
+                  Send Notification
+                </p>
               </Button>
 
               <CreateFSRModal
@@ -78,8 +84,14 @@ class Dashboard extends Component {
                 style={styles.menuItems}
                 onClick={() => toggleModal(CREATE_FSR)}
               >
-                <Icon type="file-add" style={styles.icons} />
-                <p style={styles.description}>Create FSR</p>
+                <Icon
+                  type="file-add"
+                  className="text normal"
+                  style={styles.icons}
+                />
+                <p className="text normal" style={styles.description}>
+                  Create FSR
+                </p>
               </Button>
 
               <CreateAnnouncementModal
@@ -93,8 +105,14 @@ class Dashboard extends Component {
                 style={styles.menuItems}
                 onClick={() => toggleModal(CREATE_ANNOUNCEMENT)}
               >
-                <Icon type="notification" style={styles.icons} />
-                <p style={styles.description}>Create Announcement</p>
+                <Icon
+                  type="notification"
+                  className="text normal"
+                  style={styles.icons}
+                />
+                <p className="text normal" style={styles.description}>
+                  Create Announcement
+                </p>
               </Button>
               <SettingsModal
                 isSettingsModalOpen={isSettingsModalOpen}
@@ -107,8 +125,14 @@ class Dashboard extends Component {
                 style={styles.menuItems}
                 onClick={() => toggleModal(SETTINGS)}
               >
-                <Icon type="setting" style={styles.icons} />
-                <p style={styles.description}>Settings</p>
+                <Icon
+                  type="setting"
+                  className="text normal"
+                  style={styles.icons}
+                />
+                <p className="text normal" style={styles.description}>
+                  Settings
+                </p>
               </Button>
             </Button.Group>
           </Col>
@@ -211,9 +235,7 @@ class Dashboard extends Component {
           <Row gutter={12} type="flex">
             <Col span={24}>
               <Card title="Logs">
-                {/* <Switch /> */}
                 <Table
-                  //put slider which changes it to fsr submissions
                   columns={columns}
                   dataSource={log.map(row => ({
                     ...row,
@@ -221,25 +243,8 @@ class Dashboard extends Component {
                       'MMM DD YYYY hh:mm:ss A',
                     ),
                   }))}
-                  // dataSource={[]}
                   style={styles.facultyTable}
                 />
-                {/* <List
-                  bordered
-                  size="large"
-                  locale={{ emptyText: 'No logs found' }}
-                  dataSource={log}
-                  itemLayout="horizontal"
-                  renderItem={item => (
-                    <ListItem
-                      style={styles.listItems}
-                    >
-                      <Row type="flex" style={styles.listItems}>
-                        {item.timestamp}
-                      </Row>
-                    </ListItem>
-                  )}
-                /> */}
               </Card>
             </Col>
           </Row>

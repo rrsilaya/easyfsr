@@ -1,7 +1,23 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 class ConsultationHours extends Component {
+  computeTotalHours = () => {
+    const { consultationHours } = this.props;
+
+    return (
+      consultationHours.reduce((acc, { timeStart, timeEnd }) => {
+        return (
+          acc + moment(timeEnd, 'HH:mm:ss').diff(moment(timeStart, 'HH:mm:ss'))
+        );
+      }, 0) /
+      (1000 * 60 * 60)
+    );
+  };
+
   render() {
+    const { consultationHours } = this.props;
+
     return (
       <section>
         <div className="header bold">
@@ -27,18 +43,23 @@ class ConsultationHours extends Component {
                   <th>Time</th>
                   <th>Place</th>
                 </tr>
-                <tr>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                  <th>&nbsp;</th>
-                </tr>
+                {consultationHours.map(ch => (
+                  <tr key={ch.chID}>
+                    <td>{ch.day}</td>
+                    <td>
+                      {moment(ch.timeStart, 'HH:mm:ss').format('hh:mm A')} -{' '}
+                      {moment(ch.timeEnd, 'HH:mm:ss').format('hh:mm A')}
+                    </td>
+                    <td>{ch.place}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
           <div>
             <label>Total hours per week</label>
             <div className="blank-field" style={{ width: 120 }}>
-              &nbsp;
+              {this.computeTotalHours()}
             </div>
           </div>
         </div>

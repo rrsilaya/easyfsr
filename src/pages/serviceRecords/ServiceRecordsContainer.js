@@ -2,16 +2,29 @@ import { connect } from 'react-redux';
 import ServiceRecords from './ServiceRecords';
 
 import { push } from 'react-router-redux';
-import { getFSRs } from './duck';
+import { getFSRs, getAnnouncements, getNotifications } from './duck';
 
 const mapStateToProps = state => {
-  const { fsr, isGettingFSR } = state.serviceRecords;
+  const {
+    fsr,
+    announcements,
+    notifications,
+
+    isGettingFSR,
+    isGettingNotifications,
+    isGettingAnnouncements,
+  } = state.serviceRecords;
   const { user } = state.app;
 
   return {
     fsr,
-    isGettingFSR,
     user,
+    announcements,
+    notifications,
+
+    isGettingFSR,
+    isGettingNotifications,
+    isGettingAnnouncements,
   };
 };
 
@@ -22,6 +35,12 @@ const mapDispatchToProps = dispatch => {
     },
     pushLink: route => {
       dispatch(push(route));
+    },
+    getAnnouncements: () => {
+      dispatch(getAnnouncements());
+    },
+    getNotifications: () => {
+      dispatch(getNotifications());
     },
   };
 };

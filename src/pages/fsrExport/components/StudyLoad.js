@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 class StudyLoad extends Component {
   render() {
+    const { studyLoad = {}, courses = [] } = this.props;
+
     return (
       <section>
         <div className="header bold">V. STUDY LOAD</div>
@@ -11,11 +14,13 @@ class StudyLoad extends Component {
             className="blank-field"
             style={{ width: 150, marginRight: '3em' }}
           >
-            &nbsp;
+            {!!studyLoad && studyLoad.degree}
           </div>
 
           <label>University enrolled in:</label>
-          <div className="blank-field" style={{ width: 150 }} />
+          <div className="blank-field" style={{ width: 150 }}>
+            {!!studyLoad && studyLoad.university}
+          </div>
         </div>
         <br />
         <div className="inline-flex">
@@ -26,11 +31,13 @@ class StudyLoad extends Component {
               className="blank-field"
               style={{ width: 50, marginRight: '1em' }}
             >
-              &nbsp;
+              {!!studyLoad &&
+                (studyLoad.fullLeaveWithPay ? 'X' : <span>&nbsp;</span>)}
             </div>
             <label>No</label>
             <div className="blank-field" style={{ width: 50 }}>
-              &nbsp;
+              {!!studyLoad &&
+                (!studyLoad.fullLeaveWithPay ? 'X' : <span>&nbsp;</span>)}
             </div>
           </div>
           <div>
@@ -40,11 +47,13 @@ class StudyLoad extends Component {
               className="blank-field"
               style={{ width: 50, marginRight: '1em' }}
             >
-              &nbsp;
+              {!!studyLoad &&
+                (!!studyLoad.fellowshipRecipient ? 'X' : <span>&nbsp;</span>)}
             </div>
             <label>No</label>
             <div className="blank-field" style={{ width: 50 }}>
-              &nbsp;
+              {!!studyLoad &&
+                (!studyLoad.fellowshipRecipient ? 'X' : <span>&nbsp;</span>)}
             </div>
           </div>
         </div>
@@ -65,26 +74,28 @@ class StudyLoad extends Component {
                 <th>Time</th>
                 <th>School</th>
               </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-              </tr>
+              {!!studyLoad &&
+                courses.map(course => (
+                  <tr key={course.courseID}>
+                    <td>{course.courseNumber}</td>
+                    <td>{course.credit}</td>
+                    <td>{course.day}</td>
+                    <td>
+                      {moment(course.timeStart, 'HH:mm:ss').format('hh:mm')} -{' '}
+                      {moment(course.timeEnd, 'HH:mm:ss').format('hh:mm')}
+                    </td>
+                    <td>{course.school}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
         <div className="right">
           <label className="bold">Total Study Load Credits (SLC)</label>
           <div className="blank-field" style={{ width: 130 }}>
-            &nbsp;
+            {courses.reduce((acc, { credit }) => acc + credit, 0)}
           </div>
           <br />
-          <label className="bold">TOTAL FACULTY LOAD IN CREDIT UNITS</label>
-          <div className="blank-field" style={{ width: 130 }}>
-            0
-          </div>
         </div>
       </section>
     );

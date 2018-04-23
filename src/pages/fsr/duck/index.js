@@ -948,6 +948,9 @@ const reducer = (state = initialState, action) => {
         currentStep: state.currentStep - 1,
       };
 
+    case Action.RESET_PAGE:
+      return initialState;
+
     default:
       return state;
   }

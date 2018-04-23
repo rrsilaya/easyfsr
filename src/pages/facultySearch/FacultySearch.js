@@ -33,6 +33,7 @@ class FacultySearch extends Component {
       isSendNotificationFSModalOpen,
       toggleModal,
       user,
+      session,
     } = this.props;
 
     return (
@@ -49,10 +50,7 @@ class FacultySearch extends Component {
               className="text white"
               dataSource={users}
               renderItem={item => (
-                <ListItem
-                  className="list-item set-cursor pointer"
-                  style={styles.listItem}
-                >
+                <ListItem className="list-item" style={styles.listItem}>
                   <Row type="flex" justify="space-around" style={styles.info}>
                     <Col {...gridConfig} className="text normal">
                       {item.firstName}
@@ -65,19 +63,18 @@ class FacultySearch extends Component {
                     </Col>
                   </Row>
                   <div style={styles.icons}>
-                    <Tooltip title="View FSR" arrowPointAtCenter>
-                      <Icon className="text secondary" type="solution" />
-                    </Tooltip>,
-                    <Tooltip title="Send Notification" arrowPointAtCenter>
-                      <Icon
-                        className="text secondary"
-                        type="message"
-                        style={styles.message}
-                        onClick={() =>
-                          this.handleToggleSendNotificationFSModal(item)
-                        }
-                      />
-                    </Tooltip>,
+                    {session.acctType === 'ADMIN' && (
+                      <Tooltip title="Send Notification" arrowPointAtCenter>
+                        <Icon
+                          className="text secondary set-cursor pointer"
+                          type="message"
+                          style={styles.message}
+                          onClick={() =>
+                            this.handleToggleSendNotificationFSModal(item)
+                          }
+                        />
+                      </Tooltip>
+                    )}
                     <Tooltip title="Profile" arrowPointAtCenter>
                       <Link to={`/profile/${item.employeeID}`}>
                         <Icon type="profile" className="text secondary" />
