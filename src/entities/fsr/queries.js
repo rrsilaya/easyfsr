@@ -30,7 +30,7 @@ export const getFSR = `
 `;
 
 export const getFSRs = (query, sortBy) => `
-  SELECT * FROM fsr x ${
+  SELECT x.*, concat(u.firstName,' ',u.lastName) name FROM fsr x LEFT JOIN user u ON x.userID=u.userID ${
     query.length ? `WHERE ${formatQueryParams(query, 'get')}` : ''
   } 
   ORDER BY [field] ${
