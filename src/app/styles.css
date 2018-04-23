@@ -173,6 +173,11 @@ img.crop {
   align-items: center;
   display: none;
 }
+.export-wrapper {
+  width: 8.5in;
+  background-color: #fff;
+  padding: 0.7in 0.5in;
+}
 .fsrExport {
   display: inline;
   max-width: 100%;
@@ -182,7 +187,7 @@ img.crop {
   background-color: #fff;
   font-size: 9pt;
   line-height: 1.25;
-  width: 8.5in;
+  width: 100%;
   position: relative;
   overflow: visible;
 }

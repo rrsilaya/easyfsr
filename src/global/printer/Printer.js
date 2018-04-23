@@ -4,15 +4,10 @@ import PropTypes from 'prop-types';
 
 class Printer extends React.Component {
   static propTypes = {
-    /** Copy styles over into print window. default: true */
     copyStyles: PropTypes.bool,
-    /** Trigger action used to open browser print */
     trigger: PropTypes.func.isRequired,
-    /** Content to be printed */
     content: PropTypes.func.isRequired,
-    /** Callback function to trigger before print */
     onBeforePrint: PropTypes.func,
-    /** Callback function to trigger after print */
     onAfterPrint: PropTypes.func,
   };
 
