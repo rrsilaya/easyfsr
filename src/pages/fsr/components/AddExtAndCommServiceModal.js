@@ -1,14 +1,59 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form, Input, Select, DatePicker } from 'antd';
-import { EXTANDCOMMSERVICE } from '../duck';
+import {
+  Modal,
+  Button,
+  Form,
+  Input,
+  Select,
+  DatePicker,
+  InputNumber,
+} from 'antd';
+import { ADD_EXTANDCOMMSERVICE_MODAL } from '../duck';
+import { getFieldValues } from '../../../utils';
+import moment from 'moment';
 
 const FormItem = Form.Item;
 const { Option } = Select;
 
 class AddExtAndCommServiceModal extends Component {
+  handleFormSubmit = e => {
+    e.preventDefault();
+
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        const fieldValues = getFieldValues(values);
+        fieldValues.startDate = moment(fieldValues.startDate).format(
+          'YYYY-MM-DD',
+        );
+        fieldValues.endDate = moment(fieldValues.endDate).format('YYYY-MM-DD');
+
+        this.props.addExtAndCommService({ ...fieldValues, id: this.props.id });
+      }
+    });
+  };
+
+  disabledStartDate = startDate => {
+    const endDate = this.props.form.getFieldValue('endDate');
+    if (!startDate || !endDate) {
+      return false;
+    }
+
+    return startDate.valueOf() > endDate.valueOf();
+  };
+
+  disabledEndDate = endDate => {
+    const startDate = this.props.form.getFieldValue('startDate');
+    if (!endDate || !startDate) {
+      return false;
+    }
+
+    return endDate.valueOf() <= startDate.valueOf();
+  };
+
   render() {
     const {
       isAddExtAndCommServiceModalOpen,
+      isAddingExtAndCommService,
 
       toggleModal,
     } = this.props;
@@ -30,19 +75,28 @@ class AddExtAndCommServiceModal extends Component {
       <Modal
         title="Add Extension and Community Service"
         visible={isAddExtAndCommServiceModalOpen}
-        onOk={() => toggleModal(EXTANDCOMMSERVICE)}
-        onCancel={() => toggleModal(EXTANDCOMMSERVICE)}
+        onOk={() => toggleModal(ADD_EXTANDCOMMSERVICE_MODAL)}
+        onCancel={() => toggleModal(ADD_EXTANDCOMMSERVICE_MODAL)}
         destroyOnClose
         footer={[
-          <Button key="back" onClick={() => toggleModal(EXTANDCOMMSERVICE)}>
+          <Button
+            key="back"
+            onClick={() => toggleModal(ADD_EXTANDCOMMSERVICE_MODAL)}
+          >
             Cancel
           </Button>,
-          <Button key="submit" type="primary" htmlType="submit">
+          <Button
+            key="submit"
+            type="primary"
+            htmlType="submit"
+            onClick={this.handleFormSubmit}
+            loading={isAddingExtAndCommService}
+          >
             Add
           </Button>,
         ]}
       >
-        <Form>
+        <Form onSubmit={this.handleFormSubmit}>
           <FormItem {...formItemLayout} label="Title of Activity">
             {getFieldDecorator('title', {
               rules: [
@@ -80,10 +134,9 @@ class AddExtAndCommServiceModal extends Component {
                 {
                   required: true,
                   message: 'Please input number of hours',
-                  whitespace: true,
                 },
               ],
-            })(<Input placeholder="Enter number of hours including" />)}
+            })(<InputNumber min={0} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="No. of Participants">
             {getFieldDecorator('participant', {
@@ -91,10 +144,9 @@ class AddExtAndCommServiceModal extends Component {
                 {
                   required: true,
                   message: 'Please input number of participants',
-                  whitespace: true,
                 },
               ],
-            })(<Input placeholder="Enter total number of participants" />)}
+            })(<InputNumber min={0} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Start Date">
             {getFieldDecorator('startDate', {
@@ -104,7 +156,7 @@ class AddExtAndCommServiceModal extends Component {
                   message: 'Please input start date',
                 },
               ],
-            })(<DatePicker />)}
+            })(<DatePicker disabledDate={this.disabledStartDate} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="End Date">
             {getFieldDecorator('endDate', {
@@ -114,7 +166,7 @@ class AddExtAndCommServiceModal extends Component {
                   message: 'Please input end date',
                 },
               ],
-            })(<DatePicker />)}
+            })(<DatePicker disabledDate={this.disabledEndDate} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Role">
             {getFieldDecorator('role', {
@@ -135,10 +187,9 @@ class AddExtAndCommServiceModal extends Component {
                 {
                   required: true,
                   message: 'Please input approved credit units',
-                  whitespace: true,
                 },
               ],
-            })(<Input placeholder="Enter approved credit units" />)}
+            })(<InputNumber min={0} />)}
           </FormItem>
         </Form>
       </Modal>

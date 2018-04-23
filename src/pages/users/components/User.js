@@ -31,34 +31,51 @@ class User extends Component {
   };
 
   render() {
-    const { user } = this.props;
+    const { user, userLoggedIn } = this.props;
 
     return (
       <div>
         <Card
           bordered={false}
           style={styles.card}
-          actions={[
-            <Tooltip title="Edit user" arrowPointAtCenter>
-              <Icon
-                type="edit"
-                className="text normal"
-                onClick={this.handleToggleEditModal}
-              />
-            </Tooltip>,
-            <Tooltip title="Archive user" arrowPointAtCenter>
-              <Icon
-                type="delete"
-                className="text normal"
-                onClick={this.showDeleteConfirm}
-              />
-            </Tooltip>,
-            <Link to={`/profile/${user.employeeID}`}>
-              <Tooltip title="Visit profile" arrowPointAtCenter>
-                <Icon type="profile" className="text normal" />
-              </Tooltip>
-            </Link>,
-          ]}
+          actions={
+            user.userID === userLoggedIn.userID
+              ? [
+                  <Tooltip title="Edit user" arrowPointAtCenter>
+                    <Icon
+                      type="edit"
+                      className="text normal"
+                      onClick={this.handleToggleEditModal}
+                    />
+                  </Tooltip>,
+                  <Link to={`/profile/${user.employeeID}`}>
+                    <Tooltip title="Visit profile" arrowPointAtCenter>
+                      <Icon type="profile" className="text normal" />
+                    </Tooltip>
+                  </Link>,
+                ]
+              : [
+                  <Tooltip title="Edit user" arrowPointAtCenter>
+                    <Icon
+                      type="edit"
+                      className="text normal"
+                      onClick={this.handleToggleEditModal}
+                    />
+                  </Tooltip>,
+                  <Tooltip title="Archive user" arrowPointAtCenter>
+                    <Icon
+                      type="delete"
+                      className="text normal"
+                      onClick={this.showDeleteConfirm}
+                    />
+                  </Tooltip>,
+                  <Link to={`/profile/${user.employeeID}`}>
+                    <Tooltip title="Visit profile" arrowPointAtCenter>
+                      <Icon type="profile" className="text normal" />
+                    </Tooltip>
+                  </Link>,
+                ]
+          }
         >
           <Meta
             avatar={<Avatar size="large" src={user.profileIcon} />}

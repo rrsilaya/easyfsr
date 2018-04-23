@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Modal, Button, Input, Form } from 'antd';
+import { getFieldValues } from '../../../utils';
 import styles from '../styles';
 
 import { CREATE_ANNOUNCEMENT } from '../duck';
-import { getFieldValues } from '../../../utils';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -52,7 +52,7 @@ class CreateAnnouncementModal extends Component {
       >
         <Form>
           <FormItem label="Announcement Title" required>
-            {form.getFieldDecorator('announcementTitle@@addAnnouncement', {
+            {form.getFieldDecorator('title@@addAnnouncement', {
               rules: [
                 {
                   required: true,
@@ -63,7 +63,7 @@ class CreateAnnouncementModal extends Component {
             })(<Input placeholder="Enter title here.." />)}
           </FormItem>
           <FormItem label="Announcement Body" required>
-            {form.getFieldDecorator('announcementBody@@addAnnouncement', {
+            {form.getFieldDecorator('body@@addAnnouncement', {
               rules: [
                 {
                   required: true,

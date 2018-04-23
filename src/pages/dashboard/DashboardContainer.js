@@ -8,6 +8,8 @@ import {
   addAnnouncement,
   getAnnouncements,
   getNotifications,
+  getLog,
+  addMetaData,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -19,11 +21,16 @@ const mapStateToProps = state => {
 
     isAddingNotification,
     isAddingAnnouncement,
+    isGettingAnnouncements,
+    isGettingNotifications,
+
+    isGettingLogs,
 
     user,
     searchedUsers,
     announcements,
     notifications,
+    log,
   } = state.dashboard;
 
   return {
@@ -34,11 +41,16 @@ const mapStateToProps = state => {
 
     isAddingNotification,
     isAddingAnnouncement,
+    isGettingAnnouncements,
+    isGettingNotifications,
+
+    isGettingLogs,
 
     user,
     searchedUsers,
     announcements,
     notifications,
+    log,
   };
 };
 
@@ -61,6 +73,12 @@ const mapDispatchToProps = dispatch => {
     },
     getNotifications: () => {
       dispatch(getNotifications());
+    },
+    getLog: () => {
+      dispatch(getLog());
+    },
+    addMetaData: values => {
+      dispatch(addMetaData(values));
     },
   };
 };
