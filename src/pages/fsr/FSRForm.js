@@ -195,7 +195,7 @@ class FSRForm extends Component {
             onClick={() => pushLink(`/records/${fsrID}/preview`)}
             ghost
           >
-            View Preview
+            Preview FSR
           </Button>
           {acctType === 'USER' ? (
             fsr.fsr.isTurnedIn ? (

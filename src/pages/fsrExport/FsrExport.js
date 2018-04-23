@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Button } from 'antd';
+import { Button, Icon } from 'antd';
 import { PageLoader, Printer } from '../../global';
 import {
   Header,
@@ -14,13 +14,15 @@ import {
   Certification,
 } from './components';
 
+const { Group: ButtonGroup } = Button;
+
 class FsrExport extends Component {
   componentDidMount() {
     this.props.getFSR(this.props.match.params.fsrID);
   }
 
   render() {
-    const { fsr, isGettingFSR } = this.props;
+    const { fsr, isGettingFSR, pushState } = this.props;
 
     return (
       <div>
@@ -28,34 +30,64 @@ class FsrExport extends Component {
           <PageLoader />
         ) : (
           <Fragment>
-            <Printer
-              trigger={() => (
-                <Button type="primary" size="large">
-                  Print
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <ButtonGroup>
+                <Button
+                  size="large"
+                  onClick={() =>
+                    pushState(`/records/${this.props.match.params.fsrID}`)
+                  }
+                  ghost
+                >
+                  <Icon type="arrow-left" />
                 </Button>
-              )}
-              content={() => this.document}
-            />
+                <Printer
+                  trigger={() => (
+                    <Button ghost size="large" icon="solution">
+                      Generate FSR
+                    </Button>
+                  )}
+                  content={() => this.document}
+                />
+              </ButtonGroup>
+            </div>
             <br />
             <br />
-            <div className="export-wrapper">
-              <div className="fsrExport" ref={el => (this.document = el)}>
-                <div className="document">
-                  <Header meta={fsr.fsr} user={fsr.user} metadata={fsr.meta} />
-                  <TeachingLoad teachingLoad={fsr.subjects} meta={fsr.meta} />
-                  <ResearchCreativeWork
-                    researches={fsr.researches}
-                    creativeWorks={fsr.creativeWorks}
-                  />
-                  <AdminWork adminWorks={fsr.adminWorks} />
-                  <ExtCommServe />
-                  <StudyLoad />
-                  <LtdPracticeOfProfession ltdPractices={fsr.ltdPractices[0]} />
-                  <Awards awards={fsr.awards[0]} />
-                  <ConsultationHours
-                    consultationHours={fsr.consultationHours}
-                  />
-                  <Certification />
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                width: '100%',
+              }}
+            >
+              <div className="export-wrapper">
+                <div className="fsrExport" ref={el => (this.document = el)}>
+                  <div className="document">
+                    <Header
+                      meta={fsr.fsr}
+                      user={fsr.user}
+                      metadata={fsr.meta}
+                    />
+                    <TeachingLoad teachingLoad={fsr.subjects} meta={fsr.meta} />
+                    <ResearchCreativeWork
+                      researches={fsr.researches}
+                      creativeWorks={fsr.creativeWorks}
+                    />
+                    <AdminWork adminWorks={fsr.adminWorks} />
+                    <ExtCommServe />
+                    <StudyLoad
+                      studyLoad={fsr.studyLoad}
+                      courses={fsr.courses}
+                    />
+                    <LtdPracticeOfProfession
+                      ltdPractices={fsr.ltdPractices[0]}
+                    />
+                    <Awards awards={fsr.awards[0]} />
+                    <ConsultationHours
+                      consultationHours={fsr.consultationHours}
+                    />
+                    <Certification />
+                  </div>
                 </div>
               </div>
             </div>

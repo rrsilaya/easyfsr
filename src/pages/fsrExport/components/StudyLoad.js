@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 class StudyLoad extends Component {
   render() {
+    const { studyLoad = {}, courses = [] } = this.props;
+
     return (
       <section>
         <div className="header bold">V. STUDY LOAD</div>
@@ -11,11 +13,13 @@ class StudyLoad extends Component {
             className="blank-field"
             style={{ width: 150, marginRight: '3em' }}
           >
-            &nbsp;
+            {!!studyLoad && studyLoad.degree}
           </div>
 
           <label>University enrolled in:</label>
-          <div className="blank-field" style={{ width: 150 }} />
+          <div className="blank-field" style={{ width: 150 }}>
+            {!!studyLoad && studyLoad.university}
+          </div>
         </div>
         <br />
         <div className="inline-flex">
@@ -26,11 +30,13 @@ class StudyLoad extends Component {
               className="blank-field"
               style={{ width: 50, marginRight: '1em' }}
             >
-              &nbsp;
+              {!!studyLoad &&
+                (studyLoad.fullLeaveWithPay ? 'X' : <span>&nbsp;</span>)}
             </div>
             <label>No</label>
             <div className="blank-field" style={{ width: 50 }}>
-              &nbsp;
+              {!!studyLoad &&
+                (!studyLoad.fullLeaveWithPay ? 'X' : <span>&nbsp;</span>)}
             </div>
           </div>
           <div>
@@ -40,11 +46,13 @@ class StudyLoad extends Component {
               className="blank-field"
               style={{ width: 50, marginRight: '1em' }}
             >
-              &nbsp;
+              {!!studyLoad &&
+                (!!studyLoad.fellowshipRecipient ? 'X' : <span>&nbsp;</span>)}
             </div>
             <label>No</label>
             <div className="blank-field" style={{ width: 50 }}>
-              &nbsp;
+              {!!studyLoad &&
+                (!studyLoad.fellowshipRecipient ? 'X' : <span>&nbsp;</span>)}
             </div>
           </div>
         </div>
