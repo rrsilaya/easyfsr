@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Button, Card, Popconfirm, Icon } from 'antd';
+import StackGrid from 'react-stack-grid';
+import { Table, Button, Card, Popconfirm, Icon, Modal, Tooltip } from 'antd';
 import {
   RESEARCH,
   ADD_RESEARCH_MODAL,
@@ -9,6 +10,7 @@ import {
   ADD_CWORK_MODAL,
   EDIT_CWORK_MODAL,
 } from '../duck';
+import { DataLoader } from '../../../global';
 import moment from 'moment';
 
 import AddCWorkModal from './AddCWorkModal';
@@ -18,95 +20,13 @@ import EditResearchModal from './EditResearchModal';
 
 import styles from '../styles';
 
+const { confirm } = Modal;
+
 class ResearchAndCreativeWorkForm extends Component {
   componentDidMount() {
     this.props.getResearches({ id: this.props.fsrID });
     this.props.getCreativeWorks({ id: this.props.fsrID });
   }
-
-  columns1 = [
-    {
-      title: 'Title',
-      dataIndex: 'title',
-      key: 'title',
-      align: 'center',
-    },
-    {
-      title: 'Role',
-      dataIndex: 'role',
-      key: 'role',
-      align: 'center',
-    },
-    {
-      title: 'Co-Workers',
-      dataIndex: 'coAuthor',
-      key: 'coAuthor',
-      align: 'center',
-    },
-    {
-      title: 'Start Date',
-      dataIndex: 'startDate',
-      key: 'startDate',
-      align: 'center',
-      render: startDate => moment(startDate).format('MMMM D, YYYY'),
-    },
-    {
-      title: 'End Date',
-      dataIndex: 'endDate',
-      key: 'endDate',
-      align: 'center',
-      render: endDate =>
-        endDate ? moment(endDate).format('MMMM D, YYYY') : endDate,
-    },
-    {
-      title: 'Funding',
-      dataIndex: 'funding',
-      key: 'funding',
-      align: 'center',
-    },
-    {
-      title: 'File',
-      dataIndex: 'filepath',
-      key: 'filepath',
-      align: 'center',
-      render: text =>
-        text ? (
-          <Link to={text} className="text secondary">
-            {text.split('/')[3]}
-          </Link>
-        ) : (
-          ''
-        ),
-    },
-    {
-      title: 'Approved Credit Units',
-      dataIndex: 'approvedUnits',
-      key: 'approvedUnits',
-      align: 'center',
-    },
-    {
-      render: (text, record) => (
-        <div style={styles.icons}>
-          <Popconfirm
-            title="Are you sure you want to delete this research?"
-            onConfirm={() => this.props.deleteResearch(record.researchID)}
-          >
-            <Link to="#">
-              <Icon type="delete" className="text secondary" />
-            </Link>
-          </Popconfirm>
-          <Link to="#">
-            <Icon
-              type="edit"
-              className="text secondary"
-              style={{ marginLeft: 10 }}
-              onClick={() => this.handleToggleEditResearch(record)}
-            />
-          </Link>
-        </div>
-      ),
-    },
-  ];
 
   handleToggleEditResearch = research => {
     this.props.changeSelected({ entity: RESEARCH, data: research });
@@ -190,6 +110,16 @@ class ResearchAndCreativeWorkForm extends Component {
     this.props.toggleModal(EDIT_CWORK_MODAL);
   };
 
+  handleDeleteResearchConfirmation = ({ researchID }) => {
+    confirm({
+      title: 'Are you sure you want to delete this research?',
+      onOk: () => {
+        this.props.deleteResearch(researchID);
+      },
+      onCancel() {},
+    });
+  };
+
   render() {
     const {
       fsrID,
@@ -228,18 +158,14 @@ class ResearchAndCreativeWorkForm extends Component {
           isAddResearchModalOpen={isAddResearchModalOpen}
           toggleModal={toggleModal}
         />
-        {isEditResearchModalOpen ? (
-          <EditResearchModal
-            id={fsrID}
-            research={research}
-            editResearch={editResearch}
-            isEditingResearch={isEditingResearch}
-            isEditResearchModalOpen={isEditResearchModalOpen}
-            toggleModal={toggleModal}
-          />
-        ) : (
-          ''
-        )}
+        <EditResearchModal
+          id={fsrID}
+          research={research}
+          editResearch={editResearch}
+          isEditingResearch={isEditingResearch}
+          isEditResearchModalOpen={isEditResearchModalOpen}
+          toggleModal={toggleModal}
+        />
         <div style={styles.button}>
           <Button
             icon="plus-circle-o"
@@ -249,11 +175,94 @@ class ResearchAndCreativeWorkForm extends Component {
             Add Research
           </Button>
         </div>
-        <Table
-          columns={this.columns1}
-          dataSource={researches}
-          loading={isGettingResearches}
+        <DataLoader
+          isLoading={isGettingResearches}
+          color="#fff"
+          spinColor="#483440"
+          content={
+            <StackGrid
+              columnWidth="33.3333%"
+              gutterWidth={16}
+              gutterHeight={16}
+              duration={0}
+              gridRef={grid => (this.grid = grid)}
+            >
+              {researches.map(research => (
+                <Card
+                  key={research.researchID}
+                  style={{ borderColor: '#483440' }}
+                  actions={[
+                    <Tooltip title="Edit Research" arrowPointAtCenter>
+                      <Icon
+                        type="edit"
+                        className="text normal"
+                        onClick={() => this.handleToggleEditResearch(research)}
+                      />
+                    </Tooltip>,
+                    <Tooltip title="Delete Research" arrowPointAtCenter>
+                      <Icon
+                        type="delete"
+                        className="text normal"
+                        onClick={() =>
+                          this.handleDeleteResearchConfirmation(research)
+                        }
+                      />
+                    </Tooltip>,
+                  ]}
+                >
+                  <div className="text normal">
+                    <dl>
+                      <dt>Title</dt>
+                      <dd>{research.title}</dd>
+                    </dl>
+                    <dl>
+                      <dt>Role</dt>
+                      <dd>{research.role}</dd>
+                    </dl>
+                    {!!research.coAuthor && (
+                      <dl>
+                        <dt>Co-Workers</dt>
+                        <dd>{research.coAuthor}</dd>
+                      </dl>
+                    )}
+                    <dl>
+                      <dt>Date</dt>
+                      <dd>
+                        {moment(research.startDate).format('MMMM DD, YYYY')} -{' '}
+                        {research.endDate
+                          ? moment(research.endDate).format('MMMM DD, YYYY')
+                          : 'Present'}
+                      </dd>
+                    </dl>
+                    <dl>
+                      <dt>Funding</dt>
+                      <dd>{research.funding}</dd>
+                    </dl>
+                    {!!research.filepath && (
+                      <dl>
+                        <dt>Attachment</dt>
+                        <dd>
+                          <Link
+                            to={research.filepath}
+                            className="text secondary"
+                          >
+                            {research.filepath.split('/')[3]}
+                          </Link>
+                        </dd>
+                      </dl>
+                    )}
+                    <dl>
+                      <dt>Approved Credit Units</dt>
+                      <dd>{research.approvedUnits}</dd>
+                    </dl>
+                  </div>
+                </Card>
+              ))}
+            </StackGrid>
+          }
         />
+        <br />
+
         <AddCWorkModal
           id={fsrID}
           addCreativeWork={addCreativeWork}
