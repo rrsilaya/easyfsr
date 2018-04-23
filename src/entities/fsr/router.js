@@ -22,6 +22,7 @@ import { getUserByUserID } from './../user/controller';
 import { getResearches } from './../research/controller';
 import { getMetaData, getLatestMetaData } from './../meta/controller';
 import { addLog } from './../log/controller';
+import { computeSubject } from './../subject/controller';
 
 const router = Router();
 
@@ -593,6 +594,10 @@ router.get('/fsr/:id', canViewFSR, async (req, res) => {
     const user = await getUserByUserID({ userID });
     const meta = await getMetaData({ id: fsr.metaID });
     delete user.password;
+    let computedSubjects = [];
+    subjects.map(async subject => {
+      computedSubjects.push(await computeSubject(subject));
+    });
 
     fsr = {
       user,
