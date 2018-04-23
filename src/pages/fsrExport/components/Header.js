@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import moment from 'moment';
 
 const styles = {
   header: {
@@ -14,11 +15,14 @@ const styles = {
 
 class Header extends Component {
   render() {
-    const { meta, user } = this.props;
+    const { meta, user, metadata } = this.props;
 
     return (
       <Fragment>
-        <div className="form-float">Form 67 (Revised October 25, 2013)</div>
+        <div className="form-float">
+          Form 67 (Revised{' '}
+          {moment(metadata.formRevision).format('MMMM DD, YYYY')})
+        </div>
         <div style={styles.header}>
           <div style={styles.checkbox}>
             [{user.contractType === 'FULL-TIME' ? (
@@ -67,13 +71,13 @@ class Header extends Component {
             <div className="flex-mid" style={{ width: '50%' }}>
               <label>HOME DEPARTMENT:</label>
               <div className="field-line" data-label="">
-                &nbsp;
+                {metadata.homeDepartment}
               </div>
             </div>
             <div className="flex-mid" style={{ width: '35%' }}>
               <label>HOME COLLEGE:</label>
               <div className="field-line" data-label="">
-                &nbsp;
+                {metadata.homeCollege}
               </div>
             </div>
           </div>
