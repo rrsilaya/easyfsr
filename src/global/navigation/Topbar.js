@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Icon, Menu, Dropdown, Modal } from 'antd';
-import { Link } from 'react-router-dom';
+import { Layout, Icon, Menu, Dropdown } from 'antd';
 import styles from './styles';
 import AccountSettingsModal from './AccountSettingsModal';
 

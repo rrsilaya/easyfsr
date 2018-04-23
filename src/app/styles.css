@@ -81,6 +81,9 @@ dl dd {
   color: #333 !important;
   margin: 0;
 }
+.scale-down {
+  transform: scale(0.9);
+}
 .background.primary {
   background-color: #483440;
 }

@@ -32,11 +32,7 @@ class SearchUser extends Component {
   };
 
   render() {
-    const {
-      query,
-
-      form,
-    } = this.props;
+    const { form } = this.props;
 
     return (
       <Form style={styles.searchForm} onSubmit={this.handleFormSubmit}>

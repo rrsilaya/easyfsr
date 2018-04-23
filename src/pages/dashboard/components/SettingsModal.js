@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Input, Select, DatePicker } from 'antd';
 import { getFieldValues } from '../../../utils';
-import moment from 'moment';
 import { SETTINGS } from '../duck';
 import styles from '../styles';
 
@@ -30,7 +29,6 @@ class SettingsModal extends Component {
       toggleModal,
 
       form,
-      date,
     } = this.props;
 
     const formItemLayout = {

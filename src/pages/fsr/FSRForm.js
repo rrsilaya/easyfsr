@@ -169,12 +169,11 @@ class FSRForm extends Component {
       isGettingConsultationHours,
       isAddingConsultationHour,
       isEditingConsultationHour,
+
       isTurningIn,
       isFinalizing,
       isGettingFSR,
       pushLink,
-
-      user,
     } = this.props;
 
     const { fsrID } = this.props.match.params;
@@ -194,7 +193,7 @@ class FSRForm extends Component {
           >
             View Preview
           </Button>
-          {acctType == 'USER' ? (
+          {acctType === 'USER' ? (
             fsr.fsr.isTurnedIn ? (
               <Button
                 style={styles.icons}
@@ -246,7 +245,7 @@ class FSRForm extends Component {
           Academic Year {fsr.fsr.acadYear} {fsr.fsr.semester} Term
         </h1>
         <Row>
-          <Col span={5}>
+          <Col span={4}>
             <Steps direction="vertical" size="small" current={currentStep}>
               {steps.map((item, index) => (
                 <Step
@@ -258,7 +257,7 @@ class FSRForm extends Component {
             </Steps>
           </Col>
           <div>
-            <Col span={19}>
+            <Col span={20}>
               {currentStep === 0 ? (
                 <TeachingLoadForm
                   fsrID={fsrID}

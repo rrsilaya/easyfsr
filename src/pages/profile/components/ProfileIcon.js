@@ -21,7 +21,7 @@ class ProfileIcon extends Component {
         {this.props.showUploadIcon ? (
           <Upload {...props} className="overlay" onChange={this.handleUpload}>
             <Icon
-              type="upload"
+              type={isUploadingIcon ? 'loading' : 'upload'}
               className="set-cursor pointer"
               style={{ fontSize: 24 }}
             />

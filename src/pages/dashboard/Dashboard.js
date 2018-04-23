@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Card, Table, Row, Col, Button, List, Switch } from 'antd';
+import { Icon, Card, Table, Row, Col, Button, List } from 'antd';
 import styles from './styles';
 import columns from './columns';
 import moment from 'moment';
@@ -128,26 +128,28 @@ class Dashboard extends Component {
                   />,
                 ]}
               >
-                <List
-                  bordered
-                  size="large"
-                  locale={{ emptyText: 'No announcements found' }}
-                  dataSource={announcements}
-                  itemLayout="horizontal"
-                  renderItem={item => (
-                    <ListItem
-                      style={styles.listItems}
-                      actions={[
-                        <Icon style={styles.listItems} type="close-circle" />,
-                      ]}
-                    >
-                      <Row style={styles.listItems}>
-                        <h3 className="text primary">{item.title}</h3>
-                        <p className="text normal">{item.body}</p>
-                      </Row>
-                    </ListItem>
-                  )}
-                />
+                <div style={{ maxHeight: 500, overflowY: 'auto' }}>
+                  <List
+                    bordered
+                    size="large"
+                    locale={{ emptyText: 'No current announcements' }}
+                    dataSource={announcements}
+                    itemLayout="horizontal"
+                    renderItem={item => (
+                      <ListItem
+                        style={styles.listItems}
+                        actions={[
+                          <Icon style={styles.listItems} type="close-circle" />,
+                        ]}
+                      >
+                        <Row style={styles.listItems}>
+                          <h3 className="text primary">{item.title}</h3>
+                          <p className="text normal">{item.body}</p>
+                        </Row>
+                      </ListItem>
+                    )}
+                  />
+                </div>
               </Card>
             </Col>
             <Col span={12}>
@@ -163,44 +165,46 @@ class Dashboard extends Component {
                   />,
                 ]}
               >
-                <List
-                  bordered
-                  size="large"
-                  locale={{ emptyText: 'No notifications found' }}
-                  dataSource={notifications}
-                  itemLayout="horizontal"
-                  renderItem={item => (
-                    <ListItem
-                      style={styles.listItems}
-                      actions={[
-                        <Icon style={styles.listItems} type="close-circle" />,
-                      ]}
-                    >
-                      <Row type="flex" style={styles.listItems}>
-                        <dl>
-                          <dt>Sender</dt>
-                          <dd>{item.senderID}</dd>
-                        </dl>
-                        <dl>
-                          <dt>Receiver</dt>
-                          <dd>{item.receiverID}</dd>
-                        </dl>
-                        <dl>
-                          <dt>Message</dt>
-                          <dd>{item.message}</dd>
-                        </dl>
-                        <dl>
-                          <dt>Time</dt>
-                          <dd>
-                            {moment(item.timestamp).format(
-                              'MMMM DD, YYYY hh:MM',
-                            )}
-                          </dd>
-                        </dl>
-                      </Row>
-                    </ListItem>
-                  )}
-                />
+                <div style={{ maxHeight: 500, overflowY: 'auto' }}>
+                  <List
+                    bordered
+                    size="large"
+                    locale={{ emptyText: 'No notifications found' }}
+                    dataSource={notifications}
+                    itemLayout="horizontal"
+                    renderItem={item => (
+                      <ListItem
+                        style={styles.listItems}
+                        actions={[
+                          <Icon style={styles.listItems} type="close-circle" />,
+                        ]}
+                      >
+                        <Row type="flex" style={styles.listItems}>
+                          <dl>
+                            <dt>Sender</dt>
+                            <dd>{item.senderID}</dd>
+                          </dl>
+                          <dl>
+                            <dt>Receiver</dt>
+                            <dd>{item.receiverID}</dd>
+                          </dl>
+                          <dl>
+                            <dt>Message</dt>
+                            <dd>{item.message}</dd>
+                          </dl>
+                          <dl>
+                            <dt>Time</dt>
+                            <dd>
+                              {moment(item.timestamp).format(
+                                'MMMM DD, YYYY hh:MM',
+                              )}
+                            </dd>
+                          </dl>
+                        </Row>
+                      </ListItem>
+                    )}
+                  />
+                </div>
               </Card>
             </Col>
           </Row>

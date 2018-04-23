@@ -53,7 +53,12 @@ class AddModal extends Component {
   };
 
   validateEmployeeID = async (rule, value, callback) => {
+    console.log(rule);
     if (!value) return callback('Please input employee ID');
+    if (value.match(rule.pattern.source) === null)
+      return callback('Employee ID must consist of digits only');
+    if (value.length !== 9)
+      return callback('Employee ID must be exactly 9 digits');
 
     const { data } = await getUsers({
       employeeID: value,
@@ -137,7 +142,13 @@ class AddModal extends Component {
             hasFeedback
           >
             {form.getFieldDecorator('employeeID@@addUser', {
-              rules: [{ validator: this.validateEmployeeID }],
+              rules: [
+                {
+                  len: 9,
+                  validator: this.validateEmployeeID,
+                  pattern: /\d+/,
+                },
+              ],
             })(<Input />)}
           </FormItem>
           <FormItem {...formItemLayout} label="First Name">
@@ -220,7 +231,7 @@ class AddModal extends Component {
           </FormItem>
           <FormItem {...formItemLayout} label="Committee">
             {form.getFieldDecorator('committee@@addUser')(
-              <Select showSearch>
+              <Select showSearch placeholder="Select User Committee">
                 {committees.map(committee => (
                   <Option key={committee} value={committee}>
                     {committee}
