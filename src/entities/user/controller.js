@@ -89,6 +89,16 @@ export const getUserByEmpID = ({ employeeID }) => {
   });
 };
 
+export const getName = ({ userID }) => {
+  return new Promise((resolve, reject) => {
+    db.query(Query.getName, { userID }, (err, results) => {
+      if (err) return reject(500);
+      else if (!results.length) return reject(404);
+      return resolve(results[0].name);
+    });
+  });
+};
+
 export const getUsers = (user = {}) => {
   return new Promise((resolve, reject) => {
     db.query(

@@ -3,6 +3,7 @@ import * as Ctrl from './controller';
 import { isAdmin } from '../../middlewares/middlewares';
 import { getReceiverIDofNotification } from '../../middlewares/controller';
 import { addLog } from './../log/controller';
+import { getName } from './../user/controller';
 
 const router = Router();
 
@@ -52,7 +53,10 @@ router.post('/notification/', isAdmin, async (req, res) => {
     req.body.senderID = req.session.user.userID;
     const notificationID = await Ctrl.addNotification(req.body);
     const notification = await Ctrl.getNotification({ notificationID });
-    delete notification.senderID;
+    notification.senderName = await getName({ userID: notification.senderID });
+    notification.receiverName = await getName({
+      userID: notification.receiverID,
+    });
     delete notification.isResolved;
     await addLog({
       action: 'INSERT_NOTIFICATION',
@@ -217,7 +221,11 @@ router.get('/notification/:notificationID', async (req, res) => {
         req.params.notificationID,
         req.session.user.userID,
       );
-    const notification = await Ctrl.getNotification(req.params);
+    let notification = await Ctrl.getNotification(req.params);
+    notification.senderName = await getName({ userID: notification.senderID });
+    notification.receiverName = await getName({
+      userID: notification.receiverID,
+    });
 
     res.status(200).json({
       status: 200,
@@ -325,6 +333,10 @@ router.get('/notification/', async (req, res) => {
       req.query,
       req.query.receiverID,
     );
+    notifications.forEach(async notif => {
+      notif.senderName = await getName({ userID: notif.senderID });
+      notif.receiverName = await getName({ userID: req.query.receiverID });
+    });
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched notifications',
@@ -417,6 +429,10 @@ router.put('/notification/:notificationID', isAdmin, async (req, res) => {
   try {
     await Ctrl.updateNotification(req.params, req.body);
     const notification = await Ctrl.getNotification(req.params);
+    notification.senderName = await getName({ userID: notification.senderID });
+    notification.receiverName = await getName({
+      userID: notification.receiverID,
+    });
     await addLog({
       action: 'UPDATE_NOTIFICATION',
       changes: '',
