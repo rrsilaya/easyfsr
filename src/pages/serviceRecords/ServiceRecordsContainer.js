@@ -7,18 +7,24 @@ import { getFSRs, getAnnouncements, getNotifications } from './duck';
 const mapStateToProps = state => {
   const {
     fsr,
-    isGettingFSR,
     announcements,
     notifications,
+
+    isGettingFSR,
+    isGettingNotifications,
+    isGettingAnnouncements,
   } = state.serviceRecords;
   const { user } = state.app;
 
   return {
     fsr,
-    isGettingFSR,
     user,
     announcements,
     notifications,
+
+    isGettingFSR,
+    isGettingNotifications,
+    isGettingAnnouncements,
   };
 };
 

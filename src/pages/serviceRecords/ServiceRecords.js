@@ -19,15 +19,32 @@ class ServiceRecords extends Component {
 
     const {
       fsr,
-      isGettingFSR,
+      user,
       pushLink,
       announcements,
       notifications,
+
+      isGettingFSR,
+      isGettingNotifications,
+      isGettingAnnouncements,
     } = this.props;
 
     return (
       <div>
-        <Alerts announcements={announcements} notifications={notifications} />
+        <DataLoader
+          isLoading={isGettingNotifications || isGettingAnnouncements}
+          content={
+            announcements.length || notifications.length ? (
+              <Alerts
+                announcements={announcements}
+                notifications={user.acctType === 'ADMIN' ? [] : notifications}
+              />
+            ) : (
+              ''
+            )
+          }
+          opaque
+        />
         <h4>My Service Records</h4>
         <DataLoader
           isLoading={isGettingFSR}

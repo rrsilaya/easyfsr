@@ -45,6 +45,8 @@ const initialState = {
   notifications: [],
 
   isGettingFSR: true,
+  isGettingNotifications: true,
+  isGettingAnnouncements: true,
 };
 
 const reducer = (state = initialState, action) => {
@@ -69,17 +71,33 @@ const reducer = (state = initialState, action) => {
 
     case GET_ANNOUNCEMENTS:
       return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingAnnouncements: true,
+        }),
         success: prevState => ({
           ...prevState,
           announcements: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingAnnouncements: false,
         }),
       });
 
     case GET_NOTIFICATIONS:
       return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingNotifications: true,
+        }),
         success: prevState => ({
           ...prevState,
           notifications: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingNotifications: false,
         }),
       });
 
