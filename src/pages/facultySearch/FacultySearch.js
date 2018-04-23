@@ -50,10 +50,7 @@ class FacultySearch extends Component {
               className="text white"
               dataSource={users}
               renderItem={item => (
-                <ListItem
-                  className="list-item set-cursor pointer"
-                  style={styles.listItem}
-                >
+                <ListItem className="list-item" style={styles.listItem}>
                   <Row type="flex" justify="space-around" style={styles.info}>
                     <Col {...gridConfig} className="text normal">
                       {item.firstName}
@@ -69,7 +66,7 @@ class FacultySearch extends Component {
                     {session.acctType === 'ADMIN' && (
                       <Tooltip title="Send Notification" arrowPointAtCenter>
                         <Icon
-                          className="text secondary"
+                          className="text secondary set-cursor pointer"
                           type="message"
                           style={styles.message}
                           onClick={() =>
