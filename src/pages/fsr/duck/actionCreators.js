@@ -1,4 +1,6 @@
 import { notification } from 'antd';
+import { push } from 'react-router-redux';
+
 import * as Api from '../../../api';
 import * as Action from './actionTypes';
 
@@ -20,15 +22,17 @@ export const prevStep = () => ({
   type: Action.PREVIOUS_STEP,
 });
 
-export const getFSR = id => ({
-  type: Action.GET_FSR,
-  promise: Api.getFSR(id),
-  meta: {
-    onFailure: () => {
-      notification.error({ message: 'Failure to fetch fsr' });
+export const getFSR = id => dispatch =>
+  dispatch({
+    type: Action.GET_FSR,
+    promise: Api.getFSR(id),
+    meta: {
+      onFailure: () => {
+        notification.error({ message: 'Failure to fetch fsr' });
+        dispatch(push('/records'));
+      },
     },
-  },
-});
+  });
 
 export const getSubjects = query => {
   return dispatch => {
