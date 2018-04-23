@@ -49,42 +49,46 @@ class FacultySearch extends Component {
               className="text white"
               dataSource={users}
               renderItem={item => (
-                <ListItem
-                  className="list-item set-cursor pointer"
-                  style={styles.listItem}
-                >
-                  <Row type="flex" justify="space-around" style={styles.info}>
-                    <Col {...gridConfig} className="text normal">
-                      {item.firstName}
-                    </Col>
-                    <Col {...gridConfig} className="text meta-2">
-                      {item.middleName}
-                    </Col>
-                    <Col {...gridConfig} className="text meta-2">
-                      {item.lastName}
-                    </Col>
-                  </Row>
-                  <div style={styles.icons}>
-                    <Tooltip title="View FSR" arrowPointAtCenter>
-                      <Icon className="text secondary" type="solution" />
-                    </Tooltip>,
-                    <Tooltip title="Send Notification" arrowPointAtCenter>
-                      <Icon
-                        className="text secondary"
-                        type="message"
-                        style={styles.message}
-                        onClick={() =>
-                          this.handleToggleSendNotificationFSModal(item)
-                        }
-                      />
-                    </Tooltip>,
-                    <Tooltip title="Profile" arrowPointAtCenter>
-                      <Link to={`/profile/${item.employeeID}`}>
-                        <Icon type="profile" className="text secondary" />
-                      </Link>
-                    </Tooltip>
-                  </div>
-                </ListItem>
+                <Link to={`/profile/${item.employeeID}`}>
+                  <ListItem
+                    className="list-item set-cursor pointer"
+                    style={styles.listItem}
+                  >
+                    <Row type="flex" justify="space-around" style={styles.info}>
+                      <Col {...gridConfig} className="text normal">
+                        {item.firstName}
+                      </Col>
+
+                      <Col {...gridConfig} className="text meta-2">
+                        {item.middleName}
+                      </Col>
+                      <Col {...gridConfig} className="text meta-2">
+                        {item.lastName}
+                      </Col>
+                    </Row>
+
+                    <div style={styles.icons}>
+                      <Tooltip title="View FSR" arrowPointAtCenter>
+                        <Icon className="text secondary" type="solution" />
+                      </Tooltip>,
+                      <Tooltip title="Send Notification" arrowPointAtCenter>
+                        <Icon
+                          className="text secondary"
+                          type="message"
+                          style={styles.message}
+                          onClick={() =>
+                            this.handleToggleSendNotificationFSModal(item)
+                          }
+                        />
+                      </Tooltip>,
+                      <Tooltip title="Profile" arrowPointAtCenter>
+                        <Link to={`/profile/${item.employeeID}`}>
+                          <Icon type="profile" className="text secondary" />
+                        </Link>
+                      </Tooltip>
+                    </div>
+                  </ListItem>
+                </Link>
               )}
             />
           }
