@@ -7,9 +7,9 @@ import {
   Table,
   Button,
   Card,
-  Popconfirm,
   Tooltip,
   Icon,
+  Modal,
 } from 'antd';
 import { COURSE, ADD_COURSE_MODAL, EDIT_COURSE_MODAL } from '../duck';
 import { getFieldValues } from '../../../utils';
@@ -18,6 +18,8 @@ import AddCourseModal from './AddCourseModal';
 import EditCourseModal from './EditCourseModal';
 
 import styles from '../styles';
+
+const { confirm } = Modal;
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -72,21 +74,20 @@ class StudyLoadForm extends Component {
     {
       render: (text, record) => (
         <div style={styles.icons}>
-          <Popconfirm
-            title="Are you sure you want to delete this course?"
-            onConfirm={() => this.props.deleteCourse(record.courseID)}
+          <Link
+            to="#"
+            disabled={
+              this.props.userID === this.props.fsr.fsr.userID ? false : true
+            }
           >
-            <Link
-              to="#"
-              disabled={
-                this.props.userID === this.props.fsr.fsr.userID ? false : true
-              }
-            >
-              <Tooltip title="Delete Course" arrowPointAtCenter>
-                <Icon type="delete" className="text secondary" />
-              </Tooltip>
-            </Link>
-          </Popconfirm>
+            <Tooltip title="Delete Course" arrowPointAtCenter>
+              <Icon
+                type="delete"
+                className="text secondary"
+                onClick={() => this.handleDeleteCourseConfirmation(record)}
+              />
+            </Tooltip>
+          </Link>
           <Link
             to="#"
             disabled={
@@ -110,6 +111,17 @@ class StudyLoadForm extends Component {
   handleToggleEditCourse = course => {
     this.props.changeSelected({ entity: COURSE, data: course });
     this.props.toggleModal(EDIT_COURSE_MODAL);
+  };
+
+  handleDeleteCourseConfirmation = ({ courseID }) => {
+    confirm({
+      title: 'Are you sure you want to delete this course?',
+      okType: 'danger',
+      onOk: () => {
+        this.props.deleteCreativeWork(courseID);
+      },
+      onCancel() {},
+    });
   };
 
   render() {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import StackGrid from 'react-stack-grid';
-import { Table, Button, Card, Popconfirm, Icon, Modal, Tooltip } from 'antd';
+import { Table, Button, Card, Icon, Modal, Tooltip } from 'antd';
 import {
   RESEARCH,
   ADD_RESEARCH_MODAL,
@@ -82,23 +82,22 @@ class ResearchAndCreativeWorkForm extends Component {
     {
       render: (text, record) => (
         <div style={styles.icons}>
-          <Popconfirm
-            title="Are you sure you want to delete this creative work?"
-            onConfirm={() =>
-              this.props.deleteCreativeWork(record.creativeWorkID)
+          <Link
+            to="#"
+            disabled={
+              this.props.userID === this.props.fsr.fsr.userID ? false : true
             }
           >
-            <Link
-              to="#"
-              disabled={
-                this.props.userID === this.props.fsr.fsr.userID ? false : true
-              }
-            >
-              <Tooltip title="Delete Creative Work" arrowPointAtCenter>
-                <Icon type="delete" className="text secondary" />
-              </Tooltip>
-            </Link>
-          </Popconfirm>
+            <Tooltip title="Delete Creative Work" arrowPointAtCenter>
+              <Icon
+                type="delete"
+                className="text secondary"
+                onClick={() =>
+                  this.handleDeleteCreativeWorkConfirmation(record)
+                }
+              />
+            </Tooltip>
+          </Link>
           <Link
             to="#"
             disabled={
@@ -130,6 +129,17 @@ class ResearchAndCreativeWorkForm extends Component {
       okType: 'danger',
       onOk: () => {
         this.props.deleteResearch(researchID);
+      },
+      onCancel() {},
+    });
+  };
+
+  handleDeleteCreativeWorkConfirmation = ({ creativeWorkID }) => {
+    confirm({
+      title: 'Are you sure you want to delete this creative work?',
+      okType: 'danger',
+      onOk: () => {
+        this.props.deleteCreativeWork(creativeWorkID);
       },
       onCancel() {},
     });

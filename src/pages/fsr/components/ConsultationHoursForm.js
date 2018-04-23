@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Button, Card, Popconfirm, Tooltip, Icon } from 'antd';
+import { Table, Button, Card, Tooltip, Icon, Modal } from 'antd';
 import {
   CONSULTATIONHOUR,
   ADD_CONSULTATIONHOUR_MODAL,
@@ -12,6 +12,8 @@ import AddConsultationHourModal from './AddConsultationHourModal';
 import EditConsultationHourModal from './EditConsultationHourModal';
 
 import styles from '../styles';
+
+const { confirm } = Modal;
 
 class ConsultationHoursForm extends Component {
   componentDidMount() {
@@ -46,21 +48,22 @@ class ConsultationHoursForm extends Component {
     {
       render: (text, record) => (
         <div style={styles.icons}>
-          <Popconfirm
-            title="Are you sure you want to delete this consultation hour?"
-            onConfirm={() => this.props.deleteConsultationHour(record.chID)}
+          <Link
+            to="#"
+            disabled={
+              this.props.userID === this.props.fsr.fsr.userID ? false : true
+            }
           >
-            <Link
-              to="#"
-              disabled={
-                this.props.userID === this.props.fsr.fsr.userID ? false : true
-              }
-            >
-              <Tooltip title="Delete Consultation Hour" arrowPointAtCenter>
-                <Icon type="delete" className="text secondary" />
-              </Tooltip>
-            </Link>
-          </Popconfirm>
+            <Tooltip title="Delete Consultation Hour" arrowPointAtCenter>
+              <Icon
+                type="delete"
+                className="text secondary"
+                onClick={() =>
+                  this.handleDeleteConsultationHourConfirmation(record)
+                }
+              />
+            </Tooltip>
+          </Link>
           <Link
             to="#"
             disabled={
@@ -87,6 +90,17 @@ class ConsultationHoursForm extends Component {
       data: consultationHour,
     });
     this.props.toggleModal(EDIT_CONSULTATIONHOUR_MODAL);
+  };
+
+  handleDeleteConsultationHourConfirmation = ({ chID }) => {
+    confirm({
+      title: 'Are you sure you want to delete this consultation hour?',
+      okType: 'danger',
+      onOk: () => {
+        this.props.deleteCreativeWork(chID);
+      },
+      onCancel() {},
+    });
   };
 
   render() {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Button, Card, Icon, Popconfirm, Tooltip } from 'antd';
+import { Table, Button, Card, Icon, Tooltip, Modal } from 'antd';
 import { SUBJECT, ADD_SUBJECT_MODAL, EDIT_SUBJECT_MODAL } from '../duck';
 
 import styles from '../styles';
@@ -8,6 +8,8 @@ import styles from '../styles';
 import AddSubjectModal from './AddSubjectModal';
 import EditSubjectModal from './EditSubjectModal';
 import Schedule from '../../../global/schedule/Schedule';
+
+const { confirm } = Modal;
 
 class TeachingLoadForm extends Component {
   componentDidMount() {
@@ -48,21 +50,20 @@ class TeachingLoadForm extends Component {
     {
       render: (text, record) => (
         <div style={styles.icons}>
-          <Popconfirm
-            title="Are you sure you want to delete this subject?"
-            onConfirm={() => this.props.deleteSubject(record.subjectID)}
+          <Link
+            to="#"
+            disabled={
+              this.props.userID === this.props.fsr.fsr.userID ? false : true
+            }
           >
-            <Link
-              to="#"
-              disabled={
-                this.props.userID === this.props.fsr.fsr.userID ? false : true
-              }
-            >
-              <Tooltip title="Delete Subject" arrowPointAtCenter>
-                <Icon type="delete" className="text secondary" />
-              </Tooltip>
-            </Link>
-          </Popconfirm>
+            <Tooltip title="Delete Subject" arrowPointAtCenter>
+              <Icon
+                type="delete"
+                className="text secondary"
+                onClick={() => this.handleDeleteSubjectConfirmation(record)}
+              />
+            </Tooltip>
+          </Link>
           <Link
             to="#"
             disabled={
@@ -86,6 +87,17 @@ class TeachingLoadForm extends Component {
   handleToggleEditSubject = subject => {
     this.props.changeSelected({ entity: SUBJECT, data: subject });
     this.props.toggleModal(EDIT_SUBJECT_MODAL);
+  };
+
+  handleDeleteSubjectConfirmation = ({ subjectID }) => {
+    confirm({
+      title: 'Are you sure you want to delete this subject?',
+      okType: 'danger',
+      onOk: () => {
+        this.props.deleteCreativeWork(subjectID);
+      },
+      onCancel() {},
+    });
   };
 
   render() {

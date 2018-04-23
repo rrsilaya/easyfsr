@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Button, Card, Popconfirm, Tooltip, Icon } from 'antd';
+import { Table, Button, Card, Tooltip, Icon, Modal } from 'antd';
 import { ADMINWORK, ADD_ADMINWORK_MODAL, EDIT_ADMINWORK_MODAL } from '../duck';
 
 import AddAdminWorkModal from './AddAdminWorkModal';
 import EditAdminWorkModal from './EditAdminWorkModal';
 
 import styles from '../styles';
+
+const { confirm } = Modal;
 
 class AdminWorkForm extends Component {
   componentDidMount() {
@@ -35,21 +37,20 @@ class AdminWorkForm extends Component {
     {
       render: (text, record) => (
         <div style={styles.icons}>
-          <Popconfirm
-            title="Are you sure you want to delete this administrative work?"
-            onConfirm={() => this.props.deleteAdminWork(record.adminWorkID)}
+          <Link
+            to="#"
+            disabled={
+              this.props.userID === this.props.fsr.fsr.userID ? false : true
+            }
           >
-            <Link
-              to="#"
-              disabled={
-                this.props.userID === this.props.fsr.fsr.userID ? false : true
-              }
-            >
-              <Tooltip title="Delete Admin Work" arrowPointAtCenter>
-                <Icon type="delete" className="text secondary" />
-              </Tooltip>
-            </Link>
-          </Popconfirm>
+            <Tooltip title="Delete Admin Work" arrowPointAtCenter>
+              <Icon
+                type="delete"
+                className="text secondary"
+                onClick={() => this.handleDeleteAdminWorkConfirmation(record)}
+              />
+            </Tooltip>
+          </Link>
           <Link
             to="#"
             disabled={
@@ -73,6 +74,17 @@ class AdminWorkForm extends Component {
   handleToggleEditAdminWork = adminWork => {
     this.props.changeSelected({ entity: ADMINWORK, data: adminWork });
     this.props.toggleModal(EDIT_ADMINWORK_MODAL);
+  };
+
+  handleDeleteAdminWorkConfirmation = ({ adminWorkID }) => {
+    confirm({
+      title: 'Are you sure you want to delete this administrative work?',
+      okType: 'danger',
+      onOk: () => {
+        this.props.deleteCreativeWork(adminWorkID);
+      },
+      onCancel() {},
+    });
   };
 
   render() {
