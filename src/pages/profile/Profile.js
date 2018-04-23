@@ -52,6 +52,8 @@ class Profile extends Component {
 
       uploadIcon,
       getUserSchedule,
+      pushLink,
+      userLoggedIn,
     } = this.props;
 
     return (
@@ -114,6 +116,7 @@ class Profile extends Component {
               <DataLoader isLoading opaque />
             ) : (
               <ProfileInfo
+                userLoggedIn={userLoggedIn}
                 adminWork={adminWork}
                 service={service}
                 creativeWork={creativeWork}
@@ -122,6 +125,7 @@ class Profile extends Component {
                 award={award}
                 research={research}
                 fsr={fsr}
+                pushLink={pushLink}
                 isLoadingCards={isLoadingCards}
               />
             )}

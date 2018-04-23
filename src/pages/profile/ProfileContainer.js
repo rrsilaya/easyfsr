@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import Profile from './Profile';
 
+import { push } from 'react-router-redux';
 import {
   getUserProfile,
   getAdminWork,
@@ -94,6 +95,9 @@ const mapDispatchToProps = dispatch => {
     },
     getUserResearches: id => {
       dispatch(getUserResearches(id));
+    },
+    pushLink: route => {
+      dispatch(push(route));
     },
   };
 };

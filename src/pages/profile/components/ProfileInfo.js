@@ -28,6 +28,7 @@ class ProfileInfo extends Component {
 
   render() {
     const {
+      userLoggedIn,
       adminWork,
       service,
       creativeWork,
@@ -36,6 +37,7 @@ class ProfileInfo extends Component {
       award,
       research,
       fsr,
+      pushLink,
     } = this.props;
 
     return (
@@ -46,7 +48,11 @@ class ProfileInfo extends Component {
         duration={0}
         gridRef={grid => (this.grid = grid)}
       >
-        <ServiceRecords fsr={fsr} />
+        {userLoggedIn.acctType === 'ADMIN' || userLoggedIn.isHead ? (
+          <ServiceRecords fsr={fsr} pushLink={pushLink} />
+        ) : (
+          ''
+        )}
         <Research research={research} />
         <Awards award={award} />
         <AdminWork adminWork={adminWork} />

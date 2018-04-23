@@ -7,7 +7,7 @@ const { Item: ListItem } = List;
 
 class ServiceRecords extends Component {
   render() {
-    const { fsr } = this.props;
+    const { fsr, pushLink } = this.props;
 
     return (
       <Card title="Service Records">
@@ -16,7 +16,10 @@ class ServiceRecords extends Component {
           style={style.list}
           dataSource={fsr}
           renderItem={fsr => (
-            <ListItem>
+            <ListItem
+              className="list-item set-cursor pointer"
+              onClick={() => pushLink(`/records/${fsr.id}`)}
+            >
               <Row style={style.listItem} justify="center">
                 <h3 className="text primary">{fsr.semester} Term</h3>
                 <div>
