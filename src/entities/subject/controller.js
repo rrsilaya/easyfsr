@@ -73,7 +73,8 @@ export const computeSubject = subject => {
       hoursPerWeek,
     } = subject;
 
-    const grad = new RegExp('[234][0-9]{2}D*');
+    const grad = new RegExp('[2-9][0-9]{2}D*');
+    const cmsc200 = new RegExp('200');
     const lab = new RegExp('.+L');
     const sp1 = new RegExp('CMSCs*190s*-s*1');
     const sp2 = new RegExp('CMSCs*190s*-s*2');
@@ -88,15 +89,22 @@ export const computeSubject = subject => {
       : sp1.test(subjectCode) ? 1 : sp2.test(subjectCode) ? 2 : hoursPerWeek;
 
     let TLCM = 0;
-    if (!grad.test(subjectCode)) {
+    if (
+      (!grad.test(subjectCode) || cmsc200.test(subjectCode)) &&
+      !(sp1.test(subjectCode) || sp2.test(subjectCode))
+    ) {
       TLCM =
         noOfStudents <= 40
           ? TLC
           : noOfStudents > 160
             ? TLC * 2
             : TLC * ((noOfStudents - 40) / 120 + 1);
-    } else if (sp1.test(subjectCode) || sp2.test(subjectCode))
+    } else if (sp1.test(subjectCode) || sp2.test(subjectCode)) {
       TLCM = noOfStudents / 2 * TLC * 3;
+    } else if (grad.test(subjectCode) && !cmsc200.test(subjectCode)) {
+      TLCM =
+        noOfStudents <= 4 ? TLC : noOfStudents > 9 ? TLC * 1.5 : TLC * 1.25;
+    }
 
     it.test(subjectCode) ? (TLCM = TLCM * 1.33) : TLCM;
 
