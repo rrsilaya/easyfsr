@@ -89,7 +89,7 @@ class AwardForm extends Component {
 
     return (
       <Card
-        title="Professional Chair or Faculty Grant Recipient or Nominee"
+        title="Professorial Chair or Faculty Grant Recipient or Nominee"
         style={styles.formFSR}
         loading={isGettingAward}
       >
@@ -127,17 +127,17 @@ class AwardForm extends Component {
               </Select>,
             )}
           </FormItem>
-          <FormItem {...formItemLayout} label="Professional Chair">
+          <FormItem {...formItemLayout} label="Professorial Chair">
             {getFieldDecorator('professionalChair', {
               rules: [
                 {
                   required: true,
-                  message: 'Please input professional chair',
+                  message: 'Please input professorial chair',
                   whitespace: true,
                 },
               ],
               initialValue: award.professionalChair,
-            })(<Input placeholder="Enter professional chair" />)}
+            })(<Input placeholder="Enter professorial chair" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Grant">
             {getFieldDecorator('grantF', {
