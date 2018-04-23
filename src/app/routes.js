@@ -55,6 +55,11 @@ const routes = [
     path: '/search',
     component: FacultySearch,
   },
+  {
+    type: 'route',
+    path: '/uploads',
+    render: () => window.location.reload(true),
+  },
 ];
 
 export default routes;
