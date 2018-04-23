@@ -26,7 +26,7 @@ class ResearchCreativeWork extends Component {
               <th colSpan={2}>APPROVED CREDIT UNITS</th>
             </tr>
             {researches
-              .filter(({ type }) => type !== 'PROPOSAL')
+              .filter(({ type }) => type === 'PROPOSAL')
               .map(research => (
                 <tr key={research.id}>
                   <td colSpan={3}>{research.title}</td>
@@ -40,7 +40,13 @@ class ResearchCreativeWork extends Component {
               <td colSpan={9} className="right">
                 Total Research Work Load Credits (RLC)
               </td>
-              <td colSpan={2}>0</td>
+              <td colSpan={2}>
+                {researches.reduce(
+                  (acc, { type, approvedUnits }) =>
+                    type === 'PROPOSAL' ? acc + parseFloat(approvedUnits) : acc,
+                  0,
+                )}
+              </td>
             </tr>
           </tbody>
         </table>
@@ -63,7 +69,7 @@ class ResearchCreativeWork extends Component {
               <th colSpan={2}>APPROVED CREDIT UNITS</th>
             </tr>
             {researches
-              .filter(({ type }) => type !== 'IMPLEMENTATION')
+              .filter(({ type }) => type === 'IMPLEMENTATION')
               .map(research => (
                 <tr key={research.id}>
                   <td colSpan={3}>{research.title}</td>
@@ -82,7 +88,15 @@ class ResearchCreativeWork extends Component {
               <td colSpan={9} className="right">
                 Total Research Work Load Credits (RLC)
               </td>
-              <td colSpan={2}>0</td>
+              <td colSpan={2}>
+                {researches.reduce(
+                  (acc, { type, approvedUnits }) =>
+                    type === 'IMPLEMENTATION'
+                      ? acc + parseFloat(approvedUnits)
+                      : acc,
+                  0,
+                )}
+              </td>
             </tr>
           </tbody>
         </table>
@@ -101,7 +115,7 @@ class ResearchCreativeWork extends Component {
         <CreativeTable
           section="II. B3."
           title="MONOGRAPHS: manuals, training modules"
-          data={creativeWorks.filter(work => work.type === 'Monograph')}
+          data={creativeWorks.filter(work => work.type === 'Monographs')}
         />
         <CreativeTable
           section="II. B4."

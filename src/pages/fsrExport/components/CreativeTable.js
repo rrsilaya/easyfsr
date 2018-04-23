@@ -30,7 +30,9 @@ class CreativeTable extends Component {
               <td colSpan={9} className="right">
                 Creative Work Load Credits (CLC)
               </td>
-              <td colSpan={2}>0</td>
+              <td colSpan={2}>
+                {data.reduce((acc, { credUnit }) => acc + credUnit, 0)}
+              </td>
             </tr>
           </tbody>
         </table>

@@ -74,7 +74,7 @@ class FsrExport extends Component {
                       creativeWorks={fsr.creativeWorks}
                     />
                     <AdminWork adminWorks={fsr.adminWorks} />
-                    <ExtCommServe />
+                    <ExtCommServe services={fsr.services} />
                     <StudyLoad
                       studyLoad={fsr.studyLoad}
                       courses={fsr.courses}
