@@ -113,6 +113,7 @@ class ResearchAndCreativeWorkForm extends Component {
   handleDeleteResearchConfirmation = ({ researchID }) => {
     confirm({
       title: 'Are you sure you want to delete this research?',
+      okType: 'danger',
       onOk: () => {
         this.props.deleteResearch(researchID);
       },
