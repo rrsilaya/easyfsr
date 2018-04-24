@@ -82,7 +82,9 @@ class ExtAndCommServiceForm extends Component {
             icon="plus-circle-o"
             type="primary"
             onClick={() => toggleModal(ADD_EXTANDCOMMSERVICE_MODAL)}
-            disabled={userID === fsr.fsr.userID ? false : true}
+            disabled={
+              userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? false : true
+            }
           >
             Add Extension and Community Service
           </Button>
@@ -108,7 +110,7 @@ class ExtAndCommServiceForm extends Component {
                       title="Edit Extension and Community Service"
                       arrowPointAtCenter
                     >
-                      {userID === fsr.fsr.userID ? (
+                      {userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? (
                         <Icon
                           type="edit"
                           className="text normal"
@@ -124,7 +126,7 @@ class ExtAndCommServiceForm extends Component {
                       title="Delete Extension and Community Service"
                       arrowPointAtCenter
                     >
-                      {userID === fsr.fsr.userID ? (
+                      {userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? (
                         <Icon
                           type="delete"
                           className="text normal"

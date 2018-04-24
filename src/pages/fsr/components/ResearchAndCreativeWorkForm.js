@@ -85,7 +85,10 @@ class ResearchAndCreativeWorkForm extends Component {
           <Link
             to="#"
             disabled={
-              this.props.userID === this.props.fsr.fsr.userID ? false : true
+              this.props.userID === this.props.fsr.fsr.userID &&
+              !this.props.fsr.fsr.isTurnedIn
+                ? false
+                : true
             }
           >
             <Tooltip title="Delete Creative Work" arrowPointAtCenter>
@@ -101,7 +104,10 @@ class ResearchAndCreativeWorkForm extends Component {
           <Link
             to="#"
             disabled={
-              this.props.userID === this.props.fsr.fsr.userID ? false : true
+              this.props.userID === this.props.fsr.fsr.userID &&
+              !this.props.fsr.fsr.isTurnedIn
+                ? false
+                : true
             }
           >
             <Tooltip title="Edit Creative Work" arrowPointAtCenter>
@@ -198,7 +204,9 @@ class ResearchAndCreativeWorkForm extends Component {
             icon="plus-circle-o"
             type="primary"
             onClick={() => toggleModal(ADD_RESEARCH_MODAL)}
-            disabled={userID === fsr.fsr.userID ? false : true}
+            disabled={
+              userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? false : true
+            }
           >
             Add Research
           </Button>
@@ -221,7 +229,7 @@ class ResearchAndCreativeWorkForm extends Component {
                   style={{ borderColor: '#483440' }}
                   actions={[
                     <Tooltip title="Edit Research" arrowPointAtCenter>
-                      {userID === fsr.fsr.userID ? (
+                      {userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? (
                         <Icon
                           type="edit"
                           className="text normal"
@@ -234,7 +242,7 @@ class ResearchAndCreativeWorkForm extends Component {
                       )}
                     </Tooltip>,
                     <Tooltip title="Delete Research" arrowPointAtCenter>
-                      {userID === fsr.fsr.userID ? (
+                      {userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? (
                         <Icon
                           type="delete"
                           className="text normal"
@@ -321,7 +329,9 @@ class ResearchAndCreativeWorkForm extends Component {
             icon="plus-circle-o"
             type="primary"
             onClick={() => toggleModal(ADD_CWORK_MODAL)}
-            disabled={userID === fsr.fsr.userID ? false : true}
+            disabled={
+              userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? false : true
+            }
           >
             Add Creative Work
           </Button>

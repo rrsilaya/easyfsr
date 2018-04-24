@@ -53,7 +53,10 @@ class TeachingLoadForm extends Component {
           <Link
             to="#"
             disabled={
-              this.props.userID === this.props.fsr.fsr.userID ? false : true
+              this.props.userID === this.props.fsr.fsr.userID &&
+              !this.props.fsr.fsr.isTurnedIn
+                ? false
+                : true
             }
           >
             <Tooltip title="Delete Subject" arrowPointAtCenter>
@@ -67,7 +70,10 @@ class TeachingLoadForm extends Component {
           <Link
             to="#"
             disabled={
-              this.props.userID === this.props.fsr.fsr.userID ? false : true
+              this.props.userID === this.props.fsr.fsr.userID &&
+              !this.props.fsr.fsr.isTurnedIn
+                ? false
+                : true
             }
           >
             <Tooltip title="Edit Subject" arrowPointAtCenter>
@@ -153,7 +159,9 @@ class TeachingLoadForm extends Component {
             icon="plus-circle-o"
             type="primary"
             onClick={() => toggleModal(ADD_SUBJECT_MODAL)}
-            disabled={userID === fsr.fsr.userID ? false : true}
+            disabled={
+              userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? false : true
+            }
           >
             Add Subject
           </Button>

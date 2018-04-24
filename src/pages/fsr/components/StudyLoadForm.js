@@ -77,7 +77,10 @@ class StudyLoadForm extends Component {
           <Link
             to="#"
             disabled={
-              this.props.userID === this.props.fsr.fsr.userID ? false : true
+              this.props.userID === this.props.fsr.fsr.userID &&
+              !this.props.fsr.fsr.isTurnedIn
+                ? false
+                : true
             }
           >
             <Tooltip title="Delete Course" arrowPointAtCenter>
@@ -91,7 +94,10 @@ class StudyLoadForm extends Component {
           <Link
             to="#"
             disabled={
-              this.props.userID === this.props.fsr.fsr.userID ? false : true
+              this.props.userID === this.props.fsr.fsr.userID &&
+              !this.props.fsr.fsr.isTurnedIn
+                ? false
+                : true
             }
           >
             <Tooltip title="Edit Course" arrowPointAtCenter>
@@ -181,7 +187,11 @@ class StudyLoadForm extends Component {
             })(
               <Input
                 placeholder="Enter degree program"
-                disabled={userID === fsr.fsr.userID ? false : true}
+                disabled={
+                  userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn
+                    ? false
+                    : true
+                }
               />,
             )}
           </FormItem>
@@ -198,7 +208,11 @@ class StudyLoadForm extends Component {
             })(
               <Input
                 placeholder="Enter name of university"
-                disabled={userID === fsr.fsr.userID ? false : true}
+                disabled={
+                  userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn
+                    ? false
+                    : true
+                }
               />,
             )}
           </FormItem>
@@ -214,7 +228,11 @@ class StudyLoadForm extends Component {
             })(
               <Select
                 placeholder="Select if Yes or No"
-                disabled={userID === fsr.fsr.userID ? false : true}
+                disabled={
+                  userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn
+                    ? false
+                    : true
+                }
               >
                 <Option value={1}>Yes</Option>
                 <Option value={0}>No</Option>
@@ -233,7 +251,11 @@ class StudyLoadForm extends Component {
             })(
               <Select
                 placeholder="Select if Yes or No"
-                disabled={userID === fsr.fsr.userID ? false : true}
+                disabled={
+                  userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn
+                    ? false
+                    : true
+                }
               >
                 <Option value={1}>Yes</Option>
                 <Option value={0}>No</Option>
@@ -263,7 +285,9 @@ class StudyLoadForm extends Component {
               icon="plus-circle-o"
               type="primary"
               onClick={() => toggleModal(ADD_COURSE_MODAL)}
-              disabled={userID === fsr.fsr.userID ? false : true}
+              disabled={
+                userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? false : true
+              }
             >
               Add Course
             </Button>
