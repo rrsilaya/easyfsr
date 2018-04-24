@@ -13,6 +13,7 @@ const SEARCH_USER = 'DASHBOARD/SEARCH_USER';
 const GET_USERS = 'DASHBOARD/GET_USERS';
 const CHANGE_SELECTED_USER = 'DASHBOARD/CHANGE_SELECTED_USER';
 const ADD_NOTIFICATION = 'DASHBOARD/ADD_NOTIFICATION';
+const DELETE_NOTIFICATION = 'DASHBOARD/DELETE_NOTIFICATION';
 export const ADD_ANNOUNCEMENT = 'DASHBOARD/ADD_ANNOUNCEMENT';
 export const DELETE_ANNOUNCEMENT = 'DASHBOARD/DELETE_ANNOUNCEMENT';
 const GET_ANNOUNCEMENTS = 'DASHBOARD/GET_ANNOUNCEMENTS';
@@ -122,6 +123,28 @@ export const addNotification = body => {
   };
 };
 
+export const deleteNotification = id => {
+  return dispatch => {
+    return dispatch({
+      type: DELETE_NOTIFICATION,
+      promise: Api.deleteNotification(id),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully deleted notification.',
+          });
+          dispatch(getNotifications({ isResolved: 0 }));
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Error while deleting notification.',
+          });
+        },
+      },
+    });
+  };
+};
+
 export const addAnnouncement = body => {
   return (dispatch, getState) => {
     return dispatch({
@@ -154,7 +177,6 @@ export const deleteAnnouncement = id => {
           notification.success({
             message: 'Successfully deleted announcement.',
           });
-          dispatch(getAnnouncements());
         },
         onFailure: () => {
           notification.error({
@@ -197,6 +219,7 @@ const initialState = {
   isAddingNotification: false,
   isAddingAnnouncement: false,
   isDeletingAnnouncement: false,
+  isDeletingNotification: false,
   isAddingMeta: false,
 
   isGettingsLogs: false,
@@ -205,6 +228,7 @@ const initialState = {
   searchedUsers: [],
   log: [],
   announcements: [],
+  notifications: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -251,6 +275,21 @@ const reducer = (state = initialState, action) => {
         finish: prevState => ({
           ...prevState,
           isAddingNotification: false,
+        }),
+      });
+
+    case DELETE_NOTIFICATION:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isDeletingNotification: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isDeletingNotification: false,
         }),
       });
 

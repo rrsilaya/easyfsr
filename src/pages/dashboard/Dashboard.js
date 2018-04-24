@@ -27,6 +27,10 @@ class Dashboard extends Component {
     this.props.deleteAnnouncement(announcementID);
   };
 
+  handleDeleteNotification = notificationID => {
+    this.props.deleteNotification(notificationID);
+  };
+
   render() {
     const {
       isSendNotificationModalOpen,
@@ -36,6 +40,7 @@ class Dashboard extends Component {
       isGettingNotifications,
       isGettingAnnouncements,
       isDeletingAnnouncement,
+      isDeletingNotification,
 
       searchedUsers,
 
@@ -210,30 +215,39 @@ class Dashboard extends Component {
                     locale={{ emptyText: 'No notifications found' }}
                     dataSource={notifications}
                     itemLayout="horizontal"
-                    renderItem={item => (
+                    renderItem={notification => (
                       <ListItem
                         style={styles.listItems}
                         actions={[
-                          <Icon style={styles.listItems} type="close-circle" />,
+                          <Icon
+                            style={styles.listItems}
+                            type="close-circle"
+                            spin={isDeletingNotification}
+                            onClick={() =>
+                              this.handleDeleteNotification(
+                                notification.notificationID,
+                              )
+                            }
+                          />,
                         ]}
                       >
                         <Row type="flex" style={styles.listItems}>
                           <dl>
                             <dt>Sender</dt>
-                            <dd>{item.senderID}</dd>
+                            <dd>{notification.senderID}</dd>
                           </dl>
                           <dl>
                             <dt>Receiver</dt>
-                            <dd>{item.receiverID}</dd>
+                            <dd>{notification.receiverID}</dd>
                           </dl>
                           <dl>
                             <dt>Message</dt>
-                            <dd>{item.message}</dd>
+                            <dd>{notification.message}</dd>
                           </dl>
                           <dl>
                             <dt>Time</dt>
                             <dd>
-                              {moment(item.timestamp).format(
+                              {moment(notification.timestamp).format(
                                 'MMMM DD, YYYY hh:MM',
                               )}
                             </dd>
