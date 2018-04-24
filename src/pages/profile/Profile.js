@@ -16,6 +16,11 @@ class Profile extends Component {
     this.props.getUserProfile(userID);
     this.props.getAdminWork(userID);
     this.props.getUserExtensionAndCommService(userID);
+    this.props.getUserCreativeWorks(userID);
+    this.props.getUserLimitedPractices(userID);
+    this.props.getUserStudyLoads(userID);
+    this.props.getUserAwards(userID);
+    this.props.getUserResearches(userID);
   }
 
   componentWillUnmount() {
@@ -32,6 +37,12 @@ class Profile extends Component {
       adminWork,
       service,
       schedule,
+      creativeWork,
+      limitedPractice,
+      studyLoad,
+      award,
+      research,
+      fsr,
 
       isGettingUser,
       isUploadingIcon,
@@ -41,6 +52,8 @@ class Profile extends Component {
 
       uploadIcon,
       getUserSchedule,
+      pushLink,
+      userLoggedIn,
     } = this.props;
 
     return (
@@ -103,8 +116,16 @@ class Profile extends Component {
               <DataLoader isLoading opaque />
             ) : (
               <ProfileInfo
+                userLoggedIn={userLoggedIn}
                 adminWork={adminWork}
                 service={service}
+                creativeWork={creativeWork}
+                limitedPractice={limitedPractice}
+                studyLoad={studyLoad}
+                award={award}
+                research={research}
+                fsr={fsr}
+                pushLink={pushLink}
                 isLoadingCards={isLoadingCards}
               />
             )}

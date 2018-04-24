@@ -5,3 +5,4 @@ export { default as Research } from './Research';
 export { default as CreativeWorks } from './CreativeWorks';
 export { default as LimitedPractices } from './LimitedPractices';
 export { default as StudyLoad } from './StudyLoad';
+export { default as ServiceRecords } from './ServiceRecords';
