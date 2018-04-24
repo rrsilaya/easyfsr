@@ -7,8 +7,9 @@ import {
   Table,
   Button,
   Card,
-  Popconfirm,
+  Tooltip,
   Icon,
+  Modal,
 } from 'antd';
 import { COURSE, ADD_COURSE_MODAL, EDIT_COURSE_MODAL } from '../duck';
 import { getFieldValues } from '../../../utils';
@@ -17,6 +18,8 @@ import AddCourseModal from './AddCourseModal';
 import EditCourseModal from './EditCourseModal';
 
 import styles from '../styles';
+
+const { confirm } = Modal;
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -30,13 +33,17 @@ class StudyLoadForm extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
 
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        const fieldValues = getFieldValues(values);
+    if (this.props.userID === this.props.fsr.fsr.userID) {
+      this.props.form.validateFieldsAndScroll((err, values) => {
+        if (!err) {
+          const fieldValues = getFieldValues(values);
 
-        this.props.editStudyLoad(this.props.fsrID, fieldValues);
-      }
-    });
+          this.props.editStudyLoad(this.props.fsrID, fieldValues);
+        }
+      });
+    } else {
+      this.props.nextStep();
+    }
   };
 
   columns = [
@@ -67,21 +74,34 @@ class StudyLoadForm extends Component {
     {
       render: (text, record) => (
         <div style={styles.icons}>
-          <Popconfirm
-            title="Are you sure you want to delete this course?"
-            onConfirm={() => this.props.deleteCourse(record.courseID)}
+          <Link
+            to="#"
+            disabled={
+              this.props.userID === this.props.fsr.fsr.userID ? false : true
+            }
           >
-            <Link to="#">
-              <Icon type="delete" className="text secondary" />
-            </Link>
-          </Popconfirm>
-          <Link to="#">
-            <Icon
-              type="edit"
-              className="text secondary"
-              style={{ marginLeft: 10 }}
-              onClick={() => this.handleToggleEditCourse(record)}
-            />
+            <Tooltip title="Delete Course" arrowPointAtCenter>
+              <Icon
+                type="delete"
+                className="text secondary"
+                onClick={() => this.handleDeleteCourseConfirmation(record)}
+              />
+            </Tooltip>
+          </Link>
+          <Link
+            to="#"
+            disabled={
+              this.props.userID === this.props.fsr.fsr.userID ? false : true
+            }
+          >
+            <Tooltip title="Edit Course" arrowPointAtCenter>
+              <Icon
+                type="edit"
+                className="text secondary"
+                style={{ marginLeft: 10 }}
+                onClick={() => this.handleToggleEditCourse(record)}
+              />
+            </Tooltip>
           </Link>
         </div>
       ),
@@ -93,8 +113,21 @@ class StudyLoadForm extends Component {
     this.props.toggleModal(EDIT_COURSE_MODAL);
   };
 
+  handleDeleteCourseConfirmation = ({ courseID }) => {
+    confirm({
+      title: 'Are you sure you want to delete this course?',
+      okType: 'danger',
+      onOk: () => {
+        this.props.deleteCreativeWork(courseID);
+      },
+      onCancel() {},
+    });
+  };
+
   render() {
     const {
+      userID,
+      fsr,
       fsrID,
       studyLoad,
       courses,
@@ -145,7 +178,12 @@ class StudyLoadForm extends Component {
                 },
               ],
               initialValue: studyLoad.degree,
-            })(<Input placeholder="Enter degree program" />)}
+            })(
+              <Input
+                placeholder="Enter degree program"
+                disabled={userID === fsr.fsr.userID ? false : true}
+              />,
+            )}
           </FormItem>
           <FormItem {...formItemLayout} label="University">
             {getFieldDecorator('university', {
@@ -157,7 +195,12 @@ class StudyLoadForm extends Component {
                 },
               ],
               initialValue: studyLoad.university,
-            })(<Input placeholder="Enter name of university" />)}
+            })(
+              <Input
+                placeholder="Enter name of university"
+                disabled={userID === fsr.fsr.userID ? false : true}
+              />,
+            )}
           </FormItem>
           <FormItem {...formItemLayout} label="On full study leave with pay">
             {getFieldDecorator('fullLeaveWithPay', {
@@ -169,7 +212,10 @@ class StudyLoadForm extends Component {
               ],
               initialValue: studyLoad.fullLeaveWithPay,
             })(
-              <Select placeholder="Select if Yes or No">
+              <Select
+                placeholder="Select if Yes or No"
+                disabled={userID === fsr.fsr.userID ? false : true}
+              >
                 <Option value={1}>Yes</Option>
                 <Option value={0}>No</Option>
               </Select>,
@@ -185,7 +231,10 @@ class StudyLoadForm extends Component {
               ],
               initialValue: studyLoad.fellowshipRecipient,
             })(
-              <Select placeholder="Select if Yes or No">
+              <Select
+                placeholder="Select if Yes or No"
+                disabled={userID === fsr.fsr.userID ? false : true}
+              >
                 <Option value={1}>Yes</Option>
                 <Option value={0}>No</Option>
               </Select>,
@@ -214,6 +263,7 @@ class StudyLoadForm extends Component {
               icon="plus-circle-o"
               type="primary"
               onClick={() => toggleModal(ADD_COURSE_MODAL)}
+              disabled={userID === fsr.fsr.userID ? false : true}
             >
               Add Course
             </Button>

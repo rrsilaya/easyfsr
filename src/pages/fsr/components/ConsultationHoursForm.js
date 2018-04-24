@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Button, Card, Popconfirm, Icon } from 'antd';
+import { Table, Button, Card, Tooltip, Icon, Modal } from 'antd';
 import {
   CONSULTATIONHOUR,
   ADD_CONSULTATIONHOUR_MODAL,
@@ -12,6 +12,8 @@ import AddConsultationHourModal from './AddConsultationHourModal';
 import EditConsultationHourModal from './EditConsultationHourModal';
 
 import styles from '../styles';
+
+const { confirm } = Modal;
 
 class ConsultationHoursForm extends Component {
   componentDidMount() {
@@ -46,21 +48,36 @@ class ConsultationHoursForm extends Component {
     {
       render: (text, record) => (
         <div style={styles.icons}>
-          <Popconfirm
-            title="Are you sure you want to delete this consultation hour?"
-            onConfirm={() => this.props.deleteConsultationHour(record.chID)}
+          <Link
+            to="#"
+            disabled={
+              this.props.userID === this.props.fsr.fsr.userID ? false : true
+            }
           >
-            <Link to="#">
-              <Icon type="delete" className="text secondary" />
-            </Link>
-          </Popconfirm>
-          <Link to="#">
-            <Icon
-              type="edit"
-              className="text secondary"
-              style={{ marginLeft: 10 }}
-              onClick={() => this.handleToggleEditConsultationHour(record)}
-            />
+            <Tooltip title="Delete Consultation Hour" arrowPointAtCenter>
+              <Icon
+                type="delete"
+                className="text secondary"
+                onClick={() =>
+                  this.handleDeleteConsultationHourConfirmation(record)
+                }
+              />
+            </Tooltip>
+          </Link>
+          <Link
+            to="#"
+            disabled={
+              this.props.userID === this.props.fsr.fsr.userID ? false : true
+            }
+          >
+            <Tooltip title="Edit Consultation Hour" arrowPointAtCenter>
+              <Icon
+                type="edit"
+                className="text secondary"
+                style={{ marginLeft: 10 }}
+                onClick={() => this.handleToggleEditConsultationHour(record)}
+              />
+            </Tooltip>
           </Link>
         </div>
       ),
@@ -75,8 +92,21 @@ class ConsultationHoursForm extends Component {
     this.props.toggleModal(EDIT_CONSULTATIONHOUR_MODAL);
   };
 
+  handleDeleteConsultationHourConfirmation = ({ chID }) => {
+    confirm({
+      title: 'Are you sure you want to delete this consultation hour?',
+      okType: 'danger',
+      onOk: () => {
+        this.props.deleteCreativeWork(chID);
+      },
+      onCancel() {},
+    });
+  };
+
   render() {
     const {
+      userID,
+      fsr,
       fsrID,
       consultationHours,
       consultationHour,
@@ -114,6 +144,7 @@ class ConsultationHoursForm extends Component {
             icon="plus-circle-o"
             type="primary"
             onClick={() => toggleModal(ADD_CONSULTATIONHOUR_MODAL)}
+            disabled={userID === fsr.fsr.userID ? false : true}
           >
             Add Consultation Hour
           </Button>

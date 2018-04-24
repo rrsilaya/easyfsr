@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Table, Button, Card, Modal, Icon, Tooltip } from 'antd';
+import { Button, Card, Modal, Icon, Tooltip } from 'antd';
 import {
   EXTANDCOMMSERVICE,
   ADD_EXTANDCOMMSERVICE_MODAL,
@@ -44,6 +43,8 @@ class ExtAndCommServiceForm extends Component {
 
   render() {
     const {
+      userID,
+      fsr,
       fsrID,
       extAndCommServices,
       extAndCommService,
@@ -81,6 +82,7 @@ class ExtAndCommServiceForm extends Component {
             icon="plus-circle-o"
             type="primary"
             onClick={() => toggleModal(ADD_EXTANDCOMMSERVICE_MODAL)}
+            disabled={userID === fsr.fsr.userID ? false : true}
           >
             Add Extension and Community Service
           </Button>
@@ -106,25 +108,33 @@ class ExtAndCommServiceForm extends Component {
                       title="Edit Extension and Community Service"
                       arrowPointAtCenter
                     >
-                      <Icon
-                        type="edit"
-                        className="text normal"
-                        onClick={() =>
-                          this.handleToggleEditExtAndCommService(extension)
-                        }
-                      />
+                      {userID === fsr.fsr.userID ? (
+                        <Icon
+                          type="edit"
+                          className="text normal"
+                          onClick={() =>
+                            this.handleToggleEditExtAndCommService(extension)
+                          }
+                        />
+                      ) : (
+                        <Icon type="edit" className="text meta-2" />
+                      )}
                     </Tooltip>,
                     <Tooltip
                       title="Delete Extension and Community Service"
                       arrowPointAtCenter
                     >
-                      <Icon
-                        type="delete"
-                        className="text normal"
-                        onClick={() =>
-                          this.handleDeleteExtensionConfirmation(extension)
-                        }
-                      />
+                      {userID === fsr.fsr.userID ? (
+                        <Icon
+                          type="delete"
+                          className="text normal"
+                          onClick={() =>
+                            this.handleDeleteExtensionConfirmation(extension)
+                          }
+                        />
+                      ) : (
+                        <Icon type="delete" className="text meta-2" />
+                      )}
                     </Tooltip>,
                   ]}
                 >

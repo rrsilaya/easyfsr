@@ -181,7 +181,7 @@ class FSRForm extends Component {
     } = this.props;
 
     const { fsrID } = this.props.match.params;
-    const { acctType } = this.props.user;
+    const { acctType, userID } = this.props.user;
 
     return isGettingFSR ? (
       <PageLoader />
@@ -264,6 +264,8 @@ class FSRForm extends Component {
             <Col span={20}>
               {currentStep === 0 ? (
                 <TeachingLoadForm
+                  userID={userID}
+                  fsr={fsr}
                   fsrID={fsrID}
                   subjects={subjects}
                   subject={subject}
@@ -286,6 +288,8 @@ class FSRForm extends Component {
                 />
               ) : currentStep === 1 ? (
                 <ResearchAndCreativeWorkForm
+                  userID={userID}
+                  fsr={fsr}
                   fsrID={fsrID}
                   researches={researches}
                   research={research}
@@ -316,6 +320,8 @@ class FSRForm extends Component {
                 />
               ) : currentStep === 2 ? (
                 <AdminWorkForm
+                  userID={userID}
+                  fsr={fsr}
                   fsrID={fsrID}
                   adminWorks={adminWorks}
                   adminWork={adminWork}
@@ -335,6 +341,8 @@ class FSRForm extends Component {
                 />
               ) : currentStep === 3 ? (
                 <ExtAndCommServiceForm
+                  userID={userID}
+                  fsr={fsr}
                   fsrID={fsrID}
                   extAndCommServices={extAndCommServices}
                   extAndCommService={extAndCommService}
@@ -358,6 +366,8 @@ class FSRForm extends Component {
                 />
               ) : currentStep === 4 ? (
                 <StudyLoadForm
+                  userID={userID}
+                  fsr={fsr}
                   fsrID={fsrID}
                   studyLoad={studyLoad}
                   courses={courses}
@@ -382,9 +392,12 @@ class FSRForm extends Component {
                   isEditCourseModalOpen={isEditCourseModalOpen}
                   toggleModal={toggleModal}
                   prevStep={prevStep}
+                  nextStep={nextStep}
                 />
               ) : currentStep === 5 ? (
                 <LimitedPracticeForm
+                  userID={userID}
+                  fsr={fsr}
                   fsrID={fsrID}
                   ltdPractOfProf={ltdPractOfProf}
                   getLtdPractOfProfs={getLtdPractOfProfs}
@@ -392,9 +405,12 @@ class FSRForm extends Component {
                   isGettingLtdPractOfProf={isGettingLtdPractOfProf}
                   isEditingLtdPractOfProf={isEditingLtdPractOfProf}
                   prevStep={prevStep}
+                  nextStep={nextStep}
                 />
               ) : currentStep === 6 ? (
                 <AwardForm
+                  userID={userID}
+                  fsr={fsr}
                   fsrID={fsrID}
                   award={award}
                   getAwards={getAwards}
@@ -402,9 +418,12 @@ class FSRForm extends Component {
                   isGettingAward={isGettingAward}
                   isEditingAward={isEditingAward}
                   prevStep={prevStep}
+                  nextStep={nextStep}
                 />
               ) : currentStep === 7 ? (
                 <ConsultationHoursForm
+                  userID={userID}
+                  fsr={fsr}
                   fsrID={fsrID}
                   consultationHours={consultationHours}
                   consultationHour={consultationHour}
