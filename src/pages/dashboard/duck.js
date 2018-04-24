@@ -14,6 +14,7 @@ const GET_USERS = 'DASHBOARD/GET_USERS';
 const CHANGE_SELECTED_USER = 'DASHBOARD/CHANGE_SELECTED_USER';
 const ADD_NOTIFICATION = 'DASHBOARD/ADD_NOTIFICATION';
 export const ADD_ANNOUNCEMENT = 'DASHBOARD/ADD_ANNOUNCEMENT';
+export const DELETE_ANNOUNCEMENT = 'DASHBOARD/DELETE_ANNOUNCEMENT';
 const GET_ANNOUNCEMENTS = 'DASHBOARD/GET_ANNOUNCEMENTS';
 const GET_NOTIFICATIONS = 'DASHBOARD/GET_NOTIFICATIONS';
 export const GET_LOG = 'DASHBOARD/GET_LOGS';
@@ -143,6 +144,28 @@ export const addAnnouncement = body => {
   };
 };
 
+export const deleteAnnouncement = id => {
+  return dispatch => {
+    return dispatch({
+      type: DELETE_ANNOUNCEMENT,
+      promise: Api.deleteAnnouncement(id),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully deleted announcement.',
+          });
+          dispatch(getAnnouncements());
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Error while deleting announcement.',
+          });
+        },
+      },
+    });
+  };
+};
+
 export const addMetaData = body => {
   return (dispatch, getState) => {
     return dispatch({
@@ -173,6 +196,7 @@ const initialState = {
   isSearchingUsers: false,
   isAddingNotification: false,
   isAddingAnnouncement: false,
+  isDeletingAnnouncement: false,
   isAddingMeta: false,
 
   isGettingsLogs: false,
@@ -180,6 +204,7 @@ const initialState = {
   isGettingNotifications: true,
   searchedUsers: [],
   log: [],
+  announcements: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -272,6 +297,26 @@ const reducer = (state = initialState, action) => {
           isAddingAnnouncement: false,
         }),
       });
+
+    case DELETE_ANNOUNCEMENT:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isDeletingAnnouncement: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          announcements: prevState.announcements.filter(
+            announcement =>
+              payload.data.data.announcementID !== announcement.announcementID,
+          ),
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isDeletingAnnouncement: false,
+        }),
+      });
+
     case GET_USERS:
       return handle(state, action, {
         start: prevState => ({

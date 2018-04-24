@@ -23,6 +23,10 @@ class Dashboard extends Component {
     this.props.getLog();
   }
 
+  handleDeleteAnnouncement = announcementID => {
+    this.props.deleteAnnouncement(announcementID);
+  };
+
   render() {
     const {
       isSendNotificationModalOpen,
@@ -31,6 +35,7 @@ class Dashboard extends Component {
       isSettingsModalOpen,
       isGettingNotifications,
       isGettingAnnouncements,
+      isDeletingAnnouncement,
 
       searchedUsers,
 
@@ -159,16 +164,25 @@ class Dashboard extends Component {
                     locale={{ emptyText: 'No current announcements' }}
                     dataSource={announcements}
                     itemLayout="horizontal"
-                    renderItem={item => (
+                    renderItem={announcement => (
                       <ListItem
                         style={styles.listItems}
                         actions={[
-                          <Icon style={styles.listItems} type="close-circle" />,
+                          <Icon
+                            style={styles.listItems}
+                            type="close-circle"
+                            spin={isDeletingAnnouncement}
+                            onClick={() =>
+                              this.handleDeleteAnnouncement(
+                                announcement.announcementID,
+                              )
+                            }
+                          />,
                         ]}
                       >
                         <Row style={styles.listItems}>
-                          <h3 className="text primary">{item.title}</h3>
-                          <p className="text normal">{item.body}</p>
+                          <h3 className="text primary">{announcement.title}</h3>
+                          <p className="text normal">{announcement.body}</p>
                         </Row>
                       </ListItem>
                     )}
