@@ -36,6 +36,12 @@ class LimitedPracticeForm extends Component {
     }
   };
 
+  disabledDate = date => {
+    if (!date) return moment();
+
+    return date.valueOf() > moment();
+  };
+
   render() {
     const {
       userID,
@@ -103,6 +109,7 @@ class LimitedPracticeForm extends Component {
                     ? false
                     : true
                 }
+                disabledDate={this.disabledDate}
               />,
             )}
           </FormItem>
