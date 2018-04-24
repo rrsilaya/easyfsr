@@ -19,7 +19,7 @@ const { Item: ListItem } = List;
 class Dashboard extends Component {
   componentDidMount() {
     this.props.getAnnouncements();
-    this.props.getNotifications();
+    this.props.getNotifications({ isResolved: 0 });
     this.props.getLog();
   }
 

@@ -111,7 +111,7 @@ export const addNotification = body => {
           notification.success({
             message: 'Notification successfully sent.',
           });
-          dispatch(getNotifications());
+          dispatch(getNotifications({ isResolved: 0 }));
         },
         onFailure: () => {
           notification.error({

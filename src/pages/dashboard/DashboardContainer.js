@@ -83,8 +83,8 @@ const mapDispatchToProps = dispatch => {
     getAnnouncements: () => {
       dispatch(getAnnouncements());
     },
-    getNotifications: () => {
-      dispatch(getNotifications());
+    getNotifications: query => {
+      dispatch(getNotifications(query));
     },
     getLog: () => {
       dispatch(getLog());
