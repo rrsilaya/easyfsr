@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form, Input, Select } from 'antd';
+import { Modal, Button, Form, Input } from 'antd';
 
 const FormItem = Form.Item;
-const { OptGroup, Option } = Select;
 
 class AccountSettingsModal extends Component {
   handleFormSubmit = e => {

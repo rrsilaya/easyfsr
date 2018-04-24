@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Icon, Card, Table, Row, Col, Button, List } from 'antd';
 import styles from './styles';
-import dataSource from './datasource';
 import columns from './columns';
+import moment from 'moment';
 
 import SendNotificationModal from './components/SendNotificationModal';
 import CreateFSRModal from './components/CreateFSRModal';
@@ -14,15 +14,18 @@ import { CREATE_FSR } from './duck';
 import { CREATE_ANNOUNCEMENT } from './duck';
 import { SETTINGS } from './duck';
 
-import { GET_ANNOUCEMENTS, GET_NOTIFICATIONS } from './duck';
-
 const { Item: ListItem } = List;
 
 class Dashboard extends Component {
   componentDidMount() {
     this.props.getAnnouncements();
     this.props.getNotifications();
+    this.props.getLog();
   }
+
+  handleDeleteAnnouncement = announcementID => {
+    this.props.deleteAnnouncement(announcementID);
+  };
 
   render() {
     const {
@@ -30,13 +33,19 @@ class Dashboard extends Component {
       isCreateFSRModalOpen,
       isCreateAnnouncementModalOpen,
       isSettingsModalOpen,
+      isGettingNotifications,
+      isGettingAnnouncements,
+      isDeletingAnnouncement,
 
       searchedUsers,
 
       addNotification,
       addAnnouncement,
+      addMetaData,
+
       announcements,
       notifications,
+      log,
 
       toggleModal,
       searchUser,
@@ -53,14 +62,21 @@ class Dashboard extends Component {
                 searchedUsers={searchedUsers}
                 searchUser={searchUser}
                 addNotification={addNotification}
+                notifications={notifications}
               />
               <Button
                 type="default"
                 style={styles.menuItems}
                 onClick={() => toggleModal(SEND_NOTIFICATION)}
               >
-                <Icon type="bell" style={styles.icons} />
-                <p style={styles.description}>Send Notification</p>
+                <Icon
+                  type="bell"
+                  className="text normal"
+                  style={styles.icons}
+                />
+                <p className="text normal" style={styles.description}>
+                  Send Notification
+                </p>
               </Button>
 
               <CreateFSRModal
@@ -73,8 +89,14 @@ class Dashboard extends Component {
                 style={styles.menuItems}
                 onClick={() => toggleModal(CREATE_FSR)}
               >
-                <Icon type="file-add" style={styles.icons} />
-                <p style={styles.description}>Create FSR</p>
+                <Icon
+                  type="file-add"
+                  className="text normal"
+                  style={styles.icons}
+                />
+                <p className="text normal" style={styles.description}>
+                  Create FSR
+                </p>
               </Button>
 
               <CreateAnnouncementModal
@@ -88,21 +110,34 @@ class Dashboard extends Component {
                 style={styles.menuItems}
                 onClick={() => toggleModal(CREATE_ANNOUNCEMENT)}
               >
-                <Icon type="notification" style={styles.icons} />
-                <p style={styles.description}>Create Announcement</p>
+                <Icon
+                  type="notification"
+                  className="text normal"
+                  style={styles.icons}
+                />
+                <p className="text normal" style={styles.description}>
+                  Create Announcement
+                </p>
               </Button>
               <SettingsModal
                 isSettingsModalOpen={isSettingsModalOpen}
                 toggleModal={toggleModal}
                 handleAfterClose={this.handleAfterClose}
+                addMetaData={addMetaData}
               />
               <Button
                 type="default"
                 style={styles.menuItems}
                 onClick={() => toggleModal(SETTINGS)}
               >
-                <Icon type="setting" style={styles.icons} />
-                <p style={styles.description}>Settings</p>
+                <Icon
+                  type="setting"
+                  className="text normal"
+                  style={styles.icons}
+                />
+                <p className="text normal" style={styles.description}>
+                  Settings
+                </p>
               </Button>
             </Button.Group>
           </Col>
@@ -113,6 +148,7 @@ class Dashboard extends Component {
               <Card
                 style={styles.announcement}
                 title="Announcements"
+                loading={isGettingAnnouncements}
                 actions={[
                   <Icon
                     type="plus-circle-o"
@@ -121,31 +157,44 @@ class Dashboard extends Component {
                   />,
                 ]}
               >
-                <List
-                  bordered
-                  size="large"
-                  locale={{ emptyText: 'No announcements found' }}
-                  dataSource={announcements}
-                  itemLayout="horizontal"
-                  renderItem={item => (
-                    <ListItem
-                      style={styles.listItems}
-                      actions={[
-                        <Icon style={styles.listItems} type="close-circle" />,
-                      ]}
-                    >
-                      <Row type="flex" style={styles.listItems}>
-                        {item.body}
-                      </Row>
-                    </ListItem>
-                  )}
-                />
+                <div style={{ maxHeight: 500, overflowY: 'auto' }}>
+                  <List
+                    bordered
+                    size="large"
+                    locale={{ emptyText: 'No current announcements' }}
+                    dataSource={announcements}
+                    itemLayout="horizontal"
+                    renderItem={announcement => (
+                      <ListItem
+                        style={styles.listItems}
+                        actions={[
+                          <Icon
+                            style={styles.listItems}
+                            type="close-circle"
+                            spin={isDeletingAnnouncement}
+                            onClick={() =>
+                              this.handleDeleteAnnouncement(
+                                announcement.announcementID,
+                              )
+                            }
+                          />,
+                        ]}
+                      >
+                        <Row style={styles.listItems}>
+                          <h3 className="text primary">{announcement.title}</h3>
+                          <p className="text normal">{announcement.body}</p>
+                        </Row>
+                      </ListItem>
+                    )}
+                  />
+                </div>
               </Card>
             </Col>
             <Col span={12}>
               <Card
                 style={styles.announcement}
                 title="Notifications"
+                loading={isGettingNotifications}
                 actions={[
                   <Icon
                     type="plus-circle-o"
@@ -154,25 +203,46 @@ class Dashboard extends Component {
                   />,
                 ]}
               >
-                <List
-                  bordered
-                  size="large"
-                  locale={{ emptyText: 'No notifications found' }}
-                  dataSource={notifications}
-                  itemLayout="horizontal"
-                  renderItem={item => (
-                    <ListItem
-                      style={styles.listItems}
-                      actions={[
-                        <Icon style={styles.listItems} type="close-circle" />,
-                      ]}
-                    >
-                      <Row type="flex" style={styles.listItems}>
-                        {item.message}
-                      </Row>
-                    </ListItem>
-                  )}
-                />
+                <div style={{ maxHeight: 500, overflowY: 'auto' }}>
+                  <List
+                    bordered
+                    size="large"
+                    locale={{ emptyText: 'No notifications found' }}
+                    dataSource={notifications}
+                    itemLayout="horizontal"
+                    renderItem={item => (
+                      <ListItem
+                        style={styles.listItems}
+                        actions={[
+                          <Icon style={styles.listItems} type="close-circle" />,
+                        ]}
+                      >
+                        <Row type="flex" style={styles.listItems}>
+                          <dl>
+                            <dt>Sender</dt>
+                            <dd>{item.senderID}</dd>
+                          </dl>
+                          <dl>
+                            <dt>Receiver</dt>
+                            <dd>{item.receiverID}</dd>
+                          </dl>
+                          <dl>
+                            <dt>Message</dt>
+                            <dd>{item.message}</dd>
+                          </dl>
+                          <dl>
+                            <dt>Time</dt>
+                            <dd>
+                              {moment(item.timestamp).format(
+                                'MMMM DD, YYYY hh:MM',
+                              )}
+                            </dd>
+                          </dl>
+                        </Row>
+                      </ListItem>
+                    )}
+                  />
+                </div>
               </Card>
             </Col>
           </Row>
@@ -181,7 +251,12 @@ class Dashboard extends Component {
               <Card title="Logs">
                 <Table
                   columns={columns}
-                  dataSource={dataSource}
+                  dataSource={log.map(row => ({
+                    ...row,
+                    timestamp: moment(row.timestamp).format(
+                      'MMM DD YYYY hh:mm:ss A',
+                    ),
+                  }))}
                   style={styles.facultyTable}
                 />
               </Card>

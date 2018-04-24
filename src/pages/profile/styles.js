@@ -15,6 +15,7 @@ const style = {
   },
   list: {
     border: 'none',
+    fontSize: '13px',
   },
   listItem: {
     width: '100%',

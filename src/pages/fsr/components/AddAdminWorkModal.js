@@ -1,13 +1,26 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form, Input } from 'antd';
-import { ADMINWORK } from '../duck';
+import { Modal, Button, Form, Input, InputNumber } from 'antd';
+import { ADD_ADMINWORK_MODAL } from '../duck';
+import { getFieldValues } from '../../../utils';
 
 const FormItem = Form.Item;
 
 class AddAdminWorkModal extends Component {
+  handleFormSubmit = e => {
+    e.preventDefault();
+
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        const fieldValues = getFieldValues(values);
+        this.props.addAdminWork({ ...fieldValues, id: this.props.id });
+      }
+    });
+  };
+
   render() {
     const {
       isAddAdminWorkModalOpen,
+      isAddingAdminWork,
 
       toggleModal,
     } = this.props;
@@ -29,19 +42,25 @@ class AddAdminWorkModal extends Component {
       <Modal
         title="Add Administrative Work"
         visible={isAddAdminWorkModalOpen}
-        onOk={() => toggleModal(ADMINWORK)}
-        onCancel={() => toggleModal(ADMINWORK)}
+        onOk={() => toggleModal(ADD_ADMINWORK_MODAL)}
+        onCancel={() => toggleModal(ADD_ADMINWORK_MODAL)}
         destroyOnClose
         footer={[
-          <Button key="back" onClick={() => toggleModal(ADMINWORK)}>
+          <Button key="back" onClick={() => toggleModal(ADD_ADMINWORK_MODAL)}>
             Cancel
           </Button>,
-          <Button key="submit" type="primary" htmlType="submit">
+          <Button
+            key="submit"
+            type="primary"
+            htmlType="submit"
+            onClick={this.handleFormSubmit}
+            loading={isAddingAdminWork}
+          >
             Add
           </Button>,
         ]}
       >
-        <Form>
+        <Form onSubmit={this.handleFormSubmit}>
           <FormItem {...formItemLayout} label="Position">
             {getFieldDecorator('position', {
               rules: [
@@ -72,10 +91,9 @@ class AddAdminWorkModal extends Component {
                 {
                   required: true,
                   message: 'Please input approved credit units',
-                  whitespace: true,
                 },
               ],
-            })(<Input placeholder="Enter approved credit units" />)}
+            })(<InputNumber min={0} />)}
           </FormItem>
         </Form>
       </Modal>

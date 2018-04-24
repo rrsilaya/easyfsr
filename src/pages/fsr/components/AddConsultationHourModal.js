@@ -1,14 +1,31 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Select, Input, TimePicker } from 'antd';
-import { CONSULTATIONHOUR } from '../duck';
+import { ADD_CONSULTATIONHOUR_MODAL } from '../duck';
+import { getFieldValues } from '../../../utils';
+import moment from 'moment';
 
 const FormItem = Form.Item;
 const { Option } = Select;
 
 class AddConsultationHourModal extends Component {
+  handleFormSubmit = e => {
+    e.preventDefault();
+
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        const fieldValues = getFieldValues(values);
+        fieldValues.timeStart = moment(fieldValues.timeStart).format('HH:mm');
+        fieldValues.timeEnd = moment(fieldValues.timeEnd).format('HH:mm');
+
+        this.props.addConsultationHour({ ...fieldValues, id: this.props.id });
+      }
+    });
+  };
+
   render() {
     const {
       isAddConsultationHourModalOpen,
+      isAddingConsultationHour,
 
       toggleModal,
     } = this.props;
@@ -30,19 +47,28 @@ class AddConsultationHourModal extends Component {
       <Modal
         title="Add Consultation Hour"
         visible={isAddConsultationHourModalOpen}
-        onOk={() => toggleModal(CONSULTATIONHOUR)}
-        onCancel={() => toggleModal(CONSULTATIONHOUR)}
+        onOk={() => toggleModal(ADD_CONSULTATIONHOUR_MODAL)}
+        onCancel={() => toggleModal(ADD_CONSULTATIONHOUR_MODAL)}
         destroyOnClose
         footer={[
-          <Button key="back" onClick={() => toggleModal(CONSULTATIONHOUR)}>
+          <Button
+            key="back"
+            onClick={() => toggleModal(ADD_CONSULTATIONHOUR_MODAL)}
+          >
             Cancel
           </Button>,
-          <Button key="submit" type="primary" htmlType="submit">
+          <Button
+            key="submit"
+            type="primary"
+            htmlType="submit"
+            onClick={this.handleFormSubmit}
+            loading={isAddingConsultationHour}
+          >
             Add
           </Button>,
         ]}
       >
-        <Form>
+        <Form onSubmit={this.handleFormSubmit}>
           <FormItem {...formItemLayout} label="Day">
             {getFieldDecorator('day', {
               rules: [
@@ -53,11 +79,11 @@ class AddConsultationHourModal extends Component {
               ],
             })(
               <Select placeholder="Select day of consultation hour">
-                <Option value="MONDAY">Monday</Option>
-                <Option value="TUESDAY">Tuesday</Option>
-                <Option value="WEDNESDAY">Wednesday</Option>
-                <Option value="THURSDAY">Thursday</Option>
-                <Option value="FRIDAY">Friday</Option>
+                <Option value="Monday">Monday</Option>
+                <Option value="Tuesday">Tuesday</Option>
+                <Option value="Wednesday">Wednesday</Option>
+                <Option value="Thursday">Thursday</Option>
+                <Option value="Friday">Friday</Option>
               </Select>,
             )}
           </FormItem>
@@ -69,7 +95,7 @@ class AddConsultationHourModal extends Component {
                   message: 'Please input time start',
                 },
               ],
-            })(<TimePicker />)}
+            })(<TimePicker format="HH:mm" minuteStep={30} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Time End">
             {getFieldDecorator('timeEnd', {
@@ -79,7 +105,7 @@ class AddConsultationHourModal extends Component {
                   message: 'Please input time end',
                 },
               ],
-            })(<TimePicker />)}
+            })(<TimePicker format="HH:mm" minuteStep={30} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Place">
             {getFieldDecorator('place', {

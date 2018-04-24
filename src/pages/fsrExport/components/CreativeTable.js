@@ -19,10 +19,10 @@ class CreativeTable extends Component {
               <th colSpan={2}>APPROVED CREDIT UNITS</th>
             </tr>
             {data.map(row => (
-              <tr key={row.id}>
+              <tr key={row.creativeWorkID}>
                 <td colSpan={4}>{row.title}</td>
-                <td colSpan={2}>&nbsp;</td>
-                <td colSpan={3}>{moment(row.date).format('MMMM DD, YYYY')}</td>
+                <td colSpan={2}>{row.coAuthor}</td>
+                <td colSpan={3}>{moment(row.date).format('MM/DD/YY')}</td>
                 <td colSpan={2}>{row.credUnit}</td>
               </tr>
             ))}
@@ -30,7 +30,9 @@ class CreativeTable extends Component {
               <td colSpan={9} className="right">
                 Creative Work Load Credits (CLC)
               </td>
-              <td colSpan={2}>0</td>
+              <td colSpan={2}>
+                {data.reduce((acc, { credUnit }) => acc + credUnit, 0)}
+              </td>
             </tr>
           </tbody>
         </table>

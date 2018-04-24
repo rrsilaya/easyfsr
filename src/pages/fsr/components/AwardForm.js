@@ -9,6 +9,8 @@ import {
   Upload,
   Icon,
 } from 'antd';
+import { getFieldValues } from '../../../utils';
+import moment from 'moment';
 
 import styles from '../styles';
 
@@ -16,8 +18,72 @@ const FormItem = Form.Item;
 const { Option } = Select;
 
 class AwardForm extends Component {
+  componentDidMount() {
+    this.props.getAwards({ id: this.props.fsrID });
+  }
+
+  handleFormSubmit = e => {
+    e.preventDefault();
+
+    if (this.props.userID === this.props.fsr.fsr.userID) {
+      this.props.form.validateFieldsAndScroll((err, values) => {
+        if (!err) {
+          const fieldValues = getFieldValues(values);
+          fieldValues.approvedStartDate = fieldValues.approvedStartDate
+            ? moment(fieldValues.approvedStartDate).format('YYYY-MM-DD')
+            : fieldValues.approvedStartDate;
+          fieldValues.endDate = fieldValues.endDate
+            ? moment(fieldValues.endDate).format('YYYY-MM-DD')
+            : fieldValues.endDate;
+          fieldValues.filepath =
+            fieldValues.filepath !== undefined
+              ? fieldValues.filepath.file.originFileObj
+              : undefined;
+
+          const data = new FormData();
+          Object.keys(fieldValues).forEach(key => {
+            if (fieldValues[key] !== undefined)
+              data.append(key, fieldValues[key]);
+          });
+          data.append('id', this.props.fsrID);
+
+          this.props.editAward(this.props.award.awardID, data);
+        }
+      });
+    } else {
+      this.props.nextStep();
+    }
+  };
+
+  disabledStartDate = approvedStartDate => {
+    const endDate = this.props.form.getFieldValue('endDate');
+    if (!approvedStartDate || !endDate) {
+      return false;
+    }
+
+    return approvedStartDate.valueOf() > endDate.valueOf();
+  };
+
+  disabledEndDate = endDate => {
+    const approvedStartDate = this.props.form.getFieldValue(
+      'approvedStartDate',
+    );
+    if (!endDate || !approvedStartDate) {
+      return false;
+    }
+
+    return endDate.valueOf() <= approvedStartDate.valueOf();
+  };
+
   render() {
-    const { nextStep, prevStep } = this.props;
+    const {
+      userID,
+      fsr,
+      award,
+      isGettingAward,
+      isEditingAward,
+      prevStep,
+    } = this.props;
 
     const { getFieldDecorator } = this.props.form;
 
@@ -34,10 +100,11 @@ class AwardForm extends Component {
 
     return (
       <Card
-        title="Professional Chair or Faculty Grant Recipient or Nominee"
+        title="Professorial Chair or Faculty Grant Recipient or Nominee"
         style={styles.formFSR}
+        loading={isGettingAward}
       >
-        <Form>
+        <Form onSubmit={this.handleFormSubmit}>
           <FormItem {...formItemLayout} label="Status">
             {getFieldDecorator('recipientOrNominee', {
               rules: [
@@ -46,8 +113,12 @@ class AwardForm extends Component {
                   message: 'Please select if recipient or nominee',
                 },
               ],
+              initialValue: award.recipientOrNominee,
             })(
-              <Select placeholder="Select if Recipient or Nominee">
+              <Select
+                placeholder="Select if Recipient or Nominee"
+                disabled={userID === fsr.fsr.userID ? false : true}
+              >
                 <Option value="RECIPIENT">Recipient</Option>
                 <Option value="NOMINEE">Nominee</Option>
                 <Option value="N/A">N/A</Option>
@@ -62,23 +133,33 @@ class AwardForm extends Component {
                   message: 'Please select if college has already nominated',
                 },
               ],
+              initialValue: award.collegeHasNominated,
             })(
-              <Select placeholder="Select if Yes or No">
+              <Select
+                placeholder="Select if Yes or No"
+                disabled={userID === fsr.fsr.userID ? false : true}
+              >
                 <Option value="YES">Yes</Option>
                 <Option value="NO">No</Option>
               </Select>,
             )}
           </FormItem>
-          <FormItem {...formItemLayout} label="Professional Chair">
+          <FormItem {...formItemLayout} label="Professorial Chair">
             {getFieldDecorator('professionalChair', {
               rules: [
                 {
                   required: true,
-                  message: 'Please input professional chair',
+                  message: 'Please input professorial chair',
                   whitespace: true,
                 },
               ],
-            })(<Input placeholder="Enter professional chair" />)}
+              initialValue: award.professionalChair,
+            })(
+              <Input
+                placeholder="Enter professorial chair"
+                disabled={userID === fsr.fsr.userID ? false : true}
+              />,
+            )}
           </FormItem>
           <FormItem {...formItemLayout} label="Grant">
             {getFieldDecorator('grantF', {
@@ -89,7 +170,13 @@ class AwardForm extends Component {
                   whitespace: true,
                 },
               ],
-            })(<Input placeholder="Enter name of grant" />)}
+              initialValue: award.grantF,
+            })(
+              <Input
+                placeholder="Enter name of grant"
+                disabled={userID === fsr.fsr.userID ? false : true}
+              />,
+            )}
           </FormItem>
           <FormItem {...formItemLayout} label="Chair/Grant Title">
             {getFieldDecorator('chairGrantTitle', {
@@ -100,27 +187,43 @@ class AwardForm extends Component {
                   whitespace: true,
                 },
               ],
-            })(<Input placeholder="Enter title of chair or grant" />)}
+              initialValue: award.chairGrantTitle,
+            })(
+              <Input
+                placeholder="Enter title of chair or grant"
+                disabled={userID === fsr.fsr.userID ? false : true}
+              />,
+            )}
           </FormItem>
           <FormItem {...formItemLayout} label="Approved Start Date">
-            {getFieldDecorator('approvedStartDate')(<DatePicker />)}
+            {getFieldDecorator('approvedStartDate', {
+              initialValue: award.approvedStartDate
+                ? moment(award.approvedStartDate)
+                : null,
+            })(
+              <DatePicker
+                disabledDate={this.disabledStartDate}
+                disabled={userID === fsr.fsr.userID ? false : true}
+              />,
+            )}
           </FormItem>
           <FormItem {...formItemLayout} label="End Date">
-            {getFieldDecorator('endDate')(<DatePicker />)}
+            {getFieldDecorator('endDate', {
+              initialValue: award.endDate ? moment(award.endDate) : null,
+            })(
+              <DatePicker
+                disabledDate={this.disabledEndDate}
+                disabled={userID === fsr.fsr.userID ? false : true}
+              />,
+            )}
           </FormItem>
           <FormItem {...formItemLayout} label="File">
-            {getFieldDecorator('awardFile', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please attach award file',
-                },
-              ],
-            })(
+            {getFieldDecorator('filepath')(
               <Upload>
-                <Button>
+                <Button disabled={userID === fsr.fsr.userID ? false : true}>
                   <Icon type="upload" /> Upload File
                 </Button>
+                {award.filepath ? award.filepath.split('/')[3] : ''}
               </Upload>,
             )}
           </FormItem>
@@ -132,7 +235,11 @@ class AwardForm extends Component {
             >
               Previous
             </Button>
-            <Button type="primary" onClick={nextStep}>
+            <Button
+              type="primary"
+              onClick={this.handleFormSubmit}
+              loading={isEditingAward}
+            >
               Next
             </Button>
           </div>

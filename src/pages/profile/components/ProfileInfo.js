@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Row, List } from 'antd';
-import moment from 'moment';
+import { Card } from 'antd';
 import StackGrid from 'react-stack-grid';
 
 import {
@@ -11,10 +10,8 @@ import {
   CreativeWorks,
   LimitedPractices,
   StudyLoad,
-} from './profileInfo';
-import style from '../styles';
-
-const { Item: ListItem } = List;
+  ServiceRecords,
+} from './profileInfo/';
 
 class ProfileInfo extends Component {
   componentDidUpdate() {
@@ -31,13 +28,16 @@ class ProfileInfo extends Component {
 
   render() {
     const {
-      userID,
-
-      getAdminWork,
-      getService,
-
+      userLoggedIn,
       adminWork,
       service,
+      creativeWork,
+      limitedPractice,
+      studyLoad,
+      award,
+      research,
+      fsr,
+      pushLink,
     } = this.props;
 
     return (
@@ -48,16 +48,18 @@ class ProfileInfo extends Component {
         duration={0}
         gridRef={grid => (this.grid = grid)}
       >
-        <Card title="Service Records" loading>
-          Content
-        </Card>
-        <Research />
-        <Awards />
+        {userLoggedIn.acctType === 'ADMIN' || userLoggedIn.isHead ? (
+          <ServiceRecords fsr={fsr} pushLink={pushLink} />
+        ) : (
+          ''
+        )}
+        <Research research={research} />
+        <Awards award={award} />
         <AdminWork adminWork={adminWork} />
         <CommunityService service={service} />
-        <CreativeWorks />
-        <LimitedPractices />
-        <StudyLoad />
+        <CreativeWorks creativeWork={creativeWork} />
+        <LimitedPractices limitedPractice={limitedPractice} />
+        <StudyLoad studyLoad={studyLoad} />
       </StackGrid>
     );
   }

@@ -12,7 +12,11 @@ class SearchUser extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        this.props.getUsers(getFieldValues(values));
+        this.props.getUsers({ ...this.props.query, ...getFieldValues(values) });
+        this.props.changeQuery({
+          ...this.props.query,
+          ...getFieldValues(values),
+        });
       }
     });
   };
@@ -22,7 +26,14 @@ class SearchUser extends Component {
     this.props.form.validateFieldsAndScroll((err, value) => {
       if (!err) {
         this.props.form.resetFields();
-        this.props.getUsers();
+        if (
+          !(
+            Object.keys(this.props.query).length === 0 &&
+            this.props.query.constructor === Object
+          )
+        )
+          this.props.getUsers({});
+        this.props.changeQuery({});
       }
     });
   };

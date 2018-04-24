@@ -15,8 +15,9 @@ class FacultySearch extends Component {
     this.props.resetPage();
   }
 
-  handleToggleSendNotificationFSModal = () => {
-    this.props.changeSelectedUser(this.props.user);
+  handleToggleSendNotificationFSModal = user => {
+    this.props.changeSelectedUser(user);
+    this.props.toggleModal(SEND_NOTIFICATION_FS);
   };
 
   render() {
@@ -25,8 +26,6 @@ class FacultySearch extends Component {
       // State
       users,
       isSearching,
-      isGettingUser,
-      pushLink,
       // Dispatch
       addNotification,
       // searchedUsers,
@@ -34,6 +33,7 @@ class FacultySearch extends Component {
       isSendNotificationFSModalOpen,
       toggleModal,
       user,
+      session,
     } = this.props;
 
     return (
@@ -50,10 +50,7 @@ class FacultySearch extends Component {
               className="text white"
               dataSource={users}
               renderItem={item => (
-                <ListItem
-                  className="list-item set-cursor pointer"
-                  style={styles.listItem}
-                >
+                <ListItem className="list-item" style={styles.listItem}>
                   <Row type="flex" justify="space-around" style={styles.info}>
                     <Col {...gridConfig} className="text normal">
                       {item.firstName}
@@ -66,26 +63,18 @@ class FacultySearch extends Component {
                     </Col>
                   </Row>
                   <div style={styles.icons}>
-                    <Tooltip title="View FSR" arrowPointAtCenter>
-                      <Icon className="text secondary" type="solution" />
-                    </Tooltip>,
-                    <Tooltip title="Send Notification" arrowPointAtCenter>
-                      <SendNotificationFSModal
-                        user={user}
-                        isSendNotificationFSModalOpen={
-                          isSendNotificationFSModalOpen
-                        }
-                        toggleModal={toggleModal}
-                        handleAfterClose={this.handleAfterClose}
-                        addNotification={addNotification}
-                      />
-                      <Icon
-                        className="text secondary"
-                        type="message"
-                        style={styles.message}
-                        onClick={() => toggleModal(SEND_NOTIFICATION_FS)}
-                      />
-                    </Tooltip>,
+                    {session.acctType === 'ADMIN' && (
+                      <Tooltip title="Send Notification" arrowPointAtCenter>
+                        <Icon
+                          className="text secondary set-cursor pointer"
+                          type="message"
+                          style={styles.message}
+                          onClick={() =>
+                            this.handleToggleSendNotificationFSModal(item)
+                          }
+                        />
+                      </Tooltip>
+                    )}
                     <Tooltip title="Profile" arrowPointAtCenter>
                       <Link to={`/profile/${item.employeeID}`}>
                         <Icon type="profile" className="text secondary" />
@@ -96,6 +85,13 @@ class FacultySearch extends Component {
               )}
             />
           }
+        />
+        <SendNotificationFSModal
+          user={user}
+          isSendNotificationFSModalOpen={isSendNotificationFSModalOpen}
+          toggleModal={toggleModal}
+          handleAfterClose={this.handleAfterClose}
+          addNotification={addNotification}
         />
       </div>
     );

@@ -3,8 +3,6 @@ const style = {
     marginBottom: '30px',
     marginLeft: 'auto',
     marginRight: 'auto',
-    maxHeight: '500px',
-    overflowY: 'auto',
   },
   addButton: {
     justifyContent: 'center',
@@ -53,6 +51,9 @@ const style = {
   },
   listItems: {
     color: '#000000a6',
+  },
+  datePicker: {
+    width: '100%',
   },
 };
 

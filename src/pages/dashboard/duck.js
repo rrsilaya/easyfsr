@@ -13,9 +13,12 @@ const SEARCH_USER = 'DASHBOARD/SEARCH_USER';
 const GET_USERS = 'DASHBOARD/GET_USERS';
 const CHANGE_SELECTED_USER = 'DASHBOARD/CHANGE_SELECTED_USER';
 const ADD_NOTIFICATION = 'DASHBOARD/ADD_NOTIFICATION';
-const ADD_ANNOUNCEMENT = 'DASHBOARD/ADD_ANNOUNCEMENT';
+export const ADD_ANNOUNCEMENT = 'DASHBOARD/ADD_ANNOUNCEMENT';
+export const DELETE_ANNOUNCEMENT = 'DASHBOARD/DELETE_ANNOUNCEMENT';
 const GET_ANNOUNCEMENTS = 'DASHBOARD/GET_ANNOUNCEMENTS';
 const GET_NOTIFICATIONS = 'DASHBOARD/GET_NOTIFICATIONS';
+export const GET_LOG = 'DASHBOARD/GET_LOGS';
+export const ADD_META = 'DASHBOARD/ADD_META';
 const TOGGLE_MODAL = 'DASHBOARD/TOGGLE_MODAL';
 
 export const getUsers = query => {
@@ -71,6 +74,22 @@ export const getNotifications = query => {
   };
 };
 
+export const getLog = query => {
+  return dispatch => {
+    return dispatch({
+      type: GET_LOG,
+      promise: Api.getLog(query),
+      meta: {
+        onFailure: () => {
+          notification.error({
+            message: 'Error while getting logs.',
+          });
+        },
+      },
+    });
+  };
+};
+
 export const changeSelectedUser = user => ({
   type: CHANGE_SELECTED_USER,
   payload: user,
@@ -91,6 +110,7 @@ export const addNotification = body => {
           notification.success({
             message: 'Notification successfully sent.',
           });
+          dispatch(getNotifications());
         },
         onFailure: () => {
           notification.error({
@@ -112,10 +132,54 @@ export const addAnnouncement = body => {
           notification.success({
             message: 'Announcement successfully sent.',
           });
+          dispatch(getAnnouncements());
         },
         onFailure: () => {
           notification.error({
             message: 'Server error while sending announcement.',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const deleteAnnouncement = id => {
+  return dispatch => {
+    return dispatch({
+      type: DELETE_ANNOUNCEMENT,
+      promise: Api.deleteAnnouncement(id),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully deleted announcement.',
+          });
+          dispatch(getAnnouncements());
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Error while deleting announcement.',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const addMetaData = body => {
+  return (dispatch, getState) => {
+    return dispatch({
+      type: ADD_META,
+      promise: Api.addMetaData(body),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Settings successfully changed.',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while changing settings.',
           });
         },
       },
@@ -132,8 +196,15 @@ const initialState = {
   isSearchingUsers: false,
   isAddingNotification: false,
   isAddingAnnouncement: false,
+  isDeletingAnnouncement: false,
+  isAddingMeta: false,
 
+  isGettingsLogs: false,
+  isGettingAnnouncements: true,
+  isGettingNotifications: true,
   searchedUsers: [],
+  log: [],
+  announcements: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -183,6 +254,22 @@ const reducer = (state = initialState, action) => {
         }),
       });
 
+    case ADD_META:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isAddingMeta: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          isSettingsModalOpen: false,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isAddingMeta: false,
+        }),
+      });
+
     case SEARCH_USER:
       return handle(state, action, {
         start: prevState => ({
@@ -210,6 +297,26 @@ const reducer = (state = initialState, action) => {
           isAddingAnnouncement: false,
         }),
       });
+
+    case DELETE_ANNOUNCEMENT:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isDeletingAnnouncement: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          announcements: prevState.announcements.filter(
+            announcement =>
+              payload.data.data.announcementID !== announcement.announcementID,
+          ),
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isDeletingAnnouncement: false,
+        }),
+      });
+
     case GET_USERS:
       return handle(state, action, {
         start: prevState => ({
@@ -261,6 +368,22 @@ const reducer = (state = initialState, action) => {
         finish: prevState => ({
           ...prevState,
           isGettingNotifications: false,
+        }),
+      });
+
+    case GET_LOG:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingLogs: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          log: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingLogs: false,
         }),
       });
 

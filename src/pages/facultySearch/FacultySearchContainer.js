@@ -1,7 +1,13 @@
 import { connect } from 'react-redux';
 import FacultySearch from './FacultySearch';
 import { push } from 'react-router-redux';
-import { searchUser, resetPage, toggleModal, addNotification } from './duck';
+import {
+  searchUser,
+  resetPage,
+  toggleModal,
+  addNotification,
+  changeSelectedUser,
+} from './duck';
 
 const mapStateToProps = state => {
   const {
@@ -11,6 +17,7 @@ const mapStateToProps = state => {
     isSendNotificationFSModalOpen,
     user,
   } = state.search;
+  const { user: session } = state.app;
 
   return {
     users,
@@ -18,6 +25,7 @@ const mapStateToProps = state => {
     isGettingUser,
     isSendNotificationFSModalOpen,
     user,
+    session,
     // searchedUsers,
   };
 };
@@ -38,6 +46,9 @@ const mapDispatchToProps = dispatch => {
     },
     addNotification: values => {
       dispatch(addNotification(values));
+    },
+    changeSelectedUser: user => {
+      dispatch(changeSelectedUser(user));
     },
   };
 };

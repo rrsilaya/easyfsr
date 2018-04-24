@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Button, Card, Icon, Popconfirm } from 'antd';
-import { ADD_SUBJECT_MODAL, EDIT_SUBJECT_MODAL } from '../duck';
+import { Table, Button, Card, Icon, Tooltip, Modal } from 'antd';
+import { SUBJECT, ADD_SUBJECT_MODAL, EDIT_SUBJECT_MODAL } from '../duck';
 
 import styles from '../styles';
 
 import AddSubjectModal from './AddSubjectModal';
 import EditSubjectModal from './EditSubjectModal';
 import Schedule from '../../../global/schedule/Schedule';
+
+const { confirm } = Modal;
 
 class TeachingLoadForm extends Component {
   componentDidMount() {
@@ -48,21 +50,34 @@ class TeachingLoadForm extends Component {
     {
       render: (text, record) => (
         <div style={styles.icons}>
-          <Popconfirm
-            title="Are you sure you want to delete this subject?"
-            onConfirm={() => this.props.deleteSubject(record.subjectID)}
+          <Link
+            to="#"
+            disabled={
+              this.props.userID === this.props.fsr.fsr.userID ? false : true
+            }
           >
-            <Link to="#">
-              <Icon type="delete" className="text secondary" />
-            </Link>
-          </Popconfirm>
-          <Link to="#">
-            <Icon
-              type="edit"
-              className="text secondary"
-              style={{ marginLeft: 10 }}
-              onClick={() => this.handleToggleEditSubject(record)}
-            />
+            <Tooltip title="Delete Subject" arrowPointAtCenter>
+              <Icon
+                type="delete"
+                className="text secondary"
+                onClick={() => this.handleDeleteSubjectConfirmation(record)}
+              />
+            </Tooltip>
+          </Link>
+          <Link
+            to="#"
+            disabled={
+              this.props.userID === this.props.fsr.fsr.userID ? false : true
+            }
+          >
+            <Tooltip title="Edit Subject" arrowPointAtCenter>
+              <Icon
+                type="edit"
+                className="text secondary"
+                style={{ marginLeft: 10 }}
+                onClick={() => this.handleToggleEditSubject(record)}
+              />
+            </Tooltip>
           </Link>
         </div>
       ),
@@ -70,12 +85,25 @@ class TeachingLoadForm extends Component {
   ];
 
   handleToggleEditSubject = subject => {
-    this.props.changeSelectedSubject(subject);
+    this.props.changeSelected({ entity: SUBJECT, data: subject });
     this.props.toggleModal(EDIT_SUBJECT_MODAL);
+  };
+
+  handleDeleteSubjectConfirmation = ({ subjectID }) => {
+    confirm({
+      title: 'Are you sure you want to delete this subject?',
+      okType: 'danger',
+      onOk: () => {
+        this.props.deleteSubject(subjectID);
+      },
+      onCancel() {},
+    });
   };
 
   render() {
     const {
+      userID,
+      fsr,
       fsrID,
       subjects,
       subject,
@@ -92,14 +120,9 @@ class TeachingLoadForm extends Component {
       toggleModal,
       nextStep,
     } = this.props;
-    const columns = this.columns;
 
     return (
-      <Card
-        loading={isGettingSubjects}
-        title="Teaching Load in the College"
-        style={styles.formFSR}
-      >
+      <Card title="Teaching Load in the College" style={styles.formFSR}>
         <AddSubjectModal
           id={fsrID}
           subject={subject}
@@ -119,17 +142,27 @@ class TeachingLoadForm extends Component {
           isEditSubjectModalOpen={isEditSubjectModalOpen}
           toggleModal={toggleModal}
         />
-        <Schedule data={[]} />
+        <div
+          className="scale-down"
+          style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+        >
+          <Schedule data={[]} />
+        </div>
         <div style={styles.button}>
           <Button
             icon="plus-circle-o"
             type="primary"
             onClick={() => toggleModal(ADD_SUBJECT_MODAL)}
+            disabled={userID === fsr.fsr.userID ? false : true}
           >
             Add Subject
           </Button>
         </div>
-        <Table columns={columns} dataSource={subjects} />
+        <Table
+          columns={this.columns}
+          dataSource={subjects}
+          loading={isGettingSubjects}
+        />
         <div style={styles.button}>
           <Button type="primary" onClick={nextStep}>
             Next

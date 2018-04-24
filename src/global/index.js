@@ -11,3 +11,4 @@ export { default as Loader } from './loader/Loader';
 export { default as DataLoader } from './dataloader/DataLoader';
 export { default as PageLoader } from './pageloader/PageLoader';
 export { default as Schedule } from './schedule/Schedule';
+export { default as Printer } from './printer/Printer';

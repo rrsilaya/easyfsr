@@ -33,7 +33,7 @@ class Users extends Component {
 
   handlePageSizeChange = (page, limit) => {
     this.props.getUsers({ ...this.props.query, page, limit });
-    this.props.changeQuery({ page, limit });
+    this.props.changeQuery({ ...this.props.query, page, limit });
   };
 
   render() {
@@ -52,6 +52,7 @@ class Users extends Component {
       toggleAddModal,
       toggleDeleteModal,
       changeSelectedUser,
+      changeQuery,
 
       getUsers,
       addUser,
@@ -62,12 +63,17 @@ class Users extends Component {
       pagination,
       users,
       user,
+      userLoggedIn,
     } = this.props;
 
     return (
       <div>
         <div style={styles.add}>
-          <SearchUser getUsers={getUsers} />
+          <SearchUser
+            getUsers={getUsers}
+            query={query}
+            changeQuery={changeQuery}
+          />
           <Button
             style={styles.addButton}
             size="large"
@@ -80,21 +86,27 @@ class Users extends Component {
         </div>
         <DataLoader
           isLoading={isGettingUsers}
+          opaque={!this.props.user.length}
           content={
-            <Row type="flex" gutter={16}>
-              {users.map((user, i) => (
-                <Col key={i} {...gridConfig}>
-                  <User
-                    user={user}
-                    title={`${user.lastName}, ${user.firstName}`}
-                    description={user.acctType}
-                    toggleEditModal={toggleEditModal}
-                    toggleDeleteModal={toggleDeleteModal}
-                    changeSelectedUser={changeSelectedUser}
-                  />
-                </Col>
-              ))}
-            </Row>
+            this.props.users.length ? (
+              <Row type="flex" gutter={16}>
+                {users.map((user, i) => (
+                  <Col key={i} {...gridConfig}>
+                    <User
+                      user={user}
+                      title={`${user.lastName}, ${user.firstName}`}
+                      description={user.acctType}
+                      toggleEditModal={toggleEditModal}
+                      toggleDeleteModal={toggleDeleteModal}
+                      changeSelectedUser={changeSelectedUser}
+                      userLoggedIn={userLoggedIn}
+                    />
+                  </Col>
+                ))}
+              </Row>
+            ) : (
+              <p style={styles.placeholder}>No users found</p>
+            )
           }
         />
         <EditModal
@@ -119,15 +131,19 @@ class Users extends Component {
           isDeletingUser={isDeletingUser}
         />
         <div className="pagination">
-          <Pagination
-            current={pagination.page}
-            pageSize={pagination.limit}
-            total={pagination.total}
-            showSizeChanger
-            pageSizeOptions={['12', '24', '36', '48']}
-            onChange={this.handlePageSizeChange}
-            onShowSizeChange={this.handlePageSizeChange}
-          />
+          {this.props.users.length ? (
+            <Pagination
+              current={pagination.page}
+              pageSize={pagination.limit}
+              total={pagination.total}
+              showSizeChanger
+              pageSizeOptions={['12', '24', '36', '48']}
+              onChange={this.handlePageSizeChange}
+              onShowSizeChange={this.handlePageSizeChange}
+            />
+          ) : (
+            ''
+          )}
         </div>
       </div>
     );

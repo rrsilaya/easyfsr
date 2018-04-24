@@ -1,13 +1,39 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form, Input, TimePicker } from 'antd';
-import { COURSE } from '../duck';
+import {
+  Modal,
+  Button,
+  Form,
+  Input,
+  Select,
+  TimePicker,
+  InputNumber,
+} from 'antd';
+import { ADD_COURSE_MODAL } from '../duck';
+import { getFieldValues } from '../../../utils';
+import moment from 'moment';
 
 const FormItem = Form.Item;
+const { Option } = Select;
 
 class AddCourseModal extends Component {
+  handleFormSubmit = e => {
+    e.preventDefault();
+
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        const fieldValues = getFieldValues(values);
+        fieldValues.timeStart = moment(fieldValues.timeStart).format('HH:mm');
+        fieldValues.timeEnd = moment(fieldValues.timeEnd).format('HH:mm');
+        this.props.addCourse({ ...fieldValues, id: this.props.id });
+      }
+    });
+  };
+
   render() {
     const {
       isAddCourseModalOpen,
+      isAddingCourse,
+      isAddingCourseSched,
 
       toggleModal,
     } = this.props;
@@ -29,19 +55,25 @@ class AddCourseModal extends Component {
       <Modal
         title="Add Course"
         visible={isAddCourseModalOpen}
-        onOk={() => toggleModal(COURSE)}
-        onCancel={() => toggleModal(COURSE)}
+        onOk={() => toggleModal(ADD_COURSE_MODAL)}
+        onCancel={() => toggleModal(ADD_COURSE_MODAL)}
         destroyOnClose
         footer={[
-          <Button key="back" onClick={() => toggleModal(COURSE)}>
+          <Button key="back" onClick={() => toggleModal(ADD_COURSE_MODAL)}>
             Cancel
           </Button>,
-          <Button key="submit" type="primary" htmlType="submit">
+          <Button
+            key="submit"
+            type="primary"
+            htmlType="submit"
+            onClick={this.handleFormSubmit}
+            loading={isAddingCourse || isAddingCourseSched}
+          >
             Add
           </Button>,
         ]}
       >
-        <Form>
+        <Form onSubmit={this.handleFormSubmit}>
           <FormItem {...formItemLayout} label="Course Number">
             {getFieldDecorator('courseNumber', {
               rules: [
@@ -54,15 +86,22 @@ class AddCourseModal extends Component {
             })(<Input placeholder="Enter course number" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Days">
-            {getFieldDecorator('day', {
+            {getFieldDecorator('days', {
               rules: [
                 {
                   required: true,
-                  message: 'Please input the days',
-                  whitespace: true,
+                  message: 'Please select the days of classes',
                 },
               ],
-            })(<Input placeholder="Enter days of classes" />)}
+            })(
+              <Select mode="multiple" placeholder="Select days of classes">
+                <Option value="MONDAY">Monday</Option>
+                <Option value="TUESDAY">Tuesday</Option>
+                <Option value="WEDNESDAY">Wednesday</Option>
+                <Option value="THURSDAY">Thursday</Option>
+                <Option value="FRIDAY">Friday</Option>
+              </Select>,
+            )}
           </FormItem>
           <FormItem {...formItemLayout} label="Time Start">
             {getFieldDecorator('timeStart', {
@@ -72,7 +111,7 @@ class AddCourseModal extends Component {
                   message: 'Please input time start',
                 },
               ],
-            })(<TimePicker />)}
+            })(<TimePicker format="HH:mm" minuteStep={30} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Time End">
             {getFieldDecorator('timeEnd', {
@@ -82,18 +121,7 @@ class AddCourseModal extends Component {
                   message: 'Please input time end',
                 },
               ],
-            })(<TimePicker />)}
-          </FormItem>
-          <FormItem {...formItemLayout} label="Hours Per Week">
-            {getFieldDecorator('hoursPerWeek', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please input hours per week',
-                  whitespace: true,
-                },
-              ],
-            })(<Input placeholder="Enter number of hours per week" />)}
+            })(<TimePicker format="HH:mm" minuteStep={30} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="School">
             {getFieldDecorator('school', {
@@ -112,10 +140,9 @@ class AddCourseModal extends Component {
                 {
                   required: true,
                   message: 'Please input course credits',
-                  whitespace: true,
                 },
               ],
-            })(<Input placeholder="Enter course credits" />)}
+            })(<InputNumber min={0} />)}
           </FormItem>
         </Form>
       </Modal>
