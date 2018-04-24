@@ -39,7 +39,8 @@ export const getSubject = `
 export const getSubjects = (query, sortBy, userID) => `
 	SELECT ${
     userID
-      ? `x.id,
+      ? `x.id, 
+  subjectID,
   subjectCode,
   x.teachingLoadCreds,
   noOfStudents,

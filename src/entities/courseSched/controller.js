@@ -25,7 +25,7 @@ export const addCourseSched = courseSched => {
     });
   });
 };
-//
+
 export const updateCourseSched = ({ courseSchedID }, courseSched) => {
   return new Promise((resolve, reject) => {
     const timeStart = moment(courseSched.timeStart, 'HH:mm:ss');
