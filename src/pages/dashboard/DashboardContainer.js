@@ -5,6 +5,7 @@ import {
   toggleModal,
   searchUser,
   addNotification,
+  deleteAnnouncement,
   addAnnouncement,
   getAnnouncements,
   getNotifications,
@@ -21,6 +22,7 @@ const mapStateToProps = state => {
 
     isAddingNotification,
     isAddingAnnouncement,
+    isDeletingAnnouncement,
     isGettingAnnouncements,
     isGettingNotifications,
 
@@ -41,6 +43,7 @@ const mapStateToProps = state => {
 
     isAddingNotification,
     isAddingAnnouncement,
+    isDeletingAnnouncement,
     isGettingAnnouncements,
     isGettingNotifications,
 
@@ -67,6 +70,9 @@ const mapDispatchToProps = dispatch => {
     },
     addAnnouncement: values => {
       dispatch(addAnnouncement(values));
+    },
+    deleteAnnouncement: id => {
+      dispatch(deleteAnnouncement(id));
     },
     getAnnouncements: () => {
       dispatch(getAnnouncements());
