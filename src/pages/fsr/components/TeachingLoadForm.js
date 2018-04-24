@@ -94,7 +94,7 @@ class TeachingLoadForm extends Component {
       title: 'Are you sure you want to delete this subject?',
       okType: 'danger',
       onOk: () => {
-        this.props.deleteCreativeWork(subjectID);
+        this.props.deleteSubject(subjectID);
       },
       onCancel() {},
     });

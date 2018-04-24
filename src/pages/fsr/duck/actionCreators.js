@@ -63,7 +63,7 @@ export const addSubject = values => (dispatch, getState) => {
         });
 
         notification.success({ message: 'Successfully added subject' });
-        dispatch(getSubjects({ id: fsr.id }));
+        dispatch(getSubjects({ id: fsr.fsr.id }));
       },
       onFailure: () => {
         notification.error({ message: 'Server error while creating subject' });
@@ -641,7 +641,7 @@ export const addCourse = values => (dispatch, getState) => {
         notification.success({
           message: 'Successfully added course',
         });
-        dispatch(getCourses({ id: fsr.id }));
+        dispatch(getCourses({ id: fsr.fsr.id }));
       },
       onFailure: () => {
         notification.error({
