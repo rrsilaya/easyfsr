@@ -17,6 +17,10 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
   },
+  confirmation: {
+    fontWeight: 'bold',
+    color: 'green',
+  },
 };
 
 export default styles;

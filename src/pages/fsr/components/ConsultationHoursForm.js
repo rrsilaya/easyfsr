@@ -118,7 +118,6 @@ class ConsultationHoursForm extends Component {
       isAddConsultationHourModalOpen,
       isEditConsultationHourModalOpen,
       toggleModal,
-      nextStep,
       prevStep,
     } = this.props;
 
@@ -157,9 +156,6 @@ class ConsultationHoursForm extends Component {
         <div style={styles.button}>
           <Button type="primary" onClick={prevStep} style={{ marginRight: 15 }}>
             Previous
-          </Button>
-          <Button type="primary" onClick={nextStep}>
-            Next
           </Button>
         </div>
       </Card>

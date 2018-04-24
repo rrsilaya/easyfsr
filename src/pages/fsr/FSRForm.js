@@ -1,5 +1,6 @@
 import { Steps, Row, Col, Button, Modal, notification } from 'antd';
 import React, { Component } from 'react';
+import { CERTIFICATION } from './duck';
 
 import TeachingLoadForm from './components/TeachingLoadForm';
 import ResearchAndCreativeWorkForm from './components/ResearchAndCreativeWorkForm';
@@ -28,7 +29,7 @@ class FSRForm extends Component {
     this.props.resetPage();
   }
 
-  handleTurningInFSR = () => {
+  handleUnsubmitFSR = () => {
     this.props.toggleTurningIn(this.props.fsr.fsr.id, {
       isTurnedIn: !this.props.fsr.fsr.isTurnedIn,
     });
@@ -77,6 +78,8 @@ class FSRForm extends Component {
       isEditExtAndCommServiceModalOpen,
       isEditCourseModalOpen,
       isEditConsultationHourModalOpen,
+
+      isCertificationModalOpen,
 
       toggleModal,
       nextStep,
@@ -178,6 +181,7 @@ class FSRForm extends Component {
       isFinalizing,
       isGettingFSR,
       pushLink,
+      toggleTurningIn,
     } = this.props;
 
     const { fsrID } = this.props.match.params;
@@ -204,7 +208,7 @@ class FSRForm extends Component {
                 size="large"
                 icon="check"
                 loading={isTurningIn}
-                onClick={this.handleTurningInFSR}
+                onClick={this.handleUnsubmitFSR}
                 ghost
               >
                 Turned In
@@ -214,8 +218,7 @@ class FSRForm extends Component {
                 style={styles.icons}
                 size="large"
                 icon="up-square-o"
-                loading={isTurningIn}
-                onClick={this.handleTurningInFSR}
+                onClick={() => toggleModal(CERTIFICATION)}
                 ghost
               >
                 Turn In FSR
@@ -420,7 +423,7 @@ class FSRForm extends Component {
                   prevStep={prevStep}
                   nextStep={nextStep}
                 />
-              ) : currentStep === 7 ? (
+              ) : (
                 <ConsultationHoursForm
                   userID={userID}
                   fsr={fsr}
@@ -443,15 +446,16 @@ class FSRForm extends Component {
                   }
                   toggleModal={toggleModal}
                   prevStep={prevStep}
-                  nextStep={nextStep}
-                />
-              ) : (
-                <CertificationForm
-                  fsr={fsr}
-                  pushLink={pushLink}
-                  prevStep={prevStep}
                 />
               )}
+              <CertificationForm
+                fsr={fsr}
+                toggleTurningIn={toggleTurningIn}
+                isTurningIn={isTurningIn}
+                isCertificationModalOpen={isCertificationModalOpen}
+                toggleModal={toggleModal}
+                pushLink={pushLink}
+              />
             </Col>
           </div>
         </Row>

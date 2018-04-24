@@ -57,7 +57,6 @@ const mapStateToProps = state => {
     isAddExtAndCommServiceModalOpen,
     isAddCourseModalOpen,
     isAddConsultationHourModalOpen,
-
     isEditSubjectModalOpen,
     isEditResearchModalOpen,
     isEditCWorkModalOpen,
@@ -65,7 +64,7 @@ const mapStateToProps = state => {
     isEditExtAndCommServiceModalOpen,
     isEditCourseModalOpen,
     isEditConsultationHourModalOpen,
-
+    isCertificationModalOpen,
     currentStep,
     fsr,
     subjects,
@@ -140,6 +139,7 @@ const mapStateToProps = state => {
     isEditExtAndCommServiceModalOpen,
     isEditCourseModalOpen,
     isEditConsultationHourModalOpen,
+    isCertificationModalOpen,
     currentStep,
     fsr,
     subjects,
