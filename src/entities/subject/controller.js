@@ -4,6 +4,7 @@ import { filtered, escapeSearch } from '../../utils';
 
 const subjectAttributes = [
   'id',
+  'subjectID',
   'subjectCode',
   'teachingLoadCreds',
   'noOfStudents',
