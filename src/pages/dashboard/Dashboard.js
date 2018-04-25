@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { Icon, Card, Table, Row, Col, Button, List, Modal } from 'antd';
+import Pagination, {
+  Icon,
+  Card,
+  Table,
+  Row,
+  Col,
+  Button,
+  List,
+  Modal,
+} from 'antd';
 import styles from './styles';
 import columns from './columns';
 import moment from 'moment';
@@ -60,6 +69,10 @@ class Dashboard extends Component {
     });
   };
 
+  handleChange = (page, limit) => {
+    this.props.getLog({ page, limit });
+  };
+
   render() {
     const {
       isSendNotificationModalOpen,
@@ -80,6 +93,7 @@ class Dashboard extends Component {
       announcements,
       notifications,
       log,
+      pagination,
 
       toggleModal,
       searchUser,
@@ -300,6 +314,12 @@ class Dashboard extends Component {
                       'MMM DD YYYY hh:mm:ss A',
                     ),
                   }))}
+                  pagination={{
+                    pageSize: pagination.limit,
+                    current: pagination.page,
+                    total: pagination.total,
+                    onChange: this.handleChange,
+                  }}
                   style={styles.facultyTable}
                 />
               </Card>

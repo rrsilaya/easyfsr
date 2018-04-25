@@ -35,6 +35,7 @@ const mapStateToProps = state => {
     announcements,
     notifications,
     log,
+    pagination,
   } = state.dashboard;
 
   return {
@@ -57,6 +58,7 @@ const mapStateToProps = state => {
     announcements,
     notifications,
     log,
+    pagination,
   };
 };
 
@@ -86,8 +88,8 @@ const mapDispatchToProps = dispatch => {
     getNotifications: query => {
       dispatch(getNotifications(query));
     },
-    getLog: () => {
-      dispatch(getLog());
+    getLog: query => {
+      dispatch(getLog(query));
     },
     addMetaData: values => {
       dispatch(addMetaData(values));
