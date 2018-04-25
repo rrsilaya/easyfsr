@@ -63,10 +63,12 @@ const router = Router();
 router.post('/fsr', isAdmin, async (req, res) => {
   try {
     const users = req.body.users;
-    const { metaID } = await getLatestMetaData();
-    users.map(
-      async userID => await Ctrl.addFSR({ userID, ...req.body, metaID }),
+    const meta = await getLatestMetaData();
+    users.forEach(
+      async userID =>
+        await Ctrl.addFSR({ userID, ...req.body, metaID: meta.id }),
     );
+
     users.forEach(
       async user =>
         await addLog({

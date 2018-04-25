@@ -4,12 +4,14 @@ export const addFSR = `
   INSERT INTO fsr (
     userID, 
     acadYear, 
-    semester
+    semester,
+    metaID
   )
   VALUES (
     :userID, 
     :acadYear, 
-    :semester
+    :semester,
+    :metaID
   )
 `;
 
