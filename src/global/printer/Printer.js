@@ -28,7 +28,7 @@ class Printer extends React.Component {
   handlePrint = () => {
     const { content, copyStyles, onAfterPrint } = this.props;
 
-    let printWindow = window.open(
+    const printWindow = window.open(
       '',
       'Print',
       'status=no, toolbar=no, scrollbars=yes',
@@ -84,12 +84,12 @@ class Printer extends React.Component {
         'style, link[rel="stylesheet"]',
       );
       [...headEls].forEach(node => {
-        let newHeadEl = printWindow.document.createElement(node.tagName);
+        const newHeadEl = printWindow.document.createElement(node.tagName);
 
         if (node.textContent) newHeadEl.textContent = node.textContent;
         else if (node.innerText) newHeadEl.innerText = node.innerText;
 
-        let attributes = [...node.attributes];
+        const attributes = [...node.attributes];
         attributes.forEach(attr => {
           let nodeValue = attr.nodeValue;
 
@@ -122,7 +122,7 @@ class Printer extends React.Component {
     }
 
     /* remove date/time from top */
-    let styleEl = printWindow.document.createElement('style');
+    const styleEl = printWindow.document.createElement('style');
     styleEl.appendChild(
       printWindow.document.createTextNode(`
       @page {
