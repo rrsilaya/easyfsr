@@ -34,14 +34,33 @@ export const getFSR = id => dispatch =>
     },
   });
 
-export const getSubjects = query => {
+export const getSubjects = query => (dispatch, getState) => {
+  dispatch({
+    type: Action.GET_SUBJECTS,
+    promise: Api.getSubjects(query),
+    meta: {
+      onSuccess: () => {
+        const { subjects } = getState().fsr;
+
+        subjects.forEach(subject => {
+          dispatch(getSchedule({ subjectID: subject.subjectID }));
+        });
+      },
+      onFailure: () => {
+        notification.error({ message: 'Failure to fetch subjects' });
+      },
+    },
+  });
+};
+
+export const getSchedule = query => {
   return dispatch => {
     return dispatch({
-      type: Action.GET_SUBJECTS,
-      promise: Api.getSubjects(query),
+      type: Action.GET_SCHEDULE,
+      promise: Api.getTimeslots(query),
       meta: {
         onFailure: () => {
-          notification.error({ message: 'Failure to fetch subjects' });
+          notification.error({ message: 'Failure to fetch schedule' });
         },
       },
     });
@@ -54,7 +73,7 @@ export const addSubject = values => (dispatch, getState) => {
     promise: Api.addSubject(values),
     meta: {
       onSuccess: () => {
-        const { subject, fsr } = getState().fsr;
+        const { subject } = getState().fsr;
 
         values.days.forEach(day => {
           dispatch(
@@ -63,7 +82,6 @@ export const addSubject = values => (dispatch, getState) => {
         });
 
         notification.success({ message: 'Successfully added subject' });
-        dispatch(getSubjects({ id: fsr.fsr.id }));
       },
       onFailure: () => {
         notification.error({ message: 'Server error while creating subject' });
@@ -72,18 +90,21 @@ export const addSubject = values => (dispatch, getState) => {
   });
 };
 
-export const addTimeslot = timeslot => {
-  return dispatch => {
-    return dispatch({
-      type: Action.ADD_TIMESLOT,
-      promise: Api.addTimeslot(timeslot),
-      meta: {
-        onFailure: () => {
-          notification.error({ message: 'Server error while adding timeslot' });
-        },
+export const addTimeslot = timeslot => (dispatch, getState) => {
+  dispatch({
+    type: Action.ADD_TIMESLOT,
+    promise: Api.addTimeslot(timeslot),
+    meta: {
+      onSuccess: () => {
+        const { fsr } = getState().fsr;
+
+        dispatch(getSubjects({ id: fsr.fsr.id }));
       },
-    });
-  };
+      onFailure: () => {
+        notification.error({ message: 'Server error while adding timeslot' });
+      },
+    },
+  });
 };
 
 export const deleteSubject = subjectID => {
@@ -111,11 +132,10 @@ export const editSubject = (subjectID, body) => (dispatch, getState) => {
     promise: Api.editSubject(subjectID, body),
     meta: {
       onSuccess: () => {
-        const { timeslots, fsr } = getState().fsr;
+        const { timeslots } = getState().fsr;
 
         timeslots.forEach(timeslot => {
           dispatch(editTimeslot(timeslot.timeslotID, { ...body }));
-          dispatch(getSubjects({ id: fsr.id }));
         });
 
         notification.success({ message: 'Successfully edited subject' });
@@ -141,20 +161,23 @@ export const getTimeslots = query => {
   };
 };
 
-export const editTimeslot = (timeslotID, body) => {
-  return dispatch => {
-    return dispatch({
-      type: Action.EDIT_TIMESLOT,
-      promise: Api.editTimeslot(timeslotID, body),
-      meta: {
-        onFailure: () => {
-          notification.error({
-            message: 'Server error while editing timeslot',
-          });
-        },
+export const editTimeslot = (timeslotID, body) => (dispatch, getState) => {
+  dispatch({
+    type: Action.EDIT_TIMESLOT,
+    promise: Api.editTimeslot(timeslotID, body),
+    meta: {
+      onSuccess: () => {
+        const { fsr } = getState().fsr;
+
+        dispatch(getSubjects({ id: fsr.fsr.id }));
       },
-    });
-  };
+      onFailure: () => {
+        notification.error({
+          message: 'Server error while editing timeslot',
+        });
+      },
+    },
+  });
 };
 
 export const getResearches = query => {
@@ -630,7 +653,7 @@ export const addCourse = values => (dispatch, getState) => {
     promise: Api.addCourse(values),
     meta: {
       onSuccess: () => {
-        const { course, fsr } = getState().fsr;
+        const { course } = getState().fsr;
 
         values.days.forEach(day => {
           dispatch(
@@ -641,7 +664,6 @@ export const addCourse = values => (dispatch, getState) => {
         notification.success({
           message: 'Successfully added course',
         });
-        dispatch(getCourses({ id: fsr.fsr.id }));
       },
       onFailure: () => {
         notification.error({
@@ -679,7 +701,7 @@ export const editCourse = (courseID, body) => (dispatch, getState) => {
     promise: Api.editCourse(courseID, body),
     meta: {
       onSuccess: () => {
-        const { courseScheds, fsr } = getState().fsr;
+        const { courseScheds } = getState().fsr;
 
         courseScheds.forEach(courseSched => {
           dispatch(editCourseSched(courseSched.courseSchedID, { ...body }));
@@ -688,7 +710,6 @@ export const editCourse = (courseID, body) => (dispatch, getState) => {
         notification.success({
           message: 'Successfully edited course',
         });
-        dispatch(getCourses({ id: fsr.id }));
       },
       onFailure: () => {
         notification.error({
@@ -699,20 +720,23 @@ export const editCourse = (courseID, body) => (dispatch, getState) => {
   });
 };
 
-export const addCourseSched = courseSched => {
-  return dispatch => {
-    return dispatch({
-      type: Action.ADD_COURSESCHED,
-      promise: Api.addCourseSched(courseSched),
-      meta: {
-        onFailure: () => {
-          notification.error({
-            message: 'Server error while adding course schedule',
-          });
-        },
+export const addCourseSched = courseSched => (dispatch, getState) => {
+  dispatch({
+    type: Action.ADD_COURSESCHED,
+    promise: Api.addCourseSched(courseSched),
+    meta: {
+      onSuccess: () => {
+        const { fsr } = getState().fsr;
+
+        dispatch(getCourses({ id: fsr.fsr.id }));
       },
-    });
-  };
+      onFailure: () => {
+        notification.error({
+          message: 'Server error while adding course schedule',
+        });
+      },
+    },
+  });
 };
 
 export const getCourseScheds = query => {
@@ -729,20 +753,26 @@ export const getCourseScheds = query => {
   };
 };
 
-export const editCourseSched = (courseSchedID, body) => {
-  return dispatch => {
-    return dispatch({
-      type: Action.EDIT_COURSESCHED,
-      promise: Api.editCourseSched(courseSchedID, body),
-      meta: {
-        onFailure: () => {
-          notification.error({
-            message: 'Server error while editing course schedule',
-          });
-        },
+export const editCourseSched = (courseSchedID, body) => (
+  dispatch,
+  getState,
+) => {
+  dispatch({
+    type: Action.EDIT_COURSESCHED,
+    promise: Api.editCourseSched(courseSchedID, body),
+    meta: {
+      onSuccess: () => {
+        const { fsr } = getState().fsr;
+
+        dispatch(getCourses({ id: fsr.fsr.id }));
       },
-    });
-  };
+      onFailure: () => {
+        notification.error({
+          message: 'Server error while editing course schedule',
+        });
+      },
+    },
+  });
 };
 
 export const getConsultationHours = query => {

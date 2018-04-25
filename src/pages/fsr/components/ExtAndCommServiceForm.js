@@ -105,40 +105,40 @@ class ExtAndCommServiceForm extends Component {
                 <Card
                   key={extension.extAndCommServiceID}
                   style={{ borderColor: '#483440' }}
-                  actions={[
-                    <Tooltip
-                      title="Edit Extension and Community Service"
-                      arrowPointAtCenter
-                    >
-                      {userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? (
-                        <Icon
-                          type="edit"
-                          className="text normal"
-                          onClick={() =>
-                            this.handleToggleEditExtAndCommService(extension)
-                          }
-                        />
-                      ) : (
-                        <Icon type="edit" className="text meta-2" />
-                      )}
-                    </Tooltip>,
-                    <Tooltip
-                      title="Delete Extension and Community Service"
-                      arrowPointAtCenter
-                    >
-                      {userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? (
-                        <Icon
-                          type="delete"
-                          className="text normal"
-                          onClick={() =>
-                            this.handleDeleteExtensionConfirmation(extension)
-                          }
-                        />
-                      ) : (
-                        <Icon type="delete" className="text meta-2" />
-                      )}
-                    </Tooltip>,
-                  ]}
+                  actions={
+                    userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn
+                      ? [
+                          <Tooltip
+                            title="Edit Extension and Community Service"
+                            arrowPointAtCenter
+                          >
+                            <Icon
+                              type="edit"
+                              className="text normal"
+                              onClick={() =>
+                                this.handleToggleEditExtAndCommService(
+                                  extension,
+                                )
+                              }
+                            />
+                          </Tooltip>,
+                          <Tooltip
+                            title="Delete Extension and Community Service"
+                            arrowPointAtCenter
+                          >
+                            <Icon
+                              type="delete"
+                              className="text normal"
+                              onClick={() =>
+                                this.handleDeleteExtensionConfirmation(
+                                  extension,
+                                )
+                              }
+                            />
+                          </Tooltip>,
+                        ]
+                      : null
+                  }
                 >
                   <dl>
                     <dt>Activity/Program</dt>

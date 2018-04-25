@@ -51,7 +51,7 @@ const getTimePoints = (day, start, end) => {
 
 const TimeSlot = ({ day, start, end, content, color = '#000' }) => {
   const shape = getTimePoints(day, start, end);
-  const dayOffset = days.indexOf(day);
+  const dayOffset = days.indexOf(day.toUpperCase());
   const timeStart = parseFloat(start.split(':')[0]) - 7;
   const duration = parseFloat(end.split(':')[0]) - 7 - timeStart;
 

@@ -179,7 +179,11 @@ class EditSubjectModal extends Component {
               ],
               initialValue: timeslots.map(timeslot => timeslot.day),
             })(
-              <Select mode="multiple" placeholder="Select days of classes">
+              <Select
+                mode="multiple"
+                placeholder="Select days of classes"
+                disabled
+              >
                 <Option value="MONDAY">Monday</Option>
                 <Option value="TUESDAY">Tuesday</Option>
                 <Option value="WEDNESDAY">Wednesday</Option>

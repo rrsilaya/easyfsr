@@ -46,47 +46,35 @@ class ConsultationHoursForm extends Component {
       align: 'center',
     },
     {
-      render: (text, record) => (
-        <div style={styles.icons}>
-          <Link
-            to="#"
-            disabled={
-              this.props.userID === this.props.fsr.fsr.userID &&
-              !this.props.fsr.fsr.isTurnedIn
-                ? false
-                : true
-            }
-          >
-            <Tooltip title="Delete Consultation Hour" arrowPointAtCenter>
-              <Icon
-                type="delete"
-                className="text secondary"
-                onClick={() =>
-                  this.handleDeleteConsultationHourConfirmation(record)
-                }
-              />
-            </Tooltip>
-          </Link>
-          <Link
-            to="#"
-            disabled={
-              this.props.userID === this.props.fsr.fsr.userID &&
-              !this.props.fsr.fsr.isTurnedIn
-                ? false
-                : true
-            }
-          >
-            <Tooltip title="Edit Consultation Hour" arrowPointAtCenter>
-              <Icon
-                type="edit"
-                className="text secondary"
-                style={{ marginLeft: 10 }}
-                onClick={() => this.handleToggleEditConsultationHour(record)}
-              />
-            </Tooltip>
-          </Link>
-        </div>
-      ),
+      render: (text, record) =>
+        this.props.userID === this.props.fsr.fsr.userID &&
+        !this.props.fsr.fsr.isTurnedIn ? (
+          <div style={styles.icons}>
+            <Link to="#">
+              <Tooltip title="Delete Consultation Hour" arrowPointAtCenter>
+                <Icon
+                  type="delete"
+                  className="text secondary"
+                  onClick={() =>
+                    this.handleDeleteConsultationHourConfirmation(record)
+                  }
+                />
+              </Tooltip>
+            </Link>
+            <Link to="#">
+              <Tooltip title="Edit Consultation Hour" arrowPointAtCenter>
+                <Icon
+                  type="edit"
+                  className="text secondary"
+                  style={{ marginLeft: 10 }}
+                  onClick={() => this.handleToggleEditConsultationHour(record)}
+                />
+              </Tooltip>
+            </Link>
+          </div>
+        ) : (
+          ''
+        ),
     },
   ];
 
@@ -103,7 +91,7 @@ class ConsultationHoursForm extends Component {
       title: 'Are you sure you want to delete this consultation hour?',
       okType: 'danger',
       onOk: () => {
-        this.props.deleteCreativeWork(chID);
+        this.props.deleteConsultationHour(chID);
       },
       onCancel() {},
     });
@@ -136,14 +124,19 @@ class ConsultationHoursForm extends Component {
           isAddConsultationHourModalOpen={isAddConsultationHourModalOpen}
           toggleModal={toggleModal}
         />
-        <EditConsultationHourModal
-          id={fsrID}
-          consultationHour={consultationHour}
-          editConsultationHour={editConsultationHour}
-          isEditingConsultationHour={isEditingConsultationHour}
-          isEditConsultationHourModalOpen={isEditConsultationHourModalOpen}
-          toggleModal={toggleModal}
-        />
+        {isEditConsultationHourModalOpen ? (
+          <EditConsultationHourModal
+            id={fsrID}
+            consultationHour={consultationHour}
+            editConsultationHour={editConsultationHour}
+            isEditingConsultationHour={isEditingConsultationHour}
+            isEditConsultationHourModalOpen={isEditConsultationHourModalOpen}
+            toggleModal={toggleModal}
+          />
+        ) : (
+          ''
+        )}
+
         <div style={styles.button}>
           <Button
             icon="plus-circle-o"
