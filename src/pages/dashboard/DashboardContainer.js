@@ -44,6 +44,7 @@ const mapStateToProps = state => {
     notifications,
     log,
     meta,
+    pagination,
   } = state.dashboard;
 
   return {
@@ -71,6 +72,7 @@ const mapStateToProps = state => {
     notifications,
     log,
     meta,
+    pagination,
   };
 };
 
@@ -106,8 +108,8 @@ const mapDispatchToProps = dispatch => {
     changeSelectedUsers: user => {
       dispatch(changeSelectedUsers(user));
     },
-    getLog: () => {
-      dispatch(getLog());
+    getLog: query => {
+      dispatch(getLog(query));
     },
     addMetaData: values => {
       dispatch(addMetaData(values));
