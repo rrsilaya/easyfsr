@@ -462,7 +462,7 @@ JOIN consultationHours c ON f.id = c.id WHERE f.isChecked = 1;
 -- viewSubjectTimeslot
 -- userID, employeeID, fsrID, subject fields, timeslot fields
 CREATE OR REPLACE VIEW viewSubjectTimeslot AS SELECT  u.employeeID
-,s.subjectCode, s.teachingLoadCreds, s.noOfStudents, s.hoursPerWeek, s.room, 
+,s.subjectCode, s.sectionCode, s.teachingLoadCreds, s.noOfStudents, s.hoursPerWeek, s.room, 
 t.day, t.timeStart, t.timeEnd FROM user u JOIN fsr f ON u.userID = f.userID 
 JOIN subject s ON f.id = s.id LEFT JOIN timeslot t ON s.subjectID = t.subjectID WHERE f.isChecked = 1;
 

@@ -68,3 +68,8 @@ export const deleteSession = `
   DELETE FROM sessions 
   WHERE data LIKE "%<employeeID>%"
 `;
+
+export const getName = `
+  SELECT concat( firstName,' ',lastName ) name from user 
+  WHERE userID = :userID;
+`;
