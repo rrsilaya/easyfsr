@@ -14,7 +14,9 @@ const GET_USERS = 'DASHBOARD/GET_USERS';
 const CHANGE_SELECTED_USER = 'DASHBOARD/CHANGE_SELECTED_USER';
 const CHANGE_SELECTED_USERS = 'DASHBOARD/CHANGE_SELECTED_USERS';
 const ADD_NOTIFICATION = 'DASHBOARD/ADD_NOTIFICATION';
+const DELETE_NOTIFICATION = 'DASHBOARD/DELETE_NOTIFICATION';
 export const ADD_ANNOUNCEMENT = 'DASHBOARD/ADD_ANNOUNCEMENT';
+export const DELETE_ANNOUNCEMENT = 'DASHBOARD/DELETE_ANNOUNCEMENT';
 const GET_ANNOUNCEMENTS = 'DASHBOARD/GET_ANNOUNCEMENTS';
 const GET_NOTIFICATIONS = 'DASHBOARD/GET_NOTIFICATIONS';
 export const GET_LOG = 'DASHBOARD/GET_LOGS';
@@ -117,11 +119,33 @@ export const addNotification = body => {
           notification.success({
             message: 'Notification successfully sent.',
           });
-          dispatch(getNotifications());
+          dispatch(getNotifications({ isResolved: 0 }));
         },
         onFailure: () => {
           notification.error({
             message: 'Server error while sending notification.',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const deleteNotification = id => {
+  return dispatch => {
+    return dispatch({
+      type: DELETE_NOTIFICATION,
+      promise: Api.deleteNotification(id),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully deleted notification.',
+          });
+          dispatch(getNotifications({ isResolved: 0 }));
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Error while deleting notification.',
           });
         },
       },
@@ -144,6 +168,27 @@ export const addAnnouncement = body => {
         onFailure: () => {
           notification.error({
             message: 'Server error while sending announcement.',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const deleteAnnouncement = id => {
+  return dispatch => {
+    return dispatch({
+      type: DELETE_ANNOUNCEMENT,
+      promise: Api.deleteAnnouncement(id),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully deleted announcement.',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Error while deleting announcement.',
           });
         },
       },
@@ -219,6 +264,8 @@ const initialState = {
   isAddingNotification: false,
   isAddingAnnouncement: false,
   isGettingUsers: false,
+  isDeletingAnnouncement: false,
+  isDeletingNotification: false,
   isAddingMeta: false,
   isGettingMeta: false,
   isAddingFSR: false,
@@ -231,6 +278,8 @@ const initialState = {
   users: [],
   log: [],
   meta: {},
+  announcements: [],
+  notifications: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -277,6 +326,21 @@ const reducer = (state = initialState, action) => {
         finish: prevState => ({
           ...prevState,
           isAddingNotification: false,
+        }),
+      });
+
+    case DELETE_NOTIFICATION:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isDeletingNotification: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isDeletingNotification: false,
         }),
       });
 
@@ -339,6 +403,26 @@ const reducer = (state = initialState, action) => {
           isAddingAnnouncement: false,
         }),
       });
+
+    case DELETE_ANNOUNCEMENT:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isDeletingAnnouncement: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          announcements: prevState.announcements.filter(
+            announcement =>
+              payload.data.data.announcementID !== announcement.announcementID,
+          ),
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isDeletingAnnouncement: false,
+        }),
+      });
+
     case GET_USERS:
       return handle(state, action, {
         start: prevState => ({

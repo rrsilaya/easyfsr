@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 class LtdPracticeOfProfession extends Component {
   render() {
+    const { ltdPractices } = this.props;
+
     return (
       <section>
         <div className="header bold">VI. LIMITED PRACTICE OF PROFESSION</div>
@@ -16,11 +19,11 @@ class LtdPracticeOfProfession extends Component {
               className="blank-field"
               style={{ width: 70, marginRight: '2em' }}
             >
-              &nbsp;
+              {!!ltdPractices.askedPermission ? 'X' : <span>&nbsp;</span>}
             </div>
             <label>No</label>
             <div className="blank-field" style={{ width: 70 }}>
-              &nbsp;
+              {!ltdPractices.askedPermission ? 'X' : <span>&nbsp;</span>}
             </div>
           </div>
         </div>
@@ -31,7 +34,11 @@ class LtdPracticeOfProfession extends Component {
               className="blank-field"
               style={{ width: 100, marginRight: '2em' }}
             >
-              &nbsp;
+              {!!ltdPractices.askedPermission ? (
+                moment(ltdPractices.date).format('MM/DD/YY')
+              ) : (
+                <span>&nbsp;</span>
+              )}
             </div>
             <label>or approved</label>
             <div className="blank-field" style={{ width: 100 }}>

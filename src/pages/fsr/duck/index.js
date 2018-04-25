@@ -22,7 +22,7 @@ const initialState = {
   award: {},
   consultationHours: [],
   consultationHour: {},
-  currentStep: 0,
+  currentStep: 1,
 
   isGettingFSR: true,
   isGettingSubjects: false,
@@ -80,6 +80,7 @@ const initialState = {
   isEditCourseModalOpen: false,
   isAddConsultationHourModalOpen: false,
   isEditConsultationHourModalOpen: false,
+  isCertificationModalOpen: false,
 
   isTurningIn: false,
   isFinalizing: false,
@@ -911,6 +912,11 @@ const reducer = (state = initialState, action) => {
             ...state,
             isEditConsultationHourModalOpen: !state.isEditConsultationHourModalOpen,
           };
+        case Action.CERTIFICATION:
+          return {
+            ...state,
+            isCertificationModalOpen: !state.isCertificationModalOpen,
+          };
         default:
           return state;
       }
@@ -947,6 +953,9 @@ const reducer = (state = initialState, action) => {
         ...state,
         currentStep: state.currentStep - 1,
       };
+
+    case Action.RESET_PAGE:
+      return initialState;
 
     default:
       return state;

@@ -6,6 +6,8 @@ import {
   searchUser,
   getUsers,
   addNotification,
+  deleteNotification,
+  deleteAnnouncement,
   addAnnouncement,
   getAnnouncements,
   getNotifications,
@@ -25,10 +27,12 @@ const mapStateToProps = state => {
 
     isAddingNotification,
     isAddingAnnouncement,
+    isDeletingAnnouncement,
     isGettingAnnouncements,
     isGettingNotifications,
     isAddingFSR,
     isGettingMeta,
+    isDeletingNotification,
 
     isGettingLogs,
 
@@ -50,10 +54,12 @@ const mapStateToProps = state => {
 
     isAddingNotification,
     isAddingAnnouncement,
+    isDeletingAnnouncement,
     isGettingAnnouncements,
     isGettingNotifications,
     isAddingFSR,
     isGettingMeta,
+    isDeletingNotification,
 
     isGettingLogs,
 
@@ -79,14 +85,20 @@ const mapDispatchToProps = dispatch => {
     addNotification: values => {
       dispatch(addNotification(values));
     },
+    deleteNotification: id => {
+      dispatch(deleteNotification(id));
+    },
     addAnnouncement: values => {
       dispatch(addAnnouncement(values));
+    },
+    deleteAnnouncement: id => {
+      dispatch(deleteAnnouncement(id));
     },
     getAnnouncements: () => {
       dispatch(getAnnouncements());
     },
-    getNotifications: () => {
-      dispatch(getNotifications());
+    getNotifications: query => {
+      dispatch(getNotifications(query));
     },
     getUsers: query => {
       dispatch(getUsers(query));

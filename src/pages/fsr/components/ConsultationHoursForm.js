@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Button, Card, Popconfirm, Icon } from 'antd';
+import { Table, Button, Card, Tooltip, Icon, Modal } from 'antd';
 import {
   CONSULTATIONHOUR,
   ADD_CONSULTATIONHOUR_MODAL,
@@ -12,6 +12,8 @@ import AddConsultationHourModal from './AddConsultationHourModal';
 import EditConsultationHourModal from './EditConsultationHourModal';
 
 import styles from '../styles';
+
+const { confirm } = Modal;
 
 class ConsultationHoursForm extends Component {
   componentDidMount() {
@@ -46,21 +48,42 @@ class ConsultationHoursForm extends Component {
     {
       render: (text, record) => (
         <div style={styles.icons}>
-          <Popconfirm
-            title="Are you sure you want to delete this consultation hour?"
-            onConfirm={() => this.props.deleteConsultationHour(record.chID)}
+          <Link
+            to="#"
+            disabled={
+              this.props.userID === this.props.fsr.fsr.userID &&
+              !this.props.fsr.fsr.isTurnedIn
+                ? false
+                : true
+            }
           >
-            <Link to="#">
-              <Icon type="delete" className="text secondary" />
-            </Link>
-          </Popconfirm>
-          <Link to="#">
-            <Icon
-              type="edit"
-              className="text secondary"
-              style={{ marginLeft: 10 }}
-              onClick={() => this.handleToggleEditConsultationHour(record)}
-            />
+            <Tooltip title="Delete Consultation Hour" arrowPointAtCenter>
+              <Icon
+                type="delete"
+                className="text secondary"
+                onClick={() =>
+                  this.handleDeleteConsultationHourConfirmation(record)
+                }
+              />
+            </Tooltip>
+          </Link>
+          <Link
+            to="#"
+            disabled={
+              this.props.userID === this.props.fsr.fsr.userID &&
+              !this.props.fsr.fsr.isTurnedIn
+                ? false
+                : true
+            }
+          >
+            <Tooltip title="Edit Consultation Hour" arrowPointAtCenter>
+              <Icon
+                type="edit"
+                className="text secondary"
+                style={{ marginLeft: 10 }}
+                onClick={() => this.handleToggleEditConsultationHour(record)}
+              />
+            </Tooltip>
           </Link>
         </div>
       ),
@@ -75,8 +98,21 @@ class ConsultationHoursForm extends Component {
     this.props.toggleModal(EDIT_CONSULTATIONHOUR_MODAL);
   };
 
+  handleDeleteConsultationHourConfirmation = ({ chID }) => {
+    confirm({
+      title: 'Are you sure you want to delete this consultation hour?',
+      okType: 'danger',
+      onOk: () => {
+        this.props.deleteCreativeWork(chID);
+      },
+      onCancel() {},
+    });
+  };
+
   render() {
     const {
+      userID,
+      fsr,
       fsrID,
       consultationHours,
       consultationHour,
@@ -88,7 +124,6 @@ class ConsultationHoursForm extends Component {
       isAddConsultationHourModalOpen,
       isEditConsultationHourModalOpen,
       toggleModal,
-      nextStep,
       prevStep,
     } = this.props;
 
@@ -101,23 +136,22 @@ class ConsultationHoursForm extends Component {
           isAddConsultationHourModalOpen={isAddConsultationHourModalOpen}
           toggleModal={toggleModal}
         />
-        {isEditConsultationHourModalOpen ? (
-          <EditConsultationHourModal
-            id={fsrID}
-            consultationHour={consultationHour}
-            editConsultationHour={editConsultationHour}
-            isEditingConsultationHour={isEditingConsultationHour}
-            isEditConsultationHourModalOpen={isEditConsultationHourModalOpen}
-            toggleModal={toggleModal}
-          />
-        ) : (
-          ''
-        )}
+        <EditConsultationHourModal
+          id={fsrID}
+          consultationHour={consultationHour}
+          editConsultationHour={editConsultationHour}
+          isEditingConsultationHour={isEditingConsultationHour}
+          isEditConsultationHourModalOpen={isEditConsultationHourModalOpen}
+          toggleModal={toggleModal}
+        />
         <div style={styles.button}>
           <Button
             icon="plus-circle-o"
             type="primary"
             onClick={() => toggleModal(ADD_CONSULTATIONHOUR_MODAL)}
+            disabled={
+              userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? false : true
+            }
           >
             Add Consultation Hour
           </Button>
@@ -130,9 +164,6 @@ class ConsultationHoursForm extends Component {
         <div style={styles.button}>
           <Button type="primary" onClick={prevStep} style={{ marginRight: 15 }}>
             Previous
-          </Button>
-          <Button type="primary" onClick={nextStep}>
-            Next
           </Button>
         </div>
       </Card>

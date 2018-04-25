@@ -5,7 +5,6 @@ import styles from '../styles';
 import { getFieldValues } from '../../../utils';
 import { getUsers } from '../../../api';
 
-const { Search } = Input;
 const { TextArea } = Input;
 const { Option } = Select;
 const FormItem = Form.Item;

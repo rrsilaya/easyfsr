@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 class Awards extends Component {
   render() {
+    const { awards = {} } = this.props;
+
     return (
       <section>
         <div className="header bold">
@@ -17,7 +20,7 @@ class Awards extends Component {
               className="blank-field"
               style={{ width: 150, marginRight: 40 }}
             >
-              &nbsp;
+              {!awards ? 'NA' : <span>&nbsp;</span>}
             </div>
           </div>
           <div className="inline-flex">
@@ -29,26 +32,30 @@ class Awards extends Component {
               className="blank-field"
               style={{ width: 150, marginRight: 40 }}
             >
-              &nbsp;
+              {awards.collegeHasNominated ? (
+                awards.collegeHasNominated[0]
+              ) : (
+                <span>&nbsp;</span>
+              )}
             </div>
           </div>
           <div className="inline-flex">
             <div>
               <label>PROFESSORIAL CHAIR</label>
               <div className="blank-field" style={{ width: 120 }}>
-                &nbsp;
+                {awards.professionalChair}
               </div>
             </div>
             <div>
               <label>GRANT</label>
               <div className="blank-field" style={{ width: 120 }}>
-                &nbsp;
+                {awards.grantF}
               </div>
             </div>
             <div>
               <label>GRANT/GRANT TITLE</label>
               <div className="blank-field" style={{ width: 120 }}>
-                &nbsp;
+                {awards.chairGrantTitle}
               </div>
             </div>
           </div>
@@ -56,13 +63,21 @@ class Awards extends Component {
             <div>
               <label>APPROVED START DATE (MM/DD/YY)</label>
               <div className="blank-field" style={{ width: 120 }}>
-                &nbsp;
+                {awards.approvedStartDate ? (
+                  moment(awards.approvedStartDate).format('MM/DD/YY')
+                ) : (
+                  <span>&nbsp;</span>
+                )}
               </div>
             </div>
             <div>
               <label>END DATE (MM/DD/YY)</label>
               <div className="blank-field" style={{ width: 120 }}>
-                &nbsp;
+                {awards.endDate ? (
+                  moment(awards.endDate).format('MM/DD/YY')
+                ) : (
+                  <span>&nbsp;</span>
+                )}
               </div>
             </div>
           </div>

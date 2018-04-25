@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Button, Card, Popconfirm, Icon } from 'antd';
+import { Table, Button, Card, Tooltip, Icon, Modal } from 'antd';
 import { ADMINWORK, ADD_ADMINWORK_MODAL, EDIT_ADMINWORK_MODAL } from '../duck';
 
 import AddAdminWorkModal from './AddAdminWorkModal';
 import EditAdminWorkModal from './EditAdminWorkModal';
 
 import styles from '../styles';
+
+const { confirm } = Modal;
 
 class AdminWorkForm extends Component {
   componentDidMount() {
@@ -35,21 +37,40 @@ class AdminWorkForm extends Component {
     {
       render: (text, record) => (
         <div style={styles.icons}>
-          <Popconfirm
-            title="Are you sure you want to delete this administrative work?"
-            onConfirm={() => this.props.deleteAdminWork(record.adminWorkID)}
+          <Link
+            to="#"
+            disabled={
+              this.props.userID === this.props.fsr.fsr.userID &&
+              !this.props.fsr.fsr.isTurnedIn
+                ? false
+                : true
+            }
           >
-            <Link to="#">
-              <Icon type="delete" className="text secondary" />
-            </Link>
-          </Popconfirm>
-          <Link to="#">
-            <Icon
-              type="edit"
-              className="text secondary"
-              style={{ marginLeft: 10 }}
-              onClick={() => this.handleToggleEditAdminWork(record)}
-            />
+            <Tooltip title="Delete Admin Work" arrowPointAtCenter>
+              <Icon
+                type="delete"
+                className="text secondary"
+                onClick={() => this.handleDeleteAdminWorkConfirmation(record)}
+              />
+            </Tooltip>
+          </Link>
+          <Link
+            to="#"
+            disabled={
+              this.props.userID === this.props.fsr.fsr.userID &&
+              !this.props.fsr.fsr.isTurnedIn
+                ? false
+                : true
+            }
+          >
+            <Tooltip title="Edit Admin Work" arrowPointAtCenter>
+              <Icon
+                type="edit"
+                className="text secondary"
+                style={{ marginLeft: 10 }}
+                onClick={() => this.handleToggleEditAdminWork(record)}
+              />
+            </Tooltip>
           </Link>
         </div>
       ),
@@ -61,8 +82,21 @@ class AdminWorkForm extends Component {
     this.props.toggleModal(EDIT_ADMINWORK_MODAL);
   };
 
+  handleDeleteAdminWorkConfirmation = ({ adminWorkID }) => {
+    confirm({
+      title: 'Are you sure you want to delete this administrative work?',
+      okType: 'danger',
+      onOk: () => {
+        this.props.deleteCreativeWork(adminWorkID);
+      },
+      onCancel() {},
+    });
+  };
+
   render() {
     const {
+      userID,
+      fsr,
       fsrID,
       adminWorks,
       adminWork,
@@ -87,23 +121,22 @@ class AdminWorkForm extends Component {
           isAddAdminWorkModalOpen={isAddAdminWorkModalOpen}
           toggleModal={toggleModal}
         />
-        {isEditAdminWorkModalOpen ? (
-          <EditAdminWorkModal
-            id={fsrID}
-            adminWork={adminWork}
-            editAdminWork={editAdminWork}
-            isEditingAdminWork={isEditingAdminWork}
-            isEditAdminWorkModalOpen={isEditAdminWorkModalOpen}
-            toggleModal={toggleModal}
-          />
-        ) : (
-          ''
-        )}
+        <EditAdminWorkModal
+          id={fsrID}
+          adminWork={adminWork}
+          editAdminWork={editAdminWork}
+          isEditingAdminWork={isEditingAdminWork}
+          isEditAdminWorkModalOpen={isEditAdminWorkModalOpen}
+          toggleModal={toggleModal}
+        />
         <div style={styles.button}>
           <Button
             icon="plus-circle-o"
             type="primary"
             onClick={() => toggleModal(ADD_ADMINWORK_MODAL)}
+            disabled={
+              userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? false : true
+            }
           >
             Add Administrative Work
           </Button>

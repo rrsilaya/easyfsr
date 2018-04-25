@@ -14,6 +14,32 @@ import moment from 'moment';
 
 const FormItem = Form.Item;
 const { Option } = Select;
+const hours = [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+];
 
 class EditCourseModal extends Component {
   componentDidMount() {
@@ -34,6 +60,28 @@ class EditCourseModal extends Component {
         });
       }
     });
+  };
+
+  disabledTimeStart = () => {
+    const timeEnd = this.props.form.getFieldValue('timeEnd');
+    if (!timeEnd) {
+      return hours.filter(hour => hour < 7 || hour > 18);
+    }
+
+    return hours.filter(
+      hour => hour >= timeEnd.hour() || hour < 7 || hour > 18,
+    );
+  };
+
+  disabledTimeEnd = () => {
+    const timeStart = this.props.form.getFieldValue('timeStart');
+    if (!timeStart) {
+      return hours.filter(hour => hour < 8 || hour > 19);
+    }
+
+    return hours.filter(
+      hour => hour <= timeStart.hour() || hour < 8 || hour > 19,
+    );
   };
 
   render() {
@@ -113,6 +161,7 @@ class EditCourseModal extends Component {
                 <Option value="WEDNESDAY">Wednesday</Option>
                 <Option value="THURSDAY">Thursday</Option>
                 <Option value="FRIDAY">Friday</Option>
+                <Option value="SATURDAY">Saturday</Option>
               </Select>,
             )}
           </FormItem>
@@ -125,7 +174,13 @@ class EditCourseModal extends Component {
                 },
               ],
               initialValue: moment(tStart[0], 'HH:mm'),
-            })(<TimePicker format="HH:mm" minuteStep={30} />)}
+            })(
+              <TimePicker
+                format="HH:mm"
+                minuteStep={30}
+                disabledHours={this.disabledTimeStart}
+              />,
+            )}
           </FormItem>
           <FormItem {...formItemLayout} label="Time End">
             {getFieldDecorator('timeEnd', {
@@ -136,7 +191,13 @@ class EditCourseModal extends Component {
                 },
               ],
               initialValue: moment(tEnd[0], 'HH:mm'),
-            })(<TimePicker format="HH:mm" minuteStep={30} />)}
+            })(
+              <TimePicker
+                format="HH:mm"
+                minuteStep={30}
+                disabledHours={this.disabledTimeEnd}
+              />,
+            )}
           </FormItem>
           <FormItem {...formItemLayout} label="School">
             {getFieldDecorator('school', {

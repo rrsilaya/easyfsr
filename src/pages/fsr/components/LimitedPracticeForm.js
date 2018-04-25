@@ -16,24 +16,36 @@ class LimitedPracticeForm extends Component {
   handleFormSubmit = e => {
     e.preventDefault();
 
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        const fieldValues = getFieldValues(values);
-        fieldValues.date =
-          fieldValues.date !== null
-            ? moment(fieldValues.date).format('YYYY-MM-DD')
-            : null;
+    if (this.props.userID === this.props.fsr.fsr.userID) {
+      this.props.form.validateFieldsAndScroll((err, values) => {
+        if (!err) {
+          const fieldValues = getFieldValues(values);
+          fieldValues.date =
+            fieldValues.date !== null
+              ? moment(fieldValues.date).format('YYYY-MM-DD')
+              : null;
 
-        this.props.editLtdPractOfProf(this.props.fsrID, {
-          ...fieldValues,
-          id: this.props.fsrID,
-        });
-      }
-    });
+          this.props.editLtdPractOfProf(this.props.fsrID, {
+            ...fieldValues,
+            id: this.props.fsrID,
+          });
+        }
+      });
+    } else {
+      this.props.nextStep();
+    }
+  };
+
+  disabledDate = date => {
+    if (!date) return moment();
+
+    return date.valueOf() > moment();
   };
 
   render() {
     const {
+      userID,
+      fsr,
       ltdPractOfProf,
       isGettingLtdPractOfProf,
       isEditingLtdPractOfProf,
@@ -71,7 +83,14 @@ class LimitedPracticeForm extends Component {
               ],
               initialValue: ltdPractOfProf.askedPermission,
             })(
-              <Select placeholder="Select if Yes or No">
+              <Select
+                placeholder="Select if Yes or No"
+                disabled={
+                  userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn
+                    ? false
+                    : true
+                }
+              >
                 <Option value="YES">Yes</Option>
                 <Option value="NO">No</Option>
               </Select>,
@@ -83,7 +102,16 @@ class LimitedPracticeForm extends Component {
                 ltdPractOfProf.date !== null
                   ? moment(ltdPractOfProf.date)
                   : null,
-            })(<DatePicker />)}
+            })(
+              <DatePicker
+                disabled={
+                  userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn
+                    ? false
+                    : true
+                }
+                disabledDate={this.disabledDate}
+              />,
+            )}
           </FormItem>
           <div style={styles.button}>
             <Button

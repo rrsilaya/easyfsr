@@ -1,9 +1,16 @@
-.fsrExport {
-  $documentSize = 9pt;
-  $headerSize = 11pt;
-  $tableCell = (8in / 11);
+$documentSize = 9pt;
+$headerSize = 11pt;
+$tableCell = (8in / 11);
 
-  display: inline-block;
+.export-wrapper {
+  width: 8.5in;
+  background-color: white;
+  padding: 0.7in 0.5in;
+}
+
+
+.fsrExport {
+  display: inline;
   max-width: 100%;
   font-family: "Arial", sans-serif;
 
@@ -12,8 +19,7 @@
     font-size: $documentSize;
     line-height: 1.25;
 
-    width: 8.5in;
-    padding: 0.7in 0.5in;
+    width: 100%;
     position: relative;
     overflow: visible;
     
@@ -44,6 +50,10 @@
       text-align: center;
     }
     
+    tr {
+      page-break-inside: avoid !important;
+    }
+    
     td, th { padding: 5px; }
 
     th {
@@ -72,8 +82,8 @@
   
   .form-float {
     position: absolute;
-    top: 0.7in;
-    left: 0.5in;
+    top: 0;
+    left: 0;
     font-size: $documentSize;
   }
   
@@ -125,6 +135,7 @@
   .inline-flex {
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
   }
 
   .blank-field {

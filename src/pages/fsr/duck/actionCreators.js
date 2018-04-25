@@ -1,4 +1,6 @@
 import { notification } from 'antd';
+import { push } from 'react-router-redux';
+
 import * as Api from '../../../api';
 import * as Action from './actionTypes';
 
@@ -20,15 +22,17 @@ export const prevStep = () => ({
   type: Action.PREVIOUS_STEP,
 });
 
-export const getFSR = id => ({
-  type: Action.GET_FSR,
-  promise: Api.getFSR(id),
-  meta: {
-    onFailure: () => {
-      notification.error({ message: 'Failure to fetch fsr' });
+export const getFSR = id => dispatch =>
+  dispatch({
+    type: Action.GET_FSR,
+    promise: Api.getFSR(id),
+    meta: {
+      onFailure: () => {
+        notification.error({ message: 'Failure to fetch fsr' });
+        dispatch(push('/records'));
+      },
     },
-  },
-});
+  });
 
 export const getSubjects = query => {
   return dispatch => {
@@ -59,7 +63,7 @@ export const addSubject = values => (dispatch, getState) => {
         });
 
         notification.success({ message: 'Successfully added subject' });
-        dispatch(getSubjects({ id: fsr.id }));
+        dispatch(getSubjects({ id: fsr.fsr.id }));
       },
       onFailure: () => {
         notification.error({ message: 'Server error while creating subject' });
@@ -637,7 +641,7 @@ export const addCourse = values => (dispatch, getState) => {
         notification.success({
           message: 'Successfully added course',
         });
-        dispatch(getCourses({ id: fsr.id }));
+        dispatch(getCourses({ id: fsr.fsr.id }));
       },
       onFailure: () => {
         notification.error({
@@ -819,3 +823,7 @@ export const editConsultationHour = (chID, body) => {
     });
   };
 };
+
+export const resetPage = () => ({
+  type: Action.RESET_PAGE,
+});

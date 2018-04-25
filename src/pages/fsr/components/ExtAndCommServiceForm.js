@@ -1,97 +1,25 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Table, Button, Card, Popconfirm, Icon } from 'antd';
+import { Button, Card, Modal, Icon, Tooltip } from 'antd';
 import {
   EXTANDCOMMSERVICE,
   ADD_EXTANDCOMMSERVICE_MODAL,
   EDIT_EXTANDCOMMSERVICE_MODAL,
 } from '../duck';
 import moment from 'moment';
+import StackGrid from 'react-stack-grid';
+import { DataLoader } from '../../../global';
 
 import AddExtAndCommServiceModal from './AddExtAndCommServiceModal';
 import EditExtAndCommServiceModal from './EditExtAndCommServiceModal';
 
 import styles from '../styles';
 
+const { confirm } = Modal;
+
 class ExtAndCommServiceForm extends Component {
   componentDidMount() {
     this.props.getExtAndCommServices({ id: this.props.fsrID });
   }
-
-  columns = [
-    {
-      title: 'Activity/Program',
-      dataIndex: 'title',
-      key: 'title',
-      align: 'center',
-    },
-    {
-      title: 'Type',
-      dataIndex: 'type',
-      key: 'type',
-      align: 'center',
-    },
-    {
-      title: 'Hours',
-      dataIndex: 'hours',
-      key: 'hours',
-      align: 'center',
-    },
-    {
-      title: 'Participants',
-      dataIndex: 'participant',
-      key: 'participant',
-      align: 'center',
-    },
-    {
-      title: 'Duration',
-      dataIndex: 'duration',
-      key: 'duration',
-      align: 'center',
-      render: (text, record) => (
-        <span className="text primary">
-          {moment(record.startDate).format('MMMM D, YYYY')} -{' '}
-          {moment(record.endDate).format('MMMM D, YYYY')}
-        </span>
-      ),
-    },
-    {
-      title: 'Role',
-      dataIndex: 'role',
-      key: 'role',
-      align: 'center',
-    },
-    {
-      title: 'Approved Credit Units',
-      dataIndex: 'creditUnit',
-      key: 'creditUnit',
-      align: 'center',
-    },
-    {
-      render: (text, record) => (
-        <div style={styles.icons}>
-          <Popconfirm
-            title="Are you sure you want to delete this extension and community service?"
-            onConfirm={() =>
-              this.props.deleteExtAndCommService(record.extAndCommServiceID)
-            }
-          >
-            <Link to="#">
-              <Icon type="delete" className="text secondary" />
-            </Link>
-          </Popconfirm>
-          <Link to="#">
-            <Icon
-              type="edit"
-              className="text secondary"
-              style={{ marginLeft: 10 }}
-              onClick={() => this.handleToggleEditExtAndCommService(record)}
-            />
-          </Link>
-        </div>
-      ),
-    },
-  ];
 
   handleToggleEditExtAndCommService = extAndCommService => {
     this.props.changeSelected({
@@ -101,8 +29,22 @@ class ExtAndCommServiceForm extends Component {
     this.props.toggleModal(EDIT_EXTANDCOMMSERVICE_MODAL);
   };
 
+  handleDeleteExtensionConfirmation = ({ extAndCommServiceID }) => {
+    confirm({
+      title:
+        'Are you sure you want to delete this extension and community service?',
+      okType: 'danger',
+      onOk: () => {
+        this.props.deleteExtAndCommService(extAndCommServiceID);
+      },
+      onCancel() {},
+    });
+  };
+
   render() {
     const {
+      userID,
+      fsr,
       fsrID,
       extAndCommServices,
       extAndCommService,
@@ -127,31 +69,112 @@ class ExtAndCommServiceForm extends Component {
           isAddExtAndCommServiceModalOpen={isAddExtAndCommServiceModalOpen}
           toggleModal={toggleModal}
         />
-        {isEditExtAndCommServiceModalOpen ? (
-          <EditExtAndCommServiceModal
-            id={fsrID}
-            extAndCommService={extAndCommService}
-            editExtAndCommService={editExtAndCommService}
-            isEditingExtAndCommService={isEditingExtAndCommService}
-            isEditExtAndCommServiceModalOpen={isEditExtAndCommServiceModalOpen}
-            toggleModal={toggleModal}
-          />
-        ) : (
-          ''
-        )}
+        <EditExtAndCommServiceModal
+          id={fsrID}
+          extAndCommService={extAndCommService}
+          editExtAndCommService={editExtAndCommService}
+          isEditingExtAndCommService={isEditingExtAndCommService}
+          isEditExtAndCommServiceModalOpen={isEditExtAndCommServiceModalOpen}
+          toggleModal={toggleModal}
+        />
         <div style={styles.button}>
           <Button
             icon="plus-circle-o"
             type="primary"
             onClick={() => toggleModal(ADD_EXTANDCOMMSERVICE_MODAL)}
+            disabled={
+              userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? false : true
+            }
           >
             Add Extension and Community Service
           </Button>
         </div>
-        <Table
-          columns={this.columns}
-          dataSource={extAndCommServices}
-          loading={isGettingExtAndCommService}
+        <DataLoader
+          isLoading={isGettingExtAndCommService}
+          color="#fff"
+          spinColor="#483440"
+          content={
+            <StackGrid
+              columnWidth="33.3333%"
+              gutterWidth={16}
+              gutterHeight={16}
+              duration={0}
+              gridRef={grid => (this.grid = grid)}
+            >
+              {extAndCommServices.map(extension => (
+                <Card
+                  key={extension.extAndCommServiceID}
+                  style={{ borderColor: '#483440' }}
+                  actions={[
+                    <Tooltip
+                      title="Edit Extension and Community Service"
+                      arrowPointAtCenter
+                    >
+                      {userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? (
+                        <Icon
+                          type="edit"
+                          className="text normal"
+                          onClick={() =>
+                            this.handleToggleEditExtAndCommService(extension)
+                          }
+                        />
+                      ) : (
+                        <Icon type="edit" className="text meta-2" />
+                      )}
+                    </Tooltip>,
+                    <Tooltip
+                      title="Delete Extension and Community Service"
+                      arrowPointAtCenter
+                    >
+                      {userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? (
+                        <Icon
+                          type="delete"
+                          className="text normal"
+                          onClick={() =>
+                            this.handleDeleteExtensionConfirmation(extension)
+                          }
+                        />
+                      ) : (
+                        <Icon type="delete" className="text meta-2" />
+                      )}
+                    </Tooltip>,
+                  ]}
+                >
+                  <dl>
+                    <dt>Activity/Program</dt>
+                    <dd>{extension.title}</dd>
+                  </dl>
+                  <dl>
+                    <dt>Role</dt>
+                    <dd>{extension.role}</dd>
+                  </dl>
+                  <dl>
+                    <dt>Type</dt>
+                    <dd>{extension.type}</dd>
+                  </dl>
+                  <dl>
+                    <dt>Number of Hours</dt>
+                    <dd>{extension.hours}</dd>
+                  </dl>
+                  <dl>
+                    <dt>Participants</dt>
+                    <dd>{extension.participant}</dd>
+                  </dl>
+                  <dl>
+                    <dt>Duration</dt>
+                    <dd>
+                      {moment(extension.startDate).format('MMMM DD, YYYY')} to{' '}
+                      {moment(extension.endDate).format('MMMM DD, YYYY')}
+                    </dd>
+                  </dl>
+                  <dl>
+                    <dt>Approved Credit Units</dt>
+                    <dd>{extension.creditUnit}</dd>
+                  </dl>
+                </Card>
+              ))}
+            </StackGrid>
+          }
         />
         <div style={styles.button}>
           <Button type="primary" onClick={prevStep} style={{ marginRight: 15 }}>
