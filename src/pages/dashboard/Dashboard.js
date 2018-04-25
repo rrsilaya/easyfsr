@@ -23,6 +23,10 @@ class Dashboard extends Component {
     this.props.getLog();
   }
 
+  componentWillUnmount() {
+    this.props.resetPage();
+  }
+
   handleDeleteAnnouncement = announcementID => {
     this.props.deleteAnnouncement(announcementID);
   };

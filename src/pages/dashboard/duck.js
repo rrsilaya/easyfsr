@@ -21,6 +21,7 @@ const GET_NOTIFICATIONS = 'DASHBOARD/GET_NOTIFICATIONS';
 export const GET_LOG = 'DASHBOARD/GET_LOGS';
 export const ADD_META = 'DASHBOARD/ADD_META';
 const TOGGLE_MODAL = 'DASHBOARD/TOGGLE_MODAL';
+const RESET_PAGE = 'DASHBOARD/RESET_PAGE';
 
 export const getUsers = query => {
   return dispatch => {
@@ -208,6 +209,10 @@ export const addMetaData = body => {
     });
   };
 };
+
+export const resetPage = () => ({
+  type: RESET_PAGE,
+});
 
 const initialState = {
   isSendNotificationModalOpen: false,
@@ -425,6 +430,9 @@ const reducer = (state = initialState, action) => {
           isGettingLogs: false,
         }),
       });
+
+    case RESET_PAGE:
+      return initialState;
 
     default:
       return state;

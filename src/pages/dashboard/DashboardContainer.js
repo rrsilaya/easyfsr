@@ -12,6 +12,7 @@ import {
   getNotifications,
   getLog,
   addMetaData,
+  resetPage,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -91,6 +92,9 @@ const mapDispatchToProps = dispatch => {
     },
     addMetaData: values => {
       dispatch(addMetaData(values));
+    },
+    resetPage: () => {
+      dispatch(resetPage());
     },
   };
 };
