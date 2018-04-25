@@ -16,6 +16,12 @@ class ScheduleModal extends Component {
       schedule,
     } = this.props;
 
+    const sched = schedule.map(timeslot => {
+      timeslot.day = timeslot.day.toUpperCase();
+
+      return timeslot;
+    });
+
     return (
       <Modal
         title="Schedule"
@@ -26,7 +32,7 @@ class ScheduleModal extends Component {
       >
         <DataLoader
           isLoading={isGettingSchedule}
-          content={<Schedule data={schedule} />}
+          content={<Schedule data={sched} />}
           color="#fff"
           spinColor="#483440"
           opaque
