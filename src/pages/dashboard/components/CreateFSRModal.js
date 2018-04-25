@@ -28,6 +28,7 @@ class CreateFSRModal extends Component {
         this.handleAfterClose();
       }
     });
+    this.props.toggleModal(CREATE_FSR);
   };
 
   handleAfterClose = () => {
