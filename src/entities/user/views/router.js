@@ -342,7 +342,12 @@ router.get('/user/:employeeID/schedule', async (req, res) => {
     });
     const consultationHours = await Ctrl.getUserConsultationHours(req.params);
     const courses = await Ctrl.getUserSLCourses(req.params);
-    const schedule = [...computedSubjects, ...consultationHours, ...courses];
+    const schedule = [
+      ...computedSubjects,
+      ...consultationHours,
+      ...courses,
+    ].filter(({ timeStart }) => !!timeStart);
+
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched schedule',
