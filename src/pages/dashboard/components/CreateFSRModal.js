@@ -94,12 +94,11 @@ class CreateFSRModal extends Component {
               <Transfer
                 showSearch
                 searchPlaceholder="Enter name"
-                listStyle={{ height: 500, width: '39%' }}
+                listStyle={{ height: 500, width: '45%' }}
                 dataSource={this.props.users.map(user => ({
                   ...user,
                   key: user.userID,
                 }))}
-                operations={['Apply', 'Return']}
                 render={user => `${user.lastName}, ${user.firstName}`}
                 onChange={this.handleChange}
                 filterOption={this.handleFilter}
