@@ -163,7 +163,15 @@ export const uploadIcon = (user, form) => {
       promise: Api.editUser(userID, form),
       meta: {
         onSuccess: () => {
+          // notification.success({
+          //   message: 'Successfully upload profile icon.',
+          // });
           dispatch(updateProfileIcon(user, form));
+        },
+        onFailure: () => {
+          // notification.error({
+          //   message: 'Server error whle uploading icon.',
+          // });
         },
       },
     });

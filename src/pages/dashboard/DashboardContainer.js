@@ -4,15 +4,19 @@ import Dashboard from './Dashboard';
 import {
   toggleModal,
   searchUser,
+  getUsers,
   addNotification,
   deleteNotification,
   deleteAnnouncement,
   addAnnouncement,
   getAnnouncements,
   getNotifications,
+  changeSelectedUsers,
   getLog,
   addMetaData,
   resetPage,
+  addFSR,
+  getMetaData,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -27,15 +31,21 @@ const mapStateToProps = state => {
     isDeletingAnnouncement,
     isGettingAnnouncements,
     isGettingNotifications,
+    isAddingFSR,
+    isGettingMeta,
     isDeletingNotification,
 
     isGettingLogs,
 
     user,
+    users,
     searchedUsers,
+    selectedUsers,
     announcements,
     notifications,
     log,
+    meta,
+    pagination,
   } = state.dashboard;
 
   return {
@@ -49,15 +59,21 @@ const mapStateToProps = state => {
     isDeletingAnnouncement,
     isGettingAnnouncements,
     isGettingNotifications,
+    isAddingFSR,
+    isGettingMeta,
     isDeletingNotification,
 
     isGettingLogs,
 
     user,
+    users,
     searchedUsers,
+    selectedUsers,
     announcements,
     notifications,
     log,
+    meta,
+    pagination,
   };
 };
 
@@ -87,14 +103,26 @@ const mapDispatchToProps = dispatch => {
     getNotifications: query => {
       dispatch(getNotifications(query));
     },
-    getLog: () => {
-      dispatch(getLog());
+    getUsers: query => {
+      dispatch(getUsers(query));
+    },
+    changeSelectedUsers: user => {
+      dispatch(changeSelectedUsers(user));
+    },
+    getLog: query => {
+      dispatch(getLog(query));
     },
     addMetaData: values => {
       dispatch(addMetaData(values));
     },
     resetPage: () => {
       dispatch(resetPage());
+    },
+    addFSR: body => {
+      dispatch(addFSR(body));
+    },
+    getMetaData: query => {
+      dispatch(getMetaData(query));
     },
   };
 };

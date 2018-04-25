@@ -48,7 +48,6 @@ class FSRForm extends Component {
   showDeleteConfirm = () => {
     confirm({
       title: 'Are you sure you want to finalize this FSR?',
-      content: 'Some descriptions',
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
@@ -90,6 +89,7 @@ class FSRForm extends Component {
       subjects,
       subject,
       timeslots,
+      schedule,
       researches,
       research,
       cworks,
@@ -150,6 +150,7 @@ class FSRForm extends Component {
       isAddingTimeslot,
       isEditingSubject,
       isGettingTimeslots,
+      isGettingSchedule,
       isGettingResearches,
       isAddingResearch,
       isEditingResearch,
@@ -185,7 +186,7 @@ class FSRForm extends Component {
     } = this.props;
 
     const { fsrID } = this.props.match.params;
-    const { acctType, userID } = this.props.user;
+    const { userID } = this.props.user;
 
     return isGettingFSR ? (
       <PageLoader />
@@ -201,7 +202,7 @@ class FSRForm extends Component {
           >
             Preview FSR
           </Button>
-          {acctType === 'USER' ? (
+          {userID === fsr.fsr.userID ? (
             fsr.fsr.isTurnedIn ? (
               <Button
                 style={styles.icons}
@@ -224,7 +225,10 @@ class FSRForm extends Component {
                 Turn In FSR
               </Button>
             )
-          ) : fsr.fsr.isChecked && fsr.fsr.isTurnedIn ? (
+          ) : (
+            ''
+          )}
+          {fsr.fsr.isChecked && fsr.fsr.isTurnedIn ? (
             <Button
               style={styles.icons}
               size="large"
@@ -273,6 +277,7 @@ class FSRForm extends Component {
                   subjects={subjects}
                   subject={subject}
                   timeslots={timeslots}
+                  schedule={schedule}
                   getSubjects={getSubjects}
                   addSubject={addSubject}
                   deleteSubject={deleteSubject}
@@ -284,6 +289,7 @@ class FSRForm extends Component {
                   isAddingTimeslot={isAddingTimeslot}
                   isEditingSubject={isEditingSubject}
                   isGettingTimeslots={isGettingTimeslots}
+                  isGettingSchedule={isGettingSchedule}
                   isAddSubjectModalOpen={isAddSubjectModalOpen}
                   isEditSubjectModalOpen={isEditSubjectModalOpen}
                   toggleModal={toggleModal}

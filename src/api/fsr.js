@@ -11,3 +11,7 @@ export const getFSR = id => {
 export const editFSR = (id, body) => {
   return axios.put(`/api/fsr/${id}`, body);
 };
+
+export const addFSR = body => {
+  return axios.post('/api/fsr', body);
+};

@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { Icon, Card, Table, Row, Col, Button, List } from 'antd';
+import Pagination, {
+  Icon,
+  Card,
+  Table,
+  Row,
+  Col,
+  Button,
+  List,
+  Modal,
+} from 'antd';
 import styles from './styles';
 import columns from './columns';
 import moment from 'moment';
@@ -15,10 +24,12 @@ import { CREATE_ANNOUNCEMENT } from './duck';
 import { SETTINGS } from './duck';
 
 const { Item: ListItem } = List;
+const { confirm } = Modal;
 
 class Dashboard extends Component {
   componentDidMount() {
     this.props.getAnnouncements();
+    this.props.getUsers({ limit: 99999 });
     this.props.getNotifications({ isResolved: 0 });
     this.props.getLog();
   }
@@ -35,6 +46,38 @@ class Dashboard extends Component {
     this.props.deleteNotification(notificationID);
   };
 
+  showDeleteAnnouncement = announcementID => {
+    confirm({
+      title: 'Delete this announcement?',
+      content: 'You are about to delete this announcement.',
+      okText: 'Yes',
+      cancelText: 'No',
+      okType: 'primary',
+      onOk: () => {
+        this.handleDeleteAnnouncement(announcementID);
+      },
+      onCancel: () => {},
+    });
+  };
+
+  showDeleteNotification = notificationID => {
+    confirm({
+      title: 'Resolve notification?',
+      content: 'You are about to resolve this notification.',
+      okText: 'Yes',
+      cancelText: 'No',
+      okType: 'primary',
+      onOk: () => {
+        this.handleDeleteNotification(notificationID);
+      },
+      onCancel: () => {},
+    });
+  };
+
+  handleChange = (page, limit) => {
+    this.props.getLog({ page, limit });
+  };
+
   render() {
     const {
       isSendNotificationModalOpen,
@@ -43,21 +86,31 @@ class Dashboard extends Component {
       isSettingsModalOpen,
       isGettingNotifications,
       isGettingAnnouncements,
+      isAddingFSR,
+      isGettingMeta,
       isDeletingAnnouncement,
       isDeletingNotification,
 
       searchedUsers,
+      selectedUsers,
+      users,
 
       addNotification,
       addAnnouncement,
       addMetaData,
+      addFSR,
 
       announcements,
       notifications,
       log,
+      meta,
+      pagination,
 
       toggleModal,
       searchUser,
+      changeSelectedUsers,
+      getUsers,
+      getMetaData,
     } = this.props;
     return (
       <div>
@@ -92,6 +145,15 @@ class Dashboard extends Component {
                 isCreateFSRModalOpen={isCreateFSRModalOpen}
                 toggleModal={toggleModal}
                 handleAfterClose={this.handleAfterClose}
+                getUsers={getUsers}
+                users={users}
+                selectedUsers={selectedUsers}
+                changeSelectedUsers={changeSelectedUsers}
+                isAddingFSR={isAddingFSR}
+                isGettingMeta={isGettingMeta}
+                addFSR={addFSR}
+                getMetaData={getMetaData}
+                meta={meta}
               />
               <Button
                 type="default"
@@ -182,7 +244,7 @@ class Dashboard extends Component {
                             type="close-circle"
                             spin={isDeletingAnnouncement}
                             onClick={() =>
-                              this.handleDeleteAnnouncement(
+                              this.showDeleteAnnouncement(
                                 announcement.announcementID,
                               )
                             }
@@ -228,7 +290,7 @@ class Dashboard extends Component {
                             type="close-circle"
                             spin={isDeletingNotification}
                             onClick={() =>
-                              this.handleDeleteNotification(
+                              this.showDeleteNotification(
                                 notification.notificationID,
                               )
                             }
@@ -271,6 +333,12 @@ class Dashboard extends Component {
                       'MMM DD YYYY hh:mm:ss A',
                     ),
                   }))}
+                  pagination={{
+                    pageSize: pagination.limit,
+                    current: pagination.page,
+                    total: pagination.total,
+                    onChange: this.handleChange,
+                  }}
                   style={styles.facultyTable}
                 />
               </Card>

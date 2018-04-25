@@ -1,19 +1,34 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form, Input } from 'antd';
+import { Modal, Button, Form, Input, Transfer } from 'antd';
 import { CREATE_FSR } from '../duck';
 import styles from '../styles';
+import { getFieldValues } from '../../../utils';
 
 const FormItem = Form.Item;
 
 class CreateFSRModal extends Component {
+  componentDidMount() {
+    console.log(this.props.getMetaData());
+  }
+
+  // async componentDidMount() {
+  //   await this.props.getUsers({ limit: 99999 });
+  //   const dataSource = this.props.users.map(user => ({ ...user, key: user.userID }));
+  //   this.setState({ dataSource });
+  // }
+
   handleFormSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        // this.props.deleteUser(this.props.user);
+        const users = this.props.selectedUsers;
+        const { acadYear, semester } = this.props.meta;
+        console.log(users, acadYear, semester);
+        this.props.addFSR({ users, acadYear, semester });
         this.handleAfterClose();
       }
     });
+    this.props.toggleModal(CREATE_FSR);
   };
 
   handleAfterClose = () => {
@@ -22,62 +37,74 @@ class CreateFSRModal extends Component {
   };
 
   handleCancel = () => {
-    this.props.toggleDeleteModal();
     this.handleAfterClose();
   };
 
-  validateMessage = async (rule, value, callback) => {
-    if (!value.match(/^Yes, I want to create a new FSR\.$/))
-      return callback('Please enter the correct message');
+  handleFilter = (inputValue, option) =>
+    option.lastName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1;
+
+  handleChange = targetKeys => {
+    this.props.changeSelectedUsers(targetKeys);
   };
 
   render() {
     const {
       isCreateFSRModalOpen,
+      isAddingFSR,
 
       toggleModal,
 
       form,
     } = this.props;
 
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 8 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 },
-      },
-    };
     return (
       <Modal
         title="Create FSR"
         visible={isCreateFSRModalOpen}
         onOk={() => toggleModal(CREATE_FSR)}
-        onCancel={() => toggleModal(CREATE_FSR)}
+        onCancel={() => {
+          this.handleAfterClose();
+          toggleModal(CREATE_FSR);
+        }}
         destroyOnClose
         footer={[
-          <Button key="back" onClick={() => toggleModal(CREATE_FSR)}>
+          <Button
+            key="back"
+            onClick={() => {
+              this.handleAfterClose();
+              toggleModal(CREATE_FSR);
+            }}
+          >
             Cancel
           </Button>,
-          <Button key="submit" type="primary" htmlType="submit">
-            Yes
+          <Button
+            key="submit"
+            type="primary"
+            htmlType="submit"
+            onClick={this.handleFormSubmit}
+            loading={isAddingFSR}
+          >
+            Create
           </Button>,
         ]}
       >
-        <p>Are you sure you want to create a new FSR?</p>
-        <p> Please type in the message below confirm. </p>
-        <p style={styles.confirmation}> Yes, I want to create a new FSR. </p>
         <Form onSubmit={this.handleFormSubmit}>
-          <FormItem {...formItemLayout} required hasFeedback>
-            {form.getFieldDecorator('confirmation@@deleteUser', {
-              rules: [
-                {
-                  validator: this.validateMessage,
-                },
-              ],
-            })(<Input type="text" />)}
+          <FormItem>
+            {form.getFieldDecorator('fsr@@createFSR')(
+              <Transfer
+                showSearch
+                searchPlaceholder="Enter name"
+                listStyle={{ height: 500, width: '45%' }}
+                dataSource={this.props.users.map(user => ({
+                  ...user,
+                  key: user.userID,
+                }))}
+                render={user => `${user.lastName}, ${user.firstName}`}
+                onChange={this.handleChange}
+                filterOption={this.handleFilter}
+                targetKeys={this.props.selectedUsers}
+              />,
+            )}
           </FormItem>
         </Form>
       </Modal>
