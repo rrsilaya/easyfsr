@@ -80,47 +80,35 @@ class ResearchAndCreativeWorkForm extends Component {
       align: 'center',
     },
     {
-      render: (text, record) => (
-        <div style={styles.icons}>
-          <Link
-            to="#"
-            disabled={
-              this.props.userID === this.props.fsr.fsr.userID &&
-              !this.props.fsr.fsr.isTurnedIn
-                ? false
-                : true
-            }
-          >
-            <Tooltip title="Delete Creative Work" arrowPointAtCenter>
-              <Icon
-                type="delete"
-                className="text secondary"
-                onClick={() =>
-                  this.handleDeleteCreativeWorkConfirmation(record)
-                }
-              />
-            </Tooltip>
-          </Link>
-          <Link
-            to="#"
-            disabled={
-              this.props.userID === this.props.fsr.fsr.userID &&
-              !this.props.fsr.fsr.isTurnedIn
-                ? false
-                : true
-            }
-          >
-            <Tooltip title="Edit Creative Work" arrowPointAtCenter>
-              <Icon
-                type="edit"
-                className="text secondary"
-                style={{ marginLeft: 10 }}
-                onClick={() => this.handleToggleEditCWork(record)}
-              />
-            </Tooltip>
-          </Link>
-        </div>
-      ),
+      render: (text, record) =>
+        this.props.userID === this.props.fsr.fsr.userID &&
+        !this.props.fsr.fsr.isTurnedIn ? (
+          <div style={styles.icons}>
+            <Link to="#">
+              <Tooltip title="Delete Creative Work" arrowPointAtCenter>
+                <Icon
+                  type="delete"
+                  className="text secondary"
+                  onClick={() =>
+                    this.handleDeleteCreativeWorkConfirmation(record)
+                  }
+                />
+              </Tooltip>
+            </Link>
+            <Link to="#">
+              <Tooltip title="Edit Creative Work" arrowPointAtCenter>
+                <Icon
+                  type="edit"
+                  className="text secondary"
+                  style={{ marginLeft: 10 }}
+                  onClick={() => this.handleToggleEditCWork(record)}
+                />
+              </Tooltip>
+            </Link>
+          </div>
+        ) : (
+          ''
+        ),
     },
   ];
 
@@ -227,34 +215,30 @@ class ResearchAndCreativeWorkForm extends Component {
                 <Card
                   key={research.researchID}
                   style={{ borderColor: '#483440' }}
-                  actions={[
-                    <Tooltip title="Edit Research" arrowPointAtCenter>
-                      {userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? (
-                        <Icon
-                          type="edit"
-                          className="text normal"
-                          onClick={() =>
-                            this.handleToggleEditResearch(research)
-                          }
-                        />
-                      ) : (
-                        <Icon type="edit" className="text meta-2" />
-                      )}
-                    </Tooltip>,
-                    <Tooltip title="Delete Research" arrowPointAtCenter>
-                      {userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? (
-                        <Icon
-                          type="delete"
-                          className="text normal"
-                          onClick={() =>
-                            this.handleDeleteResearchConfirmation(research)
-                          }
-                        />
-                      ) : (
-                        <Icon type="delete" className="text meta-2" />
-                      )}
-                    </Tooltip>,
-                  ]}
+                  actions={
+                    userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn
+                      ? [
+                          <Tooltip title="Edit Research" arrowPointAtCenter>
+                            <Icon
+                              type="edit"
+                              className="text normal"
+                              onClick={() =>
+                                this.handleToggleEditResearch(research)
+                              }
+                            />
+                          </Tooltip>,
+                          <Tooltip title="Delete Research" arrowPointAtCenter>
+                            <Icon
+                              type="delete"
+                              className="text normal"
+                              onClick={() =>
+                                this.handleDeleteResearchConfirmation(research)
+                              }
+                            />
+                          </Tooltip>,
+                        ]
+                      : null
+                  }
                 >
                   <div className="text normal">
                     <dl>

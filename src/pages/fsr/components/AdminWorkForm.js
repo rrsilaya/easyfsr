@@ -35,45 +35,33 @@ class AdminWorkForm extends Component {
       align: 'center',
     },
     {
-      render: (text, record) => (
-        <div style={styles.icons}>
-          <Link
-            to="#"
-            disabled={
-              this.props.userID === this.props.fsr.fsr.userID &&
-              !this.props.fsr.fsr.isTurnedIn
-                ? false
-                : true
-            }
-          >
-            <Tooltip title="Delete Admin Work" arrowPointAtCenter>
-              <Icon
-                type="delete"
-                className="text secondary"
-                onClick={() => this.handleDeleteAdminWorkConfirmation(record)}
-              />
-            </Tooltip>
-          </Link>
-          <Link
-            to="#"
-            disabled={
-              this.props.userID === this.props.fsr.fsr.userID &&
-              !this.props.fsr.fsr.isTurnedIn
-                ? false
-                : true
-            }
-          >
-            <Tooltip title="Edit Admin Work" arrowPointAtCenter>
-              <Icon
-                type="edit"
-                className="text secondary"
-                style={{ marginLeft: 10 }}
-                onClick={() => this.handleToggleEditAdminWork(record)}
-              />
-            </Tooltip>
-          </Link>
-        </div>
-      ),
+      render: (text, record) =>
+        this.props.userID === this.props.fsr.fsr.userID &&
+        !this.props.fsr.fsr.isTurnedIn ? (
+          <div style={styles.icons}>
+            <Link to="#">
+              <Tooltip title="Delete Admin Work" arrowPointAtCenter>
+                <Icon
+                  type="delete"
+                  className="text secondary"
+                  onClick={() => this.handleDeleteAdminWorkConfirmation(record)}
+                />
+              </Tooltip>
+            </Link>
+            <Link to="#">
+              <Tooltip title="Edit Admin Work" arrowPointAtCenter>
+                <Icon
+                  type="edit"
+                  className="text secondary"
+                  style={{ marginLeft: 10 }}
+                  onClick={() => this.handleToggleEditAdminWork(record)}
+                />
+              </Tooltip>
+            </Link>
+          </div>
+        ) : (
+          ''
+        ),
     },
   ];
 

@@ -48,45 +48,33 @@ class TeachingLoadForm extends Component {
       align: 'center',
     },
     {
-      render: (text, record) => (
-        <div style={styles.icons}>
-          <Link
-            to="#"
-            disabled={
-              this.props.userID === this.props.fsr.fsr.userID &&
-              !this.props.fsr.fsr.isTurnedIn
-                ? false
-                : true
-            }
-          >
-            <Tooltip title="Delete Subject" arrowPointAtCenter>
-              <Icon
-                type="delete"
-                className="text secondary"
-                onClick={() => this.handleDeleteSubjectConfirmation(record)}
-              />
-            </Tooltip>
-          </Link>
-          <Link
-            to="#"
-            disabled={
-              this.props.userID === this.props.fsr.fsr.userID &&
-              !this.props.fsr.fsr.isTurnedIn
-                ? false
-                : true
-            }
-          >
-            <Tooltip title="Edit Subject" arrowPointAtCenter>
-              <Icon
-                type="edit"
-                className="text secondary"
-                style={{ marginLeft: 10 }}
-                onClick={() => this.handleToggleEditSubject(record)}
-              />
-            </Tooltip>
-          </Link>
-        </div>
-      ),
+      render: (text, record) =>
+        this.props.userID === this.props.fsr.fsr.userID &&
+        !this.props.fsr.fsr.isTurnedIn ? (
+          <div style={styles.icons}>
+            <Link to="#">
+              <Tooltip title="Delete Subject" arrowPointAtCenter>
+                <Icon
+                  type="delete"
+                  className="text secondary"
+                  onClick={() => this.handleDeleteSubjectConfirmation(record)}
+                />
+              </Tooltip>
+            </Link>
+            <Link to="#">
+              <Tooltip title="Edit Subject" arrowPointAtCenter>
+                <Icon
+                  type="edit"
+                  className="text secondary"
+                  style={{ marginLeft: 10 }}
+                  onClick={() => this.handleToggleEditSubject(record)}
+                />
+              </Tooltip>
+            </Link>
+          </div>
+        ) : (
+          ''
+        ),
     },
   ];
 
@@ -138,16 +126,21 @@ class TeachingLoadForm extends Component {
           isAddSubjectModalOpen={isAddSubjectModalOpen}
           toggleModal={toggleModal}
         />
-        <EditSubjectModal
-          id={fsrID}
-          subject={subject}
-          timeslots={timeslots}
-          editSubject={editSubject}
-          getTimeslots={getTimeslots}
-          isEditingSubject={isEditingSubject}
-          isEditSubjectModalOpen={isEditSubjectModalOpen}
-          toggleModal={toggleModal}
-        />
+        {isEditSubjectModalOpen ? (
+          <EditSubjectModal
+            id={fsrID}
+            subject={subject}
+            timeslots={timeslots}
+            editSubject={editSubject}
+            getTimeslots={getTimeslots}
+            isEditingSubject={isEditingSubject}
+            isEditSubjectModalOpen={isEditSubjectModalOpen}
+            toggleModal={toggleModal}
+          />
+        ) : (
+          ''
+        )}
+
         <div
           className="scale-down"
           style={{ width: '100%', display: 'flex', justifyContent: 'center' }}

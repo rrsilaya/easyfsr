@@ -72,45 +72,33 @@ class StudyLoadForm extends Component {
       align: 'center',
     },
     {
-      render: (text, record) => (
-        <div style={styles.icons}>
-          <Link
-            to="#"
-            disabled={
-              this.props.userID === this.props.fsr.fsr.userID &&
-              !this.props.fsr.fsr.isTurnedIn
-                ? false
-                : true
-            }
-          >
-            <Tooltip title="Delete Course" arrowPointAtCenter>
-              <Icon
-                type="delete"
-                className="text secondary"
-                onClick={() => this.handleDeleteCourseConfirmation(record)}
-              />
-            </Tooltip>
-          </Link>
-          <Link
-            to="#"
-            disabled={
-              this.props.userID === this.props.fsr.fsr.userID &&
-              !this.props.fsr.fsr.isTurnedIn
-                ? false
-                : true
-            }
-          >
-            <Tooltip title="Edit Course" arrowPointAtCenter>
-              <Icon
-                type="edit"
-                className="text secondary"
-                style={{ marginLeft: 10 }}
-                onClick={() => this.handleToggleEditCourse(record)}
-              />
-            </Tooltip>
-          </Link>
-        </div>
-      ),
+      render: (text, record) =>
+        this.props.userID === this.props.fsr.fsr.userID &&
+        !this.props.fsr.fsr.isTurnedIn ? (
+          <div style={styles.icons}>
+            <Link to="#">
+              <Tooltip title="Delete Course" arrowPointAtCenter>
+                <Icon
+                  type="delete"
+                  className="text secondary"
+                  onClick={() => this.handleDeleteCourseConfirmation(record)}
+                />
+              </Tooltip>
+            </Link>
+            <Link to="#">
+              <Tooltip title="Edit Course" arrowPointAtCenter>
+                <Icon
+                  type="edit"
+                  className="text secondary"
+                  style={{ marginLeft: 10 }}
+                  onClick={() => this.handleToggleEditCourse(record)}
+                />
+              </Tooltip>
+            </Link>
+          </div>
+        ) : (
+          ''
+        ),
     },
   ];
 
@@ -270,16 +258,21 @@ class StudyLoadForm extends Component {
             isAddCourseModalOpen={isAddCourseModalOpen}
             toggleModal={toggleModal}
           />
-          <EditCourseModal
-            id={fsrID}
-            course={course}
-            courseScheds={courseScheds}
-            editCourse={editCourse}
-            getCourseScheds={getCourseScheds}
-            isEditingCourse={isEditingCourse}
-            isEditCourseModalOpen={isEditCourseModalOpen}
-            toggleModal={toggleModal}
-          />
+          {isEditCourseModalOpen ? (
+            <EditCourseModal
+              id={fsrID}
+              course={course}
+              courseScheds={courseScheds}
+              editCourse={editCourse}
+              getCourseScheds={getCourseScheds}
+              isEditingCourse={isEditingCourse}
+              isEditCourseModalOpen={isEditCourseModalOpen}
+              toggleModal={toggleModal}
+            />
+          ) : (
+            ''
+          )}
+
           <div style={styles.button}>
             <Button
               icon="plus-circle-o"
