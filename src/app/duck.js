@@ -76,18 +76,6 @@ export const updateProfileIcon = (user, form) => {
     return dispatch({
       type: UPDATE_ICON,
       promise: Api.editUser(userID, form),
-      meta: {
-        onSuccess: () => {
-          notification.success({
-            message: 'Succesfully uploaded profile icon.',
-          });
-        },
-        onFailure: () => {
-          notification.error({
-            message: 'Server error while uploading icon.',
-          });
-        },
-      },
     });
   };
 };

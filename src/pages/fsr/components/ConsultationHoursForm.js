@@ -51,7 +51,10 @@ class ConsultationHoursForm extends Component {
           <Link
             to="#"
             disabled={
-              this.props.userID === this.props.fsr.fsr.userID ? false : true
+              this.props.userID === this.props.fsr.fsr.userID &&
+              !this.props.fsr.fsr.isTurnedIn
+                ? false
+                : true
             }
           >
             <Tooltip title="Delete Consultation Hour" arrowPointAtCenter>
@@ -67,7 +70,10 @@ class ConsultationHoursForm extends Component {
           <Link
             to="#"
             disabled={
-              this.props.userID === this.props.fsr.fsr.userID ? false : true
+              this.props.userID === this.props.fsr.fsr.userID &&
+              !this.props.fsr.fsr.isTurnedIn
+                ? false
+                : true
             }
           >
             <Tooltip title="Edit Consultation Hour" arrowPointAtCenter>
@@ -118,7 +124,6 @@ class ConsultationHoursForm extends Component {
       isAddConsultationHourModalOpen,
       isEditConsultationHourModalOpen,
       toggleModal,
-      nextStep,
       prevStep,
     } = this.props;
 
@@ -144,7 +149,9 @@ class ConsultationHoursForm extends Component {
             icon="plus-circle-o"
             type="primary"
             onClick={() => toggleModal(ADD_CONSULTATIONHOUR_MODAL)}
-            disabled={userID === fsr.fsr.userID ? false : true}
+            disabled={
+              userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? false : true
+            }
           >
             Add Consultation Hour
           </Button>
@@ -157,9 +164,6 @@ class ConsultationHoursForm extends Component {
         <div style={styles.button}>
           <Button type="primary" onClick={prevStep} style={{ marginRight: 15 }}>
             Previous
-          </Button>
-          <Button type="primary" onClick={nextStep}>
-            Next
           </Button>
         </div>
       </Card>

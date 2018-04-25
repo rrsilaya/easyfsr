@@ -40,7 +40,10 @@ class AdminWorkForm extends Component {
           <Link
             to="#"
             disabled={
-              this.props.userID === this.props.fsr.fsr.userID ? false : true
+              this.props.userID === this.props.fsr.fsr.userID &&
+              !this.props.fsr.fsr.isTurnedIn
+                ? false
+                : true
             }
           >
             <Tooltip title="Delete Admin Work" arrowPointAtCenter>
@@ -54,7 +57,10 @@ class AdminWorkForm extends Component {
           <Link
             to="#"
             disabled={
-              this.props.userID === this.props.fsr.fsr.userID ? false : true
+              this.props.userID === this.props.fsr.fsr.userID &&
+              !this.props.fsr.fsr.isTurnedIn
+                ? false
+                : true
             }
           >
             <Tooltip title="Edit Admin Work" arrowPointAtCenter>
@@ -128,7 +134,9 @@ class AdminWorkForm extends Component {
             icon="plus-circle-o"
             type="primary"
             onClick={() => toggleModal(ADD_ADMINWORK_MODAL)}
-            disabled={userID === fsr.fsr.userID ? false : true}
+            disabled={
+              userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? false : true
+            }
           >
             Add Administrative Work
           </Button>

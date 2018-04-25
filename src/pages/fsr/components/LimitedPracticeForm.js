@@ -36,6 +36,12 @@ class LimitedPracticeForm extends Component {
     }
   };
 
+  disabledDate = date => {
+    if (!date) return moment();
+
+    return date.valueOf() > moment();
+  };
+
   render() {
     const {
       userID,
@@ -79,7 +85,11 @@ class LimitedPracticeForm extends Component {
             })(
               <Select
                 placeholder="Select if Yes or No"
-                disabled={userID === fsr.fsr.userID ? false : true}
+                disabled={
+                  userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn
+                    ? false
+                    : true
+                }
               >
                 <Option value="YES">Yes</Option>
                 <Option value="NO">No</Option>
@@ -94,7 +104,12 @@ class LimitedPracticeForm extends Component {
                   : null,
             })(
               <DatePicker
-                disabled={userID === fsr.fsr.userID ? false : true}
+                disabled={
+                  userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn
+                    ? false
+                    : true
+                }
+                disabledDate={this.disabledDate}
               />,
             )}
           </FormItem>

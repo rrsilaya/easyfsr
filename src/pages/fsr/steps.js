@@ -23,9 +23,6 @@ const steps = [
   {
     title: 'Consultation Hours',
   },
-  {
-    title: 'Certification',
-  },
 ];
 
 export default steps;

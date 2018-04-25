@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, List, Row } from 'antd';
+import { Card, List, Row, Icon } from 'antd';
 
 import style from '../../styles';
 
@@ -16,10 +16,7 @@ class ServiceRecords extends Component {
           style={style.list}
           dataSource={fsr}
           renderItem={fsr => (
-            <ListItem
-              className="list-item set-cursor pointer"
-              onClick={() => pushLink(`/records/${fsr.id}`)}
-            >
+            <ListItem>
               <Row style={style.listItem} justify="center">
                 <h3 className="text primary">{fsr.semester} Term</h3>
                 <div>
@@ -30,6 +27,16 @@ class ServiceRecords extends Component {
                   <dl>
                     <dt>Teaching Load</dt>
                     <dd>{fsr.teachingLoadCreds}</dd>
+                  </dl>
+                  <dl
+                    style={{ backgroundColor: '#dedede', padding: 5 }}
+                    className="set-cursor pointer"
+                    onClick={() => pushLink(`/records/${fsr.id}`)}
+                  >
+                    <dt style={{ alignSelf: 'flex-end' }}>View FSR</dt>
+                    <dd>
+                      <Icon type="arrow-right text normal" />
+                    </dd>
                   </dl>
                 </div>
               </Row>
