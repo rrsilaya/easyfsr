@@ -117,7 +117,11 @@ class AwardForm extends Component {
             })(
               <Select
                 placeholder="Select if Recipient or Nominee"
-                disabled={userID === fsr.fsr.userID ? false : true}
+                disabled={
+                  userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn
+                    ? false
+                    : true
+                }
               >
                 <Option value="RECIPIENT">Recipient</Option>
                 <Option value="NOMINEE">Nominee</Option>
@@ -137,7 +141,11 @@ class AwardForm extends Component {
             })(
               <Select
                 placeholder="Select if Yes or No"
-                disabled={userID === fsr.fsr.userID ? false : true}
+                disabled={
+                  userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn
+                    ? false
+                    : true
+                }
               >
                 <Option value="YES">Yes</Option>
                 <Option value="NO">No</Option>
@@ -157,7 +165,11 @@ class AwardForm extends Component {
             })(
               <Input
                 placeholder="Enter professorial chair"
-                disabled={userID === fsr.fsr.userID ? false : true}
+                disabled={
+                  userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn
+                    ? false
+                    : true
+                }
               />,
             )}
           </FormItem>
@@ -174,7 +186,11 @@ class AwardForm extends Component {
             })(
               <Input
                 placeholder="Enter name of grant"
-                disabled={userID === fsr.fsr.userID ? false : true}
+                disabled={
+                  userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn
+                    ? false
+                    : true
+                }
               />,
             )}
           </FormItem>
@@ -191,7 +207,11 @@ class AwardForm extends Component {
             })(
               <Input
                 placeholder="Enter title of chair or grant"
-                disabled={userID === fsr.fsr.userID ? false : true}
+                disabled={
+                  userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn
+                    ? false
+                    : true
+                }
               />,
             )}
           </FormItem>
@@ -203,7 +223,11 @@ class AwardForm extends Component {
             })(
               <DatePicker
                 disabledDate={this.disabledStartDate}
-                disabled={userID === fsr.fsr.userID ? false : true}
+                disabled={
+                  userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn
+                    ? false
+                    : true
+                }
               />,
             )}
           </FormItem>
@@ -213,14 +237,24 @@ class AwardForm extends Component {
             })(
               <DatePicker
                 disabledDate={this.disabledEndDate}
-                disabled={userID === fsr.fsr.userID ? false : true}
+                disabled={
+                  userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn
+                    ? false
+                    : true
+                }
               />,
             )}
           </FormItem>
           <FormItem {...formItemLayout} label="File">
             {getFieldDecorator('filepath')(
               <Upload>
-                <Button disabled={userID === fsr.fsr.userID ? false : true}>
+                <Button
+                  disabled={
+                    userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn
+                      ? false
+                      : true
+                  }
+                >
                   <Icon type="upload" /> Upload File
                 </Button>
                 {award.filepath ? award.filepath.split('/')[3] : ''}

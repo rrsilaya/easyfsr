@@ -80,6 +80,7 @@ const initialState = {
   isEditCourseModalOpen: false,
   isAddConsultationHourModalOpen: false,
   isEditConsultationHourModalOpen: false,
+  isCertificationModalOpen: false,
 
   isTurningIn: false,
   isFinalizing: false,
@@ -910,6 +911,11 @@ const reducer = (state = initialState, action) => {
           return {
             ...state,
             isEditConsultationHourModalOpen: !state.isEditConsultationHourModalOpen,
+          };
+        case Action.CERTIFICATION:
+          return {
+            ...state,
+            isCertificationModalOpen: !state.isCertificationModalOpen,
           };
         default:
           return state;
