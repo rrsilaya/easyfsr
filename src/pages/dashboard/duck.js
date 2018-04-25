@@ -229,6 +229,12 @@ const initialState = {
   log: [],
   announcements: [],
   notifications: [],
+  pagination: {
+    page: 0,
+    pages: 0,
+    limit: 0,
+    total: 0,
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -419,6 +425,12 @@ const reducer = (state = initialState, action) => {
         success: prevState => ({
           ...prevState,
           log: payload.data.data,
+          pagination: {
+            page: payload.data.page,
+            pages: payload.data.pages,
+            limit: payload.data.limit,
+            total: payload.data.total,
+          },
         }),
         finish: prevState => ({
           ...prevState,
