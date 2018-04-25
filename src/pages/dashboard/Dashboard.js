@@ -170,7 +170,11 @@ class Dashboard extends Component {
                         actions={[
                           <Icon
                             style={styles.listItems}
-                            type="close-circle"
+                            type={
+                              isDeletingAnnouncement
+                                ? 'loading'
+                                : 'close-circle'
+                            }
                             spin={isDeletingAnnouncement}
                             onClick={() =>
                               this.handleDeleteAnnouncement(
