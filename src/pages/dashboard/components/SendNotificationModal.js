@@ -127,9 +127,9 @@ class SendNotificationModal extends Component {
               ],
             })(
               <Select placeholder="Select Priority Level">
-                <Option value="High">High</Option>
-                <Option value="Normal">Normal</Option>
-                <Option value="Low">Low</Option>
+                <Option value="HIGH">High</Option>
+                <Option value="NORMAL">Normal</Option>
+                <Option value="LOW">Low</Option>
               </Select>,
             )}
           </FormItem>

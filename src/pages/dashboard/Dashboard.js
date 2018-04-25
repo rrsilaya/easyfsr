@@ -231,14 +231,10 @@ class Dashboard extends Component {
                           />,
                         ]}
                       >
-                        <Row type="flex" style={styles.listItems}>
+                        <Row style={{ width: '100%' }}>
                           <dl>
                             <dt>Sender</dt>
-                            <dd>{notification.senderID}</dd>
-                          </dl>
-                          <dl>
-                            <dt>Receiver</dt>
-                            <dd>{notification.receiverID}</dd>
+                            <dd>{notification.senderName}</dd>
                           </dl>
                           <dl>
                             <dt>Message</dt>
