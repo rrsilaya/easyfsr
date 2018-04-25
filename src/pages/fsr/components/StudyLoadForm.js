@@ -112,7 +112,7 @@ class StudyLoadForm extends Component {
       title: 'Are you sure you want to delete this course?',
       okType: 'danger',
       onOk: () => {
-        this.props.deleteCreativeWork(courseID);
+        this.props.deleteCourse(courseID);
       },
       onCancel() {},
     });

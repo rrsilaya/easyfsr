@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Table, Button, Card, Icon, Tooltip, Modal } from 'antd';
 import { SUBJECT, ADD_SUBJECT_MODAL, EDIT_SUBJECT_MODAL } from '../duck';
+import { DataLoader } from '../../../global';
 
 import styles from '../styles';
 
@@ -102,6 +103,7 @@ class TeachingLoadForm extends Component {
       subjects,
       subject,
       timeslots,
+      schedule,
       addSubject,
       editSubject,
       getTimeslots,
@@ -109,11 +111,22 @@ class TeachingLoadForm extends Component {
       isAddingSubject,
       isAddingTimeslot,
       isEditingSubject,
+      isGettingSchedule,
       isAddSubjectModalOpen,
       isEditSubjectModalOpen,
       toggleModal,
       nextStep,
     } = this.props;
+
+    const sched = schedule.map(timeslot => {
+      const subject = subjects.find(
+        subject => subject.subjectID === timeslot.subjectID,
+      );
+
+      timeslot.day = timeslot.day.toUpperCase();
+
+      return { ...timeslot, ...subject };
+    });
 
     return (
       <Card title="Teaching Load in the College" style={styles.formFSR}>
@@ -140,13 +153,23 @@ class TeachingLoadForm extends Component {
         ) : (
           ''
         )}
-
-        <div
-          className="scale-down"
-          style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
-        >
-          <Schedule data={[]} />
-        </div>
+        <DataLoader
+          isLoading={isGettingSchedule}
+          color="#fff"
+          spinColor="#483440"
+          content={
+            <div
+              className="scale-down"
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <Schedule data={sched} />
+            </div>
+          }
+        />
         <div style={styles.button}>
           <Button
             icon="plus-circle-o"

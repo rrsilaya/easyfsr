@@ -75,7 +75,7 @@ class AdminWorkForm extends Component {
       title: 'Are you sure you want to delete this administrative work?',
       okType: 'danger',
       onOk: () => {
-        this.props.deleteCreativeWork(adminWorkID);
+        this.props.deleteAdminWork(adminWorkID);
       },
       onCancel() {},
     });

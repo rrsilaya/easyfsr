@@ -89,6 +89,7 @@ class FSRForm extends Component {
       subjects,
       subject,
       timeslots,
+      schedule,
       researches,
       research,
       cworks,
@@ -149,6 +150,7 @@ class FSRForm extends Component {
       isAddingTimeslot,
       isEditingSubject,
       isGettingTimeslots,
+      isGettingSchedule,
       isGettingResearches,
       isAddingResearch,
       isEditingResearch,
@@ -275,6 +277,7 @@ class FSRForm extends Component {
                   subjects={subjects}
                   subject={subject}
                   timeslots={timeslots}
+                  schedule={schedule}
                   getSubjects={getSubjects}
                   addSubject={addSubject}
                   deleteSubject={deleteSubject}
@@ -286,6 +289,7 @@ class FSRForm extends Component {
                   isAddingTimeslot={isAddingTimeslot}
                   isEditingSubject={isEditingSubject}
                   isGettingTimeslots={isGettingTimeslots}
+                  isGettingSchedule={isGettingSchedule}
                   isAddSubjectModalOpen={isAddSubjectModalOpen}
                   isEditSubjectModalOpen={isEditSubjectModalOpen}
                   toggleModal={toggleModal}

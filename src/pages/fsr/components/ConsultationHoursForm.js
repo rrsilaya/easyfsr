@@ -91,7 +91,7 @@ class ConsultationHoursForm extends Component {
       title: 'Are you sure you want to delete this consultation hour?',
       okType: 'danger',
       onOk: () => {
-        this.props.deleteCreativeWork(chID);
+        this.props.deleteConsultationHour(chID);
       },
       onCancel() {},
     });

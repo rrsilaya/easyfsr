@@ -131,7 +131,7 @@ class EditConsultationHourModal extends Component {
               ],
               initialValue: consultationHour.day,
             })(
-              <Select placeholder="Select day of consultation hour">
+              <Select placeholder="Select day of consultation hour" disabled>
                 <Option value="Monday">Monday</Option>
                 <Option value="Tuesday">Tuesday</Option>
                 <Option value="Wednesday">Wednesday</Option>
