@@ -39,6 +39,19 @@ class ProfileInfo extends Component {
       fsr,
       pushLink,
     } = this.props;
+    const render = [
+      <ServiceRecords key={0} fsr={fsr} pushLink={pushLink} />,
+      <Research key={1} research={research} />,
+      <Awards key={2} award={award} />,
+      <AdminWork key={3} adminWork={adminWork} />,
+      <CommunityService key={4} service={service} />,
+      <CreativeWorks key={5} creativeWork={creativeWork} />,
+      <LimitedPractices key={6} limitedPractice={limitedPractice} />,
+      <StudyLoad key={7} studyLoad={studyLoad} />,
+    ];
+
+    if (userLoggedIn.acctType !== 'ADMIN' && !userLoggedIn.isHead)
+      delete render[0];
 
     return (
       <StackGrid
@@ -48,18 +61,7 @@ class ProfileInfo extends Component {
         duration={0}
         gridRef={grid => (this.grid = grid)}
       >
-        {userLoggedIn.acctType === 'ADMIN' || userLoggedIn.isHead ? (
-          <ServiceRecords fsr={fsr} pushLink={pushLink} />
-        ) : (
-          ''
-        )}
-        <Research research={research} />
-        <Awards award={award} />
-        <AdminWork adminWork={adminWork} />
-        <CommunityService service={service} />
-        <CreativeWorks creativeWork={creativeWork} />
-        <LimitedPractices limitedPractice={limitedPractice} />
-        <StudyLoad studyLoad={studyLoad} />
+        {render.map(component => component)}
       </StackGrid>
     );
   }
