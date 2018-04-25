@@ -29,6 +29,7 @@ const { confirm } = Modal;
 class Dashboard extends Component {
   componentDidMount() {
     this.props.getAnnouncements();
+    this.props.getUsers({ limit: 99999 });
     this.props.getNotifications({ isResolved: 0 });
     this.props.getLog();
   }
@@ -81,22 +82,31 @@ class Dashboard extends Component {
       isSettingsModalOpen,
       isGettingNotifications,
       isGettingAnnouncements,
+      isAddingFSR,
+      isGettingMeta,
       isDeletingAnnouncement,
       isDeletingNotification,
 
       searchedUsers,
+      selectedUsers,
+      users,
 
       addNotification,
       addAnnouncement,
       addMetaData,
+      addFSR,
 
       announcements,
       notifications,
       log,
+      meta,
       pagination,
 
       toggleModal,
       searchUser,
+      changeSelectedUsers,
+      getUsers,
+      getMetaData,
     } = this.props;
     return (
       <div>
@@ -131,6 +141,15 @@ class Dashboard extends Component {
                 isCreateFSRModalOpen={isCreateFSRModalOpen}
                 toggleModal={toggleModal}
                 handleAfterClose={this.handleAfterClose}
+                getUsers={getUsers}
+                users={users}
+                selectedUsers={selectedUsers}
+                changeSelectedUsers={changeSelectedUsers}
+                isAddingFSR={isAddingFSR}
+                isGettingMeta={isGettingMeta}
+                addFSR={addFSR}
+                getMetaData={getMetaData}
+                meta={meta}
               />
               <Button
                 type="default"

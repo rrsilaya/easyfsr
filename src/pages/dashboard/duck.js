@@ -12,6 +12,7 @@ export const SETTINGS = 'SETTINGS';
 const SEARCH_USER = 'DASHBOARD/SEARCH_USER';
 const GET_USERS = 'DASHBOARD/GET_USERS';
 const CHANGE_SELECTED_USER = 'DASHBOARD/CHANGE_SELECTED_USER';
+const CHANGE_SELECTED_USERS = 'DASHBOARD/CHANGE_SELECTED_USERS';
 const ADD_NOTIFICATION = 'DASHBOARD/ADD_NOTIFICATION';
 const DELETE_NOTIFICATION = 'DASHBOARD/DELETE_NOTIFICATION';
 export const ADD_ANNOUNCEMENT = 'DASHBOARD/ADD_ANNOUNCEMENT';
@@ -20,7 +21,9 @@ const GET_ANNOUNCEMENTS = 'DASHBOARD/GET_ANNOUNCEMENTS';
 const GET_NOTIFICATIONS = 'DASHBOARD/GET_NOTIFICATIONS';
 export const GET_LOG = 'DASHBOARD/GET_LOGS';
 export const ADD_META = 'DASHBOARD/ADD_META';
+export const GET_META = 'DASHBOARD/GET_META';
 const TOGGLE_MODAL = 'DASHBOARD/TOGGLE_MODAL';
+const ADD_FSR = 'DASHBOARD/ADD_FSR';
 
 export const getUsers = query => {
   return dispatch => {
@@ -93,6 +96,11 @@ export const getLog = query => {
 
 export const changeSelectedUser = user => ({
   type: CHANGE_SELECTED_USER,
+  payload: user,
+});
+
+export const changeSelectedUsers = user => ({
+  type: CHANGE_SELECTED_USERS,
   payload: user,
 });
 
@@ -209,6 +217,43 @@ export const addMetaData = body => {
   };
 };
 
+export const getMetaData = query => {
+  return dispatch => {
+    return dispatch({
+      type: GET_META,
+      promise: Api.getMeta(query),
+      meta: {
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while fetching meta data.',
+          });
+        },
+      },
+    });
+  };
+};
+
+export const addFSR = body => {
+  return dispatch => {
+    return dispatch({
+      type: ADD_FSR,
+      promise: Api.addFSR(body),
+      meta: {
+        onSuccess: () => {
+          notification.success({
+            message: 'Successfully added FSR/s.',
+          });
+        },
+        onFailure: () => {
+          notification.error({
+            message: 'Server error while adding FSR/s.',
+          });
+        },
+      },
+    });
+  };
+};
+
 const initialState = {
   isSendNotificationModalOpen: false,
   isCreateNotificationModalOpen: false,
@@ -218,15 +263,21 @@ const initialState = {
   isSearchingUsers: false,
   isAddingNotification: false,
   isAddingAnnouncement: false,
+  isGettingUsers: false,
   isDeletingAnnouncement: false,
   isDeletingNotification: false,
   isAddingMeta: false,
+  isGettingMeta: false,
+  isAddingFSR: false,
 
   isGettingsLogs: false,
   isGettingAnnouncements: true,
   isGettingNotifications: true,
   searchedUsers: [],
+  selectedUsers: [],
+  users: [],
   log: [],
+  meta: {},
   announcements: [],
   notifications: [],
   pagination: {
@@ -315,6 +366,22 @@ const reducer = (state = initialState, action) => {
         }),
       });
 
+    case GET_META:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingMeta: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          meta: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingMeta: false,
+        }),
+      });
+
     case SEARCH_USER:
       return handle(state, action, {
         start: prevState => ({
@@ -371,12 +438,6 @@ const reducer = (state = initialState, action) => {
         success: prevState => ({
           ...prevState,
           users: payload.data.data,
-          pagination: {
-            page: payload.data.page,
-            pages: payload.data.pages,
-            limit: payload.data.limit,
-            total: payload.data.total,
-          },
         }),
         finish: prevState => ({
           ...prevState,
@@ -416,6 +477,11 @@ const reducer = (state = initialState, action) => {
         }),
       });
 
+    case CHANGE_SELECTED_USERS:
+      return {
+        ...state,
+        selectedUsers: payload,
+      };
     case GET_LOG:
       return handle(state, action, {
         start: prevState => ({
@@ -435,6 +501,21 @@ const reducer = (state = initialState, action) => {
         finish: prevState => ({
           ...prevState,
           isGettingLogs: false,
+        }),
+      });
+
+    case ADD_FSR:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isAddingFSR: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isAddingFSR: false,
         }),
       });
 
