@@ -83,7 +83,6 @@ router.post('/timeslot/', async (req, res) => {
       timeEnd: req.body.timeEnd,
     });
     const timeslot = await Ctrl.getTimeslot({ timeslotID });
-    subject = await getSubject({ subjectID });
     await addLog({
       action: 'INSERT_TIMESLOT',
       changes: '',
@@ -94,7 +93,6 @@ router.post('/timeslot/', async (req, res) => {
       status: 200,
       message: 'Successfully created timeslot',
       data: timeslot,
-      moreData: subject,
     });
   } catch (status) {
     let message = '';

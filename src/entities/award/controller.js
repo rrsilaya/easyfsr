@@ -33,6 +33,7 @@ const defaultVal = {
   endDate: new Date('0000-00-00'),
   filepath: '',
 };
+
 export const addAward = award => {
   return new Promise((resolve, reject) => {
     db.query(Query.addAward, { ...defaultVal, ...award }, (err, results) => {

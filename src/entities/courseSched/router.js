@@ -1,11 +1,12 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
 import {
-  getIDofFSRfromCourse,
   getUserIDofFSR,
   getIDofFSRfromCourseSched,
 } from '../../middlewares/controller';
 import { addLog } from './../log/controller';
+import moment from 'moment';
+import { addCourse } from './../course/controller';
 
 const router = Router();
 
@@ -55,15 +56,31 @@ const router = Router();
 
 router.post('/courseSched/', async (req, res) => {
   try {
-    const idOfCourse = await getIDofFSRfromCourse(
-      req.body.courseID,
-      req.session.user.userID,
-    );
     const userIDofFSR = await getUserIDofFSR(
-      idOfCourse,
+      req.body.id,
       req.session.user.userID,
     );
-    const courseSchedID = await Ctrl.addCourseSched(req.body);
+    const timeStart = moment(req.body.timeStart, 'HH:mm:ss');
+    const timeEnd = moment(req.body.timeEnd, 'HH:mm:ss');
+
+    if (!moment(timeStart).isBefore(timeEnd))
+      res.status(400).json({
+        status: 400,
+        message: 'Bad Request',
+      });
+    let course = {
+      id: req.body.id,
+      school: req.body.school,
+      credit: req.body.credit,
+      courseNumber: req.body.courseNumber,
+    };
+    const courseID = await addCourse(course);
+    const courseSchedID = await Ctrl.addCourseSched({
+      courseID: courseID,
+      day: req.body.day,
+      timeStart: req.body.timeStart,
+      timeEnd: req.body.timeEnd,
+    });
     const courseSched = await Ctrl.getCourseSched({ courseSchedID });
     await addLog({
       action: 'INSERT_COURSE_SCHED',
