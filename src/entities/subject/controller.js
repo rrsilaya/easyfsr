@@ -57,6 +57,7 @@ export const deleteSubject = ({ subjectID }) => {
 export const getSubject = ({ subjectID }) => {
   return new Promise((resolve, reject) => {
     db.query(Query.getSubject, { subjectID }, (err, results) => {
+      console.log(results);
       if (err) return reject(500);
       else if (!results.length) return reject(404);
       return resolve(results[0]);

@@ -3,6 +3,7 @@ import * as Query from './queries';
 import { filtered, escapeSearch } from '../../utils';
 
 const studyLoadAttributes = [
+  'id',
   'fullLeaveWithPay',
   'fellowshipRecipient',
   'degree',
@@ -71,6 +72,7 @@ export const getStudyLoad = ({ id }) => {
 };
 
 export const getStudyLoads = (studyLoad, userID) => {
+  console.log(studyLoad);
   return new Promise((resolve, reject) => {
     db.query(
       Query.getStudyLoads(
@@ -83,6 +85,14 @@ export const getStudyLoads = (studyLoad, userID) => {
         ...escapeSearch(studyLoad, searchFields, studyLoad.limit),
       },
       (err, results) => {
+        console.log(
+          Query.getStudyLoads(
+            filtered(studyLoad, studyLoadAttributes),
+            studyLoad.sortBy,
+            userID,
+          ),
+        );
+        console.log(err);
         if (err) return reject(500);
         return resolve(results);
       },

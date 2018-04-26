@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
+import { getSubject } from '../subject/controller';
+
 import {
   getUserIDofFSR,
   getIDofFSRfromSubject,
@@ -62,6 +64,7 @@ router.post('/timeslot/', async (req, res) => {
     );
     const timeslotID = await Ctrl.addTimeslot(req.body);
     const timeslot = await Ctrl.getTimeslot({ timeslotID });
+    const subject = await getSubject(req.body);
     await addLog({
       action: 'INSERT_TIMESLOT',
       changes: '',
@@ -72,6 +75,7 @@ router.post('/timeslot/', async (req, res) => {
       status: 200,
       message: 'Successfully created timeslot',
       data: timeslot,
+      moreData: subject,
     });
   } catch (status) {
     let message = '';

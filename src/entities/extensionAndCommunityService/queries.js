@@ -5,7 +5,7 @@ export const addExtensionAndCommunityService = `
     id,
     participant,
     role,
-    fundingAgency
+    fundingAgency,
     hours,
     title,
     creditUnit,
@@ -17,7 +17,7 @@ export const addExtensionAndCommunityService = `
     :id,
     :participant,
     :role,
-    :fundingAgency
+    :fundingAgency,
     :hours,
     :title,
     :creditUnit,

@@ -17,7 +17,7 @@ import { getConsultationHours } from './../consultationHours/controller';
 import { getExtensionAndCommunityServices } from './../extensionAndCommunityService/controller';
 import { getLtdPractOfProfs } from './../limitedPracticeOfProf/controller';
 import { getSubjectsWithTimeslot } from './../subject/controller';
-import { getStudyLoad } from './../studyLoad/controller';
+import { getStudyLoads } from './../studyLoad/controller';
 import { getUserByUserID } from './../user/controller';
 import { getResearches } from './../research/controller';
 import { getMetaData, getLatestMetaData } from './../meta/controller';
@@ -591,7 +591,7 @@ router.get('/fsr/:id', canViewFSR, async (req, res) => {
     const services = await getExtensionAndCommunityServices(req.params);
     const ltdPractices = await getLtdPractOfProfs(req.params);
     const subjects = await getSubjectsWithTimeslot(req.params);
-    const studyLoad = await getStudyLoad(req.params);
+    const studyLoad = await getStudyLoads(req.params);
     const userID = fsr.userID;
     const user = await getUserByUserID({ userID });
     const meta = await getMetaData({ id: fsr.metaID });
@@ -616,7 +616,7 @@ router.get('/fsr/:id', canViewFSR, async (req, res) => {
       studyLoad,
       meta,
     };
-
+    console.log(fsr);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched fsr',
@@ -727,6 +727,7 @@ router.get('/fsr/:id', canViewFSR, async (req, res) => {
 router.get('/fsr', userGetAll, async (req, res) => {
   try {
     const FSRs = await Ctrl.getFSRs(req.query);
+    console.log(FSRs);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched FSRs',
