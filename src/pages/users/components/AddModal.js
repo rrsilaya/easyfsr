@@ -53,7 +53,6 @@ class AddModal extends Component {
   };
 
   validateEmployeeID = async (rule, value, callback) => {
-    console.log(rule);
     if (!value) return callback('Please input employee ID');
     if (value.match(rule.pattern.source) === null)
       return callback('Employee ID must consist of digits only');

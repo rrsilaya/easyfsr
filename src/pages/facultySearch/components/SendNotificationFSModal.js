@@ -42,7 +42,9 @@ class SendNotificationFSModal extends Component {
         onCancel={() => toggleModal(SEND_NOTIFICATION_FS)}
         destroyOnClose
         footer={[
-          <Button key="back">Cancel</Button>,
+          <Button key="back" onClick={() => toggleModal(SEND_NOTIFICATION_FS)}>
+            Cancel
+          </Button>,
           <Button
             key="submit"
             type="primary"
