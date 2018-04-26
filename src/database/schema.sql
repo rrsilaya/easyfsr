@@ -105,8 +105,8 @@ CREATE TABLE `timeslot`(
   -- study load, course, courseSched
 
 CREATE TABLE `studyLoad`(
-  `degree` VARCHAR (50) NOT NULL,
-  `university` VARCHAR (50) NOT NULL,
+  `degree` VARCHAR (50),
+  `university` VARCHAR (50),
   `totalSLcredits` INT (10) DEFAULT 0,
   `id` INT NOT NULL,
   `fullLeaveWithPay` BOOLEAN DEFAULT 0,
@@ -175,8 +175,8 @@ CREATE TABLE `award`(
   `collegeHasNominated` VARCHAR (50) NOT NULL,
   `recipientOrNominee` VARCHAR (50) NOT NULL,
   `professionalChair` VARCHAR (50) NOT NULL,
-  `approvedStartDate` DATE NOT NULL, --                   DATE format: YYYY-MM-DD
-  `endDate` DATE NOT NULL, --                             DATE format: YYYY-MM-DD
+  `approvedStartDate` DATE , --                   DATE format: YYYY-MM-DD
+  `endDate` DATE , --                             DATE format: YYYY-MM-DD
   `filepath` TEXT (50),
   CONSTRAINT `award_fsr_fk`
     FOREIGN KEY (`id`)

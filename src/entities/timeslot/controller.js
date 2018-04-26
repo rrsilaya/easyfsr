@@ -9,11 +9,8 @@ const searchFields = ['day', 'timeStart', 'timeEnd'];
 
 export const addTimeslot = timeslot => {
   return new Promise((resolve, reject) => {
-    const timeStart = moment(timeslot.timeStart, 'HH:mm:ss');
-    const timeEnd = moment(timeslot.timeEnd, 'HH:mm:ss');
-
-    if (!moment(timeStart).isBefore(timeEnd)) return reject(400);
     db.query(Query.addTimeslot, timeslot, (err, results) => {
+      console.log(err);
       if (err) return reject(500);
       return resolve(results.insertId);
     });

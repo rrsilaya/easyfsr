@@ -2,14 +2,12 @@ import { formatQueryParams } from '../../utils';
 
 export const addTimeslot = `
 	INSERT INTO timeslot (
-		timeslotID,
 		subjectID,
 		day,
 		timeStart,
 		timeEnd
 	)
 	VALUES (
-		DEFAULT,
 		:subjectID,
 		:day,
 		:timeStart,

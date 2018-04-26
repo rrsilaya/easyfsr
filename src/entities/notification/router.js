@@ -133,7 +133,12 @@ router.post('/notification/', isAdmin, async (req, res) => {
 router.delete('/notification/:notificationID', isAdmin, async (req, res) => {
   try {
     const notification = await Ctrl.getNotification(req.params);
+    notification.senderName = await getName({ userID: notification.senderID });
+    notification.receiverName = await getName({
+      userID: notification.receiverID,
+    });
     await Ctrl.deleteNotification(req.params);
+
     await addLog({
       action: 'DELETE_NOTIFICATION',
       changes: '',

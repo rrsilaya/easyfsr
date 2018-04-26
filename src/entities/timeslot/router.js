@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as Ctrl from './controller';
-import { getSubject } from '../subject/controller';
+import { addSubject, getSubject } from '../subject/controller';
+import moment from 'moment';
 
 import {
   getUserIDofFSR,
@@ -54,17 +55,35 @@ const router = Router();
 
 router.post('/timeslot/', async (req, res) => {
   try {
-    const idOfSubject = await getIDofFSRfromSubject(
-      req.body.subjectID,
-      req.session.user.userID,
-    );
     const userIDofFSR = await getUserIDofFSR(
-      idOfSubject,
+      req.body.id,
       req.session.user.userID,
     );
-    const timeslotID = await Ctrl.addTimeslot(req.body);
+    const timeStart = moment(req.body.timeStart, 'HH:mm:ss');
+    const timeEnd = moment(req.body.timeEnd, 'HH:mm:ss');
+
+    if (!moment(timeStart).isBefore(timeEnd))
+      res.status(400).json({
+        status: 400,
+        message: 'Bad Request',
+      });
+    let subject = {
+      id: req.body.id,
+      subjectCode: req.body.subjectCode,
+      teachingLoadCreds: req.body.teachingLoadCreds,
+      noOfStudents: req.body.noOfStudents,
+      sectionCode: req.body.sectionCode,
+      room: req.body.room,
+    };
+    const subjectID = await addSubject(subject);
+    const timeslotID = await Ctrl.addTimeslot({
+      subjectID: subjectID,
+      day: req.body.day,
+      timeStart: req.body.timeStart,
+      timeEnd: req.body.timeEnd,
+    });
     const timeslot = await Ctrl.getTimeslot({ timeslotID });
-    const subject = await getSubject(req.body);
+    subject = await getSubject({ subjectID });
     await addLog({
       action: 'INSERT_TIMESLOT',
       changes: '',

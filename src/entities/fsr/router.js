@@ -10,14 +10,17 @@ import {
 import * as Ctrl from './controller';
 import { getUsers, getTotalUsers } from './../user/controller';
 import { getAdminWorks } from './../adminWork/controller';
-import { getAwards } from './../award/controller';
+import { addAward, getAwards } from './../award/controller';
 import { getCreativeWorks } from './../creativeWork/controller';
 import { getCoursesWithSched } from './../course/controller';
 import { getConsultationHours } from './../consultationHours/controller';
 import { getExtensionAndCommunityServices } from './../extensionAndCommunityService/controller';
-import { getLtdPractOfProfs } from './../limitedPracticeOfProf/controller';
+import {
+  addLtdPractOfProf,
+  getLtdPractOfProfs,
+} from './../limitedPracticeOfProf/controller';
 import { getSubjectsWithTimeslot } from './../subject/controller';
-import { getStudyLoads } from './../studyLoad/controller';
+import { addStudyLoad, getStudyLoads } from './../studyLoad/controller';
 import { getUserByUserID } from './../user/controller';
 import { getResearches } from './../research/controller';
 import { getMetaData, getLatestMetaData } from './../meta/controller';
@@ -64,10 +67,15 @@ router.post('/fsr', isAdmin, async (req, res) => {
   try {
     const users = req.body.users;
     const meta = await getLatestMetaData();
-    users.forEach(
-      async userID =>
-        await Ctrl.addFSR({ userID, ...req.body, metaID: meta.id }),
+    let fsrIDs = await Promise.all(
+      users.map(
+        async userID =>
+          await Ctrl.addFSR({ userID, ...req.body, metaID: meta.id }),
+      ),
     );
+    fsrIDs.forEach(async id => await addStudyLoad({ id }));
+    fsrIDs.forEach(async id => await addLtdPractOfProf({ id }));
+    await Promise.all(fsrIDs.map(async id => await addAward({ id })));
 
     users.forEach(
       async user =>
@@ -616,7 +624,6 @@ router.get('/fsr/:id', canViewFSR, async (req, res) => {
       studyLoad,
       meta,
     };
-    console.log(fsr);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched fsr',
@@ -727,7 +734,6 @@ router.get('/fsr/:id', canViewFSR, async (req, res) => {
 router.get('/fsr', userGetAll, async (req, res) => {
   try {
     const FSRs = await Ctrl.getFSRs(req.query);
-    console.log(FSRs);
     res.status(200).json({
       status: 200,
       message: 'Successfully fetched FSRs',

@@ -8,10 +8,14 @@ const searchFields = ['askedPermission', 'date'];
 
 export const addLtdPractOfProf = limitedPracticeOfProf => {
   return new Promise((resolve, reject) => {
-    db.query(Query.addLtdPractOfProf, limitedPracticeOfProf, (err, results) => {
-      if (err) return reject(500);
-      return resolve(results.insertId);
-    });
+    db.query(
+      Query.addLtdPractOfProf,
+      { askedPermission: 0, date: null, ...limitedPracticeOfProf },
+      (err, results) => {
+        if (err) return reject(500);
+        return resolve(limitedPracticeOfProf.id);
+      },
+    );
   });
 };
 

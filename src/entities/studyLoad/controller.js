@@ -24,6 +24,8 @@ export const addStudyLoad = studyLoad => {
     db.query(
       Query.addStudyLoad,
       {
+        degree: '',
+        university: '',
         fullLeaveWithPay: '0',
         fellowshipRecipient: '0',
         totalSLcredits: 0,
@@ -72,7 +74,6 @@ export const getStudyLoad = ({ id }) => {
 };
 
 export const getStudyLoads = (studyLoad, userID) => {
-  console.log(studyLoad);
   return new Promise((resolve, reject) => {
     db.query(
       Query.getStudyLoads(
@@ -85,14 +86,6 @@ export const getStudyLoads = (studyLoad, userID) => {
         ...escapeSearch(studyLoad, searchFields, studyLoad.limit),
       },
       (err, results) => {
-        console.log(
-          Query.getStudyLoads(
-            filtered(studyLoad, studyLoadAttributes),
-            studyLoad.sortBy,
-            userID,
-          ),
-        );
-        console.log(err);
         if (err) return reject(500);
         return resolve(results);
       },

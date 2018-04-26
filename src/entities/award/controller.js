@@ -23,10 +23,19 @@ const searchFields = [
   'endDate',
   'grantF',
 ];
-
+const defaultVal = {
+  grantF: '',
+  chairGrantTitle: '',
+  collegeHasNominated: '',
+  recipientOrNominee: '',
+  professionalChair: '',
+  approvedStartDate: new Date('0000-00-00'),
+  endDate: new Date('0000-00-00'),
+  filepath: '',
+};
 export const addAward = award => {
   return new Promise((resolve, reject) => {
-    db.query(Query.addAward, { filepath: '', ...award }, (err, results) => {
+    db.query(Query.addAward, { ...defaultVal, ...award }, (err, results) => {
       if (err) return reject(500);
       return resolve(results.insertId);
     });
