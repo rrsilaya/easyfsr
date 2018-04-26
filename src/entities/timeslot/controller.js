@@ -10,7 +10,6 @@ const searchFields = ['day', 'timeStart', 'timeEnd'];
 export const addTimeslot = timeslot => {
   return new Promise((resolve, reject) => {
     db.query(Query.addTimeslot, timeslot, (err, results) => {
-      console.log(err);
       if (err) return reject(500);
       return resolve(results.insertId);
     });
