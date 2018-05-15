@@ -47,7 +47,7 @@ export const getAnnouncements = announcement => {
         announcement.sortBy,
       ),
       {
-        field: 'title',
+        field: 'announcementID',
         ...escapeSearch(announcement, searchFields, announcement.limit),
       },
       (err, results) => {
@@ -65,7 +65,7 @@ export const getTotalAnnouncements = announcement => {
         filtered(announcement, announcementAttributes),
       ),
       {
-        field: 'title',
+        field: 'announcementID',
         ...escapeSearch(announcement, searchFields, announcement.limit),
       },
       (err, results) => {
