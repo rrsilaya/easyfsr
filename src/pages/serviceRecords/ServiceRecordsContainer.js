@@ -36,11 +36,11 @@ const mapDispatchToProps = dispatch => {
     pushLink: route => {
       dispatch(push(route));
     },
-    getAnnouncements: () => {
-      dispatch(getAnnouncements());
+    getAnnouncements: query => {
+      dispatch(getAnnouncements(query));
     },
-    getNotifications: () => {
-      dispatch(getNotifications());
+    getNotifications: query => {
+      dispatch(getNotifications(query));
     },
   };
 };

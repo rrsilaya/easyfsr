@@ -18,9 +18,9 @@ export const getFSRs = id => ({
   },
 });
 
-export const getAnnouncements = () => ({
+export const getAnnouncements = query => ({
   type: GET_ANNOUNCEMENTS,
-  promise: Api.getAnnouncements(),
+  promise: Api.getAnnouncements(query),
   meta: {
     onFailure: () => {
       notification.error({ message: 'Failure to fetch announcements' });
@@ -28,9 +28,9 @@ export const getAnnouncements = () => ({
   },
 });
 
-export const getNotifications = () => ({
+export const getNotifications = query => ({
   type: GET_NOTIFICATIONS,
-  promise: Api.getNotifications(),
+  promise: Api.getNotifications(query),
   meta: {
     onFailure: () => {
       notification.error({ message: 'Failure to fetch notifications' });
