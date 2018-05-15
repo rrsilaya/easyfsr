@@ -30,6 +30,14 @@ export const escapeSearch = (query, appendList, limit = 12) => {
 
 export const upload = (file, dest) => {
   return new Promise((resolve, reject) => {
+    if (file.mimetype.indexOf('image') == -1 && dest == 'users')
+      return reject(500);
+    else if (
+      file.mimetype.indexOf('image') == -1 &&
+      file.mimetype.indexOf('pdf') == -1 &&
+      dest !== 'users'
+    )
+      return reject(500);
     let [, filename, extension] = file.name.match(/(.+)\.([\w\d]+)$/);
     filename = filename.substring(0, 20);
     filename = `${filename}-${shortID.generate()}.${extension}`;
