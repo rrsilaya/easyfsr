@@ -31,7 +31,7 @@ class Dashboard extends Component {
     this.props.getAnnouncements();
     this.props.getUsers({ limit: 99999 });
     this.props.getNotifications({ isResolved: 0 });
-    this.props.getLog();
+    this.props.getLog({ sortBy: 'DESC', field: 'timestamp' });
   }
 
   componentWillUnmount() {
