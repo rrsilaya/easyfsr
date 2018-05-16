@@ -20,6 +20,7 @@ class ScheduleModal extends Component {
       <Modal
         title="Schedule"
         visible={isSchedModalOpen}
+        footer={null}
         onCancel={toggleScheduleModal}
         width={811 + 48}
         destroyOnClose
