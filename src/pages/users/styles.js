@@ -35,6 +35,7 @@ const style = {
   },
   sort: {
     width: 175,
+    color: #a8a8a8,
   },
   confirmation: {
     fontWeight: 'bold',

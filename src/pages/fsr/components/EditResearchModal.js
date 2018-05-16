@@ -171,6 +171,7 @@ class EditResearchModal extends Component {
               initialValue: moment(research.startDate),
             })(<DatePicker disabledDate={this.disabledStartDate} />)}
           </FormItem>
+
           <FormItem {...formItemLayout} label="End Date">
             {getFieldDecorator('endDate', {
               initialValue: research.endDate
@@ -178,6 +179,7 @@ class EditResearchModal extends Component {
                 : research.endDate,
             })(<DatePicker disabledDate={this.disabledEndDate} />)}
           </FormItem>
+
           <FormItem {...formItemLayout} label="Funding">
             {getFieldDecorator('funding', {
               initialValue: research.funding,

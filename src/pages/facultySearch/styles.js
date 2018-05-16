@@ -27,6 +27,7 @@ const styles = {
   },
   sort: {
     width: 175,
+    color: #a8a8a8,
   },
 };
 
