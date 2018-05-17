@@ -8,3 +8,7 @@ export const addAnnouncement = body => {
 export const getAnnouncements = query => {
   return axios.get(`/api/announcement?${qs.stringify(query)}`);
 };
+
+export const deleteAnnouncement = id => {
+  return axios.delete(`api/announcement/${id}`);
+};

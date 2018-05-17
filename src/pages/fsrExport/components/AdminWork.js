@@ -25,7 +25,12 @@ class AdminWork extends Component {
               <td colSpan={9} className="right">
                 Total Administrative Load Credits (ALC)
               </td>
-              <td colSpan={2}>0</td>
+              <td colSpan={2}>
+                {adminWorks.reduce(
+                  (acc, { approvedUnits }) => acc + approvedUnits,
+                  0,
+                )}
+              </td>
             </tr>
           </tbody>
         </table>

@@ -4,12 +4,19 @@ import Dashboard from './Dashboard';
 import {
   toggleModal,
   searchUser,
+  getUsers,
   addNotification,
+  deleteNotification,
+  deleteAnnouncement,
   addAnnouncement,
   getAnnouncements,
   getNotifications,
+  changeSelectedUsers,
   getLog,
   addMetaData,
+  resetPage,
+  addFSR,
+  getMetaData,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -21,16 +28,24 @@ const mapStateToProps = state => {
 
     isAddingNotification,
     isAddingAnnouncement,
+    isDeletingAnnouncement,
     isGettingAnnouncements,
     isGettingNotifications,
+    isAddingFSR,
+    isGettingMeta,
+    isDeletingNotification,
 
     isGettingLogs,
 
     user,
+    users,
     searchedUsers,
+    selectedUsers,
     announcements,
     notifications,
     log,
+    meta,
+    pagination,
   } = state.dashboard;
 
   return {
@@ -41,16 +56,24 @@ const mapStateToProps = state => {
 
     isAddingNotification,
     isAddingAnnouncement,
+    isDeletingAnnouncement,
     isGettingAnnouncements,
     isGettingNotifications,
+    isAddingFSR,
+    isGettingMeta,
+    isDeletingNotification,
 
     isGettingLogs,
 
     user,
+    users,
     searchedUsers,
+    selectedUsers,
     announcements,
     notifications,
     log,
+    meta,
+    pagination,
   };
 };
 
@@ -65,20 +88,41 @@ const mapDispatchToProps = dispatch => {
     addNotification: values => {
       dispatch(addNotification(values));
     },
+    deleteNotification: id => {
+      dispatch(deleteNotification(id));
+    },
     addAnnouncement: values => {
       dispatch(addAnnouncement(values));
+    },
+    deleteAnnouncement: id => {
+      dispatch(deleteAnnouncement(id));
     },
     getAnnouncements: () => {
       dispatch(getAnnouncements());
     },
-    getNotifications: () => {
-      dispatch(getNotifications());
+    getNotifications: query => {
+      dispatch(getNotifications(query));
     },
-    getLog: () => {
-      dispatch(getLog());
+    getUsers: query => {
+      dispatch(getUsers(query));
+    },
+    changeSelectedUsers: user => {
+      dispatch(changeSelectedUsers(user));
+    },
+    getLog: query => {
+      dispatch(getLog(query));
     },
     addMetaData: values => {
       dispatch(addMetaData(values));
+    },
+    resetPage: () => {
+      dispatch(resetPage());
+    },
+    addFSR: body => {
+      dispatch(addFSR(body));
+    },
+    getMetaData: query => {
+      dispatch(getMetaData(query));
     },
   };
 };

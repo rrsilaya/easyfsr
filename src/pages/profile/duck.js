@@ -11,17 +11,28 @@ export const SCHEDULE_MODAL = 'SCHEDULE_MODAL';
 const GET_USER = 'PROFILE/GET_USER';
 const GET_ADMIN_WORK = 'PROFILE/GET_ADMIN_WORK';
 const GET_EXT_AND_COMM_SERVICE = 'PROFILE/GET_EXT_AND_COMM_SERVICE';
+const GET_CREATIVE_WORK = 'PROFILE/GET_CREATIVE_WORK';
+const GET_LIMITED_PRACTICE = 'PROFILE/GET_LIMITED_PRACTICE';
+const GET_STUDY_LOAD = 'PROFILE/GET_STUDY_LOAD';
+const GET_AWARD = 'PROFILE/GET_AWARD';
+const GET_RESEARCH = 'PROFILE/GET_RESEARCH';
+const GET_FSR = 'PROFILE/GET_FSR';
 const UPLOAD_ICON = 'PROFILE/UPLOAD_ICON';
 const TOGGLE_MODAL = 'PROFILE/TOGGLE_MODAL';
 const GET_USER_SCHEDULE = 'PROFILE/GET_USER_SCHEDULE';
 const RESET_PAGE = 'PROFILE/RESET_PAGE';
 
 // Action Creators
-export const getUserProfile = employeeID => dispatch => {
+export const getUserProfile = employeeID => (dispatch, getState) => {
   dispatch({
     type: GET_USER,
     promise: Api.getUser(employeeID),
     meta: {
+      onSuccess: () => {
+        const { user } = getState().profile;
+
+        dispatch(getFSRs({ userID: user.userID }));
+      },
       onFailure: () => {
         notification.error({
           message: 'An error occured while getting user profile',
@@ -60,6 +71,90 @@ export const getUserExtensionAndCommService = employeeID => dispatch => {
   });
 };
 
+export const getUserCreativeWorks = employeeID => dispatch => {
+  dispatch({
+    type: GET_CREATIVE_WORK,
+    promise: Api.getUserCreativeWorks(employeeID),
+    meta: {
+      onFailure: () => {
+        notification.error({
+          message: 'An error occured while getting creative work',
+        });
+      },
+    },
+  });
+};
+
+export const getUserLimitedPractices = employeeID => dispatch => {
+  dispatch({
+    type: GET_LIMITED_PRACTICE,
+    promise: Api.getUserLimitedPractices(employeeID),
+    meta: {
+      onFailure: () => {
+        notification.error({
+          message: 'An error occured while getting limited practices',
+        });
+      },
+    },
+  });
+};
+
+export const getUserStudyLoads = employeeID => dispatch => {
+  dispatch({
+    type: GET_STUDY_LOAD,
+    promise: Api.getUserStudyLoads(employeeID),
+    meta: {
+      onFailure: () => {
+        notification.error({
+          message: 'An error occured while getting study loads',
+        });
+      },
+    },
+  });
+};
+
+export const getUserAwards = employeeID => dispatch => {
+  dispatch({
+    type: GET_AWARD,
+    promise: Api.getUserAwards(employeeID),
+    meta: {
+      onFailure: () => {
+        notification.error({
+          message: 'An error occured while getting awards',
+        });
+      },
+    },
+  });
+};
+
+export const getUserResearches = employeeID => dispatch => {
+  dispatch({
+    type: GET_RESEARCH,
+    promise: Api.getUserResearches(employeeID),
+    meta: {
+      onFailure: () => {
+        notification.error({
+          message: 'An error occured while getting researches',
+        });
+      },
+    },
+  });
+};
+
+export const getFSRs = employeeID => dispatch => {
+  dispatch({
+    type: GET_FSR,
+    promise: Api.getFSRs(employeeID),
+    meta: {
+      onFailure: () => {
+        notification.error({
+          message: 'An error occured while getting fsrs',
+        });
+      },
+    },
+  });
+};
+
 export const uploadIcon = (user, form) => {
   const { userID } = user;
   return dispatch => {
@@ -68,15 +163,15 @@ export const uploadIcon = (user, form) => {
       promise: Api.editUser(userID, form),
       meta: {
         onSuccess: () => {
-          notification.success({
-            message: 'Successfully upload profile icon.',
-          });
+          // notification.success({
+          //   message: 'Successfully upload profile icon.',
+          // });
           dispatch(updateProfileIcon(user, form));
         },
         onFailure: () => {
-          notification.error({
-            message: 'Server error whle uploading icon.',
-          });
+          // notification.error({
+          //   message: 'Server error whle uploading icon.',
+          // });
         },
       },
     });
@@ -112,10 +207,22 @@ const initialState = {
   adminWork: [],
   service: [],
   schedule: [],
+  creativeWork: [],
+  limitedPractice: [],
+  studyLoad: [],
+  award: [],
+  research: [],
+  fsr: [],
 
   isLoadingCards: {
     adminWork: true,
     extAndCommService: true,
+    creativeWork: true,
+    limitedPractice: true,
+    studyLoad: true,
+    award: true,
+    research: true,
+    fsr: true,
   },
 
   isSchedModalOpen: false,
@@ -176,6 +283,120 @@ const reducer = (state = initialState, action) => {
           isLoadingCards: {
             ...prevState.isLoadingCards,
             extAndCommService: false,
+          },
+        }),
+      });
+
+    case GET_CREATIVE_WORK:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingCreativeWork: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          creativeWork: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isLoadingCards: {
+            ...prevState.isLoadingCards,
+            creativeWork: false,
+          },
+        }),
+      });
+
+    case GET_LIMITED_PRACTICE:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingLimitedPractice: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          limitedPractice: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isLoadingCards: {
+            ...prevState.isLoadingCards,
+            limitedPractice: false,
+          },
+        }),
+      });
+
+    case GET_STUDY_LOAD:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingStudyLoad: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          studyLoad: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isLoadingCards: {
+            ...prevState.isLoadingCards,
+            studyLoad: false,
+          },
+        }),
+      });
+
+    case GET_AWARD:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingAward: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          award: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isLoadingCards: {
+            ...prevState.isLoadingCards,
+            award: false,
+          },
+        }),
+      });
+
+    case GET_RESEARCH:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingResearch: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          research: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isLoadingCards: {
+            ...prevState.isLoadingCards,
+            research: false,
+          },
+        }),
+      });
+
+    case GET_FSR:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingFSR: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          fsr: payload.data.data,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isLoadingCards: {
+            ...prevState.isLoadingCards,
+            fsr: false,
           },
         }),
       });

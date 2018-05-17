@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import moment from 'moment';
+
 import CreativeTable from './CreativeTable';
 
 class ResearchCreativeWork extends Component {
   render() {
-    const { creativeWorks } = this.props;
+    const { creativeWorks, researches } = this.props;
 
     return (
       <section>
@@ -23,18 +25,28 @@ class ResearchCreativeWork extends Component {
               <th colSpan={2}>FUNDING AGENCY</th>
               <th colSpan={2}>APPROVED CREDIT UNITS</th>
             </tr>
-            <tr>
-              <td colSpan={3}>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td colSpan={3}>&nbsp;</td>
-              <td colSpan={2}>&nbsp;</td>
-              <td colSpan={2}>&nbsp;</td>
-            </tr>
+            {researches
+              .filter(({ type }) => type === 'PROPOSAL')
+              .map(research => (
+                <tr key={research.researchID}>
+                  <td colSpan={3}>{research.title}</td>
+                  <td>{research.role}</td>
+                  <td colSpan={3}>{research.coAuthor}</td>
+                  <td colSpan={2}>{research.funding}</td>
+                  <td colSpan={2}>{research.approvedUnits}</td>
+                </tr>
+              ))}
             <tr>
               <td colSpan={9} className="right">
                 Total Research Work Load Credits (RLC)
               </td>
-              <td colSpan={2}>0</td>
+              <td colSpan={2}>
+                {researches.reduce(
+                  (acc, { type, approvedUnits }) =>
+                    type === 'PROPOSAL' ? acc + parseFloat(approvedUnits) : acc,
+                  0,
+                )}
+              </td>
             </tr>
           </tbody>
         </table>
@@ -56,11 +68,35 @@ class ResearchCreativeWork extends Component {
               <th>FUNDING AGENCY</th>
               <th colSpan={2}>APPROVED CREDIT UNITS</th>
             </tr>
+            {researches
+              .filter(({ type }) => type === 'IMPLEMENTATION')
+              .map(research => (
+                <tr key={research.researchID}>
+                  <td colSpan={3}>{research.title}</td>
+                  <td>{research.role}</td>
+                  <td colSpan={2}>&nbsp;</td>
+                  <td>{moment(research.startDate).format('MM/DD/YY')}</td>
+                  <td>
+                    {!!research.endDate &&
+                      moment(research.endDate).format('MM/DD/YY')}
+                  </td>
+                  <td>{research.funding}</td>
+                  <td colSpan={2}>{research.approvedUnits}</td>
+                </tr>
+              ))}
             <tr>
               <td colSpan={9} className="right">
                 Total Research Work Load Credits (RLC)
               </td>
-              <td colSpan={2}>0</td>
+              <td colSpan={2}>
+                {researches.reduce(
+                  (acc, { type, approvedUnits }) =>
+                    type === 'IMPLEMENTATION'
+                      ? acc + parseFloat(approvedUnits)
+                      : acc,
+                  0,
+                )}
+              </td>
             </tr>
           </tbody>
         </table>
@@ -79,7 +115,7 @@ class ResearchCreativeWork extends Component {
         <CreativeTable
           section="II. B3."
           title="MONOGRAPHS: manuals, training modules"
-          data={creativeWorks.filter(work => work.type === 'Monograph')}
+          data={creativeWorks.filter(work => work.type === 'Monographs')}
         />
         <CreativeTable
           section="II. B4."

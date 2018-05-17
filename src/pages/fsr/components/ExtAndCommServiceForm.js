@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Table, Button, Card, Modal, Icon, Tooltip } from 'antd';
+import { Button, Card, Modal, Icon, Tooltip } from 'antd';
 import {
   EXTANDCOMMSERVICE,
   ADD_EXTANDCOMMSERVICE_MODAL,
@@ -44,6 +43,8 @@ class ExtAndCommServiceForm extends Component {
 
   render() {
     const {
+      userID,
+      fsr,
       fsrID,
       extAndCommServices,
       extAndCommService,
@@ -81,6 +82,9 @@ class ExtAndCommServiceForm extends Component {
             icon="plus-circle-o"
             type="primary"
             onClick={() => toggleModal(ADD_EXTANDCOMMSERVICE_MODAL)}
+            disabled={
+              userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? false : true
+            }
           >
             Add Extension and Community Service
           </Button>
@@ -101,32 +105,40 @@ class ExtAndCommServiceForm extends Component {
                 <Card
                   key={extension.extAndCommServiceID}
                   style={{ borderColor: '#483440' }}
-                  actions={[
-                    <Tooltip
-                      title="Edit Extension and Community Service"
-                      arrowPointAtCenter
-                    >
-                      <Icon
-                        type="edit"
-                        className="text normal"
-                        onClick={() =>
-                          this.handleToggleEditExtAndCommService(extension)
-                        }
-                      />
-                    </Tooltip>,
-                    <Tooltip
-                      title="Delete Extension and Community Service"
-                      arrowPointAtCenter
-                    >
-                      <Icon
-                        type="delete"
-                        className="text normal"
-                        onClick={() =>
-                          this.handleDeleteExtensionConfirmation(extension)
-                        }
-                      />
-                    </Tooltip>,
-                  ]}
+                  actions={
+                    userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn
+                      ? [
+                          <Tooltip
+                            title="Edit Extension and Community Service"
+                            arrowPointAtCenter
+                          >
+                            <Icon
+                              type="edit"
+                              className="text normal"
+                              onClick={() =>
+                                this.handleToggleEditExtAndCommService(
+                                  extension,
+                                )
+                              }
+                            />
+                          </Tooltip>,
+                          <Tooltip
+                            title="Delete Extension and Community Service"
+                            arrowPointAtCenter
+                          >
+                            <Icon
+                              type="delete"
+                              className="text normal"
+                              onClick={() =>
+                                this.handleDeleteExtensionConfirmation(
+                                  extension,
+                                )
+                              }
+                            />
+                          </Tooltip>,
+                        ]
+                      : null
+                  }
                 >
                   <dl>
                     <dt>Activity/Program</dt>

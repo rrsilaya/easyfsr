@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import StackGrid from 'react-stack-grid';
-import { Table, Button, Card, Popconfirm, Icon, Modal, Tooltip } from 'antd';
+import { Table, Button, Card, Icon, Modal, Tooltip } from 'antd';
 import {
   RESEARCH,
   ADD_RESEARCH_MODAL,
@@ -80,28 +80,35 @@ class ResearchAndCreativeWorkForm extends Component {
       align: 'center',
     },
     {
-      render: (text, record) => (
-        <div style={styles.icons}>
-          <Popconfirm
-            title="Are you sure you want to delete this creative work?"
-            onConfirm={() =>
-              this.props.deleteCreativeWork(record.creativeWorkID)
-            }
-          >
+      render: (text, record) =>
+        this.props.userID === this.props.fsr.fsr.userID &&
+        !this.props.fsr.fsr.isTurnedIn ? (
+          <div style={styles.icons}>
             <Link to="#">
-              <Icon type="delete" className="text secondary" />
+              <Tooltip title="Delete Creative Work" arrowPointAtCenter>
+                <Icon
+                  type="delete"
+                  className="text secondary"
+                  onClick={() =>
+                    this.handleDeleteCreativeWorkConfirmation(record)
+                  }
+                />
+              </Tooltip>
             </Link>
-          </Popconfirm>
-          <Link to="#">
-            <Icon
-              type="edit"
-              className="text secondary"
-              style={{ marginLeft: 10 }}
-              onClick={() => this.handleToggleEditCWork(record)}
-            />
-          </Link>
-        </div>
-      ),
+            <Link to="#">
+              <Tooltip title="Edit Creative Work" arrowPointAtCenter>
+                <Icon
+                  type="edit"
+                  className="text secondary"
+                  style={{ marginLeft: 10 }}
+                  onClick={() => this.handleToggleEditCWork(record)}
+                />
+              </Tooltip>
+            </Link>
+          </div>
+        ) : (
+          ''
+        ),
     },
   ];
 
@@ -121,8 +128,21 @@ class ResearchAndCreativeWorkForm extends Component {
     });
   };
 
+  handleDeleteCreativeWorkConfirmation = ({ creativeWorkID }) => {
+    confirm({
+      title: 'Are you sure you want to delete this creative work?',
+      okType: 'danger',
+      onOk: () => {
+        this.props.deleteCreativeWork(creativeWorkID);
+      },
+      onCancel() {},
+    });
+  };
+
   render() {
     const {
+      userID,
+      fsr,
       fsrID,
       researches,
       research,
@@ -172,6 +192,9 @@ class ResearchAndCreativeWorkForm extends Component {
             icon="plus-circle-o"
             type="primary"
             onClick={() => toggleModal(ADD_RESEARCH_MODAL)}
+            disabled={
+              userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? false : true
+            }
           >
             Add Research
           </Button>
@@ -192,24 +215,30 @@ class ResearchAndCreativeWorkForm extends Component {
                 <Card
                   key={research.researchID}
                   style={{ borderColor: '#483440' }}
-                  actions={[
-                    <Tooltip title="Edit Research" arrowPointAtCenter>
-                      <Icon
-                        type="edit"
-                        className="text normal"
-                        onClick={() => this.handleToggleEditResearch(research)}
-                      />
-                    </Tooltip>,
-                    <Tooltip title="Delete Research" arrowPointAtCenter>
-                      <Icon
-                        type="delete"
-                        className="text normal"
-                        onClick={() =>
-                          this.handleDeleteResearchConfirmation(research)
-                        }
-                      />
-                    </Tooltip>,
-                  ]}
+                  actions={
+                    userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn
+                      ? [
+                          <Tooltip title="Edit Research" arrowPointAtCenter>
+                            <Icon
+                              type="edit"
+                              className="text normal"
+                              onClick={() =>
+                                this.handleToggleEditResearch(research)
+                              }
+                            />
+                          </Tooltip>,
+                          <Tooltip title="Delete Research" arrowPointAtCenter>
+                            <Icon
+                              type="delete"
+                              className="text normal"
+                              onClick={() =>
+                                this.handleDeleteResearchConfirmation(research)
+                              }
+                            />
+                          </Tooltip>,
+                        ]
+                      : null
+                  }
                 >
                   <div className="text normal">
                     <dl>
@@ -284,6 +313,9 @@ class ResearchAndCreativeWorkForm extends Component {
             icon="plus-circle-o"
             type="primary"
             onClick={() => toggleModal(ADD_CWORK_MODAL)}
+            disabled={
+              userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? false : true
+            }
           >
             Add Creative Work
           </Button>

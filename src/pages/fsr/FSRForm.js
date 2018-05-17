@@ -1,5 +1,6 @@
 import { Steps, Row, Col, Button, Modal, notification } from 'antd';
 import React, { Component } from 'react';
+import { CERTIFICATION } from './duck';
 
 import TeachingLoadForm from './components/TeachingLoadForm';
 import ResearchAndCreativeWorkForm from './components/ResearchAndCreativeWorkForm';
@@ -24,7 +25,11 @@ class FSRForm extends Component {
     this.props.getFSR(this.props.match.params.fsrID);
   }
 
-  handleTurningInFSR = () => {
+  componentWillUnmount() {
+    this.props.resetPage();
+  }
+
+  handleUnsubmitFSR = () => {
     this.props.toggleTurningIn(this.props.fsr.fsr.id, {
       isTurnedIn: !this.props.fsr.fsr.isTurnedIn,
     });
@@ -43,7 +48,6 @@ class FSRForm extends Component {
   showDeleteConfirm = () => {
     confirm({
       title: 'Are you sure you want to finalize this FSR?',
-      content: 'Some descriptions',
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
@@ -74,6 +78,8 @@ class FSRForm extends Component {
       isEditCourseModalOpen,
       isEditConsultationHourModalOpen,
 
+      isCertificationModalOpen,
+
       toggleModal,
       nextStep,
       prevStep,
@@ -83,6 +89,7 @@ class FSRForm extends Component {
       subjects,
       subject,
       timeslots,
+      schedule,
       researches,
       research,
       cworks,
@@ -143,6 +150,7 @@ class FSRForm extends Component {
       isAddingTimeslot,
       isEditingSubject,
       isGettingTimeslots,
+      isGettingSchedule,
       isGettingResearches,
       isAddingResearch,
       isEditingResearch,
@@ -174,10 +182,11 @@ class FSRForm extends Component {
       isFinalizing,
       isGettingFSR,
       pushLink,
+      toggleTurningIn,
     } = this.props;
 
     const { fsrID } = this.props.match.params;
-    const { acctType } = this.props.user;
+    const { userID } = this.props.user;
 
     return isGettingFSR ? (
       <PageLoader />
@@ -191,16 +200,16 @@ class FSRForm extends Component {
             onClick={() => pushLink(`/records/${fsrID}/preview`)}
             ghost
           >
-            View Preview
+            Preview FSR
           </Button>
-          {acctType === 'USER' ? (
+          {userID === fsr.fsr.userID ? (
             fsr.fsr.isTurnedIn ? (
               <Button
                 style={styles.icons}
                 size="large"
                 icon="check"
                 loading={isTurningIn}
-                onClick={this.handleTurningInFSR}
+                onClick={this.handleUnsubmitFSR}
                 ghost
               >
                 Turned In
@@ -210,14 +219,16 @@ class FSRForm extends Component {
                 style={styles.icons}
                 size="large"
                 icon="up-square-o"
-                loading={isTurningIn}
-                onClick={this.handleTurningInFSR}
+                onClick={() => toggleModal(CERTIFICATION)}
                 ghost
               >
                 Turn In FSR
               </Button>
             )
-          ) : fsr.fsr.isChecked && fsr.fsr.isTurnedIn ? (
+          ) : (
+            ''
+          )}
+          {fsr.fsr.isChecked && fsr.fsr.isTurnedIn ? (
             <Button
               style={styles.icons}
               size="large"
@@ -260,10 +271,13 @@ class FSRForm extends Component {
             <Col span={20}>
               {currentStep === 0 ? (
                 <TeachingLoadForm
+                  userID={userID}
+                  fsr={fsr}
                   fsrID={fsrID}
                   subjects={subjects}
                   subject={subject}
                   timeslots={timeslots}
+                  schedule={schedule}
                   getSubjects={getSubjects}
                   addSubject={addSubject}
                   deleteSubject={deleteSubject}
@@ -275,6 +289,7 @@ class FSRForm extends Component {
                   isAddingTimeslot={isAddingTimeslot}
                   isEditingSubject={isEditingSubject}
                   isGettingTimeslots={isGettingTimeslots}
+                  isGettingSchedule={isGettingSchedule}
                   isAddSubjectModalOpen={isAddSubjectModalOpen}
                   isEditSubjectModalOpen={isEditSubjectModalOpen}
                   toggleModal={toggleModal}
@@ -282,6 +297,8 @@ class FSRForm extends Component {
                 />
               ) : currentStep === 1 ? (
                 <ResearchAndCreativeWorkForm
+                  userID={userID}
+                  fsr={fsr}
                   fsrID={fsrID}
                   researches={researches}
                   research={research}
@@ -312,6 +329,8 @@ class FSRForm extends Component {
                 />
               ) : currentStep === 2 ? (
                 <AdminWorkForm
+                  userID={userID}
+                  fsr={fsr}
                   fsrID={fsrID}
                   adminWorks={adminWorks}
                   adminWork={adminWork}
@@ -331,6 +350,8 @@ class FSRForm extends Component {
                 />
               ) : currentStep === 3 ? (
                 <ExtAndCommServiceForm
+                  userID={userID}
+                  fsr={fsr}
                   fsrID={fsrID}
                   extAndCommServices={extAndCommServices}
                   extAndCommService={extAndCommService}
@@ -354,6 +375,8 @@ class FSRForm extends Component {
                 />
               ) : currentStep === 4 ? (
                 <StudyLoadForm
+                  userID={userID}
+                  fsr={fsr}
                   fsrID={fsrID}
                   studyLoad={studyLoad}
                   courses={courses}
@@ -378,9 +401,12 @@ class FSRForm extends Component {
                   isEditCourseModalOpen={isEditCourseModalOpen}
                   toggleModal={toggleModal}
                   prevStep={prevStep}
+                  nextStep={nextStep}
                 />
               ) : currentStep === 5 ? (
                 <LimitedPracticeForm
+                  userID={userID}
+                  fsr={fsr}
                   fsrID={fsrID}
                   ltdPractOfProf={ltdPractOfProf}
                   getLtdPractOfProfs={getLtdPractOfProfs}
@@ -388,9 +414,12 @@ class FSRForm extends Component {
                   isGettingLtdPractOfProf={isGettingLtdPractOfProf}
                   isEditingLtdPractOfProf={isEditingLtdPractOfProf}
                   prevStep={prevStep}
+                  nextStep={nextStep}
                 />
               ) : currentStep === 6 ? (
                 <AwardForm
+                  userID={userID}
+                  fsr={fsr}
                   fsrID={fsrID}
                   award={award}
                   getAwards={getAwards}
@@ -398,9 +427,12 @@ class FSRForm extends Component {
                   isGettingAward={isGettingAward}
                   isEditingAward={isEditingAward}
                   prevStep={prevStep}
+                  nextStep={nextStep}
                 />
-              ) : currentStep === 7 ? (
+              ) : (
                 <ConsultationHoursForm
+                  userID={userID}
+                  fsr={fsr}
                   fsrID={fsrID}
                   consultationHours={consultationHours}
                   consultationHour={consultationHour}
@@ -420,15 +452,16 @@ class FSRForm extends Component {
                   }
                   toggleModal={toggleModal}
                   prevStep={prevStep}
-                  nextStep={nextStep}
-                />
-              ) : (
-                <CertificationForm
-                  fsr={fsr}
-                  pushLink={pushLink}
-                  prevStep={prevStep}
                 />
               )}
+              <CertificationForm
+                fsr={fsr}
+                toggleTurningIn={toggleTurningIn}
+                isTurningIn={isTurningIn}
+                isCertificationModalOpen={isCertificationModalOpen}
+                toggleModal={toggleModal}
+                pushLink={pushLink}
+              />
             </Col>
           </div>
         </Row>

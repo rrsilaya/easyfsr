@@ -45,6 +45,7 @@ import {
   editConsultationHour,
   toggleTurningIn,
   toggleFinalizing,
+  resetPage,
 } from './duck';
 
 const mapStateToProps = state => {
@@ -56,7 +57,6 @@ const mapStateToProps = state => {
     isAddExtAndCommServiceModalOpen,
     isAddCourseModalOpen,
     isAddConsultationHourModalOpen,
-
     isEditSubjectModalOpen,
     isEditResearchModalOpen,
     isEditCWorkModalOpen,
@@ -64,12 +64,13 @@ const mapStateToProps = state => {
     isEditExtAndCommServiceModalOpen,
     isEditCourseModalOpen,
     isEditConsultationHourModalOpen,
-
+    isCertificationModalOpen,
     currentStep,
     fsr,
     subjects,
     subject,
     timeslots,
+    schedule,
     researches,
     research,
     cworks,
@@ -90,6 +91,7 @@ const mapStateToProps = state => {
     isGettingSubjects,
     isAddingSubject,
     isAddingTimeslot,
+    isGettingSchedule,
     isEditingSubject,
     isGettingTimeslots,
     isGettingResearches,
@@ -139,11 +141,13 @@ const mapStateToProps = state => {
     isEditExtAndCommServiceModalOpen,
     isEditCourseModalOpen,
     isEditConsultationHourModalOpen,
+    isCertificationModalOpen,
     currentStep,
     fsr,
     subjects,
     subject,
     timeslots,
+    schedule,
     researches,
     research,
     cworks,
@@ -164,6 +168,7 @@ const mapStateToProps = state => {
     isGettingSubjects,
     isAddingSubject,
     isAddingTimeslot,
+    isGettingSchedule,
     isEditingSubject,
     isGettingTimeslots,
     isGettingResearches,
@@ -331,6 +336,9 @@ const mapDispatchToProps = dispatch => {
     },
     pushLink: route => {
       dispatch(push(route));
+    },
+    resetPage: () => {
+      dispatch(resetPage());
     },
   };
 };

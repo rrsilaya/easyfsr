@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Button, Card, Icon, Popconfirm } from 'antd';
+import { Table, Button, Card, Icon, Tooltip, Modal } from 'antd';
 import { SUBJECT, ADD_SUBJECT_MODAL, EDIT_SUBJECT_MODAL } from '../duck';
+import { DataLoader } from '../../../global';
 
 import styles from '../styles';
 
 import AddSubjectModal from './AddSubjectModal';
 import EditSubjectModal from './EditSubjectModal';
 import Schedule from '../../../global/schedule/Schedule';
+
+const { confirm } = Modal;
 
 class TeachingLoadForm extends Component {
   componentDidMount() {
@@ -46,26 +49,33 @@ class TeachingLoadForm extends Component {
       align: 'center',
     },
     {
-      render: (text, record) => (
-        <div style={styles.icons}>
-          <Popconfirm
-            title="Are you sure you want to delete this subject?"
-            onConfirm={() => this.props.deleteSubject(record.subjectID)}
-          >
+      render: (text, record) =>
+        this.props.userID === this.props.fsr.fsr.userID &&
+        !this.props.fsr.fsr.isTurnedIn ? (
+          <div style={styles.icons}>
             <Link to="#">
-              <Icon type="delete" className="text secondary" />
+              <Tooltip title="Delete Subject" arrowPointAtCenter>
+                <Icon
+                  type="delete"
+                  className="text secondary"
+                  onClick={() => this.handleDeleteSubjectConfirmation(record)}
+                />
+              </Tooltip>
             </Link>
-          </Popconfirm>
-          <Link to="#">
-            <Icon
-              type="edit"
-              className="text secondary"
-              style={{ marginLeft: 10 }}
-              onClick={() => this.handleToggleEditSubject(record)}
-            />
-          </Link>
-        </div>
-      ),
+            <Link to="#">
+              <Tooltip title="Edit Subject" arrowPointAtCenter>
+                <Icon
+                  type="edit"
+                  className="text secondary"
+                  style={{ marginLeft: 10 }}
+                  onClick={() => this.handleToggleEditSubject(record)}
+                />
+              </Tooltip>
+            </Link>
+          </div>
+        ) : (
+          ''
+        ),
     },
   ];
 
@@ -74,12 +84,26 @@ class TeachingLoadForm extends Component {
     this.props.toggleModal(EDIT_SUBJECT_MODAL);
   };
 
+  handleDeleteSubjectConfirmation = ({ subjectID }) => {
+    confirm({
+      title: 'Are you sure you want to delete this subject?',
+      okType: 'danger',
+      onOk: () => {
+        this.props.deleteSubject(subjectID);
+      },
+      onCancel() {},
+    });
+  };
+
   render() {
     const {
+      userID,
+      fsr,
       fsrID,
       subjects,
       subject,
       timeslots,
+      schedule,
       addSubject,
       editSubject,
       getTimeslots,
@@ -87,11 +111,22 @@ class TeachingLoadForm extends Component {
       isAddingSubject,
       isAddingTimeslot,
       isEditingSubject,
+      isGettingSchedule,
       isAddSubjectModalOpen,
       isEditSubjectModalOpen,
       toggleModal,
       nextStep,
     } = this.props;
+
+    const sched = schedule.map(timeslot => {
+      const subject = subjects.find(
+        subject => subject.subjectID === timeslot.subjectID,
+      );
+
+      timeslot.day = timeslot.day.toUpperCase();
+
+      return { ...timeslot, ...subject };
+    });
 
     return (
       <Card title="Teaching Load in the College" style={styles.formFSR}>
@@ -104,27 +139,45 @@ class TeachingLoadForm extends Component {
           isAddSubjectModalOpen={isAddSubjectModalOpen}
           toggleModal={toggleModal}
         />
-        <EditSubjectModal
-          id={fsrID}
-          subject={subject}
-          timeslots={timeslots}
-          editSubject={editSubject}
-          getTimeslots={getTimeslots}
-          isEditingSubject={isEditingSubject}
-          isEditSubjectModalOpen={isEditSubjectModalOpen}
-          toggleModal={toggleModal}
+        {isEditSubjectModalOpen ? (
+          <EditSubjectModal
+            id={fsrID}
+            subject={subject}
+            timeslots={timeslots}
+            editSubject={editSubject}
+            getTimeslots={getTimeslots}
+            isEditingSubject={isEditingSubject}
+            isEditSubjectModalOpen={isEditSubjectModalOpen}
+            toggleModal={toggleModal}
+          />
+        ) : (
+          ''
+        )}
+        <DataLoader
+          isLoading={isGettingSchedule}
+          color="#fff"
+          spinColor="#483440"
+          content={
+            <div
+              className="scale-down"
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <Schedule data={sched} />
+            </div>
+          }
         />
-        <div
-          className="scale-down"
-          style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
-        >
-          <Schedule data={[]} />
-        </div>
         <div style={styles.button}>
           <Button
             icon="plus-circle-o"
             type="primary"
             onClick={() => toggleModal(ADD_SUBJECT_MODAL)}
+            disabled={
+              userID === fsr.fsr.userID && !fsr.fsr.isTurnedIn ? false : true
+            }
           >
             Add Subject
           </Button>

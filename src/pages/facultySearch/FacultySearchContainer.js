@@ -17,6 +17,7 @@ const mapStateToProps = state => {
     isSendNotificationFSModalOpen,
     user,
   } = state.search;
+  const { user: session } = state.app;
 
   return {
     users,
@@ -24,6 +25,7 @@ const mapStateToProps = state => {
     isGettingUser,
     isSendNotificationFSModalOpen,
     user,
+    session,
     // searchedUsers,
   };
 };

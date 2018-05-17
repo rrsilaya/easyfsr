@@ -20,9 +20,9 @@ const columns = [
     key: 'affectedID',
   },
   {
-    title: 'userID',
-    dataIndex: 'userID',
-    key: 'userID',
+    title: 'User',
+    dataIndex: 'name',
+    key: 'name',
   },
 ];
 

@@ -6,6 +6,7 @@ const initialState = {
   subjects: [],
   subject: {},
   timeslots: [],
+  schedule: [],
   researches: [],
   research: {},
   cworks: [],
@@ -27,6 +28,7 @@ const initialState = {
   isGettingFSR: true,
   isGettingSubjects: false,
   isGettingTimeslots: false,
+  isGettingSchedule: false,
   isAddingSubject: false,
   isAddingTimeslot: false,
   isDeletingSubject: false,
@@ -80,6 +82,7 @@ const initialState = {
   isEditCourseModalOpen: false,
   isAddConsultationHourModalOpen: false,
   isEditConsultationHourModalOpen: false,
+  isCertificationModalOpen: false,
 
   isTurningIn: false,
   isFinalizing: false,
@@ -122,6 +125,22 @@ const reducer = (state = initialState, action) => {
         }),
       });
 
+    case Action.GET_SCHEDULE:
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isGettingSchedule: true,
+        }),
+        success: prevState => ({
+          ...prevState,
+          schedule: [...state.schedule, ...payload.data.data],
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isGettingSchedule: false,
+        }),
+      });
+
     case Action.ADD_SUBJECT:
       return handle(state, action, {
         start: prevState => ({
@@ -147,6 +166,7 @@ const reducer = (state = initialState, action) => {
         success: prevState => ({
           ...prevState,
           isAddSubjectModalOpen: false,
+          schedule: [...state.schedule, payload.data.data],
         }),
         finish: prevState => ({
           ...prevState,
@@ -164,6 +184,9 @@ const reducer = (state = initialState, action) => {
           ...prevState,
           subjects: state.subjects.filter(
             subject => subject.subjectID !== payload.data.data.subjectID,
+          ),
+          schedule: state.schedule.filter(
+            timeslot => timeslot.subjectID !== payload.data.data.subjectID,
           ),
         }),
         finish: prevState => ({
@@ -196,6 +219,12 @@ const reducer = (state = initialState, action) => {
         success: prevState => ({
           ...prevState,
           isEditSubjectModalOpen: false,
+          schedule: state.schedule.map(
+            timeslot =>
+              timeslot.subjectID === payload.data.data.subjectID
+                ? { ...payload.data.data }
+                : timeslot,
+          ),
         }),
         finish: prevState => ({
           ...prevState,
@@ -911,6 +940,11 @@ const reducer = (state = initialState, action) => {
             ...state,
             isEditConsultationHourModalOpen: !state.isEditConsultationHourModalOpen,
           };
+        case Action.CERTIFICATION:
+          return {
+            ...state,
+            isCertificationModalOpen: !state.isCertificationModalOpen,
+          };
         default:
           return state;
       }
@@ -947,6 +981,9 @@ const reducer = (state = initialState, action) => {
         ...state,
         currentStep: state.currentStep - 1,
       };
+
+    case Action.RESET_PAGE:
+      return initialState;
 
     default:
       return state;
