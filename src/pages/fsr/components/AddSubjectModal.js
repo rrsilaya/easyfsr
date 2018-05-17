@@ -213,7 +213,7 @@ class AddSubjectModal extends Component {
                   message: 'Please input total number of students',
                 },
               ],
-            })(<InputNumber min={0} />)}
+            })(<InputNumber min={1} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Course Credits">
             {getFieldDecorator('teachingLoadCreds', {

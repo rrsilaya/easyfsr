@@ -235,7 +235,7 @@ class EditSubjectModal extends Component {
                 },
               ],
               initialValue: subject.noOfStudents,
-            })(<InputNumber min={0} />)}
+            })(<InputNumber min={1} />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Course Credits">
             {getFieldDecorator('teachingLoadCreds', {
