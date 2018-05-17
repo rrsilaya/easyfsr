@@ -186,7 +186,8 @@ class FSRForm extends Component {
     } = this.props;
 
     const { fsrID } = this.props.match.params;
-    const { userID } = this.props.user;
+    const { userID, acctType } = this.props.user;
+    console.log(fsr);
 
     return isGettingFSR ? (
       <PageLoader />
@@ -210,6 +211,7 @@ class FSRForm extends Component {
                 icon="check"
                 loading={isTurningIn}
                 onClick={this.handleUnsubmitFSR}
+                disabled={fsr.fsr.isChecked}
                 ghost
               >
                 Turned In
@@ -228,28 +230,32 @@ class FSRForm extends Component {
           ) : (
             ''
           )}
-          {fsr.fsr.isChecked && fsr.fsr.isTurnedIn ? (
-            <Button
-              style={styles.icons}
-              size="large"
-              icon="check-circle-o"
-              disabled
-              ghost
-              loading={isTurningIn}
-            >
-              Finalized
-            </Button>
+          {acctType === 'ADMIN' ? (
+            fsr.fsr.isChecked && fsr.fsr.isTurnedIn ? (
+              <Button
+                style={styles.icons}
+                size="large"
+                icon="check-circle-o"
+                disabled
+                ghost
+                loading={isTurningIn}
+              >
+                Finalized
+              </Button>
+            ) : (
+              <Button
+                style={styles.icons}
+                size="large"
+                icon="check-circle-o"
+                onClick={this.showDeleteConfirm}
+                ghost
+                loading={isFinalizing}
+              >
+                Finalize FSR
+              </Button>
+            )
           ) : (
-            <Button
-              style={styles.icons}
-              size="large"
-              icon="check-circle-o"
-              onClick={this.showDeleteConfirm}
-              ghost
-              loading={isFinalizing}
-            >
-              Finalize FSR
-            </Button>
+            ''
           )}
         </ButtonGroup>
         <h1>
