@@ -52,17 +52,20 @@ export const getResearch = ({ researchID }) => {
 };
 
 export const updateResearch = ({ researchID }, research) => {
-  if (research.endDate == 'null') delete research.endDate;
   return new Promise((resolve, reject) => {
     if (!research) return reject(500);
-    db.query(
-      Query.updateResearch(filtered(research, researchAttributes)),
-      { researchID, ...research },
-      (err, results) => {
-        if (err) return reject(500);
-        return resolve(results.insertId);
-      },
-    );
+
+    if (research.endDate == 'null') delete research.endDate;
+    if (Object.keys(research).length > 0) {
+      db.query(
+        Query.updateResearch(filtered(research, researchAttributes)),
+        { researchID, ...research },
+        (err, results) => {
+          if (err) return reject(500);
+          return resolve(results.insertId);
+        },
+      );
+    } else return resolve();
   });
 };
 
