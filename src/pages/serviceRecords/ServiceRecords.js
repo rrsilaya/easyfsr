@@ -10,7 +10,7 @@ const { Item: ListItem } = List;
 class ServiceRecords extends Component {
   componentDidMount() {
     this.props.getFSRs({ userID: this.props.user.userID });
-    this.props.getAnnouncements({ sortBy: 'DESC', field: 'timestamp' });
+    this.props.getAnnouncements();
     this.props.getNotifications({ sortBy: 'DESC', field: 'timestamp' });
   }
 

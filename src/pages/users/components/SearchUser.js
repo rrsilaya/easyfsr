@@ -12,11 +12,23 @@ class SearchUser extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        this.props.getUsers({ ...this.props.query, ...getFieldValues(values) });
-        this.props.changeQuery({
-          ...this.props.query,
-          ...getFieldValues(values),
-        });
+        const filtered = getFieldValues(values);
+        if (
+          !(
+            filtered.firstName == null &&
+            filtered.lastName == null &&
+            filtered.sortBy === 'ASC'
+          )
+        ) {
+          this.props.getUsers({
+            ...this.props.query,
+            ...getFieldValues(values),
+          });
+          this.props.changeQuery({
+            ...this.props.query,
+            ...getFieldValues(values),
+          });
+        }
       }
     });
   };
@@ -33,6 +45,9 @@ class SearchUser extends Component {
           )
         )
           this.props.getUsers({});
+        Object.keys(this.props.query).forEach(
+          key => delete this.props.query[key],
+        );
         this.props.changeQuery({});
       }
     });
