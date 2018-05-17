@@ -22,11 +22,11 @@ class SearchUser extends Component {
         ) {
           this.props.getUsers({
             ...this.props.query,
-            ...getFieldValues(values),
+            ...filtered,
           });
           this.props.changeQuery({
             ...this.props.query,
-            ...getFieldValues(values),
+            ...filtered,
           });
         }
       }
