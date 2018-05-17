@@ -98,8 +98,6 @@ class AwardForm extends Component {
       },
     };
 
-    console.log(award);
-
     return (
       <Card
         title="Professorial Chair or Faculty Grant Recipient or Nominee"
