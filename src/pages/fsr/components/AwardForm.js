@@ -98,6 +98,8 @@ class AwardForm extends Component {
       },
     };
 
+    console.log(award);
+
     return (
       <Card
         title="Professorial Chair or Faculty Grant Recipient or Nominee"
@@ -233,7 +235,8 @@ class AwardForm extends Component {
           </FormItem>
           <FormItem {...formItemLayout} label="End Date">
             {getFieldDecorator('endDate', {
-              initialValue: award.endDate ? moment(award.endDate) : null,
+              initialValue:
+                award.endDate !== '0000-00-00' ? moment(award.endDate) : null,
             })(
               <DatePicker
                 disabledDate={this.disabledEndDate}

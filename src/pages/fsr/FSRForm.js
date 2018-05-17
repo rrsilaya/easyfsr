@@ -187,7 +187,6 @@ class FSRForm extends Component {
 
     const { fsrID } = this.props.match.params;
     const { userID, acctType } = this.props.user;
-    console.log(fsr);
 
     return isGettingFSR ? (
       <PageLoader />
