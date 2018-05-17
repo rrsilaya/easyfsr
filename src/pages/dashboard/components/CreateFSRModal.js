@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form, Input, Transfer } from 'antd';
+import { Modal, Button, Form, Transfer } from 'antd';
 import { CREATE_FSR } from '../duck';
-import styles from '../styles';
-import { getFieldValues } from '../../../utils';
 
 const FormItem = Form.Item;
 

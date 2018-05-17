@@ -1,14 +1,5 @@
 import React, { Component } from 'react';
-import Pagination, {
-  Icon,
-  Card,
-  Table,
-  Row,
-  Col,
-  Button,
-  List,
-  Modal,
-} from 'antd';
+import { Icon, Card, Table, Row, Col, Button, List, Modal } from 'antd';
 import styles from './styles';
 import columns from './columns';
 import moment from 'moment';
