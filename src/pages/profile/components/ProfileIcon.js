@@ -19,7 +19,13 @@ class ProfileIcon extends Component {
     return (
       <div className="profileIcon">
         {this.props.showUploadIcon ? (
-          <Upload {...props} className="overlay" onChange={this.handleUpload}>
+          <Upload
+            {...props}
+            className="overlay"
+            type="file"
+            accept=".jpg, .png"
+            onChange={this.handleUpload}
+          >
             <Icon
               type={isUploadingIcon ? 'loading' : 'upload'}
               className="set-cursor pointer"
